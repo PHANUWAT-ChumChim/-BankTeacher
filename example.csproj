@@ -140,6 +140,7 @@
     <Compile Include="Bank\Setting.Designer.cs">
       <DependentUpon>Setting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Class\Datainfo.cs" />
     <Compile Include="Class\FromSettingMedtod.cs" />
     <Compile Include="Class\Print\PrintPreviewDialog.cs" />
     <Compile Include="Class\Print\SetPrintMedtods.cs" />
