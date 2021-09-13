@@ -57,7 +57,6 @@ namespace example.Bank
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.LLoanAmount = new System.Windows.Forms.Label();
             this.CBPayMonth = new System.Windows.Forms.ComboBox();
@@ -73,6 +72,7 @@ namespace example.Bank
             this.label13 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.BCalculate = new System.Windows.Forms.Button();
             this.DGVGuarantorCredit = new System.Windows.Forms.DataGridView();
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -84,13 +84,12 @@ namespace example.Bank
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.label23 = new System.Windows.Forms.Label();
-            this.CByeartap3 = new System.Windows.Forms.ComboBox();
-            this.BTResearchtap3 = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.panel9 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
+            this.BTdeletefile = new System.Windows.Forms.Button();
+            this.BTOpenfile = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.BLoanDocUpload = new System.Windows.Forms.Button();
@@ -110,15 +109,8 @@ namespace example.Bank
             this.LB1Id = new System.Windows.Forms.Label();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.DGV1112 = new System.Windows.Forms.DataGridView();
-            this.BCalculate = new System.Windows.Forms.Button();
-
-            this.label6 = new System.Windows.Forms.Label();
-            this.BTdeletefile = new System.Windows.Forms.Button();
-            this.BTOpenfile = new System.Windows.Forms.Button();
-
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -129,7 +121,6 @@ namespace example.Bank
             ((System.ComponentModel.ISupportInitialize)(this.DGVGuarantorCredit)).BeginInit();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVLoanDetail)).BeginInit();
-            this.panel3.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.panel9.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -272,10 +263,8 @@ namespace example.Bank
             this.DGVGuarantor.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2,
-
             this.Column3});
             this.DGVGuarantor.Location = new System.Drawing.Point(10, 78);
-
             this.DGVGuarantor.Name = "DGVGuarantor";
             this.DGVGuarantor.RowHeadersVisible = false;
             this.DGVGuarantor.RowHeadersWidth = 51;
@@ -317,7 +306,6 @@ namespace example.Bank
             this.Column3.ReadOnly = true;
             this.Column3.Width = 210;
             // 
-
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.LLoanAmount);
@@ -491,6 +479,16 @@ namespace example.Bank
             this.tabPage5.Text = "กำหนดจำนวนเงินค้ำ";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // BCalculate
+            // 
+            this.BCalculate.Location = new System.Drawing.Point(437, 314);
+            this.BCalculate.Name = "BCalculate";
+            this.BCalculate.Size = new System.Drawing.Size(257, 60);
+            this.BCalculate.TabIndex = 2;
+            this.BCalculate.Text = "คำนวณอัตโนมัติ";
+            this.BCalculate.UseVisualStyleBackColor = true;
+            this.BCalculate.Click += new System.EventHandler(this.BCalculate_Click);
+            // 
             // DGVGuarantorCredit
             // 
             this.DGVGuarantorCredit.AllowUserToAddRows = false;
@@ -512,7 +510,7 @@ namespace example.Bank
             this.Column10,
             this.Column11});
             this.DGVGuarantorCredit.GridColor = System.Drawing.SystemColors.Control;
-            this.DGVGuarantorCredit.Location = new System.Drawing.Point(42, 44);
+            this.DGVGuarantorCredit.Location = new System.Drawing.Point(42, 31);
             this.DGVGuarantorCredit.Name = "DGVGuarantorCredit";
             this.DGVGuarantorCredit.RowHeadersVisible = false;
             this.DGVGuarantorCredit.RowHeadersWidth = 51;
@@ -563,7 +561,6 @@ namespace example.Bank
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.DGVLoanDetail);
-            this.tabPage3.Controls.Add(this.panel3);
             this.tabPage3.Location = new System.Drawing.Point(4, 45);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -576,7 +573,6 @@ namespace example.Bank
             // 
             this.DGVLoanDetail.AllowUserToAddRows = false;
             this.DGVLoanDetail.AllowUserToDeleteRows = false;
-
             dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle11.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -585,14 +581,13 @@ namespace example.Bank
             dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.DGVLoanDetail.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
-
             this.DGVLoanDetail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVLoanDetail.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
             this.Column4,
             this.Column5,
             this.Column6});
-            this.DGVLoanDetail.Location = new System.Drawing.Point(6, 78);
+            this.DGVLoanDetail.Location = new System.Drawing.Point(6, 42);
             this.DGVLoanDetail.Name = "DGVLoanDetail";
             this.DGVLoanDetail.ReadOnly = true;
             this.DGVLoanDetail.RowHeadersVisible = false;
@@ -633,60 +628,6 @@ namespace example.Bank
             this.Column6.Name = "Column6";
             this.Column6.ReadOnly = true;
             // 
-            // panel3
-            // 
-            this.panel3.BackColor = System.Drawing.Color.White;
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Controls.Add(this.label23);
-            this.panel3.Controls.Add(this.CByeartap3);
-            this.panel3.Controls.Add(this.BTResearchtap3);
-            this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(287, 72);
-            this.panel3.TabIndex = 109;
-            this.panel3.Visible = false;
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.BackColor = System.Drawing.Color.White;
-            this.label23.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.ForeColor = System.Drawing.Color.Black;
-            this.label23.Location = new System.Drawing.Point(18, 18);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(29, 37);
-            this.label23.TabIndex = 99;
-            this.label23.Text = "ปี";
-            // 
-            // CByeartap3
-            // 
-            this.CByeartap3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CByeartap3.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CByeartap3.FormattingEnabled = true;
-            this.CByeartap3.Items.AddRange(new object[] {
-            "2021",
-            "2020",
-            "2019",
-            "2018",
-            "2017",
-            "2015"});
-            this.CByeartap3.Location = new System.Drawing.Point(64, 17);
-            this.CByeartap3.Name = "CByeartap3";
-            this.CByeartap3.Size = new System.Drawing.Size(103, 39);
-            this.CByeartap3.TabIndex = 84;
-            // 
-            // BTResearchtap3
-            // 
-            this.BTResearchtap3.BackColor = System.Drawing.Color.White;
-            this.BTResearchtap3.Enabled = false;
-            this.BTResearchtap3.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTResearchtap3.Location = new System.Drawing.Point(182, 14);
-            this.BTResearchtap3.Name = "BTResearchtap3";
-            this.BTResearchtap3.Size = new System.Drawing.Size(90, 45);
-            this.BTResearchtap3.TabIndex = 86;
-            this.BTResearchtap3.Text = "ค้นหา";
-            this.BTResearchtap3.UseVisualStyleBackColor = false;
-            // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.panel9);
@@ -723,6 +664,40 @@ namespace example.Bank
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1095, 520);
             this.panel4.TabIndex = 122;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(56, 229);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(136, 37);
+            this.label6.TabIndex = 58;
+            this.label6.Text = "Scan(  ไม่พบ  )";
+            // 
+            // BTdeletefile
+            // 
+            this.BTdeletefile.BackColor = System.Drawing.Color.White;
+            this.BTdeletefile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BTdeletefile.Cursor = System.Windows.Forms.Cursors.Default;
+            this.BTdeletefile.Location = new System.Drawing.Point(285, 300);
+            this.BTdeletefile.Name = "BTdeletefile";
+            this.BTdeletefile.Size = new System.Drawing.Size(80, 47);
+            this.BTdeletefile.TabIndex = 56;
+            this.BTdeletefile.Text = "ลบไฟล์";
+            this.BTdeletefile.UseVisualStyleBackColor = false;
+            // 
+            // BTOpenfile
+            // 
+            this.BTOpenfile.BackColor = System.Drawing.Color.White;
+            this.BTOpenfile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BTOpenfile.Cursor = System.Windows.Forms.Cursors.Default;
+            this.BTOpenfile.Location = new System.Drawing.Point(198, 224);
+            this.BTOpenfile.Name = "BTOpenfile";
+            this.BTOpenfile.Size = new System.Drawing.Size(167, 70);
+            this.BTOpenfile.TabIndex = 55;
+            this.BTOpenfile.Text = "เปิดไฟล์";
+            this.BTOpenfile.UseVisualStyleBackColor = false;
             // 
             // label2
             // 
@@ -934,7 +909,6 @@ namespace example.Bank
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
             // 
-
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToAddRows = false;
@@ -963,51 +937,6 @@ namespace example.Bank
             this.DGV1112.Size = new System.Drawing.Size(992, 315);
             this.DGV1112.TabIndex = 1;
             // 
-            // BCalculate
-            // 
-            this.BCalculate.Location = new System.Drawing.Point(437, 327);
-            this.BCalculate.Name = "BCalculate";
-            this.BCalculate.Size = new System.Drawing.Size(257, 60);
-            this.BCalculate.TabIndex = 2;
-            this.BCalculate.Text = "คำนวณอัตโนมัติ";
-            this.BCalculate.UseVisualStyleBackColor = true;
-            this.BCalculate.Click += new System.EventHandler(this.BCalculate_Click);
-
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(56, 229);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(136, 37);
-            this.label6.TabIndex = 58;
-            this.label6.Text = "Scan(  ไม่พบ  )";
-            // 
-            // BTdeletefile
-            // 
-            this.BTdeletefile.BackColor = System.Drawing.Color.White;
-            this.BTdeletefile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BTdeletefile.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BTdeletefile.Location = new System.Drawing.Point(285, 300);
-            this.BTdeletefile.Name = "BTdeletefile";
-            this.BTdeletefile.Size = new System.Drawing.Size(80, 47);
-            this.BTdeletefile.TabIndex = 56;
-            this.BTdeletefile.Text = "ลบไฟล์";
-            this.BTdeletefile.UseVisualStyleBackColor = false;
-            // 
-            // BTOpenfile
-            // 
-            this.BTOpenfile.BackColor = System.Drawing.Color.White;
-            this.BTOpenfile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BTOpenfile.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BTOpenfile.Location = new System.Drawing.Point(198, 224);
-            this.BTOpenfile.Name = "BTOpenfile";
-            this.BTOpenfile.Size = new System.Drawing.Size(167, 70);
-            this.BTOpenfile.TabIndex = 55;
-            this.BTOpenfile.Text = "เปิดไฟล์";
-            this.BTOpenfile.UseVisualStyleBackColor = false;
-
-            // 
             // Loan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1033,8 +962,6 @@ namespace example.Bank
             ((System.ComponentModel.ISupportInitialize)(this.DGVGuarantorCredit)).EndInit();
             this.tabPage3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGVLoanDetail)).EndInit();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.panel9.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
@@ -1060,10 +987,6 @@ namespace example.Bank
         private System.Windows.Forms.Button BTsave;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.ComboBox CByeartap3;
-        private System.Windows.Forms.Button BTResearchtap3;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Panel panel4;
