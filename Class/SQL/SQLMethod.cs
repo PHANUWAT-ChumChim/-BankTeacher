@@ -23,13 +23,11 @@ namespace example.Class
         /// <para> [5] INSERT Bill and BillDetail INPUT: {TeacherAddBy} {TeacherNo} {TypeNo} {LoanNo} {Amount} {Mount} {Year}</para>
         /// <para> [6] SELECT Loan INPUT : {TeacherNo} </para>
         /// <para> [7] UPDATE SavingAmount INPUT: {TeacherNo} {Amount} </para>
-
         /// <para> [8] UPDATE REMAIN INPUT: {TeacherNo} {Amount} </para>
         /// <para> [9] Check Time Server INPUT: - </para>
         /// <para> [10] Change Status Member INPUT: {TeacherNoAddBy} {TeacherNo} {Note} {DocStatusNo} {DocUploadPath} {Status} {TeacherNo}</para>
-
         /// </para>[11] CheckAmountpayINPUT: {TeacherNo}  </para>
-        /// </para> [12] INSERT Member To Member  Bill BillDetail  INPUT: {TeacherNo} </para> 
+       
         /// </summary>
         private static String[] SQLDefault = new String[]
          { 
@@ -145,15 +143,7 @@ namespace example.Class
           "LEFT JOIN EmployeeBank.dbo.tblMember AS Mb ON Bi.TeacherNo = Mb.TeacherNo \r\n" +
           "WHERE Bi.TeacherNo LIKE '{TeacherNo}' AND Bd.Mount IS NULL AND Bd.Year IS  NULL AND Bd.Amount = Mb.StartAmount ;"
           ,
-           //[12] INSERT Member To Member  Bill BillDetail  INPUT: {TeacherNo} 
-          "DECLARE @BillNo INT; \r\n"+
-          "SELECT @BillNo = SCOPE_IDENTITY(); \r\n"+
-          "INSERT INTO EmployeeBank.dbo.tblMember(TeacherNo, TeacherAddBy, StartAmount, DateAdd) \r\n"+
-          "VALUES({TeacherNo}, {TeacherNoAddBy},{StartAmount},{DateAdd} \r\n"+
-          "INSERT INTO EmployeeBank.dbo.tblBill(TeacherNo, TeacherNoAddBy, DateAdd) \r\n"+
-          "VALUES({TeacherNo},{TeacherNoAddBy},{DateAdd}) \r\n"+
-          "INSERT INTO EmployeeBank.dbo.tblBillDetail(BillNo, TypeNo, Amount, Mount, Year) \r\n"+
-          "VALUES(@BillNo,{TypeNo},{Amount},{Mount},{Year}) "
+       
 
 
         };

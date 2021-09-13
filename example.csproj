@@ -140,9 +140,12 @@
     <Compile Include="Bank\Setting.Designer.cs">
       <DependentUpon>Setting.cs</DependentUpon>
     </Compile>
+    <Compile Include="Class\Datainfo.cs" />
     <Compile Include="Class\FromSettingMedtod.cs" />
-    <Compile Include="Class\SQLMethod.cs" />
-    <Compile Include="Class\SQLConnection.cs" />
+    <Compile Include="Class\Print\PrintPreviewDialog.cs" />
+    <Compile Include="Class\Print\SetPrintMedtods.cs" />
+    <Compile Include="Class\SQL\SQLMethod.cs" />
+    <Compile Include="Class\SQL\SQLConnection.cs" />
     <Compile Include="Class\UserInfo.cs" />
     <Compile Include="Class\ProtocolSharing\ConnectSMB.cs" />
     <Compile Include="Class\ProtocolSharing\SBM.cs" />

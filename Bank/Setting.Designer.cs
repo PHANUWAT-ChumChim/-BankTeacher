@@ -84,6 +84,7 @@ namespace example.Bank
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(678, 535);
             this.tabControl1.TabIndex = 98;
+            //this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabPage1
             // 
@@ -189,6 +190,7 @@ namespace example.Bank
             this.B_Cancel.TabIndex = 17;
             this.B_Cancel.Text = "ยกเลิก";
             this.B_Cancel.UseVisualStyleBackColor = true;
+            this.B_Cancel.Click += new System.EventHandler(this.B_Cancel_Click);
             // 
             // B_Save
             // 
@@ -200,6 +202,7 @@ namespace example.Bank
             this.B_Save.TabIndex = 16;
             this.B_Save.Text = "บันทึก";
             this.B_Save.UseVisualStyleBackColor = true;
+            this.B_Save.Click += new System.EventHandler(this.B_Save_Click);
             // 
             // TB_Max
             // 
@@ -254,6 +257,7 @@ namespace example.Bank
             this.Name = "Setting";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Setting";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Setting_FormClosed);
             this.Load += new System.EventHandler(this.B_Save_Click_1);
             this.P1.ResumeLayout(false);
             this.P1.PerformLayout();

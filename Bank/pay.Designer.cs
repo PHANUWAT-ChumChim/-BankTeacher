@@ -226,7 +226,6 @@ namespace example.GOODS
             this.TBTeacherNo.Name = "TBTeacherNo";
             this.TBTeacherNo.Size = new System.Drawing.Size(154, 43);
             this.TBTeacherNo.TabIndex = 82;
-            this.TBTeacherNo.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             this.TBTeacherNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TBTeacherNo_KeyDown);
             // 
             // LB3Bi
@@ -287,6 +286,7 @@ namespace example.GOODS
             this.button4.TabIndex = 86;
             this.button4.Text = "อัตโนมัติ";
             this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // LB8pay
             // 
@@ -308,10 +308,6 @@ namespace example.GOODS
             this.CBB4Oppay.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CBB4Oppay.ForeColor = System.Drawing.Color.Black;
             this.CBB4Oppay.FormattingEnabled = true;
-            this.CBB4Oppay.Items.AddRange(new object[] {
-            "เงินสด",
-            "เงินโอน",
-            "บัตรเครดิต"});
             this.CBB4Oppay.Location = new System.Drawing.Point(188, 504);
             this.CBB4Oppay.Name = "CBB4Oppay";
             this.CBB4Oppay.Size = new System.Drawing.Size(170, 44);
@@ -337,9 +333,6 @@ namespace example.GOODS
             this.CBStatus.Enabled = false;
             this.CBStatus.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CBStatus.FormattingEnabled = true;
-            this.CBStatus.Items.AddRange(new object[] {
-            "สะสม",
-            "กู้"});
             this.CBStatus.Location = new System.Drawing.Point(99, 15);
             this.CBStatus.Name = "CBStatus";
             this.CBStatus.Size = new System.Drawing.Size(103, 39);
@@ -448,13 +441,6 @@ namespace example.GOODS
             this.CByeartap1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CByeartap1.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CByeartap1.FormattingEnabled = true;
-            this.CByeartap1.Items.AddRange(new object[] {
-            "2021",
-            "2020",
-            "2019",
-            "2018",
-            "2017",
-            "2015"});
             this.CByeartap1.Location = new System.Drawing.Point(99, 17);
             this.CByeartap1.Name = "CByeartap1";
             this.CByeartap1.Size = new System.Drawing.Size(103, 39);
@@ -728,13 +714,6 @@ namespace example.GOODS
             this.CByeartap2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CByeartap2.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CByeartap2.FormattingEnabled = true;
-            this.CByeartap2.Items.AddRange(new object[] {
-            "2021",
-            "2020",
-            "2019",
-            "2018",
-            "2017",
-            "2015"});
             this.CByeartap2.Location = new System.Drawing.Point(64, 17);
             this.CByeartap2.Name = "CByeartap2";
             this.CByeartap2.Size = new System.Drawing.Size(103, 39);
@@ -1160,13 +1139,6 @@ namespace example.GOODS
             this.CByeartap3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CByeartap3.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CByeartap3.FormattingEnabled = true;
-            this.CByeartap3.Items.AddRange(new object[] {
-            "2021",
-            "2020",
-            "2019",
-            "2018",
-            "2017",
-            "2015"});
             this.CByeartap3.Location = new System.Drawing.Point(64, 17);
             this.CByeartap3.Name = "CByeartap3";
             this.CByeartap3.Size = new System.Drawing.Size(103, 39);
@@ -1363,6 +1335,7 @@ namespace example.GOODS
             this.Name = "pay";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ทำเป็นFormจ่าย";
+            this.Load += new System.EventHandler(this.pay_Load);
             this.SizeChanged += new System.EventHandler(this.Menuf_SizeChanged);
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();

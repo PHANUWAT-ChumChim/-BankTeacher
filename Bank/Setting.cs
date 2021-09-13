@@ -116,5 +116,52 @@ namespace example.Bank
                 e.Handled = true;
             }
         }
+
+        private void B_Save_Click(object sender, EventArgs e)
+        {
+
+            if (TB_Min.Text != Min.ToString() || TB_Max.Text != Max.ToString() || CHB_edittime.Checked != chb)
+            {
+                if (Convert.ToInt32(TB_Min.Text) <= Convert.ToInt32(TB_Max.Text))
+                {
+                    int TranChbToInt;
+                    if (CHB_edittime.Checked == true)
+                    {
+                        TranChbToInt = 1;
+                        example.GOODS.Menu.DateAmountChange = TranChbToInt;
+                    }
+                    else
+                    {
+                        TranChbToInt = 0;
+                        example.GOODS.Menu.DateAmountChange = TranChbToInt;
+                    }
+
+                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[0].Replace("{DateAmountChange}", TranChbToInt.ToString())
+                        .Replace("{StartAmountMin}", TB_Min.Text)
+                        .Replace("{StartAmountMax}", TB_Max.Text));
+                    example.GOODS.Menu.startAmountMin = Convert.ToInt32(TB_Min.Text);
+                    example.GOODS.Menu.startAmountMax = Convert.ToInt32(TB_Max.Text);
+                    MessageBox.Show("เสร็จสิ้น", "ตั้งค่า", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    this.Hide();
+                }
+                else
+                    MessageBox.Show("ค่าสูงสุดต้องไม่น้อยกว่าค่าต่ำสุด", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+            }
+        }
+        private void B_Cancel_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+
+        }
+
+        private void Setting_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
+        }
+
+        private static void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+        }
     }
 }

@@ -30,11 +30,11 @@ namespace example.GOODS
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel7 = new System.Windows.Forms.Panel();
             this.BSearchTeacher = new System.Windows.Forms.Button();
             this.TBTeacherBill = new System.Windows.Forms.TextBox();
@@ -45,14 +45,23 @@ namespace example.GOODS
             this.label1 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.P1 = new System.Windows.Forms.Panel();
+            this.BTClean = new System.Windows.Forms.Button();
+            this.panel16 = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.CBStatus = new System.Windows.Forms.ComboBox();
+            this.CBMonth = new System.Windows.Forms.ComboBox();
+            this.LB5Mo = new System.Windows.Forms.Label();
+            this.automatic = new System.Windows.Forms.Button();
+            this.LB5Ye = new System.Windows.Forms.Label();
+            this.CByear = new System.Windows.Forms.ComboBox();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button6 = new System.Windows.Forms.Button();
             this.panel7.SuspendLayout();
             this.P1.SuspendLayout();
+            this.panel16.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.SuspendLayout();
             // 
@@ -92,9 +101,9 @@ namespace example.GOODS
             // 
             this.TBTeacherBill.Enabled = false;
             this.TBTeacherBill.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBTeacherBill.Location = new System.Drawing.Point(761, 15);
+            this.TBTeacherBill.Location = new System.Drawing.Point(787, 15);
             this.TBTeacherBill.Name = "TBTeacherBill";
-            this.TBTeacherBill.Size = new System.Drawing.Size(360, 43);
+            this.TBTeacherBill.Size = new System.Drawing.Size(334, 43);
             this.TBTeacherBill.TabIndex = 84;
             // 
             // TBTeacherName
@@ -122,11 +131,11 @@ namespace example.GOODS
             this.label3.BackColor = System.Drawing.Color.White;
             this.label3.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(686, 15);
+            this.label3.Location = new System.Drawing.Point(686, 17);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(69, 37);
+            this.label3.Size = new System.Drawing.Size(95, 37);
             this.label3.TabIndex = 69;
-            this.label3.Text = "เลขบิล";
+            this.label3.Text = "วันที่สมัคร";
             // 
             // label2
             // 
@@ -167,27 +176,156 @@ namespace example.GOODS
             // 
             this.P1.BackColor = System.Drawing.Color.White;
             this.P1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.P1.Controls.Add(this.BTClean);
+            this.P1.Controls.Add(this.panel16);
             this.P1.Controls.Add(this.dataGridView3);
-            this.P1.Controls.Add(this.button6);
             this.P1.Controls.Add(this.panel7);
             this.P1.Location = new System.Drawing.Point(25, 42);
             this.P1.Name = "P1";
             this.P1.Size = new System.Drawing.Size(1156, 725);
             this.P1.TabIndex = 98;
             // 
+            // BTClean
+            // 
+            this.BTClean.BackColor = System.Drawing.Color.White;
+            this.BTClean.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTClean.Location = new System.Drawing.Point(987, 89);
+            this.BTClean.Name = "BTClean";
+            this.BTClean.Size = new System.Drawing.Size(128, 67);
+            this.BTClean.TabIndex = 100;
+            this.BTClean.Text = "ล้าง";
+            this.BTClean.UseVisualStyleBackColor = false;
+            this.BTClean.Click += new System.EventHandler(this.BTClean_Click);
+            // 
+            // panel16
+            // 
+            this.panel16.BackColor = System.Drawing.Color.White;
+            this.panel16.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel16.Controls.Add(this.label4);
+            this.panel16.Controls.Add(this.CBStatus);
+            this.panel16.Controls.Add(this.CBMonth);
+            this.panel16.Controls.Add(this.LB5Mo);
+            this.panel16.Controls.Add(this.automatic);
+            this.panel16.Controls.Add(this.LB5Ye);
+            this.panel16.Controls.Add(this.CByear);
+            this.panel16.Location = new System.Drawing.Point(8, 88);
+            this.panel16.Name = "panel16";
+            this.panel16.Size = new System.Drawing.Size(963, 72);
+            this.panel16.TabIndex = 99;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.White;
+            this.label4.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.Black;
+            this.label4.Location = new System.Drawing.Point(479, 17);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(77, 37);
+            this.label4.TabIndex = 103;
+            this.label4.Text = "รายการ";
+            // 
+            // CBStatus
+            // 
+            this.CBStatus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBStatus.Enabled = false;
+            this.CBStatus.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CBStatus.FormattingEnabled = true;
+            this.CBStatus.Items.AddRange(new object[] {
+            "ชำระเสร็จสิ้น",
+            "ค้างชำระ"});
+            this.CBStatus.Location = new System.Drawing.Point(574, 16);
+            this.CBStatus.Name = "CBStatus";
+            this.CBStatus.Size = new System.Drawing.Size(130, 39);
+            this.CBStatus.TabIndex = 102;
+            this.CBStatus.SelectedIndexChanged += new System.EventHandler(this.CBStatus_SelectedIndexChanged);
+            // 
+            // CBMonth
+            // 
+            this.CBMonth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBMonth.Enabled = false;
+            this.CBMonth.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CBMonth.FormattingEnabled = true;
+            this.CBMonth.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12"});
+            this.CBMonth.Location = new System.Drawing.Point(325, 16);
+            this.CBMonth.Name = "CBMonth";
+            this.CBMonth.Size = new System.Drawing.Size(130, 39);
+            this.CBMonth.TabIndex = 101;
+            this.CBMonth.SelectedIndexChanged += new System.EventHandler(this.CBMonth_SelectedIndexChanged);
+            // 
+            // LB5Mo
+            // 
+            this.LB5Mo.AutoSize = true;
+            this.LB5Mo.BackColor = System.Drawing.Color.White;
+            this.LB5Mo.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LB5Mo.ForeColor = System.Drawing.Color.Black;
+            this.LB5Mo.Location = new System.Drawing.Point(231, 17);
+            this.LB5Mo.Name = "LB5Mo";
+            this.LB5Mo.Size = new System.Drawing.Size(57, 37);
+            this.LB5Mo.TabIndex = 100;
+            this.LB5Mo.Text = "เดือน";
+            // 
+            // automatic
+            // 
+            this.automatic.BackColor = System.Drawing.Color.White;
+            this.automatic.Enabled = false;
+            this.automatic.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.automatic.Location = new System.Drawing.Point(761, 12);
+            this.automatic.Name = "automatic";
+            this.automatic.Size = new System.Drawing.Size(98, 45);
+            this.automatic.TabIndex = 86;
+            this.automatic.Text = "อัตโนมัติ";
+            this.automatic.UseVisualStyleBackColor = false;
+            this.automatic.Click += new System.EventHandler(this.automatic_Click);
+            // 
+            // LB5Ye
+            // 
+            this.LB5Ye.AutoSize = true;
+            this.LB5Ye.BackColor = System.Drawing.Color.White;
+            this.LB5Ye.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LB5Ye.ForeColor = System.Drawing.Color.Black;
+            this.LB5Ye.Location = new System.Drawing.Point(9, 17);
+            this.LB5Ye.Name = "LB5Ye";
+            this.LB5Ye.Size = new System.Drawing.Size(29, 37);
+            this.LB5Ye.TabIndex = 99;
+            this.LB5Ye.Text = "ปี";
+            // 
+            // CByear
+            // 
+            this.CByear.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CByear.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CByear.FormattingEnabled = true;
+            this.CByear.Location = new System.Drawing.Point(90, 16);
+            this.CByear.Name = "CByear";
+            this.CByear.Size = new System.Drawing.Size(103, 39);
+            this.CByear.TabIndex = 84;
+            this.CByear.SelectedIndexChanged += new System.EventHandler(this.CByear_SelectedIndexChanged);
+            // 
             // dataGridView3
             // 
-            this.dataGridView3.AllowDrop = true;
+            this.dataGridView3.AllowUserToAddRows = false;
             this.dataGridView3.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView3.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView3.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView3.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
@@ -195,56 +333,45 @@ namespace example.GOODS
             this.dataGridViewTextBoxColumn3,
             this.dataGridViewTextBoxColumn4});
             this.dataGridView3.GridColor = System.Drawing.SystemColors.ControlLightLight;
-            this.dataGridView3.Location = new System.Drawing.Point(8, 88);
+            this.dataGridView3.Location = new System.Drawing.Point(8, 166);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.RowHeadersVisible = false;
             this.dataGridView3.RowHeadersWidth = 51;
             this.dataGridView3.RowTemplate.Height = 24;
-            this.dataGridView3.Size = new System.Drawing.Size(1133, 554);
+            this.dataGridView3.Size = new System.Drawing.Size(1133, 540);
             this.dataGridView3.TabIndex = 66;
             // 
             // dataGridViewTextBoxColumn1
             // 
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn1.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridViewTextBoxColumn1.HeaderText = "รหัส";
             this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             // 
             // dataGridViewTextBoxColumn2
             // 
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridViewTextBoxColumn2.HeaderText = "ชื่อ";
             this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             // 
             // dataGridViewTextBoxColumn3
             // 
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn3.DefaultCellStyle = dataGridViewCellStyle4;
             this.dataGridViewTextBoxColumn3.HeaderText = "รายการ";
             this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
             // 
             // dataGridViewTextBoxColumn4
             // 
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn4.DefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridViewTextBoxColumn4.HeaderText = "ยอดเงิน";
             this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            // 
-            // button6
-            // 
-            this.button6.BackColor = System.Drawing.Color.White;
-            this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.Location = new System.Drawing.Point(970, 648);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(171, 56);
-            this.button6.TabIndex = 96;
-            this.button6.Text = "จ่ายยอด";
-            this.button6.UseVisualStyleBackColor = false;
             // 
             // Home
             // 
@@ -257,10 +384,13 @@ namespace example.GOODS
             this.Name = "Home";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Workformhome";
+            this.Load += new System.EventHandler(this.Home_Load);
             this.SizeChanged += new System.EventHandler(this.Form2_SizeChanged);
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
             this.P1.ResumeLayout(false);
+            this.panel16.ResumeLayout(false);
+            this.panel16.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.ResumeLayout(false);
 
@@ -277,12 +407,20 @@ namespace example.GOODS
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Panel P1;
-        private System.Windows.Forms.Button button6;
         private System.Windows.Forms.DataGridView dataGridView3;
         private System.Windows.Forms.Button BSearchTeacher;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.Panel panel16;
+        private System.Windows.Forms.ComboBox CBMonth;
+        private System.Windows.Forms.Label LB5Mo;
+        private System.Windows.Forms.Label LB5Ye;
+        private System.Windows.Forms.ComboBox CByear;
+        private System.Windows.Forms.Button automatic;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.ComboBox CBStatus;
+        private System.Windows.Forms.Button BTClean;
     }
 }
