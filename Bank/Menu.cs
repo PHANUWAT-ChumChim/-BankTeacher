@@ -16,10 +16,13 @@ namespace example.GOODS
         public static int startAmountMax;
         public static int DateAmountChange;
         public static string FontSize;
-        static DataTable dt;
+        public static String[] Date;
+        public static String Monthname;
+        DataTable dt;
         /// <summary> 
         /// SQLDafault 
         /// <para>[0]Check Setting INPUT: - </para> 
+        /// <para>[1]Select Date Input - </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -27,11 +30,18 @@ namespace example.GOODS
              "SELECT DateAmountChange , StartAmountMin , StartAmountMax \r\n" +
              "FROM EmployeeBank.dbo.tblSettingAmount;"
           ,
+             //[1]Select Date InWput :  -
+             "SELECT CAST(CURRENT_TIMESTAMP as DATE);"
+             ,
 
          };
         public Menu()
         {
             InitializeComponent();
+            Date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]).Rows[0][0].ToString().Split('-');
+            String[] Month = { "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" };
+            example.GOODS.Menu.Monthname = Month[Convert.ToInt32(example.GOODS.Menu.Date[1]) - 1];
+
             Class.UserInfo.SetTeacherInformation("T53036", "John YouSuck", "1");
 
                 dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]);

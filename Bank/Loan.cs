@@ -33,12 +33,13 @@ namespace example.Bank
         //----------------------- End code -------------------- ////////
 
         /// <summary> 
-        /// SQLDafaultLoan 
+        /// SQLDafault
         /// <para>[0] SELECT TeacherName Data INPUT:{TeacherNo} , {TeacherNoNotLike} </para>
         /// <para>[1] SELECT Guarantor Credit Limit INPUT:T{TeacherNo} , {TeacherNoNotLike} </para>
         /// <para>[2] SELECT Date Data </para>
         /// <para>[3] INSERT Loan and Get LoanNo INPUT: {TeacherNoAdd}, {TeacherNo}, {MonthPay}, {YearPay}, {LoanAmount}, {PayNo}, {InterestRate}</para>
         /// <para>[4] INSERT Guarantor INPUT: {LoanNo},{TeacherNo},{Amount},{RemainsAmount}</para>
+        /// <para>[5] Detail Loan Print  INPUT: TeacherNo</para>
         /// </summary>
         private String[] SQLDefault = new String[]
         {
@@ -84,10 +85,24 @@ namespace example.Bank
             "WHERE LoanNo = @LoanNo;\r\n"
             ,
 
-            //INSERT Guarantor INPUT: {LoanNo},{TeacherNo},{Amount},{RemainsAmount}
+            //[4]INSERT Guarantor INPUT: {LoanNo},{TeacherNo},{Amount},{RemainsAmount}
             "INSERT INTO EmployeeBank.dbo.tblGuarantor (LoanNo,TeacherNo,Amount,RemainsAmount)\r\n" +
             "VALUES ('{LoanNo}','{TeacherNo}','{Amount}','{RemainsAmount}');\r\n"
             ,
+            //[5] Detail Loan Print  INPUT: TeacherNo
+            "SELECT a.TeacherNo,CAST(d.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS Name,LoanAmount , \r\n " +
+            "CAST(cNo + ' หมู่ ' + cMu + 'ซอย  ' + cSoi + ' ถนน' + cRoad + ' ตำบล' +  TumBonName + ' อำเภอ'  + AmphurName + ' จังหวัด ' + JangWatLongName + ' รหัสไปรสณี ' + ZipCode as NVARCHAR(255)) AS ADDRESS, \r\n " +
+            "MonthPay , YearPay , PayNo , InterestRate \r\n " +
+            "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
+            "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo \r\n " +
+            "LEFT JOIN Personal.dbo.tblTeacherHis as c ON b.TeacherNo = c.TeacherNo \r\n " +
+            "LEFT JOIN BaseData.dbo.tblPrefix as d ON c.PrefixNo = d.PrefixNo \r\n " +
+            "LEFT JOIN BaseData.dbo.tblTumBon as e on c.cTumBonNo = e.TumBonNo \r\n " +
+            "LEFT JOIN BaseData.dbo.tblAmphur as f on c.cAmPhurNo = f.AmphurNo \r\n " +
+            "LEFT JOIN BaseData.dbo.tblJangWat as g on c.cJangWatNo = g.JangWatNo \r\n " +
+            "WHERE a.TeacherNo = '{TeacherNo}' "
+          ,
+
         };
 
         //----------------------- PullSQLDate -------------------- ////////
@@ -95,11 +110,15 @@ namespace example.Bank
         int Month;
         private void Loan_Load(object sender, EventArgs e)
         {
+
+            int Year = Convert.ToInt32(example.GOODS.Menu.Date[0]);
+
             DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]);
             DataTable dt = ds.Tables[0];
             DateTime = DateTime.Parse(dt.Rows[0][0].ToString());
             int Year = int.Parse(DateTime.ToString("yyyy"));
             Month = int.Parse(DateTime.ToString("MM"));
+
             for (int Num = 0; Num < 5; Num++)
             {
                 CBPayYear.Items.Add(Year);
@@ -560,7 +579,7 @@ namespace example.Bank
         // กระดาษปริ้น
         private void printDocument1_PrintPage_1(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.Print.PrintPreviewDialog.PrintLoan(e);
+            Class.Print.PrintPreviewDialog.PrintLoan(e,SQLDefault[5].Replace("{TeacherNo}",TBTeacherNo.Text),example.GOODS.Menu.Date[2], example.GOODS.Menu.Monthname, (Convert.ToInt32(example.GOODS.Menu.Date[0])+543).ToString(),TBTeacherNo.Text);
             //e.HasMorePages = true;
             //Class.Print.PrintPreviewDialog.ExamplePrint(sender,e);
 
