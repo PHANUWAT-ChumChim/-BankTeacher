@@ -25,11 +25,13 @@ namespace example.GOODS
         /// SQLDafault 
         /// <para>[0] SELECT MEMBER INPUT: {TeacherNo} </para> 
         /// <para>[1] SELECT TIME INPUT : - </para>
-        /// <para>[2] INSERT Bill and BillDetail INPUT: {TeacherAddBy} {TeacherNo} {TypeNo} {LoanNo} {Amount} {Mount} {Year}</para>
+        /// <para>[2] INSERT Bill and BillDetail INPUT: {TeacherAddBy} {TeacherNo} {TypeNo} {LoanNo} {Amount} {Mount} {Year} {Payment}</para>
         /// <para>[3] UPDATE SavingAmount INPUT: {TeacherNo} {Amount}</para>
         /// <para>[4] UPDATE REMAIN INPUT: {TeacherNo} {Amount}</para>
         /// <para>[5] AmountpayANDAmountLoanINMonth INPUT: {TeacherNo}</para>
         /// <para>[6] SELECT Detail Member INPUT: {TeacherNo}</para>
+        ///<para>[7] SELECT Type pay (2Table) INPUT : {Month} , {Year} , {TeacherNo} {DateSet} </para>
+        ///<para>[8] Check BillDetailPayment INPUT: - </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -44,7 +46,7 @@ namespace example.GOODS
           //[1] SELECT TIME INPUT : -
           "SELECT CONVERT (DATE , CURRENT_TIMESTAMP); "
              ,
-          //[2] INSERT Bill and BillDetail INPUT: {TeacherAddBy} {TeacherNo} {TypeNo} {LoanNo} {Amount} {Mount} {Year}
+          //[2] INSERT Bill and BillDetail INPUT: {TeacherAddBy} {TeacherNo} {TypeNo} {LoanNo} {Amount} {Mount} {Year} {Payment}
           "DECLARE @BillNo INT; \r\n " +
           "DECLARE @TeacherNo VARCHAR(20); \r\n " +
           "DECLARE @TeacherNoAddBy VARCHAR (20); \r\n " +
@@ -57,8 +59,8 @@ namespace example.GOODS
           " \r\n " +
           "SELECT @BillNo = SCOPE_IDENTITY(); \r\n " +
           " \r\n " +
-          "INSERT INTO EmployeeBank.dbo.tblBillDetail (BillNo,TypeNo,LoanNo,Amount,Mount,Year) \r\n " +
-          "VALUES (@BillNo,'{TypeNo}','{LoanNo}','{Amount}','{Mount}','{Year}'); "
+          "INSERT INTO EmployeeBank.dbo.tblBillDetail (BillNo,TypeNo,LoanNo,Amount,Mount,Year,BillDetailPaymentNo) \r\n " +
+          "VALUES (@BillNo,'{TypeNo}','{LoanNo}','{Amount}','{Mount}','{Year}','{Payment}'); "
              ,
          //[3] UPDATE SavingAmount INPUT: {TeacherNo} {Amount}
           "DECLARE @Saving INT; \r\n " +
@@ -103,7 +105,45 @@ namespace example.GOODS
           " WHERE a.TeacherNo LIKE 'T{TeacherNo}%' and a.MemberStatusNo = 1   \r\n " +
           " ORDER BY a.TeacherNo;  "
           ,
+          //[7] SELECT Type pay (2Table) INPUT : {Month} , {Year} , {TeacherNo} {DateSet}
+          "SELECT a.TeacherNo, StartAmount , f.TypeName  \r\n " +
+          " FROM EmployeeBank.dbo.tblMember as a   \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblBill as b on a.TeacherNo = b.TeacherNo  \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblBillDetail as c on b.BillNo = c.BillNo  \r\n " +
+          " LEFT JOIN Personal.dbo.tblTeacherHis as d on a.TeacherNo = d.TeacherNo   \r\n " +
+          " LEFT JOIN BaseData.dbo.tblPrefix as e on d.PrefixNo = e.PrefixNo   \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblBillDetailType as f on c.TypeNo = f.TypeNo  \r\n " +
+          " WHERE a.TeacherNo NOT IN   \r\n " +
+          " (SELECT aa.TeacherNo FROM EmployeeBank.dbo.tblBill as aa   \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblBillDetail as bb on aa.BillNo = bb.BillNo   \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblLoan as cc on aa.TeacherNo = cc.TeacherNo \r\n " +
+          " WHERE bb.Mount = {Month} and bb.Year = {Year} and bb.TypeNo = 1 ) \r\n " +
+          " and a.TeacherNo LIKE '{TeacherNo}' and MemberStatusNo = 1 and c.TypeNo = 1 and DATEADD(YYYY,0,'{DateSet}') >= a.DateAdd \r\n " +
+          " GROUP BY a.TeacherNo,f.TypeName, StartAmount   \r\n " +
+          " \r\n " +
+          " \r\n " +
+          " SELECT a.TeacherNo, CONVERT(float , (CONVERT(float , LoanAmount) / CONVERT(float , PayNo) + CONVERT(float,LoanAmount) * (InterestRate / 100)) )  , f.TypeName  \r\n " +
+          " FROM EmployeeBank.dbo.tblMember as a   \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblBill as b on a.TeacherNo = b.TeacherNo  \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblBillDetail as c on b.BillNo = c.BillNo  \r\n " +
+          " LEFT JOIN Personal.dbo.tblTeacherHis as d on a.TeacherNo = d.TeacherNo   \r\n " +
+          " LEFT JOIN BaseData.dbo.tblPrefix as e on d.PrefixNo = e.PrefixNo   \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblBillDetailType as f on c.TypeNo = f.TypeNo  \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblLoan as g on a.TeacherNo = g.TeacherNo  \r\n " +
+          " WHERE a.TeacherNo NOT IN   \r\n " +
+          " (SELECT aa.TeacherNo FROM EmployeeBank.dbo.tblBill as aa   \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblBillDetail as bb on aa.BillNo = bb.BillNo   \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblLoan as cc on aa.TeacherNo = cc.TeacherNo \r\n " +
+          " WHERE bb.Mount = {Month} and bb.Year = {Year} and bb.TypeNo = 2 ) \r\n " +
+          " and a.TeacherNo LIKE '{TeacherNo}' and MemberStatusNo = 1 and c.TypeNo = 2 and DATEADD(YYYY,0,'{DateSet}') >= a.DateAdd\r\n " +
+          " GROUP BY a.TeacherNo,f.TypeName, StartAmount ,CONVERT(float , (CONVERT(float , LoanAmount) / CONVERT(float , PayNo) + CONVERT(float,LoanAmount) * (InterestRate / 100)) ) "
 
+          ,
+          //[8] Check BillDetailPayment INPUT: -  
+          "SELECT Name , BillDetailpaymentNo  \r\n " +
+          "FROM EmployeeBank.dbo.tblBillDetailPayment \r\n " +
+          "WHERE Status = 1 "
+          ,
 
          };
         public pay(int TabIndex)
@@ -140,16 +180,16 @@ namespace example.GOODS
 
         //----------------------- PullSQL -------------------- ////////
         // Comment! Pull SQL Member & CheckTBTeacherNo
-       
+
         // Comment! Pull SQL Member & CheckTBTeacherNo
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
             //try
             //{
-                Bank.Search IN = new Bank.Search(SQLDefault[0].Replace("{TeacherNo}",""));
-                IN.ShowDialog();
-                TBTeacherNo.Text = Bank.Search.Return[0];
-                TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+            Bank.Search IN = new Bank.Search(SQLDefault[0].Replace("{TeacherNo}", ""));
+            IN.ShowDialog();
+            TBTeacherNo.Text = Bank.Search.Return[0];
+            TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
             //}
             //catch (Exception x)
             //{
@@ -161,6 +201,8 @@ namespace example.GOODS
             dataGridView1.Rows.Clear();
             TBStartAmountShare.Clear();
             CBStatus.SelectedIndex = -1;
+            CByeartap1.SelectedIndex = -1;
+            CBMonth.SelectedIndex = -1;
         }
         // บันทึกรายการเเล้ว ส่งขึ้นไปบนฐานข้อมูล
         private void BTsave_Click(object sender, EventArgs e)
@@ -177,32 +219,30 @@ namespace example.GOODS
                     for (int x = 0; x < dataGridView1.Rows.Count; x++)
                     {
                         string[] MountandYear = dataGridView1.Rows[x].Cells[0].Value.ToString().Replace(" ", "").Split('/');
-                        if (dataGridView1.Rows[x].Cells[1].Value.ToString() == "สะสม")
+                        if (dataGridView1.Rows[x].Cells[1].Value.ToString().Contains("สะสม"))
                         {
                             DataTable LoanID = Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("{TeacherNo}", TBTeacherNo.Text));
                             if (LoanID.Rows.Count == 1)
                             {
                                 LoanNo = LoanID.Rows[0][0].ToString();
                             }
-                            else
-                            {
-                                MessageBox.Show("ไม่พบผู้ใช้", "การแจ้งเตือนการชำระ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            }
                             TypeNo = 1;
                         }
-                        else if (dataGridView1.Rows[x].Cells[1].Value.ToString() == "กู้")
+                        else if (dataGridView1.Rows[x].Cells[1].Value.ToString().Contains("หนี้"))
                         {
                             TypeNo = 2;
                         }
                         try
                         {
+                            example.Class.ComboBoxPayment Payment = (CBB4Oppay.SelectedItem as example.Class.ComboBoxPayment);
                             Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{TeacherNo}", TBTeacherNo.Text)
                                 .Replace("{TeacherAddBy}", Class.UserInfo.TeacherName)
                                 .Replace("{TypeNo}", TypeNo.ToString())
                                 .Replace("{LoanNo}", LoanNo)
                                 .Replace("{Amount}", dataGridView1.Rows[x].Cells[2].Value.ToString())
                                 .Replace("{Mount}", MountandYear[1])
-                                .Replace("{Year}", MountandYear[0]));
+                                .Replace("{Year}", MountandYear[0])
+                                .Replace("{Payment}", Payment.No));
                             if (TypeNo == 1)
                             {
                                 Class.SQLConnection.InputSQLMSSQL(SQLDefault[3].Replace("{TeacherNo}", TBTeacherNo.Text)
@@ -213,20 +253,27 @@ namespace example.GOODS
                                 Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{TeacherNo}", TBTeacherNo.Text)
                                      .Replace("{Amount}", dataGridView1.Rows[x].Cells[2].Value.ToString()));
                             }
-                            MessageBox.Show("การชำระเสร็จสิ้น", "การเเจ้งเตือนการชำระ", MessageBoxButtons.OK, MessageBoxIcon.Question);
-
+                            MessageBox.Show("การชำระเสร็จสิ้น", "การเเจ้งเตือนการชำระ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            CBMonth.SelectedIndex = -1;
+                            CBStatus.SelectedIndex = -1;
+                            CBB4Oppay.SelectedIndex = -1;
+                            CByeartap1.SelectedIndex = -1;
+                            CBB4Oppay.Enabled = false;
+                            CBStatus.Enabled = false;
+                            CBMonth.Enabled = false;
+                            dataGridView1.Rows.Clear();
+                            label5.Text = "0";
                         }
                         catch
                         {
-                            MessageBox.Show("การชำระล้มเหลว", "การเเจ้งเตือนการชำระ", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                            MessageBox.Show("การชำระล้มเหลว", "การเเจ้งเตือนการชำระ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
-                    MessageBox.Show("การชำระเสร็จสิ้น", "การเเจ้งเตือนการชำระ", MessageBoxButtons.OK, MessageBoxIcon.Question);
                 }
                 else if (dialogResult == DialogResult.No)
                 {
                     //do something else/
-                    MessageBox.Show("การชำระล้มเหลว", "การเเจ้งเตือนการชำระ", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                    MessageBox.Show("การชำระล้มเหลว", "การเเจ้งเตือนการชำระ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
             }
@@ -250,8 +297,10 @@ namespace example.GOODS
             else
             {
                 CBMonth.Enabled = false;
-            }
 
+            }
+            CBStatus.SelectedIndex = -1;
+            TBStartAmountShare.Text = "";
         }
         // if message in textMonth nothing will not Open next
         // ถ้า ไม่มีข้อความ ใน กล่องเดือน จะไม่เปิดใช่งานกล่อง ถัดไป
@@ -259,11 +308,55 @@ namespace example.GOODS
         {
             if (CBMonth.SelectedIndex != -1)
             {
+                CBStatus.Items.Clear();
+                CBStatus.Enabled = true;
+                TBStartAmountShare.Text = "0";
+                BTAdd.Enabled = false;
+                int Same = 1;
+                ComboBox[] cb = new ComboBox[] { CBStatus };
+                DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[7]
+                    .Replace("{Month}", CBMonth.Text)
+                    .Replace("{Year}", CByeartap1.Text)
+                    .Replace("{TeacherNo}", TBTeacherNo.Text)
+                    .Replace("{DateSet}", (Convert.ToDateTime(CByeartap1.Text + "-" + CBMonth.Text + "-" + 1)).ToString("yyyy-MM-dd")));
+                for (int a = 0; a < ds.Tables[0].Rows.Count; a++)
+                {
+                    for (int x = 0; x < cb.Length; x++)
+                    {
+                        cb[x].Items.Add(new example.Class.ComboBoxPay(ds.Tables[0].Rows[a][2].ToString(),
+                        ds.Tables[0].Rows[a][1].ToString(),
+                        ds.Tables[0].Rows[a][0].ToString()));
+
+                    }
+                }
+                for (int a = 0; a < ds.Tables[1].Rows.Count; a++)
+                {
+                    for (int x = 0; x < cb.Length; x++)
+                    {
+                        float.TryParse(ds.Tables[1].Rows[a][1].ToString(), out float Balance);
+                        if (Balance >= Convert.ToInt32(Balance) + 0.5)
+                        {
+                            Balance++;
+                        }
+                        else
+                        {
+                            Balance = Convert.ToInt32(Balance);
+                        }
+                        cb[x].Items.Add(new example.Class.ComboBoxPay(ds.Tables[1].Rows[a][2].ToString() + " " + Same,
+                        Balance.ToString(),
+                        ds.Tables[1].Rows[a][0].ToString()));
+                        Same++;
+                    }
+                }
+
+
                 button4.Enabled = true;
+
             }
             else
             {
-                button4.Enabled = false;
+                CBStatus.Enabled = false;
+                CBStatus.SelectedIndex = -1;
             }
         }
         // if message in Text nothing will not Open next
@@ -288,22 +381,11 @@ namespace example.GOODS
         // ถ้า ไม่มีข้อความ ใน กล่อง จะไม่เปิดใช่งานกล่อง ถัดไป
         private void CBB3_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (CBStatus.SelectedIndex != -1 && TBTeacherNo.Text.Length  == 6)
+            example.Class.ComboBoxPay Status = (CBStatus.SelectedItem as example.Class.ComboBoxPay);
+            if (CBStatus.SelectedIndex != -1 && TBTeacherNo.Text.Length == 6)
             {
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text));
-                if (dt.Rows.Count != 0)
-                {
-                    if (CBStatus.SelectedIndex == 0)
-                    {
-                        TBStartAmountShare.Text = dt.Rows[0][1].ToString();
-                    }
-                    else
-                    {
-                        TBStartAmountShare.Text = dt.Rows[0][3].ToString();
-                    }
 
-
-                }
+                TBStartAmountShare.Text = Status.Balance;
                 if (TBStartAmountShare.Text == "")
                     TBStartAmountShare.Text = "0";
                 BTAdd.Enabled = true;
@@ -313,7 +395,7 @@ namespace example.GOODS
 
                 TBStartAmountShare.Text = "";
                 CBStatus.Text = "";
-                
+
                 BTAdd.Enabled = false;
             }
         }
@@ -328,13 +410,13 @@ namespace example.GOODS
             if (CBB4Oppay.SelectedIndex != -1)
             {
                 BTsave.Enabled = true;
-                
+
             }
             else { BTsave.Enabled = false; }
         }
         //----------------------- End code -------------------- ////////
 
-     
+
 
         //------------------------- ClickDelete&Empty --------- //
         // Comment!
@@ -343,6 +425,8 @@ namespace example.GOODS
             CByeartap1.SelectedIndex = -1;
             CBMonth.SelectedIndex = -1;
             CBStatus.SelectedIndex = -1;
+            CBStatus.Enabled = false;
+            BTAdd.Enabled = false;
             TBStartAmountShare.Text = string.Empty;
             dataGridView1.Rows.Clear();
             label5.Text = "0";
@@ -391,21 +475,45 @@ namespace example.GOODS
         {
             if (dataGridView1.Rows.ToString() != "")
             {
-                CBB4Oppay.Enabled = true;
-                if (TBStartAmountShare.Text != "")
+                if (dataGridView1.Rows.Count == 0)
                 {
-                    x += int.Parse(TBStartAmountShare.Text);
-                    sum = x;
-                    label5.Text = sum.ToString();
+                    CBB4Oppay.Enabled = true;
+                    if (TBStartAmountShare.Text != "")
+                    {
+                        x += int.Parse(TBStartAmountShare.Text);
+                        sum = x;
+                        label5.Text = sum.ToString();
+                    }
+                    else
+                    {
+                        TBStartAmountShare.Text = "0";
+                    }
+                    String Time = CByeartap1.Text + "/" + CBMonth.Text;
+                    dataGridView1.Rows.Add(Time, CBStatus.Text, TBStartAmountShare.Text);
                 }
-                else { TBStartAmountShare.Text = "0"; }
+                else
+                {
+                    int TicketName = 0;
+                    for (int x = 0; x < dataGridView1.Rows.Count; x++)
+                    {
+                        if (CBStatus.Text == dataGridView1.Rows[x].Cells[1].Value.ToString())
+                        {
+                            TicketName = 1;
+                        }
+
+                    }
+                    if (TicketName == 0)
+                    {
+                        String Time = CByeartap1.Text + "/" + CBMonth.Text;
+                        dataGridView1.Rows.Add(Time, CBStatus.Text, TBStartAmountShare.Text);
+                    }
+                }
+
             }
-            String Time = Convert.ToDateTime(Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]).Rows[0][0]).ToString("yyyy/MM");
-            dataGridView1.Rows.Add(Time, CBStatus.Text, TBStartAmountShare.Text);
 
 
             //dataGridView1.Rows.Add(DateTime.Today.Date.ToString(), CBStatus.Text, TBStartAmountShare.Text);
-           
+
 
 
             //DataGridViewRow row = (DataGridViewRow)dataGridView1.Rows[];
@@ -417,7 +525,7 @@ namespace example.GOODS
 
 
 
-     
+
 
 
 
@@ -454,7 +562,7 @@ namespace example.GOODS
 
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
                 if (TBTeacherNo.Text.Length == 6)
                 {
@@ -469,16 +577,19 @@ namespace example.GOODS
                         TBStartAmount2.Text = dt.Rows[0][6].ToString();
                         TBstatus.Text = dt.Rows[0][7].ToString();
                         Check = 1;
+                        CBStatus.SelectedIndex = -1;
+                        CByeartap1.Enabled = true;
                     }
-                    CBStatus.Enabled = true;
+
                 }
 
             }
-            else if(e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
+            else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
             {
-                if(Check == 1)
+                if (Check == 1)
                 {
-                    sum = 0; x = 0;
+                    sum = 0;
+                    x = 0;
                     label5.Text = sum.ToString();
                     dataGridView1.Rows.Clear();
                     TBStartAmountShare.Text = "";
@@ -493,6 +604,51 @@ namespace example.GOODS
 
         private void button4_Click(object sender, EventArgs e)
         {
+            label5.Text = "0";
+            dataGridView1.Rows.Clear();
+            DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[7]
+                .Replace("{Month}", CBMonth.Text)
+                .Replace("{Year}", CByeartap1.Text)
+                .Replace("{TeacherNo}", TBTeacherNo.Text)
+                .Replace("{DateSet}", (Convert.ToDateTime(CByeartap1.Text + "-" + CBMonth.Text + "-" + 1)).ToString("yyyy-MM-dd")));
+            if (ds.Tables[0].Rows.Count != 0 || ds.Tables[1].Rows.Count != 0)
+            {
+                String Time = CByeartap1.Text + "/" + CBMonth.Text;
+                int Same = 1;
+                for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
+                {
+                    if (dataGridView1.Rows.ToString() != "")
+                    {
+                        dataGridView1.Rows.Add(Time, ds.Tables[0].Rows[x][2], ds.Tables[0].Rows[x][1]);
+                        label5.Text = (Convert.ToInt32(label5.Text) + int.Parse(ds.Tables[0].Rows[x][1].ToString())).ToString();
+                    }
+
+                }
+                for (int x = 0; x < ds.Tables[1].Rows.Count; x++)
+                {
+                    if (dataGridView1.Rows.ToString() != "")
+                    {
+                        float.TryParse(ds.Tables[1].Rows[x][1].ToString(), out float Balance);
+                        if (Balance >= Convert.ToInt32(Balance) + 0.5)
+                        {
+                            Balance++;
+                        }
+                        else
+                        {
+                            Balance = Convert.ToInt32(Balance);
+                        }
+                        dataGridView1.Rows.Add(Time, ds.Tables[1].Rows[x][2] + " " + Same, Balance);
+                        Same++;
+                        label5.Text = (Convert.ToInt32(label5.Text) + Balance).ToString();
+                    }
+                }
+                sum = Convert.ToInt32(label5.Text);
+                CBB4Oppay.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show("ไม่พบรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
 
         }
 
@@ -500,15 +656,19 @@ namespace example.GOODS
         {
             DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]);
             int Year = Convert.ToInt32((Convert.ToDateTime(dt.Rows[0][0])).ToString("yyyy"));
-            for(int x = 0; x < 4; x++)
+            for (int x = 0; x < 4; x++)
             {
                 CByeartap1.Items.Add(Year);
                 CByeartap2.Items.Add(Year);
                 CByeartap3.Items.Add(Year);
                 Year--;
             }
-
-
+            ComboBox[] cb = new ComboBox[] { CBB4Oppay };
+            DataTable dtPayment = Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]);
+            for (int a = 0; a < dtPayment.Rows.Count; a++)
+                for (int x = 0; x < cb.Length; x++)
+                    cb[x].Items.Add(new example.Class.ComboBoxPayment(dtPayment.Rows[a][0].ToString(),
+                        dtPayment.Rows[a][1].ToString()));
         }
 
 
