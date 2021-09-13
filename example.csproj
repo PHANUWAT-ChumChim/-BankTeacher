@@ -98,12 +98,6 @@
     <Compile Include="Bank\Loan.Designer.cs">
       <DependentUpon>Loan.cs</DependentUpon>
     </Compile>
-    <Compile Include="Bank\null.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Bank\null.Designer.cs">
-      <DependentUpon>null.cs</DependentUpon>
-    </Compile>
     <Compile Include="Bank\ReportCancelMember.cs">
       <SubType>Form</SubType>
     </Compile>

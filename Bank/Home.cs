@@ -139,8 +139,7 @@ namespace example.GOODS
         private void Home_Load(object sender, EventArgs e)
         {
 
-            DataTable date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]);
-            int Year = Convert.ToInt32((Convert.ToDateTime(date.Rows[0][0])).ToString("yyyy"));
+            int Year = Convert.ToInt32(example.GOODS.Menu.Date[0]);
             int Y = Year;
             for (int x = 0; x < 4; x++)
             {
@@ -150,7 +149,7 @@ namespace example.GOODS
             DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
                 .Replace("{TeacherNo}","")
                 .Replace("{CByear}",Y.ToString())
-                .Replace("{CBMonth}", (Convert.ToDateTime(date.Rows[0][0])).ToString("MM")));
+                .Replace("{CBMonth}", example.GOODS.Menu.Date[1]));
             for (int num = 0; num < dt.Rows.Count; num++)
             {
                 dataGridView3.Rows.Add(dt.Rows[num][0], dt.Rows[num][1], "สะสม", dt.Rows[num][3]);
