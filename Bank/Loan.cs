@@ -112,7 +112,8 @@ namespace example.Bank
         {
 
             int Year = Convert.ToInt32(example.GOODS.Menu.Date[0]);
-            Month = Convert.ToInt32(example.GOODS.Menu.Date[1]);
+            int Month = Convert.ToInt32(example.GOODS.Menu.Date[1]);
+
 
             for (int Num = 0; Num < 5; Num++)
             {
@@ -559,7 +560,7 @@ namespace example.Bank
 
         //----------------------- Printf -------------------- ////////
         // พิมพ์เอกสารกู้
-        private void BPrintLoanDoc_Click_1(object sender, EventArgs e)
+        private void BPrintLoanDoc_Click_2(object sender, EventArgs e)
         {
             if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
             {
@@ -567,9 +568,25 @@ namespace example.Bank
             }
         }
         // อัพเอกสารส่ง เซิร์ฟเวอร์
-        private void BLoanDocUpload_Click(object sender, EventArgs e)
+        private void BTOpenfile_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("รอก่อนนะยังใช่งานไม่ได้งับ", "ตัวส่ง", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            Image File;
+            String imgeLocation = "";
+            try
+            {
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Filter = "pdf files(*.pdf)|*.pdf";
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    imgeLocation = dialog.FileName;
+                    File = Image.FromFile(dialog.FileName);
+                    //Class.ProtocolSharing.ConnectSMB.SmbFileContainer.PathFile = File;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         // กระดาษปริ้น
         private void printDocument1_PrintPage_1(object sender, System.Drawing.Printing.PrintPageEventArgs e)

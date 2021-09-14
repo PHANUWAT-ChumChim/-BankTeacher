@@ -310,7 +310,7 @@ namespace example.Bank
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(264, 120);
+            this.label6.Location = new System.Drawing.Point(264, 116);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(136, 37);
             this.label6.TabIndex = 53;
@@ -360,7 +360,7 @@ namespace example.Bank
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(149, 83);
+            this.label5.Location = new System.Drawing.Point(149, 56);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(251, 37);
