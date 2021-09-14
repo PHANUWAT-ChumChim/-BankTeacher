@@ -562,7 +562,7 @@ namespace example.Bank
         {
             Class.Print.PrintPreviewDialog.PrintLoan(e);
             //e.HasMorePages = true;
-            //Class.Print.PrintPreviewDialog.ExamplePrint(sender,e);
+            //Class.Print.PrintPreviewDialog.ExamplePrint(sender, e);
 
 
         }

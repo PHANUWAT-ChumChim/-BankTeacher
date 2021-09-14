@@ -13,7 +13,6 @@ namespace example.GOODS
     {
         public static Font F = new Font("TH Sarabun New",16,FontStyle.Regular);
         int Check = 0;
-
         /// <summary> 
         /// SQLDafault 
         /// <para>[0] SELECT Teachar IN Mont INPUT: {TeacherNo} </para> 
@@ -70,7 +69,6 @@ namespace example.GOODS
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as f ON e.TypeNo = f.TypeNo \r\n" +
           "WHERE a.TeacherNo LIKE 'T{TeacherNo}%' AND e.Mount = {CBMonth} AND e.Year = {CByear} \r\n" +
           "ORDER BY a.TeacherNo;"
-
         };
 
         public Home()
@@ -82,10 +80,6 @@ namespace example.GOODS
         private void Form2_SizeChanged(object sender, EventArgs e)
         {
             Class.FromSettingMedtod.ChangeSizePanal(this, P1);
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        { 
         }
 
         private void BSearchTeacher_Click(object sender, EventArgs e)
