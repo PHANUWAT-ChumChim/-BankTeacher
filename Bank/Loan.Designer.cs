@@ -88,12 +88,11 @@ namespace example.Bank
             this.panel9 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
+            this.BPrintLoanDoc = new System.Windows.Forms.Button();
             this.BTdeletefile = new System.Windows.Forms.Button();
             this.BTOpenfile = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
-            this.BLoanDocUpload = new System.Windows.Forms.Button();
-            this.BPrintLoanDoc = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
             this.TBSavingAmount = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -654,12 +653,11 @@ namespace example.Bank
             this.panel4.BackColor = System.Drawing.Color.White;
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel4.Controls.Add(this.label6);
+            this.panel4.Controls.Add(this.BPrintLoanDoc);
             this.panel4.Controls.Add(this.BTdeletefile);
             this.panel4.Controls.Add(this.BTOpenfile);
             this.panel4.Controls.Add(this.label2);
             this.panel4.Controls.Add(this.label15);
-            this.panel4.Controls.Add(this.BLoanDocUpload);
-            this.panel4.Controls.Add(this.BPrintLoanDoc);
             this.panel4.Location = new System.Drawing.Point(14, 8);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1095, 520);
@@ -669,20 +667,33 @@ namespace example.Bank
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(56, 229);
+            this.label6.Location = new System.Drawing.Point(513, 215);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(136, 37);
             this.label6.TabIndex = 58;
             this.label6.Text = "Scan(  ไม่พบ  )";
+            // 
+            // BPrintLoanDoc
+            // 
+            this.BPrintLoanDoc.BackColor = System.Drawing.Color.White;
+            this.BPrintLoanDoc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BPrintLoanDoc.Cursor = System.Windows.Forms.Cursors.Default;
+            this.BPrintLoanDoc.Location = new System.Drawing.Point(511, 50);
+            this.BPrintLoanDoc.Name = "BPrintLoanDoc";
+            this.BPrintLoanDoc.Size = new System.Drawing.Size(256, 61);
+            this.BPrintLoanDoc.TabIndex = 57;
+            this.BPrintLoanDoc.Text = "Print";
+            this.BPrintLoanDoc.UseVisualStyleBackColor = false;
+            this.BPrintLoanDoc.Click += new System.EventHandler(this.BPrintLoanDoc_Click_2);
             // 
             // BTdeletefile
             // 
             this.BTdeletefile.BackColor = System.Drawing.Color.White;
             this.BTdeletefile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BTdeletefile.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BTdeletefile.Location = new System.Drawing.Point(285, 300);
+            this.BTdeletefile.Location = new System.Drawing.Point(684, 150);
             this.BTdeletefile.Name = "BTdeletefile";
-            this.BTdeletefile.Size = new System.Drawing.Size(80, 47);
+            this.BTdeletefile.Size = new System.Drawing.Size(83, 47);
             this.BTdeletefile.TabIndex = 56;
             this.BTdeletefile.Text = "ลบไฟล์";
             this.BTdeletefile.UseVisualStyleBackColor = false;
@@ -692,52 +703,33 @@ namespace example.Bank
             this.BTOpenfile.BackColor = System.Drawing.Color.White;
             this.BTOpenfile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BTOpenfile.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BTOpenfile.Location = new System.Drawing.Point(198, 224);
+            this.BTOpenfile.Location = new System.Drawing.Point(511, 117);
             this.BTOpenfile.Name = "BTOpenfile";
-            this.BTOpenfile.Size = new System.Drawing.Size(167, 70);
+            this.BTOpenfile.Size = new System.Drawing.Size(167, 80);
             this.BTOpenfile.TabIndex = 55;
             this.BTOpenfile.Text = "เปิดไฟล์";
             this.BTOpenfile.UseVisualStyleBackColor = false;
+            this.BTOpenfile.Click += new System.EventHandler(this.BTOpenfile_Click);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label2.Location = new System.Drawing.Point(56, 157);
+            this.label2.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label2.Location = new System.Drawing.Point(114, 136);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(408, 40);
+            this.label2.Size = new System.Drawing.Size(370, 40);
             this.label2.TabIndex = 4;
             this.label2.Text = "อัพโหลดเอกสารสัญญากู้ที่มีลายเซ็นครบถ้าน";
             // 
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label15.Location = new System.Drawing.Point(56, 66);
+            this.label15.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label15.Location = new System.Drawing.Point(301, 59);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(200, 40);
+            this.label15.Size = new System.Drawing.Size(183, 40);
             this.label15.TabIndex = 5;
             this.label15.Text = "พิมพ์เอกสารสัญญากู้";
-            // 
-            // BLoanDocUpload
-            // 
-            this.BLoanDocUpload.Location = new System.Drawing.Point(510, 157);
-            this.BLoanDocUpload.Name = "BLoanDocUpload";
-            this.BLoanDocUpload.Size = new System.Drawing.Size(224, 66);
-            this.BLoanDocUpload.TabIndex = 2;
-            this.BLoanDocUpload.Text = "อัพโหลดเอกสาร";
-            this.BLoanDocUpload.UseVisualStyleBackColor = true;
-            this.BLoanDocUpload.Click += new System.EventHandler(this.BLoanDocUpload_Click);
-            // 
-            // BPrintLoanDoc
-            // 
-            this.BPrintLoanDoc.Location = new System.Drawing.Point(510, 66);
-            this.BPrintLoanDoc.Name = "BPrintLoanDoc";
-            this.BPrintLoanDoc.Size = new System.Drawing.Size(224, 66);
-            this.BPrintLoanDoc.TabIndex = 3;
-            this.BPrintLoanDoc.Text = "พิมพ์เอกสาร";
-            this.BPrintLoanDoc.UseVisualStyleBackColor = true;
-            this.BPrintLoanDoc.Click += new System.EventHandler(this.BPrintLoanDoc_Click_1);
             // 
             // panel7
             // 
@@ -992,8 +984,6 @@ namespace example.Bank
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Button BLoanDocUpload;
-        private System.Windows.Forms.Button BPrintLoanDoc;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Button BSearchTeacher;
         private System.Windows.Forms.TextBox TBTeacherName;
@@ -1047,11 +1037,9 @@ namespace example.Bank
         private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
         private System.Windows.Forms.Button BCalculate;
-
-   
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button BPrintLoanDoc;
         private System.Windows.Forms.Button BTdeletefile;
         private System.Windows.Forms.Button BTOpenfile;
-
     }
 }
