@@ -32,17 +32,17 @@ namespace example.Bank
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Loan));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.BSave = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -88,6 +88,7 @@ namespace example.Bank
             this.panel9 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.BTdeleteText = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.BSearchTeacher2 = new System.Windows.Forms.Button();
             this.TBTeacherNamePrint = new System.Windows.Forms.TextBox();
@@ -118,7 +119,6 @@ namespace example.Bank
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.DGV1112 = new System.Windows.Forms.DataGridView();
-            this.BTdeleteText = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -266,8 +266,8 @@ namespace example.Bank
             // DGVGuarantor
             // 
             this.DGVGuarantor.AllowUserToAddRows = false;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DGVGuarantor.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DGVGuarantor.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DGVGuarantor.BackgroundColor = System.Drawing.Color.White;
             this.DGVGuarantor.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVGuarantor.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -288,8 +288,8 @@ namespace example.Bank
             // 
             // Column1
             // 
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle2;
             this.Column1.HeaderText = "รหัส";
             this.Column1.MinimumWidth = 6;
             this.Column1.Name = "Column1";
@@ -298,8 +298,8 @@ namespace example.Bank
             // 
             // Column2
             // 
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle3;
             this.Column2.HeaderText = "ชื่อ";
             this.Column2.MinimumWidth = 6;
             this.Column2.Name = "Column2";
@@ -308,8 +308,8 @@ namespace example.Bank
             // 
             // Column3
             // 
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column3.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column3.DefaultCellStyle = dataGridViewCellStyle4;
             this.Column3.HeaderText = "ยอดเงินค้ำสูงสุด";
             this.Column3.MinimumWidth = 6;
             this.Column3.Name = "Column3";
@@ -503,16 +503,16 @@ namespace example.Bank
             // 
             this.DGVGuarantorCredit.AllowUserToAddRows = false;
             this.DGVGuarantorCredit.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DGVGuarantorCredit.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DGVGuarantorCredit.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             this.DGVGuarantorCredit.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVGuarantorCredit.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVGuarantorCredit.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.DGVGuarantorCredit.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVGuarantorCredit.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column8,
@@ -532,8 +532,8 @@ namespace example.Bank
             // 
             // Column8
             // 
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column8.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column8.DefaultCellStyle = dataGridViewCellStyle7;
             this.Column8.HeaderText = "รหัส";
             this.Column8.MinimumWidth = 6;
             this.Column8.Name = "Column8";
@@ -542,8 +542,8 @@ namespace example.Bank
             // 
             // Column9
             // 
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column9.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column9.DefaultCellStyle = dataGridViewCellStyle8;
             this.Column9.HeaderText = "ชื่อ - นามสกุล";
             this.Column9.MinimumWidth = 6;
             this.Column9.Name = "Column9";
@@ -552,8 +552,8 @@ namespace example.Bank
             // 
             // Column10
             // 
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column10.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column10.DefaultCellStyle = dataGridViewCellStyle9;
             this.Column10.HeaderText = "เปอร์เซ็นค้ำ";
             this.Column10.MinimumWidth = 6;
             this.Column10.Name = "Column10";
@@ -562,8 +562,8 @@ namespace example.Bank
             // Column11
             // 
             this.Column11.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle21.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column11.DefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column11.DefaultCellStyle = dataGridViewCellStyle10;
             this.Column11.HeaderText = "จำงานเงินค้ำ";
             this.Column11.MinimumWidth = 6;
             this.Column11.Name = "Column11";
@@ -583,14 +583,14 @@ namespace example.Bank
             // 
             this.DGVLoanDetail.AllowUserToAddRows = false;
             this.DGVLoanDetail.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle22.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle22.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVLoanDetail.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVLoanDetail.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
             this.DGVLoanDetail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVLoanDetail.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
@@ -683,6 +683,19 @@ namespace example.Bank
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1068, 139);
             this.panel2.TabIndex = 89;
+            // 
+            // BTdeleteText
+            // 
+            this.BTdeleteText.BackColor = System.Drawing.Color.White;
+            this.BTdeleteText.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BTdeleteText.Cursor = System.Windows.Forms.Cursors.Default;
+            this.BTdeleteText.Location = new System.Drawing.Point(870, 35);
+            this.BTdeleteText.Name = "BTdeleteText";
+            this.BTdeleteText.Size = new System.Drawing.Size(141, 47);
+            this.BTdeleteText.TabIndex = 91;
+            this.BTdeleteText.Text = "ล้างข้อความ";
+            this.BTdeleteText.UseVisualStyleBackColor = false;
+            this.BTdeleteText.Click += new System.EventHandler(this.BTdeleteText_Click);
             // 
             // label9
             // 
@@ -805,6 +818,7 @@ namespace example.Bank
             this.BTdeletefile.TabIndex = 56;
             this.BTdeletefile.Text = "ลบไฟล์";
             this.BTdeletefile.UseVisualStyleBackColor = false;
+            this.BTdeletefile.Click += new System.EventHandler(this.BTdeletefile_Click);
             // 
             // label6
             // 
@@ -1032,19 +1046,6 @@ namespace example.Bank
             this.DGV1112.RowTemplate.Height = 24;
             this.DGV1112.Size = new System.Drawing.Size(992, 315);
             this.DGV1112.TabIndex = 1;
-            // 
-            // BTdeleteText
-            // 
-            this.BTdeleteText.BackColor = System.Drawing.Color.White;
-            this.BTdeleteText.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BTdeleteText.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BTdeleteText.Location = new System.Drawing.Point(870, 35);
-            this.BTdeleteText.Name = "BTdeleteText";
-            this.BTdeleteText.Size = new System.Drawing.Size(141, 47);
-            this.BTdeleteText.TabIndex = 91;
-            this.BTdeleteText.Text = "ล้างข้อความ";
-            this.BTdeleteText.UseVisualStyleBackColor = false;
-            this.BTdeleteText.Click += new System.EventHandler(this.BTdeleteText_Click);
             // 
             // Loan
             // 
