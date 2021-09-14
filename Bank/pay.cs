@@ -654,8 +654,7 @@ namespace example.GOODS
 
         private void pay_Load(object sender, EventArgs e)
         {
-            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]);
-            int Year = Convert.ToInt32((Convert.ToDateTime(dt.Rows[0][0])).ToString("yyyy"));
+            int Year = Convert.ToInt32(example.GOODS.Menu.Date[0]);
             for (int x = 0; x < 4; x++)
             {
                 CByeartap1.Items.Add(Year);

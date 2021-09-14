@@ -7,13 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static example.Class.ProtocolSharing.ConnectSMB;
 
 namespace example.Bank
 {
     public partial class Loan : Form
     {
         //------------------------- index -----------------
-        DateTime DateTime;
+        static string name = "",id = "";
+        int StatusBoxFile = 0;
+        String imgeLocation = "";
         int Check = 0;
         public static int SelectIndexRowDelete;
 
@@ -33,12 +36,14 @@ namespace example.Bank
         //----------------------- End code -------------------- ////////
 
         /// <summary> 
-        /// SQLDafaultLoan 
+        /// SQLDafault
         /// <para>[0] SELECT TeacherName Data INPUT:{TeacherNo} , {TeacherNoNotLike} </para>
         /// <para>[1] SELECT Guarantor Credit Limit INPUT:T{TeacherNo} , {TeacherNoNotLike} </para>
         /// <para>[2] SELECT Date Data </para>
         /// <para>[3] INSERT Loan and Get LoanNo INPUT: {TeacherNoAdd}, {TeacherNo}, {MonthPay}, {YearPay}, {LoanAmount}, {PayNo}, {InterestRate}</para>
         /// <para>[4] INSERT Guarantor INPUT: {LoanNo},{TeacherNo},{Amount},{RemainsAmount}</para>
+        /// <para>[5] Detail Loan Print  INPUT: TeacherNo</para>
+        /// <para>[6] SELECT MemberLona  INPUT: {TeacherNo} </para>
         /// </summary>
         private String[] SQLDefault = new String[]
         {
@@ -84,22 +89,44 @@ namespace example.Bank
             "WHERE LoanNo = @LoanNo;\r\n"
             ,
 
-            //INSERT Guarantor INPUT: {LoanNo},{TeacherNo},{Amount},{RemainsAmount}
+            //[4]INSERT Guarantor INPUT: {LoanNo},{TeacherNo},{Amount},{RemainsAmount}
             "INSERT INTO EmployeeBank.dbo.tblGuarantor (LoanNo,TeacherNo,Amount,RemainsAmount)\r\n" +
             "VALUES ('{LoanNo}','{TeacherNo}','{Amount}','{RemainsAmount}');\r\n"
             ,
-        };
+            //[5] Detail Loan Print  INPUT: TeacherNo
+            "SELECT a.TeacherNo,CAST(d.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS Name,LoanAmount , \r\n " +
+            "CAST(cNo + ' หมู่ ' + cMu + 'ซอย  ' + cSoi + ' ถนน' + cRoad + ' ตำบล' +  TumBonName + ' อำเภอ'  + AmphurName + ' จังหวัด ' + JangWatLongName + ' รหัสไปรสณี ' + ZipCode as NVARCHAR(255)) AS ADDRESS, \r\n " +
+            "MonthPay , YearPay , PayNo , InterestRate \r\n " +
+            "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
+            "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo \r\n " +
+            "LEFT JOIN Personal.dbo.tblTeacherHis as c ON b.TeacherNo = c.TeacherNo \r\n " +
+            "LEFT JOIN BaseData.dbo.tblPrefix as d ON c.PrefixNo = d.PrefixNo \r\n " +
+            "LEFT JOIN BaseData.dbo.tblTumBon as e on c.cTumBonNo = e.TumBonNo \r\n " +
+            "LEFT JOIN BaseData.dbo.tblAmphur as f on c.cAmPhurNo = f.AmphurNo \r\n " +
+            "LEFT JOIN BaseData.dbo.tblJangWat as g on c.cJangWatNo = g.JangWatNo \r\n " +
+            "WHERE a.TeacherNo = '{TeacherNo}' "
+          ,
+             //[6] SELECT MemberLona  INPUT: {TeacherNo}
+            "SELECT a.TeacherNo,CAST(c.PrefixName+''+b.Fname+''+b.Lname as NVARCHAR),d.StartAmount  \r\n "+
+            "FROM EmployeeBank.dbo.tblLoan as a  \r\n "+
+            "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo  \r\n "+
+            "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo  \r\n "+
+            "LEFT JOIN EmployeeBank.dbo.tblMember as d on a.TeacherNo = d.TeacherNo \r\n "+
+            "WHERE a.TeacherNo LIKE 'T{TeacherNo}%'  \r\n "+
+            "ORDER BY b.Fname;"
+
+    };
 
         //----------------------- PullSQLDate -------------------- ////////
         // ดึงขอมูลวันที่จากฐานข้อมูล
         int Month;
         private void Loan_Load(object sender, EventArgs e)
         {
-            DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]);
-            DataTable dt = ds.Tables[0];
-            DateTime = DateTime.Parse(dt.Rows[0][0].ToString());
-            int Year = int.Parse(DateTime.ToString("yyyy"));
-            Month = int.Parse(DateTime.ToString("MM"));
+
+            int Year = Convert.ToInt32(example.GOODS.Menu.Date[0]);
+            int Month = Convert.ToInt32(example.GOODS.Menu.Date[1]);
+
+
             for (int Num = 0; Num < 5; Num++)
             {
                 CBPayYear.Items.Add(Year);
@@ -180,15 +207,7 @@ namespace example.Bank
 
         //------------------------- Pull SQL Member & CheckTBTeacherNo ---------
         // ค้นหารายชชื่อผู้สมัครสมาชิกครูสหกร์จากฐานข้อมูล
-        private void TBTeacherNo_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TBGuarantorNo_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-        }
+       
         //int RowDGV;
         //----------------------- End code -------------------- ////////
 
@@ -369,6 +388,39 @@ namespace example.Bank
                 Console.WriteLine(x);
             }
         }
+        private void BSearchTeacher2_Click(object sender, EventArgs e)
+        {
+            Bank.Search IN; 
+            try
+            {
+                IN = new Bank.Search(SQLDefault[6]
+                     .Replace("{TeacherNo}", ""));
+                IN.ShowDialog();
+                name = Bank.Search.Return[0];
+                TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+                if (name.Length == 6)
+                {
+                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("T{TeacherNo}%", name));
+                    if (dt.Rows.Count != 0)
+                    {
+                        TBTeacherNamePrint.Text = dt.Rows[0][1].ToString();
+                        id = dt.Rows[0][0].ToString();
+                    }
+                    BPrintLoanDoc.Enabled = true;
+                }
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x);
+            }
+        }
+        private void BTdeleteText_Click(object sender, EventArgs e)
+        {
+            TBTeacherNamePrint.Clear();
+            BPrintLoanDoc.Enabled = false;
+            label9.Text = "Scan(  ไม่พบ  )";
+
+        }
         //TB ใส่ ID คนกู้ มี event การกด
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
         {
@@ -517,54 +569,65 @@ namespace example.Bank
                 e.Handled = true;
             }
         }
-
-        //----------------------- End code -------------------- ////////
-        // Comment!
-        public void Rect(System.Drawing.Printing.PrintPageEventArgs e, Pen ColorRect, int WidthSize, int HeightSize, float LocY, float LocX)
-        {
-            //float x = e.PageBounds.Width - 50 - 125;
-            e.Graphics.DrawRectangle(ColorRect, LocX, LocY, WidthSize, HeightSize);
-        }
-        // Comment!
-        public void PrintBody(System.Drawing.Printing.PrintPageEventArgs e, float LocY, String Text, Font font, Brush brush)
-        {
-            float LocX = 96;
-            e.Graphics.DrawString(Text, font, brush, LocX, LocY);
-        }
-        // Comment!
-        public void PrintCheckBoxList(System.Drawing.Printing.PrintPageEventArgs e, float LocX, float LocY, Font font, Brush brush, List<String> AllCheckBox, float SpaceCheckList)
-        {
-            Pen ColorRect = new Pen(Color.Black);
-
-            for (int Num = 0; Num < AllCheckBox.Count; Num++)
-            {
-                SizeF SizeText = e.Graphics.MeasureString(AllCheckBox[Num], font);
-                e.Graphics.DrawString(AllCheckBox[Num], font, brush, LocX + (SpaceCheckList * (Num + 1)), LocY);
-                Rect(e, ColorRect, 15, 15, LocY + 20, LocX + (SpaceCheckList * (Num + 1)) - 17);
-                LocX += SizeText.Width;
-            }
-
-        }
-        //----------------------- End Medtod -------------------- ////////
-
         //----------------------- Printf -------------------- ////////
         // พิมพ์เอกสารกู้
-        private void BPrintLoanDoc_Click_1(object sender, EventArgs e)
+        private void BPrintLoanDoc_Click_2(object sender, EventArgs e)
         {
+            label9.Text = "Scan(  พบไฟล์  )";
             if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
             {
                 printDocument1.Print();
             }
         }
         // อัพเอกสารส่ง เซิร์ฟเวอร์
-        private void BLoanDocUpload_Click(object sender, EventArgs e)
+        private void BTOpenfile_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("รอก่อนนะยังใช่งานไม่ได้งับ", "ตัวส่ง", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            if (StatusBoxFile == 0)
+            {
+
+                try
+                {
+                    OpenFileDialog dialog = new OpenFileDialog();
+                    dialog.Filter = "pdf files(*.pdf)|*.pdf";
+                    if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        imgeLocation = dialog.FileName;
+                    }
+                    if (imgeLocation != "")
+                    {
+                        BTOpenfile.Text = "ส่งไฟล์";
+                        StatusBoxFile = 1;
+                        label6.Text = "Scan(  พบไฟล์  )";
+                    }
+
+                }
+                catch
+                {
+                    MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else if (StatusBoxFile == 1)
+            {
+                var smb = new SmbFileContainer();
+                if (smb.IsValidConnection())
+                {
+                    smb.SendFile(imgeLocation, "ชื่อ.pdf");
+                    MessageBox.Show("Upload File Complete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    StatusBoxFile = 0;
+                    BTOpenfile.Text = "เปิดไฟล์";
+                    label6.Text = "Scan(  ไม่พบ  )";
+                    imgeLocation = "";
+                }
+                else
+                {
+                    MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
         }
         // กระดาษปริ้น
         private void printDocument1_PrintPage_1(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.Print.PrintPreviewDialog.PrintLoan(e);
+            Class.Print.PrintPreviewDialog.PrintLoan(e,SQLDefault[5].Replace("{TeacherNo}",id),example.GOODS.Menu.Date[2], example.GOODS.Menu.Monthname, (Convert.ToInt32(example.GOODS.Menu.Date[0])+543).ToString(),id);
             //e.HasMorePages = true;
             //Class.Print.PrintPreviewDialog.ExamplePrint(sender,e);
 
@@ -860,6 +923,17 @@ namespace example.Bank
                 e.Handled = true;
             }
         }
+
+
+        private void BTdeletefile_Click(object sender, EventArgs e)
+        {
+            StatusBoxFile = 0;
+            BTOpenfile.Text = "เปิดไฟล์";
+            label6.Text = "Scan(  ไม่พบ  )";
+            imgeLocation = "";
+        }
+
+
         private void BCalculate_Click(object sender, EventArgs e)
         {
             if(DGVGuarantorCredit.Rows.Count > 0 && TBLoanAmount.Text != "")

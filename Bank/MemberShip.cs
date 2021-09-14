@@ -17,9 +17,6 @@ namespace example.Bank
     public partial class MemberShip : Form
     {
         //------------------------- index -----------------
-        public static string Day;
-        public static string Month;
-        public static string Year;
 
         //----------------------- index code -------------------- ////////
 
@@ -42,8 +39,6 @@ namespace example.Bank
         /// <para>[1] SELECT Member  INPUT:{TeacherNo} </para>
         /// <para>[2]  Select Detail Memner INPUT: {TeacherNo} </para>
         /// <para>[3] INSERT Member To Member  Bill BillDetail  INPUT: {TeacherNo} {TeacherNoAddBy} {StartAmount} {Mount} {Year}  </para>
-        /// <para>[4] DATE  INPUT: - </para>
-
         /// </summary>
         private String[] SQLDefault = new String[]
         {
@@ -82,8 +77,6 @@ namespace example.Bank
           "INSERT INTO EmployeeBank.dbo.tblBillDetail(BillNo, TypeNo, Amount, Mount, Year,BillDetailPaymentNo) \r\n"+
           "VALUES(@BillNo,1,{StartAmount},{Month},{Year},1)"
           ,
-           //[4] DATE  INPUT: -
-           "SELECT CAST(CURRENT_TIMESTAMP as DATE);"
         };
 
         //----------------------- PullSQL -------------------- ////////
@@ -133,10 +126,15 @@ namespace example.Bank
         // Available values|  SQLDefault[1] / TB /
         private void BSave_Click_1(object sender, EventArgs e)
         {
+            int AmountShare = Convert.ToInt32(TBStartAmountShare.Text);
+            if(AmountShare.ToString() == "" || AmountShare == 0)
+            {
+                AmountShare = example.GOODS.Menu.startAmountMin;
+            }
             DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text));
             if (TBTeacherName.Text != "")
             {
-                if (Convert.ToInt32(TBStartAmountShare.Text) >= example.GOODS.Menu.startAmountMin && Convert.ToInt32(TBStartAmountShare.Text) <= example.GOODS.Menu.startAmountMax)
+                if (AmountShare >= example.GOODS.Menu.startAmountMin && AmountShare <= example.GOODS.Menu.startAmountMax)
                 {
                     if (dt.Rows.Count == 0)
                     {
@@ -146,9 +144,9 @@ namespace example.Bank
                         {
                             Class.SQLConnection.InputSQLMSSQL(SQLDefault[3].Replace("{TeacherNo}", TBTeacherNo.Text)
                             .Replace("{TeacherNoAddBy}", "Teacher")
-                            .Replace("{StartAmount}",TBStartAmountShare.Text)
-                            .Replace("{Month}", Month)
-                            .Replace("{Year}", Year));
+                            .Replace("{StartAmount}", AmountShare.ToString())
+                            .Replace("{Month}", example.GOODS.Menu.Date[1])
+                            .Replace("{Year}", example.GOODS.Menu.Date[0]));
                             MessageBox.Show("สมัครเสร็จสิ้น", "สมัครสมาชิก", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             TBTeacherNo.Clear();
                             TBTeacherName.Clear();
@@ -214,17 +212,6 @@ namespace example.Bank
 
         private void membership_Load(object sender, EventArgs e)
         {
-            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4]);
-            if(dt.Rows.Count != 0)
-            {
-                //DateTime a = DateTime.Parse(dt.Rows[0][0].ToString());
-                String[] date = dt.Rows[0][0].ToString().Split('-');
-                //DTPStartDate.Value = a;
-                DTPStartDate.Value = new DateTime(Convert.ToInt32(date[0]), Convert.ToInt32(date[1]), Convert.ToInt32(date[2]));
-                Day = date[2].ToString();
-                Month = date[1].ToString();
-                Year = date[0].ToString();
-            }
         }
 
 
@@ -262,7 +249,7 @@ namespace example.Bank
         //----------------------- Printf -------------------- ////////
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            example.Class.Print.PrintPreviewDialog.PrintMember(e);
+            example.Class.Print.PrintPreviewDialog.PrintMember(e,SQLDefault[2],example.GOODS.Menu.Date[2],example.GOODS.Menu.Monthname,(Convert.ToInt32(example.GOODS.Menu.Date[0]) + 543).ToString(),TBTeacherNo.Text,TBStartAmountShare.Text);
         }
 
         private void BTOpenfile_Click(object sender, EventArgs e)

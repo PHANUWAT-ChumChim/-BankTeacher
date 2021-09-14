@@ -143,6 +143,35 @@ namespace example.Class.Print
         //    }
 
         //}
+
+        //----------------------- End code -------------------- ////////
+        // Comment!
+        //public void Rect(System.Drawing.Printing.PrintPageEventArgs e, Pen ColorRect, int WidthSize, int HeightSize, float LocY, float LocX)
+        //{
+        //    //float x = e.PageBounds.Width - 50 - 125;
+        //    e.Graphics.DrawRectangle(ColorRect, LocX, LocY, WidthSize, HeightSize);
+        //}
+        //// Comment!
+        //public void PrintBody(System.Drawing.Printing.PrintPageEventArgs e, float LocY, String Text, Font font, Brush brush)
+        //{
+        //    float LocX = 96;
+        //    e.Graphics.DrawString(Text, font, brush, LocX, LocY);
+        //}
+        //// Comment!
+        //public void PrintCheckBoxList(System.Drawing.Printing.PrintPageEventArgs e, float LocX, float LocY, Font font, Brush brush, List<String> AllCheckBox, float SpaceCheckList)
+        //{
+        //    Pen ColorRect = new Pen(Color.Black);
+
+        //    for (int Num = 0; Num < AllCheckBox.Count; Num++)
+        //    {
+        //        SizeF SizeText = e.Graphics.MeasureString(AllCheckBox[Num], font);
+        //        e.Graphics.DrawString(AllCheckBox[Num], font, brush, LocX + (SpaceCheckList * (Num + 1)), LocY);
+        //        Rect(e, ColorRect, 15, 15, LocY + 20, LocX + (SpaceCheckList * (Num + 1)) - 17);
+        //        LocX += SizeText.Width;
+        //    }
+
+        //}
+        //----------------------- End Medtod -------------------- ////////
         //----------------------- End Medtod -------------------- ////////
         // พี่ตังค์
 
