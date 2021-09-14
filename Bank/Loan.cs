@@ -114,7 +114,6 @@ namespace example.Bank
             int Year = Convert.ToInt32(example.GOODS.Menu.Date[0]);
             int Month = Convert.ToInt32(example.GOODS.Menu.Date[1]);
 
-     
 
             for (int Num = 0; Num < 5; Num++)
             {
