@@ -13,6 +13,7 @@ namespace example.Bank
     public partial class Loan : Form
     {
         //------------------------- index -----------------
+        static string name = "";
         DateTime DateTime;
         int Check = 0;
         public static int SelectIndexRowDelete;
@@ -185,15 +186,7 @@ namespace example.Bank
 
         //------------------------- Pull SQL Member & CheckTBTeacherNo ---------
         // ค้นหารายชชื่อผู้สมัครสมาชิกครูสหกร์จากฐานข้อมูล
-        private void TBTeacherNo_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TBGuarantorNo_KeyPress(object sender, KeyPressEventArgs e)
-        {
-
-        }
+       
         //int RowDGV;
         //----------------------- End code -------------------- ////////
 
@@ -374,6 +367,32 @@ namespace example.Bank
                 {
                     TBTeacherNo.Text = Bank.Search.Return[0];
                     TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+                }
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x);
+            }
+        }
+        private void BSearchTeacher2_Click(object sender, EventArgs e)
+        {
+            Bank.Search IN; 
+            try
+            {
+                IN = new Bank.Search(SQLDefault[0]
+                     .Replace("{TeacherNo}", "")
+                     .Replace("{TeacherNoNotLike}", ""));
+                IN.ShowDialog();
+                name = Bank.Search.Return[0];
+                TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+                if (name.Length == 6)
+                {
+                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0].Replace("T{TeacherNo}%", name).Replace("{TeacherNoNotLike}", ""));
+                    if (dt.Rows.Count != 0)
+                    {
+                        TBTeacherNamePrint.Text = dt.Rows[0][1].ToString();
+                    }
+
                 }
             }
             catch (Exception x)
@@ -940,6 +959,8 @@ namespace example.Bank
                 }
             }
         }
+
+       
     }
 }
 
