@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static example.Class.ProtocolSharing.ConnectSMB;
 
 namespace example.Bank
 {
@@ -14,8 +15,9 @@ namespace example.Bank
     {
         //------------------------- index -----------------
         static string name = "",id = "";
-        DateTime DateTime;
         int Check = 0;
+        int StatusBoxFile = 0;
+        String imgeLocation = "";
         public static int SelectIndexRowDelete;
 
         //----------------------- index code -------------------- ////////
@@ -576,22 +578,46 @@ namespace example.Bank
         // อัพเอกสารส่ง เซิร์ฟเวอร์
         private void BTOpenfile_Click(object sender, EventArgs e)
         {
-            Image File;
-            String imgeLocation = "";
-            try
+            if (StatusBoxFile == 0)
             {
-                OpenFileDialog dialog = new OpenFileDialog();
-                dialog.Filter = "pdf files(*.pdf)|*.pdf";
-                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+
+                try
                 {
-                    imgeLocation = dialog.FileName;
-                    File = Image.FromFile(dialog.FileName);
-                    //Class.ProtocolSharing.ConnectSMB.SmbFileContainer.PathFile = File;
+                    OpenFileDialog dialog = new OpenFileDialog();
+                    dialog.Filter = "pdf files(*.pdf)|*.pdf";
+                    if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        imgeLocation = dialog.FileName;
+                    }
+                    if (imgeLocation != "")
+                    {
+                        BTOpenfile.Text = "ส่งไฟล์";
+                        StatusBoxFile = 1;
+                        label6.Text = "Scan(  พบไฟล์  )";
+                    }
+
+                }
+                catch
+                {
+                    MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            catch
+            else if (StatusBoxFile == 1)
             {
-                MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var smb = new SmbFileContainer();
+                if (smb.IsValidConnection())
+                {
+                    smb.SendFile(imgeLocation, "ชื่อ.pdf");
+                    MessageBox.Show("Upload File Complete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    StatusBoxFile = 0;
+                    BTOpenfile.Text = "เปิดไฟล์";
+                    label6.Text = "Scan(  ไม่พบ  )";
+                    imgeLocation = "";
+                }
+                else
+                {
+                    MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
         // กระดาษปริ้น
@@ -914,6 +940,14 @@ namespace example.Bank
             {
                 e.Handled = true;
             }
+        }
+
+        private void BTdeletefile_Click(object sender, EventArgs e)
+        {
+            StatusBoxFile = 0;
+            BTOpenfile.Text = "เปิดไฟล์";
+            label6.Text = "Scan(  ไม่พบ  )";
+            imgeLocation = "";
         }
 
         private void BCalculate_Click(object sender, EventArgs e)
