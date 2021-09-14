@@ -112,12 +112,7 @@ namespace example.Bank
         {
 
             int Year = Convert.ToInt32(example.GOODS.Menu.Date[0]);
-
-            DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]);
-            DataTable dt = ds.Tables[0];
-            DateTime = DateTime.Parse(dt.Rows[0][0].ToString());
-            int Year = int.Parse(DateTime.ToString("yyyy"));
-            Month = int.Parse(DateTime.ToString("MM"));
+            Month = Convert.ToInt32(example.GOODS.Menu.Date[1]);
 
             for (int Num = 0; Num < 5; Num++)
             {

@@ -126,10 +126,15 @@ namespace example.Bank
         // Available values|  SQLDefault[1] / TB /
         private void BSave_Click_1(object sender, EventArgs e)
         {
+            int AmountShare = Convert.ToInt32(TBStartAmountShare.Text);
+            if(AmountShare.ToString() == "" || AmountShare == 0)
+            {
+                AmountShare = example.GOODS.Menu.startAmountMin;
+            }
             DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text));
             if (TBTeacherName.Text != "")
             {
-                if (Convert.ToInt32(TBStartAmountShare.Text) >= example.GOODS.Menu.startAmountMin && Convert.ToInt32(TBStartAmountShare.Text) <= example.GOODS.Menu.startAmountMax)
+                if (AmountShare >= example.GOODS.Menu.startAmountMin && AmountShare <= example.GOODS.Menu.startAmountMax)
                 {
                     if (dt.Rows.Count == 0)
                     {
@@ -139,7 +144,7 @@ namespace example.Bank
                         {
                             Class.SQLConnection.InputSQLMSSQL(SQLDefault[3].Replace("{TeacherNo}", TBTeacherNo.Text)
                             .Replace("{TeacherNoAddBy}", "Teacher")
-                            .Replace("{StartAmount}",TBStartAmountShare.Text)
+                            .Replace("{StartAmount}", AmountShare.ToString())
                             .Replace("{Month}", example.GOODS.Menu.Date[1])
                             .Replace("{Year}", example.GOODS.Menu.Date[0]));
                             MessageBox.Show("สมัครเสร็จสิ้น", "สมัครสมาชิก", MessageBoxButtons.OK, MessageBoxIcon.Information);
