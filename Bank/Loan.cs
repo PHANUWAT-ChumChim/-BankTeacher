@@ -904,7 +904,7 @@ namespace example.Bank
                     //DGVGuarantorCredit.Rows[e.RowIndex].Cells[3].Value = "";
                 }
             }
-            
+            //asdasdasdasdasdasdasd
         }
 
         private void DGVGuarantorCredit_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
