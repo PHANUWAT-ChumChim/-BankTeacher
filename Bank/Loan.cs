@@ -13,7 +13,7 @@ namespace example.Bank
     public partial class Loan : Form
     {
         //------------------------- index -----------------
-        static string name = "";
+        static string name = "",id = "";
         DateTime DateTime;
         int Check = 0;
         public static int SelectIndexRowDelete;
@@ -41,6 +41,7 @@ namespace example.Bank
         /// <para>[3] INSERT Loan and Get LoanNo INPUT: {TeacherNoAdd}, {TeacherNo}, {MonthPay}, {YearPay}, {LoanAmount}, {PayNo}, {InterestRate}</para>
         /// <para>[4] INSERT Guarantor INPUT: {LoanNo},{TeacherNo},{Amount},{RemainsAmount}</para>
         /// <para>[5] Detail Loan Print  INPUT: TeacherNo</para>
+        /// <para>[6] SELECT MemberLona  INPUT: {TeacherNo} </para>
         /// </summary>
         private String[] SQLDefault = new String[]
         {
@@ -103,8 +104,16 @@ namespace example.Bank
             "LEFT JOIN BaseData.dbo.tblJangWat as g on c.cJangWatNo = g.JangWatNo \r\n " +
             "WHERE a.TeacherNo = '{TeacherNo}' "
           ,
+             //[6] SELECT MemberLona  INPUT: {TeacherNo}
+            "SELECT a.TeacherNo,CAST(c.PrefixName+''+b.Fname+''+b.Lname as NVARCHAR),d.StartAmount  \r\n "+
+            "FROM EmployeeBank.dbo.tblLoan as a  \r\n "+
+            "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo  \r\n "+
+            "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo  \r\n "+
+            "LEFT JOIN EmployeeBank.dbo.tblMember as d on a.TeacherNo = d.TeacherNo \r\n "+
+            "WHERE a.TeacherNo LIKE 'T{TeacherNo}%'  \r\n "+
+            "ORDER BY b.Fname;"
 
-        };
+    };
 
         //----------------------- PullSQLDate -------------------- ////////
         // ดึงขอมูลวันที่จากฐานข้อมูล
@@ -379,26 +388,33 @@ namespace example.Bank
             Bank.Search IN; 
             try
             {
-                IN = new Bank.Search(SQLDefault[0]
-                     .Replace("{TeacherNo}", "")
-                     .Replace("{TeacherNoNotLike}", ""));
+                IN = new Bank.Search(SQLDefault[6]
+                     .Replace("{TeacherNo}", ""));
                 IN.ShowDialog();
                 name = Bank.Search.Return[0];
                 TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
                 if (name.Length == 6)
                 {
-                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0].Replace("T{TeacherNo}%", name).Replace("{TeacherNoNotLike}", ""));
+                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("T{TeacherNo}%", name));
                     if (dt.Rows.Count != 0)
                     {
                         TBTeacherNamePrint.Text = dt.Rows[0][1].ToString();
+                        id = dt.Rows[0][0].ToString();
                     }
-
+                    BPrintLoanDoc.Enabled = true;
                 }
             }
             catch (Exception x)
             {
                 Console.WriteLine(x);
             }
+        }
+        private void BTdeleteText_Click(object sender, EventArgs e)
+        {
+            TBTeacherNamePrint.Clear();
+            BPrintLoanDoc.Enabled = false;
+            label9.Text = "Scan(  ไม่พบ  )";
+
         }
         //TB ใส่ ID คนกู้ มี event การกด
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
@@ -547,40 +563,11 @@ namespace example.Bank
                 e.Handled = true;
             }
         }
-
-        //----------------------- End code -------------------- ////////
-        // Comment!
-        public void Rect(System.Drawing.Printing.PrintPageEventArgs e, Pen ColorRect, int WidthSize, int HeightSize, float LocY, float LocX)
-        {
-            //float x = e.PageBounds.Width - 50 - 125;
-            e.Graphics.DrawRectangle(ColorRect, LocX, LocY, WidthSize, HeightSize);
-        }
-        // Comment!
-        public void PrintBody(System.Drawing.Printing.PrintPageEventArgs e, float LocY, String Text, Font font, Brush brush)
-        {
-            float LocX = 96;
-            e.Graphics.DrawString(Text, font, brush, LocX, LocY);
-        }
-        // Comment!
-        public void PrintCheckBoxList(System.Drawing.Printing.PrintPageEventArgs e, float LocX, float LocY, Font font, Brush brush, List<String> AllCheckBox, float SpaceCheckList)
-        {
-            Pen ColorRect = new Pen(Color.Black);
-
-            for (int Num = 0; Num < AllCheckBox.Count; Num++)
-            {
-                SizeF SizeText = e.Graphics.MeasureString(AllCheckBox[Num], font);
-                e.Graphics.DrawString(AllCheckBox[Num], font, brush, LocX + (SpaceCheckList * (Num + 1)), LocY);
-                Rect(e, ColorRect, 15, 15, LocY + 20, LocX + (SpaceCheckList * (Num + 1)) - 17);
-                LocX += SizeText.Width;
-            }
-
-        }
-        //----------------------- End Medtod -------------------- ////////
-
         //----------------------- Printf -------------------- ////////
         // พิมพ์เอกสารกู้
         private void BPrintLoanDoc_Click_2(object sender, EventArgs e)
         {
+            label9.Text = "Scan(  พบไฟล์  )";
             if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
             {
                 printDocument1.Print();
@@ -610,7 +597,7 @@ namespace example.Bank
         // กระดาษปริ้น
         private void printDocument1_PrintPage_1(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.Print.PrintPreviewDialog.PrintLoan(e,SQLDefault[5].Replace("{TeacherNo}",TBTeacherNo.Text),example.GOODS.Menu.Date[2], example.GOODS.Menu.Monthname, (Convert.ToInt32(example.GOODS.Menu.Date[0])+543).ToString(),TBTeacherNo.Text);
+            Class.Print.PrintPreviewDialog.PrintLoan(e,SQLDefault[5].Replace("{TeacherNo}",id),example.GOODS.Menu.Date[2], example.GOODS.Menu.Monthname, (Convert.ToInt32(example.GOODS.Menu.Date[0])+543).ToString(),id);
             //e.HasMorePages = true;
             //Class.Print.PrintPreviewDialog.ExamplePrint(sender,e);
 
@@ -959,8 +946,6 @@ namespace example.Bank
                 }
             }
         }
-
-       
     }
 }
 

@@ -131,10 +131,11 @@ namespace example.Class.Print
                     PayNo = PayNo + Convert.ToInt32(dt.Rows[0][4].ToString());
                     while (PayNo > 12)
                     {
-                        Yearpay = Yearpay++;
+                        Yearpay++; 
                         PayNo = PayNo - 12;
                     }
-                    LimitMonthPay = example.GOODS.Menu.Monthname[PayNo] + " พ.ศ. " + (Yearpay + 543);
+                    LimitMonthPay = example.GOODS.Menu.Month[PayNo].ToString() + " พ.ศ. " + (Yearpay + 543).ToString();
+                    //LimitMonthPay = example.GOODS.Menu.Monthname.ToString() + " พ.ศ. " + (Yearpay + 543).ToString();
 
                 }
                 //----------------------

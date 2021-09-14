@@ -18,6 +18,7 @@ namespace example.GOODS
         public static string FontSize;
         public static String[] Date;
         public static String Monthname;
+        public static String[] Month = { "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" };
         DataTable dt;
         /// <summary> 
         /// SQLDafault 
@@ -39,7 +40,6 @@ namespace example.GOODS
         {
             InitializeComponent();
             Date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]).Rows[0][0].ToString().Split('-');
-            String[] Month = { "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" };
             example.GOODS.Menu.Monthname = Month[Convert.ToInt32(example.GOODS.Menu.Date[1]) - 1];
 
             Class.UserInfo.SetTeacherInformation("T53036", "John YouSuck", "1");
