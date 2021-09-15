@@ -83,7 +83,7 @@ namespace example.Bank
                 { 
                     DocStaTus = 1;
                     
-                    var smb = new example.Class.ProtocolSharing.ConnectSMB.SmbFileContainer();
+                    var smb = new example.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("CancellMember");
                     if (smb.IsValidConnection())
                     {
                         smb.SendFile(PathFile, TBTeacherName.Text + " Cancel.pdf");

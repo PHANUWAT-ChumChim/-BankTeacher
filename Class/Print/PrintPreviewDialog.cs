@@ -15,7 +15,7 @@ namespace example.Class.Print
         public static Font THsarabun18 = new Font("TH Sarabun New", 18, FontStyle.Bold);
         public static Brush BrushBlack = Brushes.Black;
         static int pageNow = 0;
-
+        //
         public static void PrintMember(System.Drawing.Printing.PrintPageEventArgs e, String SQLCode, String Day, String Month, String Year, String TeacherNo, String Amount)
         {
             if (TeacherNo != "")
