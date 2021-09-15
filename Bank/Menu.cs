@@ -131,8 +131,14 @@ namespace example.GOODS
 
         private void Loan_Click(object sender, EventArgs e)
         {
-            Bank.Loan Ln = new Bank.Loan();
+            Bank.Loan.loan Ln = new Bank.Loan.loan();
             CloseFrom(Ln);
+        }
+
+        private void Cancel_Click(object sender, EventArgs e)
+        {
+            example.Bank.Loan.CancelLoan Cl = new Bank.Loan.CancelLoan();
+            CloseFrom(Cl);
         }
     }
 }

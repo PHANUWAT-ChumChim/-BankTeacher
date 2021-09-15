@@ -86,22 +86,28 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bank\CancelMembership.cs">
+    <Compile Include="Bank\Add Member\CancelMembership.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Bank\CancelMembership.Designer.cs">
+    <Compile Include="Bank\Add Member\CancelMembership.Designer.cs">
       <DependentUpon>CancelMembership.cs</DependentUpon>
     </Compile>
-    <Compile Include="Bank\Loan.cs">
+    <Compile Include="Bank\Loan\CancelLoan.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Bank\Loan.Designer.cs">
-      <DependentUpon>Loan.cs</DependentUpon>
+    <Compile Include="Bank\Loan\CancelLoan.Designer.cs">
+      <DependentUpon>CancelLoan.cs</DependentUpon>
     </Compile>
-    <Compile Include="Bank\ReportCancelMember.cs">
+    <Compile Include="Bank\Loan\loan.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Bank\ReportCancelMember.Designer.cs">
+    <Compile Include="Bank\Loan\loan.Designer.cs">
+      <DependentUpon>loan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Bank\Add Member\ReportCancelMember.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bank\Add Member\ReportCancelMember.Designer.cs">
       <DependentUpon>ReportCancelMember.cs</DependentUpon>
     </Compile>
     <Compile Include="Bank\Search.cs">
@@ -110,10 +116,10 @@
     <Compile Include="Bank\Search.Designer.cs">
       <DependentUpon>Search.cs</DependentUpon>
     </Compile>
-    <Compile Include="Bank\MemberShip.cs">
+    <Compile Include="Bank\Add Member\MemberShip.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Bank\MemberShip.Designer.cs">
+    <Compile Include="Bank\Add Member\MemberShip.Designer.cs">
       <DependentUpon>MemberShip.cs</DependentUpon>
     </Compile>
     <Compile Include="Bank\Menu.cs">
@@ -146,10 +152,10 @@
     <Compile Include="UI Remake\CircularPics.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Bank\pay.cs">
+    <Compile Include="Bank\Pay\pay.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Bank\pay.Designer.cs">
+    <Compile Include="Bank\Pay\pay.Designer.cs">
       <DependentUpon>pay.cs</DependentUpon>
     </Compile>
     <Compile Include="Reference\Orders.cs">
@@ -160,19 +166,22 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Bank\CancelMembership.resx">
+    <EmbeddedResource Include="Bank\Add Member\CancelMembership.resx">
       <DependentUpon>CancelMembership.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Bank\Loan.resx">
-      <DependentUpon>Loan.cs</DependentUpon>
+    <EmbeddedResource Include="Bank\Loan\CancelLoan.resx">
+      <DependentUpon>CancelLoan.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Bank\ReportCancelMember.resx">
+    <EmbeddedResource Include="Bank\Loan\loan.resx">
+      <DependentUpon>loan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bank\Add Member\ReportCancelMember.resx">
       <DependentUpon>ReportCancelMember.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Search.resx">
       <DependentUpon>Search.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Bank\MemberShip.resx">
+    <EmbeddedResource Include="Bank\Add Member\MemberShip.resx">
       <DependentUpon>MemberShip.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Menu.resx">
@@ -181,7 +190,7 @@
     <EmbeddedResource Include="Bank\Home.resx">
       <DependentUpon>Home.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Bank\pay.resx">
+    <EmbeddedResource Include="Bank\Pay\pay.resx">
       <DependentUpon>pay.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reference\Orders.resx">

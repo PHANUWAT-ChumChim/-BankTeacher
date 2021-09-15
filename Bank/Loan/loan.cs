@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static example.Class.ProtocolSharing.ConnectSMB;
 
-namespace example.Bank
+namespace example.Bank.Loan
 {
-    public partial class Loan : Form
+    public partial class loan : Form
     {
         //------------------------- index -----------------
         static string name = "",id = "";
@@ -21,7 +21,7 @@ namespace example.Bank
         public static int SelectIndexRowDelete;
 
         //----------------------- index code -------------------- ////////
-        public Loan()
+        public loan()
         {
             InitializeComponent();
         }
@@ -801,6 +801,7 @@ namespace example.Bank
                                 Double GetCredit = Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[Count].Cells[3].Value.ToString()) * 100 / (Convert.ToDouble(TBLoanAmount.Text) + Interrestrate));
                                 DGVGuarantorCredit.Rows[Count].Cells[2].Value = Math.Round(GetCredit, 2);
                                 Credit -= CreditResult;
+                                
 
                             }
                         }
@@ -942,8 +943,6 @@ namespace example.Bank
             label6.Text = "Scan(  ไม่พบ  )";
             imgeLocation = "";
         }
-
-
         private void BCalculate_Click(object sender, EventArgs e)
         {
             if(DGVGuarantorCredit.Rows.Count > 0 && TBLoanAmount.Text != "")
