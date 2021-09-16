@@ -14,7 +14,7 @@ namespace example.Bank.Loan
     public partial class loan : Form
     {
         //------------------------- index -----------------
-        static string name = "", id = "";
+        string name = "", id = "";
         int StatusBoxFile = 0;
         String imgeLocation = "";
         int Check = 0;
@@ -180,11 +180,6 @@ namespace example.Bank.Loan
                 }
 
                 MessageBox.Show("บันทึกข้อมูลเสร็จเรียบร้อยแล้ว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                TBTeacherNo.Text = "";
-                TBTeacherName.Text = "";
-                TBLoanNo.Text = "";
-                TBLoanStatus.Text = "";
-                TBSavingAmount.Text = "";
                 DGVGuarantor.Rows.Clear();
                 DGVGuarantorCredit.Rows.Clear();
                 DGVLoanDetail.Rows.Clear();
@@ -194,6 +189,8 @@ namespace example.Bank.Loan
                 tabControl1.SelectedIndex = 0;
                 LGuarantorAmount.Text = "0/4";
                 LLoanAmount.Text = "( )";
+                BTOpenfile.Enabled = true;
+                BPrintLoanDoc.Enabled = true;
 
             }
             else
@@ -266,7 +263,6 @@ namespace example.Bank.Loan
                         Interest = Convert.ToInt32((Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)) - (Convert.ToInt32(Interest) * Num));
                         Pay = Convert.ToInt32(TBLoanAmount.Text) - Pay * Num;
                     }
-
                     DGVLoanDetail.Rows.Add($"{Month}/{Year}", Pay, Convert.ToInt32(Interest), SumInstallment);
                     Month++;
                 }
@@ -406,8 +402,10 @@ namespace example.Bank.Loan
                     {
                         TBTeacherNamePrint.Text = dt.Rows[0][1].ToString();
                         id = dt.Rows[0][0].ToString();
+                        BPrintLoanDoc.Enabled = true;
+                        BTOpenfile.Enabled = true;
                     }
-                    BPrintLoanDoc.Enabled = true;
+
                 }
             }
             catch (Exception x)
@@ -419,6 +417,7 @@ namespace example.Bank.Loan
         {
             TBTeacherNamePrint.Clear();
             BPrintLoanDoc.Enabled = false;
+            BTOpenfile.Enabled = false;
             label9.Text = "Scan(  ไม่พบ  )";
 
         }
@@ -474,6 +473,7 @@ namespace example.Bank.Loan
                     MessageBox.Show("รหัสไม่ถูกต้อง หรือยอดเงินที่ค้ำได้ไม่เพียงพอ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     TBTeacherNo.Text = "";
                     TBTeacherNo.Focus();
+
                 }
 
             }
@@ -488,6 +488,8 @@ namespace example.Bank.Loan
                     DGVGuarantor.Rows.Clear();
                     DGVGuarantorCredit.Rows.Clear();
                     Check = 0;
+                    BTOpenfile.Enabled = false;
+                    BPrintLoanDoc.Enabled = false;
                 }
 
             }
@@ -530,7 +532,7 @@ namespace example.Bank.Loan
                     }
                     else
                     {
-                        DialogResult Result = MessageBox.Show("ไม่มีข้อมูล หรือไม่มียอดเงินที่ค้ำได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("ไม่มีข้อมูล หรือไม่มียอดเงินที่ค้ำได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
                 else if (DGVGuarantor.Rows.Count >= 4)
@@ -609,11 +611,11 @@ namespace example.Bank.Loan
             }
             else if (StatusBoxFile == 1)
             {
-                var smb = new SmbFileContainer();
+                var smb = new SmbFileContainer("Loan");
                 if (smb.IsValidConnection())
                 {
-                    smb.SendFile(imgeLocation, "ชื่อ.pdf");
-                    MessageBox.Show("Upload File Complete.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    String Return = smb.SendFile(imgeLocation, "Loan_" + TBTeacherNo.Text + ".pdf");
+                    MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     StatusBoxFile = 0;
                     BTOpenfile.Text = "เปิดไฟล์";
                     label6.Text = "Scan(  ไม่พบ  )";
@@ -628,7 +630,7 @@ namespace example.Bank.Loan
         // กระดาษปริ้น
         private void printDocument1_PrintPage_1(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.Print.PrintPreviewDialog.PrintLoan(e, SQLDefault[5].Replace("{TeacherNo}", id), example.GOODS.Menu.Date[2], example.GOODS.Menu.Monthname, (Convert.ToInt32(example.GOODS.Menu.Date[0]) + 543).ToString(), id);
+            Class.Print.PrintPreviewDialog.PrintLoan(e, SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text), example.GOODS.Menu.Date[2], example.GOODS.Menu.Monthname, (Convert.ToInt32(example.GOODS.Menu.Date[0]) + 543).ToString(), TBTeacherNo.Text);
             //e.HasMorePages = true;
             //Class.Print.PrintPreviewDialog.ExamplePrint(sender,e);
 
@@ -851,8 +853,12 @@ namespace example.Bank.Loan
                     TBTeacherNo.Focus();
                 }
             }
-
-
+            else if (DGVGuarantor.Rows.Count == 0)
+            {
+                MessageBox.Show("โปรดเลือกผู้กู้ ผู้ค้ำก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                tabControl1.SelectedIndex = 0;
+                TBTeacherNo.Focus();
+            }
         }
 
         List<String[]> DGVRow = new List<String[]> { };
@@ -986,7 +992,7 @@ namespace example.Bank.Loan
             LLoanAmount.Text = "(" + LoanAmount + ")";
             LTotal.Text = "" + LoanAmount;
         }
-
+        
         private void BCalculate_Click(object sender, EventArgs e)
         {
             if (DGVGuarantorCredit.Rows.Count > 0 && TBLoanAmount.Text != "")

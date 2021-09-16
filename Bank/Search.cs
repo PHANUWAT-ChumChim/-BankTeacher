@@ -17,7 +17,7 @@ namespace example.Bank
         /// <para>[AllTeacher_or_Member]</para> 
         /// <para>ถ้าใส่ 0 จะหาอาจารย์ทั้งหมด</para>
         /// <para>ใส่ 1 จะหาแค่อาจารยฺ์ที่สมัครสมาชิกแล้ว ( สถาณะ ใช้งานเท่านั้น ) Return : รหัสอาจารย์ ชื่อ เลขบัตรปชช.</para>
-        /// <para>ใส่ 2 จะหาอาจารย์ที่สมัครสมาชิกแล้ว แต่มีข้อมูลสำหรับการกู้เพิ่มเข้ามา (สถาณะใช้งานเท่านั้น) Return : รหัสอาจารย์ ชื่อ เลขบัตรปชช. สถาณะ เลขที่สัญญากู้ หุ้นสะสม</para>
+        /// <para>ใส่ 2 จะหาอาจารย์ที่สมัครสมาชิกแล้ว แต่มีข้อมูลสำหรับการกู้เพิ่มเข้ามา (สถาณะใช้งานเท่านั้น) Returnyyyyy : รหัสอาจารย์ ชื่อ เลขบัตรปชช. สถาณะ เลขที่สัญญากู้ หุ้นสะสม</para>
         ///</summary>
 
         /// <summary> 
@@ -34,7 +34,8 @@ namespace example.Bank
           " LEFT JOIN BaseData.dbo.tblPrefix as c ON c.PrefixNo = b.PrefixNo  \r\n " +
           " INNER JOIN EmployeeBank.dbo.tblMemberStatus as d on a.MemberStatusNo = d.MemberStatusNo  \r\n " +
           "  WHERE a.TeacherNo LIKE '%T{TeacherNo}%'  or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Name}%'   and a.MemberStatusNo = 1      \r\n " +
-          " ORDER BY a.TeacherNo;  "
+          " ORDER BY a.TeacherNo;  \r\n"+
+          " GROUP BY "
           ,
         };
 
@@ -62,6 +63,7 @@ namespace example.Bank
                 Return = new String[]
                 {
                         dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString(),
+                        dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString(),
                 };
 
                 this.Dispose();
