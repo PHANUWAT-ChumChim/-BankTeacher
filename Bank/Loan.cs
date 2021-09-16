@@ -645,6 +645,7 @@ namespace example.Bank
         
         private void DGVGuarantor_MouseClick(object sender, MouseEventArgs e)
         {
+            //kkkk
             if (e.Button == MouseButtons.Right)
             {
                 int currentMouseOverRow =  DGVGuarantor.HitTest(e.X, e.Y).RowIndex;
