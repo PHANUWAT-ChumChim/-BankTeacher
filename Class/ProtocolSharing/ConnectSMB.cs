@@ -18,9 +18,9 @@ namespace example.Class.ProtocolSharing
             public readonly string networkPath;
             public static String PathFile;
 
-            public SmbFileContainer()
+            public SmbFileContainer(String Location)
             {
-                PathFile = this.networkPath = @"\\166.166.4.189\Newfolder";
+                PathFile = this.networkPath = @"\\166.166.4.189\Newfolder\" + Location + @"\";
                 var userName = "tang1811";
                 var password = "123456789";
                 var domain = "";
@@ -54,7 +54,7 @@ namespace example.Class.ProtocolSharing
                     }
                 }
             }
-            public void SendFile(String LocationFile, String TargetFile)
+            public String SendFile(String LocationFile, String TargetFile)
             {
                 try
                 {
@@ -66,12 +66,26 @@ namespace example.Class.ProtocolSharing
                         {
                             File.Copy(LocationFile, path, true);
                         }
+                        else
+                        {
+                            for (int x = 0; x < x + 1; x++)
+                            {
+                                if (!File.Exists(path.Replace(".pdf", "_" + (x + 1) + ".pdf")))
+                                {
+                                    File.Copy(LocationFile, path
+                                        .Replace(".pdf", "_" + (x + 1) + ".pdf"), true);
+                                    break;
+                                }
+                            }
+
+                        }
+                        return "Upload File Complete";
                     }
 
                 }
-                catch (Exception ex)
+                catch
                 {
-                    Console.WriteLine(ex);
+                    return "UpLoadFail { Error อะ ก็ตามนั้น }";
                 }
             }
         }
