@@ -51,7 +51,9 @@ namespace example.Bank.Loan
             this.label3 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.TBTeacherName = new System.Windows.Forms.TextBox();
-            this.BSaveCancel = new System.Windows.Forms.Button();
+
+            this.button1 = new System.Windows.Forms.Button();
+
             this.DTPStartDate = new System.Windows.Forms.DateTimePicker();
             this.label7 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -166,6 +168,9 @@ namespace example.Bank.Loan
             this.BSearchTeacher.Size = new System.Drawing.Size(43, 43);
             this.BSearchTeacher.TabIndex = 58;
             this.BSearchTeacher.UseVisualStyleBackColor = false;
+
+            this.BSearchTeacher.Click += new System.EventHandler(this.BSearchTeacher_Click_1);
+
             // 
             // label13
             // 
@@ -185,6 +190,9 @@ namespace example.Bank.Loan
             this.TBTeacherNo.Name = "TBTeacherNo";
             this.TBTeacherNo.Size = new System.Drawing.Size(250, 43);
             this.TBTeacherNo.TabIndex = 57;
+
+            this.TBTeacherNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TBTeacherNo_KeyDown);
+
             // 
             // label12
             // 
@@ -305,6 +313,7 @@ namespace example.Bank.Loan
             this.label8.Size = new System.Drawing.Size(83, 40);
             this.label8.TabIndex = 57;
             this.label8.Text = "ชื่อ-สกุล";
+
             // 
             // TBTeacherName
             // 
@@ -316,18 +325,19 @@ namespace example.Bank.Loan
             this.TBTeacherName.Size = new System.Drawing.Size(310, 43);
             this.TBTeacherName.TabIndex = 58;
             // 
-            // BSaveCancel
+            // button1
             // 
-            this.BSaveCancel.BackColor = System.Drawing.Color.White;
-            this.BSaveCancel.Font = new System.Drawing.Font("TH Sarabun New", 19.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BSaveCancel.Location = new System.Drawing.Point(696, 690);
-            this.BSaveCancel.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
-            this.BSaveCancel.Name = "BSaveCancel";
-            this.BSaveCancel.Size = new System.Drawing.Size(173, 65);
-            this.BSaveCancel.TabIndex = 55;
-            this.BSaveCancel.Text = "บันทึก";
-            this.BSaveCancel.UseVisualStyleBackColor = false;
-            this.BSaveCancel.Click += new System.EventHandler(this.BSaveCancel_Click);
+            this.button1.BackColor = System.Drawing.Color.White;
+            this.button1.Font = new System.Drawing.Font("TH Sarabun New", 19.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(696, 690);
+            this.button1.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(173, 65);
+            this.button1.TabIndex = 55;
+            this.button1.Text = "บันทึก";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+
             // 
             // DTPStartDate
             // 

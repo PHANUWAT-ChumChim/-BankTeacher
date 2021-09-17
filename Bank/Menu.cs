@@ -129,12 +129,6 @@ namespace example.GOODS
 
         }
 
-        private void Loan_Click(object sender, EventArgs e)
-        {
-            Bank.Loan.loan Ln = new Bank.Loan.loan();
-            CloseFrom(Ln);
-        }
-
         private void Cancel_Click(object sender, EventArgs e)
         {
             example.Bank.Loan.CancelLoan Cl = new Bank.Loan.CancelLoan();
@@ -145,6 +139,18 @@ namespace example.GOODS
         {
             Bank.Loan.PayLoan Pl = new Bank.Loan.PayLoan();
             CloseFrom(Pl);
+        }
+
+        private void สมครกToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Bank.Loan.loan Ln = new Bank.Loan.loan();
+            CloseFrom(Ln);
+        }
+
+        private void ดขอมลกToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Bank.Loan.InfoLoan If = new Bank.Loan.InfoLoan();
+            CloseFrom(If);
         }
     }
 }

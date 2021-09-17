@@ -59,18 +59,20 @@ namespace example.Bank
             this.BSave = new System.Windows.Forms.Button();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("TH Sarabun New", 24F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(296, 25);
+            this.label2.Location = new System.Drawing.Point(430, 112);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(306, 53);
@@ -113,26 +115,23 @@ namespace example.Bank
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.BExit);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.CBStatus);
-            this.panel1.Controls.Add(this.tabControl1);
             this.panel1.Controls.Add(this.DTPStartDate);
             this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.BSave);
             this.panel1.Controls.Add(this.label2);
-            this.panel1.Location = new System.Drawing.Point(27, 25);
+            this.panel1.Controls.Add(this.panel2);
+            this.panel1.Location = new System.Drawing.Point(21, 25);
             this.panel1.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(900, 541);
+            this.panel1.Size = new System.Drawing.Size(1165, 712);
             this.panel1.TabIndex = 18;
             // 
             // BExit
             // 
             this.BExit.BackColor = System.Drawing.Color.White;
             this.BExit.Font = new System.Drawing.Font("TH Sarabun New", 19.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BExit.Location = new System.Drawing.Point(719, 451);
+            this.BExit.Location = new System.Drawing.Point(675, 302);
             this.BExit.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
             this.BExit.Name = "BExit";
             this.BExit.Size = new System.Drawing.Size(125, 61);
@@ -145,7 +144,7 @@ namespace example.Bank
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(553, 107);
+            this.label1.Location = new System.Drawing.Point(687, 194);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(68, 37);
             this.label1.TabIndex = 52;
@@ -158,7 +157,7 @@ namespace example.Bank
             "สมัครสมาชิก",
             "ปิดใช้งาน",
             "เปิดใช้งาน"});
-            this.CBStatus.Location = new System.Drawing.Point(651, 101);
+            this.CBStatus.Location = new System.Drawing.Point(785, 188);
             this.CBStatus.Name = "CBStatus";
             this.CBStatus.Size = new System.Drawing.Size(193, 39);
             this.CBStatus.TabIndex = 51;
@@ -169,7 +168,7 @@ namespace example.Bank
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabControl1.Location = new System.Drawing.Point(59, 176);
+            this.tabControl1.Location = new System.Drawing.Point(15, 27);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(787, 265);
@@ -372,7 +371,7 @@ namespace example.Bank
             this.DTPStartDate.CalendarFont = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DTPStartDate.Enabled = false;
             this.DTPStartDate.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DTPStartDate.Location = new System.Drawing.Point(159, 101);
+            this.DTPStartDate.Location = new System.Drawing.Point(293, 188);
             this.DTPStartDate.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
             this.DTPStartDate.Name = "DTPStartDate";
             this.DTPStartDate.Size = new System.Drawing.Size(199, 43);
@@ -382,7 +381,7 @@ namespace example.Bank
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(52, 101);
+            this.label7.Location = new System.Drawing.Point(186, 188);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(99, 40);
@@ -393,7 +392,7 @@ namespace example.Bank
             // 
             this.BSave.BackColor = System.Drawing.Color.White;
             this.BSave.Font = new System.Drawing.Font("TH Sarabun New", 19.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BSave.Location = new System.Drawing.Point(250, 451);
+            this.BSave.Location = new System.Drawing.Point(206, 302);
             this.BSave.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
             this.BSave.Name = "BSave";
             this.BSave.Size = new System.Drawing.Size(398, 61);
@@ -417,12 +416,23 @@ namespace example.Bank
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
             // 
+            // panel2
+            // 
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.BExit);
+            this.panel2.Controls.Add(this.tabControl1);
+            this.panel2.Controls.Add(this.BSave);
+            this.panel2.Location = new System.Drawing.Point(173, 252);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(819, 383);
+            this.panel2.TabIndex = 54;
+            // 
             // MemberShip
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(955, 590);
+            this.ClientSize = new System.Drawing.Size(1206, 809);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -440,6 +450,7 @@ namespace example.Bank
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -474,5 +485,6 @@ namespace example.Bank
         private System.Windows.Forms.Button BTPrintfShare;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox TBStartAmountShare;
+        private System.Windows.Forms.Panel panel2;
     }
 }

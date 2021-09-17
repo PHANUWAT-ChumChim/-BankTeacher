@@ -25,6 +25,7 @@ namespace example.Class
             return Type;
         }
     }
+
     class ComboBoxPayment
     {
         public String Name { get; set; }

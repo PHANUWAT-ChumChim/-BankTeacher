@@ -38,6 +38,7 @@ namespace example.GOODS
             this.ขอมลกToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ขอมลสมาชกToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Loan = new System.Windows.Forms.ToolStripMenuItem();
+            this.สมครกToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.จายกToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ดขอมลกToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Cancel = new System.Windows.Forms.ToolStripMenuItem();
@@ -122,6 +123,7 @@ namespace example.GOODS
             // Loan
             // 
             this.Loan.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.สมครกToolStripMenuItem,
             this.จายกToolStripMenuItem,
             this.ดขอมลกToolStripMenuItem,
             this.Cancel});
@@ -130,7 +132,13 @@ namespace example.GOODS
             this.Loan.Name = "Loan";
             this.Loan.Size = new System.Drawing.Size(62, 41);
             this.Loan.Text = "กู้";
-            this.Loan.Click += new System.EventHandler(this.Loan_Click);
+            // 
+            // สมครกToolStripMenuItem
+            // 
+            this.สมครกToolStripMenuItem.Name = "สมครกToolStripMenuItem";
+            this.สมครกToolStripMenuItem.Size = new System.Drawing.Size(224, 42);
+            this.สมครกToolStripMenuItem.Text = "สมัครกู้";
+            this.สมครกToolStripMenuItem.Click += new System.EventHandler(this.สมครกToolStripMenuItem_Click);
             // 
             // จายกToolStripMenuItem
             // 
@@ -144,6 +152,7 @@ namespace example.GOODS
             this.ดขอมลกToolStripMenuItem.Name = "ดขอมลกToolStripMenuItem";
             this.ดขอมลกToolStripMenuItem.Size = new System.Drawing.Size(224, 42);
             this.ดขอมลกToolStripMenuItem.Text = "ดูข้อมุลกู้";
+            this.ดขอมลกToolStripMenuItem.Click += new System.EventHandler(this.ดขอมลกToolStripMenuItem_Click);
             // 
             // Cancel
             // 
@@ -236,5 +245,6 @@ namespace example.GOODS
         private System.Windows.Forms.ToolStripMenuItem จายกToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ดขอมลกToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem Cancel;
+        private System.Windows.Forms.ToolStripMenuItem สมครกToolStripMenuItem;
     }
 }
