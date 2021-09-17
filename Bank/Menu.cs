@@ -140,5 +140,11 @@ namespace example.GOODS
             example.Bank.Loan.CancelLoan Cl = new Bank.Loan.CancelLoan();
             CloseFrom(Cl);
         }
+
+        private void จายกToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Bank.Loan.PayLoan Pl = new Bank.Loan.PayLoan();
+            CloseFrom(Pl);
+        }
     }
 }

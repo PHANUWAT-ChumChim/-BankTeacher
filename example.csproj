@@ -110,6 +110,12 @@
     <Compile Include="Bank\Add Member\ReportCancelMember.Designer.cs">
       <DependentUpon>ReportCancelMember.cs</DependentUpon>
     </Compile>
+    <Compile Include="Bank\Loan\PayLoan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bank\Loan\PayLoan.Designer.cs">
+      <DependentUpon>PayLoan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Bank\Search.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -177,6 +183,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Add Member\ReportCancelMember.resx">
       <DependentUpon>ReportCancelMember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bank\Loan\PayLoan.resx">
+      <DependentUpon>PayLoan.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Search.resx">
       <DependentUpon>Search.cs</DependentUpon>
