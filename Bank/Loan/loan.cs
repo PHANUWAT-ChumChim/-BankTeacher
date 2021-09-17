@@ -928,15 +928,15 @@ namespace example.Bank.Loan
             int SumCreditEdit = 0;
             for (int Num = 0; Num < DGVGuarantorCredit.Rows.Count; Num++)
             {
-                SumCreditEdit += Convert.ToInt32(DGVGuarantorCredit.Rows[Num].Cells[2].Value.ToString());
+                SumCreditEdit += Convert.ToInt32(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString());
             }
 
             SumCreditEdit = Convert.ToInt32(LTotal.Text) - SumCreditEdit;
             if (SumCreditEdit < Convert.ToInt32(LTotal.Text))
-                LTotal.ForeColor = Color.Red;
+                LLackAmount.ForeColor = Color.Red;
             else
-                LTotal.ForeColor = Color.Green;
-            LTotal.Text = "" + SumCreditEdit;
+                LLackAmount.ForeColor = Color.Green;
+            LLackAmount.Text = "" + SumCreditEdit;
 
         }
 
@@ -1030,6 +1030,8 @@ namespace example.Bank.Loan
                     }
                     SumAmountCredit += Convert.ToInt32(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString());
                 }
+
+
                 if (SumAmountCredit != int.Parse(LTotal.Text))
                     LLackAmount.ForeColor = Color.Red;
                 else
