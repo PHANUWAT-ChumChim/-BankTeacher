@@ -1020,29 +1020,48 @@ namespace example.Bank.Loan
                             Result = Difference;
                         else if (CreditAdd < Difference /*&& CheckMinus == false*/)
                             Result = CreditAdd;
-                        //else if (CreditAdd < Difference && CheckMinus == true)
-                        //{
-                        //    CreditAdd /= 2;
-                        //    Result = CreditAdd * -1;
-                        //}
-                        //else if(CreditAdd >= Difference && CheckMinus == true)
-                        //{
-                        //    Result = Difference * -1;
-                        //}
                         else if (Difference < 0)
                         {
+                            CheckMinus = true;
                             Result = Difference/* / (DGVGuarantorCredit.Rows.Count - Num)*/;
-                            //Result *= -1;
                         }
-                        //if()
+                        if(Convert.ToInt32(LLackAmount.Text) < 0)
+                        {
+                            if (Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString()) + Result) <= 0)
+                            {
+                                int ChangeMinus = Convert.ToInt32(Interest * 0.01);
+                                //ChangeMinus += Convert.ToInt32(Result) * -1;
+                                Result = (Convert.ToInt32(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString()) - ChangeMinus) * -1;
+                            }
+                            else
+                                Result = Difference * -1;
 
-                        DGVGuarantorCredit.Rows[Num].Cells[3].Value = Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString()) + Result);
-                        DGVGuarantorCredit.Rows[Num].Cells[2].Value = Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString()) * 100 / Interest);
+                            if (Result < 0)
+                                DGVGuarantorCredit.Rows[Num].Cells[3].Value = Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString()) + Result);
+                            else
+                                DGVGuarantorCredit.Rows[Num].Cells[3].Value = Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString()) - Result);
 
-                        //if (Difference >= 0)
-                        //    Difference -= Result;
-                        //else
-                        Difference -= Result;
+                            DGVGuarantorCredit.Rows[Num].Cells[2].Value = Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString()) * 100 / Interest);
+
+                            if (Result < 0)
+                                Difference -= Result;
+                            else if (Result > 0 && Difference < 0)
+                                Difference += Result;
+                            else if (Difference > 0)
+                                Difference -= Result;
+                        }
+                        else
+                        {
+                            DGVGuarantorCredit.Rows[Num].Cells[3].Value = Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString()) + Result);
+                            DGVGuarantorCredit.Rows[Num].Cells[2].Value = Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString()) * 100 / Interest);
+
+                            //if (Difference >= 0)
+                            //    Difference -= Result;
+                            //else
+                            Difference -= Result;
+                        }
+                        
+
                     }
                     SumAmountCredit += Convert.ToInt32(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString());
                 }
