@@ -51,7 +51,9 @@ namespace example.Bank.Loan
             this.label3 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.TBTeacherName = new System.Windows.Forms.TextBox();
+
             this.button1 = new System.Windows.Forms.Button();
+
             this.DTPStartDate = new System.Windows.Forms.DateTimePicker();
             this.label7 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -166,7 +168,9 @@ namespace example.Bank.Loan
             this.BSearchTeacher.Size = new System.Drawing.Size(43, 43);
             this.BSearchTeacher.TabIndex = 58;
             this.BSearchTeacher.UseVisualStyleBackColor = false;
+
             this.BSearchTeacher.Click += new System.EventHandler(this.BSearchTeacher_Click_1);
+
             // 
             // label13
             // 
@@ -186,7 +190,9 @@ namespace example.Bank.Loan
             this.TBTeacherNo.Name = "TBTeacherNo";
             this.TBTeacherNo.Size = new System.Drawing.Size(250, 43);
             this.TBTeacherNo.TabIndex = 57;
+
             this.TBTeacherNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TBTeacherNo_KeyDown);
+
             // 
             // label12
             // 
@@ -307,6 +313,7 @@ namespace example.Bank.Loan
             this.label8.Size = new System.Drawing.Size(83, 40);
             this.label8.TabIndex = 57;
             this.label8.Text = "ชื่อ-สกุล";
+
             // 
             // TBTeacherName
             // 
@@ -330,6 +337,7 @@ namespace example.Bank.Loan
             this.button1.Text = "บันทึก";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+
             // 
             // DTPStartDate
             // 
@@ -367,7 +375,7 @@ namespace example.Bank.Loan
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.BSaveCancel);
             this.panel1.Controls.Add(this.tabControl1);
             this.panel1.Controls.Add(this.BExit);
             this.panel1.Controls.Add(this.CBStatus);
@@ -510,7 +518,7 @@ namespace example.Bank.Loan
         #endregion
 
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button BSaveCancel;
         private System.Windows.Forms.DateTimePicker DTPStartDate;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label2;

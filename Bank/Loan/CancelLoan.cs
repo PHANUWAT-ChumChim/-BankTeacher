@@ -101,6 +101,7 @@ namespace example.Bank.Loan
             }
         }
 
+
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -148,6 +149,7 @@ namespace example.Bank.Loan
                     Check = 0;
                 }
             }
+
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
