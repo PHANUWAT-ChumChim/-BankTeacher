@@ -146,5 +146,11 @@ namespace example.GOODS
             Bank.Loan.loan Ln = new Bank.Loan.loan();
             CloseFrom(Ln);
         }
+
+        private void ดขอมลกToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Bank.Loan.InfoLoan If = new Bank.Loan.InfoLoan();
+            CloseFrom(If);
+        }
     }
 }

@@ -152,6 +152,7 @@ namespace example.GOODS
             this.ดขอมลกToolStripMenuItem.Name = "ดขอมลกToolStripMenuItem";
             this.ดขอมลกToolStripMenuItem.Size = new System.Drawing.Size(224, 42);
             this.ดขอมลกToolStripMenuItem.Text = "ดูข้อมุลกู้";
+            this.ดขอมลกToolStripMenuItem.Click += new System.EventHandler(this.ดขอมลกToolStripMenuItem_Click);
             // 
             // Cancel
             // 
