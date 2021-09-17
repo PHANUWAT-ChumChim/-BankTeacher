@@ -747,7 +747,7 @@ namespace example.Bank.Loan
         }
         private void DGVGuarantor_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            DGVGuarantorCredit.Rows.Add(DGVGuarantor.Rows[e.RowIndex].Cells[0].Value, DGVGuarantor.Rows[e.RowIndex].Cells[1].Value, "", "", DGVGuarantor.Rows[e.RowIndex].Cells[2].Value);
+            DGVGuarantorCredit.Rows.Add(DGVGuarantor.Rows[e.RowIndex].Cells[0].Value, DGVGuarantor.Rows[e.RowIndex].Cells[1].Value, "0", "0", DGVGuarantor.Rows[e.RowIndex].Cells[2].Value);
         }
 
         DialogResult UserOutCreditLimit = DialogResult.No;
@@ -815,6 +815,7 @@ namespace example.Bank.Loan
                         }
                     }
                 }
+                LTotal.Text = "" + Convert.ToInt32(Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(Convert.ToDouble(TBInterestRate.Text) / 100)) + Convert.ToDouble(TBLoanAmount.Text));
                 BCalculate_Click(sender, new EventArgs());
 
             }
@@ -932,7 +933,7 @@ namespace example.Bank.Loan
             }
 
             SumCreditEdit = Convert.ToInt32(LTotal.Text) - SumCreditEdit;
-            if (SumCreditEdit < Convert.ToInt32(LTotal.Text))
+            if (SumCreditEdit != 0)
                 LLackAmount.ForeColor = Color.Red;
             else
                 LLackAmount.ForeColor = Color.Green;
@@ -1009,17 +1010,32 @@ namespace example.Bank.Loan
                 for (int Num = 0; Num < DGVGuarantorCredit.Rows.Count; Num++)
                 {
                     Double Result = 0;
-                    if (Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString()) < Convert.ToDouble(DGVGuarantor.Rows[Num].Cells[2].Value.ToString()) && SumCredit != Interest)
+                    bool CheckMinus = false;
+                    if (Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString()) <= Convert.ToDouble(DGVGuarantor.Rows[Num].Cells[2].Value.ToString()) && SumCredit != Interest)
                     {
                         Double CreditAdd = Convert.ToDouble(DGVGuarantor.Rows[Num].Cells[2].Value.ToString()) - Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString());
-                        if (CreditAdd >= Difference && Difference > 0)
+
+                        
+                        if (CreditAdd >= Difference && Difference > 0 /*&& CheckMinus == false*/)
                             Result = Difference;
-                        else if (CreditAdd < Difference)
+                        else if (CreditAdd < Difference /*&& CheckMinus == false*/)
                             Result = CreditAdd;
+                        //else if (CreditAdd < Difference && CheckMinus == true)
+                        //{
+                        //    CreditAdd /= 2;
+                        //    Result = CreditAdd * -1;
+                        //}
+                        //else if(CreditAdd >= Difference && CheckMinus == true)
+                        //{
+                        //    Result = Difference * -1;
+                        //}
                         else if (Difference < 0)
                         {
-                            Result = Difference; /*/ (DGVGuarantorCredit.Rows.Count - Num);*/
+                            Result = Difference/* / (DGVGuarantorCredit.Rows.Count - Num)*/;
+                            //Result *= -1;
                         }
+                        //if()
+
                         DGVGuarantorCredit.Rows[Num].Cells[3].Value = Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString()) + Result);
                         DGVGuarantorCredit.Rows[Num].Cells[2].Value = Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString()) * 100 / Interest);
 
