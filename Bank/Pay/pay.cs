@@ -669,15 +669,6 @@ namespace example.GOODS
                     cb[x].Items.Add(new example.Class.ComboBoxPayment(dtPayment.Rows[a][0].ToString(),
                         dtPayment.Rows[a][1].ToString()));
         }
-
-
-
-
-
         //----------------------- End code -------------------//
-
-
-
-
     }
 }
