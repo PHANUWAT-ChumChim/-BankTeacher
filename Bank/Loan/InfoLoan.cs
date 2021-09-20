@@ -16,6 +16,7 @@ namespace example.Bank.Loan
         /// <summary>
         /// <para>[0] SELECT MemberLona  INPUT: {TeacherNo}</para>
         /// <para>[1] SELECT LOAN INPUT: {TeacherNo} </para>
+        /// <para>[2] SELECT Detail Loan INPUT: {LoanID} </para>
         /// </summary>
         private String[] SQLDefault =
         {
@@ -43,6 +44,16 @@ namespace example.Bank.Loan
           " ORDER BY a.LoanNo  "
 
           ,
+          //[2] SELECT Detail Loan INPUT: {LoanID} 
+          "SELECT b.TeacherNo , CAST(d.PrefixName + ' ' + Fname + ' ' + Lname AS NVARCHAR) ,DateAdd, \r\n " +
+          "a.PayDate,MonthPay,YearPay,PayNo,InterestRate,LoanAmount,b.Amount \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo  \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo  \r\n " +
+          "WHERE a.LoanNo = '{LoanID}' and LoanStatusNo != 4  "
+          ,
+
         };
         public InfoLoan()
         {
@@ -122,6 +133,8 @@ namespace example.Bank.Loan
                     textBox3.Text = "";
                     textBox4.Text = "";
                     textBox5.Text = "";
+                    DGVGuarantor.Rows.Clear();
+                    DGVLoanDetail.Rows.Clear();
                     comboBox1.Enabled = false;
                     Check = 0;
                 }
@@ -130,7 +143,48 @@ namespace example.Bank.Loan
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            example.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as example.Class.ComboBoxPayment);
+            DataTable dt = example.Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{LoanID}", Loan.No));
+            if (dt.Rows.Count != 0)
+            {
+                for (int x = 0; x < dt.Rows.Count; x++)
+                {
+                    DGVGuarantor.Rows.Add(dt.Rows[x][0].ToString(), dt.Rows[x][1].ToString(), dt.Rows[x][9].ToString());
+                }
+                textBox1.Text = dt.Rows[0][5].ToString();
+                textBox3.Text = dt.Rows[0][4].ToString();
+                textBox4.Text = (Convert.ToDouble(Convert.ToDouble(dt.Rows[0][8].ToString()) + (Convert.ToDouble(dt.Rows[0][8].ToString()) * Convert.ToDouble(dt.Rows[0][7].ToString()) / 100)).ToString());
+                textBox5.Text = dt.Rows[0][6].ToString();
+                TBInterestRate.Text = dt.Rows[0][7].ToString();
+                DGVLoanDetail.Rows.Clear();
+                int Month = Convert.ToInt32(dt.Rows[0][4].ToString());
+                int Year = Convert.ToInt32(dt.Rows[0][5].ToString());
+                DGVLoanDetail.Rows.Clear();
 
+                Double Interest = Convert.ToDouble(Convert.ToDouble(dt.Rows[0][8].ToString())) * (Convert.ToDouble(dt.Rows[0][7].ToString()) / 100) / Convert.ToDouble(dt.Rows[0][6].ToString());
+
+                int Pay = Convert.ToInt32(Convert.ToDouble(dt.Rows[0][8].ToString()) / Convert.ToInt32(dt.Rows[0][6].ToString()));
+                int SumInstallment = Convert.ToInt32(Pay + Interest);
+
+
+                for (int Num = 0; Num < int.Parse(dt.Rows[0][6].ToString()); Num++)
+                {
+                    if (Month > 12)
+                    {
+                        Month = 1;
+                        Year++;
+                    }
+                    if (Num == Convert.ToInt32(dt.Rows[0][6].ToString()) - 1)
+                    {
+                        Interest = Convert.ToInt32((Convert.ToDouble(dt.Rows[0][8].ToString()) * (Convert.ToDouble(TBInterestRate.Text) / 100)) - (Convert.ToInt32(Interest) * Num));
+                        Pay = Pay * Num;
+                        Pay = Convert.ToInt32(dt.Rows[0][8].ToString()) - Pay;
+                        SumInstallment = Convert.ToInt32(Pay + Interest);
+                    }
+                    DGVLoanDetail.Rows.Add($"{Month}/{Year}", Pay, Convert.ToInt32(Interest), SumInstallment);
+                    Month++;
+                }
+            }
         }
     }
 }

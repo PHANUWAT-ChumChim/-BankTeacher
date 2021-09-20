@@ -426,10 +426,11 @@ namespace example.GOODS
             CBMonth.SelectedIndex = -1;
             CBStatus.SelectedIndex = -1;
             CBStatus.Enabled = false;
+            CBB4Oppay.Enabled = false;
             BTAdd.Enabled = false;
             TBStartAmountShare.Text = string.Empty;
             dataGridView1.Rows.Clear();
-            label5.Text = "0";
+            label5.Text = "";
         }
         // Comment!
         private void dataGridView1_MouseClick(object sender, MouseEventArgs e)
