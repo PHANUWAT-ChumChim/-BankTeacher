@@ -180,17 +180,18 @@ namespace example.Bank.Loan
                 }
 
                 MessageBox.Show("บันทึกข้อมูลเสร็จเรียบร้อยแล้ว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                DGVGuarantor.Rows.Clear();
-                DGVGuarantorCredit.Rows.Clear();
-                DGVLoanDetail.Rows.Clear();
-                CBPayMonth.SelectedIndex = -1;
-                CBPayYear.SelectedIndex = -1;
-                TBLoanAmount.Text = "";
-                tabControl1.SelectedIndex = 0;
-                LGuarantorAmount.Text = "0/4";
-                LLoanAmount.Text = "( )";
-                BTOpenfile.Enabled = true;
                 BPrintLoanDoc.Enabled = true;
+                //DGVGuarantor.Rows.Clear();
+                //DGVGuarantorCredit.Rows.Clear();
+                //DGVLoanDetail.Rows.Clear();
+                //CBPayMonth.SelectedIndex = -1;
+                //CBPayYear.SelectedIndex = -1;
+                //TBLoanAmount.Text = "";
+                //tabControl1.SelectedIndex = 0;
+                //LGuarantorAmount.Text = "0/4";
+                //LLoanAmount.Text = "( )";
+                //BTOpenfile.Enabled = true;
+                //BPrintLoanDoc.Enabled = true;
 
             }
             else
@@ -232,22 +233,13 @@ namespace example.Bank.Loan
                 && CBPayYear.SelectedIndex != -1 && TBPayNo.Text != "" && TBInterestRate.Text != ""))
             {
                 DGVLoanDetail.Rows.Clear();
-                int Month = int.Parse(CBPayMonth.Text), Year = int.Parse(CBPayYear.Text);
-                //กู้รวมดอกเบี้ย
-                Double Total = (Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)) + Convert.ToDouble(TBLoanAmount.Text);
-                //ผ่อนรวมดอกเบี้ย
-                Double Installment = Total / Convert.ToDouble(TBPayNo.Text);
-                //ดอกเบียแต่ละเดือน
+                int Month = int.Parse(CBPayMonth.Text), 
+                    Year = int.Parse(CBPayYear.Text);
+                
                 Double Interest = (Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)) / Convert.ToDouble(TBPayNo.Text);
-                //รวมผ่อนแต่ละเดือน
-                int SumInstallment = 0;
-                int Pay = 0;
-
-                for (int Num = 0; Num < DGVGuarantorCredit.Rows.Count; Num++)
-                {
-                    SumInstallment += Convert.ToInt32((Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[2].Value.ToString()) / 100) * Installment);
-                    Pay += Convert.ToInt32((Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[2].Value.ToString()) / 100) * (Convert.ToDouble(TBLoanAmount.Text) / Convert.ToDouble(TBPayNo.Text)));
-                }
+                
+                int Pay = Convert.ToInt32(TBLoanAmount.Text) / Convert.ToInt32(TBPayNo.Text);
+                int SumInstallment = Convert.ToInt32(Pay + Interest);
 
                 for (int Num = 0; Num < int.Parse(TBPayNo.Text); Num++)
                 {
@@ -258,10 +250,10 @@ namespace example.Bank.Loan
                     }
                     if (Num == Convert.ToInt32(TBPayNo.Text) - 1)
                     {
-                        SumInstallment = SumInstallment * Num;
-                        SumInstallment = Convert.ToInt32(Total - Convert.ToDouble(SumInstallment));
                         Interest = Convert.ToInt32((Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)) - (Convert.ToInt32(Interest) * Num));
-                        Pay = Convert.ToInt32(TBLoanAmount.Text) - Pay * Num;
+                        Pay = Pay * Num;
+                        Pay = Convert.ToInt32(TBLoanAmount.Text) - Pay;
+                        SumInstallment = Convert.ToInt32(Pay + Interest);
                     }
                     DGVLoanDetail.Rows.Add($"{Month}/{Year}", Pay, Convert.ToInt32(Interest), SumInstallment);
                     Month++;
@@ -987,13 +979,24 @@ namespace example.Bank.Loan
         }
 
         private void TBInterestRate_Leave(object sender, EventArgs e)
-        {
+         {
             //Double aa = (Convert.ToDouble(TBInterestRate.Text) / 100);
-            int LoanAmount = Convert.ToInt32(CreditLoanAmount - CreditLoanAmount * (Convert.ToDouble(TBInterestRate.Text) / 100));
-            LLoanAmount.Text = "(" + LoanAmount + ")";
-            LTotal.Text = "" + LoanAmount;
+            if(Double.TryParse(TBInterestRate.Text , out Double Interestrate))
+            {
+                int LoanAmount = Convert.ToInt32(CreditLoanAmount - CreditLoanAmount * (Interestrate / 100));
+                LLoanAmount.Text = "(" + LoanAmount + ")";
+                LTotal.Text = "" + LoanAmount;
+
+                TBLoanAmount_Leave(sender, new EventArgs());
+            }
+            else
+            {
+                MessageBox.Show("ใสจำนวนเปอร์เซ็นต์ไม่ถูกต้อง");
+                TBInterestRate.Text = "";
+            }
+            
         }
-        
+
         private void BCalculate_Click(object sender, EventArgs e)
         {
             if (DGVGuarantorCredit.Rows.Count > 0 && TBLoanAmount.Text != "")
