@@ -18,6 +18,8 @@ namespace example.Bank.Loan
         /// <para>[0] SELECT MemberLona  INPUT: {TeacherNo}</para>
         /// <para>[1] SELECT LOAN INPUT: {TeacherNo} </para>
         /// <para>[2] SELECT Detail Loan INPUT: {LoanNo}</para>
+        /// <para>[3] UPDATE Cancel Loan INPUT: {WhereLoanNo}</para>
+        /// <para>[4] UPDATE Cancel Guarantor INPUT: {WhereLoanNo}</para>
         /// </summary>
         private String[] SQLDefault =
         {
@@ -54,8 +56,16 @@ namespace example.Bank.Loan
           "WHERE a.LoanNo = '{LoanNo} ' and LoanStatusNo != 4 \r\n " +
           " "
           ,
-
-
+          //[3] UPDATE Cancel Loan INPUT: {WhereLoanNo}
+          "UPDATE EmployeeBank.dbo.tblLoan\r\n" +
+          "SET LoanStatusNo = 4\r\n" +
+          "WHERE LoanNo = {WhereLoanNo}"
+          
+          ,
+          //[4] UPDATE Cancel Guarantor INPUT: {WhereLoanNo}
+          "UPDATE EmployeeBank.dbo.tblGuarantor\r\n" +
+          "SET RemainsAmount = 0\r\n" +
+          "WHERE LoanNo = {WhereLoanNo}"
 
         };
 
@@ -176,6 +186,29 @@ namespace example.Bank.Loan
         private void button1_Click(object sender, EventArgs e)
         {
             //เหลือปุ่มจ้า
+        }
+
+        private void BCancelSave_Click(object sender, EventArgs e)
+        {
+            example.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as example.Class.ComboBoxPayment);
+            if (TBTeacherNo.Text != "" && TBTeacherName.Text != "" && textBox6.Text == "ยังไม่ได้จ่าย" && MessageBox.Show("ยืนยันที่จะลบการกู้นี้หรือไม่","ระบบ",MessageBoxButtons.YesNo,MessageBoxIcon.Information) == DialogResult.Yes)
+            {
+                Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
+                    .Replace("{WhereLoanNo}", Loan.No.ToString()));
+
+                Class.SQLConnection.InputSQLMSSQL(SQLDefault[4]
+                    .Replace("{WhereLoanNo}", Loan.No.ToString()));
+
+                TBTeacherNo.Text = "";
+                TBTeacherName.Text = "";
+                comboBox1.Items.Clear();
+                textBox2.Text = "";
+                textBox3.Text = "";
+                textBox4.Text = "";
+                textBox5.Text = "";
+                textBox6.Text = "";
+
+            }
         }
     }
 }

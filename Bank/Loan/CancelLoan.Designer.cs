@@ -51,9 +51,6 @@ namespace example.Bank.Loan
             this.label3 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.TBTeacherName = new System.Windows.Forms.TextBox();
-
-            this.button1 = new System.Windows.Forms.Button();
-
             this.DTPStartDate = new System.Windows.Forms.DateTimePicker();
             this.label7 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -67,6 +64,7 @@ namespace example.Bank.Loan
             this.BExit = new System.Windows.Forms.Button();
             this.CBStatus = new System.Windows.Forms.ComboBox();
             this.BSave = new System.Windows.Forms.Button();
+            this.BCancelSave = new System.Windows.Forms.Button();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -90,7 +88,7 @@ namespace example.Bank.Loan
             this.tabPage1.Location = new System.Drawing.Point(4, 45);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(829, 534);
+            this.tabPage1.Size = new System.Drawing.Size(829, 524);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "ข้อมูล";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -168,9 +166,7 @@ namespace example.Bank.Loan
             this.BSearchTeacher.Size = new System.Drawing.Size(43, 43);
             this.BSearchTeacher.TabIndex = 58;
             this.BSearchTeacher.UseVisualStyleBackColor = false;
-
             this.BSearchTeacher.Click += new System.EventHandler(this.BSearchTeacher_Click_1);
-
             // 
             // label13
             // 
@@ -190,9 +186,7 @@ namespace example.Bank.Loan
             this.TBTeacherNo.Name = "TBTeacherNo";
             this.TBTeacherNo.Size = new System.Drawing.Size(250, 43);
             this.TBTeacherNo.TabIndex = 57;
-
             this.TBTeacherNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TBTeacherNo_KeyDown);
-
             // 
             // label12
             // 
@@ -313,7 +307,6 @@ namespace example.Bank.Loan
             this.label8.Size = new System.Drawing.Size(83, 40);
             this.label8.TabIndex = 57;
             this.label8.Text = "ชื่อ-สกุล";
-
             // 
             // TBTeacherName
             // 
@@ -324,20 +317,6 @@ namespace example.Bank.Loan
             this.TBTeacherName.ReadOnly = true;
             this.TBTeacherName.Size = new System.Drawing.Size(310, 43);
             this.TBTeacherName.TabIndex = 58;
-            // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.White;
-            this.button1.Font = new System.Drawing.Font("TH Sarabun New", 19.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(696, 690);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(173, 65);
-            this.button1.TabIndex = 55;
-            this.button1.Text = "บันทึก";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-
             // 
             // DTPStartDate
             // 
@@ -375,7 +354,7 @@ namespace example.Bank.Loan
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.BSaveCancel);
+            this.panel1.Controls.Add(this.BCancelSave);
             this.panel1.Controls.Add(this.tabControl1);
             this.panel1.Controls.Add(this.BExit);
             this.panel1.Controls.Add(this.CBStatus);
@@ -397,7 +376,7 @@ namespace example.Bank.Loan
             this.tabControl1.Location = new System.Drawing.Point(36, 101);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(837, 583);
+            this.tabControl1.Size = new System.Drawing.Size(837, 573);
             this.tabControl1.TabIndex = 54;
             // 
             // tabPage2
@@ -491,6 +470,16 @@ namespace example.Bank.Loan
             this.BSave.Text = "บันทึก";
             this.BSave.UseVisualStyleBackColor = false;
             // 
+            // BCancelSave
+            // 
+            this.BCancelSave.Location = new System.Drawing.Point(335, 684);
+            this.BCancelSave.Name = "BCancelSave";
+            this.BCancelSave.Size = new System.Drawing.Size(234, 70);
+            this.BCancelSave.TabIndex = 55;
+            this.BCancelSave.Text = "บันทึก";
+            this.BCancelSave.UseVisualStyleBackColor = true;
+            this.BCancelSave.Click += new System.EventHandler(this.BCancelSave_Click);
+            // 
             // CancelLoan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -552,5 +541,6 @@ namespace example.Bank.Loan
         private System.Windows.Forms.TextBox TBTeacherNo;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button BCancelSave;
     }
 }
