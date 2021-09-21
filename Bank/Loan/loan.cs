@@ -181,6 +181,7 @@ namespace example.Bank.Loan
 
                 MessageBox.Show("บันทึกข้อมูลเสร็จเรียบร้อยแล้ว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 BPrintLoanDoc.Enabled = true;
+                TBLoanNo.Text = LoanNo;
                 //DGVGuarantor.Rows.Clear();
                 //DGVGuarantorCredit.Rows.Clear();
                 //DGVLoanDetail.Rows.Clear();
@@ -622,7 +623,7 @@ namespace example.Bank.Loan
         // กระดาษปริ้น
         private void printDocument1_PrintPage_1(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.Print.PrintPreviewDialog.PrintLoan(e, SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text), example.GOODS.Menu.Date[2], example.GOODS.Menu.Monthname, (Convert.ToInt32(example.GOODS.Menu.Date[0]) + 543).ToString(), TBTeacherNo.Text);
+            Class.Print.PrintPreviewDialog.PrintLoan(e, SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text), example.GOODS.Menu.Date[2], example.GOODS.Menu.Monthname, (Convert.ToInt32(example.GOODS.Menu.Date[0]) + 543).ToString(), TBTeacherNo.Text,TBLoanNo.Text);
             //e.HasMorePages = true;
             //Class.Print.PrintPreviewDialog.ExamplePrint(sender,e);
 
@@ -925,12 +926,27 @@ namespace example.Bank.Loan
             }
 
             SumCreditEdit = Convert.ToInt32(LTotal.Text) - SumCreditEdit;
-            if (SumCreditEdit != 0)
+            if (SumCreditEdit > 0)
+            {
                 LLackAmount.ForeColor = Color.Red;
-            else
+                LOutCredit.ForeColor = Color.Green;
+                LLackAmount.Text = SumCreditEdit + "";
+                LOutCredit.Text = 0 + "";
+            }
+            else if (SumCreditEdit < 0)
+            {
                 LLackAmount.ForeColor = Color.Green;
-            LLackAmount.Text = "" + SumCreditEdit;
-
+                LOutCredit.ForeColor = Color.Red;
+                LLackAmount.Text = 0 + "";
+                LOutCredit.Text = SumCreditEdit + "";
+            }
+            else
+            {
+                LLackAmount.ForeColor = Color.Green;
+                LOutCredit.ForeColor = Color.Green;
+                LLackAmount.Text = SumCreditEdit + "";
+                LOutCredit.Text = SumCreditEdit + "";
+            }
         }
 
         private void DGVGuarantorCredit_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
@@ -1067,13 +1083,29 @@ namespace example.Bank.Loan
                     SumAmountCredit += Convert.ToInt32(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString());
                 }
 
-
-                if (SumAmountCredit != int.Parse(LTotal.Text))
+                SumAmountCredit = Convert.ToInt32(LTotal.Text) - SumAmountCredit;
+                if (SumAmountCredit > 0)
+                {
                     LLackAmount.ForeColor = Color.Red;
-                else
+                    LOutCredit.ForeColor = Color.Green;
+                    LLackAmount.Text = SumAmountCredit + "";
+                    LOutCredit.Text = 0 + "";
+                }
+                else if(SumAmountCredit < 0)
+                {
                     LLackAmount.ForeColor = Color.Green;
-
-                LLackAmount.Text = Convert.ToString(Convert.ToInt32(LTotal.Text) - SumAmountCredit);
+                    LOutCredit.ForeColor = Color.Red;
+                    LLackAmount.Text = 0 + "";
+                    LOutCredit.Text = SumAmountCredit + "";
+                }
+                else
+                {
+                    LLackAmount.ForeColor = Color.Green;
+                    LOutCredit.ForeColor = Color.Green;
+                    LLackAmount.Text = SumAmountCredit + "";
+                    LOutCredit.Text = SumAmountCredit + "";
+                }
+                
             }
         }
     }
