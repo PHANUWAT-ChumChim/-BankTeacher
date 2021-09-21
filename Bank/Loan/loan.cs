@@ -1013,7 +1013,6 @@ namespace example.Bank.Loan
                 for (int Num = 0; Num < DGVGuarantorCredit.Rows.Count; Num++)
                 {
                     Double Result = 0;
-                    bool CheckMinus = false;
                     if (Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString()) <= Convert.ToDouble(DGVGuarantor.Rows[Num].Cells[2].Value.ToString()) && SumCredit != Interest)
                     {
                         Double CreditAdd = Convert.ToDouble(DGVGuarantor.Rows[Num].Cells[2].Value.ToString()) - Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString());
@@ -1025,7 +1024,6 @@ namespace example.Bank.Loan
                             Result = CreditAdd;
                         else if (Difference < 0)
                         {
-                            CheckMinus = true;
                             Result = Difference/* / (DGVGuarantorCredit.Rows.Count - Num)*/;
                         }
                         if(Convert.ToInt32(LLackAmount.Text) < 0)
