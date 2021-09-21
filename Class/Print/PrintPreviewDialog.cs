@@ -102,7 +102,7 @@ namespace example.Class.Print
 
         }
 
-        public static void PrintLoan(System.Drawing.Printing.PrintPageEventArgs e, String SQLCode, String Day, String Month, String Year, String TeacherNo)
+        public static void PrintLoan(System.Drawing.Printing.PrintPageEventArgs e, String SQLCode, String Day, String Month, String Year, String TeacherNo, String LoanNo)
         {
             if (TeacherNo != "")
             {
@@ -116,7 +116,7 @@ namespace example.Class.Print
                 int CurrentRows = 0;
                 e.HasMorePages = true;
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLCode);
-                string IDBorrower = dt.Rows[0][0].ToString();
+                //string IDBorrower = dt.Rows[0][0].ToString();
                 string School = "วิทยาลัยเทคโนโลยี อีอีซีเอ็นจิเนีย แหลมฉบัง";
                 String Lender = "นางสาวภาตะวัน บูญจี๊ด";
                 String Borrower = dt.Rows[0][1].ToString();
@@ -145,7 +145,7 @@ namespace example.Class.Print
                     //------------------------
 
 
-                    Class.Print.SetPrintMedtods.CenterRight(e, "สมาชิกเลขที่" + IDBorrower, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), XP, XD);
+                    Class.Print.SetPrintMedtods.CenterRight(e, "สมาชิกเลขที่" + LoanNo, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), XP, XD);
                     Class.Print.SetPrintMedtods.Center(e, Y + (SpacePerRow * CurrentRows++), "สัญญากู้ยืมเงินสวัสดิการพนักงาน", THsarabun30, BrushBlack);
                     Class.Print.SetPrintMedtods.CenterRight(e, "เขียนที่ " + School, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 10, XP, XD);
                     Class.Print.SetPrintMedtods.CenterRight(e, "วันที่ " + Day + " " + Month + " " + Year, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), XP, XD);
