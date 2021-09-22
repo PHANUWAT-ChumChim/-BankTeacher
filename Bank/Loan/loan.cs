@@ -44,6 +44,7 @@ namespace example.Bank.Loan
         /// <para>[4] INSERT Guarantor INPUT: {LoanNo},{TeacherNo},{Amount},{RemainsAmount}</para>
         /// <para>[5] Detail Loan Print  INPUT: TeacherNo</para>
         /// <para>[6] SELECT MemberLona  INPUT: {TeacherNo} </para>
+        /// <para>[7] Delete Loan INPUT: NO </para>
         /// </summary>
         private String[] SQLDefault = new String[]
         {
@@ -105,7 +106,7 @@ namespace example.Bank.Loan
             "LEFT JOIN BaseData.dbo.tblAmphur as f on c.cAmPhurNo = f.AmphurNo \r\n " +
             "LEFT JOIN BaseData.dbo.tblJangWat as g on c.cJangWatNo = g.JangWatNo \r\n " +
             "WHERE a.TeacherNo = '{TeacherNo}' "
-          ,
+            ,
              //[6] SELECT MemberLona  INPUT: {TeacherNo}
             "SELECT a.TeacherNo,CAST(c.PrefixName+''+b.Fname+''+b.Lname as NVARCHAR),d.StartAmount  \r\n "+
             "FROM EmployeeBank.dbo.tblLoan as a  \r\n "+
@@ -114,8 +115,13 @@ namespace example.Bank.Loan
             "LEFT JOIN EmployeeBank.dbo.tblMember as d on a.TeacherNo = d.TeacherNo \r\n "+
             "WHERE a.TeacherNo LIKE 'T{TeacherNo}%'  \r\n "+
             "ORDER BY b.Fname;"
+            ,
+            //[7] Delete Loan INPUT: NO
+            "DELETE FROM EmployeeBank.dbo.tblLoan;\r\n" +
+            "DELETE FROM EmployeeBank.dbo.tblGuarantor\r\n"
+            ,
 
-    };
+        };
 
         //----------------------- PullSQLDate -------------------- ////////
         // ดึงขอมูลวันที่จากฐานข้อมูล
@@ -155,7 +161,8 @@ namespace example.Bank.Loan
 
             }
             if (TBTeacherNo.Text != "" && CBPayMonth.SelectedIndex != -1 && CBPayYear.SelectedIndex != -1 &&
-                TBLoanAmount.Text != "" && TBPayNo.Text != "" && TBInterestRate.Text != "" && DGVGuarantor.Rows.Count == 4 && ((SumPercentGuarantor >= int.Parse(TBLoanAmount.Text)) || UserOutCreditLimit == DialogResult.Yes)/*&& CheckDBNull == true*/)
+                TBLoanAmount.Text != "" && TBPayNo.Text != "" && TBInterestRate.Text != "" && DGVGuarantor.Rows.Count == 4 && ((SumPercentGuarantor >= int.Parse(TBLoanAmount.Text)) || UserOutCreditLimit == DialogResult.Yes) &&
+                Convert.ToInt32(LLackAmount.Text) == 0 && Convert.ToInt32(LOutCredit.Text) == 0)
             {
 
                 DataSet dt = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[3]
@@ -439,6 +446,7 @@ namespace example.Bank.Loan
                     //{
                     credit = int.Parse(dt.Rows[0][2].ToString());
                     //float Percent = 100 / DGVGuarantor.Rows.Count;
+                    DGVGuarantorCredit.Rows.Clear();
                     DGVGuarantor.Rows.Clear();
                     DGVGuarantor.Rows.Add(dt.Rows[0][0], dt.Rows[0][1], credit);
                     TBSavingAmount.Text = credit.ToString();
@@ -753,8 +761,9 @@ namespace example.Bank.Loan
             if (CheckNum == true && DGVGuarantor.Rows.Count > 0)
             {
                 Double Percent = 100 / LoanAmount * int.Parse(DGVGuarantor.Rows[0].Cells[2].Value.ToString());
-                if (int.Parse(DGVGuarantor.Rows[0].Cells[2].Value.ToString()) >= LoanAmount)
-                    Percent = 50;
+                //if (int.Parse(DGVGuarantor.Rows[0].Cells[2].Value.ToString()) >= LoanAmount)
+                Percent = 50;
+                
 
                 Double lastRow = 0;
                 for (int Num = 0; Num < DGVGuarantorCredit.Rows.Count; Num++)
@@ -780,6 +789,7 @@ namespace example.Bank.Loan
 
                     DGVGuarantorCredit.Rows[Num].Cells[2].Value = Convert.ToInt32(Percent);
                     DGVGuarantorCredit.Rows[Num].Cells[3].Value = Convert.ToInt32(LoanAmount * Percent / 100);
+                    
 
                     if (lastRow < 100 && Num == DGVGuarantorCredit.Rows.Count - 1)
                     {
@@ -1010,7 +1020,13 @@ namespace example.Bank.Loan
                 MessageBox.Show("ใสจำนวนเปอร์เซ็นต์ไม่ถูกต้อง");
                 TBInterestRate.Text = "";
             }
-            
+        }
+
+        private void Delete_Click_1(object sender, EventArgs e)
+        {
+            //String DeleteLoan = "DELETE FROM EmployeeBank.dbo.tblLoan";
+            //String DeleteGuarantor = "DELETE FROM EmployeeBank.dbo.tblGuarantor";
+            Class.SQLConnection.InputSQLMSSQL(SQLDefault[7]);
         }
 
         private void BCalculate_Click(object sender, EventArgs e)
@@ -1072,9 +1088,6 @@ namespace example.Bank.Loan
                             DGVGuarantorCredit.Rows[Num].Cells[3].Value = Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString()) + Result);
                             DGVGuarantorCredit.Rows[Num].Cells[2].Value = Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString()) * 100 / Interest);
 
-                            //if (Difference >= 0)
-                            //    Difference -= Result;
-                            //else
                             Difference -= Result;
                         }
                         
