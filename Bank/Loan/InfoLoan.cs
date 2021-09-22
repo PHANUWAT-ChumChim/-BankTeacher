@@ -45,8 +45,8 @@ namespace example.Bank.Loan
 
           ,
           //[2] SELECT Detail Loan INPUT: {LoanID} 
-          "SELECT b.TeacherNo , CAST(d.PrefixName + ' ' + Fname + ' ' + Lname AS NVARCHAR) ,DateAdd, \r\n " +
-          "a.PayDate,MonthPay,YearPay,PayNo,InterestRate,LoanAmount,b.Amount \r\n " +
+          "SELECT b.TeacherNo , CAST(d.PrefixName + ' ' + Fname + ' ' + Lname AS NVARCHAR) ,CAST(DateAdd as date), \r\n " +
+          "a.PayDate,MonthPay,YearPay,PayNo,InterestRate,LoanAmount,b.Amount,a.LoanStatusNo \r\n " +
           "FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo  \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo \r\n " +
@@ -84,6 +84,21 @@ namespace example.Bank.Loan
                         cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + (x + 1), dt.Rows[x][0].ToString()));
                     }
                 }
+                comboBox1.Items.Clear();
+                comboBox1.SelectedIndex = -1;
+                TBTeacherName.Text = "";
+                textBox1.Text = "";
+                textBox2.Text = "";
+                textBox3.Text = "";
+                textBox4.Text = "";
+                textBox5.Text = "";
+                TBLoanStatus.Text = "";
+                TBLoanNo.Text = "";
+                TBSavingAmount.Text = "";
+                DGVGuarantor.Rows.Clear();
+                DGVLoanDetail.Rows.Clear();
+                comboBox1.Enabled = false;
+                Check = 0;
             }
             catch (Exception x)
             {
@@ -97,6 +112,7 @@ namespace example.Bank.Loan
             {
                 if (TBTeacherNo.Text.Length == 6)
                 {
+                    DGVGuarantor.Rows.Clear();
                     DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text));
                     if (dt.Rows.Count != 0)
                     {
@@ -133,6 +149,9 @@ namespace example.Bank.Loan
                     textBox3.Text = "";
                     textBox4.Text = "";
                     textBox5.Text = "";
+                    TBLoanStatus.Text = "";
+                    TBLoanNo.Text = "";
+                    TBSavingAmount.Text = "";
                     DGVGuarantor.Rows.Clear();
                     DGVLoanDetail.Rows.Clear();
                     comboBox1.Enabled = false;
@@ -145,17 +164,21 @@ namespace example.Bank.Loan
         {
             example.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as example.Class.ComboBoxPayment);
             DataTable dt = example.Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{LoanID}", Loan.No));
+            DGVGuarantor.Rows.Clear();
             if (dt.Rows.Count != 0)
             {
                 for (int x = 0; x < dt.Rows.Count; x++)
                 {
                     DGVGuarantor.Rows.Add(dt.Rows[x][0].ToString(), dt.Rows[x][1].ToString(), dt.Rows[x][9].ToString());
                 }
+                TBLoanNo.Text = Loan.No;
                 textBox1.Text = dt.Rows[0][5].ToString();
                 textBox3.Text = dt.Rows[0][4].ToString();
                 textBox4.Text = (Convert.ToDouble(Convert.ToDouble(dt.Rows[0][8].ToString()) + (Convert.ToDouble(dt.Rows[0][8].ToString()) * Convert.ToDouble(dt.Rows[0][7].ToString()) / 100)).ToString());
                 textBox5.Text = dt.Rows[0][6].ToString();
                 TBInterestRate.Text = dt.Rows[0][7].ToString();
+                TBLoanStatus.Text = dt.Rows[0][10].ToString();
+                TBSavingAmount.Text = dt.Rows[0][2].ToString();
                 DGVLoanDetail.Rows.Clear();
                 int Month = Convert.ToInt32(dt.Rows[0][4].ToString());
                 int Year = Convert.ToInt32(dt.Rows[0][5].ToString());
@@ -186,5 +209,6 @@ namespace example.Bank.Loan
                 }
             }
         }
+
     }
 }

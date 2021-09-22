@@ -72,6 +72,8 @@ namespace example.Bank.Loan
             this.label13 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.LOutCredit = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
             this.LLackAmount = new System.Windows.Forms.Label();
             this.LTotal = new System.Windows.Forms.Label();
             this.label18 = new System.Windows.Forms.Label();
@@ -124,8 +126,7 @@ namespace example.Bank.Loan
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.DGV1112 = new System.Windows.Forms.DataGridView();
-            this.label19 = new System.Windows.Forms.Label();
-            this.LOutCredit = new System.Windows.Forms.Label();
+            this.Delete = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -149,6 +150,7 @@ namespace example.Bank.Loan
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.Delete);
             this.panel1.Controls.Add(this.BSave);
             this.panel1.Controls.Add(this.tabControl1);
             this.panel1.Controls.Add(this.panel7);
@@ -502,21 +504,43 @@ namespace example.Bank.Loan
             this.tabPage5.Text = "กำหนดจำนวนเงินค้ำ";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // LOutCredit
+            // 
+            this.LOutCredit.AutoSize = true;
+            this.LOutCredit.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LOutCredit.Location = new System.Drawing.Point(908, 254);
+            this.LOutCredit.Name = "LOutCredit";
+            this.LOutCredit.Size = new System.Drawing.Size(28, 40);
+            this.LOutCredit.TabIndex = 5;
+            this.LOutCredit.Text = "0";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.Location = new System.Drawing.Point(811, 254);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(104, 40);
+            this.label19.TabIndex = 5;
+            this.label19.Text = "ยอดที่เกิน";
+            // 
             // LLackAmount
             // 
             this.LLackAmount.AutoSize = true;
+            this.LLackAmount.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LLackAmount.Location = new System.Drawing.Point(607, 254);
             this.LLackAmount.Name = "LLackAmount";
-            this.LLackAmount.Size = new System.Drawing.Size(28, 37);
+            this.LLackAmount.Size = new System.Drawing.Size(28, 40);
             this.LLackAmount.TabIndex = 4;
             this.LLackAmount.Text = "0";
             // 
             // LTotal
             // 
             this.LTotal.AutoSize = true;
+            this.LTotal.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LTotal.Location = new System.Drawing.Point(294, 257);
             this.LTotal.Name = "LTotal";
-            this.LTotal.Size = new System.Drawing.Size(28, 37);
+            this.LTotal.Size = new System.Drawing.Size(28, 40);
             this.LTotal.TabIndex = 4;
             this.LTotal.Text = "0";
             // 
@@ -1110,23 +1134,15 @@ namespace example.Bank.Loan
             this.DGV1112.Size = new System.Drawing.Size(992, 315);
             this.DGV1112.TabIndex = 1;
             // 
-            // label19
+            // Delete
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(811, 254);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(91, 37);
-            this.label19.TabIndex = 5;
-            this.label19.Text = "ยอดที่เกิน";
-            // 
-            // LOutCredit
-            // 
-            this.LOutCredit.AutoSize = true;
-            this.LOutCredit.Location = new System.Drawing.Point(908, 254);
-            this.LOutCredit.Name = "LOutCredit";
-            this.LOutCredit.Size = new System.Drawing.Size(28, 37);
-            this.LOutCredit.TabIndex = 5;
-            this.LOutCredit.Text = "0";
+            this.Delete.Location = new System.Drawing.Point(694, 147);
+            this.Delete.Name = "Delete";
+            this.Delete.Size = new System.Drawing.Size(249, 50);
+            this.Delete.TabIndex = 100;
+            this.Delete.Text = "ล้างข้อมูล";
+            this.Delete.UseVisualStyleBackColor = true;
+            this.Delete.Click += new System.EventHandler(this.Delete_Click_1);
             // 
             // loan
             // 
@@ -1259,5 +1275,6 @@ namespace example.Bank.Loan
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.Label LOutCredit;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Button Delete;
     }
 }
