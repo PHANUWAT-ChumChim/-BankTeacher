@@ -58,6 +58,7 @@ namespace example.Bank.Loan
         public InfoLoan()
         {
             InitializeComponent();
+            
         }
 
         private void BSearchTeacher_Click(object sender, EventArgs e)
