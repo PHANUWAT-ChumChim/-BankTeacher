@@ -1029,6 +1029,11 @@ namespace example.Bank.Loan
             Class.SQLConnection.InputSQLMSSQL(SQLDefault[7]);
         }
 
+        private void panel7_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
         private void BCalculate_Click(object sender, EventArgs e)
         {
             if (DGVGuarantorCredit.Rows.Count > 0 && TBLoanAmount.Text != "")
