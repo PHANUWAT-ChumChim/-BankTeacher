@@ -161,7 +161,9 @@ namespace example.Bank.Loan
             // 
             // Delete
             // 
-            this.Delete.Location = new System.Drawing.Point(694, 147);
+            this.Delete.BackColor = System.Drawing.Color.White;
+            this.Delete.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Delete.Location = new System.Drawing.Point(892, 151);
             this.Delete.Name = "Delete";
             this.Delete.Size = new System.Drawing.Size(249, 50);
             this.Delete.TabIndex = 100;
@@ -285,6 +287,7 @@ namespace example.Bank.Loan
             // DGVGuarantor
             // 
             this.DGVGuarantor.AllowUserToAddRows = false;
+            this.DGVGuarantor.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DGVGuarantor.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DGVGuarantor.BackgroundColor = System.Drawing.Color.White;
@@ -588,6 +591,7 @@ namespace example.Bank.Loan
             // 
             this.DGVGuarantorCredit.AllowUserToAddRows = false;
             this.DGVGuarantorCredit.AllowUserToDeleteRows = false;
+            this.DGVGuarantorCredit.AllowUserToResizeRows = false;
             dataGridViewCellStyle5.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DGVGuarantorCredit.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             this.DGVGuarantorCredit.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
@@ -677,6 +681,7 @@ namespace example.Bank.Loan
             // 
             this.DGVLoanDetail.AllowUserToAddRows = false;
             this.DGVLoanDetail.AllowUserToDeleteRows = false;
+            this.DGVLoanDetail.AllowUserToResizeRows = false;
             dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle11.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -968,6 +973,7 @@ namespace example.Bank.Loan
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(1165, 134);
             this.panel7.TabIndex = 63;
+            this.panel7.Paint += new System.Windows.Forms.PaintEventHandler(this.panel7_Paint);
             // 
             // TBSavingAmount
             // 
