@@ -1328,9 +1328,7 @@ namespace example.Bank.Loan
         private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
 
-        private System.Windows.Forms.Label LOutCredit;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Button Delete;
+     
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Button button2;
 
