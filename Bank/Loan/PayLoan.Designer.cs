@@ -437,7 +437,7 @@ namespace example.Bank.Loan
             this.BSearchTeacher.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BSearchTeacher.Font = new System.Drawing.Font("TH Sarabun New", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BSearchTeacher.ImageKey = "(none)";
-            this.BSearchTeacher.Location = new System.Drawing.Point(309, 7);
+            this.BSearchTeacher.Location = new System.Drawing.Point(308, 15);
             this.BSearchTeacher.Margin = new System.Windows.Forms.Padding(3, 7, 3, 7);
             this.BSearchTeacher.Name = "BSearchTeacher";
             this.BSearchTeacher.Size = new System.Drawing.Size(48, 43);

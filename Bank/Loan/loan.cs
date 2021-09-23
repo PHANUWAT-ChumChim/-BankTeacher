@@ -279,7 +279,7 @@ namespace example.Bank.Loan
                 }
 
             }
-            if(tabControl1.SelectedIndex == 2)
+            if(tabControl1.SelectedIndex >= 2)
             {
                 try
                 {
@@ -429,10 +429,9 @@ namespace example.Bank.Loan
                     DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("T{TeacherNo}%", name));
                     if (dt.Rows.Count != 0)
                     {
-                        TBTeacherNamePrint.Text = dt.Rows[0][1].ToString();
                         id = dt.Rows[0][0].ToString();
                         BPrintLoanDoc.Enabled = true;
-                        BTOpenfile.Enabled = true;
+                      
                     }
 
                 }
@@ -442,14 +441,7 @@ namespace example.Bank.Loan
                 Console.WriteLine(x);
             }
         }
-        private void BTdeleteText_Click(object sender, EventArgs e)
-        {
-            TBTeacherNamePrint.Clear();
-            BPrintLoanDoc.Enabled = false;
-            BTOpenfile.Enabled = false;
-            label9.Text = "Scan(  ไม่พบ  )";
-
-        }
+      
         //TB ใส่ ID คนกู้ มี event การกด
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
         {
@@ -522,7 +514,7 @@ namespace example.Bank.Loan
                     DGVGuarantor.Rows.Clear();
                     DGVGuarantorCredit.Rows.Clear();
                     Check = 0;
-                    BTOpenfile.Enabled = false;
+                  
                     BPrintLoanDoc.Enabled = false;
                 }
 
@@ -609,9 +601,9 @@ namespace example.Bank.Loan
         private void BPrintLoanDoc_Click_2(object sender, EventArgs e)
         {
             label9.Text = "Scan(  พบไฟล์  )";
+            P1 = 1;
             if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
             {
-                P1 = 1;
                 printDocument1.Print();
             }
         }
@@ -619,6 +611,7 @@ namespace example.Bank.Loan
         {
             if (DGVLoanDetail.Rows.Count != 0)
             {
+                P1 = 0;
                 if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                 {
                     printDocument1.Print();
@@ -645,9 +638,9 @@ namespace example.Bank.Loan
                     }
                     if (imgeLocation != "")
                     {
-                        BTOpenfile.Text = "ส่งไฟล์";
+                       
                         StatusBoxFile = 1;
-                        label6.Text = "Scan(  พบไฟล์  )";
+                
                     }
 
                 }
@@ -664,8 +657,7 @@ namespace example.Bank.Loan
                     String Return = smb.SendFile(imgeLocation, "Loan_" + TBTeacherNo.Text + ".pdf");
                     MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     StatusBoxFile = 0;
-                    BTOpenfile.Text = "เปิดไฟล์";
-                    label6.Text = "Scan(  ไม่พบ  )";
+                 
                     imgeLocation = "";
                 }
                 else
@@ -680,6 +672,7 @@ namespace example.Bank.Loan
             if (P1 == 1) 
             {
                 Class.Print.PrintPreviewDialog.PrintLoan(e, SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text), example.GOODS.Menu.Date[2], example.GOODS.Menu.Monthname, (Convert.ToInt32(example.GOODS.Menu.Date[0]) + 543).ToString(), TBTeacherNo.Text, TBLoanNo.Text);
+                
             }
             else
             {
@@ -829,12 +822,12 @@ namespace example.Bank.Loan
                     TBTeacherNo.Focus();
                 }
             }
-            else if (DGVGuarantor.Rows.Count == 0)
-            {
-                MessageBox.Show("โปรดเลือกผู้กู้ ผู้ค้ำก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                tabControl1.SelectedIndex = 0;
-                TBTeacherNo.Focus();
-            }
+            //else if (DGVGuarantor.Rows.Count == 0)
+            //{
+            //    MessageBox.Show("โปรดเลือกผู้กู้ ผู้ค้ำก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    tabControl1.SelectedIndex = 0;
+            //    TBTeacherNo.Focus();
+            //}
 
             bool CheckNum = Double.TryParse(TBLoanAmount.Text, out Double LoanAmount);
             LoanAmount = LoanAmount * Convert.ToDouble((Convert.ToDouble(TBInterestRate.Text) / 100)) + LoanAmount;
@@ -1039,8 +1032,7 @@ namespace example.Bank.Loan
         private void BTdeletefile_Click(object sender, EventArgs e)
         {
             StatusBoxFile = 0;
-            BTOpenfile.Text = "เปิดไฟล์";
-            label6.Text = "Scan(  ไม่พบ  )";
+        
             imgeLocation = "";
         }
 
@@ -1078,6 +1070,7 @@ namespace example.Bank.Loan
             {
                 MessageBox.Show("ใสจำนวนเปอร์เซ็นต์ไม่ถูกต้อง");
                 TBInterestRate.Text = "";
+                TBInterestRate.Focus();
             }
         }
 
