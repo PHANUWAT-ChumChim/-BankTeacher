@@ -16,6 +16,7 @@ namespace example.GOODS
         public static int startAmountMax;
         public static int DateAmountChange;
         public static string FontSize;
+        public static int MinLoan;
         public static String[] Date;
         public static String Monthname;
         public static String[] Month = { "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" };
@@ -28,7 +29,7 @@ namespace example.GOODS
         private String[] SQLDefault = new String[]
          { 
              //[0]Check Setting INPUT: - 
-             "SELECT DateAmountChange , StartAmountMin , StartAmountMax \r\n" +
+             "SELECT DateAmountChange , StartAmountMin , StartAmountMax,MinLoan \r\n" +
              "FROM EmployeeBank.dbo.tblSettingAmount;"
           ,
              //[1]Select Date InWput :  -
@@ -44,10 +45,11 @@ namespace example.GOODS
 
             Class.UserInfo.SetTeacherInformation("T53036", "John YouSuck", "1");
 
-                dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]);
-                DateAmountChange = Convert.ToInt32(dt.Rows[0][0]);
-                startAmountMin = Convert.ToInt32(dt.Rows[0][1]);
-                startAmountMax = Convert.ToInt32(dt.Rows[0][2]);
+            dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]);
+            DateAmountChange = Convert.ToInt32(dt.Rows[0][0]);
+            startAmountMin = Convert.ToInt32(dt.Rows[0][1]);
+            startAmountMax = Convert.ToInt32(dt.Rows[0][2]);
+            MinLoan = Convert.ToInt32(dt.Rows[0][3]);
         }
         public void CloseFrom(Form F)
         {

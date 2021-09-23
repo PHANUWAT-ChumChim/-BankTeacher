@@ -74,12 +74,6 @@ namespace example.Bank.Loan
             InitializeComponent();
         }
 
-        private void CancelLoan_Load(object sender, EventArgs e)
-        {
-            Class.FromSettingMedtod.ChangeSizePanal(this, panel1);
-        }
-
-
         private void BSearchTeacher_Click_1(object sender, EventArgs e)
         {
             Bank.Search IN;
@@ -149,7 +143,6 @@ namespace example.Bank.Loan
                     comboBox1.Items.Clear();
                     comboBox1.SelectedIndex = -1;
                     TBTeacherName.Text = "";
-                    textBox1.Text = "";
                     textBox2.Text = "";
                     textBox3.Text = "";
                     textBox4.Text = "";
@@ -209,6 +202,11 @@ namespace example.Bank.Loan
                 textBox6.Text = "";
 
             }
+        }
+
+        private void CancelLoan_SizeChanged(object sender, EventArgs e)
+        {
+            Class.FromSettingMedtod.ChangeSizePanal(this, panel1);
         }
     }
 }

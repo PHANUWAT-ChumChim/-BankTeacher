@@ -214,6 +214,7 @@ namespace example.Bank.Loan
             }
         }
 
+
         private void BTOpenfile_Click(object sender, EventArgs e)
         {
             if (StatusBoxFile == 0)
@@ -265,6 +266,10 @@ namespace example.Bank.Loan
             BTOpenfile.Text = "เปิดไฟล์";
             label6.Text = "Scan(  ไม่พบ  )";
             imgeLocation = "";
+
+        private void PayLoan_SizeChanged(object sender, EventArgs e)
+        {
+            Class.FromSettingMedtod.ChangeSizePanal(this, panel1);
         }
     }
 }

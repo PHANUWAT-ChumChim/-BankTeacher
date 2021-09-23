@@ -13,13 +13,6 @@ namespace example.Bank
     public partial class Search : Form
     {
         public static String[] Return = { "" };
-        ///<summary>
-        /// <para>[AllTeacher_or_Member]</para> 
-        /// <para>ถ้าใส่ 0 จะหาอาจารย์ทั้งหมด</para>
-        /// <para>ใส่ 1 จะหาแค่อาจารยฺ์ที่สมัครสมาชิกแล้ว ( สถาณะ ใช้งานเท่านั้น ) Return : รหัสอาจารย์ ชื่อ เลขบัตรปชช.</para>
-        /// <para>ใส่ 2 จะหาอาจารย์ที่สมัครสมาชิกแล้ว แต่มีข้อมูลสำหรับการกู้เพิ่มเข้ามา (สถาณะใช้งานเท่านั้น) Returnyyyyy : รหัสอาจารย์ ชื่อ เลขบัตรปชช. สถาณะ เลขที่สัญญากู้ หุ้นสะสม</para>
-        ///</summary>
-
         /// <summary> 
         /// SQLDafault 
         /// <para>[0] SELECT Detail Member INPUT: {TeacherNo} {Name} </para>
