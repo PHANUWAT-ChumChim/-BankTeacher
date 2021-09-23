@@ -44,6 +44,7 @@ namespace example.Bank.Loan
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.Delete = new System.Windows.Forms.Button();
             this.BSave = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -126,7 +127,6 @@ namespace example.Bank.Loan
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.DGV1112 = new System.Windows.Forms.DataGridView();
-            this.Delete = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -158,6 +158,16 @@ namespace example.Bank.Loan
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1165, 712);
             this.panel1.TabIndex = 99;
+            // 
+            // Delete
+            // 
+            this.Delete.Location = new System.Drawing.Point(694, 147);
+            this.Delete.Name = "Delete";
+            this.Delete.Size = new System.Drawing.Size(249, 50);
+            this.Delete.TabIndex = 100;
+            this.Delete.Text = "ล้างข้อมูล";
+            this.Delete.UseVisualStyleBackColor = true;
+            this.Delete.Click += new System.EventHandler(this.Delete_Click_1);
             // 
             // BSave
             // 
@@ -1133,16 +1143,6 @@ namespace example.Bank.Loan
             this.DGV1112.RowTemplate.Height = 24;
             this.DGV1112.Size = new System.Drawing.Size(992, 315);
             this.DGV1112.TabIndex = 1;
-            // 
-            // Delete
-            // 
-            this.Delete.Location = new System.Drawing.Point(694, 147);
-            this.Delete.Name = "Delete";
-            this.Delete.Size = new System.Drawing.Size(249, 50);
-            this.Delete.TabIndex = 100;
-            this.Delete.Text = "ล้างข้อมูล";
-            this.Delete.UseVisualStyleBackColor = true;
-            this.Delete.Click += new System.EventHandler(this.Delete_Click_1);
             // 
             // loan
             // 
