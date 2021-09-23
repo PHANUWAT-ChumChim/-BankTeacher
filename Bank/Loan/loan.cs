@@ -279,7 +279,7 @@ namespace example.Bank.Loan
                 }
 
             }
-            if(tabControl1.SelectedIndex == 2)
+            if(tabControl1.SelectedIndex >= 2)
             {
                 try
                 {
@@ -833,12 +833,12 @@ namespace example.Bank.Loan
                     TBTeacherNo.Focus();
                 }
             }
-            else if (DGVGuarantor.Rows.Count == 0)
-            {
-                MessageBox.Show("โปรดเลือกผู้กู้ ผู้ค้ำก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                tabControl1.SelectedIndex = 0;
-                TBTeacherNo.Focus();
-            }
+            //else if (DGVGuarantor.Rows.Count == 0)
+            //{
+            //    MessageBox.Show("โปรดเลือกผู้กู้ ผู้ค้ำก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //    tabControl1.SelectedIndex = 0;
+            //    TBTeacherNo.Focus();
+            //}
 
             bool CheckNum = Double.TryParse(TBLoanAmount.Text, out Double LoanAmount);
             LoanAmount = LoanAmount * Convert.ToDouble((Convert.ToDouble(TBInterestRate.Text) / 100)) + LoanAmount;
@@ -1082,6 +1082,7 @@ namespace example.Bank.Loan
             {
                 MessageBox.Show("ใสจำนวนเปอร์เซ็นต์ไม่ถูกต้อง");
                 TBInterestRate.Text = "";
+                TBInterestRate.Focus();
             }
         }
 
