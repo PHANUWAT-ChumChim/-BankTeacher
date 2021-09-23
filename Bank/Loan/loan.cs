@@ -164,7 +164,7 @@ namespace example.Bank.Loan
             }
             if (TBTeacherNo.Text != "" && CBPayMonth.SelectedIndex != -1 && CBPayYear.SelectedIndex != -1 &&
                 TBLoanAmount.Text != "" && TBPayNo.Text != "" && TBInterestRate.Text != "" && DGVGuarantor.Rows.Count == 4 && ((SumPercentGuarantor >= int.Parse(TBLoanAmount.Text)) || UserOutCreditLimit == DialogResult.Yes) &&
-                Convert.ToInt32(LLackAmount.Text) == 0 && Convert.ToInt32(LOutCredit.Text) == 0)
+                Convert.ToInt32(LLackAmount.Text) == 0 && Convert.ToInt32(LOutCredit.Text) == 0 && Int32.TryParse(TBLoanAmount.Text, out int x ) && x >= example.GOODS.Menu.MinLoan)
             {
 
                 DataSet dt = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[3]
@@ -239,35 +239,63 @@ namespace example.Bank.Loan
         // Comment!
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControl1.SelectedIndex == 3 && (TBLoanAmount.Text != "" && CBPayMonth.SelectedIndex != -1
+            if (tabControl1.SelectedIndex == 3 && (CBPayMonth.SelectedIndex != -1
                 && CBPayYear.SelectedIndex != -1 && TBPayNo.Text != "" && TBInterestRate.Text != ""))
             {
-                DGVLoanDetail.Rows.Clear();
-                int Month = int.Parse(CBPayMonth.Text), 
-                    Year = int.Parse(CBPayYear.Text);
-                
-                Double Interest = (Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)) / Convert.ToDouble(TBPayNo.Text);
-                
-                int Pay = Convert.ToInt32(TBLoanAmount.Text) / Convert.ToInt32(TBPayNo.Text);
-                int SumInstallment = Convert.ToInt32(Pay + Interest);
-
-                for (int Num = 0; Num < int.Parse(TBPayNo.Text); Num++)
+                if (TBLoanAmount.Text != "" && Convert.ToInt32(TBLoanAmount.Text) >= example.GOODS.Menu.MinLoan)
                 {
-                    if (Month > 12)
+                    DGVLoanDetail.Rows.Clear();
+                    int Month = int.Parse(CBPayMonth.Text),
+                        Year = int.Parse(CBPayYear.Text);
+
+                    Double Interest = (Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)) / Convert.ToDouble(TBPayNo.Text);
+
+                    int Pay = Convert.ToInt32(TBLoanAmount.Text) / Convert.ToInt32(TBPayNo.Text);
+                    int SumInstallment = Convert.ToInt32(Pay + Interest);
+
+                    for (int Num = 0; Num < int.Parse(TBPayNo.Text); Num++)
                     {
-                        Month = 1;
-                        Year++;
+                        if (Month > 12)
+                        {
+                            Month = 1;
+                            Year++;
+                        }
+                        if (Num == Convert.ToInt32(TBPayNo.Text) - 1)
+                        {
+                            Interest = Convert.ToInt32((Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)) - (Convert.ToInt32(Interest) * Num));
+                            Pay = Pay * Num;
+                            Pay = Convert.ToInt32(TBLoanAmount.Text) - Pay;
+                            SumInstallment = Convert.ToInt32(Pay + Interest);
+                        }
+                        DGVLoanDetail.Rows.Add($"{Month}/{Year}", Pay, Convert.ToInt32(Interest), SumInstallment);
+                        Month++;
                     }
-                    if (Num == Convert.ToInt32(TBPayNo.Text) - 1)
-                    {
-                        Interest = Convert.ToInt32((Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)) - (Convert.ToInt32(Interest) * Num));
-                        Pay = Pay * Num;
-                        Pay = Convert.ToInt32(TBLoanAmount.Text) - Pay;
-                        SumInstallment = Convert.ToInt32(Pay + Interest);
-                    }
-                    DGVLoanDetail.Rows.Add($"{Month}/{Year}", Pay, Convert.ToInt32(Interest), SumInstallment);
-                    Month++;
+
                 }
+                else
+                {
+                    tabControl1.SelectedIndex = 1;
+                    TBLoanAmount.Focus();
+                }
+
+            }
+            if(tabControl1.SelectedIndex == 2)
+            {
+                try
+                {
+                    if(Convert.ToInt32(TBLoanAmount.Text) < example.GOODS.Menu.MinLoan && TBLoanAmount.Text == "")
+                    {
+                        tabControl1.SelectedIndex = 1;
+                        TBLoanAmount.Focus();
+                    }
+                }
+                catch
+                {
+                    tabControl1.SelectedIndex = 1;
+                    TBLoanAmount.Focus();
+
+                }
+
             }
         }
         //----------------------- End code -------------------- ////////
@@ -448,9 +476,11 @@ namespace example.Bank.Loan
                     //{
                     credit = int.Parse(dt.Rows[0][2].ToString());
                     //float Percent = 100 / DGVGuarantor.Rows.Count;
-                    DGVGuarantorCredit.Rows.Clear();
+                    
                     DGVGuarantor.Rows.Clear();
+                    DGVGuarantorCredit.Rows.Clear();
                     DGVGuarantor.Rows.Add(dt.Rows[0][0], dt.Rows[0][1], credit);
+
                     TBSavingAmount.Text = credit.ToString();
                     tabControl1.SelectedIndex = 0;
                     //}
@@ -778,113 +808,124 @@ namespace example.Bank.Loan
         private void TBLoanAmount_Leave(object sender, EventArgs e)
         {
 
+
             bool CheckNum = Double.TryParse(TBLoanAmount.Text, out Double LoanAmount);
             LoanAmount = LoanAmount * Convert.ToDouble((Convert.ToDouble(TBInterestRate.Text) / 100)) + LoanAmount;
-            LTotal.Text = "" + LoanAmount;
-            if (CheckNum == true && DGVGuarantor.Rows.Count > 0)
+            LTotal.Text = LoanAmount.ToString();
+            if (Int32.TryParse(TBLoanAmount.Text, out int x) && x >= example.GOODS.Menu.MinLoan)
             {
-                Double Percent = 100 / LoanAmount * int.Parse(DGVGuarantor.Rows[0].Cells[2].Value.ToString());
-                //if (int.Parse(DGVGuarantor.Rows[0].Cells[2].Value.ToString()) >= LoanAmount)
-                Percent = 50;
-                
-
-                Double lastRow = 0;
-                for (int Num = 0; Num < DGVGuarantorCredit.Rows.Count; Num++)
+                if (CheckNum == true && DGVGuarantor.Rows.Count > 0)
                 {
-                    if (Num == DGVGuarantorCredit.Rows.Count - 1 /*&& Percent != 100*/)
+                    Double Percent = 100 / LoanAmount * int.Parse(DGVGuarantor.Rows[0].Cells[2].Value.ToString());
+                    //if (int.Parse(DGVGuarantor.Rows[0].Cells[2].Value.ToString()) >= LoanAmount)
+                    Percent = 50;
+
+
+                    Double lastRow = 0;
+                    for (int Num = 0; Num < DGVGuarantorCredit.Rows.Count; Num++)
                     {
-                        Percent = 100 - Convert.ToInt32(lastRow);
-                    }
-                    else if (Num >= 1 /*&& Percent != 100*/)
-                    {
-                        Percent = (100 - Math.Round(lastRow, 2)) / (DGVGuarantorCredit.Rows.Count - Num);
-                    }
-
-                    Percent = Convert.ToInt32(Percent);
-                    Double Credit = Convert.ToInt32(LoanAmount) * Percent / 100;
-                    if (Credit > Convert.ToDouble(DGVGuarantor.Rows[Num].Cells[2].Value.ToString()))
-                    {
-                        Credit = Convert.ToInt32(DGVGuarantor.Rows[Num].Cells[2].Value.ToString());
-                        Percent = Credit * 100 / LoanAmount;
-                    }
-
-                    lastRow += Percent;
-
-                    DGVGuarantorCredit.Rows[Num].Cells[2].Value = Convert.ToInt32(Percent);
-                    DGVGuarantorCredit.Rows[Num].Cells[3].Value = Convert.ToInt32(LoanAmount * Percent / 100);
-                    
-
-                    if (lastRow < 100 && Num == DGVGuarantorCredit.Rows.Count - 1)
-                    {
-                        Percent = 100 - Math.Round(lastRow, 2);
-
-                        Credit = Convert.ToInt32(LoanAmount) * (Math.Round(Percent, 2) / 100);
-                        for (int Count = 0; Count < DGVGuarantorCredit.Rows.Count; Count++)
+                        if (Num == DGVGuarantorCredit.Rows.Count - 1 /*&& Percent != 100*/)
                         {
-                            if (Convert.ToInt32(Credit) <= 0)
-                                break;
-                            if (Convert.ToDouble(DGVGuarantor.Rows[Count].Cells[2].Value.ToString()) > Convert.ToDouble(DGVGuarantorCredit.Rows[Count].Cells[3].Value.ToString()))
-                            {
-                                Double CreditResult = 0;
-                                Double CreditAdd = Convert.ToDouble(DGVGuarantor.Rows[Count].Cells[2].Value.ToString()) - Convert.ToDouble(DGVGuarantorCredit.Rows[Count].Cells[3].Value.ToString());
-                                if (CreditAdd >= Credit)
-                                    CreditResult = Credit;
-                                else
-                                    CreditResult = CreditAdd;
-                                DGVGuarantorCredit.Rows[Count].Cells[3].Value = Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[Count].Cells[3].Value.ToString()) + CreditResult);
-                                Double Interrestrate = (Convert.ToDouble(Convert.ToDouble(TBInterestRate.Text) / 100)) * Convert.ToDouble(TBLoanAmount.Text);
-                                Double GetCredit = Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[Count].Cells[3].Value.ToString()) * 100 / (Convert.ToDouble(TBLoanAmount.Text) + Interrestrate));
-                                DGVGuarantorCredit.Rows[Count].Cells[2].Value = Math.Round(GetCredit, 2);
-                                Credit -= CreditResult;
+                            Percent = 100 - Convert.ToInt32(lastRow);
+                        }
+                        else if (Num >= 1 /*&& Percent != 100*/)
+                        {
+                            Percent = (100 - Math.Round(lastRow, 2)) / (DGVGuarantorCredit.Rows.Count - Num);
+                        }
 
+                        Percent = Convert.ToInt32(Percent);
+                        Double Credit = Convert.ToInt32(LoanAmount) * Percent / 100;
+                        if (Credit > Convert.ToDouble(DGVGuarantor.Rows[Num].Cells[2].Value.ToString()))
+                        {
+                            Credit = Convert.ToInt32(DGVGuarantor.Rows[Num].Cells[2].Value.ToString());
+                            Percent = Credit * 100 / LoanAmount;
+                        }
+
+                        lastRow += Percent;
+
+                        DGVGuarantorCredit.Rows[Num].Cells[2].Value = Convert.ToInt32(Percent);
+                        DGVGuarantorCredit.Rows[Num].Cells[3].Value = Convert.ToInt32(LoanAmount * Percent / 100);
+
+
+                        if (lastRow < 100 && Num == DGVGuarantorCredit.Rows.Count - 1)
+                        {
+                            Percent = 100 - Math.Round(lastRow, 2);
+
+                            Credit = Convert.ToInt32(LoanAmount) * (Math.Round(Percent, 2) / 100);
+                            for (int Count = 0; Count < DGVGuarantorCredit.Rows.Count; Count++)
+                            {
+                                if (Convert.ToInt32(Credit) <= 0)
+                                    break;
+                                if (Convert.ToDouble(DGVGuarantor.Rows[Count].Cells[2].Value.ToString()) > Convert.ToDouble(DGVGuarantorCredit.Rows[Count].Cells[3].Value.ToString()))
+                                {
+                                    Double CreditResult = 0;
+                                    Double CreditAdd = Convert.ToDouble(DGVGuarantor.Rows[Count].Cells[2].Value.ToString()) - Convert.ToDouble(DGVGuarantorCredit.Rows[Count].Cells[3].Value.ToString());
+                                    if (CreditAdd >= Credit)
+                                        CreditResult = Credit;
+                                    else
+                                        CreditResult = CreditAdd;
+                                    DGVGuarantorCredit.Rows[Count].Cells[3].Value = Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[Count].Cells[3].Value.ToString()) + CreditResult);
+                                    Double Interrestrate = (Convert.ToDouble(Convert.ToDouble(TBInterestRate.Text) / 100)) * Convert.ToDouble(TBLoanAmount.Text);
+                                    Double GetCredit = Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[Count].Cells[3].Value.ToString()) * 100 / (Convert.ToDouble(TBLoanAmount.Text) + Interrestrate));
+                                    DGVGuarantorCredit.Rows[Count].Cells[2].Value = Math.Round(GetCredit, 2);
+                                    Credit -= CreditResult;
+
+                                }
                             }
                         }
                     }
+                    LTotal.Text = "" + Convert.ToInt32(Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(Convert.ToDouble(TBInterestRate.Text) / 100)) + Convert.ToDouble(TBLoanAmount.Text));
+                    BCalculate_Click(sender, new EventArgs());
+
                 }
-                LTotal.Text = "" + Convert.ToInt32(Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(Convert.ToDouble(TBInterestRate.Text) / 100)) + Convert.ToDouble(TBLoanAmount.Text));
-                BCalculate_Click(sender, new EventArgs());
-
-            }
-            else if (DGVGuarantor.Rows.Count < 1)
-            {
-                TBLoanAmount.Text = "";
-                tabControl1.SelectedIndex = 0;
-                TBTeacherNo.Focus();
-                //for(int Num = 0; Num < DGVGuarantorCredit.Rows.Count; Num++)
-                //{
-                //    DGVGuarantorCredit.Rows[Num].Cells[2].Value = "";
-                //    DGVGuarantorCredit.Rows[Num].Cells[3].Value = "";
-                //}
-            }
-
-            if (DGVGuarantor.Rows.Count != 0)
-            {
-                int Amount;
-                String AmountLimit = LLoanAmount.Text.Remove(0, 1);
-                AmountLimit = AmountLimit.Remove(AmountLimit.Length - 1);
-                bool Check = int.TryParse(AmountLimit, out int LimitAmount);
-                if (int.TryParse(TBLoanAmount.Text, out Amount) && (Check))
+                else if (DGVGuarantor.Rows.Count < 1)
                 {
-                    if (Amount > LimitAmount)
+                    TBLoanAmount.Text = "";
+                    tabControl1.SelectedIndex = 0;
+                    TBTeacherNo.Focus();
+                    //for(int Num = 0; Num < DGVGuarantorCredit.Rows.Count; Num++)
+                    //{
+                    //    DGVGuarantorCredit.Rows[Num].Cells[2].Value = "";
+                    //    DGVGuarantorCredit.Rows[Num].Cells[3].Value = "";
+                    //}
+                }
+
+                if (DGVGuarantor.Rows.Count != 0)
+                {
+                    int Amount;
+                    String AmountLimit = LLoanAmount.Text.Remove(0, 1);
+                    AmountLimit = AmountLimit.Remove(AmountLimit.Length - 1);
+                    bool Check = int.TryParse(AmountLimit, out int LimitAmount);
+                    if (int.TryParse(TBLoanAmount.Text, out Amount) && (Check))
                     {
-                        UserOutCreditLimit = MessageBox.Show("จำนวนเงินกู้ เกินกำหนดเงินค้ำ\r\n ต้องการทำต่อหรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                        if (UserOutCreditLimit == DialogResult.No)
+                        if (Amount > LimitAmount)
                         {
-                            TBLoanAmount.Text = "";
-                            TBLoanAmount.Focus();
+                            UserOutCreditLimit = MessageBox.Show("จำนวนเงินกู้ เกินกำหนดเงินค้ำ\r\n ต้องการทำต่อหรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                            if (UserOutCreditLimit == DialogResult.No)
+                            {
+                                TBLoanAmount.Text = "";
+                                TBLoanAmount.Focus();
+                            }
                         }
                     }
+                    else if (!Check)
+                    {
+                        TBTeacherNo.Focus();
+                    }
                 }
-                else if (!Check)
+                else if (DGVGuarantor.Rows.Count == 0)
                 {
+                    MessageBox.Show("โปรดเลือกผู้กู้ ผู้ค้ำก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    tabControl1.SelectedIndex = 0;
                     TBTeacherNo.Focus();
                 }
             }
-            else if (DGVGuarantor.Rows.Count == 0)
+            else if (Int32.TryParse(TBLoanAmount.Text, out int y))
             {
-                MessageBox.Show("โปรดเลือกผู้กู้ ผู้ค้ำก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                tabControl1.SelectedIndex = 0;
-                TBTeacherNo.Focus();
+                MessageBox.Show("ยอดกู้ต่ำกว่ากำหนดกรุณาลองใหม่อีกครั้ง","System",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                TBLoanAmount.Focus();
+                TBLoanAmount.Text = "";
+                tabControl1.SelectedIndex = 1;
             }
         }
 
@@ -971,7 +1012,7 @@ namespace example.Bank.Loan
                 LLackAmount.ForeColor = Color.Green;
                 LOutCredit.ForeColor = Color.Red;
                 LLackAmount.Text = 0 + "";
-                LOutCredit.Text = SumCreditEdit + "";
+                LOutCredit.Text = (-1 * SumCreditEdit) + "";
             }
             else
             {
@@ -1052,8 +1093,20 @@ namespace example.Bank.Loan
             Class.SQLConnection.InputSQLMSSQL(SQLDefault[7]);
         }
 
+
+        private void TBPayNo_Leave(object sender, EventArgs e)
+        {
+            if (Convert.ToInt32(TBPayNo.Text) == 0)
+            {
+                tabControl1.SelectedIndex = 1;
+                MessageBox.Show("จำนวนเดือนต้องไม่เท่ากับ 0", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                TBPayNo.Text = "";
+                TBPayNo.Focus();
+            }
+        }
         private void panel7_Paint(object sender, PaintEventArgs e)
         {
+
 
         }
 
@@ -1086,7 +1139,7 @@ namespace example.Bank.Loan
                         {
                             Result = Difference/* / (DGVGuarantorCredit.Rows.Count - Num)*/;
                         }
-                        if(Convert.ToInt32(LLackAmount.Text) < 0)
+                        if(Convert.ToInt32(LOutCredit.Text) > 0)
                         {
                             if (Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString()) + Result) <= 0)
                             {
