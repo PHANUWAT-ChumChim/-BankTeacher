@@ -7,12 +7,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static example.Class.ProtocolSharing.ConnectSMB;
 
 namespace example.Bank.Loan
 {
     public partial class PayLoan : Form
     {
         int Check = 0;
+        int StatusBoxFile = 0;
+        String imgeLocation = "";
 
         /// <summary>
         /// <para>[0] SELECT MemberLona  INPUT: {TeacherNo}</para>
@@ -210,6 +213,59 @@ namespace example.Bank.Loan
                 MessageBox.Show("จ่ายล้มเหลว", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+
+        private void BTOpenfile_Click(object sender, EventArgs e)
+        {
+            if (StatusBoxFile == 0)
+            {
+
+                try
+                {
+                    OpenFileDialog dialog = new OpenFileDialog();
+                    dialog.Filter = "pdf files(*.pdf)|*.pdf";
+                    if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        imgeLocation = dialog.FileName;
+                    }
+                    if (imgeLocation != "")
+                    {
+                        BTOpenfile.Text = "ส่งไฟล์";
+                        StatusBoxFile = 1;
+                        label6.Text = "Scan(  พบไฟล์  )";
+                    }
+
+                }
+                catch
+                {
+                    MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else if (StatusBoxFile == 1)
+            {
+                var smb = new SmbFileContainer("Loan");
+                if (smb.IsValidConnection())
+                {
+                    String Return = smb.SendFile(imgeLocation, "Loan_" + TBTeacherNo.Text + ".pdf");
+                    MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    StatusBoxFile = 0;
+                    BTOpenfile.Text = "เปิดไฟล์";
+                    label6.Text = "Scan(  ไม่พบ  )";
+                    imgeLocation = "";
+                }
+                else
+                {
+                    MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
+
+        private void BTdeletefile_Click(object sender, EventArgs e)
+        {
+            StatusBoxFile = 0;
+            BTOpenfile.Text = "เปิดไฟล์";
+            label6.Text = "Scan(  ไม่พบ  )";
+            imgeLocation = "";
 
         private void PayLoan_SizeChanged(object sender, EventArgs e)
         {

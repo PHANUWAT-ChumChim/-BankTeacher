@@ -474,9 +474,11 @@ namespace example.Bank.Loan
                     //{
                     credit = int.Parse(dt.Rows[0][2].ToString());
                     //float Percent = 100 / DGVGuarantor.Rows.Count;
-                    DGVGuarantorCredit.Rows.Clear();
+                    
                     DGVGuarantor.Rows.Clear();
+                    DGVGuarantorCredit.Rows.Clear();
                     DGVGuarantor.Rows.Add(dt.Rows[0][0], dt.Rows[0][1], credit);
+
                     TBSavingAmount.Text = credit.ToString();
                     tabControl1.SelectedIndex = 0;
                     //}
@@ -782,6 +784,8 @@ namespace example.Bank.Loan
         DialogResult UserOutCreditLimit = DialogResult.No;
         private void TBLoanAmount_Leave(object sender, EventArgs e)
         {
+
+
             bool CheckNum = Double.TryParse(TBLoanAmount.Text, out Double LoanAmount);
             LoanAmount = LoanAmount * Convert.ToDouble((Convert.ToDouble(TBInterestRate.Text) / 100)) + LoanAmount;
             LTotal.Text = LoanAmount.ToString();
@@ -900,7 +904,6 @@ namespace example.Bank.Loan
                 TBLoanAmount.Text = "";
                 tabControl1.SelectedIndex = 1;
             }
-
         }
 
         List<String[]> DGVRow = new List<String[]> { };
@@ -986,7 +989,7 @@ namespace example.Bank.Loan
                 LLackAmount.ForeColor = Color.Green;
                 LOutCredit.ForeColor = Color.Red;
                 LLackAmount.Text = 0 + "";
-                LOutCredit.Text = SumCreditEdit + "";
+                LOutCredit.Text = (-1 * SumCreditEdit) + "";
             }
             else
             {
@@ -1067,8 +1070,19 @@ namespace example.Bank.Loan
             Class.SQLConnection.InputSQLMSSQL(SQLDefault[7]);
         }
 
+
+        private void TBPayNo_Leave(object sender, EventArgs e)
+        {
+            if(Convert.ToInt32(TBPayNo.Text) == 0)
+            {
+                tabControl1.SelectedIndex = 1;
+                MessageBox.Show("จำนวนเดือนต้องไม่เท่ากับ 0", "ระบบ", MessageBoxButtons.OK ,MessageBoxIcon.Information);
+                TBPayNo.Text = "";
+                TBPayNo.Focus();
+            }
         private void panel7_Paint(object sender, PaintEventArgs e)
         {
+
 
         }
 
@@ -1101,7 +1115,7 @@ namespace example.Bank.Loan
                         {
                             Result = Difference/* / (DGVGuarantorCredit.Rows.Count - Num)*/;
                         }
-                        if(Convert.ToInt32(LLackAmount.Text) < 0)
+                        if(Convert.ToInt32(LOutCredit.Text) > 0)
                         {
                             if (Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString()) + Result) <= 0)
                             {
