@@ -35,7 +35,7 @@ namespace example.GOODS
              //[1]Select Date InWput :  -
              "SELECT CAST(CURRENT_TIMESTAMP as DATE);"
              ,
-
+             
          };
         public Menu()
         {
