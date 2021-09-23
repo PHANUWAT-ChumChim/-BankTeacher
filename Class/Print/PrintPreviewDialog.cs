@@ -150,23 +150,23 @@ namespace example.Class.Print
                     Class.Print.SetPrintMedtods.Center(e, Y + (SpacePerRow * CurrentRows++), "สัญญากู้ยืมเงินสวัสดิการพนักงาน", THsarabun30, BrushBlack);
                     Class.Print.SetPrintMedtods.CenterRight(e, "เขียนที่ " + School, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 10, XP, XD);
                     Class.Print.SetPrintMedtods.CenterRight(e, "วันที่ " + Day + " " + Month + " " + Year, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), XP, XD);
-                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "สัญญาฉบับนี้ทำขึ้นมาระหว่างผู้เเทน" + School +
-                    "(" + Lender + ") อยู่ ณ เลขที่ 75/2 หมู่  10 ต.ทุ่งสุขลา อ. ศรีราชา จ. ชลบุรี ซึ่งต่อไปในสัญญานี้เรียกว่า '" + School + "' ฝ่ายหนึ่งกับ " + Borrower, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 750f, 200, false);
+                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "       สัญญาฉบับนี้ทำขึ้นมาระหว่างผู้เเทน" + School +
+                    " (" + Lender + ") อยู่ ณ เลขที่ 75/2 หมู่  10 ต.ทุ่งสุขลา อ. ศรีราชา จ. ชลบุรี ซึ่งต่อไปในสัญญานี้เรียกว่า '" + School + "' ฝ่ายหนึ่งกับ " + Borrower, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 750f, 200, false);
                     Class.Print.SetPrintMedtods.CenterLeft(e, Borroweraddress, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), XP, XD);
                     //  เงื่อนไข 1
                     CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "ซึ่งต่อไปในสัญญานี้เรียกว่า 'พนักงานครู / อาจารย์'อีกฝ่าย \r\n" +
-                        "  ทั้งสองฝ่ายตกลงทำสัญญาดังมีข้อความดังต่อไปนี้ \r\n" +
-                        "  ข้อ 1. พนักงานได้กู้ยืมเงินจากสหกรณ์ครู" + School + " ไปเป็นจำนวน \r\n" +
+                        "   ทั้งสองฝ่ายตกลงทำสัญญาดังมีข้อความดังต่อไปนี้ \r\n" +
+                        "   ข้อ 1. พนักงานได้กู้ยืมเงินจากสหกรณ์ครู" + School + " ไปเป็นจำนวน \r\n" +
                         "" + AmountLoan + " บาท ( " + NumToBath(AmountLoan) + " ) เเละพนักงานครูได้รับเงินกู้ \r\n" +
-                        "จำนวนดังกล่าวจาก" + School + "ไปถูกต้องครบถ้วนเเล้วในขณะทำสัยญากู้ยืมเงินฉบังนี้", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 750f, 200, false);
+                        "จำนวนดังกล่าวจาก" + School + "ไปถูกต้องครบถ้วนเเล้วในขณะทำสัญญากู้ยืมเงินฉบังนี้", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 750f, 200, false);
                     // เงื่อนไข 2
-                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "  ข้อ 2. หนักงานครู จะชำระหนี้เงินกู้ยืมตาม ข้อ 1. ของสัญญานี้คืนให้เเก่วิทยาลัยสหกรณ์ครู \r\n" +
+                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "   ข้อ 2. หนักงานครู จะชำระหนี้เงินกู้ยืมตาม ข้อ 1. ของสัญญานี้คืนให้เเก่วิทยาลัยสหกรณ์ครู \r\n" +
                         "เทคโนโลยีเเหบมฉบัง โดยผ่อนชำระเป็นรายเดือนในจำนวนไม่ต่ำกว่าเดือนละ " + PayMin + " บาท\r\n" +
                         "( " + NumToBath(PayMin) + " )ในวันที่พนักงานครูรับเงินค่าจ้างจาก" + School + "\r\n" +
                         "เเละส่งให้สหกรณ์ก่อนวันที่ 3 ของเดือน ติดต่อกันจนกว่าจะชำระหนี้เงินกู้ยืมครบถ้วน เเละจะต้องชำระคืน\r\n" +
                         "ให้เสร็จสิ้นภายในเดือน " + LimitMonthPay, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 750f, 200, false);
                     // เงื่อนไข 3
-                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "  ข้อ 3. พนักงานยืนยอมให้" + School + "หักเงินค่าตอบเเทนที่หนักงานครูมีสิทธิได้รับ" +
+                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "   ข้อ 3. พนักงานยืนยอมให้" + School + "หักเงินค่าตอบเเทนที่หนักงานครูมีสิทธิได้รับ" +
                         "อันได้เเก่ ค่าจ้าง ค่าล่วงเวลา ค่าทำงานในวันหยุด เเละค่าจ้างล่วงเวลาในวันหยุด เพื่อเป็นการใช้คืนเงินกู้ตาม" +
                         "สัญญานี้ หากจำนวนเงินที่" + School + "หักไว้จากค่าตอบเเทนดังกล่าวในวรรคเเรก มีจำนวน" +
                         "เกินกว่าหนึ่งในห้าของเงินค่าตอบเเทนที่พนักงานครูมีสิทธิได้รับไม่ว่าจะเป็นการหักเพื่อเหตุใดเหตุหนึ่ง หรือ" +
@@ -174,25 +174,25 @@ namespace example.Class.Print
                         "ดังกล่าวนจนครบถ้วน หากผู้กู้ยืมไม่ชำระเงินตามกำหนด จะต้องชำระอัตราดอกเบี้ยเพิ่มอีก 1 เท่า เเละผู้ค้ำ\r\n" +
                         "ประกันจะต้องรับผิดชอบชำระเเทนผู้กู้ยืมโดยไม่มีข้อทักท้วงใดๆ", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 750f, 300, false);
                     // เงื่อนไข 4
-                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "  ข้อที่ 4. หากพนักงานครูพ้นสภาพจากการเป็นลูกจ้าง" + School + "ไม่ว่าจะด้วยสาเหตุ" +
+                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "   ข้อที่ 4. หากพนักงานครูพ้นสภาพจากการเป็นลูกจ้าง" + School + "ไม่ว่าจะด้วยสาเหตุ" +
                         "ใดๆ ก็ตามพนักงานครูจะต้องชำระหนี้เงินกู้ในส่วนที่ยังค้างชำระอยู่ทั้งหมดคืนให้กับ" + School + "ในทันที", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 20, 750f, 300, false);
                 }
                 else
                 {
-                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "สัญญานี้ทำขึ้น 2 ฉบับ มีข้อความตรงกัน คู่สัญญาทั้งสองฝ่ายได้อ่าน เเละเข้าใจข้อความในสัญญา\r\n" +
+                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e,     "สัญญานี้ทำขึ้น 2 ฉบับ มีข้อความตรงกัน คู่สัญญาทั้งสองฝ่ายได้อ่าน เเละเข้าใจข้อความในสัญญา\r\n" +
                         "ฉบับนี้โดยตลอดเเล้ว เห็นว่าถูกต้องเเละตรงตามความประสงค์เเล้ว จึงได้ลงลายมือชื่อไว้เป็นหลักฐานต่อหน้า" +
                         "พยาน เเละเก็บสัญญาไว้ฝ่ายละฉบับ", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 750f, 300, false);
                     CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "ลงชื่อ ................................................ นายจ้าง\r\n" +
-                                          "    (" + Lender + ")", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 300f, 300, false);
+                                          "     (" + Lender + ")", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++),350f,70,false);
                     string NameLoan = $"ลงชื่อ ................................................ ผู้กู้ยืม\r\n" +
                                       "    (" + Borrower + ")";
-                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, NameLoan, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 300f, 300, false);
+                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, NameLoan, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 350f, 70, false);
                     CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "ลง ................................................ ผู้ค้ำประกัน 1\r\n" +
-                                            "      ( " + dt.Rows[1][1].ToString() + " )", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 300f, 300, false);
-                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "ลง................................................ผู้ค้ำประกัน 2\r\n" +
-                                             "     ( " + dt.Rows[2][1].ToString() + " )", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 300f, 300, false);
+                                            "      ( " + dt.Rows[1][1].ToString() + " )", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 350f, 70, false);
+                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "ลง ................................................ ผู้ค้ำประกัน 2\r\n" +
+                                             "     ( " + dt.Rows[2][1].ToString() + " )", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 350f, 70, false);
                     CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "ลง ................................................ ผู้ค้ำประกัน 3\r\n" +
-                                             "     ( " + dt.Rows[3][1].ToString() + " )", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 300f, 300, false);
+                                             "     ( " + dt.Rows[3][1].ToString() + " )", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 350f, 70, false);
                     Class.Print.SetPrintMedtods.Center(e, Y + (SpacePerRow * CurrentRows++), "ลงชื่อรับเงิน ................................................................................................ วันที่ " + Day + " " + Month + " " + Year, THsarabun18, BrushBlack);
 
 
@@ -211,9 +211,10 @@ namespace example.Class.Print
 
         public static void Printdatagridview(System.Drawing.Printing.PrintPageEventArgs e,DataGridView G,Bitmap bmp)
         {
-                int height = G.Height;
-                G.Height = G.RowCount * G.RowTemplate.Height * 2;
-                bmp = new Bitmap(G.Width,G.Height);
+            G.ClearSelection();
+            int height = G.Height;
+                G.Height = G.RowTemplate.Height * G.RowCount + 39; /*G.Height = G.RowCount * G.RowTemplate.Height * 2;*/
+            bmp = new Bitmap(G.Width,G.Height);
                 G.DrawToBitmap(bmp, new Rectangle(0, 0, G.Width, G.Height));
                 G.Height = height;
                 e.Graphics.DrawImage(bmp, 0, 0);
