@@ -1073,13 +1073,14 @@ namespace example.Bank.Loan
 
         private void TBPayNo_Leave(object sender, EventArgs e)
         {
-            if(Convert.ToInt32(TBPayNo.Text) == 0)
+            if (Convert.ToInt32(TBPayNo.Text) == 0)
             {
                 tabControl1.SelectedIndex = 1;
-                MessageBox.Show("จำนวนเดือนต้องไม่เท่ากับ 0", "ระบบ", MessageBoxButtons.OK ,MessageBoxIcon.Information);
+                MessageBox.Show("จำนวนเดือนต้องไม่เท่ากับ 0", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 TBPayNo.Text = "";
                 TBPayNo.Focus();
             }
+        }
         private void panel7_Paint(object sender, PaintEventArgs e)
         {
 

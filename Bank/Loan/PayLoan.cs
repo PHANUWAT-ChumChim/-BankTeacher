@@ -232,7 +232,7 @@ namespace example.Bank.Loan
                     {
                         BTOpenfile.Text = "ส่งไฟล์";
                         StatusBoxFile = 1;
-                        label6.Text = "Scan(  พบไฟล์  )";
+                        //label6.Text = "Scan(  พบไฟล์  )";
                     }
 
                 }
@@ -250,7 +250,7 @@ namespace example.Bank.Loan
                     MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     StatusBoxFile = 0;
                     BTOpenfile.Text = "เปิดไฟล์";
-                    label6.Text = "Scan(  ไม่พบ  )";
+                    //label6.Text = "Scan(  ไม่พบ  )";
                     imgeLocation = "";
                 }
                 else
@@ -264,9 +264,9 @@ namespace example.Bank.Loan
         {
             StatusBoxFile = 0;
             BTOpenfile.Text = "เปิดไฟล์";
-            label6.Text = "Scan(  ไม่พบ  )";
+            //label6.Text = "Scan(  ไม่พบ  )";
             imgeLocation = "";
-
+        }
         private void PayLoan_SizeChanged(object sender, EventArgs e)
         {
             Class.FromSettingMedtod.ChangeSizePanal(this, panel1);

@@ -625,7 +625,7 @@ namespace example.Bank.Loan
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Label label6;
+        //private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel4;
 
     }
