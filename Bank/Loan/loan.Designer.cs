@@ -83,6 +83,8 @@ namespace example.Bank.Loan
             this.BCalculate = new System.Windows.Forms.Button();
             this.DGVGuarantorCredit = new System.Windows.Forms.DataGridView();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label20 = new System.Windows.Forms.Label();
+            this.button2 = new System.Windows.Forms.Button();
             this.DGVLoanDetail = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -636,6 +638,8 @@ namespace example.Bank.Loan
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.label20);
+            this.tabPage3.Controls.Add(this.button2);
             this.tabPage3.Controls.Add(this.DGVLoanDetail);
             this.tabPage3.Location = new System.Drawing.Point(4, 45);
             this.tabPage3.Name = "tabPage3";
@@ -644,6 +648,31 @@ namespace example.Bank.Loan
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "รายละเอียดการชำระ";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.BackColor = System.Drawing.Color.White;
+            this.label20.Font = new System.Drawing.Font("TH Sarabun New", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.ForeColor = System.Drawing.Color.Black;
+            this.label20.Location = new System.Drawing.Point(885, 342);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(94, 53);
+            this.label20.TabIndex = 112;
+            this.label20.Text = "Print :";
+            // 
+            // button2
+            // 
+            this.button2.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button2.BackgroundImage")));
+            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button2.Location = new System.Drawing.Point(985, 332);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(139, 66);
+            this.button2.TabIndex = 111;
+            this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // DGVLoanDetail
             // 
@@ -664,7 +693,7 @@ namespace example.Bank.Loan
             this.Column4,
             this.Column5,
             this.Column6});
-            this.DGVLoanDetail.Location = new System.Drawing.Point(6, 42);
+            this.DGVLoanDetail.Location = new System.Drawing.Point(8, 6);
             this.DGVLoanDetail.Name = "DGVLoanDetail";
             this.DGVLoanDetail.ReadOnly = true;
             this.DGVLoanDetail.RowHeadersVisible = false;
@@ -1190,6 +1219,7 @@ namespace example.Bank.Loan
             this.tabPage5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVGuarantorCredit)).EndInit();
             this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVLoanDetail)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.panel9.ResumeLayout(false);
@@ -1297,5 +1327,12 @@ namespace example.Bank.Loan
         private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
+
+        private System.Windows.Forms.Label LOutCredit;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Button Delete;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Button button2;
+
     }
 }
