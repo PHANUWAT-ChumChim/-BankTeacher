@@ -210,5 +210,10 @@ namespace example.Bank.Loan
                 MessageBox.Show("จ่ายล้มเหลว", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+
+        private void PayLoan_SizeChanged(object sender, EventArgs e)
+        {
+            Class.FromSettingMedtod.ChangeSizePanal(this, panel1);
+        }
     }
 }

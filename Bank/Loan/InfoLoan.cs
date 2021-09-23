@@ -211,5 +211,9 @@ namespace example.Bank.Loan
             }
         }
 
+        private void InfoLoan_SizeChanged(object sender, EventArgs e)
+        {
+            Class.FromSettingMedtod.ChangeSizePanal(this, panel1);
+        }
     }
 }
