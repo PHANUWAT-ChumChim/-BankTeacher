@@ -6,6 +6,7 @@ using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace example.Class.Print
 {
@@ -206,6 +207,16 @@ namespace example.Class.Print
             }
 
 
+        }
+
+        public static void Printdatagridview(System.Drawing.Printing.PrintPageEventArgs e,DataGridView G,Bitmap bmp)
+        {
+                int height = G.Height;
+                G.Height = G.RowCount * G.RowTemplate.Height * 2;
+                bmp = new Bitmap(G.Width,G.Height);
+                G.DrawToBitmap(bmp, new Rectangle(0, 0, G.Width, G.Height));
+                G.Height = height;
+                e.Graphics.DrawImage(bmp, 0, 0);
         }
 
         public static string NumToBath(string InpuNum, bool IsTrillion = false)

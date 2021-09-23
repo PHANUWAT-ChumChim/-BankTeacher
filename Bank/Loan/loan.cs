@@ -14,6 +14,8 @@ namespace example.Bank.Loan
     public partial class loan : Form
     {
         //------------------------- index -----------------
+        Bitmap bmp;
+        int P1;
         string name = "", id = "";
         int StatusBoxFile = 0;
         String imgeLocation = "";
@@ -580,7 +582,22 @@ namespace example.Bank.Loan
             label9.Text = "Scan(  พบไฟล์  )";
             if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
             {
+                P1 = 1;
                 printDocument1.Print();
+            }
+        }
+        private void button2_Click_1(object sender, EventArgs e)
+        {
+            if (DGVLoanDetail.Rows.Count != 0)
+            {
+                if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    printDocument1.Print();
+                }
+            }
+            else
+            {
+                MessageBox.Show("ไม่พบข้อมูลในตารางที่จะปริ้น");
             }
         }
         // อัพเอกสารส่ง เซิร์ฟเวอร์
@@ -631,11 +648,17 @@ namespace example.Bank.Loan
         // กระดาษปริ้น
         private void printDocument1_PrintPage_1(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.Print.PrintPreviewDialog.PrintLoan(e, SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text), example.GOODS.Menu.Date[2], example.GOODS.Menu.Monthname, (Convert.ToInt32(example.GOODS.Menu.Date[0]) + 543).ToString(), TBTeacherNo.Text,TBLoanNo.Text);
+            if (P1 == 1) 
+            {
+                Class.Print.PrintPreviewDialog.PrintLoan(e, SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text), example.GOODS.Menu.Date[2], example.GOODS.Menu.Monthname, (Convert.ToInt32(example.GOODS.Menu.Date[0]) + 543).ToString(), TBTeacherNo.Text, TBLoanNo.Text);
+            }
+            else
+            {
+                Class.Print.PrintPreviewDialog.Printdatagridview(e, DGVLoanDetail, bmp);
+               
+            }
             //e.HasMorePages = true;
             //Class.Print.PrintPreviewDialog.ExamplePrint(sender,e);
-
-
         }
         //----------------------- End Printf -------------------- ////////
 
