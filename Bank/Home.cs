@@ -19,7 +19,7 @@ namespace example.GOODS
         /// <para>[0] SELECT Teachar IN Mont INPUT: {TeacherNo} </para> 
         /// <para>[1] SELECT not pay IN Mont INPUT: {TeacherNo} {CByear} {CBMonth} </para> 
         /// <para>[2] SELECT TIME INPUT : - </para>
-        /// <para>[3] SELECT MEMBER INPUT: {TeacherNo} </para>
+        /// <para>[3] SELECT MEMBER INPUT: {Text} </para>
         /// <para>[4] SELECT pay IN Mont INPUT:  {TeacherNo} {CByear} {CBMonth} </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
@@ -52,13 +52,19 @@ namespace example.GOODS
           //[2] SELECT TIME INPUT : -
           "SELECT CONVERT (DATE , CURRENT_TIMESTAMP); "
           ,
-          //[3] SELECT MEMBER INPUT: {TeacherNo} 
-          "SELECT a.TeacherNo ,  CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR),a.StartAmount,a.DateAdd \r\n"+
-          "FROM EmployeeBank.dbo.tblMember as a \r\n"+
-          "LEFT JOIN Personal.dbo.tblTeacherHis as b ON a.TeacherNo = b.TeacherNo \r\n"+
-          "LEFT JOIN BaseData.dbo.tblPrefix as c ON c.PrefixNo = b.PrefixNo \r\n"+
-          "WHERE a.TeacherNo LIKE 'T{TeacherNo}%' and MemberStatusNo = 1 \r\n"+
-          "ORDER BY Fname;"
+          //[3] SELECT MEMBER INPUT: {Text}
+          "SELECT TOP(20) a.TeacherNo , CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR)AS Name, e.SavingAmount,    \r\n " +
+          "b.TeacherLicenseNo,b.IdNo AS IDNo,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar) AS UserStatususing    \r\n " +
+          "FROM EmployeeBank.dbo.tblMember as a    \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as b ON a.TeacherNo = b.TeacherNo    \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as c ON c.PrefixNo = b.PrefixNo   \r\n " +
+          "INNER JOIN EmployeeBank.dbo.tblMemberStatus as d on a.MemberStatusNo = d.MemberStatusNo  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblShare as e on a.TeacherNo = e.TeacherNo \r\n " +
+          "WHERE a.TeacherNo LIKE '%{Text}%'  or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%'   and a.MemberStatusNo = 1         \r\n " +
+          "GROUP BY a.TeacherNo , CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR), e.SavingAmount,    \r\n " +
+          "b.TeacherLicenseNo,b.IdNo ,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar)   \r\n " +
+          "ORDER BY a.TeacherNo; "
+
           ,
           //[4] SELECT pay IN Mont INPUT: {TeacherNo} {CByear} {CBMonth}
           "SELECT a.TeacherNo , CAST(c.PrefixName + ' ' +[Fname] + ' ' + [Lname] as NVARCHAR)AS Name,f.TypeName,a.StartAmount \r\n" +
@@ -92,7 +98,7 @@ namespace example.GOODS
         {
             try
             {
-                Bank.Search IN = new Bank.Search(SQLDefault[3].Replace("{TeacherNo}",""));
+                Bank.Search IN = new Bank.Search(SQLDefault[3]);
                 IN.ShowDialog();
                 TBTeacherNo.Text = Bank.Search.Return[0];
                 TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));

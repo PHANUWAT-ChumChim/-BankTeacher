@@ -340,9 +340,9 @@ namespace example.Bank.Loan
             this.label5.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label5.Location = new System.Drawing.Point(115, 157);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(370, 40);
+            this.label5.Size = new System.Drawing.Size(371, 40);
             this.label5.TabIndex = 73;
-            this.label5.Text = "อัพโหลดเอกสารสัญญากู้ที่มีลายเซ็นครบถ้าน";
+            this.label5.Text = "อัพโหลดเอกสารสัญญากู้ที่มีลายเซ็นครบถ้วน";
             // 
             // panel7
             // 
