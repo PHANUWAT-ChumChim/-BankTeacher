@@ -133,7 +133,7 @@ namespace example.Bank.Loan
             Month = Convert.ToInt32(example.GOODS.Menu.Date[1]);
 
 
-            for (int Num = 0; Num < 5; Num++)
+            for (int Num = 0; Num < 2; Num++)
             {
                 CBPayYear.Items.Add(Year);
                 Year++;
@@ -478,7 +478,9 @@ namespace example.Bank.Loan
                     DGVGuarantor.Rows.Clear();
                     DGVGuarantorCredit.Rows.Clear();
                     DGVGuarantor.Rows.Add(dt.Rows[0][0], dt.Rows[0][1], credit);
-
+                    TBLoanAmount.Text = "";
+                    CBPayMonth.SelectedIndex = -1;
+                    CBPayYear.SelectedIndex = -1;
                     TBSavingAmount.Text = credit.ToString();
                     tabControl1.SelectedIndex = 0;
                     //}
@@ -784,20 +786,47 @@ namespace example.Bank.Loan
         DialogResult UserOutCreditLimit = DialogResult.No;
         private void TBLoanAmount_Leave(object sender, EventArgs e)
         {
-
+            int LimitAmount = 0;
+            if (DGVGuarantor.Rows.Count != 0)
+            {
+                int Amount;
+                String AmountLimit = LLoanAmount.Text.Remove(0, 1);
+                AmountLimit = AmountLimit.Remove(AmountLimit.Length - 1);
+                bool Check = int.TryParse(AmountLimit, out LimitAmount);
+                if (int.TryParse(TBLoanAmount.Text, out Amount) && (Check))
+                {
+                    if (Amount > LimitAmount)
+                    {
+                        UserOutCreditLimit = MessageBox.Show("จำนวนเงินกู้ เกินกำหนดเงินค้ำ\r\n ต้องการทำต่อหรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if (UserOutCreditLimit == DialogResult.No)
+                        {
+                            TBLoanAmount.Text = "";
+                            TBLoanAmount.Focus();
+                        }
+                    }
+                }
+                else if (!Check)
+                {
+                    TBTeacherNo.Focus();
+                }
+            }
+            else if (DGVGuarantor.Rows.Count == 0)
+            {
+                MessageBox.Show("โปรดเลือกผู้กู้ ผู้ค้ำก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                tabControl1.SelectedIndex = 0;
+                TBTeacherNo.Focus();
+            }
 
             bool CheckNum = Double.TryParse(TBLoanAmount.Text, out Double LoanAmount);
             LoanAmount = LoanAmount * Convert.ToDouble((Convert.ToDouble(TBInterestRate.Text) / 100)) + LoanAmount;
             LTotal.Text = LoanAmount.ToString();
-            if (Int32.TryParse(TBLoanAmount.Text, out int x) && x >= example.GOODS.Menu.MinLoan)
+            if (Int32.TryParse(TBLoanAmount.Text, out int x) && x >= example.GOODS.Menu.MinLoan && ((UserOutCreditLimit != DialogResult.No) || Convert.ToInt32(TBLoanAmount.Text) <= LimitAmount))
             {
                 if (CheckNum == true && DGVGuarantor.Rows.Count > 0)
                 {
                     Double Percent = 100 / LoanAmount * int.Parse(DGVGuarantor.Rows[0].Cells[2].Value.ToString());
                     //if (int.Parse(DGVGuarantor.Rows[0].Cells[2].Value.ToString()) >= LoanAmount)
                     Percent = 50;
-
-
                     Double lastRow = 0;
                     for (int Num = 0; Num < DGVGuarantorCredit.Rows.Count; Num++)
                     {
@@ -865,36 +894,6 @@ namespace example.Bank.Loan
                     //    DGVGuarantorCredit.Rows[Num].Cells[2].Value = "";
                     //    DGVGuarantorCredit.Rows[Num].Cells[3].Value = "";
                     //}
-                }
-
-                if (DGVGuarantor.Rows.Count != 0)
-                {
-                    int Amount;
-                    String AmountLimit = LLoanAmount.Text.Remove(0, 1);
-                    AmountLimit = AmountLimit.Remove(AmountLimit.Length - 1);
-                    bool Check = int.TryParse(AmountLimit, out int LimitAmount);
-                    if (int.TryParse(TBLoanAmount.Text, out Amount) && (Check))
-                    {
-                        if (Amount > LimitAmount)
-                        {
-                            UserOutCreditLimit = MessageBox.Show("จำนวนเงินกู้ เกินกำหนดเงินค้ำ\r\n ต้องการทำต่อหรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                            if (UserOutCreditLimit == DialogResult.No)
-                            {
-                                TBLoanAmount.Text = "";
-                                TBLoanAmount.Focus();
-                            }
-                        }
-                    }
-                    else if (!Check)
-                    {
-                        TBTeacherNo.Focus();
-                    }
-                }
-                else if (DGVGuarantor.Rows.Count == 0)
-                {
-                    MessageBox.Show("โปรดเลือกผู้กู้ ผู้ค้ำก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    tabControl1.SelectedIndex = 0;
-                    TBTeacherNo.Focus();
                 }
             }
             else if (Int32.TryParse(TBLoanAmount.Text, out int y))
