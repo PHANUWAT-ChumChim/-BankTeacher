@@ -14,25 +14,25 @@ namespace example.Bank.Loan
     {
         int Check = 0;
         /// <summary>
-        /// <para>[0] SELECT MemberLona  INPUT: {TeacherNo}</para>
+        /// <para>[0] SELECT MemberLonn  INPUT: {TeacherNo}</para>
         /// <para>[1] SELECT LOAN INPUT: {TeacherNo} </para>
         /// <para>[2] SELECT Detail Loan INPUT: {LoanID} </para>
         /// </summary>
         private String[] SQLDefault =
         {
-             //[0] SELECT MemberLona  INPUT: {TeacherNo}
-          "SELECT TOP(20) TeacherNo , NAME , StartAmount \r\n " +
-          "FROM( \r\n " +
-          "SELECT a.TeacherNo,CAST(c.PrefixName+''+b.Fname+''+b.Lname as NVARCHAR)AS NAME,d.StartAmount ,b.Fname \r\n " +
-          "FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
-          "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo  \r\n " +
-          "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo  \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblMember as d on a.TeacherNo = d.TeacherNo \r\n " +
-          "WHERE a.TeacherNo LIKE 'T{TeacherNo}%' and a.LoanStatusNo != 4 \r\n " +
-          "GROUP BY a.TeacherNo,CAST(c.PrefixName+''+b.Fname+''+b.Lname as NVARCHAR),d.StartAmount ,Fname) AS A \r\n " +
-          "ORDER BY Fname; \r\n " +
-          " "
-          ,
+             //[0] SELECT MemberLonn  INPUT: {Text}
+          " SELECT TOP(20) TeacherNo , NAME , SavingAmount  \r\n" +
+          " FROM(   \r\n " +
+          " SELECT a.TeacherNo, CAST(c.PrefixName + ' ' + Fname + ' ' + Lname AS nvarchar)AS NAME,SavingAmount,Fname ,LoanStatusNo \r\n " +
+          " FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
+          " LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo  \r\n " +
+          " LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo  \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblShare as d on a.TeacherNo = d.TeacherNo  \r\n " +
+          " WHERE a.LoanStatusNo != 4 and a.LoanStatusNo != 3 \r\n " +
+          " GROUP BY a.TeacherNo,CAST(c.PrefixName+' '+Fname+' '+Lname as NVARCHAR),d.SavingAmount ,Fname , LoanStatusNo) AS A   \r\n " +
+          " WHERE a.TeacherNo LIKE '%{Text}%' or Fname LIKE '%{Text}%'  \r\n " +
+          " ORDER BY Fname;   "
+                ,
           //[1] SELECT LOAN INPUT: {TeacherNo} : 
           "SELECT a.LoanNo , CAST(d.PrefixName + ' ' + Fname + ' ' + Lname AS NVARCHAR) \r\n " +
           " FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
@@ -67,14 +67,26 @@ namespace example.Bank.Loan
             try
             {
 
-                IN = new Bank.Search(SQLDefault[0]
-                     .Replace("{TeacherNo}", ""));
+                IN = new Bank.Search(SQLDefault[0]);
                 IN.ShowDialog();
                 TBTeacherNo.Text = Bank.Search.Return[0];
                 TBTeacherName.Text = Bank.Search.Return[1];
                 comboBox1.Enabled = true;
                 comboBox1.Items.Clear();
                 Check = 1;
+                comboBox1.Items.Clear();
+                comboBox1.SelectedIndex = -1;
+                TBTeacherName.Text = "";
+                textBox1.Text = "";
+                textBox2.Text = "";
+                textBox3.Text = "";
+                textBox4.Text = "";
+                textBox5.Text = "";
+                TBLoanStatus.Text = "";
+                TBLoanNo.Text = "";
+                TBSavingAmount.Text = "";
+                DGVGuarantor.Rows.Clear();
+                DGVLoanDetail.Rows.Clear();
                 ComboBox[] cb = new ComboBox[] { comboBox1 };
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
                     .Replace("{TeacherNo}", TBTeacherNo.Text));
@@ -89,20 +101,9 @@ namespace example.Bank.Loan
                 {
                     comboBox1.Enabled = false;
                     Check = 0;
+
                 }
-                                     comboBox1.Items.Clear();
-                    comboBox1.SelectedIndex = -1;
-                    TBTeacherName.Text = "";
-                    textBox1.Text = "";
-                    textBox2.Text = "";
-                    textBox3.Text = "";
-                    textBox4.Text = "";
-                    textBox5.Text = "";
-                    TBLoanStatus.Text = "";
-                    TBLoanNo.Text = "";
-                    TBSavingAmount.Text = "";
-                    DGVGuarantor.Rows.Clear();
-                    DGVLoanDetail.Rows.Clear();
+                    
             }
             catch (Exception x)
             {

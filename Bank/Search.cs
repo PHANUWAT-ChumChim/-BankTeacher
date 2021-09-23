@@ -13,24 +13,8 @@ namespace example.Bank
     public partial class Search : Form
     {
         public static String[] Return = { "" };
-        /// <summary> 
-        /// SQLDafault 
-        /// <para>[0] SELECT Detail Member INPUT: {TeacherNo} {Name} </para>
-        /// </summary> 
-        private String[] SQLDefault = new String[]
-        {
-         //[0] SELECT TBSearch Member INPUT: {TeacherNo} {Name}
-          "SELECT TOP(20) a.TeacherNo , CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR)AS Name, b.IdNo AS TeacherID,   \r\n " +
-          " b.TeacherLicenseNo,b.IdNo AS IDNo,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar) AS UserStatususing   \r\n " +
-          " FROM EmployeeBank.dbo.tblMember as a   \r\n " +
-          " LEFT JOIN Personal.dbo.tblTeacherHis as b ON a.TeacherNo = b.TeacherNo   \r\n " +
-          " LEFT JOIN BaseData.dbo.tblPrefix as c ON c.PrefixNo = b.PrefixNo  \r\n " +
-          " INNER JOIN EmployeeBank.dbo.tblMemberStatus as d on a.MemberStatusNo = d.MemberStatusNo  \r\n " +
-          "  WHERE a.TeacherNo LIKE '%T{TeacherNo}%'  or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Name}%'   and a.MemberStatusNo = 1      \r\n " +
-          " ORDER BY a.TeacherNo;  \r\n"+
-          " GROUP BY "
-          ,
-        };
+        String SQLCODE;
+       
 
         public Search(String SQLCode)
         {
@@ -38,7 +22,8 @@ namespace example.Bank
             Return = new String[] { "" };
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLCode);
+            SQLCODE = SQLCode;
+            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLCode.Replace("{Text}",""));
             for (int x = 0; x < dt.Rows.Count; x++)
             {
                 dataGridView1.Rows.Add(dt.Rows[x][0], dt.Rows[x][1],dt.Rows[x][2]);
@@ -71,22 +56,21 @@ namespace example.Bank
 
         private void TBTeacherNo_TextChanged(object sender, EventArgs e)
         {
-            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]
-                .Replace("T{TeacherNo}", TBSearch.Text)
-                .Replace("{Name}", TBSearch.Text));
+            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLCODE
+                .Replace("{Text}", TBSearch.Text));
             if (dataGridView1.Rows.Count != 0) { dataGridView1.Rows.Clear(); }
             if (TBSearch.Text != "")
             {
                 for (int x = 0; x < dt.Rows.Count; x++)
                 {
-                    dataGridView1.Rows.Add(dt.Rows[x][0], dt.Rows[x][1],"");
+                    dataGridView1.Rows.Add(dt.Rows[x][0], dt.Rows[x][1],dt.Rows[x][2]);
                 }
             }
             else
             {
                 for (int x = 0; x < dt.Rows.Count; x++)
                 {
-                    dataGridView1.Rows.Add(dt.Rows[x][0], dt.Rows[x][1], "");
+                    dataGridView1.Rows.Add(dt.Rows[x][0], dt.Rows[x][1], dt.Rows[x][2]);
                 }
 
 

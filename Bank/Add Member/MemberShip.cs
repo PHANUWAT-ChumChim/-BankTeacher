@@ -17,6 +17,7 @@ namespace example.Bank
     public partial class MemberShip : Form
     {
         //------------------------- index -----------------
+        int Check = 0;
 
         //----------------------- index code -------------------- ////////
 
@@ -36,7 +37,7 @@ namespace example.Bank
         /// <summary>
         /// SQLDafault
         /// <para>[0] Insert Teacher Data INPUT:{TeacherNo}{TeacherAddBy}, {StartAmount} </para>
-        /// <para>[1] SELECT Member  INPUT:{TeacherNo} </para>
+        /// <para>[1] SELECT Member  INPUT:{Text} </para>
         /// <para>[2]  Select Detail Memner INPUT: {TeacherNo} </para>
         /// <para>[3] INSERT Member To Member  Bill BillDetail  INPUT: {TeacherNo} {TeacherNoAddBy} {StartAmount} {Mount} {Year}  </para>
         /// </summary>
@@ -46,12 +47,13 @@ namespace example.Bank
 			"INSERT INTO EmployeeBank.dbo.tblMember(TeacherNo,TeacherAddBy,StartAmount,DateAdd) \r\n"+
             "VALUES('{TeacherNo}','{TeacherAddBy}',{StartAmount}, CURRENT_TIMESTAMP); \r\n\r\n"
             ,
-            //[1] SELECT Member  INPUT:{TeacherNo}
-          "SELECT a.TeacherNo ,  CAST(b.PrefixName+' '+Fname +' '+ Lname as NVARCHAR), null \r\n " +
-          "FROM Personal.dbo.tblTeacherHis as a \r\n " +
-          "LEFT JOIN BaseData.dbo.tblPrefix as b ON a.PrefixNo = b.PrefixNo  \r\n " +
-          "WHERE NOT a.TeacherNo IN(SELECT TeacherNo FROM EmployeeBank.dbo.tblMember) and a.TeacherNo LIKE 'T{TeacherNo}%' \r\n " +
-          "ORDER BY Fname "
+            //[1] SELECT Member  INPUT:{Text}
+          "SELECT a.TeacherNo ,  CAST(b.PrefixName+' '+Fname +' '+ Lname as NVARCHAR), null  \r\n " +
+          "FROM Personal.dbo.tblTeacherHis as a  \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as b ON a.PrefixNo = b.PrefixNo   \r\n " +
+          "WHERE NOT a.TeacherNo IN(SELECT TeacherNo FROM EmployeeBank.dbo.tblMember)  \r\n " +
+          "and a.TeacherNo LIKE '%{Text}%' or CAST(b.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%' \r\n " +
+          "ORDER BY Fname  "
           ,
 
           //[2]  Select Detail Memner INPUT: {TeacherNo} 
@@ -82,37 +84,20 @@ namespace example.Bank
         //----------------------- PullSQL -------------------- ////////
         // Comment!
         // Available values| ResearchUserAllTLC / TB /
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            //ต้องพิมพ์รหัสอาจารย์ถึง 6 ตัวถึงจะเข้าเงื่อนไข if
-            if (TBTeacherNo.Text.Length == 6)
-            {
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("T{TeacherNo}%", TBTeacherNo.Text));
-                if(dt.Rows.Count != 0)
-                {
-                    TBTeacherName.Text = dt.Rows[0][1].ToString();
-                    TBIDNo.Text = "รอใส่ครับ";
-                }
 
-            }
-            else
-            {
-                TBIDNo.Text = "";
-                TBTeacherName.Text = "";
-            }
 
-        }
         // Comment!
         // Available values|  BSearchTeacher / TB /
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
             try
             {
-                Search IN = new Search(SQLDefault[1].Replace("{TeacherNo}", ""));
+                Search IN = new Search(SQLDefault[1]);
                 IN.ShowDialog();
                 if (Search.Return[0] != "")
                 {
                     TBTeacherNo.Text = Search.Return[0];
+                    TBTeacherName.Text = Search.Return[1];
                     TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
                 }
 
@@ -266,9 +251,27 @@ namespace example.Bank
         {
             if (e.KeyCode == Keys.Enter)
             {
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("T{TeacherNo}", TBTeacherNo.Text));
-                TBTeacherName.Text = dt.Rows[0][1].ToString();
-                TBIDNo.Text = "รอใส่จ้าาา";
+                if(TBTeacherNo.Text.Length == 6)
+                {
+                    try
+                    {
+                         DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1].Replace("{Text}", TBTeacherNo.Text));
+                        TBTeacherName.Text = ds.Tables[0].Rows[0][1].ToString();
+                        TBIDNo.Text = "รอใส่จ้าาา";
+                        Check = 1;
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                } 
+            }
+            else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back && Check == 1)
+            {
+                TBIDNo.Text = "";
+                TBTeacherName.Text = "";
+                Check = 0;
             }
         }
 
