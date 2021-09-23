@@ -43,7 +43,7 @@ namespace example.GOODS
             Date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]).Rows[0][0].ToString().Split('-');
             example.GOODS.Menu.Monthname = Month[Convert.ToInt32(example.GOODS.Menu.Date[1]) - 1];
 
-            Class.UserInfo.SetTeacherInformation("T53036", "John YouSuck", "1");
+            Class.UserInfo.SetTeacherInformation("T43005", "Manit Hodkuntod", "1");
 
             dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]);
             DateAmountChange = Convert.ToInt32(dt.Rows[0][0]);

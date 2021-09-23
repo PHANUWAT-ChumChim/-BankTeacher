@@ -45,13 +45,16 @@ namespace example.Bank.Loan
 
           ,
           //[2] SELECT Detail Loan INPUT: {LoanID} 
-          "SELECT b.TeacherNo , CAST(d.PrefixName + ' ' + Fname + ' ' + Lname AS NVARCHAR) ,CAST(DateAdd as date), \r\n " +
-          "a.PayDate,MonthPay,YearPay,PayNo,InterestRate,LoanAmount,b.Amount,a.LoanStatusNo \r\n " +
-          "FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
+          "SELECT b.TeacherNo , CAST(d.PrefixName + ' ' + c.Fname + ' ' + c.Lname AS NVARCHAR) AS NameTeacher,CAST(DateAdd as date),  \r\n " +
+          "a.PayDate,MonthPay,YearPay,PayNo,InterestRate,LoanAmount,b.Amount,a.LoanStatusNo  \r\n " +
+          ",TeacherNoAddBy, CAST(f.PrefixName + ' ' + e.Fname + ' ' + e.Lname AS NVARCHAR) AS NameTeacherAddby \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a   \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo  \r\n " +
-          "LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo \r\n " +
-          "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo  \r\n " +
-          "WHERE a.LoanNo = '{LoanID}' and LoanStatusNo != 4  "
+          "LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo  \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo   \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as e on a.TeacherNoAddBy = e.TeacherNo \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as f on e.PrefixNo = f.PrefixNo    \r\n " +
+          "WHERE a.LoanNo = '53' and LoanStatusNo != 4   "
           ,
 
         };
@@ -185,6 +188,8 @@ namespace example.Bank.Loan
                 TBLoanStatus.Text = dt.Rows[0][10].ToString();
                 TBSavingAmount.Text = dt.Rows[0][2].ToString();
                 DGVLoanDetail.Rows.Clear();
+                TBTeacheraddbyNo.Text = dt.Rows[0][11].ToString();
+                TBTeacheraddbyname.Text = dt.Rows[0][12].ToString();
                 int Month = Convert.ToInt32(dt.Rows[0][4].ToString());
                 int Year = Convert.ToInt32(dt.Rows[0][5].ToString());
                 DGVLoanDetail.Rows.Clear();
