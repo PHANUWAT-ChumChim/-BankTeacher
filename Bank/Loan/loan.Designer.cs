@@ -168,7 +168,7 @@ namespace example.Bank.Loan
             this.Delete.Size = new System.Drawing.Size(249, 50);
             this.Delete.TabIndex = 100;
             this.Delete.Text = "ล้างข้อมูล";
-            this.Delete.UseVisualStyleBackColor = false;
+            this.Delete.UseVisualStyleBackColor = true;
             this.Delete.Click += new System.EventHandler(this.Delete_Click_1);
             // 
             // BSave
