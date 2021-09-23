@@ -94,24 +94,37 @@ namespace example.Bank.Loan
                 IN = new Bank.Search(SQLDefault[0]
                      .Replace("{TeacherNo}", ""));
                 IN.ShowDialog();
-                TBTeacherNo.Text = Bank.Search.Return[0];
-                TBTeacherName.Text = Bank.Search.Return[1];
-                label3.Text = "0";
-                CBB4Oppay.Enabled = false;
-                button1.Enabled = false;
-                comboBox1.Enabled = true;
-                comboBox1.Items.Clear();
-                Check = 1;
-                ComboBox[] cb = new ComboBox[] { comboBox1 };
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
-                    .Replace("{TeacherNo}", TBTeacherNo.Text));
-                for (int x = 0; x < dt.Rows.Count; x++)
+                
+                if(Bank.Search.Return.Length != 1)
                 {
-                    for (int aa = 0; aa < cb.Length; aa++)
+                    TBTeacherNo.Text = Bank.Search.Return[0];
+                    TBTeacherName.Text = Bank.Search.Return[1];
+                    textBox1.Text = Bank.Search.Return[1];
+                    label3.Text = "0";
+                    CBB4Oppay.Enabled = false;
+                    button1.Enabled = false;
+                    comboBox1.Enabled = true;
+                    comboBox1.Items.Clear();
+                    Check = 1;
+                    ComboBox[] cb = new ComboBox[] { comboBox1 };
+                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
+                        .Replace("{TeacherNo}", TBTeacherNo.Text));
+                    for (int x = 0; x < dt.Rows.Count; x++)
                     {
-                        cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + (x + 1), dt.Rows[x][0].ToString()));
+                        for (int aa = 0; aa < cb.Length; aa++)
+                        {
+                            cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + (x + 1), dt.Rows[x][0].ToString()));
+                        }
+                    }
+                    TBLoanNo.Text = "";
+                    TBLoanStatus.Text = "";
+                    TBDate.Text = "";
+                    if (comboBox1.Items.Count == 1)
+                    {
+                        comboBox1.SelectedIndex = 0;
                     }
                 }
+                
             }
             catch (Exception x)
             {
@@ -129,6 +142,7 @@ namespace example.Bank.Loan
                     if (dt.Rows.Count != 0)
                     {
                         TBTeacherName.Text = dt.Rows[0][1].ToString();
+                        textBox1.Text = dt.Rows[0][1].ToString();
                         comboBox1.Enabled = true;
                         comboBox1.Items.Clear();
                         Check = 1;
@@ -140,10 +154,19 @@ namespace example.Bank.Loan
                                 cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + (x + 1), dt.Rows[x][0].ToString()));
                             }
                         }
+                        TBLoanNo.Text = "";
+                        TBLoanStatus.Text = "";
+                        TBDate.Text = "";
+                        if(comboBox1.Items.Count == 1)
+                        {
+                            comboBox1.SelectedIndex = 0;
+                        }
                     }
                     else
                     {
                         MessageBox.Show("รหัสผู้ใช้ไม่ถูกต้อง", "System", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TBTeacherNo.Text = "";
+                        TBTeacherNo.Focus();
                     }
 
                 }

@@ -412,6 +412,7 @@ namespace example.Bank.Loan
             this.TBLoanAmount.Size = new System.Drawing.Size(254, 43);
             this.TBLoanAmount.TabIndex = 14;
             this.TBLoanAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.TBLoanAmount.Enter += new System.EventHandler(this.TBLoanAmount_Enter);
             this.TBLoanAmount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBLoanAmount_KeyPress);
             this.TBLoanAmount.Leave += new System.EventHandler(this.TBLoanAmount_Leave);
             // 
@@ -693,7 +694,9 @@ namespace example.Bank.Loan
             this.DGVLoanDetail.AllowUserToAddRows = false;
             this.DGVLoanDetail.AllowUserToDeleteRows = false;
             this.DGVLoanDetail.AllowUserToResizeRows = false;
+
             this.DGVLoanDetail.BackgroundColor = System.Drawing.Color.White;
+
             this.DGVLoanDetail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVLoanDetail.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,

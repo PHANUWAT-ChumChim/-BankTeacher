@@ -85,21 +85,24 @@ namespace example.Bank.Loan
                         cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + (x + 1), dt.Rows[x][0].ToString()));
                     }
                 }
-                comboBox1.Items.Clear();
-                comboBox1.SelectedIndex = -1;
-                TBTeacherName.Text = "";
-                textBox1.Text = "";
-                textBox2.Text = "";
-                textBox3.Text = "";
-                textBox4.Text = "";
-                textBox5.Text = "";
-                TBLoanStatus.Text = "";
-                TBLoanNo.Text = "";
-                TBSavingAmount.Text = "";
-                DGVGuarantor.Rows.Clear();
-                DGVLoanDetail.Rows.Clear();
-                comboBox1.Enabled = false;
-                Check = 0;
+                if(Bank.Search.Return[0] == "")
+                {
+                    comboBox1.Enabled = false;
+                    Check = 0;
+                }
+                                     comboBox1.Items.Clear();
+                    comboBox1.SelectedIndex = -1;
+                    TBTeacherName.Text = "";
+                    textBox1.Text = "";
+                    textBox2.Text = "";
+                    textBox3.Text = "";
+                    textBox4.Text = "";
+                    textBox5.Text = "";
+                    TBLoanStatus.Text = "";
+                    TBLoanNo.Text = "";
+                    TBSavingAmount.Text = "";
+                    DGVGuarantor.Rows.Clear();
+                    DGVLoanDetail.Rows.Clear();
             }
             catch (Exception x)
             {
