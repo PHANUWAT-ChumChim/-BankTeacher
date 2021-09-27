@@ -22,7 +22,7 @@ namespace example.Bank.Loan
         /// <para>[1] SELECT LOAN INPUT: {TeacherNo} </para>
         /// <para>[2] SELECT Detail Loan INPUT: {LoanNo}</para>
         /// <para>[3] Select Payment Name INPUT: - </para>
-        /// <para>[4] UPDATE Payment INPUT: {LoanID} {TeacherNoPay} {PaymentNo}</para>
+        /// <para>[4] UPDATE Payment Loan INPUT: {LoanID} {TeacherNoPay} {PaymentNo}</para>
         /// </summary>
         private String[] SQLDefault =
 {
@@ -34,20 +34,22 @@ namespace example.Bank.Loan
           "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo  \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblMember as d on a.TeacherNo = d.TeacherNo \r\n " +
-          "WHERE a.TeacherNo LIKE 'T{TeacherNo}%' and a.LoanStatusNo != 4 \r\n " +
+          "WHERE a.TeacherNo LIKE 'T{TeacherNo}%' and a.LoanStatusNo = 1 \r\n " +
           "GROUP BY a.TeacherNo,CAST(c.PrefixName+''+b.Fname+''+b.Lname as NVARCHAR),d.StartAmount ,Fname) AS A \r\n " +
           "ORDER BY Fname; \r\n " +
           " "
           ,
-          //[1] SELECT LOAN INPUT: {TeacherNo} : 
-          "SELECT a.LoanNo , CAST(d.PrefixName + ' ' + Fname + ' ' + Lname AS NVARCHAR) \r\n " +
-          " FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
-          " LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo  \r\n " +
-          " LEFT JOIN Personal.dbo.tblTeacherHis as c on a.TeacherNo = c.TeacherNo \r\n " +
-          " LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo \r\n " +
-          " WHERE a.TeacherNo = '{TeacherNo}' and LoanStatusNo != 4  \r\n " +
-          " GROUP BY a.LoanNo , CAST(d.PrefixName + ' ' + Fname + ' ' + Lname AS NVARCHAR) \r\n " +
-          " ORDER BY a.LoanNo  "
+          //[1] SELECT LOAN INPUT: {TeacherNo}
+          "SELECT a.LoanNo , CAST(d.PrefixName + ' ' + Fname + ' ' + Lname AS NVARCHAR) , ISNULL(CAST(a.PayDate as int) , 1) \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a   \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo   \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as c on a.TeacherNo = c.TeacherNo  \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo  \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}' and LoanStatusNo = 1 and  LoanStatusNo != 3 \r\n " +
+          "GROUP BY a.LoanNo , CAST(d.PrefixName + ' ' + Fname + ' ' + Lname AS NVARCHAR) ,ISNULL(CAST(a.PayDate as int) , 1) \r\n " +
+          "ORDER BY a.LoanNo "
+          
+
                 ,
           //[2] SELECT Detail Loan INPUT: {LoanNo} 
           "SELECT CAST(d.PrefixName + ' ' + Fname + ' ' + Lname AS NVARCHAR) ,DateAdd,a.PayDate,LoanAmount \r\n " +
@@ -60,11 +62,11 @@ namespace example.Bank.Loan
           //[3] Check BillDetailPayment INPUT: -  
           "SELECT Name , BillDetailpaymentNo  \r\n " +
           "FROM EmployeeBank.dbo.tblBillDetailPayment \r\n " +
-          "WHERE Status = 1 "
+          "WHERE Status = 1 and BillDetailpaymentNo <> 3"
           ,
-          //[4] UPDATE Payment INPUT: {LoanID} {TeacherNoPay} {PaymentNo}
+          //[4] UPDATE Payment Loan INPUT: {LoanID} {TeacherNoPay} {PaymentNo}
           "UPDATE EmployeeBank.dbo.tblLoan \r\n " +
-          "SET PayDate = CURRENT_TIMESTAMP , TeacherNoPay = '{TeacherNoPay}', BillDetailPaymentNo = '{PaymentNo}' \r\n " +
+          "SET PayDate = CURRENT_TIMESTAMP , TeacherNoPay = '{TeacherNoPay}', BillDetailPaymentNo = '{PaymentNo}' , LoanStatusNo = 2 \r\n " +
           "WHERE LoanNo = '{LoanID}'; "
           ,
 
@@ -109,19 +111,31 @@ namespace example.Bank.Loan
                     ComboBox[] cb = new ComboBox[] { comboBox1 };
                     DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
                         .Replace("{TeacherNo}", TBTeacherNo.Text));
+                    int CheckPay = 0;
                     for (int x = 0; x < dt.Rows.Count; x++)
                     {
                         for (int aa = 0; aa < cb.Length; aa++)
                         {
-                            cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + (x + 1), dt.Rows[x][0].ToString()));
+                            int.TryParse(dt.Rows[x][2].ToString(), out CheckPay);
+                            if(CheckPay == 1)
+                            {
+                                cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[x][0], dt.Rows[x][0].ToString()));
+                            }
                         }
                     }
                     TBLoanNo.Text = "";
                     TBLoanStatus.Text = "";
                     TBDate.Text = "";
+                    comboBox1.Enabled = true;
                     if (comboBox1.Items.Count == 1)
                     {
                         comboBox1.SelectedIndex = 0;
+                        label9.Visible = false;
+                    }
+                    else if(comboBox1.Items.Count == 0)
+                    {
+                        label9.Visible = true;
+                        comboBox1.Enabled = false;
                     }
                 }
                 
@@ -147,20 +161,33 @@ namespace example.Bank.Loan
                         comboBox1.Items.Clear();
                         Check = 1;
                         ComboBox[] cb = new ComboBox[] { comboBox1 };
+                        int CheckPay = 0;
                         for (int x = 0; x < dt.Rows.Count; x++)
                         {
                             for (int aa = 0; aa < cb.Length; aa++)
                             {
-                                cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + (x + 1), dt.Rows[x][0].ToString()));
+                                int.TryParse(dt.Rows[x][2].ToString(), out CheckPay);
+                                if (CheckPay == 1)
+                                {
+                                    cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[x][0], dt.Rows[x][0].ToString()));
+                                }
                             }
                         }
                         TBLoanNo.Text = "";
                         TBLoanStatus.Text = "";
                         TBDate.Text = "";
-                        if(comboBox1.Items.Count == 1)
+                        comboBox1.Enabled = true;
+                        if (comboBox1.Items.Count == 1)
                         {
                             comboBox1.SelectedIndex = 0;
+                            label9.Visible = false;
                         }
+                        else if (comboBox1.Items.Count == 0)
+                        {
+                            label9.Visible = true;
+                            comboBox1.Enabled = false;
+                        }
+
                     }
                     else
                     {
@@ -215,9 +242,9 @@ namespace example.Bank.Loan
             try
             {
                 example.Class.ComboBoxPayment Payment = (CBB4Oppay.SelectedItem as example.Class.ComboBoxPayment);
-                Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{LoanID}", TBLoanNo.Text
+                Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{LoanID}", TBLoanNo.Text)
                     .Replace("{TeacherNoPay}", Class.UserInfo.TeacherNo)
-                    .Replace("{PaymentNo}", Payment.No)));
+                    .Replace("{PaymentNo}", Payment.No));
                 MessageBox.Show("จ่ายสำเร็จ","System",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 comboBox1.Items.Clear();
                 comboBox1.SelectedIndex = -1;
@@ -227,8 +254,12 @@ namespace example.Bank.Loan
                 TBDate.Text = "";
                 label3.Text = "0";
                 CBB4Oppay.Enabled = false;
+                CBB4Oppay.SelectedIndex = -1;
+                TBTeacherNo.Text = "";
+                textBox1.Text = "";
                 button1.Enabled = false;
                 comboBox1.Enabled = false;
+                TBTeacherNo.Focus();
                 Check = 0;
             }
             catch
