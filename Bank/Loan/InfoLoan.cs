@@ -113,7 +113,9 @@ namespace example.Bank.Loan
                     Check = 0;
 
                 }
-                    
+
+                TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+
             }
             catch (Exception x)
             {
@@ -143,6 +145,8 @@ namespace example.Bank.Loan
                                 cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + (x + 1), dt.Rows[x][0].ToString()));
                             }
                         }
+                        if (comboBox1.Items.Count == 1)
+                            comboBox1.SelectedIndex = 0;
                     }
                     else
                     {
@@ -160,7 +164,6 @@ namespace example.Bank.Loan
                     comboBox1.SelectedIndex = -1;
                     TBTeacherName.Text = "";
                     textBox1.Text = "";
-                    textBox2.Text = "";
                     textBox3.Text = "";
                     textBox4.Text = "";
                     textBox5.Text = "";
@@ -247,6 +250,11 @@ namespace example.Bank.Loan
         private void InfoLoan_SizeChanged(object sender, EventArgs e)
         {
             Class.FromSettingMedtod.ChangeSizePanal(this, panel1);
+        }
+
+        private void BPrintLoanDoc_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

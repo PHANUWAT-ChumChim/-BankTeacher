@@ -43,7 +43,6 @@ namespace example.Bank.Loan
             this.panel3 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
@@ -51,6 +50,7 @@ namespace example.Bank.Loan
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.BTOpenfile = new System.Windows.Forms.Button();
             this.BTdeletefile = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.TBDate = new System.Windows.Forms.TextBox();
@@ -67,6 +67,7 @@ namespace example.Bank.Loan
             this.LB1Id = new System.Windows.Forms.Label();
             this.CBStatus = new System.Windows.Forms.ComboBox();
             this.BSave = new System.Windows.Forms.Button();
+            this.label9 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -159,6 +160,7 @@ namespace example.Bank.Loan
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.label9);
             this.tabPage4.Controls.Add(this.panel4);
             this.tabPage4.Controls.Add(this.panel3);
             this.tabPage4.Controls.Add(this.panel2);
@@ -235,17 +237,6 @@ namespace example.Bank.Loan
             this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(310, 43);
             this.textBox1.TabIndex = 58;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(13, 48);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(83, 40);
-            this.label6.TabIndex = 57;
-            this.label6.Text = "ชื่อ-สกุล";
             // 
             // panel2
             // 
@@ -333,6 +324,17 @@ namespace example.Bank.Loan
             this.BTdeletefile.Text = "ลบไฟล์";
             this.BTdeletefile.UseVisualStyleBackColor = false;
             this.BTdeletefile.Click += new System.EventHandler(this.BTdeletefile_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(13, 48);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(83, 40);
+            this.label6.TabIndex = 57;
+            this.label6.Text = "ชื่อ-สกุล";
             // 
             // label5
             // 
@@ -520,6 +522,17 @@ namespace example.Bank.Loan
             this.BSave.Text = "บันทึก";
             this.BSave.UseVisualStyleBackColor = false;
             // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.ForeColor = System.Drawing.Color.Red;
+            this.label9.Location = new System.Drawing.Point(385, 30);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(244, 37);
+            this.label9.TabIndex = 90;
+            this.label9.Text = "**ไม่มีรายการที่สามาถจ่ายได้";
+            this.label9.Visible = false;
+            // 
             // PayLoan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -535,6 +548,7 @@ namespace example.Bank.Loan
             this.panel1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
+            this.tabPage4.PerformLayout();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.panel3.ResumeLayout(false);
@@ -591,6 +605,6 @@ namespace example.Bank.Loan
         private System.Windows.Forms.TextBox textBox1;
         //private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Panel panel4;
-
+        private System.Windows.Forms.Label label9;
     }
 }

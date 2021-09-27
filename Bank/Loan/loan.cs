@@ -130,7 +130,7 @@ namespace example.Bank.Loan
         int Month;
         private void Loan_Load(object sender, EventArgs e)
         {
-
+            
             int Year = Convert.ToInt32(example.GOODS.Menu.Date[0]);
             Month = Convert.ToInt32(example.GOODS.Menu.Date[1]);
 
@@ -154,17 +154,23 @@ namespace example.Bank.Loan
         private void BSave_Click(object sender, EventArgs e)
         {
             int SumPercentGuarantor = 0;
+            bool CheckMinus = true;
             for (int Num = 0; Num < DGVGuarantorCredit.Rows.Count; Num++)
             {
                 if (Double.TryParse(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString(), out Double CreditPercent))
                 {
                     SumPercentGuarantor += Convert.ToInt32(CreditPercent);
+                    if(CreditPercent <= 0)
+                    {
+                        CheckMinus = false;
+                        break;
+                    }
                 }
 
             }
             if (TBTeacherNo.Text != "" && CBPayMonth.SelectedIndex != -1 && CBPayYear.SelectedIndex != -1 &&
                 TBLoanAmount.Text != "" && TBPayNo.Text != "" && TBInterestRate.Text != "" && DGVGuarantor.Rows.Count == 4 && ((SumPercentGuarantor >= int.Parse(TBLoanAmount.Text)) || UserOutCreditLimit == DialogResult.Yes) &&
-                Convert.ToInt32(LLackAmount.Text) == 0 && Convert.ToInt32(LOutCredit.Text) == 0 && Int32.TryParse(TBLoanAmount.Text, out int x ) && x >= example.GOODS.Menu.MinLoan)
+                Convert.ToInt32(LLackAmount.Text) == 0 && Convert.ToInt32(LOutCredit.Text) == 0 && Int32.TryParse(TBLoanAmount.Text, out int x ) && x >= example.GOODS.Menu.MinLoan && CheckMinus == true)
             {
 
                 DataSet dt = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[3]
@@ -206,10 +212,10 @@ namespace example.Bank.Loan
             }
             else
             {
-                MessageBox.Show("โปรดใสข้อมุลให้ครบก่อนบันทึก", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("กรอกข้อมูลไม่ถูกต้อง", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
-
+            //TBGuarantorNo.Cop
         }
         //----------------------- End code -------------------- ////////
 
@@ -1096,6 +1102,11 @@ namespace example.Bank.Loan
         {
 
 
+        }
+
+        private void BReset_Click(object sender, EventArgs e)
+        {
+            TBLoanAmount_Leave(sender, new EventArgs());
         }
 
         private void BCalculate_Click(object sender, EventArgs e)
