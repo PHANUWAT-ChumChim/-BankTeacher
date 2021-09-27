@@ -928,39 +928,66 @@ namespace example.Bank.Loan
         {
 
             int NumCell = 0;
-            if (TBLoanAmount.Text != "" && TBInterestRate.Text != "" && TBPayNo.Text != "")
+            if (TBLoanAmount.Text != "" && TBInterestRate.Text != "" && TBPayNo.Text != "" )
             {
                 Double Total = (Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100) + Convert.ToDouble(TBLoanAmount.Text));
                 bool Check;
-                try
+                if (DGVGuarantorCredit.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
                 {
-                    NumCell = int.Parse(DGVGuarantorCredit.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
-                    Check = true;
-                }
-                catch
-                {
-                    Check = false;
-                }
-
-                if (e.ColumnIndex == 2 && Check)
-                {
-                    Double Credit = Convert.ToDouble(NumCell) / 100 * Total;
-                    if (Credit <= int.Parse(DGVGuarantor.Rows[e.RowIndex].Cells[2].Value.ToString()))
+                    if (Int32.TryParse(DGVGuarantorCredit.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out NumCell))
                     {
-                        DGVGuarantorCredit.Rows[e.RowIndex].Cells[3].Value = Convert.ToInt32(Credit);
+                        Check = true;
                     }
                     else
                     {
-                        MessageBox.Show("เกินวงเงินที่ค้ำได้ จะปรับเป็นยอดค้ำสูงสุด", "ระบบ");
-                        DGVGuarantorCredit.Rows[e.RowIndex].Cells[3].Value = Convert.ToDouble(DGVGuarantor.Rows[e.RowIndex].Cells[2].Value.ToString());
-                        //Double Interest = (Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)) + Convert.ToDouble(TBLoanAmount.Text);
-                        DGVGuarantorCredit.Rows[e.RowIndex].Cells[2].Value = Convert.ToInt32((Convert.ToDouble(DGVGuarantorCredit.Rows[e.RowIndex].Cells[3].Value.ToString()) * 100 / Total));
+                        Check = false;
+                        NumCell = 0;
+                    }
+
+
+                    if (e.ColumnIndex == 2 && Check)
+                    {
+                        Double Credit = Convert.ToDouble(NumCell) / 100 * Total;
+                        if (Credit <= int.Parse(DGVGuarantor.Rows[e.RowIndex].Cells[2].Value.ToString()))
+                        {
+                            DGVGuarantorCredit.Rows[e.RowIndex].Cells[3].Value = Convert.ToInt32(Credit);
+                        }
+                        else
+                        {
+                            MessageBox.Show("เกินวงเงินที่ค้ำได้ จะปรับเป็นยอดค้ำสูงสุด", "ระบบ");
+                            DGVGuarantorCredit.Rows[e.RowIndex].Cells[3].Value = Convert.ToDouble(DGVGuarantor.Rows[e.RowIndex].Cells[2].Value.ToString());
+                            //Double Interest = (Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)) + Convert.ToDouble(TBLoanAmount.Text);
+                            DGVGuarantorCredit.Rows[e.RowIndex].Cells[2].Value = Convert.ToInt32((Convert.ToDouble(DGVGuarantorCredit.Rows[e.RowIndex].Cells[3].Value.ToString()) * 100 / Total));
+                        }
+                    }
+                    else if (e.ColumnIndex == 3 && Check)
+                    {
+                        if (NumCell <= int.Parse(DGVGuarantor.Rows[e.RowIndex].Cells[2].Value.ToString()))
+                        {
+                            Double Percent = NumCell * 100 / Total;
+                            Double ppp = Convert.ToDouble(Convert.ToInt32(Percent)) + 0.5;
+                            if (Math.Round(Percent, 0) > Convert.ToDouble(Convert.ToInt32(Percent)) + 0.5)
+                                Percent += 1;
+                            else
+                            {
+                                 Percent = Math.Round(Percent, 0);
+                            }
+                            DGVGuarantorCredit.Rows[e.RowIndex].Cells[2].Value = Convert.ToInt32(Percent);
+                        }
+                        else
+                        {
+                            MessageBox.Show("เกินวงเงินที่ค้ำได้ จะปรับเป็นยอดค้ำสูงสุด", "ระบบ");
+                            DGVGuarantorCredit.Rows[e.RowIndex].Cells[3].Value = Convert.ToDouble(DGVGuarantor.Rows[e.RowIndex].Cells[2].Value.ToString());
+                            //Double Interest = (Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)) + Convert.ToDouble(TBLoanAmount.Text);
+                            DGVGuarantorCredit.Rows[e.RowIndex].Cells[2].Value = Convert.ToInt32((Convert.ToDouble(DGVGuarantorCredit.Rows[e.RowIndex].Cells[3].Value.ToString()) * 100 / Total));
+
+                        }
                     }
                 }
-                else if (e.ColumnIndex == 3 && Check)
+                else
                 {
-                    if (NumCell <= int.Parse(DGVGuarantor.Rows[e.RowIndex].Cells[2].Value.ToString()))
-                    {
+                    if(Int32.TryParse(DGVGuarantorCredit.Rows[e.RowIndex].Cells[3].Value.ToString(), out NumCell))
+                        {
                         Double Percent = NumCell * 100 / Total;
                         Double ppp = Convert.ToDouble(Convert.ToInt32(Percent)) + 0.5;
                         if (Math.Round(Percent, 0) > Convert.ToDouble(Convert.ToInt32(Percent)) + 0.5)
@@ -971,19 +998,13 @@ namespace example.Bank.Loan
                         }
                         DGVGuarantorCredit.Rows[e.RowIndex].Cells[2].Value = Convert.ToInt32(Percent);
                     }
-                    else
-                    {
-                        MessageBox.Show("เกินวงเงินที่ค้ำได้ จะปรับเป็นยอดค้ำสูงสุด", "ระบบ");
-                        DGVGuarantorCredit.Rows[e.RowIndex].Cells[3].Value = Convert.ToDouble(DGVGuarantor.Rows[e.RowIndex].Cells[2].Value.ToString());
-                        //Double Interest = (Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)) + Convert.ToDouble(TBLoanAmount.Text);
-                        DGVGuarantorCredit.Rows[e.RowIndex].Cells[2].Value = Convert.ToInt32((Convert.ToDouble(DGVGuarantorCredit.Rows[e.RowIndex].Cells[3].Value.ToString()) * 100 / Total));
-
-                    }
+                        
                 }
+                
             }
             else
             {
-                DGVGuarantorCredit.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "";
+                DGVGuarantor.Rows[e.RowIndex].Cells[2].Value = "0";
                 MessageBox.Show("โปรดกรอกหน้าข้อมูลการกู้ให้ครบถ้วนก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 

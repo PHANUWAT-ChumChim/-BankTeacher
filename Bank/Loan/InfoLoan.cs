@@ -88,7 +88,7 @@ namespace example.Bank.Loan
                 comboBox1.SelectedIndex = -1;
                 TBTeacherName.Text = "";
                 textBox1.Text = "";
-                textBox2.Text = "";
+                //textBox2.Text = "";
                 textBox3.Text = "";
                 textBox4.Text = "";
                 textBox5.Text = "";

@@ -70,6 +70,7 @@ namespace example.Bank.Loan
             this.label13 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.BReset = new System.Windows.Forms.Button();
             this.LOutCredit = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.LLackAmount = new System.Windows.Forms.Label();
@@ -115,7 +116,6 @@ namespace example.Bank.Loan
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.DGV1112 = new System.Windows.Forms.DataGridView();
-            this.BReset = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -505,6 +505,16 @@ namespace example.Bank.Loan
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "กำหนดจำนวนเงินค้ำ";
             this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // BReset
+            // 
+            this.BReset.Location = new System.Drawing.Point(59, 315);
+            this.BReset.Name = "BReset";
+            this.BReset.Size = new System.Drawing.Size(245, 59);
+            this.BReset.TabIndex = 6;
+            this.BReset.Text = "รีเซ็ต";
+            this.BReset.UseVisualStyleBackColor = true;
+            this.BReset.Click += new System.EventHandler(this.BReset_Click);
             // 
             // LOutCredit
             // 
@@ -1017,16 +1027,6 @@ namespace example.Bank.Loan
             this.DGV1112.RowTemplate.Height = 24;
             this.DGV1112.Size = new System.Drawing.Size(992, 315);
             this.DGV1112.TabIndex = 1;
-            // 
-            // BReset
-            // 
-            this.BReset.Location = new System.Drawing.Point(59, 315);
-            this.BReset.Name = "BReset";
-            this.BReset.Size = new System.Drawing.Size(245, 59);
-            this.BReset.TabIndex = 6;
-            this.BReset.Text = "รีเซ็ต";
-            this.BReset.UseVisualStyleBackColor = true;
-            this.BReset.Click += new System.EventHandler(this.BReset_Click);
             // 
             // loan
             // 
