@@ -51,7 +51,11 @@ namespace example.Bank.Loan
             this.label10 = new System.Windows.Forms.Label();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
+            this.TBTeacheraddbyNo = new System.Windows.Forms.TextBox();
+            this.TBTeacheraddbyname = new System.Windows.Forms.TextBox();
             this.textBox4 = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -93,10 +97,6 @@ namespace example.Bank.Loan
             this.LB2Ne = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.LB1Id = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.TBTeacheraddbyname = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.TBTeacheraddbyNo = new System.Windows.Forms.TextBox();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -320,6 +320,28 @@ namespace example.Bank.Loan
             this.label13.TabIndex = 10;
             this.label13.Text = "จำนวนงวด";
             // 
+            // TBTeacheraddbyNo
+            // 
+            this.TBTeacheraddbyNo.Enabled = false;
+            this.TBTeacheraddbyNo.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBTeacheraddbyNo.Location = new System.Drawing.Point(84, 10);
+            this.TBTeacheraddbyNo.MaxLength = 8;
+            this.TBTeacheraddbyNo.Name = "TBTeacheraddbyNo";
+            this.TBTeacheraddbyNo.Size = new System.Drawing.Size(227, 43);
+            this.TBTeacheraddbyNo.TabIndex = 21;
+            this.TBTeacheraddbyNo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // TBTeacheraddbyname
+            // 
+            this.TBTeacheraddbyname.Enabled = false;
+            this.TBTeacheraddbyname.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBTeacheraddbyname.Location = new System.Drawing.Point(604, 10);
+            this.TBTeacheraddbyname.MaxLength = 8;
+            this.TBTeacheraddbyname.Name = "TBTeacheraddbyname";
+            this.TBTeacheraddbyname.Size = new System.Drawing.Size(281, 43);
+            this.TBTeacheraddbyname.TabIndex = 21;
+            this.TBTeacheraddbyname.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
             // textBox4
             // 
             this.textBox4.Enabled = false;
@@ -330,6 +352,26 @@ namespace example.Bank.Loan
             this.textBox4.Size = new System.Drawing.Size(254, 43);
             this.textBox4.TabIndex = 21;
             this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("TH Sarabun New", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.Location = new System.Drawing.Point(18, 10);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(74, 57);
+            this.label17.TabIndex = 20;
+            this.label17.Text = "รหัส";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("TH Sarabun New", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(317, 10);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(281, 57);
+            this.label8.TabIndex = 20;
+            this.label8.Text = "ชื่อ-สกุล คนทำรายการ";
             // 
             // label14
             // 
@@ -815,55 +857,13 @@ namespace example.Bank.Loan
             this.LB1Id.TabIndex = 67;
             this.LB1Id.Text = "รหัส";
             // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("TH Sarabun New", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(317, 10);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(281, 57);
-            this.label8.TabIndex = 20;
-            this.label8.Text = "ชื่อ-สกุล คนทำรายการ";
-            // 
-            // TBTeacheraddbyname
-            // 
-            this.TBTeacheraddbyname.Enabled = false;
-            this.TBTeacheraddbyname.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBTeacheraddbyname.Location = new System.Drawing.Point(604, 10);
-            this.TBTeacheraddbyname.MaxLength = 8;
-            this.TBTeacheraddbyname.Name = "TBTeacheraddbyname";
-            this.TBTeacheraddbyname.Size = new System.Drawing.Size(281, 43);
-            this.TBTeacheraddbyname.TabIndex = 21;
-            this.TBTeacheraddbyname.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("TH Sarabun New", 25.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(18, 10);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(74, 57);
-            this.label17.TabIndex = 20;
-            this.label17.Text = "รหัส";
-            // 
-            // TBTeacheraddbyNo
-            // 
-            this.TBTeacheraddbyNo.Enabled = false;
-            this.TBTeacheraddbyNo.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBTeacheraddbyNo.Location = new System.Drawing.Point(84, 10);
-            this.TBTeacheraddbyNo.MaxLength = 8;
-            this.TBTeacheraddbyNo.Name = "TBTeacheraddbyNo";
-            this.TBTeacheraddbyNo.Size = new System.Drawing.Size(227, 43);
-            this.TBTeacheraddbyNo.TabIndex = 21;
-            this.TBTeacheraddbyNo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // dataGridViewTextBoxColumn1
             // 
             this.dataGridViewTextBoxColumn1.HeaderText = "เดือน / ปี";
             this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Width = 200;
+            this.dataGridViewTextBoxColumn1.Width = 150;
             // 
             // Column4
             // 
@@ -871,7 +871,7 @@ namespace example.Bank.Loan
             this.Column4.MinimumWidth = 6;
             this.Column4.Name = "Column4";
             this.Column4.ReadOnly = true;
-            this.Column4.Width = 200;
+            this.Column4.Width = 150;
             // 
             // Column5
             // 
@@ -879,15 +879,15 @@ namespace example.Bank.Loan
             this.Column5.MinimumWidth = 6;
             this.Column5.Name = "Column5";
             this.Column5.ReadOnly = true;
-            this.Column5.Width = 200;
+            this.Column5.Width = 180;
             // 
             // Column6
             // 
-            this.Column6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Column6.HeaderText = "รวมที่ต้องจ่าย";
             this.Column6.MinimumWidth = 6;
             this.Column6.Name = "Column6";
             this.Column6.ReadOnly = true;
+            this.Column6.Width = 200;
             // 
             // Column7
             // 
