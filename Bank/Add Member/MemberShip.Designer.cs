@@ -211,7 +211,7 @@ namespace example.Bank
             this.TBTeacherNo.Name = "TBTeacherNo";
             this.TBTeacherNo.Size = new System.Drawing.Size(310, 43);
             this.TBTeacherNo.TabIndex = 18;
-            this.TBTeacherNo.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            //this.TBTeacherNo.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             this.TBTeacherNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TBTeacherNo_KeyDown);
             this.TBTeacherNo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TBTeacherNo_MouseDown);
             // 

@@ -18,26 +18,32 @@ namespace example.Bank.Loan
         String imgeLocation = "";
 
         /// <summary>
-        /// <para>[0] SELECT MemberLona  INPUT: {TeacherNo}</para>
+        /// <para>[0] SELECT MemberLona  INPUT: {Text}</para>
         /// <para>[1] SELECT LOAN INPUT: {TeacherNo} </para>
         /// <para>[2] SELECT Detail Loan INPUT: {LoanNo}</para>
         /// <para>[3] Select Payment Name INPUT: - </para>
         /// <para>[4] UPDATE Payment Loan INPUT: {LoanID} {TeacherNoPay} {PaymentNo}</para>
         /// </summary>
         private String[] SQLDefault =
-{
-          //[0] SELECT MemberLona  INPUT: {TeacherNo}
-          "SELECT TOP(20) TeacherNo , NAME , StartAmount \r\n " +
-          "FROM( \r\n " +
-          "SELECT a.TeacherNo,CAST(c.PrefixName+''+b.Fname+''+b.Lname as NVARCHAR)AS NAME,d.StartAmount ,b.Fname \r\n " +
-          "FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
-          "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo  \r\n " +
-          "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo  \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblMember as d on a.TeacherNo = d.TeacherNo \r\n " +
-          "WHERE a.TeacherNo LIKE 'T{TeacherNo}%' and a.LoanStatusNo = 1 \r\n " +
-          "GROUP BY a.TeacherNo,CAST(c.PrefixName+''+b.Fname+''+b.Lname as NVARCHAR),d.StartAmount ,Fname) AS A \r\n " +
-          "ORDER BY Fname; \r\n " +
-          " "
+
+
+            {
+          //[0] SELECT MemberLona  INPUT: {Text} 
+          " SELECT TOP(20) TeacherNo , NAME , SavingAmount  \r\n" +
+          " FROM(   \r\n " +
+          " SELECT a.TeacherNo, CAST(c.PrefixName + ' ' + Fname + ' ' + Lname AS nvarchar)AS NAME,SavingAmount,Fname ,LoanStatusNo \r\n " +
+          " FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
+          " LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo  \r\n " +
+          " LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo  \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblShare as d on a.TeacherNo = d.TeacherNo  \r\n " +
+          " WHERE a.LoanStatusNo != 4 and a.LoanStatusNo != 3 \r\n " +
+          " GROUP BY a.TeacherNo,CAST(c.PrefixName+' '+Fname+' '+Lname as NVARCHAR),d.SavingAmount ,Fname , LoanStatusNo) AS A   \r\n " +
+          " WHERE a.TeacherNo LIKE '%{Text}%' or Fname LIKE '%{Text}%'  \r\n " +
+          " ORDER BY Fname;   "
+
+
+
+
           ,
           //[1] SELECT LOAN INPUT: {TeacherNo}
           "SELECT a.LoanNo , CAST(d.PrefixName + ' ' + Fname + ' ' + Lname AS NVARCHAR) , ISNULL(CAST(a.PayDate as int) , 1) \r\n " +
@@ -93,8 +99,7 @@ namespace example.Bank.Loan
             try
             {
 
-                IN = new Bank.Search(SQLDefault[0]
-                     .Replace("{TeacherNo}", ""));
+                IN = new Bank.Search(SQLDefault[0]);
                 IN.ShowDialog();
                 
                 if(Bank.Search.Return.Length != 1)

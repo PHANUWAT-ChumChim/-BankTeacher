@@ -14,25 +14,25 @@ namespace example.Bank.Loan
     {
         int Check = 0;
         /// <summary>
-        /// <para>[0] SELECT MemberLona  INPUT: {TeacherNo}</para>
+        /// <para>[0] SELECT MemberLonn  INPUT: {TeacherNo}</para>
         /// <para>[1] SELECT LOAN INPUT: {TeacherNo} </para>
         /// <para>[2] SELECT Detail Loan INPUT: {LoanID} </para>
         /// </summary>
         private String[] SQLDefault =
         {
-             //[0] SELECT MemberLona  INPUT: {TeacherNo}
-          "SELECT TOP(20) TeacherNo , NAME , StartAmount \r\n " +
-          "FROM( \r\n " +
-          "SELECT a.TeacherNo,CAST(c.PrefixName+''+b.Fname+''+b.Lname as NVARCHAR)AS NAME,d.StartAmount ,b.Fname \r\n " +
-          "FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
-          "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo  \r\n " +
-          "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo  \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblMember as d on a.TeacherNo = d.TeacherNo \r\n " +
-          "WHERE a.TeacherNo LIKE 'T{TeacherNo}%' and a.LoanStatusNo != 4 \r\n " +
-          "GROUP BY a.TeacherNo,CAST(c.PrefixName+''+b.Fname+''+b.Lname as NVARCHAR),d.StartAmount ,Fname) AS A \r\n " +
-          "ORDER BY Fname; \r\n " +
-          " "
-          ,
+             //[0] SELECT MemberLonn  INPUT: {Text}
+          " SELECT TOP(20) TeacherNo , NAME , SavingAmount  \r\n" +
+          " FROM(   \r\n " +
+          " SELECT a.TeacherNo, CAST(c.PrefixName + ' ' + Fname + ' ' + Lname AS nvarchar)AS NAME,SavingAmount,Fname ,LoanStatusNo \r\n " +
+          " FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
+          " LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo  \r\n " +
+          " LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo  \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblShare as d on a.TeacherNo = d.TeacherNo  \r\n " +
+          " WHERE a.LoanStatusNo != 4 and a.LoanStatusNo != 3 \r\n " +
+          " GROUP BY a.TeacherNo,CAST(c.PrefixName+' '+Fname+' '+Lname as NVARCHAR),d.SavingAmount ,Fname , LoanStatusNo) AS A   \r\n " +
+          " WHERE a.TeacherNo LIKE '%{Text}%' or Fname LIKE '%{Text}%'  \r\n " +
+          " ORDER BY Fname;   "
+                ,
           //[1] SELECT LOAN INPUT: {TeacherNo} : 
           "SELECT a.LoanNo , CAST(d.PrefixName + ' ' + Fname + ' ' + Lname AS NVARCHAR) \r\n " +
           " FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
@@ -44,15 +44,25 @@ namespace example.Bank.Loan
           " ORDER BY a.LoanNo  "
 
           ,
-          //[2] SELECT Detail Loan INPUT: {LoanID} 
-          "SELECT b.TeacherNo , CAST(d.PrefixName + ' ' + Fname + ' ' + Lname AS NVARCHAR) ,CAST(DateAdd as date), \r\n " +
-          "a.PayDate,MonthPay,YearPay,PayNo,InterestRate,LoanAmount,b.Amount,a.LoanStatusNo \r\n " +
-          "FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
+          //[2] SELECT Detail Loan INPUT: {LoanID}
+          "SELECT b.TeacherNo , CAST(d.PrefixName + ' ' + c.Fname + ' ' + c.Lname AS NVARCHAR) AS NameTeacher,CAST(DateAdd as date), \r\n " +
+          "a.PayDate,MonthPay,YearPay,PayNo,InterestRate,LoanAmount,b.Amount,a.LoanStatusNo  \r\n " +
+          ",TeacherNoAddBy, CAST(f.PrefixName + ' ' + e.Fname + ' ' + e.Lname AS NVARCHAR) AS NameTeacherAddby  \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a   \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo  \r\n " +
-          "LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo \r\n " +
-          "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo  \r\n " +
-          "WHERE a.LoanNo = '{LoanID}' and LoanStatusNo != 4  "
+          "LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo   \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo    \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as e on a.TeacherNoAddBy = e.TeacherNo  \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as f on e.PrefixNo = f.PrefixNo    \r\n " +
+          "WHERE a.LoanNo = '{LoanID}' and LoanStatusNo != 4 ; \r\n " +
+          " \r\n " +
+          "SELECT Concat(b.Mount , '/' , Year) \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.LoanNo = b.LoanNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBill as c on b.BillNo = c.BillNo \r\n " +
+          "WHERE a.LoanNo = '{LoanID}' and TypeNo = '2' and Cancel != 0; "
           ,
+
 
         };
         public InfoLoan()
@@ -67,14 +77,26 @@ namespace example.Bank.Loan
             try
             {
 
-                IN = new Bank.Search(SQLDefault[0]
-                     .Replace("{TeacherNo}", ""));
+                IN = new Bank.Search(SQLDefault[0]);
                 IN.ShowDialog();
                 TBTeacherNo.Text = Bank.Search.Return[0];
                 TBTeacherName.Text = Bank.Search.Return[1];
                 comboBox1.Enabled = true;
                 comboBox1.Items.Clear();
                 Check = 1;
+                comboBox1.Items.Clear();
+                comboBox1.SelectedIndex = -1;
+                TBTeacherName.Text = "";
+                textBox1.Text = "";
+                textBox2.Text = "";
+                textBox3.Text = "";
+                textBox4.Text = "";
+                textBox5.Text = "";
+                TBLoanStatus.Text = "";
+                TBLoanNo.Text = "";
+                TBSavingAmount.Text = "";
+                DGVGuarantor.Rows.Clear();
+                DGVLoanDetail.Rows.Clear();
                 ComboBox[] cb = new ComboBox[] { comboBox1 };
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
                     .Replace("{TeacherNo}", TBTeacherNo.Text));
@@ -89,8 +111,11 @@ namespace example.Bank.Loan
                 {
                     comboBox1.Enabled = false;
                     Check = 0;
+
                 }
+
                 TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+
             }
             catch (Exception x)
             {
@@ -156,48 +181,67 @@ namespace example.Bank.Loan
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             example.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as example.Class.ComboBoxPayment);
-            DataTable dt = example.Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{LoanID}", Loan.No));
+            DataSet ds = example.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2].Replace("{LoanID}", Loan.No));
             DGVGuarantor.Rows.Clear();
-            if (dt.Rows.Count != 0)
+            if (ds.Tables[0].Rows.Count != 0)
             {
-                for (int x = 0; x < dt.Rows.Count; x++)
+                for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
                 {
-                    DGVGuarantor.Rows.Add(dt.Rows[x][0].ToString(), dt.Rows[x][1].ToString(), dt.Rows[x][9].ToString());
+                    DGVGuarantor.Rows.Add(ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][1].ToString(), ds.Tables[0].Rows[x][9].ToString());
                 }
                 TBLoanNo.Text = Loan.No;
-                textBox1.Text = dt.Rows[0][5].ToString();
-                textBox3.Text = dt.Rows[0][4].ToString();
-                textBox4.Text = (Convert.ToDouble(Convert.ToDouble(dt.Rows[0][8].ToString()) + (Convert.ToDouble(dt.Rows[0][8].ToString()) * Convert.ToDouble(dt.Rows[0][7].ToString()) / 100)).ToString());
-                textBox5.Text = dt.Rows[0][6].ToString();
-                TBInterestRate.Text = dt.Rows[0][7].ToString();
-                TBLoanStatus.Text = dt.Rows[0][10].ToString();
-                TBSavingAmount.Text = dt.Rows[0][2].ToString();
+                textBox1.Text = ds.Tables[0].Rows[0][5].ToString();
+                textBox3.Text = ds.Tables[0].Rows[0][4].ToString();
+                textBox4.Text = (Convert.ToDouble(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) + (Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) * Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100)).ToString());
+                textBox5.Text = ds.Tables[0].Rows[0][6].ToString();
+                TBInterestRate.Text = ds.Tables[0].Rows[0][7].ToString();
+                TBLoanStatus.Text = ds.Tables[0].Rows[0][10].ToString();
+                TBSavingAmount.Text = ds.Tables[0].Rows[0][2].ToString();
                 DGVLoanDetail.Rows.Clear();
-                int Month = Convert.ToInt32(dt.Rows[0][4].ToString());
-                int Year = Convert.ToInt32(dt.Rows[0][5].ToString());
+                TBTeacheraddbyNo.Text = ds.Tables[0].Rows[0][11].ToString();
+                TBTeacheraddbyname.Text = ds.Tables[0].Rows[0][12].ToString();
+                int Month = Convert.ToInt32(ds.Tables[0].Rows[0][4].ToString());
+                int Year = Convert.ToInt32(ds.Tables[0].Rows[0][5].ToString());
                 DGVLoanDetail.Rows.Clear();
 
-                Double Interest = Convert.ToDouble(Convert.ToDouble(dt.Rows[0][8].ToString())) * (Convert.ToDouble(dt.Rows[0][7].ToString()) / 100) / Convert.ToDouble(dt.Rows[0][6].ToString());
+                Double Interest = Convert.ToDouble(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString())) * (Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100) / Convert.ToDouble(ds.Tables[0].Rows[0][6].ToString());
 
-                int Pay = Convert.ToInt32(Convert.ToDouble(dt.Rows[0][8].ToString()) / Convert.ToInt32(dt.Rows[0][6].ToString()));
+                int Pay = Convert.ToInt32(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) / Convert.ToInt32(ds.Tables[0].Rows[0][6].ToString()));
                 int SumInstallment = Convert.ToInt32(Pay + Interest);
+                String StatusPay = "";
 
-
-                for (int Num = 0; Num < int.Parse(dt.Rows[0][6].ToString()); Num++)
+                for (int Num = 0; Num < int.Parse(ds.Tables[0].Rows[0][6].ToString()); Num++)
                 {
                     if (Month > 12)
                     {
                         Month = 1;
                         Year++;
                     }
-                    if (Num == Convert.ToInt32(dt.Rows[0][6].ToString()) - 1)
+                    if (Num == Convert.ToInt32(ds.Tables[0].Rows[0][6].ToString()) - 1)
                     {
-                        Interest = Convert.ToInt32((Convert.ToDouble(dt.Rows[0][8].ToString()) * (Convert.ToDouble(TBInterestRate.Text) / 100)) - (Convert.ToInt32(Interest) * Num));
+                        Interest = Convert.ToInt32((Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) * (Convert.ToDouble(TBInterestRate.Text) / 100)) - (Convert.ToInt32(Interest) * Num));
                         Pay = Pay * Num;
-                        Pay = Convert.ToInt32(dt.Rows[0][8].ToString()) - Pay;
+                        Pay = Convert.ToInt32(ds.Tables[0].Rows[0][8].ToString()) - Pay;
                         SumInstallment = Convert.ToInt32(Pay + Interest);
+                        
                     }
-                    DGVLoanDetail.Rows.Add($"{Month}/{Year}", Pay, Convert.ToInt32(Interest), SumInstallment);
+                    try
+                    {
+                        if (Month + "/" + Year == ds.Tables[1].Rows[Num][0].ToString())
+                        {
+                            StatusPay = "จ่ายแล้ว";
+                        }
+                        else
+                        {
+                            StatusPay = "ยังไม่จ่าย";
+                        }
+                    }
+                    catch
+                    {
+                        StatusPay = "ยังไม่จ่าย";
+                    }
+
+                    DGVLoanDetail.Rows.Add($"{Month}/{Year}", Pay, Convert.ToInt32(Interest), SumInstallment,StatusPay);
                     Month++;
                 }
             }

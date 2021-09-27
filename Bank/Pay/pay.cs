@@ -23,7 +23,7 @@ namespace example.GOODS
 
         /// <summary> 
         /// SQLDafault 
-        /// <para>[0] SELECT MEMBER INPUT: {TeacherNo} </para> 
+        /// <para>[0] SELECT MEMBER INPUT: {Text} </para> 
         /// <para>[1] SELECT TIME INPUT : - </para>
         /// <para>[2] INSERT Bill and BillDetail INPUT: {TeacherAddBy} {TeacherNo} {TypeNo} {LoanNo} {Amount} {Mount} {Year} {Payment}</para>
         /// <para>[3] UPDATE SavingAmount INPUT: {TeacherNo} {Amount}</para>
@@ -35,13 +35,19 @@ namespace example.GOODS
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
-          //[0] SELECT MEMBER INPUT: {TeacherNo} 
-          "SELECT a.TeacherNo ,  CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR),a.StartAmount \r\n"+
-          "FROM EmployeeBank.dbo.tblMember as a \r\n"+
-          "LEFT JOIN Personal.dbo.tblTeacherHis as b ON a.TeacherNo = b.TeacherNo \r\n"+
-          "LEFT JOIN BaseData.dbo.tblPrefix as c ON c.PrefixNo = b.PrefixNo \r\n"+
-          "WHERE a.TeacherNo LIKE 'T%' and MemberStatusNo = 1 \r\n"+
-          "ORDER BY Fname;"
+          //[0] SELECT MEMBER INPUT: {Text} 
+          "SELECT TOP(20) a.TeacherNo , CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR)AS Name, e.SavingAmount,    \r\n " +
+          "b.TeacherLicenseNo,b.IdNo AS IDNo,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar) AS UserStatususing    \r\n " +
+          "FROM EmployeeBank.dbo.tblMember as a    \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as b ON a.TeacherNo = b.TeacherNo    \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as c ON c.PrefixNo = b.PrefixNo   \r\n " +
+          "INNER JOIN EmployeeBank.dbo.tblMemberStatus as d on a.MemberStatusNo = d.MemberStatusNo  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblShare as e on a.TeacherNo = e.TeacherNo \r\n " +
+          "WHERE a.TeacherNo LIKE '%{Text}%'  or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%'   and a.MemberStatusNo = 1         \r\n " +
+          "GROUP BY a.TeacherNo , CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR), e.SavingAmount,    \r\n " +
+          "b.TeacherLicenseNo,b.IdNo ,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar)   \r\n " +
+          "ORDER BY a.TeacherNo; "
+
           ,
           //[1] SELECT TIME INPUT : -
           "SELECT CONVERT (DATE , CURRENT_TIMESTAMP); "
@@ -186,7 +192,7 @@ namespace example.GOODS
         {
             //try
             //{
-            Bank.Search IN = new Bank.Search(SQLDefault[0].Replace("{TeacherNo}", ""));
+            Bank.Search IN = new Bank.Search(SQLDefault[0]);
             IN.ShowDialog();
             TBTeacherNo.Text = Bank.Search.Return[0];
             TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));

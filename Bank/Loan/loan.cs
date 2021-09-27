@@ -61,7 +61,7 @@ namespace example.Bank.Loan
 
             , 
 
-            //[1] SELECT CreditLimit Data INPUT:T{TeacherNo} , {TeacherNoNotLike}
+            //[1] SELECT CreditLimit Data INPUT:{Text} , {TeacherNoNotLike}
             "SELECT TeacherNo, Name, RemainAmount \r\n " +
             "FROM (SELECT a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS Name,  \r\n " +
             "ISNULL(e.SavingAmount,0) - ISNULL(SUM(d.RemainsAmount),0) as RemainAmount, Fname \r\n " +
@@ -70,9 +70,9 @@ namespace example.Bank.Loan
             "LEFT JOIN BaseData.dbo.tblPrefix as c ON b.PrefixNo = c.PrefixNo  \r\n " +
             "LEFT JOIN EmployeeBank.dbo.tblGuarantor as d on a.TeacherNo = d.TeacherNo \r\n " +
             "LEFT JOIN EmployeeBank.dbo.tblShare as e ON e.TeacherNo = a.TeacherNo \r\n " +
-            "WHERE a.TeacherNo LIKE 'T{TeacherNo}%' and a.MemberStatusNo = 1 {TeacherNoNotLike}\r\n " +
+            "WHERE a.TeacherNo LIKE '%{Text}%' or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%' and a.MemberStatusNo = 1 \r\n " +
             "GROUP BY a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname) as a \r\n " +
-            "WHERE RemainAmount >= 500 \r\n " +
+            "WHERE RemainAmount >= 500 {TeacherNoNotLike} \r\n " +
             "ORDER BY a.Fname; "
             , 
 
@@ -406,7 +406,6 @@ namespace example.Bank.Loan
                     //NotLike = NotLike.Remove(NotLike.Length - 1);
                 }
                 IN = new Bank.Search(SQLDefault[1]
-                       .Replace("{TeacherNo}", "")
                        .Replace("{TeacherNoNotLike}", NotLike));
 
                 IN.ShowDialog();
@@ -454,7 +453,7 @@ namespace example.Bank.Loan
         {
             if (e.KeyCode == Keys.Enter && TBTeacherNo.Text.Length == 6)
             {
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("T{TeacherNo}", TBTeacherNo.Text)
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{Text}", TBTeacherNo.Text)
                     .Replace("{TeacherNoNotLike}", ""));
                 if (dt.Rows.Count != 0)
                 {
@@ -550,12 +549,10 @@ namespace example.Bank.Loan
                     }
                     //NotLike = NotLike.Remove(NotLike.Length - 1);
 
-                    DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(
+                    DataTable dtRemainAmount = Class.SQLConnection.InputSQLMSSQL(
                         SQLDefault[1]
-                        .Replace("T{TeacherNo}", TBGuarantorNo.Text)
+                        .Replace("{Text}", TBGuarantorNo.Text)
                         .Replace("{TeacherNoNotLike}", NotLike));
-                    DataTable dataTable = ds.Tables[0];
-                    DataTable dtRemainAmount = dataTable;
                     if (dtRemainAmount.Rows.Count != 0)
                     {
 
@@ -747,7 +744,6 @@ namespace example.Bank.Loan
                         NotLike = NotLike.Remove(NotLike.Length - 1);
                     }
                     IN = new Bank.Search(SQLDefault[1]
-                           .Replace("{TeacherNo}", "")
                            .Replace("{TeacherNoNotLike}", NotLike));
 
                     IN.ShowDialog();
