@@ -809,6 +809,7 @@ namespace example.GOODS
                         Pay = Pay * Num;
                         Pay = Convert.ToInt32(ds.Tables[0].Rows[0][8].ToString()) - Pay;
                         SumInstallment = Convert.ToInt32(Pay + Interest);
+                        //hello
                     }
                     try
                     {
