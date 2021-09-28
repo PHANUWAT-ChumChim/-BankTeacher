@@ -20,6 +20,7 @@ namespace example.Bank.Loan
         int StatusBoxFile = 0;
         String imgeLocation = "";
         int Check = 0;
+        int DefaultEdit = 0;
         public static int SelectIndexRowDelete;
 
         //----------------------- index code -------------------- ////////
@@ -1004,7 +1005,7 @@ namespace example.Bank.Loan
             }
             else
             {
-                DGVGuarantor.Rows[e.RowIndex].Cells[2].Value = "0";
+                DGVGuarantor.Rows[e.RowIndex].Cells[2].Value = DefaultEdit;
                 MessageBox.Show("โปรดกรอกหน้าข้อมูลการกู้ให้ครบถ้วนก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
@@ -1035,6 +1036,10 @@ namespace example.Bank.Loan
                 LOutCredit.ForeColor = Color.Green;
                 LLackAmount.Text = SumCreditEdit + "";
                 LOutCredit.Text = SumCreditEdit + "";
+            }
+            if(!int.TryParse(DGVGuarantorCredit.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(),out int a))
+            {
+                DGVGuarantorCredit.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = DefaultEdit;
             }
         }
 
@@ -1122,12 +1127,16 @@ namespace example.Bank.Loan
         private void panel7_Paint(object sender, PaintEventArgs e)
         {
 
-
         }
 
         private void BReset_Click(object sender, EventArgs e)
         {
             TBLoanAmount_Leave(sender, new EventArgs());
+        }
+
+        private void DGVGuarantorCredit_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            DefaultEdit = int.Parse(DGVGuarantorCredit.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
         }
 
         private void BCalculate_Click(object sender, EventArgs e)

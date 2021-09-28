@@ -614,6 +614,7 @@ namespace example.Bank.Loan
             this.DGVGuarantorCredit.RowTemplate.Height = 24;
             this.DGVGuarantorCredit.Size = new System.Drawing.Size(1047, 220);
             this.DGVGuarantorCredit.TabIndex = 1;
+            this.DGVGuarantorCredit.CellBeginEdit += new System.Windows.Forms.DataGridViewCellCancelEventHandler(this.DGVGuarantorCredit_CellBeginEdit);
             this.DGVGuarantorCredit.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGVGuarantorCredit_CellEndEdit);
             this.DGVGuarantorCredit.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.DGVGuarantorCredit_EditingControlShowing);
             // 
@@ -1065,11 +1066,6 @@ namespace example.Bank.Loan
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGV1112)).EndInit();
             this.ResumeLayout(false);
-
-        }
-
-        private void BPrintLoanDoc_Click(object sender, EventArgs e)
-        {
 
         }
 
