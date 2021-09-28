@@ -33,6 +33,7 @@ namespace example.GOODS
         ///<para>[7] SELECT Type pay (2Table) INPUT : {Month} , {Year} , {TeacherNo} {DateSet} </para>
         ///<para>[8] Check BillDetailPayment INPUT: - </para>
         ///<para>[9] SELECT LOANID and SELECT DATE Register Member INPUT : {TeacherNo} </para>
+        ///<para>[10] SELECT Detail Loan INPUT: {LoanID} </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -161,6 +162,24 @@ namespace example.GOODS
           "WHERE TeacherNo = '{TeacherNo}' and MemberStatusNo != 2; "
           ,
 
+          //[10] SELECT Detail Loan INPUT: {LoanID}
+          "SELECT b.TeacherNo , CAST(d.PrefixName + ' ' + c.Fname + ' ' + c.Lname AS NVARCHAR) AS NameTeacher,CAST(DateAdd as date), \r\n " +
+          "a.PayDate,MonthPay,YearPay,PayNo,InterestRate,LoanAmount,b.RemainsAmount,a.LoanStatusNo  \r\n " +
+          ",TeacherNoAddBy, CAST(f.PrefixName + ' ' + e.Fname + ' ' + e.Lname AS NVARCHAR) AS NameTeacherAddby  \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a   \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo  \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo   \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo    \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as e on a.TeacherNoAddBy = e.TeacherNo  \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as f on e.PrefixNo = f.PrefixNo    \r\n " +
+          "WHERE a.LoanNo = '{LoanID}' and LoanStatusNo != 4 ; \r\n " +
+          " \r\n " +
+          "SELECT Concat(b.Mount , '/' , Year) \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.LoanNo = b.LoanNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBill as c on b.BillNo = c.BillNo \r\n " +
+          "WHERE a.LoanNo = '{LoanID}' and TypeNo = '2' and Cancel != 0; "
+          ,
 
 
          };
@@ -233,33 +252,43 @@ namespace example.GOODS
             ComboBox[] cb = new ComboBox[] { CBSelectLoan };
             DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[9]
                 .Replace("{TeacherNo}", TBTeacherNo.Text));
-            for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
+            if(ds.Tables[1].Rows.Count != 0)
             {
-                for (int aa = 0; aa < cb.Length; aa++)
+                for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
                 {
-                    cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][0].ToString()));
+                    for (int aa = 0; aa < cb.Length; aa++)
+                    {
+                        cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][0].ToString()));
+                    }
+                }
+
+                if (CBSelectLoan.Items.Count == 1)
+                {
+                    CBSelectLoan.SelectedIndex = 0;
+                }
+
+                int YearRegister = Convert.ToInt32((Convert.ToDateTime(ds.Tables[1].Rows[0][0].ToString())).ToString("yyyy"));
+                if (YearRegister < Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2)
+                {
+                    int Yeard2 = Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2;
+                    while (Yeard2 <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + 1)
+                    {
+                        CByeartap1.Items.Add(Yeard2);
+                        CByeartap2.Items.Add(Yeard2);
+                        Yeard2++;
+                    }
+                }
+                else if (YearRegister > Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2)
+                {
+                    while (YearRegister <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + 1)
+                    {
+                        CByeartap1.Items.Add(YearRegister);
+                        CByeartap2.Items.Add(YearRegister);
+                        YearRegister++;
+                    }
                 }
             }
-            int YearRegister = Convert.ToInt32((Convert.ToDateTime(ds.Tables[1].Rows[0][0].ToString())).ToString("yyyy"));
-            if (YearRegister < Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2)
-            {
-                int Yeard2 = Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2;
-                while ( Yeard2 <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + 1)
-                {
-                    CByeartap1.Items.Add(Yeard2);
-                    CByeartap2.Items.Add(Yeard2);
-                    Yeard2++;
-                }
-            }
-            else if(YearRegister > Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2)
-            {
-                while (YearRegister <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + 1)
-                {
-                    CByeartap1.Items.Add(YearRegister);
-                    CByeartap2.Items.Add(YearRegister);
-                    YearRegister++;
-                }
-            }
+            
             
         }
         // บันทึกรายการเเล้ว ส่งขึ้นไปบนฐานข้อมูล
@@ -443,10 +472,7 @@ namespace example.GOODS
         }
         // if message in Text nothing will not Open next
         // ถ้า ไม่มีข้อความ ใน กล่อง จะไม่เปิดใช่งานกล่อง ถัดไป
-        private void comboBox5_SelectedIndexChanged(object sender, EventArgs e)
-        {
-           
-        }
+
         // if message in Text nothing will not Open next
         // ถ้า ไม่มีข้อความ ใน กล่อง จะไม่เปิดใช่งานกล่อง ถัดไป
         private void CBB3_SelectedIndexChanged(object sender, EventArgs e)
@@ -735,6 +761,76 @@ namespace example.GOODS
                 for (int x = 0; x < cb.Length; x++)
                     cb[x].Items.Add(new example.Class.ComboBoxPayment(dtPayment.Rows[a][0].ToString(),
                         dtPayment.Rows[a][1].ToString()));
+        }
+
+        private void CBSelectLoan_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            example.Class.ComboBoxPayment Loan = (CBSelectLoan.SelectedItem as example.Class.ComboBoxPayment);
+            DataSet ds = example.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[10].Replace("{LoanID}", Loan.No));
+            dataGridView3.Rows.Clear();
+            if (ds.Tables[0].Rows.Count != 0)
+            {
+                int RemainAmount = 0;
+                for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
+                {
+                    RemainAmount += int.Parse(ds.Tables[0].Rows[x][9].ToString());
+                }
+
+                TBSumAmount.Text = (Convert.ToDouble(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) + (Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) * Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100)).ToString());
+                TBRemainAmount.Text = RemainAmount.ToString();
+                TBInterest.Text = Convert.ToInt32(Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100 * Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString())).ToString();
+                TBAmount.Text = Convert.ToInt32(ds.Tables[0].Rows[0][8].ToString()).ToString();
+                TBPayNo.Text = ds.Tables[0].Rows[0][6].ToString();
+                //TBLoanStatus.Text = ds.Tables[0].Rows[0][10].ToString();
+                //TBSavingAmount.Text = ds.Tables[0].Rows[0][2].ToString();
+                //DGVLoanDetail.Rows.Clear();
+                //TBTeacheraddbyNo.Text = ds.Tables[0].Rows[0][11].ToString();
+                //TBTeacheraddbyname.Text = ds.Tables[0].Rows[0][12].ToString();
+                int Month = Convert.ToInt32(ds.Tables[0].Rows[0][4].ToString());
+                int Year = Convert.ToInt32(ds.Tables[0].Rows[0][5].ToString());
+                //DGVLoanDetail.Rows.Clear();
+
+                Double Interest = Convert.ToDouble(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString())) * (Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100) / Convert.ToDouble(ds.Tables[0].Rows[0][6].ToString());
+
+                int Pay = Convert.ToInt32(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) / Convert.ToInt32(ds.Tables[0].Rows[0][6].ToString()));
+                int SumInstallment = Convert.ToInt32(Pay + Interest);
+                String StatusPay = "";
+
+                for (int Num = 0; Num < int.Parse(ds.Tables[0].Rows[0][6].ToString()); Num++)
+                {
+                    if (Month > 12)
+                    {
+                        Month = 1;
+                        Year++;
+                    }
+                    if (Num == Convert.ToInt32(ds.Tables[0].Rows[0][6].ToString()) - 1)
+                    {
+                        Interest = Convert.ToInt32((Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) * (Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100)) - (Convert.ToInt32(Interest) * Num));
+                        Pay = Pay * Num;
+                        Pay = Convert.ToInt32(ds.Tables[0].Rows[0][8].ToString()) - Pay;
+                        SumInstallment = Convert.ToInt32(Pay + Interest);
+                        //hell
+                    }
+                    try
+                    {
+                        if (Month + "/" + Year == ds.Tables[1].Rows[Num][0].ToString())
+                        {
+                            StatusPay = "จ่ายแล้ว";
+                        }
+                        else
+                        {
+                            StatusPay = "ยังไม่จ่าย";
+                        }
+                    }
+                    catch
+                    {
+                        StatusPay = "ยังไม่จ่าย";
+                    }
+
+                    dataGridView3.Rows.Add($"{Month}/{Year}", Pay, Convert.ToInt32(Interest), SumInstallment, StatusPay);
+                    Month++;
+                }
+            }
         }
         //----------------------- End code -------------------//
     }
