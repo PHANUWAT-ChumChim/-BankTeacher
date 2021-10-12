@@ -900,7 +900,7 @@ namespace example.GOODS
                 TBRemainAmount.Text = RemainAmount.ToString();
                 TBInterest.Text = Convert.ToInt32(Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100 * Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString())).ToString();
                 TBAmount.Text = Convert.ToInt32(ds.Tables[0].Rows[0][8].ToString()).ToString();
-                TBPayNo.Text = ds.Tables[0].Rows[0][6].ToString();
+                //TBPayNo.Text = ds.Tables[0].Rows[0][6].ToString();
                 //TBLoanStatus.Text = ds.Tables[0].Rows[0][10].ToString();
                 //TBSavingAmount.Text = ds.Tables[0].Rows[0][2].ToString();
                 //DGVLoanDetail.Rows.Clear();
