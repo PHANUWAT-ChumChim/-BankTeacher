@@ -18,6 +18,7 @@ namespace example.Bank
         /// <para>[2] UPDATE Share WithDraw INPUT: {ShareNo} , {WithDraw}</para>
         /// <para>[3] INSERT ShareWithDraw INPUT: {TeacherNoAddBy} , {ShareNo} , {WithDraw} , {PayMent}</para>
         /// <para>[4] Check BillDetailPayment INPUT: -  </para>
+        /// <para>[5] SELECT MEMBER INPUT: {Text}</para>
         /// </summary>
         String[] SQLDefault = new String[]
         {
@@ -65,6 +66,19 @@ namespace example.Bank
             "SELECT Name , BillDetailpaymentNo  \r\n " +
             "FROM EmployeeBank.dbo.tblBillDetailPayment \r\n " +
             "WHERE Status = 1 "
+            ,
+            //[5] SELECT MEMBER INPUT: {Text}
+            "SELECT TOP(20) a.TeacherNo , CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR)AS Name, e.SavingAmount,    \r\n " +
+            "b.TeacherLicenseNo,b.IdNo AS IDNo,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar) AS UserStatususing    \r\n " +
+            "FROM EmployeeBank.dbo.tblMember as a    \r\n " +
+            "LEFT JOIN Personal.dbo.tblTeacherHis as b ON a.TeacherNo = b.TeacherNo    \r\n " +
+            "LEFT JOIN BaseData.dbo.tblPrefix as c ON c.PrefixNo = b.PrefixNo   \r\n " +
+            "INNER JOIN EmployeeBank.dbo.tblMemberStatus as d on a.MemberStatusNo = d.MemberStatusNo  \r\n " +
+            "LEFT JOIN EmployeeBank.dbo.tblShare as e on a.TeacherNo = e.TeacherNo \r\n " +
+            "WHERE a.TeacherNo LIKE '%{Text}%'  or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%'   and a.MemberStatusNo = 1         \r\n " +
+            "GROUP BY a.TeacherNo , CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR), e.SavingAmount,    \r\n " +
+            "b.TeacherLicenseNo,b.IdNo ,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar)   \r\n " +
+            "ORDER BY a.TeacherNo; "
         };
 
         int Check;
@@ -89,10 +103,10 @@ namespace example.Bank
             {
                 if (TBTeacherNo.Text.Length == 6)
                 {
+
+                    DGVLoan.Rows.Clear();
                     DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(
                         SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text) + 
-                        "\r\n" +
-                        "\r\n" +
                         SQLDefault[0].Replace("{TeacherNo}", TBTeacherNo.Text));
                     if (ds.Tables[0].Rows.Count != 0)
                     {
@@ -181,6 +195,21 @@ namespace example.Bank
         {
             Class.FromSettingMedtod.ChangeSizePanal(this, panel1);
 
+        }
+
+        private void BSearchTeacher_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Bank.Search IN = new Bank.Search(SQLDefault[5]);
+                IN.ShowDialog();
+                TBTeacherNo.Text = Bank.Search.Return[0];
+                TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+            }
+            catch (Exception x)
+            {
+                Console.WriteLine(x);
+            }
         }
     }
 }
