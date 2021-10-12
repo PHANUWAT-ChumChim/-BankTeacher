@@ -12,7 +12,9 @@ namespace example.Class
         public String Balance { get; set; }
         public String Type { get; set; }
 
-
+        // No = ID
+        // Balance = จำนวนเงิน
+        // Type = ประเภท หุ้น / กู้
         public ComboBoxPay(String type, String balance, String no)
         {
             No = no;
