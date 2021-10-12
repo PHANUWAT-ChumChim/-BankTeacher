@@ -131,7 +131,6 @@ namespace example.Bank.Loan
         int Month;
         private void Loan_Load(object sender, EventArgs e)
         {
-            
             int Year = Convert.ToInt32(example.GOODS.Menu.Date[0]);
             Month = Convert.ToInt32(example.GOODS.Menu.Date[1]);
 
@@ -277,7 +276,7 @@ namespace example.Bank.Loan
                         DGVLoanDetail.Rows.Add($"{Month}/{Year}", Pay, Convert.ToInt32(Interest), SumInstallment);
                         Month++;
                     }
-
+                    
                 }
                 else
                 {
