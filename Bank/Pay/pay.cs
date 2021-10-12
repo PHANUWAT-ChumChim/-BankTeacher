@@ -37,6 +37,7 @@ namespace example.GOODS
         /// <para>[5] AmountpayANDAmountLoan- </para>
         ///<para>[9] SELECT LOANID and SELECT DATE Register Member INPUT : {TeacherNo} </para>
         ///<para>[10] SELECT Detail Loan INPUT: {LoanID} </para>
+        ///<para>[11] SELECT SharePayBill and SELECT ShareOfYear INPUT: {TeacherNo} , {Year}</para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -257,8 +258,23 @@ namespace example.GOODS
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.LoanNo = b.LoanNo \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBill as c on b.BillNo = c.BillNo \r\n " +
           "WHERE a.LoanNo = '{LoanID}' and TypeNo = '2' and Cancel != 0; "
+
           ,
 
+          //[11] SELECT SharePayBill and SELECT ShareOfYear INPUT: {TeacherNo} , {Year}
+          "SELECT SUM(d.Amount) , d.Mount , d.Year , a.StartAmount , CAST(a.DateAdd AS Date)\r\n" +
+          "FROM EmployeeBank.dbo.tblMember as a\r\n" +
+          "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo\r\n" +
+          "LEFT JOIN EmployeeBank.dbo.tblBill as c on a.TeacherNo = c.TeacherNo\r\n" +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as d on c.BillNo = d.BillNo\r\n" +
+          "WHERE c.Cancel = 1 and d.TypeNo = 1 and d.Mount <= 12 and d.Year = {Year} and a.TeacherNo LIKE '{TeacherNo}'\r\n" +
+          "GROUP BY a.TeacherNo , d.Amount , d.Mount , d.Year , a.StartAmount , CAST(a.DateAdd AS Date) , b.SavingAmount;\r\n" +
+          "\r\n" +
+          "SELECT a.StartAmount , b.SavingAmount\r\n" +
+          "FROM EmployeeBank.dbo.tblMember as a\r\n" +
+          "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo\r\n" +
+          "WHERE a.TeacherNo LIKE '{TeacherNo}'\r\n"
+          ,
 
          };
         public pay(int TabIndex)
@@ -626,9 +642,7 @@ namespace example.GOODS
         }
         // if message in Text nothing will not Open next
         // ถ้า ไม่มีข้อความ ใน กล่อง จะไม่เปิดใช่งานกล่อง ถัดไป
-        private void comboBox6_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
+        
         // if message in Text nothing will not Open next
         // ถ้า ไม่มีข้อความ ใน กล่อง จะไม่เปิดใช่งานกล่อง ถัดไป
 
@@ -937,6 +951,51 @@ namespace example.GOODS
                     Month++;
                 }
             }
+        }
+        private void CByeartap2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            dataGridView2.Rows.Clear();
+            DataSet ds = example.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[11]
+                .Replace("{TeacherNo}" , TBTeacherNo.Text)
+                .Replace("{Year}" , CByeartap2.Text));
+            TBAmountShareofsystem.Text = ds.Tables[1].Rows[0][1].ToString();
+            //TBAmountShareofyear.Text = ds.Tables[1].Rows[0][1].ToString();
+            DateTime Date;
+            int Year = 0;
+            int Num = 12;
+            int Count = 0;
+            int ShareOfYear = 0;
+            if (ds.Tables[0].Rows.Count != 0)
+            {
+                Date = DateTime.Parse(ds.Tables[0].Rows[0][4].ToString());
+                //int Mont = int.Parse(Date.ToString("MM"));
+                Year = int.Parse(Date.ToString("yyyy"));
+                if (int.Parse(CByeartap2.SelectedItem.ToString()) == Year)
+                {
+                    Num = 13 - int.Parse(Date.ToString("MM"));
+                }
+            }
+            //if (int.Parse(CByeartap2.SelectedItem.ToString()) == Year && )
+            //{
+                
+            //} 
+            
+            for (int a = 0; a < Num; a++)
+            {
+                
+                if(a < ds.Tables[0].Rows.Count)
+                {
+                    dataGridView2.Rows.Add(ds.Tables[0].Rows[a][1].ToString() + "/" + ds.Tables[0].Rows[a][2].ToString(), ds.Tables[0].Rows[a][0].ToString(), "ชำระแล้ว");
+                    Count = int.Parse(ds.Tables[0].Rows[a][1].ToString());
+                    ShareOfYear += int.Parse(ds.Tables[0].Rows[a][0].ToString());
+                }
+                else
+                {
+                    Count += 1;
+                    dataGridView2.Rows.Add(Count + "/" + CByeartap2.Text, ds.Tables[1].Rows[0][0].ToString(), "ยังไม่ได้ชำระ");
+                }
+            }
+            TBAmountShareofyear.Text = ShareOfYear.ToString();
         }
         //----------------------- End code -------------------//
     }

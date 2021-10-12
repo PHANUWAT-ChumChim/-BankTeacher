@@ -36,7 +36,7 @@ namespace example.Bank.Loan
           " LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo  \r\n " +
           " LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo  \r\n " +
           " LEFT JOIN EmployeeBank.dbo.tblShare as d on a.TeacherNo = d.TeacherNo  \r\n " +
-          " WHERE a.LoanStatusNo != 4 and a.LoanStatusNo != 3 \r\n " +
+          " WHERE a.LoanStatusNo = 1 \r\n " +
           " GROUP BY a.TeacherNo,CAST(c.PrefixName+' '+Fname+' '+Lname as NVARCHAR),d.SavingAmount ,Fname , LoanStatusNo) AS A   \r\n " +
           " WHERE a.TeacherNo LIKE '%{Text}%' or Fname LIKE '%{Text}%'  \r\n " +
           " ORDER BY Fname;   "
@@ -122,10 +122,8 @@ namespace example.Bank.Loan
                         for (int aa = 0; aa < cb.Length; aa++)
                         {
                             int.TryParse(dt.Rows[x][2].ToString(), out CheckPay);
-                            if(CheckPay == 1)
-                            {
-                                cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[x][0], dt.Rows[x][0].ToString()));
-                            }
+                            cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[x][0], dt.Rows[x][0].ToString()));
+                            
                         }
                     }
                     TBLoanNo.Text = "";
@@ -244,33 +242,37 @@ namespace example.Bank.Loan
 
         private void button1_Click(object sender, EventArgs e)
         {
-            try
+            if(MessageBox.Show("ยืนยันการจ่ายเงิน","ระบบ", MessageBoxButtons.YesNo ,MessageBoxIcon.Information) == DialogResult.Yes)
             {
-                example.Class.ComboBoxPayment Payment = (CBB4Oppay.SelectedItem as example.Class.ComboBoxPayment);
-                Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{LoanID}", TBLoanNo.Text)
-                    .Replace("{TeacherNoPay}", Class.UserInfo.TeacherNo)
-                    .Replace("{PaymentNo}", Payment.No));
-                MessageBox.Show("จ่ายสำเร็จ","System",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                comboBox1.Items.Clear();
-                comboBox1.SelectedIndex = -1;
-                TBTeacherName.Text = "";
-                TBLoanNo.Text = "";
-                TBLoanStatus.Text = "";
-                TBDate.Text = "";
-                label3.Text = "0";
-                CBB4Oppay.Enabled = false;
-                CBB4Oppay.SelectedIndex = -1;
-                TBTeacherNo.Text = "";
-                textBox1.Text = "";
-                button1.Enabled = false;
-                comboBox1.Enabled = false;
-                TBTeacherNo.Focus();
-                Check = 0;
+                try
+                {
+                    example.Class.ComboBoxPayment Payment = (CBB4Oppay.SelectedItem as example.Class.ComboBoxPayment);
+                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{LoanID}", TBLoanNo.Text)
+                        .Replace("{TeacherNoPay}", Class.UserInfo.TeacherNo)
+                        .Replace("{PaymentNo}", Payment.No));
+                    MessageBox.Show("จ่ายสำเร็จ", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    comboBox1.Items.Clear();
+                    comboBox1.SelectedIndex = -1;
+                    TBTeacherName.Text = "";
+                    TBLoanNo.Text = "";
+                    TBLoanStatus.Text = "";
+                    TBDate.Text = "";
+                    label3.Text = "0";
+                    CBB4Oppay.Enabled = false;
+                    CBB4Oppay.SelectedIndex = -1;
+                    TBTeacherNo.Text = "";
+                    textBox1.Text = "";
+                    button1.Enabled = false;
+                    comboBox1.Enabled = false;
+                    TBTeacherNo.Focus();
+                    Check = 0;
+                }
+                catch
+                {
+                    MessageBox.Show("จ่ายล้มเหลว", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
-            catch
-            {
-                MessageBox.Show("จ่ายล้มเหลว", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
+            
         }
 
 

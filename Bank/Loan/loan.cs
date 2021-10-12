@@ -63,18 +63,19 @@ namespace example.Bank.Loan
             , 
 
             //[1] SELECT CreditLimit Data INPUT:{Text} , {TeacherNoNotLike}
-            "SELECT TeacherNo, Name, RemainAmount \r\n " +
-            "FROM (SELECT a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS Name,  \r\n " +
-            "ISNULL(e.SavingAmount,0) - ISNULL(SUM(d.RemainsAmount),0) as RemainAmount, Fname \r\n " +
-            "FROM EmployeeBank.dbo.tblMember as a  \r\n " +
-            "LEFT JOIN Personal.dbo.tblTeacherHis as b ON a.TeacherNo = b.TeacherNo  \r\n " +
-            "LEFT JOIN BaseData.dbo.tblPrefix as c ON b.PrefixNo = c.PrefixNo  \r\n " +
-            "LEFT JOIN EmployeeBank.dbo.tblGuarantor as d on a.TeacherNo = d.TeacherNo \r\n " +
-            "LEFT JOIN EmployeeBank.dbo.tblShare as e ON e.TeacherNo = a.TeacherNo \r\n " +
-            "WHERE a.TeacherNo LIKE '%{Text}%' or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%' and a.MemberStatusNo = 1 \r\n " +
-            "GROUP BY a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname) as a \r\n " +
-            "WHERE RemainAmount >= 500 {TeacherNoNotLike} \r\n " +
-            "ORDER BY a.Fname; "
+            "SELECT TeacherNo, Name, RemainAmount, ISNULL(a.LoanStatusNo , 0)\r\n" +
+            "FROM (SELECT a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS Name, \r\n" +
+            "ISNULL(e.SavingAmount,0) - ISNULL(SUM(d.RemainsAmount),0) as RemainAmount, Fname , f.LoanStatusNo\r\n" +
+            "FROM EmployeeBank.dbo.tblMember as a  \r\n" +
+            "LEFT JOIN Personal.dbo.tblTeacherHis as b ON a.TeacherNo = b.TeacherNo  \r\n" +
+            "LEFT JOIN BaseData.dbo.tblPrefix as c ON b.PrefixNo = c.PrefixNo  \r\n" +
+            "LEFT JOIN EmployeeBank.dbo.tblGuarantor as d on a.TeacherNo = d.TeacherNo \r\n" +
+            "LEFT JOIN EmployeeBank.dbo.tblShare as e ON e.TeacherNo = a.TeacherNo \r\n" +
+            "LEFT JOIN EmployeeBank.dbo.tblLoan as f on a.TeacherNo = f.TeacherNo\r\n" +
+            "WHERE a.TeacherNo LIKE '%{Text}%' or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%' and a.MemberStatusNo = 1\r\n" +
+            "GROUP BY a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname, f.LoanStatusNo) as a \r\n" +
+            "WHERE RemainAmount >= 500 {TeacherNoNotLike} \r\n" +
+            "ORDER BY a.Fname; \r\n"
             , 
 
 
@@ -453,56 +454,63 @@ namespace example.Bank.Loan
         {
             if (e.KeyCode == Keys.Enter && TBTeacherNo.Text.Length == 6)
             {
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{Text}", TBTeacherNo.Text)
+                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{Text}", TBTeacherNo.Text)
                     .Replace("{TeacherNoNotLike}", ""));
                 if (dt.Rows.Count != 0)
                 {
-                    TBTeacherName.Text = dt.Rows[0][1].ToString();
-                    TBLoanNo.Text = "-";
-                    TBLoanStatus.Text = "ดำเนินการ";
-                    TBSavingAmount.Text = dt.Rows[0][2].ToString();
+                    if (int.Parse(dt.Rows[0][3].ToString()) == 2 || int.Parse(dt.Rows[0][3].ToString()) == 1)
+                    {
+                        MessageBox.Show("ผู้ใช้นี้มียอดกู้อยู่ในระบบ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        TBTeacherName.Text = dt.Rows[0][1].ToString();
+                        TBLoanNo.Text = "-";
+                        TBLoanStatus.Text = "ดำเนินการ";
+                        TBSavingAmount.Text = dt.Rows[0][2].ToString();
 
-                    int credit;
+                        int credit;
 
-                    //DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(
-                    //    SQLDefault[1].Replace("T{TeacherNo}", TBTeacherNo.Text));
+                        //DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(
+                        //    SQLDefault[1].Replace("T{TeacherNo}", TBTeacherNo.Text));
 
-                    //DataTable dtGuarantorCredit = ds.Tables[0];
-                    //String aa = dtGuarantorCredit.Rows[0][2].ToString();
-                    //if (dtGuarantorCredit.Rows.Count != 0/* && dtTeacherName.Rows.Count != 0*/)
-                    //{
-                    credit = int.Parse(dt.Rows[0][2].ToString());
-                    //float Percent = 100 / DGVGuarantor.Rows.Count;
-                    
-                    DGVGuarantor.Rows.Clear();
-                    DGVGuarantorCredit.Rows.Clear();
-                    DGVGuarantor.Rows.Add(dt.Rows[0][0], dt.Rows[0][1], credit);
-                    TBLoanAmount.Text = "";
-                    CBPayMonth.SelectedIndex = -1;
-                    CBPayYear.SelectedIndex = -1;
-                    TBSavingAmount.Text = credit.ToString();
-                    tabControl1.SelectedIndex = 0;
-                    //}
-                    //else
-                    //{
-                    //    MessageBox.Show("ไม่พบข้อมูล", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    //    TBTeacherNo.Text = "";
-                    //    TBTeacherName.Text = "";
-                    //    TBSavingAmount.Text = "";
-                    //    TBPayNo.Text = "";
-                    //    TBLoanNo.Text = "";
-                    //    TBLoanAmount.Text = "";
-                    //    TBInterestRate.Text = "";
-                    //    TBGuarantorNo.Text = "";
-                    //    TBTeacherNo.Focus();
-                    //}
-                    TBGuarantorNo.Focus();
-                    Check = 1;
+                        //DataTable dtGuarantorCredit = ds.Tables[0];
+                        //String aa = dtGuarantorCredit.Rows[0][2].ToString();
+                        //if (dtGuarantorCredit.Rows.Count != 0/* && dtTeacherName.Rows.Count != 0*/)
+                        //{
+                        credit = int.Parse(dt.Rows[0][2].ToString());
+                        //float Percent = 100 / DGVGuarantor.Rows.Count;
 
+                        DGVGuarantor.Rows.Clear();
+                        DGVGuarantorCredit.Rows.Clear();
+                        DGVGuarantor.Rows.Add(dt.Rows[0][0], dt.Rows[0][1], credit);
+                        TBLoanAmount.Text = "";
+                        CBPayMonth.SelectedIndex = -1;
+                        CBPayYear.SelectedIndex = -1;
+                        TBSavingAmount.Text = credit.ToString();
+                        tabControl1.SelectedIndex = 0;
+                        //}
+                        //else
+                        //{
+                        //    MessageBox.Show("ไม่พบข้อมูล", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        //    TBTeacherNo.Text = "";
+                        //    TBTeacherName.Text = "";
+                        //    TBSavingAmount.Text = "";
+                        //    TBPayNo.Text = "";
+                        //    TBLoanNo.Text = "";
+                        //    TBLoanAmount.Text = "";
+                        //    TBInterestRate.Text = "";
+                        //    TBGuarantorNo.Text = "";
+                        //    TBTeacherNo.Focus();
+                        //}
+                        TBGuarantorNo.Focus();
+                        Check = 1;
+
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("รหัสไม่ถูกต้อง หรือยอดเงินที่ค้ำได้ไม่เพียงพอ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("รหัสไม่ถูกต้อง หรือยอดเงินที่ค้ำได้ไม่เพียงพอ \r\n", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     TBTeacherNo.Text = "";
                     TBTeacherNo.Focus();
 

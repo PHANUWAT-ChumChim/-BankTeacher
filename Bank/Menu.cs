@@ -154,5 +154,11 @@ namespace example.GOODS
             Bank.Loan.InfoLoan If = new Bank.Loan.InfoLoan();
             CloseFrom(If);
         }
+
+        private void AmountOff_Click(object sender, EventArgs e)
+        {
+            Bank.AmountOff Af = new Bank.AmountOff();
+            CloseFrom(Af);  
+        }
     }
 }
