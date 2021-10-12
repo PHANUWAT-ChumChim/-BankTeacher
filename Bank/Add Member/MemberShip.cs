@@ -47,13 +47,20 @@ namespace example.Bank
 			"INSERT INTO EmployeeBank.dbo.tblMember(TeacherNo,TeacherAddBy,StartAmount,DateAdd) \r\n"+
             "VALUES('{TeacherNo}','{TeacherAddBy}',{StartAmount}, CURRENT_TIMESTAMP); \r\n\r\n"
             ,
-            //[1] SELECT Member  INPUT:{Text}
-          "SELECT a.TeacherNo ,  CAST(b.PrefixName+' '+Fname +' '+ Lname as NVARCHAR), null  \r\n " +
-          "FROM Personal.dbo.tblTeacherHis as a  \r\n " +
-          "LEFT JOIN BaseData.dbo.tblPrefix as b ON a.PrefixNo = b.PrefixNo   \r\n " +
-          "WHERE NOT a.TeacherNo IN(SELECT TeacherNo FROM EmployeeBank.dbo.tblMember)  \r\n " +
-          "and a.TeacherNo LIKE '%{Text}%' or CAST(b.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%' \r\n " +
-          "ORDER BY Fname  "
+            //[1] SELECT Member  INPUT:{Text}   
+          "SELECT a.TeacherNo ,  CAST(b.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS NAME, null   \r\n " +
+          "FROM Personal.dbo.tblTeacherHis as a   \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as b ON a.PrefixNo = b.PrefixNo    \r\n " +
+          "WHERE (NOT a.TeacherNo IN (SELECT TeacherNo FROM EmployeeBank.dbo.tblMember) \r\n " +
+          "and a.TeacherNo LIKE '{Text}%' or  \r\n " +
+          "NOT a.TeacherNo IN (SELECT TeacherNo FROM EmployeeBank.dbo.tblMember)  \r\n " +
+          "and CAST(Fname +' '+ Lname as NVARCHAR) LIKE '{Text}%' )and CAST(b.PrefixName+' '+Fname +' '+ Lname as NVARCHAR) != '' \r\n " +
+          "ORDER BY Fname "
+          
+
+
+
+
           ,
 
           //[2]  Select Detail Memner INPUT: {TeacherNo} 
@@ -128,7 +135,7 @@ namespace example.Bank
                         if (dialogResult == DialogResult.Yes)
                         {
                             Class.SQLConnection.InputSQLMSSQL(SQLDefault[3].Replace("{TeacherNo}", TBTeacherNo.Text)
-                            .Replace("{TeacherNoAddBy}", "Teacher")
+                            .Replace("{TeacherNoAddBy}", example.Class.UserInfo.TeacherNo)
                             .Replace("{StartAmount}", AmountShare.ToString())
                             .Replace("{Month}", example.GOODS.Menu.Date[1])
                             .Replace("{Year}", example.GOODS.Menu.Date[0]));
