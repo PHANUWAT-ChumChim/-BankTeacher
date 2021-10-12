@@ -43,17 +43,17 @@ namespace example.Bank
         /// </summary>
         private String[] SQLDefault = new String[]
         {
-			//[0] Insert Teacher Data INPUT:{TeacherNo},{TeacherAddBy},{StartAmount} 
-			"INSERT INTO EmployeeBank.dbo.tblMember(TeacherNo,TeacherAddBy,StartAmount,DateAdd) \r\n"+
-            "VALUES('{TeacherNo}','{TeacherAddBy}',{StartAmount}, CURRENT_TIMESTAMP); \r\n\r\n"
+		   //[0] Insert Teacher Data INPUT:{TeacherNo},{TeacherAddBy},{StartAmount} 
+		   "INSERT INTO EmployeeBank.dbo.tblMember(TeacherNo,TeacherAddBy,StartAmount,DateAdd) \r\n"+
+           "VALUES('{TeacherNo}','{TeacherAddBy}',{StartAmount}, CURRENT_TIMESTAMP); \r\n\r\n"
             ,
-            //[1] SELECT Member  INPUT:{Text}
-          "SELECT a.TeacherNo ,  CAST(b.PrefixName+' '+Fname +' '+ Lname as NVARCHAR), null  \r\n " +
-          "FROM Personal.dbo.tblTeacherHis as a  \r\n " +
-          "LEFT JOIN BaseData.dbo.tblPrefix as b ON a.PrefixNo = b.PrefixNo   \r\n " +
-          "WHERE NOT a.TeacherNo IN(SELECT TeacherNo FROM EmployeeBank.dbo.tblMember)  \r\n " +
-          "and a.TeacherNo LIKE '%{Text}%' or CAST(b.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%' \r\n " +
-          "ORDER BY Fname  "
+           //[1] SELECT Member  INPUT:{Text}
+          "SELECT a.TeacherNo ,  CAST(b.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS NAME, null  ,Fname \r\n " +
+          "FROM Personal.dbo.tblTeacherHis as a   \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as b ON a.PrefixNo = b.PrefixNo    \r\n " +
+          "WHERE NOT a.TeacherNo IN (SELECT TeacherNo FROM EmployeeBank.dbo.tblMember) \r\n " +
+          "and a.TeacherNo LIKE '{Text}' or  \r\n " +
+          "NOT a.TeacherNo IN (SELECT TeacherNo FROM EmployeeBank.dbo.tblMember) and CAST(b.PrefixName+' '+Fname +' '+ Lname as NVARCHAR) LIKE '{Text}' "
           ,
 
           //[2]  Select Detail Memner INPUT: {TeacherNo} 

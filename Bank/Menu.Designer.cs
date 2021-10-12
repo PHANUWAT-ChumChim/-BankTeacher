@@ -42,7 +42,7 @@ namespace example.GOODS
             this.จายกToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ดขอมลกToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Cancel = new System.Windows.Forms.ToolStripMenuItem();
-            this.ปดยอดToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AmountOff = new System.Windows.Forms.ToolStripMenuItem();
             this.Member_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TMLCancelMembers = new System.Windows.Forms.ToolStripMenuItem();
             this.ReportCancelMember = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,7 +58,7 @@ namespace example.GOODS
             this.Home_ToolStripMenuItem,
             this.pay,
             this.Loan,
-            this.ปดยอดToolStripMenuItem,
+            this.AmountOff,
             this.Member_ToolStripMenuItem,
             this.SentingToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -136,38 +136,39 @@ namespace example.GOODS
             // สมครกToolStripMenuItem
             // 
             this.สมครกToolStripMenuItem.Name = "สมครกToolStripMenuItem";
-            this.สมครกToolStripMenuItem.Size = new System.Drawing.Size(224, 42);
+            this.สมครกToolStripMenuItem.Size = new System.Drawing.Size(176, 42);
             this.สมครกToolStripMenuItem.Text = "สมัครกู้";
             this.สมครกToolStripMenuItem.Click += new System.EventHandler(this.สมครกToolStripMenuItem_Click);
             // 
             // จายกToolStripMenuItem
             // 
             this.จายกToolStripMenuItem.Name = "จายกToolStripMenuItem";
-            this.จายกToolStripMenuItem.Size = new System.Drawing.Size(224, 42);
+            this.จายกToolStripMenuItem.Size = new System.Drawing.Size(176, 42);
             this.จายกToolStripMenuItem.Text = "จ่ายกู้";
             this.จายกToolStripMenuItem.Click += new System.EventHandler(this.จายกToolStripMenuItem_Click);
             // 
             // ดขอมลกToolStripMenuItem
             // 
             this.ดขอมลกToolStripMenuItem.Name = "ดขอมลกToolStripMenuItem";
-            this.ดขอมลกToolStripMenuItem.Size = new System.Drawing.Size(224, 42);
+            this.ดขอมลกToolStripMenuItem.Size = new System.Drawing.Size(176, 42);
             this.ดขอมลกToolStripMenuItem.Text = "ดูข้อมุลกู้";
             this.ดขอมลกToolStripMenuItem.Click += new System.EventHandler(this.ดขอมลกToolStripMenuItem_Click);
             // 
             // Cancel
             // 
             this.Cancel.Name = "Cancel";
-            this.Cancel.Size = new System.Drawing.Size(224, 42);
+            this.Cancel.Size = new System.Drawing.Size(176, 42);
             this.Cancel.Text = "ยกเลิกกู้";
             this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
             // 
-            // ปดยอดToolStripMenuItem
+            // AmountOff
             // 
-            this.ปดยอดToolStripMenuItem.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ปดยอดToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("ปดยอดToolStripMenuItem.Image")));
-            this.ปดยอดToolStripMenuItem.Name = "ปดยอดToolStripMenuItem";
-            this.ปดยอดToolStripMenuItem.Size = new System.Drawing.Size(107, 41);
-            this.ปดยอดToolStripMenuItem.Text = "ปิดยอด";
+            this.AmountOff.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AmountOff.Image = ((System.Drawing.Image)(resources.GetObject("AmountOff.Image")));
+            this.AmountOff.Name = "AmountOff";
+            this.AmountOff.Size = new System.Drawing.Size(107, 41);
+            this.AmountOff.Text = "ปิดยอด";
+            this.AmountOff.Click += new System.EventHandler(this.AmountOff_Click);
             // 
             // Member_ToolStripMenuItem
             // 
@@ -235,7 +236,7 @@ namespace example.GOODS
         private System.Windows.Forms.ToolStripMenuItem จายยอดToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem Loan;
-        private System.Windows.Forms.ToolStripMenuItem ปดยอดToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AmountOff;
         private System.Windows.Forms.ToolStripMenuItem ขอมลกToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ขอมลสมาชกToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem Member_ToolStripMenuItem;
