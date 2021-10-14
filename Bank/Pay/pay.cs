@@ -246,22 +246,6 @@ namespace example.GOODS
                 TBTeacherNo.Text = Bank.Search.Return[0];
                 TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
 
-                //sum = 0; x = 0;
-                //label5.Text = sum.ToString();
-                //dataGridView1.Rows.Clear();
-                //TBStartAmountShare.Clear();
-                //CBStatus.SelectedIndex = -1;
-                //CByeartap1.SelectedIndex = -1;
-                //CByeartap1.Items.Clear();
-                //CBMonth.SelectedIndex = -1;
-                //dataGridView2.Rows.Clear();
-                //dataGridView3.Rows.Clear();
-                //CByeartap2.SelectedIndex = -1;
-                //CByeartap2.Items.Clear();
-                //CBSelectLoan.SelectedIndex = -1;
-                //CBSelectLoan.Items.Clear();
-                //CBMonth.Items.Clear();
-                //CBMonth.SelectedIndex = -1;
                 ComboBox[] cb = new ComboBox[] { CBSelectLoan };
                 DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[9]
                     .Replace("{TeacherNo}", TBTeacherNo.Text));
