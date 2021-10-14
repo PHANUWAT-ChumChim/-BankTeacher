@@ -35,6 +35,11 @@ namespace example.GOODS
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel7 = new System.Windows.Forms.Panel();
             this.BSearchTeacher = new System.Windows.Forms.Button();
             this.TBTeacherBill = new System.Windows.Forms.TextBox();
@@ -88,6 +93,17 @@ namespace example.GOODS
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.TBAmountRemain = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.TBPayNo = new System.Windows.Forms.TextBox();
+            this.TBInterrest = new System.Windows.Forms.TextBox();
+            this.TBSum = new System.Windows.Forms.TextBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.TBAmoun = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column17 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -111,13 +127,9 @@ namespace example.GOODS
             this.label14 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.TBRemainAmount = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.TBInterest = new System.Windows.Forms.TextBox();
-            this.TBSumAmount = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.TBAmount = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel7.SuspendLayout();
@@ -134,6 +146,7 @@ namespace example.GOODS
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.tabPage3.SuspendLayout();
+            this.panel11.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.panel3.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -730,19 +743,34 @@ namespace example.GOODS
             this.dataGridView2.AllowUserToAddRows = false;
             this.dataGridView2.AllowUserToDeleteRows = false;
             this.dataGridView2.AllowUserToResizeRows = false;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle5.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
             this.dataGridView2.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView2.BackgroundColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column4,
             this.Column5,
             this.Column6});
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridView2.Enabled = false;
             this.dataGridView2.Location = new System.Drawing.Point(3, 133);
             this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.ReadOnly = true;
             this.dataGridView2.RowHeadersVisible = false;
             this.dataGridView2.RowHeadersWidth = 51;
             this.dataGridView2.RowTemplate.Height = 24;
@@ -773,6 +801,7 @@ namespace example.GOODS
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.panel11);
             this.tabPage3.Controls.Add(this.dataGridView3);
             this.tabPage3.Controls.Add(this.panel3);
             this.tabPage3.Location = new System.Drawing.Point(4, 45);
@@ -783,14 +812,145 @@ namespace example.GOODS
             this.tabPage3.Text = "ข้อมูลกู้";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // panel11
+            // 
+            this.panel11.BackColor = System.Drawing.Color.White;
+            this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel11.Controls.Add(this.TBAmountRemain);
+            this.panel11.Controls.Add(this.label13);
+            this.panel11.Controls.Add(this.label15);
+            this.panel11.Controls.Add(this.TBPayNo);
+            this.panel11.Controls.Add(this.TBInterrest);
+            this.panel11.Controls.Add(this.TBSum);
+            this.panel11.Controls.Add(this.label19);
+            this.panel11.Controls.Add(this.TBAmoun);
+            this.panel11.Controls.Add(this.label20);
+            this.panel11.Controls.Add(this.label22);
+            this.panel11.Location = new System.Drawing.Point(380, 14);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(744, 112);
+            this.panel11.TabIndex = 112;
+            // 
+            // TBAmountRemain
+            // 
+            this.TBAmountRemain.Enabled = false;
+            this.TBAmountRemain.Location = new System.Drawing.Point(555, 55);
+            this.TBAmountRemain.Name = "TBAmountRemain";
+            this.TBAmountRemain.Size = new System.Drawing.Size(169, 43);
+            this.TBAmountRemain.TabIndex = 103;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.BackColor = System.Drawing.Color.White;
+            this.label13.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.ForeColor = System.Drawing.Color.Black;
+            this.label13.Location = new System.Drawing.Point(50, 12);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(82, 37);
+            this.label13.TabIndex = 108;
+            this.label13.Text = "ยอดรวม";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.BackColor = System.Drawing.Color.White;
+            this.label15.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.ForeColor = System.Drawing.Color.Black;
+            this.label15.Location = new System.Drawing.Point(562, 12);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(151, 37);
+            this.label15.TabIndex = 102;
+            this.label15.Text = "กู้คงเหลือในระบบ";
+            // 
+            // TBPayNo
+            // 
+            this.TBPayNo.Enabled = false;
+            this.TBPayNo.Location = new System.Drawing.Point(168, 55);
+            this.TBPayNo.Name = "TBPayNo";
+            this.TBPayNo.Size = new System.Drawing.Size(113, 43);
+            this.TBPayNo.TabIndex = 111;
+            // 
+            // TBInterrest
+            // 
+            this.TBInterrest.Enabled = false;
+            this.TBInterrest.Location = new System.Drawing.Point(300, 55);
+            this.TBInterrest.Name = "TBInterrest";
+            this.TBInterrest.Size = new System.Drawing.Size(115, 43);
+            this.TBInterrest.TabIndex = 111;
+            // 
+            // TBSum
+            // 
+            this.TBSum.Enabled = false;
+            this.TBSum.Location = new System.Drawing.Point(19, 55);
+            this.TBSum.Name = "TBSum";
+            this.TBSum.Size = new System.Drawing.Size(140, 43);
+            this.TBSum.TabIndex = 103;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.BackColor = System.Drawing.Color.White;
+            this.label19.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label19.ForeColor = System.Drawing.Color.Black;
+            this.label19.Location = new System.Drawing.Point(448, 12);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(67, 37);
+            this.label19.TabIndex = 110;
+            this.label19.Text = "เงินต้น";
+            // 
+            // TBAmoun
+            // 
+            this.TBAmoun.Enabled = false;
+            this.TBAmoun.Location = new System.Drawing.Point(421, 55);
+            this.TBAmoun.Name = "TBAmoun";
+            this.TBAmoun.Size = new System.Drawing.Size(121, 43);
+            this.TBAmoun.TabIndex = 103;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.BackColor = System.Drawing.Color.White;
+            this.label20.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label20.ForeColor = System.Drawing.Color.Black;
+            this.label20.Location = new System.Drawing.Point(173, 12);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(104, 37);
+            this.label20.TabIndex = 106;
+            this.label20.Text = "จำนวนงวด";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.BackColor = System.Drawing.Color.White;
+            this.label22.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.ForeColor = System.Drawing.Color.Black;
+            this.label22.Location = new System.Drawing.Point(325, 12);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(79, 37);
+            this.label22.TabIndex = 106;
+            this.label22.Text = "ดอกเบี้ย";
+            // 
             // dataGridView3
             // 
             this.dataGridView3.AllowDrop = true;
             this.dataGridView3.AllowUserToAddRows = false;
             this.dataGridView3.AllowUserToDeleteRows = false;
             this.dataGridView3.AllowUserToResizeRows = false;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black;
+            this.dataGridView3.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridView3.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView3.BackgroundColor = System.Drawing.Color.White;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView3.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
@@ -798,6 +958,14 @@ namespace example.GOODS
             this.Column18,
             this.Column19,
             this.Column20});
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView3.DefaultCellStyle = dataGridViewCellStyle10;
             this.dataGridView3.Location = new System.Drawing.Point(3, 133);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ReadOnly = true;
@@ -1034,14 +1202,6 @@ namespace example.GOODS
             this.label4.TabIndex = 102;
             this.label4.Text = "สมาชิกเลขที่";
             // 
-            // TBRemainAmount
-            // 
-            this.TBRemainAmount.Enabled = false;
-            this.TBRemainAmount.Location = new System.Drawing.Point(555, 55);
-            this.TBRemainAmount.Name = "TBRemainAmount";
-            this.TBRemainAmount.Size = new System.Drawing.Size(169, 22);
-            this.TBRemainAmount.TabIndex = 103;
-            // 
             // label17
             // 
             this.label17.AutoSize = true;
@@ -1066,22 +1226,6 @@ namespace example.GOODS
             this.label9.TabIndex = 102;
             this.label9.Text = "กู้คงเหลือในระบบ";
             // 
-            // TBInterest
-            // 
-            this.TBInterest.Enabled = false;
-            this.TBInterest.Location = new System.Drawing.Point(300, 55);
-            this.TBInterest.Name = "TBInterest";
-            this.TBInterest.Size = new System.Drawing.Size(115, 22);
-            this.TBInterest.TabIndex = 111;
-            // 
-            // TBSumAmount
-            // 
-            this.TBSumAmount.Enabled = false;
-            this.TBSumAmount.Location = new System.Drawing.Point(19, 55);
-            this.TBSumAmount.Name = "TBSumAmount";
-            this.TBSumAmount.Size = new System.Drawing.Size(140, 22);
-            this.TBSumAmount.TabIndex = 103;
-            // 
             // label18
             // 
             this.label18.AutoSize = true;
@@ -1093,14 +1237,6 @@ namespace example.GOODS
             this.label18.Size = new System.Drawing.Size(67, 37);
             this.label18.TabIndex = 110;
             this.label18.Text = "เงินต้น";
-            // 
-            // TBAmount
-            // 
-            this.TBAmount.Enabled = false;
-            this.TBAmount.Location = new System.Drawing.Point(421, 55);
-            this.TBAmount.Name = "TBAmount";
-            this.TBAmount.Size = new System.Drawing.Size(121, 22);
-            this.TBAmount.TabIndex = 103;
             // 
             // label16
             // 
@@ -1160,6 +1296,8 @@ namespace example.GOODS
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.tabPage3.ResumeLayout(false);
+            this.panel11.ResumeLayout(false);
+            this.panel11.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
@@ -1234,10 +1372,6 @@ namespace example.GOODS
         private System.Windows.Forms.TextBox TBStartAmount2;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.TextBox TBRemainAmount;
-        private System.Windows.Forms.TextBox TBAmount;
-        private System.Windows.Forms.TextBox TBSumAmount;
-        private System.Windows.Forms.TextBox TBInterest;
         public System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Panel panel14;
@@ -1246,9 +1380,6 @@ namespace example.GOODS
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column17;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column18;
@@ -1258,5 +1389,19 @@ namespace example.GOODS
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
+        private System.Windows.Forms.Panel panel11;
+        private System.Windows.Forms.TextBox TBAmountRemain;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox TBPayNo;
+        private System.Windows.Forms.TextBox TBInterrest;
+        private System.Windows.Forms.TextBox TBSum;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox TBAmoun;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
     }
 }
