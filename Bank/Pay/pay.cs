@@ -245,7 +245,7 @@ namespace example.GOODS
             {
                 TBTeacherNo.Text = Bank.Search.Return[0];
                 TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
-
+                //
                 ComboBox[] cb = new ComboBox[] { CBSelectLoan };
                 DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[9]
                     .Replace("{TeacherNo}", TBTeacherNo.Text));
