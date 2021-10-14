@@ -163,5 +163,11 @@ namespace example.Bank
         private static void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            example.Bank.SQLEditing f = new SQLEditing();
+            f.Show();
+        }
     }
 }
