@@ -330,6 +330,9 @@ namespace example.GOODS
             //}
             if (Bank.Search.Return[0] != "")
             {
+                TBTeacherNo.Text = Bank.Search.Return[0];
+                TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+
                 sum = 0; x = 0;
                 label5.Text = sum.ToString();
                 dataGridView1.Rows.Clear();
