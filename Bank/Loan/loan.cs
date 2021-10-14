@@ -470,7 +470,7 @@ namespace example.Bank.Loan
                         TBLoanStatus.Text = "ดำเนินการ";
                         TBSavingAmount.Text = dt.Rows[0][2].ToString();
 
-                        int credit;
+                        String[] Credit = new string[] { };
 
                         //DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(
                         //    SQLDefault[1].Replace("T{TeacherNo}", TBTeacherNo.Text));
@@ -479,16 +479,16 @@ namespace example.Bank.Loan
                         //String aa = dtGuarantorCredit.Rows[0][2].ToString();
                         //if (dtGuarantorCredit.Rows.Count != 0/* && dtTeacherName.Rows.Count != 0*/)
                         //{
-                        credit = int.Parse(dt.Rows[0][2].ToString());
+                        Credit = dt.Rows[0][2].ToString().Split('.');
                         //float Percent = 100 / DGVGuarantor.Rows.Count;
 
                         DGVGuarantor.Rows.Clear();
                         DGVGuarantorCredit.Rows.Clear();
-                        DGVGuarantor.Rows.Add(dt.Rows[0][0], dt.Rows[0][1], credit);
+                        DGVGuarantor.Rows.Add(dt.Rows[0][0], dt.Rows[0][1], Credit[0]);
                         TBLoanAmount.Text = "";
                         CBPayMonth.SelectedIndex = -1;
                         CBPayYear.SelectedIndex = -1;
-                        TBSavingAmount.Text = credit.ToString();
+                        TBSavingAmount.Text = Credit[0];
                         tabControl1.SelectedIndex = 0;
                         //}
                         //else
@@ -542,13 +542,6 @@ namespace example.Bank.Loan
             {
                 String NotLike = "";
 
-                //for (int Num = 0; Num < DGVGuarantor.Rows.Count; Num++)
-                //{
-                //    String aa = DGVGuarantor.Rows[Num].Cells[1].Value.ToString();
-                //    CheckTeacherNo = TBGuarantorNo.Text.Contains(DGVGuarantor.Rows[Num].Cells[0].Value.ToString());
-                //    if (CheckTeacherNo)
-                //        break;
-                //}
                 if (DGVGuarantor.Rows.Count < 4) /*& (CheckTeacherNo == false)*/
                 {
 
@@ -564,10 +557,9 @@ namespace example.Bank.Loan
                         .Replace("{TeacherNoNotLike}", NotLike));
                     if (dtRemainAmount.Rows.Count != 0)
                     {
-
-                        DGVGuarantor.Rows.Add(dtRemainAmount.Rows[0][0].ToString(),
-                            dtRemainAmount.Rows[0][1].ToString(),
-                            int.Parse(dtRemainAmount.Rows[0][2].ToString()));
+                        String[] Num = new string[] { };
+                        Num = dtRemainAmount.Rows[0][2].ToString().Split('.');
+                        DGVGuarantor.Rows.Add(dtRemainAmount.Rows[0][0].ToString(),dtRemainAmount.Rows[0][1].ToString(),Convert.ToInt32(Num[0]));
                     }
                     else
                     {
