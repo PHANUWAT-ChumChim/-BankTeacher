@@ -430,6 +430,7 @@ namespace example.Bank
             this.BSearchTeacher.Size = new System.Drawing.Size(48, 43);
             this.BSearchTeacher.TabIndex = 85;
             this.BSearchTeacher.UseVisualStyleBackColor = false;
+            this.BSearchTeacher.Click += new System.EventHandler(this.BSearchTeacher_Click);
             // 
             // TBTeacherName
             // 

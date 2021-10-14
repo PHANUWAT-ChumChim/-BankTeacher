@@ -47,6 +47,7 @@ namespace example.Bank
 		   "INSERT INTO EmployeeBank.dbo.tblMember(TeacherNo,TeacherAddBy,StartAmount,DateAdd) \r\n"+
            "VALUES('{TeacherNo}','{TeacherAddBy}',{StartAmount}, CURRENT_TIMESTAMP); \r\n\r\n"
             ,
+
            //[1] SELECT Member  INPUT:{Text}
           "SELECT a.TeacherNo ,  CAST(b.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS NAME, null  ,Fname \r\n " +
           "FROM Personal.dbo.tblTeacherHis as a   \r\n " +
@@ -128,7 +129,7 @@ namespace example.Bank
                         if (dialogResult == DialogResult.Yes)
                         {
                             Class.SQLConnection.InputSQLMSSQL(SQLDefault[3].Replace("{TeacherNo}", TBTeacherNo.Text)
-                            .Replace("{TeacherNoAddBy}", "Teacher")
+                            .Replace("{TeacherNoAddBy}", example.Class.UserInfo.TeacherNo)
                             .Replace("{StartAmount}", AmountShare.ToString())
                             .Replace("{Month}", example.GOODS.Menu.Date[1])
                             .Replace("{Year}", example.GOODS.Menu.Date[0]));
