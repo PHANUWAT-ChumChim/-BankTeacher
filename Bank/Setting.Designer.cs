@@ -46,6 +46,7 @@ namespace example.Bank
             this.TB_Min = new System.Windows.Forms.TextBox();
             this.ตั้งการเเก้ไขเวลา = new System.Windows.Forms.TabPage();
             this.CHB_edittime = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.P1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -84,11 +85,11 @@ namespace example.Bank
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(678, 535);
             this.tabControl1.TabIndex = 98;
-            //this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.White;
+            this.tabPage1.Controls.Add(this.button1);
             this.tabPage1.Controls.Add(this.comboBox2);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.comboBox1);
@@ -246,6 +247,17 @@ namespace example.Bank
             this.CHB_edittime.Text = "อณุญาตให้แก้ไขเวลา";
             this.CHB_edittime.UseVisualStyleBackColor = true;
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.Red;
+            this.button1.Location = new System.Drawing.Point(312, 63);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(295, 58);
+            this.button1.TabIndex = 16;
+            this.button1.Text = "เฉพาะตอนทำโปรแกรม";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Setting
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -291,5 +303,6 @@ namespace example.Bank
         private System.Windows.Forms.TextBox TB_Min;
         private System.Windows.Forms.TabPage ตั้งการเเก้ไขเวลา;
         private System.Windows.Forms.CheckBox CHB_edittime;
+        private System.Windows.Forms.Button button1;
     }
 }
