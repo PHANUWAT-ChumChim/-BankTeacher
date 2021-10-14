@@ -876,6 +876,8 @@ namespace example.GOODS
                     DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("T{TeacherNo}", TBTeacherNo.Text));
                     if (dt.Rows.Count != 0)
                     {
+                        //
+                        //
                         sum = 0; x = 0;
                         label5.Text = sum.ToString();
                         dataGridView1.Rows.Clear();
