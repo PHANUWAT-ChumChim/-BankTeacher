@@ -108,20 +108,24 @@ namespace example.Bank
                     DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(
                         SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text) + 
                         SQLDefault[0].Replace("{TeacherNo}", TBTeacherNo.Text));
+                    String[] Credit = new string[] { };
                     if (ds.Tables[0].Rows.Count != 0)
                     {
+                        Credit = ds.Tables[0].Rows[0][3].ToString().Split('.');
                         TBWithDraw.Enabled = true;
                         CBTypePay.Enabled = true;
                         BSaveAmountOff.Enabled = true;
                         TBTeacherName.Text = ds.Tables[0].Rows[0][0].ToString();
                         TBShareNo.Text = ds.Tables[0].Rows[0][1].ToString();
                         TBSavingAmount.Text = ds.Tables[0].Rows[0][2].ToString();
-                        TBCreditSystem.Text = ds.Tables[0].Rows[0][3].ToString();
-                        TBCreditWithDraw.Text = ds.Tables[0].Rows[0][4].ToString();
+                        TBCreditSystem.Text = Credit[0];
+                        Credit = ds.Tables[0].Rows[0][4].ToString().Split('.');
+                        TBCreditWithDraw.Text = Credit[0];
 
                         for(int Num = 0;Num < ds.Tables[1].Rows.Count; Num++)
                         {
-                            DGVLoan.Rows.Add(ds.Tables[1].Rows[Num][0].ToString(), ds.Tables[1].Rows[Num][1].ToString(), ds.Tables[1].Rows[Num][2].ToString(), ds.Tables[1].Rows[Num][3].ToString());
+                            Credit = ds.Tables[1].Rows[Num][2].ToString().Split('.');
+                            DGVLoan.Rows.Add(ds.Tables[1].Rows[Num][0].ToString(), ds.Tables[1].Rows[Num][1].ToString(), Credit[0], ds.Tables[1].Rows[Num][3].ToString());
                         }
                     }
                     else
