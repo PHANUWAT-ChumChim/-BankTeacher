@@ -877,6 +877,7 @@ namespace example.GOODS
                     if (dt.Rows.Count != 0)
                     {
                         //
+                        //
                         sum = 0; x = 0;
                         label5.Text = sum.ToString();
                         dataGridView1.Rows.Clear();
