@@ -52,20 +52,20 @@ namespace example.Bank
             //[2] UPDATE Share WithDraw INPUT: {ShareNo} , {WithDraw}
             "UPDATE EmployeeBank.dbo.tblShare\r\n" +
             "SET SavingAmount = SavingAmount - {WithDraw}\r\n" +
-            "WHERE ShareNo = {ShareNo}"
+            "WHERE ShareNo = {ShareNo};"
 
             ,
 
             //[3] INSERT ShareWithDraw INPUT: {TeacherNoAddBy} , {ShareNo} , {WithDraw},{PayMent}
             "INSERT INTO EmployeeBank.dbo.tblShareWithdraw (TeacherNoAddBy,ShareNo,DateAdd,Amount,BillDetailPayMentNo)\r\n" +
-            "VALUES ('{TeacherNoAddBy}', '{ShareNo}',CAST(CURRENT_TIMESTAMP as Date),'{WithDraw}',{PayMent})"
+            "VALUES ('{TeacherNoAddBy}', '{ShareNo}',CAST(CURRENT_TIMESTAMP as Date),'{WithDraw}',{PayMent});"
 
             ,
 
             //[4] Check BillDetailPayment INPUT: -  
             "SELECT Name , BillDetailpaymentNo  \r\n " +
             "FROM EmployeeBank.dbo.tblBillDetailPayment \r\n " +
-            "WHERE Status = 1 "
+            "WHERE Status = 1 ;"
             ,
             //[5] SELECT MEMBER INPUT: {Text}
             "SELECT TOP(20) a.TeacherNo , CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR)AS Name, e.SavingAmount,    \r\n " +
@@ -156,14 +156,12 @@ namespace example.Bank
             example.Class.ComboBoxPayment Payment = (CBTypePay.SelectedItem as example.Class.ComboBoxPayment);
             if (TBWithDraw.Text != "" && CBTypePay.SelectedIndex != -1)
             {
-                Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]
-                    .Replace("{ShareNo}", TBShareNo.Text)
-                    .Replace("{WithDraw}", TBWithDraw.Text));
-
-                Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[3]
-                    .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
+                Class.SQLConnection.InputSQLMSSQLDS( (SQLDefault[2] + 
+                    "\r\n"+
+                    SQLDefault[3])
                     .Replace("{ShareNo}", TBShareNo.Text)
                     .Replace("{WithDraw}", TBWithDraw.Text)
+                    .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
                     .Replace("{PayMent}", Payment.No));
             }
         }

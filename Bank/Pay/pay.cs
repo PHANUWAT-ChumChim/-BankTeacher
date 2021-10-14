@@ -16,8 +16,9 @@ namespace example.GOODS
         //------------------------- index -----------------
         public static int x = 0;
         public static int sum = 0;
-        public static int SelectIndexRowDelete = -1;
+        public static int SelectIndexRow = -1;
         int Check = 0;
+        int Auto = 0;
         //----------------------- index code -------------------- ////////
 
 
@@ -504,6 +505,13 @@ namespace example.GOODS
         // ถ้า ไม่มีข้อความ ใน กล่องปี จะไม่เปิดใช่งานกล่อง ถัดไป
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            CBB4Oppay.Enabled = false;
+            BTsave.Enabled = false;
+            label5.Text = "0";
+            if(dataGridView1.Rows.Count > 0)
+            {
+                dataGridView1.Rows.Clear();
+            }
             if (CByeartap1.SelectedIndex != -1)
             {
                 DataSet ds = example.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[9].Replace("{TeacherNo}", TBTeacherNo.Text));
@@ -553,6 +561,8 @@ namespace example.GOODS
                 CBStatus.Items.Clear();
                 TBStartAmountShare.Text = "";
                 BTAdd.Enabled = false;
+                Auto = 0;
+                label5.Text = "0";
                 ComboBox[] cb = new ComboBox[] { CBStatus };
                 DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[7]
                     .Replace("{Month}", CBMonth.Text)
@@ -566,7 +576,7 @@ namespace example.GOODS
                     {
                         cb[x].Items.Add(new example.Class.ComboBoxPay(ds.Tables[0].Rows[a][2].ToString(),
                         ds.Tables[0].Rows[a][1].ToString(),
-                        ds.Tables[0].Rows[a][0].ToString()));
+                        "500"));
 
                     }
                 }
@@ -654,14 +664,24 @@ namespace example.GOODS
             if (CBStatus.SelectedIndex != -1 && TBTeacherNo.Text.Length == 6)
             {
 
-                TBStartAmountShare.Text = Status.Balance;
-                if (TBStartAmountShare.Text == "")
-                    TBStartAmountShare.Text = "0";
-                BTAdd.Enabled = true;
+                TBStartAmountShare.Enabled = false;
+                if (Status.Type.Contains("กู้"))
+                {
+                    TBStartAmountShare.Text = Status.Balance;
+                    if (TBStartAmountShare.Text == "")
+                        TBStartAmountShare.Text = "0";
+                    BTAdd.Enabled = true;
+                }
+                else if (Status.Type.Contains("สะสม"))
+                {
+                    TBStartAmountShare.Text = "500";
+                    TBStartAmountShare.Enabled = true;
+                    BTAdd.Enabled = true;
+                }
+                CBB4Oppay.SelectedIndex = 0;
             }
             else
             {
-
                 TBStartAmountShare.Text = "";
                 CBStatus.Text = "";
 
@@ -713,7 +733,7 @@ namespace example.GOODS
                 int currentMouseOverRow = dataGridView1.HitTest(e.X, e.Y).RowIndex;
                 if (currentMouseOverRow != -1)
                 {
-                    SelectIndexRowDelete = currentMouseOverRow;
+                    SelectIndexRow = currentMouseOverRow;
                     ContextMenu m = new ContextMenu();
                     m.MenuItems.Add(new MenuItem("ลบออก"));
                     m.Show(dataGridView1, new Point(e.X, e.Y));
@@ -726,14 +746,15 @@ namespace example.GOODS
         {
             if (dataGridView1.Rows.Count != 0)
             {
-                sum -= int.Parse(dataGridView1.Rows[SelectIndexRowDelete].Cells[2].Value.ToString());
+                sum -= int.Parse(dataGridView1.Rows[SelectIndexRow].Cells[2].Value.ToString());
                 x = sum;
                 label5.Text = sum.ToString();
             }
-            if (SelectIndexRowDelete != -1)
+            if (SelectIndexRow != -1)
             {
-                dataGridView1.Rows.RemoveAt(SelectIndexRowDelete);
-                SelectIndexRowDelete = -1;
+                this.RestoreComboboxafterdelete();
+                dataGridView1.Rows.RemoveAt(SelectIndexRow);
+                SelectIndexRow = -1;
                 if (dataGridView1.Rows.Count == 0)
                 {
                     CBB4Oppay.Enabled = false;
@@ -741,21 +762,38 @@ namespace example.GOODS
                 }
             }
         }
+        private void RestoreComboboxafterdelete ()
+        {
+            if (dataGridView1.Rows[SelectIndexRow].Cells[1].Value.ToString().Contains("กู้"))
+            {
+                ComboBox[] cb = new ComboBox[] { CBStatus };
+                for (int x = 0; x < cb.Length; x++)
+                    cb[x].Items.Add(new example.Class.ComboBoxPay(dataGridView1.Rows[SelectIndexRow].Cells[1].Value.ToString(), dataGridView1.Rows[SelectIndexRow].Cells[2].Value.ToString(),
+                                             dataGridView1.Rows[SelectIndexRow].Cells[3].Value.ToString()));
+            }
+            
+        }
         //----------------------- End code -------------------- ////////
 
         //------------------------- SUMAmountShare --------- //
         // Comment! //
         private void BTAdd_Click(object sender, EventArgs e)
         {
+            
             example.Class.ComboBoxPay Loan = (CBStatus.SelectedItem as example.Class.ComboBoxPay);
             if (dataGridView1.Rows.ToString() != "")
             {
+                
                 if (dataGridView1.Rows.Count == 0)
                 {
                     int BALANCE = 0;
                     CBB4Oppay.Enabled = true;
                     String Time = CByeartap1.Text + "/" + CBMonth.Text;
                     dataGridView1.Rows.Add(Time, CBStatus.Text, TBStartAmountShare.Text, Loan.No);
+                    if (CBStatus.Text.Contains("กู้"))
+                    {
+                        CBStatus.Items.RemoveAt(CBStatus.SelectedIndex);
+                    }
                     for(int x = 0; x < dataGridView1.Rows.Count; x++)
                     {
                         BALANCE += Convert.ToInt32(dataGridView1.Rows[x].Cells[2].Value.ToString());
@@ -769,6 +807,17 @@ namespace example.GOODS
                     {
                         if (CBStatus.Text == dataGridView1.Rows[x].Cells[1].Value.ToString())
                         {
+                            if(dataGridView1.Rows[x].Cells[1].Value.ToString().Contains("สะสม"))
+                                if(Int32.TryParse(TBStartAmountShare.Text,out int value)&& value > 0)
+                                {
+                                    dataGridView1.Rows[x].Cells[2].Value = TBStartAmountShare.Text;
+                                    sum = 0;
+                                    for(int a = 0; x < dataGridView1.Rows.Count; x++)
+                                    {
+                                        sum += Convert.ToInt32(dataGridView1.Rows[a].Cells[2].Value);
+                                    }
+                                    label5.Text = sum.ToString();
+                                }
                             TicketName = 1;
                         }
 
@@ -778,6 +827,10 @@ namespace example.GOODS
                         int BALANCE = 0;
                         String Time = CByeartap1.Text + "/" + CBMonth.Text;
                         dataGridView1.Rows.Add(Time, CBStatus.Text, TBStartAmountShare.Text,Loan.No);
+                        if (CBStatus.Text.Contains("กู้"))
+                        {
+                            CBStatus.Items.RemoveAt(CBStatus.SelectedIndex);
+                        }
                         for (int x = 0; x < dataGridView1.Rows.Count; x++)
                         {
                             BALANCE += Convert.ToInt32(dataGridView1.Rows[x].Cells[2].Value.ToString());
@@ -785,6 +838,7 @@ namespace example.GOODS
                         label5.Text = BALANCE.ToString();
                     }
                 }
+                CBStatus.SelectedIndex = 0;
 
             }
         }
@@ -840,31 +894,52 @@ namespace example.GOODS
                     TBTeacherName.Text = "";
                     CBStatus.Enabled = false;
                     Check = 0;
+                    CByeartap2.Enabled = false;
+                    CBSelectLoan.Enabled = false;
+                    CByeartap1.Enabled = false;
                 }
             }
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            dataGridView1.Rows.Clear();
-            label5.Text = "0";
-            sum = 0;
             if (CBMonth.Text != "")
             {
                 if (CBStatus.Items.Count != 0)
                 {
-                    for (int x = 0; x < CBStatus.Items.Count; x++)
+                    if(Auto == 0)
                     {
-                        CBStatus.SelectedIndex = x;
-                        example.Class.ComboBoxPay Loan = (CBStatus.SelectedItem as example.Class.ComboBoxPay);
-                        String Time = CByeartap1.Text + "/" + CBMonth.Text;
-                        dataGridView1.Rows.Add(Time, CBStatus.Text, TBStartAmountShare.Text, Loan.No);
-                        sum += Convert.ToInt32(Loan.Balance);
-                        label5.Text = sum.ToString();
-                    }
 
-                    CBB4Oppay.Enabled = true;
-                    CBStatus.SelectedIndex = -1;
+                        dataGridView1.Rows.Clear();
+                        label5.Text = "0";
+                        sum = 0;
+                        for (int x = 0; x < CBStatus.Items.Count; x++)
+                        {
+                            CBStatus.SelectedIndex = x;
+                            example.Class.ComboBoxPay Loan = (CBStatus.SelectedItem as example.Class.ComboBoxPay);
+                            String Time = CByeartap1.Text + "/" + CBMonth.Text;
+                            dataGridView1.Rows.Add(Time, CBStatus.Text, TBStartAmountShare.Text, Loan.No);
+                            sum += Convert.ToInt32(Loan.Balance);
+                            label5.Text = sum.ToString();
+                        }
+                        for (int a = 0; a < CBStatus.Items.Count; a++)
+                        {
+                            CBStatus.SelectedIndex = a;
+                            if (CBStatus.Text.Contains("กู้"))
+                                CBStatus.Items.RemoveAt(a);
+                        }
+                        try
+                        {
+                            CBStatus.SelectedIndex = 0;
+                            CBB4Oppay.Enabled = true;
+                            CBB4Oppay.SelectedIndex = 0;
+                            Auto = 1;
+                        }
+                        catch
+                        {
+                            Console.WriteLine("===== Don't have Index in Combobox. =====");
+                        }
+                    }
                 }
                 else
                 {
