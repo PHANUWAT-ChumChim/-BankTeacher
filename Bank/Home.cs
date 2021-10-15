@@ -116,7 +116,7 @@ namespace example.GOODS
             {
                 if (TBTeacherNo.Text.Length == 6)
                 {
-                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[3].Replace("T{TeacherNo}%", TBTeacherNo.Text));
+                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[3].Replace("{Text}", TBTeacherNo.Text));
                     if (dt.Rows.Count != 0)
                     {
                         TBTeacherName.Text = dt.Rows[0][1].ToString();
