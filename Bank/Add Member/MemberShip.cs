@@ -18,6 +18,8 @@ namespace example.Bank
     {
         //------------------------- index -----------------
         int Check = 0;
+        int StatusBoxFile = 0;
+        String imgeLocation = "";
 
         //----------------------- index code -------------------- ////////
 
@@ -49,12 +51,14 @@ namespace example.Bank
             ,
 
            //[1] SELECT Member  INPUT:{Text}
-          "SELECT a.TeacherNo ,  CAST(b.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS NAME, null  ,Fname \r\n " +
-          "FROM Personal.dbo.tblTeacherHis as a   \r\n " +
-          "LEFT JOIN BaseData.dbo.tblPrefix as b ON a.PrefixNo = b.PrefixNo    \r\n " +
-          "WHERE NOT a.TeacherNo IN (SELECT TeacherNo FROM EmployeeBank.dbo.tblMember) \r\n " +
-          "and a.TeacherNo LIKE '{Text}' or  \r\n " +
-          "NOT a.TeacherNo IN (SELECT TeacherNo FROM EmployeeBank.dbo.tblMember) and CAST(b.PrefixName+' '+Fname +' '+ Lname as NVARCHAR) LIKE '{Text}' "
+          "SELECT TeacherNo,Name,null,Fname \r\n " +
+          "FROM(SELECT ISNULL(b.TeacherNo , a.TeacherNo) as TeacherNo ,  CAST(ISNULL(c.PrefixName , '') + '' + Fname +' '+ Lname as NVARCHAR)AS NAME, Fname , b.MemberStatusNo \r\n " +
+          "FROM Personal.dbo.tblTeacherHis as a \r\n " +
+          "FULL OUTER JOIN EmployeeBank.dbo.tblMember as b on a.TeacherNo = b.TeacherNo \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as c ON a.PrefixNo = c.PrefixNo  \r\n " +
+          "WHERE a.TeacherNo LIKE '{Text}%' or CAST(Fname +' '+ Lname as NVARCHAR) LIKE '{Text}%' ) as a \r\n " +
+          "WHERE a.MemberStatusNo = 2 or a.MemberStatusNo IS NULL \r\n " +
+          "ORDER BY a.Fname; "
           ,
 
           //[2]  Select Detail Memner INPUT: {TeacherNo} 
@@ -240,7 +244,46 @@ namespace example.Bank
 
         private void BTOpenfile_Click(object sender, EventArgs e)
         {
+            if (StatusBoxFile == 0)
+            {
 
+                try
+                {
+                    OpenFileDialog dialog = new OpenFileDialog();
+                    dialog.Filter = "pdf files(*.pdf)|*.pdf";
+                    if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        imgeLocation = dialog.FileName;
+                    }
+                    if (imgeLocation != "")
+                    {
+                        BTOpenfile.Text = "ส่งไฟล์";
+                        StatusBoxFile = 1;
+                        //label6.Text = "Scan(  พบไฟล์  )";
+                    }
+
+                }
+                catch
+                {
+                    MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else if (StatusBoxFile == 1)
+            {
+                var smb = new SmbFileContainer("Member");
+                if (smb.IsValidConnection())
+                {
+                    String Return = smb.SendFile(imgeLocation, "Member" + TBTeacherNo.Text + ".pdf");
+                    MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    StatusBoxFile = 0;
+                    BTOpenfile.Text = "เปิดไฟล์";
+                    imgeLocation = "";
+                }
+                else
+                {
+                    MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
         }
 
         private void TBTeacherNo_MouseDown(object sender, MouseEventArgs e)
@@ -278,7 +321,9 @@ namespace example.Bank
 
         private void BTdeletefile_Click(object sender, EventArgs e)
         {
-
+            StatusBoxFile = 0;
+            BTOpenfile.Text = "เปิดไฟล์";
+            imgeLocation = "";
         }
 
         private void TBStartAmountShare_TextChanged(object sender, EventArgs e)

@@ -7,11 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static example.Class.ProtocolSharing.ConnectSMB;
 
 namespace example.Bank
 {
     public partial class AmountOff : Form
     {
+        int StatusBoxFile = 0;
+        String imgeLocation = "";
         /// <summary>
         /// <para>[0] SELECT LoanNo,RemainAmount,Name,EndDate INPUT: {TeacherNo}</para>
         /// <para>[1] SELECT TeacherNo,Name,SumRemainAmount,AmountCredit,SavingAmount,ShareNo INPUT: {TeacherNo}</para>
@@ -63,7 +66,7 @@ namespace example.Bank
             ,
 
             //[4] Check BillDetailPayment INPUT: -  
-            "SELECT Name , BillDetailpaymentNo  \r\n " +
+            "SELECT Convert(nvarchar(50) , Name) , BillDetailpaymentNo  \r\n " +
             "FROM EmployeeBank.dbo.tblBillDetailPayment \r\n " +
             "WHERE Status = 1 ;"
             ,
@@ -212,6 +215,57 @@ namespace example.Bank
             {
                 Console.WriteLine(x);
             }
+        }
+
+        private void BTOpenfile_Click(object sender, EventArgs e)
+        {
+            if (StatusBoxFile == 0)
+            {
+
+                try
+                {
+                    OpenFileDialog dialog = new OpenFileDialog();
+                    dialog.Filter = "pdf files(*.pdf)|*.pdf";
+                    if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        imgeLocation = dialog.FileName;
+                    }
+                    if (imgeLocation != "")
+                    {
+                        BTOpenfile.Text = "ส่งไฟล์";
+                        StatusBoxFile = 1;
+                        //label6.Text = "Scan(  พบไฟล์  )";
+                    }
+
+                }
+                catch
+                {
+                    MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else if (StatusBoxFile == 1)
+            {
+                var smb = new SmbFileContainer("CamcelMember");
+                if (smb.IsValidConnection())
+                {
+                    String Return = smb.SendFile(imgeLocation, "CMember_" + TBTeacherNo.Text + ".pdf");
+                    MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    StatusBoxFile = 0;
+                    BTOpenfile.Text = "เปิดไฟล์";
+                    imgeLocation = "";
+                }
+                else
+                {
+                    MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
+
+        private void BTdeletefile_Click(object sender, EventArgs e)
+        {
+            StatusBoxFile = 0;
+            BTOpenfile.Text = "เปิดไฟล์";
+            imgeLocation = "";
         }
     }
 }
