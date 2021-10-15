@@ -26,7 +26,7 @@ namespace example.Bank
             DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLCode.Replace("{Text}",""));
             for (int x = 0; x < dt.Rows.Count; x++)
             {
-                dataGridView1.Rows.Add(dt.Rows[x][0], dt.Rows[x][1],dt.Rows[x][2]);
+                dataGridView1.Rows.Add(dt.Rows[x][0], dt.Rows[x][1], Decimal.Truncate(Convert.ToDecimal(dt.Rows[x][2].ToString())));
 
                 if (x % 2 == 1)
                 {
@@ -63,14 +63,14 @@ namespace example.Bank
             {
                 for (int x = 0; x < dt.Rows.Count; x++)
                 {
-                    dataGridView1.Rows.Add(dt.Rows[x][0], dt.Rows[x][1],dt.Rows[x][2]);
+                    dataGridView1.Rows.Add(dt.Rows[x][0], dt.Rows[x][1], Decimal.Truncate(Convert.ToDecimal(dt.Rows[x][2].ToString())));
                 }
             }
             else
             {
                 for (int x = 0; x < dt.Rows.Count; x++)
                 {
-                    dataGridView1.Rows.Add(dt.Rows[x][0], dt.Rows[x][1], dt.Rows[x][2]);
+                    dataGridView1.Rows.Add(dt.Rows[x][0], dt.Rows[x][1], Decimal.Truncate(Convert.ToDecimal(dt.Rows[x][2].ToString())));
                 }
 
 

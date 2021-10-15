@@ -66,7 +66,7 @@ namespace example.Bank.Loan
           "WHERE a.LoanNo = '{LoanNo} ' and LoanStatusNo != 4 and LoanStatusNo != 3\r\n "
           ,
           //[3] Check BillDetailPayment INPUT: -  
-          "SELECT Name , BillDetailpaymentNo  \r\n " +
+          "SELECT Convert(nvarchar(20),Name) , BillDetailpaymentNo  \r\n " +
           "FROM EmployeeBank.dbo.tblBillDetailPayment \r\n " +
           "WHERE Status = 1 and BillDetailpaymentNo <> 3"
           ,
@@ -293,7 +293,6 @@ namespace example.Bank.Loan
                     {
                         BTOpenfile.Text = "ส่งไฟล์";
                         StatusBoxFile = 1;
-                        //label6.Text = "Scan(  พบไฟล์  )";
                     }
 
                 }

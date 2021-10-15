@@ -7,14 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static example.Class.ProtocolSharing.SBM;
+using static example.Class.ProtocolSharing.ConnectSMB;
 
 namespace example.Bank
 {
     public partial class CancelMembership : Form
     {
-        static String PathFile = "";
+        int StatusBoxFile = 0;
+        String imgeLocation = "";
         int Check = 0;
+        
 
         /// <summary>
         /// <para> SQLDefault </para>
@@ -92,36 +94,26 @@ namespace example.Bank
             if(TBTeacherName.Text != "")
             {
                 int DocStaTus = 2;
-                if (PathFile != "")
+                if (imgeLocation != "")
                 { 
                     DocStaTus = 1;
                     
                     var smb = new example.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("CancelLoan");
                     if (smb.IsValidConnection())
                     {
-                        smb.SendFile(PathFile, TBTeacherName.Text + " Cancel.pdf");
+                        smb.SendFile(imgeLocation, TBTeacherName.Text + " Cancel.pdf");
                     }
                     else
                     {
                         MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
-
-
-                String DocUpLoadPath = example.Class.ProtocolSharing.ConnectSMB.SmbFileContainer.PathFile + @"\" + TBTeacherName.Text + " Cancel.pdf";
-                if (DocUpLoadPath == "") { DocUpLoadPath = "Null"; }
-                Class.SQLConnection.InputSQLMSSQL(SQLDefault[0].Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
-                    .Replace("{TeacherNo}", TBTeacherNo.Text)
-                    .Replace("{Note}", textBox1.Text)
-                    .Replace("{DocStatusNo}", DocStaTus.ToString())
-                    .Replace("{DocUploadPath}", DocUpLoadPath.ToString())
-                    .Replace("{Status}", 2.ToString()));
                 MessageBox.Show("ยกเลิกผู้ใช้เรียบร้อย","System",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 TBIDNo.Text = "";
                 TBTeacherName.Text = "";
                 TBTeacherNo.Text = "";
                 textBox1.Text = "";
-                PathFile = "";
+                imgeLocation = "";
             }
             else
             {
@@ -132,19 +124,45 @@ namespace example.Bank
 
         private void button3_Click(object sender, EventArgs e)
         {
-            try
+            if (StatusBoxFile == 0)
             {
-                OpenFileDialog dialog = new OpenFileDialog();
-                dialog.Filter = "pdf files(*.pdf)|*.pdf";
-                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+
+                try
                 {
-                    PathFile = dialog.FileName;
+                    OpenFileDialog dialog = new OpenFileDialog();
+                    dialog.Filter = "pdf files(*.pdf)|*.pdf";
+                    if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        imgeLocation = dialog.FileName;
+                    }
+                    if (imgeLocation != "")
+                    {
+                        button3.Text = "ส่งไฟล์";
+                        StatusBoxFile = 1;
+                    }
+
                 }
-                    
+                catch
+                {
+                    MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            catch
+            else if (StatusBoxFile == 1)
             {
-                MessageBox.Show("Error","Error",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                var smb = new SmbFileContainer("Loan");
+                if (smb.IsValidConnection())
+                {
+                    String Return = smb.SendFile(imgeLocation, "Loan_" + TBTeacherNo.Text + ".pdf");
+                    MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    StatusBoxFile = 0;
+                    button3.Text = "เปิดไฟล์";
+                    //label6.Text = "Scan(  ไม่พบ  )";
+                    imgeLocation = "";
+                }
+                else
+                {
+                    MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 
