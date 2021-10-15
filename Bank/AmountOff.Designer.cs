@@ -230,8 +230,11 @@ namespace example.Bank
             this.TBWithDraw.Location = new System.Drawing.Point(573, 279);
             this.TBWithDraw.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.TBWithDraw.Name = "TBWithDraw";
-            this.TBWithDraw.Size = new System.Drawing.Size(192, 36);
+            this.TBWithDraw.Size = new System.Drawing.Size(207, 43);
+
             this.TBWithDraw.TabIndex = 1;
+            this.TBWithDraw.Text = "0";
+            this.TBWithDraw.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.TBWithDraw.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBWithDraw_KeyPress);
             this.TBWithDraw.Leave += new System.EventHandler(this.TBWithDraw_Leave);
             // 
@@ -241,8 +244,10 @@ namespace example.Bank
             this.TBCreditWithDraw.Location = new System.Drawing.Point(573, 235);
             this.TBCreditWithDraw.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.TBCreditWithDraw.Name = "TBCreditWithDraw";
-            this.TBCreditWithDraw.Size = new System.Drawing.Size(192, 36);
+            this.TBCreditWithDraw.Size = new System.Drawing.Size(207, 43);
             this.TBCreditWithDraw.TabIndex = 1;
+            this.TBCreditWithDraw.Text = "0";
+            this.TBCreditWithDraw.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.TBCreditWithDraw.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBCreditWithDraw_KeyPress);
             // 
             // TBCreditSystem
@@ -251,8 +256,10 @@ namespace example.Bank
             this.TBCreditSystem.Location = new System.Drawing.Point(234, 235);
             this.TBCreditSystem.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.TBCreditSystem.Name = "TBCreditSystem";
-            this.TBCreditSystem.Size = new System.Drawing.Size(192, 36);
+            this.TBCreditSystem.Size = new System.Drawing.Size(207, 43);
             this.TBCreditSystem.TabIndex = 1;
+            this.TBCreditSystem.Text = "0";
+            this.TBCreditSystem.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label7
             // 
