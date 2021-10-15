@@ -1347,9 +1347,9 @@ namespace example.GOODS
             // Column6
             // 
             this.Column6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black;
-            this.Column6.DefaultCellStyle = dataGridViewCellStyle7;
+            //dataGridViewCellStyle7.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            //dataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black;
+            //this.Column6.DefaultCellStyle = dataGridViewCellStyle7;
             this.Column6.HeaderText = "สถานะการจ่าย";
             this.Column6.MinimumWidth = 6;
             this.Column6.Name = "Column6";
