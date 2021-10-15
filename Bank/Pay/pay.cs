@@ -228,7 +228,7 @@ namespace example.GOODS
  
 
           //[8] Check BillDetailPayment INPUT: -  
-          "SELECT Name , BillDetailpaymentNo  \r\n " +
+          "SELECT Convert(nvarchar(50) , Name) , BillDetailpaymentNo  \r\n " +
           "FROM EmployeeBank.dbo.tblBillDetailPayment \r\n " +
           "WHERE Status = 1 "
           ,
@@ -316,79 +316,10 @@ namespace example.GOODS
         // Comment! Pull SQL Member & CheckTBTeacherNo
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
-            //try
-            //{
             Bank.Search IN = new Bank.Search(SQLDefault[0]);
             IN.ShowDialog();
-
             TBTeacherNo.Text = Bank.Search.Return[0];
             TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
-            //}
-            //catch (Exception x)
-            //{
-            //    Console.WriteLine(x);
-            //}
-            if (Bank.Search.Return[0] != "")
-            {
-                TBTeacherNo.Text = Bank.Search.Return[0];
-                TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
-
-                sum = 0; x = 0;
-                label5.Text = sum.ToString();
-                dataGridView1.Rows.Clear();
-                TBStartAmountShare.Clear();
-                CBStatus.SelectedIndex = -1;
-                CByeartap1.SelectedIndex = -1;
-                CByeartap1.Items.Clear();
-                CBMonth.SelectedIndex = -1;
-                dataGridView2.Rows.Clear();
-                dataGridView3.Rows.Clear();
-                CByeartap2.SelectedIndex = -1;
-                CByeartap2.Items.Clear();
-                CBSelectLoan.SelectedIndex = -1;
-                CBSelectLoan.Items.Clear();
-                CBMonth.Items.Clear();
-                CBMonth.SelectedIndex = -1;
-                ComboBox[] cb = new ComboBox[] { CBSelectLoan };
-                DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[9]
-                    .Replace("{TeacherNo}", TBTeacherNo.Text));
-                //for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
-                //{
-                    for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
-                    {
-                        for (int aa = 0; aa < cb.Length; aa++)
-                        {
-                            cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][0].ToString()));
-                        }
-                    }
-
-                    if (CBSelectLoan.Items.Count == 1)
-                    {
-                        CBSelectLoan.SelectedIndex = 0;
-                    }
-                //}
-                int YearRegister = Convert.ToInt32((Convert.ToDateTime(ds.Tables[1].Rows[0][0].ToString())).ToString("yyyy"));
-                if (YearRegister < Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2)
-                {
-                    int Yeard2 = Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2;
-                    
-                    while (Yeard2 <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + 1)
-                    {
-                        CByeartap1.Items.Add(Yeard2);
-                        CByeartap2.Items.Add(Yeard2);
-                        Yeard2++;
-                    }
-                }
-                else if (YearRegister > Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2)
-                {
-                    while (YearRegister <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + 1)
-                    {
-                        CByeartap1.Items.Add(YearRegister);
-                        CByeartap2.Items.Add(YearRegister);
-                        YearRegister++;
-                    }
-                }
-            }
         }
         // บันทึกรายการเเล้ว ส่งขึ้นไปบนฐานข้อมูล
         private void BTsave_Click(object sender, EventArgs e)
@@ -639,34 +570,25 @@ namespace example.GOODS
                         //กรณีเดือนแรก
                     else if (ds.Tables[1].Rows.Count <= 0 && (Convert.ToDateTime(ds.Tables[2].Rows[0][1].ToString() + '-' + ds.Tables[2].Rows[0][0].ToString() + '-' +
                         DateTime.DaysInMonth(Convert.ToInt32(ds.Tables[2].Rows[0][1].ToString()), Convert.ToInt32(ds.Tables[2].Rows[0][0].ToString())).ToString())).ToString() == (Convert.ToDateTime(CByeartap1.Text + '-' + CBMonth.Text + '-' + DateTime.DaysInMonth(Convert.ToInt32(CByeartap1.Text), Convert.ToInt32(CBMonth.Text)).ToString())).ToString())
-                    {
-                        if(ds.Tables[3].Rows.Count == 0)
-                        {
-                            cb[0].Items.Add(new example.Class.ComboBoxPay("รายการกู้ " + ds.Tables[2].Rows[0][3].ToString(), ds.Tables[2].Rows[0][2].ToString(),
-                                        ds.Tables[2].Rows[0][3].ToString()));
-                        }
+                         {
+                            if(ds.Tables[3].Rows.Count == 0)
+                            {
+                                cb[0].Items.Add(new example.Class.ComboBoxPay("รายการกู้ " + ds.Tables[2].Rows[0][3].ToString(), ds.Tables[2].Rows[0][2].ToString(),
+                                            ds.Tables[2].Rows[0][3].ToString()));
+                            }
                         
-                    }
-                    if(CBStatus.Items.Count > 0)
-                    {
-                        CBStatus.Enabled = true;
-                    }
+                         }
                 }
                 button4.Enabled = true;
-                //else
-                //{ 
-                //    CBStatus.Enabled = false;
-                //    CBStatus.SelectedIndex = -1;
-                //}
+            }
+            if (CBStatus.Items.Count > 0)
+            {
+                if (CBStatus.Items.Count == 1)
+                    CBStatus.SelectedIndex = 0;
+                CBStatus.Enabled = true;
             }
 
         }
-        // if message in Text nothing will not Open next
-        // ถ้า ไม่มีข้อความ ใน กล่อง จะไม่เปิดใช่งานกล่อง ถัดไป
-        
-        // if message in Text nothing will not Open next
-        // ถ้า ไม่มีข้อความ ใน กล่อง จะไม่เปิดใช่งานกล่อง ถัดไป
-
         // if message in Text nothing will not Open next
         // ถ้า ไม่มีข้อความ ใน กล่อง จะไม่เปิดใช่งานกล่อง ถัดไป
         private void CBB3_SelectedIndexChanged(object sender, EventArgs e)
@@ -770,6 +692,7 @@ namespace example.GOODS
                 {
                     CBB4Oppay.Enabled = false;
                     CBB4Oppay.SelectedIndex = -1;
+                    Auto = 0;
                 }
             }
         }
@@ -786,8 +709,6 @@ namespace example.GOODS
         }
         //----------------------- End code -------------------- ////////
 
-        //------------------------- SUMAmountShare --------- //
-        // Comment! //
         private void BTAdd_Click(object sender, EventArgs e)
         {
             
@@ -797,19 +718,16 @@ namespace example.GOODS
                 
                 if (dataGridView1.Rows.Count == 0)
                 {
-                    int BALANCE = 0;
                     CBB4Oppay.Enabled = true;
                     String Time = CByeartap1.Text + "/" + CBMonth.Text;
                     dataGridView1.Rows.Add(Time, CBStatus.Text, TBStartAmountShare.Text, Loan.No);
                     if (CBStatus.Text.Contains("กู้"))
                     {
                         CBStatus.Items.RemoveAt(CBStatus.SelectedIndex);
+                        TBStartAmount2.Text = "";
+                        if (CBStatus.Items.Count == 0)
+                            BTAdd.Enabled = false;
                     }
-                    for(int x = 0; x < dataGridView1.Rows.Count; x++)
-                    {
-                        BALANCE += Convert.ToInt32(dataGridView1.Rows[x].Cells[2].Value.ToString());
-                    }
-                    label5.Text = BALANCE.ToString();
                 }
                 else
                 {
@@ -822,12 +740,6 @@ namespace example.GOODS
                                 if(Int32.TryParse(TBStartAmountShare.Text,out int value)&& value > 0)
                                 {
                                     dataGridView1.Rows[x].Cells[2].Value = TBStartAmountShare.Text;
-                                    sum = 0;
-                                    for(int a = 0; x < dataGridView1.Rows.Count; x++)
-                                    {
-                                        sum += Convert.ToInt32(dataGridView1.Rows[a].Cells[2].Value);
-                                    }
-                                    label5.Text = sum.ToString();
                                 }
                             TicketName = 1;
                         }
@@ -835,21 +747,28 @@ namespace example.GOODS
                     }
                     if (TicketName == 0)
                     {
-                        int BALANCE = 0;
                         String Time = CByeartap1.Text + "/" + CBMonth.Text;
                         dataGridView1.Rows.Add(Time, CBStatus.Text, TBStartAmountShare.Text,Loan.No);
                         if (CBStatus.Text.Contains("กู้"))
                         {
                             CBStatus.Items.RemoveAt(CBStatus.SelectedIndex);
+                            TBStartAmount2.Text = "";
+                            if (CBStatus.Items.Count == 0)
+                                BTAdd.Enabled = false;
                         }
-                        for (int x = 0; x < dataGridView1.Rows.Count; x++)
-                        {
-                            BALANCE += Convert.ToInt32(dataGridView1.Rows[x].Cells[2].Value.ToString());
-                        }
-                        label5.Text = BALANCE.ToString();
                     }
                 }
-                CBStatus.SelectedIndex = 0;
+                //sum ยอด
+                sum = 0;
+                for (int x = 0; x < dataGridView1.Rows.Count; x++)
+                {
+                    sum += Convert.ToInt32(dataGridView1.Rows[x].Cells[2].Value.ToString());
+                }
+                label5.Text = sum.ToString();
+                if (CBStatus.Items.Count != 0)
+                    CBStatus.SelectedIndex = 0;
+                else if (CBStatus.Items.Count == 0)
+                    CBStatus.SelectedIndex = -1;
 
             }
         }
@@ -912,6 +831,45 @@ namespace example.GOODS
                         Check = 1;
                         CBStatus.SelectedIndex = -1;
                         CByeartap1.Enabled = true;
+                        ComboBox[] cb = new ComboBox[] { CBSelectLoan };
+                        DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[9]
+                            .Replace("{TeacherNo}", TBTeacherNo.Text));
+                        //for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
+                        //{
+                        for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
+                        {
+                            for (int aa = 0; aa < cb.Length; aa++)
+                            {
+                                cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][0].ToString()));
+                            }
+                        }
+
+                        if (CBSelectLoan.Items.Count == 1)
+                        {
+                            CBSelectLoan.SelectedIndex = 0;
+                        }
+                        //}
+                        int YearRegister = Convert.ToInt32((Convert.ToDateTime(ds.Tables[1].Rows[0][0].ToString())).ToString("yyyy"));
+                        if (YearRegister < Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2)
+                        {
+                            int Yeard2 = Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2;
+
+                            while (Yeard2 <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + 1)
+                            {
+                                CByeartap1.Items.Add(Yeard2);
+                                CByeartap2.Items.Add(Yeard2);
+                                Yeard2++;
+                            }
+                        }
+                        else if (YearRegister > Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2)
+                        {
+                            while (YearRegister <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + 1)
+                            {
+                                CByeartap1.Items.Add(YearRegister);
+                                CByeartap2.Items.Add(YearRegister);
+                                YearRegister++;
+                            }
+                        }
                     }
 
                 }
@@ -956,7 +914,7 @@ namespace example.GOODS
                             example.Class.ComboBoxPay Loan = (CBStatus.SelectedItem as example.Class.ComboBoxPay);
                             String Time = CByeartap1.Text + "/" + CBMonth.Text;
                             dataGridView1.Rows.Add(Time, CBStatus.Text, TBStartAmountShare.Text, Loan.No);
-                            sum += Convert.ToInt32(Loan.Balance);
+                            sum += Convert.ToInt32(dataGridView1.Rows[x].Cells[2].Value);
                             label5.Text = sum.ToString();
                         }
                         for (int a = 0; a < CBStatus.Items.Count; a++)
