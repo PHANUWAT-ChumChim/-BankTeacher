@@ -876,8 +876,6 @@ namespace example.GOODS
                     DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("T{TeacherNo}", TBTeacherNo.Text));
                     if (dt.Rows.Count != 0)
                     {
-                        //
-                        //
                         sum = 0; x = 0;
                         label5.Text = sum.ToString();
                         dataGridView1.Rows.Clear();
@@ -1063,6 +1061,12 @@ namespace example.GOODS
                         }
 
                         dataGridView3.Rows.Add($"{Month}/{Year}", Pay, Convert.ToInt32(Interest), SumInstallment, StatusPay);
+                        if(StatusPay == "ยังไม่จ่าย")
+                        {
+                            dataGridView3.Rows[Num].Cells[4].Style = new DataGridViewCellStyle { ForeColor = Color.Red };
+                        }
+                        else
+                            dataGridView3.Rows[Num].Cells[4].Style = new DataGridViewCellStyle { ForeColor = Color.Green };
                         Month++;
                     }
                 }
@@ -1094,6 +1098,7 @@ namespace example.GOODS
                 {
                     
                     dataGridView2.Rows.Add(a + "/" + CByeartap2.SelectedItem.ToString(), ds.Tables[1].Rows[0][0].ToString(), "ยังไม่ได้ชำระ");
+                    dataGridView2.Rows[a - Month].Cells[2].Style = new DataGridViewCellStyle { ForeColor = Color.Red };
                     bool Check = true;
                     for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
                     {
@@ -1101,6 +1106,7 @@ namespace example.GOODS
                         {
                             dataGridView2.Rows.RemoveAt(a - Month);
                             dataGridView2.Rows.Add(a + "/" + CByeartap2.SelectedItem.ToString(), ds.Tables[0].Rows[x][0].ToString(), "ชำระแล้ว");
+                            dataGridView2.Rows[a - Month].Cells[2].Style = new DataGridViewCellStyle { ForeColor = Color.Green };
                             ShareOfYear += Convert.ToInt32(ds.Tables[0].Rows[x][0].ToString());
                         }
                         if (!Check)

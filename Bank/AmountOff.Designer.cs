@@ -223,8 +223,10 @@ namespace example.Bank
             this.TBWithDraw.Enabled = false;
             this.TBWithDraw.Location = new System.Drawing.Point(764, 343);
             this.TBWithDraw.Name = "TBWithDraw";
-            this.TBWithDraw.Size = new System.Drawing.Size(255, 43);
+            this.TBWithDraw.Size = new System.Drawing.Size(207, 43);
             this.TBWithDraw.TabIndex = 1;
+            this.TBWithDraw.Text = "0";
+            this.TBWithDraw.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.TBWithDraw.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBWithDraw_KeyPress);
             this.TBWithDraw.Leave += new System.EventHandler(this.TBWithDraw_Leave);
             // 
@@ -233,8 +235,10 @@ namespace example.Bank
             this.TBCreditWithDraw.Enabled = false;
             this.TBCreditWithDraw.Location = new System.Drawing.Point(764, 289);
             this.TBCreditWithDraw.Name = "TBCreditWithDraw";
-            this.TBCreditWithDraw.Size = new System.Drawing.Size(255, 43);
+            this.TBCreditWithDraw.Size = new System.Drawing.Size(207, 43);
             this.TBCreditWithDraw.TabIndex = 1;
+            this.TBCreditWithDraw.Text = "0";
+            this.TBCreditWithDraw.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.TBCreditWithDraw.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBCreditWithDraw_KeyPress);
             // 
             // TBCreditSystem
@@ -242,8 +246,10 @@ namespace example.Bank
             this.TBCreditSystem.Enabled = false;
             this.TBCreditSystem.Location = new System.Drawing.Point(312, 289);
             this.TBCreditSystem.Name = "TBCreditSystem";
-            this.TBCreditSystem.Size = new System.Drawing.Size(255, 43);
+            this.TBCreditSystem.Size = new System.Drawing.Size(207, 43);
             this.TBCreditSystem.TabIndex = 1;
+            this.TBCreditSystem.Text = "0";
+            this.TBCreditSystem.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label7
             // 
