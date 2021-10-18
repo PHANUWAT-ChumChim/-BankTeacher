@@ -179,70 +179,7 @@ namespace example.GOODS
 
         private void automatic_Click(object sender, EventArgs e)
         {
-            dataGridView3.Rows.Clear();
-            int O = 0; 
-            if (CBStatus.SelectedIndex == 0)
-            {
-                O = 4;
-            }
-            else if(CBStatus.SelectedIndex == 1) { O = 1; }
-            else { O = 0; }
-            if (TBTeacherName.Text == "")
-            {
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[O]
-                    .Replace("{TeacherNo}", "")
-                    .Replace("{CBMonth}", CBMonth.Text)
-                    .Replace("{CByear}", CByear.Text));
-                if (O == 4 && dt.Rows.Count != 0)
-                {
-                    if (dt.Rows.Count != 0)
-                    {
-                        for (int num = 0; num < dt.Rows.Count; num++)
-                        {
-                            dataGridView3.Rows.Add(dt.Rows[num][0], dt.Rows[num][1], "สะสม", dt.Rows[num][3]);
-                        }
-                    }
-                }
-                else if (O == 1 && dt.Rows.Count != 0)
-                {
-                    if (dt.Rows.Count != 0)
-                    {
-                        for (int num = 0; num < dt.Rows.Count; num++)
-                        {
-                            dataGridView3.Rows.Add(dt.Rows[num][0], dt.Rows[num][1], "สะสม", dt.Rows[num][3]);
-                        }
-                    }
-                }
-                else { MessageBox.Show($"ไม่พบรายการ", "การแจ้งเตือนการค้นหา", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
-            }
-            else
-            {
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[O]
-                   .Replace("T{TeacherNo}%",TBTeacherNo.Text)
-                   .Replace("{CBMonth}", CBMonth.Text)
-                   .Replace("{CByear}", CByear.Text));
-                if (O == 4 && dt.Rows.Count != 0)
-                {
-                    if (dt.Rows.Count != 0)
-                    {
-                        for (int num = 0; num < dt.Rows.Count; num++)
-                        {
-                            dataGridView3.Rows.Add(dt.Rows[num][0], dt.Rows[num][1], "สะสม", dt.Rows[num][3]);
-                        }
-                    }
-                }
-                else if (O == 1 && dt.Rows.Count != 0)
-                {
-                    if (dt.Rows.Count != 0)
-                    {
-                        for (int num = 0; num < dt.Rows.Count; num++)
-                        {
-                            dataGridView3.Rows.Add(dt.Rows[num][0], dt.Rows[num][1], "สะสม", dt.Rows[num][3]);
-                        }
-                    }
-                }
-                else { MessageBox.Show($"ไม่พบรายการ", "การแจ้งเตือนการค้นหา", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
-            }
+            
         }
 
         private void CBMonth_SelectedIndexChanged(object sender, EventArgs e)
@@ -252,32 +189,12 @@ namespace example.GOODS
                 CBStatus.Enabled = true;
             }
         }
-
+        
         private void CByear_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (CByear.SelectedIndex != -1)
             {
-                CBStatus.SelectedIndex = -1;
-                DataTable dt = example.Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text));
-                int Month = Convert.ToInt32((Convert.ToDateTime(dt.Rows[0][0].ToString())).ToString("MM"));
-                int Year = Convert.ToInt32((Convert.ToDateTime(dt.Rows[0][0].ToString())).ToString("yyyy"));
-                CBMonth.Enabled = true;
-                CBMonth.Items.Clear();
-                if (CByear.Text == Year.ToString())
-                {
-                    while (Month <= 12)
-                    {
-                        CBMonth.Items.Add(Month);
-                        Month++;
-                    }
-                }
-                else
-                {
-                    for (int x = 0; x < 12; x++)
-                    {
-                        CBMonth.Items.Add(x + 1);
-                    }
-                }
+                CBStatus.Enabled = true;
             }
         }
 
@@ -285,14 +202,13 @@ namespace example.GOODS
         {
             if (CBStatus.SelectedIndex != -1)
             {
-                automatic.Enabled = true;
+
             }
         }
 
         private void BTClean_Click(object sender, EventArgs e)
         {
             CByear.SelectedIndex = -1;
-            CBMonth.SelectedIndex = -1;
             CBStatus.SelectedIndex = -1;
             dataGridView3.Rows.Clear();
             TBTeacherNo.Clear();
