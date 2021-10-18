@@ -202,6 +202,7 @@ namespace example.GOODS
         {
             if (CBStatus.SelectedIndex != -1)
             {
+
             }
         }
 
