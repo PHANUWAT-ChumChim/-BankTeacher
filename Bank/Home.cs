@@ -21,6 +21,7 @@ namespace example.GOODS
         /// <para>[2] SELECT TIME INPUT : - </para>
         /// <para>[3] SELECT MEMBER INPUT: {Text} </para>
         /// <para>[4] SELECT pay IN Mont INPUT:  {TeacherNo} {CByear} {CBMonth} </para>
+        /// <para>[5] SELECT DATE Register Member INPUT : {TeacherNo}</para>
         /// </summary> 
         private String[] SQLDefault = new String[]
         {
@@ -76,7 +77,12 @@ namespace example.GOODS
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as f ON e.TypeNo = f.TypeNo \r\n" +
           "WHERE a.TeacherNo LIKE 'T{TeacherNo}%' AND e.Mount = {CBMonth} AND e.Year = {CByear} \r\n" +
           "ORDER BY a.TeacherNo;"
-
+            ,
+          //[5]SELECT DATE Register Member INPUT : {TeacherNo}
+          "SELECT CAST(DateAdd as date) \r\n " +
+          "FROM EmployeeBank.dbo.tblMember \r\n " +
+          "WHERE TeacherNo = '{TeacherNo}' and MemberStatusNo != 2; "
+          ,
         };
 
         public Home()
@@ -116,12 +122,37 @@ namespace example.GOODS
             {
                 if (TBTeacherNo.Text.Length == 6)
                 {
-                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[3].Replace("T{TeacherNo}%", TBTeacherNo.Text));
+                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[3].Replace("{Text}", TBTeacherNo.Text));
                     if (dt.Rows.Count != 0)
                     {
                         TBTeacherName.Text = dt.Rows[0][1].ToString();
-                        TBTeacherBill.Text = dt.Rows[0][3].ToString().Remove(8,8);
+                        TBTeacherBill.Text = dt.Rows[0][4].ToString();
                         Check = 1;
+
+                        CByear.Items.Clear();
+                        CByear.SelectedIndex = -1;
+
+                        DataTable dts = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5]
+                            .Replace("{TeacherNo}", TBTeacherNo.Text));
+                        int YearRegister = Convert.ToInt32((Convert.ToDateTime(dts.Rows[0][0].ToString())).ToString("yyyy"));
+                        if (YearRegister < Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2)
+                        {
+                            int Yeard2 = Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2;
+
+                            while (Yeard2 <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + 1)
+                            {
+                                CByear.Items.Add(Yeard2);
+                                Yeard2++;
+                            }
+                        }
+                        else if (YearRegister > Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2)
+                        {
+                            while (YearRegister <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + 1)
+                            {
+                                CByear.Items.Add(YearRegister);
+                                YearRegister++;
+                            }
+                        }
                     }
                     else
                     {
@@ -144,22 +175,6 @@ namespace example.GOODS
         }
         private void Home_Load(object sender, EventArgs e)
         {
-
-            int Year = Convert.ToInt32(example.GOODS.Menu.Date[0]);
-            int Y = Year;
-            for (int x = 0; x < 4; x++)
-            {
-                CByear.Items.Add(Year);
-                Year--; 
-            }
-            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
-                .Replace("{TeacherNo}","")
-                .Replace("{CByear}",Y.ToString())
-                .Replace("{CBMonth}", example.GOODS.Menu.Date[1]));
-            for (int num = 0; num < dt.Rows.Count; num++)
-            {
-                dataGridView3.Rows.Add(dt.Rows[num][0], dt.Rows[num][1], "สะสม", dt.Rows[num][3]);
-            }
         }
 
         private void automatic_Click(object sender, EventArgs e)
@@ -242,7 +257,27 @@ namespace example.GOODS
         {
             if (CByear.SelectedIndex != -1)
             {
+                CBStatus.SelectedIndex = -1;
+                DataTable dt = example.Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text));
+                int Month = Convert.ToInt32((Convert.ToDateTime(dt.Rows[0][0].ToString())).ToString("MM"));
+                int Year = Convert.ToInt32((Convert.ToDateTime(dt.Rows[0][0].ToString())).ToString("yyyy"));
                 CBMonth.Enabled = true;
+                CBMonth.Items.Clear();
+                if (CByear.Text == Year.ToString())
+                {
+                    while (Month <= 12)
+                    {
+                        CBMonth.Items.Add(Month);
+                        Month++;
+                    }
+                }
+                else
+                {
+                    for (int x = 0; x < 12; x++)
+                    {
+                        CBMonth.Items.Add(x + 1);
+                    }
+                }
             }
         }
 
