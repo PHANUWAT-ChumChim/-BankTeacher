@@ -30,15 +30,15 @@ namespace example.GOODS
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(pay));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel7 = new System.Windows.Forms.Panel();
             this.BSearchTeacher = new System.Windows.Forms.Button();
             this.TBTeacherBill = new System.Windows.Forms.TextBox();
@@ -131,9 +131,6 @@ namespace example.GOODS
             this.label18 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel7.SuspendLayout();
             this.panel8.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -172,7 +169,7 @@ namespace example.GOODS
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel7.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.panel7.Location = new System.Drawing.Point(0, 0);
-            this.panel7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel7.Margin = new System.Windows.Forms.Padding(2);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(876, 59);
             this.panel7.TabIndex = 63;
@@ -197,7 +194,7 @@ namespace example.GOODS
             this.TBTeacherBill.Enabled = false;
             this.TBTeacherBill.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBTeacherBill.Location = new System.Drawing.Point(582, 11);
-            this.TBTeacherBill.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBTeacherBill.Margin = new System.Windows.Forms.Padding(2);
             this.TBTeacherBill.Name = "TBTeacherBill";
             this.TBTeacherBill.Size = new System.Drawing.Size(276, 36);
             this.TBTeacherBill.TabIndex = 84;
@@ -207,7 +204,7 @@ namespace example.GOODS
             this.TBTeacherName.Enabled = false;
             this.TBTeacherName.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBTeacherName.Location = new System.Drawing.Point(280, 11);
-            this.TBTeacherName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBTeacherName.Margin = new System.Windows.Forms.Padding(2);
             this.TBTeacherName.Name = "TBTeacherName";
             this.TBTeacherName.Size = new System.Drawing.Size(242, 36);
             this.TBTeacherName.TabIndex = 83;
@@ -216,7 +213,7 @@ namespace example.GOODS
             // 
             this.TBTeacherNo.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBTeacherNo.Location = new System.Drawing.Point(52, 11);
-            this.TBTeacherNo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBTeacherNo.Margin = new System.Windows.Forms.Padding(2);
             this.TBTeacherNo.Name = "TBTeacherNo";
             this.TBTeacherNo.Size = new System.Drawing.Size(116, 36);
             this.TBTeacherNo.TabIndex = 82;
@@ -279,7 +276,7 @@ namespace example.GOODS
             this.button4.Enabled = false;
             this.button4.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button4.Location = new System.Drawing.Point(362, 11);
-            this.button4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button4.Margin = new System.Windows.Forms.Padding(2);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(74, 37);
             this.button4.TabIndex = 86;
@@ -309,7 +306,7 @@ namespace example.GOODS
             this.CBB4Oppay.ForeColor = System.Drawing.Color.Black;
             this.CBB4Oppay.FormattingEnabled = true;
             this.CBB4Oppay.Location = new System.Drawing.Point(141, 410);
-            this.CBB4Oppay.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CBB4Oppay.Margin = new System.Windows.Forms.Padding(2);
             this.CBB4Oppay.Name = "CBB4Oppay";
             this.CBB4Oppay.Size = new System.Drawing.Size(128, 38);
             this.CBB4Oppay.TabIndex = 92;
@@ -321,7 +318,7 @@ namespace example.GOODS
             this.BTsave.Enabled = false;
             this.BTsave.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTsave.Location = new System.Drawing.Point(586, 399);
-            this.BTsave.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BTsave.Margin = new System.Windows.Forms.Padding(2);
             this.BTsave.Name = "BTsave";
             this.BTsave.Size = new System.Drawing.Size(256, 64);
             this.BTsave.TabIndex = 94;
@@ -336,7 +333,7 @@ namespace example.GOODS
             this.CBStatus.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CBStatus.FormattingEnabled = true;
             this.CBStatus.Location = new System.Drawing.Point(74, 12);
-            this.CBStatus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CBStatus.Margin = new System.Windows.Forms.Padding(2);
             this.CBStatus.Name = "CBStatus";
             this.CBStatus.Size = new System.Drawing.Size(78, 33);
             this.CBStatus.TabIndex = 88;
@@ -348,7 +345,7 @@ namespace example.GOODS
             this.BTAdd.Enabled = false;
             this.BTAdd.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTAdd.Location = new System.Drawing.Point(420, 8);
-            this.BTAdd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BTAdd.Margin = new System.Windows.Forms.Padding(2);
             this.BTAdd.Name = "BTAdd";
             this.BTAdd.Size = new System.Drawing.Size(254, 41);
             this.BTAdd.TabIndex = 95;
@@ -367,7 +364,7 @@ namespace example.GOODS
             this.panel8.Controls.Add(this.CBStatus);
             this.panel8.Controls.Add(this.label11);
             this.panel8.Location = new System.Drawing.Point(2, 73);
-            this.panel8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel8.Margin = new System.Windows.Forms.Padding(2);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(844, 59);
             this.panel8.TabIndex = 96;
@@ -377,7 +374,7 @@ namespace example.GOODS
             this.TBStartAmountShare.Enabled = false;
             this.TBStartAmountShare.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBStartAmountShare.Location = new System.Drawing.Point(250, 11);
-            this.TBStartAmountShare.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBStartAmountShare.Margin = new System.Windows.Forms.Padding(2);
             this.TBStartAmountShare.MaxLength = 8;
             this.TBStartAmountShare.Name = "TBStartAmountShare";
             this.TBStartAmountShare.Size = new System.Drawing.Size(140, 36);
@@ -426,7 +423,7 @@ namespace example.GOODS
             this.BTClean.BackColor = System.Drawing.Color.White;
             this.BTClean.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTClean.Location = new System.Drawing.Point(510, 415);
-            this.BTClean.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BTClean.Margin = new System.Windows.Forms.Padding(2);
             this.BTClean.Name = "BTClean";
             this.BTClean.Size = new System.Drawing.Size(72, 41);
             this.BTClean.TabIndex = 98;
@@ -453,7 +450,7 @@ namespace example.GOODS
             this.CByeartap1.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CByeartap1.FormattingEnabled = true;
             this.CByeartap1.Location = new System.Drawing.Point(74, 14);
-            this.CByeartap1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CByeartap1.Margin = new System.Windows.Forms.Padding(2);
             this.CByeartap1.Name = "CByeartap1";
             this.CByeartap1.Size = new System.Drawing.Size(78, 33);
             this.CByeartap1.TabIndex = 84;
@@ -467,7 +464,7 @@ namespace example.GOODS
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(6, 63);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(854, 508);
@@ -487,9 +484,9 @@ namespace example.GOODS
             this.tabPage1.Controls.Add(this.LB8pay);
             this.tabPage1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPage1.Location = new System.Drawing.Point(4, 39);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage1.Size = new System.Drawing.Size(846, 465);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "จ่ายยอด";
@@ -500,7 +497,7 @@ namespace example.GOODS
             this.panel14.Controls.Add(this.label3);
             this.panel14.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel14.Location = new System.Drawing.Point(3, 341);
-            this.panel14.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel14.Margin = new System.Windows.Forms.Padding(2);
             this.panel14.Name = "panel14";
             this.panel14.Size = new System.Drawing.Size(558, 36);
             this.panel14.TabIndex = 101;
@@ -525,7 +522,7 @@ namespace example.GOODS
             this.panel13.Controls.Add(this.label5);
             this.panel13.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel13.Location = new System.Drawing.Point(3, 341);
-            this.panel13.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel13.Margin = new System.Windows.Forms.Padding(2);
             this.panel13.Name = "panel13";
             this.panel13.Size = new System.Drawing.Size(843, 36);
             this.panel13.TabIndex = 100;
@@ -560,8 +557,8 @@ namespace example.GOODS
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToResizeRows = false;
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -570,7 +567,7 @@ namespace example.GOODS
             this.Column3,
             this.Column7});
             this.dataGridView1.Location = new System.Drawing.Point(3, 136);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
@@ -582,8 +579,8 @@ namespace example.GOODS
             // 
             // Column1
             // 
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle2;
             this.Column1.HeaderText = "ปี/เดือน";
             this.Column1.MinimumWidth = 6;
             this.Column1.Name = "Column1";
@@ -592,8 +589,8 @@ namespace example.GOODS
             // 
             // Column2
             // 
-            dataGridViewCellStyle21.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle3;
             this.Column2.HeaderText = "รายการ";
             this.Column2.MinimumWidth = 6;
             this.Column2.Name = "Column2";
@@ -603,8 +600,8 @@ namespace example.GOODS
             // Column3
             // 
             this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column3.DefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column3.DefaultCellStyle = dataGridViewCellStyle4;
             this.Column3.HeaderText = "ยอดเงิน";
             this.Column3.MinimumWidth = 6;
             this.Column3.Name = "Column3";
@@ -629,7 +626,7 @@ namespace example.GOODS
             this.panel16.Controls.Add(this.CByeartap1);
             this.panel16.Controls.Add(this.button4);
             this.panel16.Location = new System.Drawing.Point(0, 0);
-            this.panel16.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel16.Margin = new System.Windows.Forms.Padding(2);
             this.panel16.Name = "panel16";
             this.panel16.Size = new System.Drawing.Size(448, 59);
             this.panel16.TabIndex = 98;
@@ -641,7 +638,7 @@ namespace example.GOODS
             this.CBMonth.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CBMonth.FormattingEnabled = true;
             this.CBMonth.Location = new System.Drawing.Point(250, 14);
-            this.CBMonth.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CBMonth.Margin = new System.Windows.Forms.Padding(2);
             this.CBMonth.Name = "CBMonth";
             this.CBMonth.Size = new System.Drawing.Size(98, 33);
             this.CBMonth.TabIndex = 101;
@@ -668,9 +665,9 @@ namespace example.GOODS
             this.tabPage2.Controls.Add(this.dataGridView2);
             this.tabPage2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabPage2.Location = new System.Drawing.Point(4, 39);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage2.Size = new System.Drawing.Size(846, 465);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "ข้อมูลหุ้นสะสม";
@@ -684,7 +681,7 @@ namespace example.GOODS
             this.panel10.Controls.Add(this.TBAmountShareofsystem);
             this.panel10.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel10.Location = new System.Drawing.Point(616, 12);
-            this.panel10.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel10.Margin = new System.Windows.Forms.Padding(2);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(216, 91);
             this.panel10.TabIndex = 107;
@@ -706,7 +703,7 @@ namespace example.GOODS
             // 
             this.TBAmountShareofsystem.Enabled = false;
             this.TBAmountShareofsystem.Location = new System.Drawing.Point(18, 46);
-            this.TBAmountShareofsystem.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBAmountShareofsystem.Margin = new System.Windows.Forms.Padding(2);
             this.TBAmountShareofsystem.Name = "TBAmountShareofsystem";
             this.TBAmountShareofsystem.Size = new System.Drawing.Size(178, 36);
             this.TBAmountShareofsystem.TabIndex = 103;
@@ -718,7 +715,7 @@ namespace example.GOODS
             this.panel6.Controls.Add(this.label24);
             this.panel6.Controls.Add(this.CByeartap2);
             this.panel6.Location = new System.Drawing.Point(0, 0);
-            this.panel6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel6.Margin = new System.Windows.Forms.Padding(2);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(160, 59);
             this.panel6.TabIndex = 106;
@@ -742,7 +739,7 @@ namespace example.GOODS
             this.CByeartap2.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CByeartap2.FormattingEnabled = true;
             this.CByeartap2.Location = new System.Drawing.Point(48, 14);
-            this.CByeartap2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CByeartap2.Margin = new System.Windows.Forms.Padding(2);
             this.CByeartap2.Name = "CByeartap2";
             this.CByeartap2.Size = new System.Drawing.Size(93, 33);
             this.CByeartap2.TabIndex = 84;
@@ -756,7 +753,7 @@ namespace example.GOODS
             this.panel2.Controls.Add(this.label10);
             this.panel2.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panel2.Location = new System.Drawing.Point(386, 12);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(216, 91);
             this.panel2.TabIndex = 104;
@@ -765,7 +762,7 @@ namespace example.GOODS
             // 
             this.TBAmountShareofyear.Enabled = false;
             this.TBAmountShareofyear.Location = new System.Drawing.Point(18, 44);
-            this.TBAmountShareofyear.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBAmountShareofyear.Margin = new System.Windows.Forms.Padding(2);
             this.TBAmountShareofyear.Name = "TBAmountShareofyear";
             this.TBAmountShareofyear.Size = new System.Drawing.Size(178, 36);
             this.TBAmountShareofyear.TabIndex = 103;
@@ -789,34 +786,33 @@ namespace example.GOODS
             this.dataGridView2.AllowUserToAddRows = false;
             this.dataGridView2.AllowUserToDeleteRows = false;
             this.dataGridView2.AllowUserToResizeRows = false;
-            dataGridViewCellStyle23.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle23.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle23.ForeColor = System.Drawing.Color.Black;
-            this.dataGridView2.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
+            this.dataGridView2.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView2.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle24.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle24.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column4,
             this.Column5,
             this.Column6});
-            dataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle25.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle25.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle25.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle25.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle25.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle25.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle25;
-            this.dataGridView2.Enabled = false;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle7;
             this.dataGridView2.Location = new System.Drawing.Point(2, 108);
-            this.dataGridView2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView2.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersVisible = false;
             this.dataGridView2.RowHeadersWidth = 51;
@@ -852,9 +848,9 @@ namespace example.GOODS
             this.tabPage3.Controls.Add(this.dataGridView3);
             this.tabPage3.Controls.Add(this.panel3);
             this.tabPage3.Location = new System.Drawing.Point(4, 39);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage3.Size = new System.Drawing.Size(846, 465);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "ข้อมูลกู้";
@@ -875,7 +871,7 @@ namespace example.GOODS
             this.panel11.Controls.Add(this.label20);
             this.panel11.Controls.Add(this.label22);
             this.panel11.Location = new System.Drawing.Point(285, 11);
-            this.panel11.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel11.Margin = new System.Windows.Forms.Padding(2);
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(558, 91);
             this.panel11.TabIndex = 112;
@@ -884,7 +880,7 @@ namespace example.GOODS
             // 
             this.TBAmountRemain.Enabled = false;
             this.TBAmountRemain.Location = new System.Drawing.Point(416, 45);
-            this.TBAmountRemain.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBAmountRemain.Margin = new System.Windows.Forms.Padding(2);
             this.TBAmountRemain.Name = "TBAmountRemain";
             this.TBAmountRemain.Size = new System.Drawing.Size(128, 36);
             this.TBAmountRemain.TabIndex = 103;
@@ -919,7 +915,7 @@ namespace example.GOODS
             // 
             this.TBPayNo.Enabled = false;
             this.TBPayNo.Location = new System.Drawing.Point(126, 45);
-            this.TBPayNo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBPayNo.Margin = new System.Windows.Forms.Padding(2);
             this.TBPayNo.Name = "TBPayNo";
             this.TBPayNo.Size = new System.Drawing.Size(86, 36);
             this.TBPayNo.TabIndex = 111;
@@ -928,7 +924,7 @@ namespace example.GOODS
             // 
             this.TBInterrest.Enabled = false;
             this.TBInterrest.Location = new System.Drawing.Point(225, 45);
-            this.TBInterrest.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBInterrest.Margin = new System.Windows.Forms.Padding(2);
             this.TBInterrest.Name = "TBInterrest";
             this.TBInterrest.Size = new System.Drawing.Size(87, 36);
             this.TBInterrest.TabIndex = 111;
@@ -937,7 +933,7 @@ namespace example.GOODS
             // 
             this.TBSum.Enabled = false;
             this.TBSum.Location = new System.Drawing.Point(14, 45);
-            this.TBSum.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBSum.Margin = new System.Windows.Forms.Padding(2);
             this.TBSum.Name = "TBSum";
             this.TBSum.Size = new System.Drawing.Size(106, 36);
             this.TBSum.TabIndex = 103;
@@ -959,7 +955,7 @@ namespace example.GOODS
             // 
             this.TBAmoun.Enabled = false;
             this.TBAmoun.Location = new System.Drawing.Point(316, 45);
-            this.TBAmoun.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBAmoun.Margin = new System.Windows.Forms.Padding(2);
             this.TBAmoun.Name = "TBAmoun";
             this.TBAmoun.Size = new System.Drawing.Size(92, 36);
             this.TBAmoun.TabIndex = 103;
@@ -996,20 +992,20 @@ namespace example.GOODS
             this.dataGridView3.AllowUserToAddRows = false;
             this.dataGridView3.AllowUserToDeleteRows = false;
             this.dataGridView3.AllowUserToResizeRows = false;
-            dataGridViewCellStyle26.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle26.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle26.ForeColor = System.Drawing.Color.Black;
-            this.dataGridView3.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle26;
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black;
+            this.dataGridView3.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle8;
             this.dataGridView3.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView3.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle27.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle27.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle27.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle27.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataGridView3.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle27;
+            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView3.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
@@ -1018,7 +1014,7 @@ namespace example.GOODS
             this.Column19,
             this.Column20});
             this.dataGridView3.Location = new System.Drawing.Point(2, 108);
-            this.dataGridView3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dataGridView3.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ReadOnly = true;
             this.dataGridView3.RowHeadersVisible = false;
@@ -1070,7 +1066,7 @@ namespace example.GOODS
             this.panel3.Controls.Add(this.label23);
             this.panel3.Controls.Add(this.CBSelectLoan);
             this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(269, 59);
             this.panel3.TabIndex = 109;
@@ -1094,7 +1090,7 @@ namespace example.GOODS
             this.CBSelectLoan.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CBSelectLoan.FormattingEnabled = true;
             this.CBSelectLoan.Location = new System.Drawing.Point(76, 11);
-            this.CBSelectLoan.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CBSelectLoan.Margin = new System.Windows.Forms.Padding(2);
             this.CBSelectLoan.Name = "CBSelectLoan";
             this.CBSelectLoan.Size = new System.Drawing.Size(158, 33);
             this.CBSelectLoan.TabIndex = 84;
@@ -1104,9 +1100,9 @@ namespace example.GOODS
             // 
             this.tabPage4.Controls.Add(this.panel9);
             this.tabPage4.Location = new System.Drawing.Point(4, 39);
-            this.tabPage4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage4.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage4.Size = new System.Drawing.Size(846, 465);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "ข้อมูลสมาชิก";
@@ -1118,7 +1114,7 @@ namespace example.GOODS
             this.panel9.Controls.Add(this.panel4);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel9.Location = new System.Drawing.Point(2, 2);
-            this.panel9.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel9.Margin = new System.Windows.Forms.Padding(2);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(842, 461);
             this.panel9.TabIndex = 109;
@@ -1139,7 +1135,7 @@ namespace example.GOODS
             this.panel4.Controls.Add(this.label6);
             this.panel4.Controls.Add(this.label4);
             this.panel4.Location = new System.Drawing.Point(10, 6);
-            this.panel4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(822, 423);
             this.panel4.TabIndex = 122;
@@ -1149,7 +1145,7 @@ namespace example.GOODS
             this.TBStartAmount2.Enabled = false;
             this.TBStartAmount2.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBStartAmount2.Location = new System.Drawing.Point(626, 63);
-            this.TBStartAmount2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBStartAmount2.Margin = new System.Windows.Forms.Padding(2);
             this.TBStartAmount2.Name = "TBStartAmount2";
             this.TBStartAmount2.Size = new System.Drawing.Size(156, 36);
             this.TBStartAmount2.TabIndex = 128;
@@ -1172,7 +1168,7 @@ namespace example.GOODS
             this.TBstatus.Enabled = false;
             this.TBstatus.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBstatus.Location = new System.Drawing.Point(192, 232);
-            this.TBstatus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBstatus.Margin = new System.Windows.Forms.Padding(2);
             this.TBstatus.Name = "TBstatus";
             this.TBstatus.Size = new System.Drawing.Size(156, 36);
             this.TBstatus.TabIndex = 126;
@@ -1182,7 +1178,7 @@ namespace example.GOODS
             this.TBTel.Enabled = false;
             this.TBTel.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBTel.Location = new System.Drawing.Point(192, 171);
-            this.TBTel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBTel.Margin = new System.Windows.Forms.Padding(2);
             this.TBTel.Name = "TBTel";
             this.TBTel.Size = new System.Drawing.Size(156, 36);
             this.TBTel.TabIndex = 125;
@@ -1205,7 +1201,7 @@ namespace example.GOODS
             this.TBTeacherIDNo.Enabled = false;
             this.TBTeacherIDNo.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBTeacherIDNo.Location = new System.Drawing.Point(192, 63);
-            this.TBTeacherIDNo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBTeacherIDNo.Margin = new System.Windows.Forms.Padding(2);
             this.TBTeacherIDNo.Name = "TBTeacherIDNo";
             this.TBTeacherIDNo.Size = new System.Drawing.Size(156, 36);
             this.TBTeacherIDNo.TabIndex = 121;
@@ -1227,7 +1223,7 @@ namespace example.GOODS
             // 
             this.TBidno.Enabled = false;
             this.TBidno.Location = new System.Drawing.Point(192, 115);
-            this.TBidno.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBidno.Margin = new System.Windows.Forms.Padding(2);
             this.TBidno.Name = "TBidno";
             this.TBidno.Size = new System.Drawing.Size(156, 36);
             this.TBidno.TabIndex = 120;
@@ -1325,35 +1321,10 @@ namespace example.GOODS
             this.panel1.Controls.Add(this.tabControl1);
             this.panel1.Controls.Add(this.panel7);
             this.panel1.Location = new System.Drawing.Point(20, 34);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(876, 578);
             this.panel1.TabIndex = 98;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "เดือน/ปี";
-            this.Column4.MinimumWidth = 6;
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "ยอดเงิน";
-            this.Column5.MinimumWidth = 6;
-            this.Column5.Name = "Column5";
-            this.Column5.ReadOnly = true;
-            // 
-            // Column6
-            // 
-            this.Column6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            //dataGridViewCellStyle7.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            //dataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black;
-            //this.Column6.DefaultCellStyle = dataGridViewCellStyle7;
-            this.Column6.HeaderText = "สถานะการจ่าย";
-            this.Column6.MinimumWidth = 6;
-            this.Column6.Name = "Column6";
-            this.Column6.ReadOnly = true;
             // 
             // pay
             // 
@@ -1363,7 +1334,7 @@ namespace example.GOODS
             this.ClientSize = new System.Drawing.Size(904, 657);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "pay";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ทำเป็นFormจ่าย";

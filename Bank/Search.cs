@@ -26,8 +26,14 @@ namespace example.Bank
             DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLCode.Replace("{Text}",""));
             for (int x = 0; x < dt.Rows.Count; x++)
             {
-                dataGridView1.Rows.Add(dt.Rows[x][0], dt.Rows[x][1], Decimal.Truncate(Convert.ToDecimal(dt.Rows[x][2].ToString() + "0.00")));
-
+                if (Decimal.TryParse(dt.Rows[x][2].ToString() , out decimal value))
+                {
+                    dataGridView1.Rows.Add(dt.Rows[x][0], dt.Rows[x][1], Decimal.Truncate(Convert.ToDecimal(dt.Rows[x][2].ToString())));
+                }
+                else
+                {
+                    dataGridView1.Rows.Add(dt.Rows[x][0], dt.Rows[x][1], Decimal.Truncate(Convert.ToDecimal(dt.Rows[x][2].ToString() + "0.0")));
+                }
                 if (x % 2 == 1)
                 {
                     dataGridView1.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
@@ -59,21 +65,20 @@ namespace example.Bank
             DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLCODE
                 .Replace("{Text}", TBSearch.Text));
             if (dataGridView1.Rows.Count != 0) { dataGridView1.Rows.Clear(); }
-            if (TBSearch.Text != "")
+            for (int x = 0; x < dt.Rows.Count; x++)
             {
-                for (int x = 0; x < dt.Rows.Count; x++)
+                if (Decimal.TryParse(dt.Rows[x][2].ToString(), out decimal value))
                 {
-                    dataGridView1.Rows.Add(dt.Rows[x][0], dt.Rows[x][1], Decimal.Truncate(Convert.ToDecimal(dt.Rows[x][2].ToString() + "0.00")));
+                    dataGridView1.Rows.Add(dt.Rows[x][0], dt.Rows[x][1], Decimal.Truncate(Convert.ToDecimal(dt.Rows[x][2].ToString())));
                 }
-            }
-            else
-            {
-                for (int x = 0; x < dt.Rows.Count; x++)
+                else
                 {
-                    dataGridView1.Rows.Add(dt.Rows[x][0], dt.Rows[x][1], Decimal.Truncate(Convert.ToDecimal(dt.Rows[x][2].ToString() + "0.00")));
+                    dataGridView1.Rows.Add(dt.Rows[x][0], dt.Rows[x][1], Decimal.Truncate(Convert.ToDecimal(dt.Rows[x][2].ToString() + "0.0")));
                 }
-
-
+                if (x % 2 == 1)
+                {
+                    dataGridView1.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
+                }
             }
         }
     }
