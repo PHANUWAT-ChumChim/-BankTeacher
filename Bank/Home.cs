@@ -189,7 +189,7 @@ namespace example.GOODS
                 CBStatus.Enabled = true;
             }
         }
-
+        
         private void CByear_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (CByear.SelectedIndex != -1)
