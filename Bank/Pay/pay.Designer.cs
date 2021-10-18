@@ -170,7 +170,7 @@ namespace example.GOODS
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel7.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.panel7.Location = new System.Drawing.Point(0, 0);
-            this.panel7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel7.Margin = new System.Windows.Forms.Padding(2);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(1168, 72);
             this.panel7.TabIndex = 63;
@@ -194,8 +194,8 @@ namespace example.GOODS
             // 
             this.TBTeacherBill.Enabled = false;
             this.TBTeacherBill.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBTeacherBill.Location = new System.Drawing.Point(776, 14);
-            this.TBTeacherBill.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TBTeacherBill.Location = new System.Drawing.Point(582, 11);
+            this.TBTeacherBill.Margin = new System.Windows.Forms.Padding(2);
             this.TBTeacherBill.Name = "TBTeacherBill";
             this.TBTeacherBill.Size = new System.Drawing.Size(367, 43);
             this.TBTeacherBill.TabIndex = 84;
@@ -204,8 +204,8 @@ namespace example.GOODS
             // 
             this.TBTeacherName.Enabled = false;
             this.TBTeacherName.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBTeacherName.Location = new System.Drawing.Point(373, 14);
-            this.TBTeacherName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TBTeacherName.Location = new System.Drawing.Point(280, 11);
+            this.TBTeacherName.Margin = new System.Windows.Forms.Padding(2);
             this.TBTeacherName.Name = "TBTeacherName";
             this.TBTeacherName.Size = new System.Drawing.Size(321, 43);
             this.TBTeacherName.TabIndex = 83;
@@ -213,8 +213,8 @@ namespace example.GOODS
             // TBTeacherNo
             // 
             this.TBTeacherNo.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBTeacherNo.Location = new System.Drawing.Point(69, 14);
-            this.TBTeacherNo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TBTeacherNo.Location = new System.Drawing.Point(52, 11);
+            this.TBTeacherNo.Margin = new System.Windows.Forms.Padding(2);
             this.TBTeacherNo.Name = "TBTeacherNo";
             this.TBTeacherNo.Size = new System.Drawing.Size(153, 43);
             this.TBTeacherNo.TabIndex = 82;
@@ -272,8 +272,8 @@ namespace example.GOODS
             this.button4.BackColor = System.Drawing.Color.White;
             this.button4.Enabled = false;
             this.button4.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(483, 14);
-            this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button4.Location = new System.Drawing.Point(362, 11);
+            this.button4.Margin = new System.Windows.Forms.Padding(2);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(99, 46);
             this.button4.TabIndex = 86;
@@ -301,8 +301,8 @@ namespace example.GOODS
             this.CBB4Oppay.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CBB4Oppay.ForeColor = System.Drawing.Color.Black;
             this.CBB4Oppay.FormattingEnabled = true;
-            this.CBB4Oppay.Location = new System.Drawing.Point(188, 505);
-            this.CBB4Oppay.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.CBB4Oppay.Location = new System.Drawing.Point(141, 410);
+            this.CBB4Oppay.Margin = new System.Windows.Forms.Padding(2);
             this.CBB4Oppay.Name = "CBB4Oppay";
             this.CBB4Oppay.Size = new System.Drawing.Size(169, 44);
             this.CBB4Oppay.TabIndex = 92;
@@ -313,8 +313,8 @@ namespace example.GOODS
             this.BTsave.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.BTsave.Enabled = false;
             this.BTsave.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTsave.Location = new System.Drawing.Point(781, 491);
-            this.BTsave.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BTsave.Location = new System.Drawing.Point(586, 399);
+            this.BTsave.Margin = new System.Windows.Forms.Padding(2);
             this.BTsave.Name = "BTsave";
             this.BTsave.Size = new System.Drawing.Size(341, 79);
             this.BTsave.TabIndex = 94;
@@ -328,8 +328,8 @@ namespace example.GOODS
             this.CBStatus.Enabled = false;
             this.CBStatus.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CBStatus.FormattingEnabled = true;
-            this.CBStatus.Location = new System.Drawing.Point(99, 15);
-            this.CBStatus.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.CBStatus.Location = new System.Drawing.Point(74, 12);
+            this.CBStatus.Margin = new System.Windows.Forms.Padding(2);
             this.CBStatus.Name = "CBStatus";
             this.CBStatus.Size = new System.Drawing.Size(103, 39);
             this.CBStatus.TabIndex = 88;
@@ -340,8 +340,8 @@ namespace example.GOODS
             this.BTAdd.BackColor = System.Drawing.Color.White;
             this.BTAdd.Enabled = false;
             this.BTAdd.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTAdd.Location = new System.Drawing.Point(560, 10);
-            this.BTAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BTAdd.Location = new System.Drawing.Point(420, 8);
+            this.BTAdd.Margin = new System.Windows.Forms.Padding(2);
             this.BTAdd.Name = "BTAdd";
             this.BTAdd.Size = new System.Drawing.Size(339, 50);
             this.BTAdd.TabIndex = 95;
@@ -359,8 +359,8 @@ namespace example.GOODS
             this.panel8.Controls.Add(this.LB6Op);
             this.panel8.Controls.Add(this.CBStatus);
             this.panel8.Controls.Add(this.label11);
-            this.panel8.Location = new System.Drawing.Point(3, 90);
-            this.panel8.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel8.Location = new System.Drawing.Point(2, 73);
+            this.panel8.Margin = new System.Windows.Forms.Padding(2);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(1125, 72);
             this.panel8.TabIndex = 96;
@@ -369,8 +369,8 @@ namespace example.GOODS
             // 
             this.TBStartAmountShare.Enabled = false;
             this.TBStartAmountShare.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBStartAmountShare.Location = new System.Drawing.Point(333, 14);
-            this.TBStartAmountShare.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TBStartAmountShare.Location = new System.Drawing.Point(250, 11);
+            this.TBStartAmountShare.Margin = new System.Windows.Forms.Padding(2);
             this.TBStartAmountShare.MaxLength = 8;
             this.TBStartAmountShare.Name = "TBStartAmountShare";
             this.TBStartAmountShare.Size = new System.Drawing.Size(185, 43);
@@ -415,8 +415,8 @@ namespace example.GOODS
             // 
             this.BTClean.BackColor = System.Drawing.Color.White;
             this.BTClean.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTClean.Location = new System.Drawing.Point(680, 511);
-            this.BTClean.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BTClean.Location = new System.Drawing.Point(510, 415);
+            this.BTClean.Margin = new System.Windows.Forms.Padding(2);
             this.BTClean.Name = "BTClean";
             this.BTClean.Size = new System.Drawing.Size(96, 50);
             this.BTClean.TabIndex = 98;
@@ -441,8 +441,8 @@ namespace example.GOODS
             this.CByeartap1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CByeartap1.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CByeartap1.FormattingEnabled = true;
-            this.CByeartap1.Location = new System.Drawing.Point(99, 17);
-            this.CByeartap1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.CByeartap1.Location = new System.Drawing.Point(74, 14);
+            this.CByeartap1.Margin = new System.Windows.Forms.Padding(2);
             this.CByeartap1.Name = "CByeartap1";
             this.CByeartap1.Size = new System.Drawing.Size(103, 39);
             this.CByeartap1.TabIndex = 84;
@@ -455,8 +455,8 @@ namespace example.GOODS
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabControl1.Location = new System.Drawing.Point(8, 78);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabControl1.Location = new System.Drawing.Point(6, 63);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1139, 625);
@@ -475,11 +475,11 @@ namespace example.GOODS
             this.tabPage1.Controls.Add(this.CBB4Oppay);
             this.tabPage1.Controls.Add(this.LB8pay);
             this.tabPage1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabPage1.Location = new System.Drawing.Point(4, 45);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage1.Location = new System.Drawing.Point(4, 39);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage1.Size = new System.Drawing.Size(1131, 576);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(2);
+            this.tabPage1.Size = new System.Drawing.Size(846, 465);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "จ่ายยอด";
             // 
@@ -488,8 +488,8 @@ namespace example.GOODS
             this.panel14.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel14.Controls.Add(this.label3);
             this.panel14.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel14.Location = new System.Drawing.Point(4, 420);
-            this.panel14.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel14.Location = new System.Drawing.Point(3, 341);
+            this.panel14.Margin = new System.Windows.Forms.Padding(2);
             this.panel14.Name = "panel14";
             this.panel14.Size = new System.Drawing.Size(743, 43);
             this.panel14.TabIndex = 101;
@@ -512,8 +512,8 @@ namespace example.GOODS
             this.panel13.Controls.Add(this.label8);
             this.panel13.Controls.Add(this.label5);
             this.panel13.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel13.Location = new System.Drawing.Point(4, 420);
-            this.panel13.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel13.Location = new System.Drawing.Point(3, 341);
+            this.panel13.Margin = new System.Windows.Forms.Padding(2);
             this.panel13.Name = "panel13";
             this.panel13.Size = new System.Drawing.Size(1123, 43);
             this.panel13.TabIndex = 100;
@@ -555,8 +555,8 @@ namespace example.GOODS
             this.Column2,
             this.Column3,
             this.Column7});
-            this.dataGridView1.Location = new System.Drawing.Point(4, 167);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dataGridView1.Location = new System.Drawing.Point(3, 136);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
@@ -615,7 +615,7 @@ namespace example.GOODS
             this.panel16.Controls.Add(this.CByeartap1);
             this.panel16.Controls.Add(this.button4);
             this.panel16.Location = new System.Drawing.Point(0, 0);
-            this.panel16.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel16.Margin = new System.Windows.Forms.Padding(2);
             this.panel16.Name = "panel16";
             this.panel16.Size = new System.Drawing.Size(597, 72);
             this.panel16.TabIndex = 98;
@@ -626,8 +626,8 @@ namespace example.GOODS
             this.CBMonth.Enabled = false;
             this.CBMonth.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CBMonth.FormattingEnabled = true;
-            this.CBMonth.Location = new System.Drawing.Point(333, 17);
-            this.CBMonth.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.CBMonth.Location = new System.Drawing.Point(250, 14);
+            this.CBMonth.Margin = new System.Windows.Forms.Padding(2);
             this.CBMonth.Name = "CBMonth";
             this.CBMonth.Size = new System.Drawing.Size(129, 39);
             this.CBMonth.TabIndex = 101;
@@ -652,11 +652,11 @@ namespace example.GOODS
             this.tabPage2.Controls.Add(this.panel2);
             this.tabPage2.Controls.Add(this.dataGridView2);
             this.tabPage2.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabPage2.Location = new System.Drawing.Point(4, 45);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage2.Location = new System.Drawing.Point(4, 39);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage2.Size = new System.Drawing.Size(1131, 576);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(2);
+            this.tabPage2.Size = new System.Drawing.Size(846, 465);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "ข้อมูลหุ้นสะสม";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -668,8 +668,8 @@ namespace example.GOODS
             this.panel10.Controls.Add(this.label21);
             this.panel10.Controls.Add(this.TBAmountShareofsystem);
             this.panel10.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel10.Location = new System.Drawing.Point(821, 15);
-            this.panel10.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel10.Location = new System.Drawing.Point(616, 12);
+            this.panel10.Margin = new System.Windows.Forms.Padding(2);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(287, 112);
             this.panel10.TabIndex = 107;
@@ -689,8 +689,8 @@ namespace example.GOODS
             // TBAmountShareofsystem
             // 
             this.TBAmountShareofsystem.Enabled = false;
-            this.TBAmountShareofsystem.Location = new System.Drawing.Point(24, 57);
-            this.TBAmountShareofsystem.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TBAmountShareofsystem.Location = new System.Drawing.Point(18, 46);
+            this.TBAmountShareofsystem.Margin = new System.Windows.Forms.Padding(2);
             this.TBAmountShareofsystem.Name = "TBAmountShareofsystem";
             this.TBAmountShareofsystem.Size = new System.Drawing.Size(236, 43);
             this.TBAmountShareofsystem.TabIndex = 103;
@@ -702,7 +702,7 @@ namespace example.GOODS
             this.panel6.Controls.Add(this.label24);
             this.panel6.Controls.Add(this.CByeartap2);
             this.panel6.Location = new System.Drawing.Point(0, 0);
-            this.panel6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel6.Margin = new System.Windows.Forms.Padding(2);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(213, 72);
             this.panel6.TabIndex = 106;
@@ -724,8 +724,8 @@ namespace example.GOODS
             this.CByeartap2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CByeartap2.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CByeartap2.FormattingEnabled = true;
-            this.CByeartap2.Location = new System.Drawing.Point(64, 17);
-            this.CByeartap2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.CByeartap2.Location = new System.Drawing.Point(48, 14);
+            this.CByeartap2.Margin = new System.Windows.Forms.Padding(2);
             this.CByeartap2.Name = "CByeartap2";
             this.CByeartap2.Size = new System.Drawing.Size(123, 39);
             this.CByeartap2.TabIndex = 84;
@@ -738,8 +738,8 @@ namespace example.GOODS
             this.panel2.Controls.Add(this.TBAmountShareofyear);
             this.panel2.Controls.Add(this.label10);
             this.panel2.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel2.Location = new System.Drawing.Point(515, 15);
-            this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel2.Location = new System.Drawing.Point(386, 12);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(287, 112);
             this.panel2.TabIndex = 104;
@@ -747,8 +747,8 @@ namespace example.GOODS
             // TBAmountShareofyear
             // 
             this.TBAmountShareofyear.Enabled = false;
-            this.TBAmountShareofyear.Location = new System.Drawing.Point(24, 54);
-            this.TBAmountShareofyear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TBAmountShareofyear.Location = new System.Drawing.Point(18, 44);
+            this.TBAmountShareofyear.Margin = new System.Windows.Forms.Padding(2);
             this.TBAmountShareofyear.Name = "TBAmountShareofyear";
             this.TBAmountShareofyear.Size = new System.Drawing.Size(236, 43);
             this.TBAmountShareofyear.TabIndex = 103;
@@ -833,11 +833,11 @@ namespace example.GOODS
             this.tabPage3.Controls.Add(this.panel11);
             this.tabPage3.Controls.Add(this.dataGridView3);
             this.tabPage3.Controls.Add(this.panel3);
-            this.tabPage3.Location = new System.Drawing.Point(4, 45);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage3.Location = new System.Drawing.Point(4, 39);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage3.Size = new System.Drawing.Size(1131, 576);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(2);
+            this.tabPage3.Size = new System.Drawing.Size(846, 465);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "ข้อมูลกู้";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -856,8 +856,8 @@ namespace example.GOODS
             this.panel11.Controls.Add(this.TBAmoun);
             this.panel11.Controls.Add(this.label20);
             this.panel11.Controls.Add(this.label22);
-            this.panel11.Location = new System.Drawing.Point(380, 14);
-            this.panel11.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel11.Location = new System.Drawing.Point(285, 11);
+            this.panel11.Margin = new System.Windows.Forms.Padding(2);
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(743, 112);
             this.panel11.TabIndex = 112;
@@ -865,8 +865,8 @@ namespace example.GOODS
             // TBAmountRemain
             // 
             this.TBAmountRemain.Enabled = false;
-            this.TBAmountRemain.Location = new System.Drawing.Point(555, 55);
-            this.TBAmountRemain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TBAmountRemain.Location = new System.Drawing.Point(416, 45);
+            this.TBAmountRemain.Margin = new System.Windows.Forms.Padding(2);
             this.TBAmountRemain.Name = "TBAmountRemain";
             this.TBAmountRemain.Size = new System.Drawing.Size(169, 43);
             this.TBAmountRemain.TabIndex = 103;
@@ -898,8 +898,8 @@ namespace example.GOODS
             // TBPayNo
             // 
             this.TBPayNo.Enabled = false;
-            this.TBPayNo.Location = new System.Drawing.Point(168, 55);
-            this.TBPayNo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TBPayNo.Location = new System.Drawing.Point(126, 45);
+            this.TBPayNo.Margin = new System.Windows.Forms.Padding(2);
             this.TBPayNo.Name = "TBPayNo";
             this.TBPayNo.Size = new System.Drawing.Size(113, 43);
             this.TBPayNo.TabIndex = 111;
@@ -907,8 +907,8 @@ namespace example.GOODS
             // TBInterrest
             // 
             this.TBInterrest.Enabled = false;
-            this.TBInterrest.Location = new System.Drawing.Point(300, 55);
-            this.TBInterrest.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TBInterrest.Location = new System.Drawing.Point(225, 45);
+            this.TBInterrest.Margin = new System.Windows.Forms.Padding(2);
             this.TBInterrest.Name = "TBInterrest";
             this.TBInterrest.Size = new System.Drawing.Size(115, 43);
             this.TBInterrest.TabIndex = 111;
@@ -916,8 +916,8 @@ namespace example.GOODS
             // TBSum
             // 
             this.TBSum.Enabled = false;
-            this.TBSum.Location = new System.Drawing.Point(19, 55);
-            this.TBSum.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TBSum.Location = new System.Drawing.Point(14, 45);
+            this.TBSum.Margin = new System.Windows.Forms.Padding(2);
             this.TBSum.Name = "TBSum";
             this.TBSum.Size = new System.Drawing.Size(140, 43);
             this.TBSum.TabIndex = 103;
@@ -937,8 +937,8 @@ namespace example.GOODS
             // TBAmoun
             // 
             this.TBAmoun.Enabled = false;
-            this.TBAmoun.Location = new System.Drawing.Point(421, 55);
-            this.TBAmoun.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TBAmoun.Location = new System.Drawing.Point(316, 45);
+            this.TBAmoun.Margin = new System.Windows.Forms.Padding(2);
             this.TBAmoun.Name = "TBAmoun";
             this.TBAmoun.Size = new System.Drawing.Size(121, 43);
             this.TBAmoun.TabIndex = 103;
@@ -1055,7 +1055,7 @@ namespace example.GOODS
             this.panel3.Controls.Add(this.label23);
             this.panel3.Controls.Add(this.CBSelectLoan);
             this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(358, 72);
             this.panel3.TabIndex = 109;
@@ -1077,8 +1077,8 @@ namespace example.GOODS
             this.CBSelectLoan.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CBSelectLoan.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CBSelectLoan.FormattingEnabled = true;
-            this.CBSelectLoan.Location = new System.Drawing.Point(101, 14);
-            this.CBSelectLoan.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.CBSelectLoan.Location = new System.Drawing.Point(76, 11);
+            this.CBSelectLoan.Margin = new System.Windows.Forms.Padding(2);
             this.CBSelectLoan.Name = "CBSelectLoan";
             this.CBSelectLoan.Size = new System.Drawing.Size(209, 39);
             this.CBSelectLoan.TabIndex = 84;
@@ -1087,11 +1087,11 @@ namespace example.GOODS
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.panel9);
-            this.tabPage4.Location = new System.Drawing.Point(4, 45);
-            this.tabPage4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage4.Location = new System.Drawing.Point(4, 39);
+            this.tabPage4.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabPage4.Size = new System.Drawing.Size(1131, 576);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(2);
+            this.tabPage4.Size = new System.Drawing.Size(846, 465);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "ข้อมูลสมาชิก";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -1101,8 +1101,8 @@ namespace example.GOODS
             this.panel9.BackColor = System.Drawing.Color.White;
             this.panel9.Controls.Add(this.panel4);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel9.Location = new System.Drawing.Point(3, 2);
-            this.panel9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel9.Location = new System.Drawing.Point(2, 2);
+            this.panel9.Margin = new System.Windows.Forms.Padding(2);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(1123, 572);
             this.panel9.TabIndex = 109;
@@ -1122,8 +1122,8 @@ namespace example.GOODS
             this.panel4.Controls.Add(this.label14);
             this.panel4.Controls.Add(this.label6);
             this.panel4.Controls.Add(this.label4);
-            this.panel4.Location = new System.Drawing.Point(13, 7);
-            this.panel4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel4.Location = new System.Drawing.Point(10, 6);
+            this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1095, 520);
             this.panel4.TabIndex = 122;
@@ -1132,8 +1132,8 @@ namespace example.GOODS
             // 
             this.TBStartAmount2.Enabled = false;
             this.TBStartAmount2.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBStartAmount2.Location = new System.Drawing.Point(835, 78);
-            this.TBStartAmount2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TBStartAmount2.Location = new System.Drawing.Point(626, 63);
+            this.TBStartAmount2.Margin = new System.Windows.Forms.Padding(2);
             this.TBStartAmount2.Name = "TBStartAmount2";
             this.TBStartAmount2.Size = new System.Drawing.Size(207, 43);
             this.TBStartAmount2.TabIndex = 128;
@@ -1154,8 +1154,8 @@ namespace example.GOODS
             // 
             this.TBstatus.Enabled = false;
             this.TBstatus.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBstatus.Location = new System.Drawing.Point(256, 286);
-            this.TBstatus.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TBstatus.Location = new System.Drawing.Point(192, 232);
+            this.TBstatus.Margin = new System.Windows.Forms.Padding(2);
             this.TBstatus.Name = "TBstatus";
             this.TBstatus.Size = new System.Drawing.Size(207, 43);
             this.TBstatus.TabIndex = 126;
@@ -1164,8 +1164,8 @@ namespace example.GOODS
             // 
             this.TBTel.Enabled = false;
             this.TBTel.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBTel.Location = new System.Drawing.Point(256, 210);
-            this.TBTel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TBTel.Location = new System.Drawing.Point(192, 171);
+            this.TBTel.Margin = new System.Windows.Forms.Padding(2);
             this.TBTel.Name = "TBTel";
             this.TBTel.Size = new System.Drawing.Size(207, 43);
             this.TBTel.TabIndex = 125;
@@ -1186,8 +1186,8 @@ namespace example.GOODS
             // 
             this.TBTeacherIDNo.Enabled = false;
             this.TBTeacherIDNo.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBTeacherIDNo.Location = new System.Drawing.Point(256, 78);
-            this.TBTeacherIDNo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TBTeacherIDNo.Location = new System.Drawing.Point(192, 63);
+            this.TBTeacherIDNo.Margin = new System.Windows.Forms.Padding(2);
             this.TBTeacherIDNo.Name = "TBTeacherIDNo";
             this.TBTeacherIDNo.Size = new System.Drawing.Size(207, 43);
             this.TBTeacherIDNo.TabIndex = 121;
@@ -1207,8 +1207,8 @@ namespace example.GOODS
             // TBidno
             // 
             this.TBidno.Enabled = false;
-            this.TBidno.Location = new System.Drawing.Point(256, 142);
-            this.TBidno.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TBidno.Location = new System.Drawing.Point(192, 115);
+            this.TBidno.Margin = new System.Windows.Forms.Padding(2);
             this.TBidno.Name = "TBidno";
             this.TBidno.Size = new System.Drawing.Size(207, 43);
             this.TBidno.TabIndex = 120;
@@ -1302,8 +1302,8 @@ namespace example.GOODS
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Controls.Add(this.tabControl1);
             this.panel1.Controls.Add(this.panel7);
-            this.panel1.Location = new System.Drawing.Point(27, 42);
-            this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel1.Location = new System.Drawing.Point(20, 34);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1168, 711);
             this.panel1.TabIndex = 98;
@@ -1316,7 +1316,7 @@ namespace example.GOODS
             this.ClientSize = new System.Drawing.Size(1205, 809);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "pay";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ทำเป็นFormจ่าย";

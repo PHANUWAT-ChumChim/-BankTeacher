@@ -21,6 +21,7 @@ namespace example.GOODS
         /// <para>[2] SELECT TIME INPUT : - </para>
         /// <para>[3] SELECT MEMBER INPUT: {Text} </para>
         /// <para>[4] SELECT pay IN Mont INPUT:  {TeacherNo} {CByear} {CBMonth} </para>
+        /// <para>[5] SELECT DATE Register Member INPUT : {TeacherNo}</para>
         /// </summary> 
         private String[] SQLDefault = new String[]
         {
@@ -76,7 +77,12 @@ namespace example.GOODS
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as f ON e.TypeNo = f.TypeNo \r\n" +
           "WHERE a.TeacherNo LIKE 'T{TeacherNo}%' AND e.Mount = {CBMonth} AND e.Year = {CByear} \r\n" +
           "ORDER BY a.TeacherNo;"
-
+            ,
+          //[5]SELECT DATE Register Member INPUT : {TeacherNo}
+          "SELECT CAST(DateAdd as date) \r\n " +
+          "FROM EmployeeBank.dbo.tblMember \r\n " +
+          "WHERE TeacherNo = '{TeacherNo}' and MemberStatusNo != 2; "
+          ,
         };
 
         public Home()
@@ -120,8 +126,33 @@ namespace example.GOODS
                     if (dt.Rows.Count != 0)
                     {
                         TBTeacherName.Text = dt.Rows[0][1].ToString();
-                        TBTeacherBill.Text = dt.Rows[0][3].ToString().Remove(8,8);
+                        TBTeacherBill.Text = dt.Rows[0][4].ToString();
                         Check = 1;
+
+                        CByear.Items.Clear();
+                        CByear.SelectedIndex = -1;
+
+                        DataTable dts = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5]
+                            .Replace("{TeacherNo}", TBTeacherNo.Text));
+                        int YearRegister = Convert.ToInt32((Convert.ToDateTime(dts.Rows[0][0].ToString())).ToString("yyyy"));
+                        if (YearRegister < Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2)
+                        {
+                            int Yeard2 = Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2;
+
+                            while (Yeard2 <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + 1)
+                            {
+                                CByear.Items.Add(Yeard2);
+                                Yeard2++;
+                            }
+                        }
+                        else if (YearRegister > Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2)
+                        {
+                            while (YearRegister <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + 1)
+                            {
+                                CByear.Items.Add(YearRegister);
+                                YearRegister++;
+                            }
+                        }
                     }
                     else
                     {
@@ -144,90 +175,11 @@ namespace example.GOODS
         }
         private void Home_Load(object sender, EventArgs e)
         {
-
-            int Year = Convert.ToInt32(example.GOODS.Menu.Date[0]);
-            int Y = Year;
-            for (int x = 0; x < 4; x++)
-            {
-                CByear.Items.Add(Year);
-                Year--; 
-            }
-            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
-                .Replace("{TeacherNo}","")
-                .Replace("{CByear}",Y.ToString())
-                .Replace("{CBMonth}", example.GOODS.Menu.Date[1]));
-            for (int num = 0; num < dt.Rows.Count; num++)
-            {
-                dataGridView3.Rows.Add(dt.Rows[num][0], dt.Rows[num][1], "สะสม", dt.Rows[num][3]);
-            }
         }
 
         private void automatic_Click(object sender, EventArgs e)
         {
-            dataGridView3.Rows.Clear();
-            int O = 0; 
-            if (CBStatus.SelectedIndex == 0)
-            {
-                O = 4;
-            }
-            else if(CBStatus.SelectedIndex == 1) { O = 1; }
-            else { O = 0; }
-            if (TBTeacherName.Text == "")
-            {
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[O]
-                    .Replace("{TeacherNo}", "")
-                    .Replace("{CBMonth}", CBMonth.Text)
-                    .Replace("{CByear}", CByear.Text));
-                if (O == 4 && dt.Rows.Count != 0)
-                {
-                    if (dt.Rows.Count != 0)
-                    {
-                        for (int num = 0; num < dt.Rows.Count; num++)
-                        {
-                            dataGridView3.Rows.Add(dt.Rows[num][0], dt.Rows[num][1], "สะสม", dt.Rows[num][3]);
-                        }
-                    }
-                }
-                else if (O == 1 && dt.Rows.Count != 0)
-                {
-                    if (dt.Rows.Count != 0)
-                    {
-                        for (int num = 0; num < dt.Rows.Count; num++)
-                        {
-                            dataGridView3.Rows.Add(dt.Rows[num][0], dt.Rows[num][1], "สะสม", dt.Rows[num][3]);
-                        }
-                    }
-                }
-                else { MessageBox.Show($"ไม่พบรายการ", "การแจ้งเตือนการค้นหา", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
-            }
-            else
-            {
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[O]
-                   .Replace("T{TeacherNo}%",TBTeacherNo.Text)
-                   .Replace("{CBMonth}", CBMonth.Text)
-                   .Replace("{CByear}", CByear.Text));
-                if (O == 4 && dt.Rows.Count != 0)
-                {
-                    if (dt.Rows.Count != 0)
-                    {
-                        for (int num = 0; num < dt.Rows.Count; num++)
-                        {
-                            dataGridView3.Rows.Add(dt.Rows[num][0], dt.Rows[num][1], "สะสม", dt.Rows[num][3]);
-                        }
-                    }
-                }
-                else if (O == 1 && dt.Rows.Count != 0)
-                {
-                    if (dt.Rows.Count != 0)
-                    {
-                        for (int num = 0; num < dt.Rows.Count; num++)
-                        {
-                            dataGridView3.Rows.Add(dt.Rows[num][0], dt.Rows[num][1], "สะสม", dt.Rows[num][3]);
-                        }
-                    }
-                }
-                else { MessageBox.Show($"ไม่พบรายการ", "การแจ้งเตือนการค้นหา", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
-            }
+            
         }
 
         private void CBMonth_SelectedIndexChanged(object sender, EventArgs e)
@@ -237,12 +189,12 @@ namespace example.GOODS
                 CBStatus.Enabled = true;
             }
         }
-
+        
         private void CByear_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (CByear.SelectedIndex != -1)
             {
-                CBMonth.Enabled = true;
+                CBStatus.Enabled = true;
             }
         }
 
@@ -250,14 +202,13 @@ namespace example.GOODS
         {
             if (CBStatus.SelectedIndex != -1)
             {
-                automatic.Enabled = true;
+
             }
         }
 
         private void BTClean_Click(object sender, EventArgs e)
         {
             CByear.SelectedIndex = -1;
-            CBMonth.SelectedIndex = -1;
             CBStatus.SelectedIndex = -1;
             dataGridView3.Rows.Clear();
             TBTeacherNo.Clear();
