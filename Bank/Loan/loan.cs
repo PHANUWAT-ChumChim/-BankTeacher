@@ -821,6 +821,12 @@ namespace example.Bank.Loan
                             TBLoanAmount.Text = "";
                             TBLoanAmount.Focus();
                         }
+                        else
+                        {
+                            //เช็คดูว่า User นี้ มีสิทหรือไม่
+                            //ถ้าไม่ให้เปลี่ยน UserOutCreditLimit เป็น No
+                            //และขึ้นแจ้งเตือนว่าไม่สามารถทำได้
+                        }
                     }
                 }
                 else if (!Check)

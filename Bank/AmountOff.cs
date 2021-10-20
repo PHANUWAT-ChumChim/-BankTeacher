@@ -68,7 +68,7 @@ namespace example.Bank
             //[4] Check BillDetailPayment INPUT: -  
             "SELECT Convert(nvarchar(50) , Name) , BillDetailpaymentNo  \r\n " +
             "FROM EmployeeBank.dbo.tblBillDetailPayment \r\n " +
-            "WHERE Status = 1 ;"
+            "WHERE Status = 1 and BillDetailPaymentNo <> 3 ;"
             ,
             //[5] SELECT MEMBER INPUT: {Text}
             "SELECT TOP(20) a.TeacherNo , CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR)AS Name, e.SavingAmount,    \r\n " +
@@ -110,6 +110,7 @@ namespace example.Bank
                     DGVLoan.Rows.Clear();
                     DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(
                         SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text) + 
+                        "\r\n" +
                         SQLDefault[0].Replace("{TeacherNo}", TBTeacherNo.Text));
                     String[] Credit = new string[] { };
                     if (ds.Tables[0].Rows.Count != 0)
@@ -124,11 +125,12 @@ namespace example.Bank
                         TBCreditSystem.Text = Credit[0];
                         Credit = ds.Tables[0].Rows[0][4].ToString().Split('.');
                         TBCreditWithDraw.Text = Credit[0];
+                        Check = 1;
 
                         for(int Num = 0;Num < ds.Tables[1].Rows.Count; Num++)
                         {
-                            Credit = ds.Tables[1].Rows[Num][2].ToString().Split('.');
-                            DGVLoan.Rows.Add(ds.Tables[1].Rows[Num][0].ToString(), ds.Tables[1].Rows[Num][1].ToString(), Credit[0], ds.Tables[1].Rows[Num][3].ToString());
+                            Credit = ds.Tables[1].Rows[Num][1].ToString().Split('.');
+                            DGVLoan.Rows.Add(ds.Tables[1].Rows[Num][0].ToString(), ds.Tables[1].Rows[Num][2].ToString(), Credit[0], ds.Tables[1].Rows[Num][3].ToString());
                         }
                     }
                     else
@@ -151,6 +153,7 @@ namespace example.Bank
                     TBCreditWithDraw.Text = "";
                     TBWithDraw.Text = "";
                     TBWithDraw.Enabled = false;
+                    CBTypePay.SelectedIndex = -1;
                     CBTypePay.Enabled = false;
                     BSaveAmountOff.Enabled = false;
                     Check = 0;
@@ -163,13 +166,24 @@ namespace example.Bank
             example.Class.ComboBoxPayment Payment = (CBTypePay.SelectedItem as example.Class.ComboBoxPayment);
             if (TBWithDraw.Text != "" && CBTypePay.SelectedIndex != -1)
             {
-                Class.SQLConnection.InputSQLMSSQLDS( (SQLDefault[2] + 
-                    "\r\n"+
+                try
+                {
+                    Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[2] +
+                    "\r\n" +
                     SQLDefault[3])
                     .Replace("{ShareNo}", TBShareNo.Text)
                     .Replace("{WithDraw}", TBWithDraw.Text)
                     .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
                     .Replace("{PayMent}", Payment.No));
+                    MessageBox.Show("บันทึกสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Back));
+                    TBTeacherNo.Text = "";
+                }
+                catch(Exception x)
+                {
+                    Console.Write(x);
+                }
+                
             }
         }
 
@@ -190,10 +204,20 @@ namespace example.Bank
 
         private void TBWithDraw_Leave(object sender, EventArgs e)
         {
-            if(int.Parse(TBWithDraw.Text) > int.Parse(TBCreditWithDraw.Text))
+            if(TBWithDraw.Text != "")
             {
-                //MessageBox.Show("")
+                if (int.Parse(TBWithDraw.Text) > int.Parse(TBCreditWithDraw.Text))
+                {
+                    MessageBox.Show("ยอดเงินเกินกำหนด", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    TBWithDraw.Text = "";
+                    TBWithDraw.Focus();
+                }
+                else
+                {
+                    CBTypePay.Enabled = true;
+                }
             }
+            
         }
 
         private void AmountOff_SizeChanged(object sender, EventArgs e)
@@ -208,8 +232,11 @@ namespace example.Bank
             {
                 Bank.Search IN = new Bank.Search(SQLDefault[5]);
                 IN.ShowDialog();
-                TBTeacherNo.Text = Bank.Search.Return[0];
-                TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+                if(Bank.Search.Return[0] != "")
+                {
+                    TBTeacherNo.Text = Bank.Search.Return[0];
+                    TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+                }
             }
             catch (Exception x)
             {
