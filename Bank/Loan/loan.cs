@@ -583,7 +583,6 @@ namespace example.Bank.Loan
             {
                 e.Handled = true;
             }
-
         }
         // อีเว้นตัวเลข ในTB
         private void TBPayNo_KeyPress(object sender, KeyPressEventArgs e)
@@ -1142,6 +1141,17 @@ namespace example.Bank.Loan
         private void DGVGuarantorCredit_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
             DefaultEdit = int.Parse(DGVGuarantorCredit.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+        }
+
+        private void TBLoanAmount_TextChanged(object sender, EventArgs e)
+        {
+            if(TBLoanAmount.Text.Length > 0)
+            {
+                if (Convert.ToInt32(TBLoanAmount.Text) <= 0)
+                {
+                    TBLoanAmount.Text = "";
+                }
+            }
         }
 
         private void BCalculate_Click(object sender, EventArgs e)
