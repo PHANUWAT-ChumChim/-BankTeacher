@@ -206,7 +206,7 @@ namespace example.GOODS
           "  LEFT JOIN EmployeeBank.dbo.tblLoan as cc on bb.LoanNo = cc.LoanNo \r\n " +
           "  LEFT JOIN EmployeeBank.dbo.tblMember as dd on aa.TeacherNo = dd.TeacherNo \r\n " +
           "  WHERE bb.Mount = {Month} and bb.Year = {Year} \r\n " +
-          "  and dd.MemberStatusNo = 1 and (DATEADD(YYYY,0,'{DateSet}') >= cc.DateAdd ) and bb.TypeNo = 2  and LoanStatusNo = 2 )and a.TeacherNo = '{TeacherNo}'  and c.TypeNo = 2 and LoanStatusNo =2 and DATEADD(YYYY,0,'{DateSet}') <= EOMONTH(DATEADD(MONTH , PayNo-1,CAST(CAST(CAST(YearPay as nvarchar) +'/' + CAST(MonthPay AS nvarchar) + '/01' AS nvarchar) AS date)))) \r\n " +
+          "  and dd.MemberStatusNo = 1 and bb.TypeNo = 2  and LoanStatusNo = 2 )and a.TeacherNo = '{TeacherNo}'  and c.TypeNo = 2 and LoanStatusNo =2 and DATEADD(YYYY,0,'{DateSet}') <= EOMONTH(DATEADD(MONTH , PayNo-1,CAST(CAST(CAST(YearPay as nvarchar) +'/' + CAST(MonthPay AS nvarchar) + '/01' AS nvarchar) AS date)))) and (DATEADD(YYYY,0,'{DateSet}') >= EOMONTH(CAST(YearPay as nvarchar) +'/' + CAST(MonthPay as nvarchar) +'/01') ) \r\n " +
           "  GROUP BY  a.TeacherNo ,  \r\n " +
           "  ROUND(Convert(float, ( (g.InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0) ,  \r\n " +
           "  f.TypeName  ,g.LoanNo ,PayNo , g.MonthPay, g.YearPay ,  \r\n " +
@@ -505,6 +505,9 @@ namespace example.GOODS
                 BTAdd.Enabled = false;
                 Auto = 0;
                 label5.Text = "0";
+                ///Comment สำหรับวันที่ 21-10-2021
+                ///แก้ SQL หน้าจ่าย ดูตัวอย่างได้ที่เลย T62021
+                ///เริ่มจ่ายใน SQL เดือน 1 ปี 2022 แต่มาขึ้นก่อนปี 2022
                 ComboBox[] cb = new ComboBox[] { CBStatus };
                 DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[7]
                     .Replace("{Month}", CBMonth.Text)
@@ -541,19 +544,24 @@ namespace example.GOODS
                                 {
                                     YearLoan++;
                                     sumy = sumy - 12;
-                                    if (sumy < 13)
-                                    {
-                                        MonthLoan = sumy;
-                                    }
                                 }
-
+                                if (sumy < 13)
+                                    MonthLoan = sumy;
                                 DateTime DateLoan = Convert.ToDateTime(YearLoan + "-" + MonthLoan + "-" + DateTime.DaysInMonth(YearLoan, MonthLoan).ToString());
                                 if (Convert.ToDateTime(CByeartap1.Text + '-' + CBMonth.Text + '-' + DateTime.DaysInMonth(Convert.ToInt32(CByeartap1.Text), Convert.ToInt32(CBMonth.Text)).ToString()) <= DateLoan)
                                 {
                                     Balance = 0;
                                     if (DateLoan == Convert.ToDateTime(CByeartap1.Text + '-' + CBMonth.Text + '-' + DateTime.DaysInMonth(Convert.ToInt32(CByeartap1.Text), Convert.ToInt32(CBMonth.Text)).ToString()))
                                     {
-                                        Balance = Convert.ToInt32(ds.Tables[1].Rows[a][7].ToString());
+                                        try
+                                        {
+                                            Balance = Convert.ToInt32(ds.Tables[1].Rows[a][7].ToString());
+                                        }
+                                        catch
+                                        {
+                                            Balance = Convert.ToInt32(Decimal.Truncate(Convert.ToDecimal(Convert.ToDouble(ds.Tables[1].Rows[a][7].ToString())))+1);
+                                        }   
+                                        
                                     }
                                     else
                                     {
@@ -612,6 +620,7 @@ namespace example.GOODS
                     BTAdd.Enabled = true;
                 }
                 CBB4Oppay.SelectedIndex = 0;
+                CBB4Oppay.Enabled = true;
             }
             else
             {
@@ -770,6 +779,7 @@ namespace example.GOODS
                 else if (CBStatus.Items.Count == 0)
                     CBStatus.SelectedIndex = -1;
 
+                
             }
         }
         private void button3_Click(object sender, EventArgs e)
@@ -974,7 +984,6 @@ namespace example.GOODS
 
                     int Month = Convert.ToInt32(ds.Tables[0].Rows[0][4].ToString());
                     int Year = Convert.ToInt32(ds.Tables[0].Rows[0][5].ToString());
-                    //DGVLoanDetail.Rows.Clear();
 
                     Double Interest = Convert.ToDouble(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString())) * (Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100) / Convert.ToDouble(ds.Tables[0].Rows[0][6].ToString());
 
@@ -995,7 +1004,6 @@ namespace example.GOODS
                             Pay = Pay * Num;
                             Pay = Convert.ToInt32(ds.Tables[0].Rows[0][8].ToString()) - Pay;
                             SumInstallment = Convert.ToInt32(Pay + Interest);
-                            //hell
                         }
                         try
                         {
