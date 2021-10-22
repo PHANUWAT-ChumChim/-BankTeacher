@@ -50,7 +50,7 @@ namespace example.GOODS
           "LEFT JOIN BaseData.dbo.tblPrefix as c ON c.PrefixNo = b.PrefixNo   \r\n " +
           "INNER JOIN EmployeeBank.dbo.tblMemberStatus as d on a.MemberStatusNo = d.MemberStatusNo  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblShare as e on a.TeacherNo = e.TeacherNo \r\n " +
-          "WHERE a.TeacherNo LIKE '%{Text}%'  or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%'   and a.MemberStatusNo = 1         \r\n " +
+          "WHERE a.MemberStatusNo = 1 and a.TeacherNo LIKE '%{Text}%'  or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%'   and a.MemberStatusNo = 1         \r\n " +
           "GROUP BY a.TeacherNo , CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR), e.SavingAmount,    \r\n " +
           "b.TeacherLicenseNo,b.IdNo ,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar)   \r\n " +
           "ORDER BY a.TeacherNo; "
@@ -122,8 +122,8 @@ namespace example.GOODS
           "------------------------------------------------------------ \r\n " +
           " \r\n " +
           "--Saving \r\n " +
-          "--{haveSaving}INSERT INTO EmployeeBank.dbo.tblBillDetail (BillNo,TypeNo,LoanNo,Amount,Mount,Year,BillDetailPaymentNo) \r\n " +
-          "--{haveSaving}VALUES({BillNo} , '1','','{AmountPaySaving}','{Month}','{Year}','{Payment}') \r\n " +
+          "--{haveSaving}INSERT INTO EmployeeBank.dbo.tblBillDetail (BillNo,TypeNo,Amount,Mount,Year,BillDetailPaymentNo) \r\n " +
+          "--{haveSaving}VALUES({BillNo} , '1','{AmountPaySaving}','{Month}','{Year}','{Payment}') \r\n " +
           " \r\n " +
           "--{haveSaving}UPDATE EmployeeBank.dbo.tblShare \r\n " +
           "--{haveSaving}SET SavingAmount = @SavingAmount + '{AmountPaySaving}' \r\n " +
