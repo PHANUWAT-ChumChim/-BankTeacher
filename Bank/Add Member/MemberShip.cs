@@ -26,6 +26,7 @@ namespace example.Bank
         public MemberShip()
         {
             InitializeComponent();
+            TBStartAmountShare.Text = example.GOODS.Menu.startAmountMin.ToString();
         }
 
         //------------------------- FormSize -----------------
@@ -73,17 +74,46 @@ namespace example.Bank
           ,
 
            //[3] INSERT Member To Member  Bill BillDetail  INPUT: {TeacherNo} {TeacherNoAddBy} {StartAmount} {Mount} {Year}
-          "DECLARE @BillNo INT; \r\n"+
-          "INSERT INTO EmployeeBank.dbo.tblMember(TeacherNo, TeacherAddBy, StartAmount, DateAdd) \r\n"+
-          "VALUES('{TeacherNo}','{TeacherNoAddBy}',{StartAmount},CURRENT_TIMESTAMP)  \r\n"+
-          "INSERT INTO EmployeeBank.dbo.tblShare(TeacherNo, SavingAmount) \r\n"+
-          "VALUES('{TeacherNo}',{StartAmount}) \r\n"+
-          "INSERT INTO EmployeeBank.dbo.tblBill(TeacherNo, TeacherNoAddBy, DateAdd) \r\n"+
-          "VALUES('{TeacherNo}','{TeacherNoAddBy}', CURRENT_TIMESTAMP) \r\n"+
-          "SELECT @BillNo = SCOPE_IDENTITY(); \r\n"+
-          "INSERT INTO EmployeeBank.dbo.tblBillDetail(BillNo, TypeNo, Amount, Mount, Year,BillDetailPaymentNo) \r\n"+
-          "VALUES(@BillNo,1,{StartAmount},{Month},{Year},1)"
+          "DECLARE @CountTeacher INT; \r\n " +
+          "DECLARE @BillNo INT;  \r\n " +
+          " \r\n " +
+          "SET @CountTeacher = (SELECT Count(TeacherNo) \r\n " +
+          "FROM EmployeeBank.dbo.tblMember \r\n " +
+          "WHERE TeacherNo = '{TeacherNo}' and MemberStatusNo = 2) ; \r\n " +
+          " \r\n " +
+          "IF(@CountTeacher > 0) \r\n " +
+          "BEGIN \r\n " +
+          "UPDATE EmployeeBank.dbo.tblMember \r\n " +
+          "SET MemberStatusNo = 1 ,DateAdd = CURRENT_TIMESTAMP \r\n " +
+          "WHERE TeacherNo = '{TeacherNo}'; \r\n " +
+          "UPDATE EmployeeBank.dbo.tblShare \r\n " +
+          "SET SavingAmount = '{StartAmount}' \r\n " +
+          "WHERE TeacherNo = '{TeacherNo}'; \r\n " +
+          "INSERT INTO EmployeeBank.dbo.tblBill(TeacherNo, TeacherNoAddBy, DateAdd)  \r\n " +
+          "VALUES('{TeacherNo}','{TeacherNoAddBy}', CURRENT_TIMESTAMP)  \r\n " +
+          "SELECT @BillNo = SCOPE_IDENTITY();  \r\n " +
+          "INSERT INTO EmployeeBank.dbo.tblBillDetail(BillNo, TypeNo, Amount, Mount, Year,BillDetailPaymentNo) \r\n " +
+          "VALUES(@BillNo,1,{StartAmount},{Month},{Year},1) \r\n " +
+          " \r\n " +
+          "END; \r\n " +
+          " \r\n " +
+          "ELSE \r\n " +
+          "BEGIN \r\n " +
+          " \r\n " +
+          "INSERT INTO EmployeeBank.dbo.tblMember(TeacherNo, TeacherAddBy, StartAmount, DateAdd)  \r\n " +
+          "VALUES('{TeacherNo}','{TeacherNoAddBy}',{StartAmount},CURRENT_TIMESTAMP)   \r\n " +
+          "INSERT INTO EmployeeBank.dbo.tblShare(TeacherNo, SavingAmount) \r\n " +
+          "VALUES('{TeacherNo}',{StartAmount})  \r\n " +
+          "INSERT INTO EmployeeBank.dbo.tblBill(TeacherNo, TeacherNoAddBy, DateAdd)  \r\n " +
+          "VALUES('{TeacherNo}','{TeacherNoAddBy}', CURRENT_TIMESTAMP)  \r\n " +
+          "SELECT @BillNo = SCOPE_IDENTITY();  \r\n " +
+          "INSERT INTO EmployeeBank.dbo.tblBillDetail(BillNo, TypeNo, Amount, Mount, Year,BillDetailPaymentNo) \r\n " +
+          "VALUES(@BillNo,1,{StartAmount},{Month},{Year},1) \r\n " +
+          " \r\n " +
+          "END; \r\n " +
+          " "
           ,
+
         };
 
         //----------------------- PullSQL -------------------- ////////
@@ -139,7 +169,7 @@ namespace example.Bank
                             .Replace("{Year}", example.GOODS.Menu.Date[0]));
                             MessageBox.Show("สมัครเสร็จสิ้น", "สมัครสมาชิก", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             TBTeacherNo.Clear();
-                            TBTeacherName.Clear();
+                            TBTeacherName.Clear(); 
                         }
                         else
                         {
@@ -332,10 +362,11 @@ namespace example.Bank
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControl1.SelectedIndex == 1)
-            {
-                TBStartAmountShare.Text = example.GOODS.Menu.startAmountMin.ToString();
-            }
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
         }
         //----------------------- End code -------------------- ////////
 
