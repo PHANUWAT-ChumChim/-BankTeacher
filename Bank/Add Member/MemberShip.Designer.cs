@@ -43,13 +43,14 @@ namespace example.Bank
             this.BExit = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.label4 = new System.Windows.Forms.Label();
             this.TBIDNo = new System.Windows.Forms.TextBox();
+            this.TBStartAmountShare = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.TBTeacherNo = new System.Windows.Forms.TextBox();
             this.BSearchTeacher = new System.Windows.Forms.Button();
             this.TBTeacherName = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.TBStartAmountShare = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label6 = new System.Windows.Forms.Label();
             this.BTPrintfShare = new System.Windows.Forms.Button();
@@ -59,7 +60,6 @@ namespace example.Bank
             this.BSave = new System.Windows.Forms.Button();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-            this.label10 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -156,7 +156,7 @@ namespace example.Bank
             this.DTPStartDate.Location = new System.Drawing.Point(293, 188);
             this.DTPStartDate.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
             this.DTPStartDate.Name = "DTPStartDate";
-            this.DTPStartDate.Size = new System.Drawing.Size(199, 36);
+            this.DTPStartDate.Size = new System.Drawing.Size(265, 36);
             this.DTPStartDate.TabIndex = 48;
             // 
             // label7
@@ -228,6 +228,18 @@ namespace example.Bank
             this.tabPage1.Text = "ข้อมูลส่วนตัว";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.Red;
+            this.label4.Location = new System.Drawing.Point(4, 3);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(400, 30);
+            this.label4.TabIndex = 17;
+            this.label4.Text = "*โปรดทราบ หุ้นที่ซื้อ สามารถเปลี่ยนแปลงราคาซื้อได้ ตามที่กำหนด";
+            // 
             // TBIDNo
             // 
             this.TBIDNo.Enabled = false;
@@ -237,6 +249,30 @@ namespace example.Bank
             this.TBIDNo.Name = "TBIDNo";
             this.TBIDNo.Size = new System.Drawing.Size(210, 36);
             this.TBIDNo.TabIndex = 20;
+            // 
+            // TBStartAmountShare
+            // 
+            this.TBStartAmountShare.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBStartAmountShare.Location = new System.Drawing.Point(322, 179);
+            this.TBStartAmountShare.MaxLength = 10;
+            this.TBStartAmountShare.Name = "TBStartAmountShare";
+            this.TBStartAmountShare.Size = new System.Drawing.Size(165, 36);
+            this.TBStartAmountShare.TabIndex = 16;
+            this.TBStartAmountShare.Text = "0";
+            this.TBStartAmountShare.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.TBStartAmountShare.TextChanged += new System.EventHandler(this.TBStartAmountShare_TextChanged);
+            this.TBStartAmountShare.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBStartAmountShare_KeyPress);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(494, 182);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(38, 30);
+            this.label10.TabIndex = 15;
+            this.label10.Text = "บาท";
             // 
             // TBTeacherNo
             // 
@@ -285,31 +321,6 @@ namespace example.Bank
             this.label3.TabIndex = 36;
             this.label3.Text = "หมายเลขบัตรประชาชน";
             this.label3.Click += new System.EventHandler(this.label3_Click);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.ForeColor = System.Drawing.Color.Red;
-            this.label4.Location = new System.Drawing.Point(4, 3);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(400, 30);
-            this.label4.TabIndex = 17;
-            this.label4.Text = "*โปรดทราบ หุ้นที่ซื้อ สามารถเปลี่ยนแปลงราคาซื้อได้ ตามที่กำหนด";
-            // 
-            // TBStartAmountShare
-            // 
-            this.TBStartAmountShare.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBStartAmountShare.Location = new System.Drawing.Point(322, 179);
-            this.TBStartAmountShare.MaxLength = 10;
-            this.TBStartAmountShare.Name = "TBStartAmountShare";
-            this.TBStartAmountShare.Size = new System.Drawing.Size(165, 36);
-            this.TBStartAmountShare.TabIndex = 16;
-            this.TBStartAmountShare.Text = "0";
-            this.TBStartAmountShare.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.TBStartAmountShare.TextChanged += new System.EventHandler(this.TBStartAmountShare_TextChanged);
-            this.TBStartAmountShare.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBStartAmountShare_KeyPress);
             // 
             // tabPage3
             // 
@@ -415,17 +426,6 @@ namespace example.Bank
             this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(494, 182);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(38, 30);
-            this.label10.TabIndex = 15;
-            this.label10.Text = "บาท";
             // 
             // MemberShip
             // 
