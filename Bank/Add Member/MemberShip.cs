@@ -116,13 +116,6 @@ namespace example.Bank
 
         };
 
-        //----------------------- PullSQL -------------------- ////////
-        // Comment!
-        // Available values| ResearchUserAllTLC / TB /
-
-
-        // Comment!
-        // Available values|  BSearchTeacher / TB /
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
             try
