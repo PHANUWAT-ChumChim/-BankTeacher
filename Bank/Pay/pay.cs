@@ -720,44 +720,18 @@ namespace example.GOODS
 
         private void BTAdd_Click(object sender, EventArgs e)
         {
-            
-            example.Class.ComboBoxPay Loan = (CBStatus.SelectedItem as example.Class.ComboBoxPay);
-            if (dataGridView1.Rows.ToString() != "")
-            {
-                
-                if (dataGridView1.Rows.Count == 0)
-                {
-                    CBB4Oppay.Enabled = true;
-                    String Time = CByeartap1.Text + "/" + CBMonth.Text;
-                    dataGridView1.Rows.Add(Time, CBStatus.Text, TBStartAmountShare.Text, Loan.No);
-                    if (CBStatus.Text.Contains("กู้"))
-                    {
-                        CBStatus.Items.RemoveAt(CBStatus.SelectedIndex);
-                        TBStartAmount2.Text = "";
-                        if (CBStatus.Items.Count == 0)
-                            BTAdd.Enabled = false;
-                    }
-                }
-                else
-                {
-                    int TicketName = 0;
-                    for (int x = 0; x < dataGridView1.Rows.Count; x++)
-                    {
-                        if (CBStatus.Text == dataGridView1.Rows[x].Cells[1].Value.ToString())
-                        {
-                            if(dataGridView1.Rows[x].Cells[1].Value.ToString().Contains("สะสม"))
-                                if(Int32.TryParse(TBStartAmountShare.Text,out int value)&& value > 0)
-                                {
-                                    dataGridView1.Rows[x].Cells[2].Value = TBStartAmountShare.Text;
-                                }
-                            TicketName = 1;
-                        }
 
-                    }
-                    if (TicketName == 0)
+            example.Class.ComboBoxPay Loan = (CBStatus.SelectedItem as example.Class.ComboBoxPay);
+            if (TBStartAmountShare.Text != "")
+            {
+                if (dataGridView1.Rows.ToString() != "")
+                {
+
+                    if (dataGridView1.Rows.Count == 0)
                     {
+                        CBB4Oppay.Enabled = true;
                         String Time = CByeartap1.Text + "/" + CBMonth.Text;
-                        dataGridView1.Rows.Add(Time, CBStatus.Text, TBStartAmountShare.Text,Loan.No);
+                        dataGridView1.Rows.Add(Time, CBStatus.Text, TBStartAmountShare.Text, Loan.No);
                         if (CBStatus.Text.Contains("กู้"))
                         {
                             CBStatus.Items.RemoveAt(CBStatus.SelectedIndex);
@@ -766,20 +740,54 @@ namespace example.GOODS
                                 BTAdd.Enabled = false;
                         }
                     }
-                }
-                //sum ยอด
-                sum = 0;
-                for (int x = 0; x < dataGridView1.Rows.Count; x++)
-                {
-                    sum += Convert.ToInt32(dataGridView1.Rows[x].Cells[2].Value.ToString());
-                }
-                label5.Text = sum.ToString();
-                if (CBStatus.Items.Count != 0)
-                    CBStatus.SelectedIndex = 0;
-                else if (CBStatus.Items.Count == 0)
-                    CBStatus.SelectedIndex = -1;
+                    else
+                    {
+                        int TicketName = 0;
+                        for (int x = 0; x < dataGridView1.Rows.Count; x++)
+                        {
+                            if (CBStatus.Text == dataGridView1.Rows[x].Cells[1].Value.ToString())
+                            {
+                                if (dataGridView1.Rows[x].Cells[1].Value.ToString().Contains("สะสม"))
+                                    if (Int32.TryParse(TBStartAmountShare.Text, out int value) && value > 0)
+                                    {
+                                        dataGridView1.Rows[x].Cells[2].Value = TBStartAmountShare.Text;
+                                    }
+                                TicketName = 1;
+                            }
 
-                
+                        }
+                        if (TicketName == 0)
+                        {
+                            String Time = CByeartap1.Text + "/" + CBMonth.Text;
+                            dataGridView1.Rows.Add(Time, CBStatus.Text, TBStartAmountShare.Text, Loan.No);
+                            if (CBStatus.Text.Contains("กู้"))
+                            {
+                                CBStatus.Items.RemoveAt(CBStatus.SelectedIndex);
+                                TBStartAmount2.Text = "";
+                                if (CBStatus.Items.Count == 0)
+                                    BTAdd.Enabled = false;
+                            }
+                        }
+                    }
+                    //sum ยอด
+                    sum = 0;
+                    for (int x = 0; x < dataGridView1.Rows.Count; x++)
+                    {
+                        sum += Convert.ToInt32(dataGridView1.Rows[x].Cells[2].Value.ToString());
+                    }
+                    label5.Text = sum.ToString();
+                    if (CBStatus.Items.Count != 0)
+                        CBStatus.SelectedIndex = 0;
+                    else if (CBStatus.Items.Count == 0)
+                        CBStatus.SelectedIndex = -1;
+
+
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("กรอกข้อมูลไม่ถูกต้อง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
         private void button3_Click(object sender, EventArgs e)
@@ -1082,6 +1090,14 @@ namespace example.GOODS
                 TBAmountShareofyear.Text = ShareOfYear.ToString();
             }
             
+        }
+
+        private void TBStartAmountShare_KeyPress_1(object sender, KeyPressEventArgs e)
+        {
+            if ((!Char.IsNumber(e.KeyChar)) && (!Char.IsControl(e.KeyChar)))
+            {
+                e.Handled = true;
+            }
         }
         //----------------------- End code -------------------//
     }
