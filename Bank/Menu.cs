@@ -32,7 +32,7 @@ namespace example.GOODS
              "SELECT DateAmountChange , StartAmountMin , StartAmountMax,MinLoan \r\n" +
              "FROM EmployeeBank.dbo.tblSettingAmount;"
           ,
-             //[1]Select Date InWput :  -
+             //[1]Select Date Input :  -
              "SELECT CAST(CURRENT_TIMESTAMP as DATE);"
              ,
              

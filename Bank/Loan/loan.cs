@@ -1147,7 +1147,11 @@ namespace example.Bank.Loan
         {
             if(TBLoanAmount.Text.Length > 0)
             {
-                if (Convert.ToInt32(TBLoanAmount.Text) <= 0)
+                if (Int32.TryParse(TBLoanAmount.Text , out int x) && x <= 0)
+                {
+                    TBLoanAmount.Text = "";
+                }
+                else if(!(Int32.TryParse(TBLoanAmount.Text , out int y)))
                 {
                     TBLoanAmount.Text = "";
                 }

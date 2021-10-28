@@ -23,6 +23,7 @@ namespace example.GOODS
         /// <para>[3] SELECT MEMBER INPUT: {Text} </para>
         /// <para>[4] SELECT pay IN Mont INPUT:  {TeacherNo} {CByear} {CBMonth} </para>
         /// <para>[5] SELECT DATE Register Member INPUT : {TeacherNo}</para>
+        /// <para>[6] Check last pay date INPUT: {TeacherNo} </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
         {
@@ -97,6 +98,13 @@ namespace example.GOODS
           "FROM EmployeeBank.dbo.tblMember \r\n " +
           "WHERE TeacherNo = '{TeacherNo}' and MemberStatusNo != 2; "
           ,
+          //[6] Check last pay date INPUT: {TeacherNo} 
+          "SELECT EOMONTH(CAST(CAST(Year as nvarchar)+'-'+ CAST(Mount as nvarchar) +'-10' as nvarchar)) , b.BillNo ,DATEADD(MONTH,5,CAST(CAST(CAST(Year as nvarchar) +'/' + CAST(Mount AS nvarchar) + '/05' AS nvarchar) AS date)) \r\n " +
+          "FROM EmployeeBank.dbo.tblBill as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo \r\n " +
+          "WHERE TeacherNo = '{TeacherNo}' \r\n " +
+          "ORDER BY DateAdd DESC; "
+          ,
         };
 
         public Home()
@@ -150,12 +158,16 @@ namespace example.GOODS
 
                         DataTable dts = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5]
                             .Replace("{TeacherNo}", TBTeacherNo.Text));
+                        DataTable dtss = Class.SQLConnection.InputSQLMSSQL(SQLDefault[6]
+                            .Replace("{TeacherNo}", TBTeacherNo.Text));
                         int YearRegister = Convert.ToInt32((Convert.ToDateTime(dts.Rows[0][0].ToString())).ToString("yyyy"));
+                        int Yearlastofpay = Convert.ToInt32((Convert.ToDateTime(dtss.Rows[0][2].ToString())).ToString("yyyy"));
+                        Yearlastofpay = Yearlastofpay - YearRegister;
                         if (YearRegister < Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2)
                         {
                             int Yeard2 = Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2;
 
-                            while (Yeard2 <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + 1)
+                            while (Yeard2 <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + Yearlastofpay)
                             {
                                 CByear.Items.Add(Yeard2);
                                 Yeard2++;
@@ -163,12 +175,14 @@ namespace example.GOODS
                         }
                         else if (YearRegister > Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2)
                         {
-                            while (YearRegister <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + 1)
+                            while (YearRegister <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + Yearlastofpay)
                             {
                                 CByear.Items.Add(YearRegister);
                                 YearRegister++;
                             }
                         }
+                        CByear.SelectedIndex = 0;
+                        CByear.Text = example.GOODS.Menu.Date[0];
                     }
                     else
                     {
