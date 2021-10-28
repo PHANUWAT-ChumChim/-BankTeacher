@@ -559,7 +559,6 @@ namespace example.Bank.Loan
         #endregion
 
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.Button BSaveCancel;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.Button BExit;
