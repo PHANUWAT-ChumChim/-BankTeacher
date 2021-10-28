@@ -22,6 +22,7 @@ namespace example.Bank
         /// <para>[3] INSERT ShareWithDraw INPUT: {TeacherNoAddBy} , {ShareNo} , {WithDraw} , {PayMent}</para>
         /// <para>[4] Check BillDetailPayment INPUT: -  </para>
         /// <para>[5] SELECT MEMBER INPUT: {Text}</para>
+        /// <para>[6] SELECT ShareWithDraw INPUT: {Date}</para>
         /// </summary>
         String[] SQLDefault = new String[]
         {
@@ -82,6 +83,19 @@ namespace example.Bank
             "GROUP BY a.TeacherNo , CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR), e.SavingAmount,    \r\n " +
             "b.TeacherLicenseNo,b.IdNo ,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar)   \r\n " +
             "ORDER BY a.TeacherNo; "
+
+            ,
+
+            //[6] SELECT ShareWithDraw INPUT: {Date}
+            "SELECT CAST(c.DateAdd as date) ,a.TeacherNo , CAST(ISNULL(e.PrefixNameFull , '') + d.Fname + ' ' + d.Lname as varchar) , c.Amount\r\n" +
+            "FROM EmployeeBank.dbo.tblMember as a\r\n" +
+            "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo\r\n" +
+            "LEFT JOIN EmployeeBank.dbo.tblShareWithdraw as c on b.ShareNo = c.ShareNo\r\n" +
+            "LEFT JOIN Personal.dbo.tblTeacherHis as d on a.TeacherNo = d.TeacherNo\r\n" +
+            "LEFT JOIN BaseData.dbo.tblPrefix as e on d.PrefixNo = e.PrefixNo\r\n" +
+            "WHERE CAST(CAST(c.DateAdd as date) as varchar) LIKE '{Date}%'\r\n"
+
+            ,
         };
 
         int Check;
@@ -98,6 +112,15 @@ namespace example.Bank
                 for (int x = 0; x < cb.Length; x++)
                     cb[x].Items.Add(new example.Class.ComboBoxPayment(dtPayment.Rows[a][0].ToString(),
                         dtPayment.Rows[a][1].ToString()));
+
+            int Year = Convert.ToInt32(example.GOODS.Menu.Date[0]);
+            for(int a = 0; a < 5; a++)
+            {
+                CBYear.Items.Add(Year);
+                Year--;
+            }
+
+            CBYear.SelectedIndex = 0;
         }
 
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
@@ -244,55 +267,121 @@ namespace example.Bank
             }
         }
 
-        private void BTOpenfile_Click(object sender, EventArgs e)
+        private void CBYear_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (StatusBoxFile == 0)
+            if(CBYear.SelectedIndex != -1)
             {
-
-                try
+                CBMonth.SelectedIndex = -1;
+                CBMonth.Items.Clear();
+                int Month = Convert.ToInt32(example.GOODS.Menu.Date[1]);
+                if(CBYear.SelectedIndex == 0)
                 {
-                    OpenFileDialog dialog = new OpenFileDialog();
-                    dialog.Filter = "pdf files(*.pdf)|*.pdf";
-                    if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    for(int a = 0; a <= Month; a++)
                     {
-                        imgeLocation = dialog.FileName;
+                        if(a == 0)
+                            CBMonth.Items.Add("(none)");
+                        else
+                            CBMonth.Items.Add(a);
                     }
-                    if (imgeLocation != "")
-                    {
-                        BTOpenfile.Text = "ส่งไฟล์";
-                        StatusBoxFile = 1;
-                        //label6.Text = "Scan(  พบไฟล์  )";
-                    }
-
-                }
-                catch
-                {
-                    MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else if (StatusBoxFile == 1)
-            {
-                var smb = new SmbFileContainer("CamcelMember");
-                if (smb.IsValidConnection())
-                {
-                    String Return = smb.SendFile(imgeLocation, "CMember_" + TBTeacherNo.Text + ".pdf");
-                    MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    StatusBoxFile = 0;
-                    BTOpenfile.Text = "เปิดไฟล์";
-                    imgeLocation = "";
                 }
                 else
                 {
-                    MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    for(int a = 0; a <= 12; a++)
+                    {
+                        if (a == 0)
+                            CBMonth.Items.Add("(none)");
+                        else
+                            CBMonth.Items.Add(a);
+                    }
+                }
+                CBMonth.Enabled = true;
+                DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[6]
+                    .Replace("{Date}", CBYear.Text));
+                DGVAmountOffHistory.Rows.Clear();
+                for (int a = 0; a < ds.Tables[0].Rows.Count; a++)
+                {
+                    DGVAmountOffHistory.Rows.Add(ds.Tables[0].Rows[a][0], ds.Tables[0].Rows[a][1], ds.Tables[0].Rows[a][2], ds.Tables[0].Rows[a][3]);
                 }
             }
         }
 
-        private void BTdeletefile_Click(object sender, EventArgs e)
+        private void CBMonth_SelectedIndexChanged(object sender, EventArgs e)
         {
-            StatusBoxFile = 0;
-            BTOpenfile.Text = "เปิดไฟล์";
-            imgeLocation = "";
+            if(CBMonth.SelectedIndex != -1)
+            {
+                DataSet ds;
+                if(CBMonth.SelectedIndex >= 1 && CBMonth.SelectedIndex < 10)
+                {
+                    ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[6]
+                    .Replace("{Date}", CBYear.SelectedItem.ToString() + "-0" + CBMonth.SelectedItem.ToString()));
+                }
+                else if (CBMonth.SelectedIndex >= 10)
+                {
+                    ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[6]
+                    .Replace("{Date}", CBYear.SelectedItem.ToString() + "-" + CBMonth.SelectedItem.ToString()));
+                }
+                else
+                {
+                    ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[6]
+                   .Replace("{Date}", CBYear.SelectedItem.ToString() + "-"));
+                }
+                
+                DGVAmountOffHistory.Rows.Clear();
+                for(int a = 0; a < ds.Tables[0].Rows.Count; a++)
+                {
+                    DGVAmountOffHistory.Rows.Add(ds.Tables[0].Rows[a][0], ds.Tables[0].Rows[a][1], ds.Tables[0].Rows[a][2], ds.Tables[0].Rows[a][3]);
+                }
+            }
         }
+
+        //private void BTOpenfile_Click(object sender, EventArgs e)
+        //{
+        //    if (StatusBoxFile == 0)
+        //    {
+        //        try
+        //        {
+        //            OpenFileDialog dialog = new OpenFileDialog();
+        //            dialog.Filter = "pdf files(*.pdf)|*.pdf";
+        //            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        //            {
+        //                imgeLocation = dialog.FileName;
+        //            }
+        //            if (imgeLocation != "")
+        //            {
+        //                BTOpenfile.Text = "ส่งไฟล์";
+        //                StatusBoxFile = 1;
+        //                //label6.Text = "Scan(  พบไฟล์  )";
+        //            }
+
+        //        }
+        //        catch
+        //        {
+        //            MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        }
+        //    }
+        //    else if (StatusBoxFile == 1)
+        //    {
+        //        var smb = new SmbFileContainer("CamcelMember");
+        //        if (smb.IsValidConnection())
+        //        {
+        //            String Return = smb.SendFile(imgeLocation, "CMember_" + TBTeacherNo.Text + ".pdf");
+        //            MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //            StatusBoxFile = 0;
+        //            BTOpenfile.Text = "เปิดไฟล์";
+        //            imgeLocation = "";
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //        }
+        //    }
+        //}
+
+        //private void BTdeletefile_Click(object sender, EventArgs e)
+        //{
+        //    StatusBoxFile = 0;
+        //    BTOpenfile.Text = "เปิดไฟล์";
+        //    imgeLocation = "";
+        //}
     }
 }
