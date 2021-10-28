@@ -1072,6 +1072,7 @@ namespace example.GOODS
                         catch
                         {
                             Console.WriteLine("===== Don't have Index in Combobox. =====");
+                            //
                         }
                         CBPayment_Pay.Enabled = true;
                         CBPayment_Pay.SelectedIndex = 0;
