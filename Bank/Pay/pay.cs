@@ -1082,6 +1082,7 @@ namespace example.GOODS
                             CBList_Pay.Enabled = false;
                             BListAdd_Pay.Enabled = false;
                             TBAmount_Pay.Text = "0";
+                            //
                         }
                     }
                 }
