@@ -666,8 +666,8 @@ namespace example.Bank.Loan
             }
             else
             {
-                Class.Print.PrintPreviewDialog.Printdatagridview(e, DGVLoanDetail, bmp);
-               
+                Class.Print.PrintPreviewDialog.PrintDeReport(e, DGVLoanDetail);
+
             }
             //e.HasMorePages = true;
             //Class.Print.PrintPreviewDialog.ExamplePrint(sender,e);
