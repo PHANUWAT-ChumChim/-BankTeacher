@@ -87,8 +87,6 @@ namespace example.Bank.Loan
             this.Column11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.label20 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
             this.DGVLoanDetail = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -158,8 +156,9 @@ namespace example.Bank.Loan
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label15.Location = new System.Drawing.Point(221, 526);
-            this.label15.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+
+            this.label15.Location = new System.Drawing.Point(19, 624);
+
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(145, 32);
             this.label15.TabIndex = 5;
@@ -172,8 +171,7 @@ namespace example.Bank.Loan
             this.BPrintLoanDoc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BPrintLoanDoc.Cursor = System.Windows.Forms.Cursors.Default;
             this.BPrintLoanDoc.Enabled = false;
-            this.BPrintLoanDoc.Location = new System.Drawing.Point(363, 518);
-            this.BPrintLoanDoc.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BPrintLoanDoc.Location = new System.Drawing.Point(208, 624);
             this.BPrintLoanDoc.Name = "BPrintLoanDoc";
             this.BPrintLoanDoc.Size = new System.Drawing.Size(173, 53);
             this.BPrintLoanDoc.TabIndex = 57;
@@ -723,8 +721,6 @@ namespace example.Bank.Loan
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.label20);
-            this.tabPage3.Controls.Add(this.button2);
             this.tabPage3.Controls.Add(this.DGVLoanDetail);
             this.tabPage3.Location = new System.Drawing.Point(4, 39);
             this.tabPage3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
@@ -781,7 +777,7 @@ namespace example.Bank.Loan
             this.DGVLoanDetail.RowHeadersVisible = false;
             this.DGVLoanDetail.RowHeadersWidth = 51;
             this.DGVLoanDetail.RowTemplate.Height = 24;
-            this.DGVLoanDetail.Size = new System.Drawing.Size(838, 260);
+            this.DGVLoanDetail.Size = new System.Drawing.Size(1118, 395);
             this.DGVLoanDetail.TabIndex = 110;
             // 
             // dataGridViewTextBoxColumn1
@@ -1054,7 +1050,6 @@ namespace example.Bank.Loan
             this.tabPage5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVGuarantorCredit)).EndInit();
             this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVLoanDetail)).EndInit();
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
@@ -1134,10 +1129,6 @@ namespace example.Bank.Loan
         private System.Windows.Forms.DataGridViewTextBoxColumn Column10;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
-
-     
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button BReset;
     }
 }
