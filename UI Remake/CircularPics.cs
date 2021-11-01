@@ -12,6 +12,7 @@ namespace example.UiRemake
     {
         protected override void OnPaint(PaintEventArgs pe)
         {
+            //
             GraphicsPath g = new GraphicsPath();
             g.AddEllipse(0, 0, ClientSize.Width, ClientSize.Height);
             this.Region = new System.Drawing.Region(g);
