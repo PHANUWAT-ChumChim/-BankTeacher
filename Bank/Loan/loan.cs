@@ -657,11 +657,9 @@ namespace example.Bank.Loan
         // กระดาษปริ้น
         private void printDocument1_PrintPage_1(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            if (P1 == 1) 
-            {
-                Class.Print.PrintPreviewDialog.PrintLoan(e, SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text), example.GOODS.Menu.Date[2], example.GOODS.Menu.Monthname, (Convert.ToInt32(example.GOODS.Menu.Date[0]) + 543).ToString(), TBTeacherNo.Text, TBLoanNo.Text);
-                
-            }
+                Class.Print.PrintPreviewDialog.PrintLoan(e, SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text), 
+                    example.GOODS.Menu.Date[2], example.GOODS.Menu.Monthname, (Convert.ToInt32(example.GOODS.Menu.Date[0]) + 543).ToString(), 
+                    TBTeacherNo.Text, TBLoanNo.Text,DGVGuarantor.RowCount);
         }
         //----------------------- End Printf -------------------- ////////
 
