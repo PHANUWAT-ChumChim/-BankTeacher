@@ -119,8 +119,6 @@ namespace example.Bank
                 CBYear.Items.Add(Year);
                 Year--;
             }
-
-            CBYear.SelectedIndex = 0;
         }
 
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
@@ -295,13 +293,7 @@ namespace example.Bank
                     }
                 }
                 CBMonth.Enabled = true;
-                DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[6]
-                    .Replace("{Date}", CBYear.Text));
-                DGVAmountOffHistory.Rows.Clear();
-                for (int a = 0; a < ds.Tables[0].Rows.Count; a++)
-                {
-                    DGVAmountOffHistory.Rows.Add(ds.Tables[0].Rows[a][0], ds.Tables[0].Rows[a][1], ds.Tables[0].Rows[a][2], ds.Tables[0].Rows[a][3]);
-                }
+                CBMonth.SelectedIndex = 0;
             }
         }
 
@@ -330,6 +322,10 @@ namespace example.Bank
                 for(int a = 0; a < ds.Tables[0].Rows.Count; a++)
                 {
                     DGVAmountOffHistory.Rows.Add(ds.Tables[0].Rows[a][0], ds.Tables[0].Rows[a][1], ds.Tables[0].Rows[a][2], ds.Tables[0].Rows[a][3]);
+                }
+                if (ds.Tables[0].Rows.Count == 0 && tabControl1.SelectedIndex == 1)
+                {
+                    MessageBox.Show("ไม่พบรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
         }
