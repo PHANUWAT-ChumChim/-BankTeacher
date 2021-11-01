@@ -445,7 +445,7 @@ namespace example.Bank.Pay
                         {
                             BAutoSelection_Click(sender, new EventArgs());
                         }
-                        CBYearSelection_Pay.Text = example.GOODS.Menu.Date[0];
+                        CBYearSelection_Pay.Text = example.Bank.Menu.Date[0];
                         CBYearSelection_ShareInfo.Text = example.Bank.Menu.Date[0];
                         CBYearSelection_Pay.Text = example.Bank.Menu.Date[0];
                         CBYearSelection_BillInfo.Text = example.Bank.Menu.Date[0];
@@ -994,7 +994,6 @@ namespace example.Bank.Pay
                                     {
                                         try
                                         {
-                                            DataSet dsCheckMonth = example.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]
                                             if(dtGuarantor.Rows.Count == 1)
                                             {
                                                 DataSet dsCheckMonth = example.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]

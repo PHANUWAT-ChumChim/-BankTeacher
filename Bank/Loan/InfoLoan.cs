@@ -83,7 +83,6 @@ namespace example.Bank.Loan
 
                 IN = new Bank.Search(SQLDefault[0]);
                 IN.ShowDialog();
-<<<<<<< Updated upstream
                 TBTeacherNo.Text = Bank.Search.Return[0];
                 TBTeacherName.Text = Bank.Search.Return[1];
                 comboBox1.Enabled = true;
@@ -93,7 +92,6 @@ namespace example.Bank.Loan
                 comboBox1.SelectedIndex = -1;
                 TBTeacherName.Text = "";
                 TBYearPay_Detail.Text = "";
-                //textBox2.Text = "";
                 TBMonthPay_Detail.Text = "";
                 TBTotalAmount_Detail.Text = "";
                 TBPayNo_Detail.Text = "";
@@ -106,9 +104,7 @@ namespace example.Bank.Loan
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
                     .Replace("{TeacherNo}", TBTeacherNo.Text));
                 for (int x = 0; x < dt.Rows.Count; x++)
-=======
                 if(Bank.Search.Return[0].ToString() != "")
->>>>>>> Stashed changes
                 {
                     TBTeacherNo.Text = Bank.Search.Return[0];
                     TBTeacherName.Text = Bank.Search.Return[1];
@@ -134,10 +130,6 @@ namespace example.Bank.Loan
                     comboBox1.Items.Clear();
                     comboBox1.SelectedIndex = -1;
                     TBTeacherName.Text = "";
-                    textBox1.Text = "";
-                    textBox3.Text = "";
-                    textBox4.Text = "";
-                    textBox5.Text = "";
                     TBLoanStatus.Text = "";
                     TBLoanNo.Text = "";
                     TBSavingAmount.Text = "";

@@ -130,7 +130,7 @@ namespace example.Bank
 
         private void pay_Click(object sender, EventArgs e)
         {
-            pay Mn = new pay(0);
+            example.Bank.Pay.pay Mn = new example.Bank.Pay.pay(0);
             CloseFrom(Mn);
         }
 
