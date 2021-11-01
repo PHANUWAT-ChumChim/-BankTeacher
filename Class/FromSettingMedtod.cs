@@ -24,8 +24,8 @@ namespace example.Class
             {
                 CB.Items.Add(F.Name.ToString());
             }
-            example.GOODS.Menu.FontSize = Fs.ToString();
-            example.GOODS.Home.F = F;
+            example.Bank.Menu.FontSize = Fs.ToString();
+            example.Bank.Home.F = F;
         }
        
          public static void ResetAllControls(Control form)

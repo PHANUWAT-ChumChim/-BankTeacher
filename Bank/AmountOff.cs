@@ -113,7 +113,7 @@ namespace example.Bank
                     cb[x].Items.Add(new example.Class.ComboBoxPayment(dtPayment.Rows[a][0].ToString(),
                         dtPayment.Rows[a][1].ToString()));
 
-            int Year = Convert.ToInt32(example.GOODS.Menu.Date[0]);
+            int Year = Convert.ToInt32(example.Bank.Menu.Date[0]);
             for(int a = 0; a < 5; a++)
             {
                 CBYear.Items.Add(Year);
@@ -273,7 +273,7 @@ namespace example.Bank
             {
                 CBMonth.SelectedIndex = -1;
                 CBMonth.Items.Clear();
-                int Month = Convert.ToInt32(example.GOODS.Menu.Date[1]);
+                int Month = Convert.ToInt32(example.Bank.Menu.Date[1]);
                 if(CBYear.SelectedIndex == 0)
                 {
                     for(int a = 0; a <= Month; a++)

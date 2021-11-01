@@ -83,6 +83,7 @@ namespace example.Bank.Loan
 
                 IN = new Bank.Search(SQLDefault[0]);
                 IN.ShowDialog();
+<<<<<<< Updated upstream
                 TBTeacherNo.Text = Bank.Search.Return[0];
                 TBTeacherName.Text = Bank.Search.Return[1];
                 comboBox1.Enabled = true;
@@ -105,20 +106,14 @@ namespace example.Bank.Loan
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
                     .Replace("{TeacherNo}", TBTeacherNo.Text));
                 for (int x = 0; x < dt.Rows.Count; x++)
+=======
+                if(Bank.Search.Return[0].ToString() != "")
+>>>>>>> Stashed changes
                 {
-                    for (int aa = 0; aa < cb.Length; aa++)
-                    {
-                        cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + (x + 1), dt.Rows[x][0].ToString()));
-                    }
+                    TBTeacherNo.Text = Bank.Search.Return[0];
+                    TBTeacherName.Text = Bank.Search.Return[1];
+                    TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
                 }
-                if(Bank.Search.Return[0] == "")
-                {
-                    comboBox1.Enabled = false;
-                    Check = 0;
-
-                }
-
-                TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
 
             }
             catch (Exception x)
@@ -133,7 +128,21 @@ namespace example.Bank.Loan
             {
                 if (TBTeacherNo.Text.Length == 6)
                 {
+                    comboBox1.Enabled = true;
+                    comboBox1.Items.Clear();
+                    Check = 1;
+                    comboBox1.Items.Clear();
+                    comboBox1.SelectedIndex = -1;
+                    TBTeacherName.Text = "";
+                    textBox1.Text = "";
+                    textBox3.Text = "";
+                    textBox4.Text = "";
+                    textBox5.Text = "";
+                    TBLoanStatus.Text = "";
+                    TBLoanNo.Text = "";
+                    TBSavingAmount.Text = "";
                     DGVGuarantor.Rows.Clear();
+                    DGVLoanDetail.Rows.Clear();
                     DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text));
                     if (dt.Rows.Count != 0)
                     {

@@ -51,7 +51,12 @@ namespace example.Bank.Loan
           "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo   \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as c on a.TeacherNo = c.TeacherNo  \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo  \r\n " +
+<<<<<<< Updated upstream
           "WHERE a.TeacherNo = '{TeacherNo}' and a.LoanStatusNo = 1 \r\n " +
+=======
+          "LEFT JOIN EmployeeBank.dbo.tblMember as e on b.TeacherNo = e.TeacherNo \r\n" +
+          "WHERE a.TeacherNo = '{TeacherNo}' and LoanStatusNo = 1 and  LoanStatusNo != 3 and MemberStatusNo = 1 \r\n " +
+>>>>>>> Stashed changes
           "GROUP BY a.LoanNo , CAST(d.PrefixName + ' ' + Fname + ' ' + Lname AS NVARCHAR) ,ISNULL(CAST(a.PayDate as int) , 1) \r\n " +
           "ORDER BY a.LoanNo "
           
@@ -110,36 +115,9 @@ namespace example.Bank.Loan
                     label3.Text = "0";
                     CBB4Oppay.Enabled = false;
                     button1.Enabled = false;
-                    comboBox1.Enabled = true;
                     comboBox1.Items.Clear();
                     Check = 1;
-                    ComboBox[] cb = new ComboBox[] { comboBox1 };
-                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
-                        .Replace("{TeacherNo}", TBTeacherNo.Text));
-                    int CheckPay = 0;
-                    for (int x = 0; x < dt.Rows.Count; x++)
-                    {
-                        for (int aa = 0; aa < cb.Length; aa++)
-                        {
-                            int.TryParse(dt.Rows[x][2].ToString(), out CheckPay);
-                            cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[x][0], dt.Rows[x][0].ToString()));
-                            
-                        }
-                    }
-                    TBLoanNo.Text = "";
-                    TBLoanStatus.Text = "";
-                    TBDate.Text = "";
-                    comboBox1.Enabled = true;
-                    if (comboBox1.Items.Count == 1)
-                    {
-                        comboBox1.SelectedIndex = 0;
-                        label9.Visible = false;
-                    }
-                    else if(comboBox1.Items.Count == 0)
-                    {
-                        label9.Visible = true;
-                        comboBox1.Enabled = false;
-                    }
+                    TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
                 }
                 
             }
@@ -180,6 +158,7 @@ namespace example.Bank.Loan
                         TBLoanStatus.Text = "";
                         TBDate.Text = "";
                         comboBox1.Enabled = true;
+                        CBB4Oppay.SelectedIndex = 0;
                         if (comboBox1.Items.Count == 1)
                         {
                             comboBox1.SelectedIndex = 0;
