@@ -285,5 +285,28 @@ namespace example.Bank.Loan
         {
 
         }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedIndex == 2)
+            {
+                BTPrint.Visible = true;
+            }
+            else
+                BTPrint.Visible = false;
+        }
+
+        private void BTPrint_Click(object sender, EventArgs e)
+        {
+            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+            {
+                printDocument1.Print();
+            }
+        }
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Class.Print.PrintPreviewDialog.PrintDeReport(e, DGVLoanDetail);
+            
+        }
     }
 }

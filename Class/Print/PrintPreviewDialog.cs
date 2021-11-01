@@ -357,10 +357,12 @@ namespace example.Class.Print
                         {
                             if (Cells == G.Rows[Rows].Cells.Count - 1)
                             {
-                                Type Checkstring = Convert.ToSingle(G.Rows[Rows].Cells[Cells].Value).GetType();
+                                
+                                Type Checkstring = Convert.ToSingle(G.Rows[Rows].Cells[Cells-1].Value).GetType();
                                 if (Checkstring == typeof(float))
-                                    SUM.Add(Convert.ToSingle(G.Rows[Rows].Cells[Cells].Value));
+                                    SUM.Add(Convert.ToSingle(G.Rows[Rows].Cells[Cells-1].Value));
                                 //SUM.Add(Convert.ToInt32(G.Rows[Rows].Cells[Cells].Value.ToString()));
+                            
                             }
                             // เรียกใช้ โรงงาน การตัด  เเละ การวัด ขนาดสี่เหลี่ยมพื้นผ้า
                             Class.Print.SetPrintMedtods.CutingCharAndString
@@ -387,8 +389,11 @@ namespace example.Class.Print
                     }
                 }
             }
-            Class.Print.SetPrintMedtods.Tabletotal(e, PenBlack, SUM, BrushBlack, 18, X, startTableY);
-
+         
+           Class.Print.SetPrintMedtods.Tabletotal(e, PenBlack, SUM, BrushBlack, 18, X, startTableY);
+          
+          
+           
             for (int l = 0; l < cutline.Count; l++)
             {
                 e.Graphics.DrawLine(PenBlack, cutline[l], y1, cutline[l], startTableY);
@@ -403,9 +408,11 @@ namespace example.Class.Print
             if (startTableY <= linesToPrint || Currentposition >= G.RowCount)
             {
                 cutline.Clear();
-                onetimestartColumns--;
+                //onetimestartColumns--;
                 e.HasMorePages = false;
-                onetimestartColumns++;
+                //onetimestartColumns++;
+                onetimestartColumns = 0;
+                Currentposition = 0;
             }
             else
             {

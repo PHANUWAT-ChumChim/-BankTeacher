@@ -590,8 +590,6 @@ namespace example.Bank.Loan
         // พิมพ์เอกสารกู้
         private void BPrintLoanDoc_Click_2(object sender, EventArgs e)
         {
-            //label9.Text = "Scan(  พบไฟล์  )";
-            P1 = 1;
             if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
             {
                 printDocument1.Print();
@@ -664,13 +662,6 @@ namespace example.Bank.Loan
                 Class.Print.PrintPreviewDialog.PrintLoan(e, SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text), example.GOODS.Menu.Date[2], example.GOODS.Menu.Monthname, (Convert.ToInt32(example.GOODS.Menu.Date[0]) + 543).ToString(), TBTeacherNo.Text, TBLoanNo.Text);
                 
             }
-            else
-            {
-                Class.Print.PrintPreviewDialog.PrintDeReport(e, DGVLoanDetail);
-
-            }
-            //e.HasMorePages = true;
-            //Class.Print.PrintPreviewDialog.ExamplePrint(sender,e);
         }
         //----------------------- End Printf -------------------- ////////
 
