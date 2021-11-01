@@ -8,12 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace example.GOODS
+namespace example.Bank
 {
     public partial class Menu : Form
     {
         public static int startAmountMin;
         public static int startAmountMax;
+        public static int perShare;
         public static int DateAmountChange;
         public static string FontSize;
         public static int MinLoan;
@@ -29,7 +30,7 @@ namespace example.GOODS
         private String[] SQLDefault = new String[]
          { 
              //[0]Check Setting INPUT: - 
-             "SELECT DateAmountChange , StartAmountMin , StartAmountMax,MinLoan \r\n" +
+             "SELECT DateAmountChange , StartAmountMin , StartAmountMax,MinLoan , PerShare\r\n" +
              "FROM EmployeeBank.dbo.tblSettingAmount;"
           ,
              //[1]Select Date Input :  -
@@ -41,7 +42,7 @@ namespace example.GOODS
         {
             InitializeComponent();
             Date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]).Rows[0][0].ToString().Split('-');
-            example.GOODS.Menu.Monthname = Month[Convert.ToInt32(example.GOODS.Menu.Date[1]) - 1];
+            example.Bank.Menu.Monthname = Month[Convert.ToInt32(example.Bank.Menu.Date[1]) - 1];
 
             Class.UserInfo.SetTeacherInformation("T43005", "Manit Hodkuntod", "1");
 
@@ -50,6 +51,7 @@ namespace example.GOODS
             startAmountMin = Convert.ToInt32(dt.Rows[0][1]);
             startAmountMax = Convert.ToInt32(dt.Rows[0][2]);
             MinLoan = Convert.ToInt32(dt.Rows[0][3]);
+            perShare = Convert.ToInt32(dt.Rows[0][4]);
         }
         public void CloseFrom(Form F)
         {
@@ -66,13 +68,13 @@ namespace example.GOODS
         }
         public void shareinformation(object sender, EventArgs e)
         {
-            pay Mn = new pay(1);
+            Bank.Pay.pay Mn = new Bank.Pay.pay(1);
             CloseFrom(Mn);
         }
 
         private void จายยอดToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            pay Mn = new pay(0);
+            Bank.Pay.pay Mn = new Bank.Pay.pay(0);
             CloseFrom(Mn);
         }
 
@@ -83,18 +85,18 @@ namespace example.GOODS
 
         private void หนาเเรกToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Home Hm = new Home();
+            example.Bank.Home Hm = new example.Bank.Home();
             CloseFrom(Hm);
         }
         private void loaninformation(object sender, EventArgs e)
         {
-            pay Mn = new pay(2);
+            Bank.Pay.pay Mn = new example.Bank.Pay.pay(2);
             CloseFrom(Mn);
         }
 
         private void member(object sender, EventArgs e)
         {
-            pay Mn = new pay(3);
+            Bank.Pay.pay Mn = new Bank.Pay.pay(3);
             CloseFrom(Mn);
         }
 
@@ -105,14 +107,14 @@ namespace example.GOODS
         }
         private void Menu_Load_1(object sender, EventArgs e)
         {
-            Home Hm = new Home();
+            example.Bank.Home Hm = new example.Bank.Home();
             CloseFrom(Hm);
         }
 
         private void SettingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Bank.Setting St = new Bank.Setting();
-            St.Show();
+            St.ShowDialog();
         }
         private void TMLCancelMembers_Click(object sender, EventArgs e)
         {

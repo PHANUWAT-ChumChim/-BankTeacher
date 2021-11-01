@@ -35,7 +35,7 @@ namespace example.Class.Print
             {
                 if (Amount == "")
                 {
-                    Amount = example.GOODS.Menu.startAmountMin.ToString();
+                    Amount = example.Bank.Menu.startAmountMin.ToString();
                 }
                 // X 850 = 22 cm เเนะนำ 800 //
                 // A4 = 21 cm  {Width = 356.70163 Height = 136.230438} {Width = 356.70163 Height = 102.954086} // 
@@ -147,9 +147,8 @@ namespace example.Class.Print
                         Yearpay++;
                         PayNo = PayNo - 12;
                     }
-                    LimitMonthPay = example.GOODS.Menu.Month[PayNo].ToString() + " พ.ศ. " + (Yearpay + 543).ToString();
-                    //LimitMonthPay = example.GOODS.Menu.Monthname.ToString() + " พ.ศ. " + (Yearpay + 543).ToString();
-
+                    LimitMonthPay = example.Bank.Menu.Month[PayNo].ToString() + " พ.ศ. " + (Yearpay + 543).ToString();
+                    //LimitMonthPay = example.Bank.Menu.Monthname.ToString() + " พ.ศ. " + (Yearpay + 543).ToString();
                 }
                 //----------------------
 

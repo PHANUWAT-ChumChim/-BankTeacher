@@ -57,7 +57,6 @@ namespace example.Bank
 
         private void Search_Load(object sender, EventArgs e)
         {
-
         }
 
         private void TBTeacherNo_TextChanged(object sender, EventArgs e)

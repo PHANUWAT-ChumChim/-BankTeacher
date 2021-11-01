@@ -1,5 +1,5 @@
 ﻿
-namespace example.GOODS
+namespace example.Bank
 {
     partial class Menu
     {
@@ -29,7 +29,7 @@ namespace example.GOODS
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Menu));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(example.Bank.Menu));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.Home_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pay = new System.Windows.Forms.ToolStripMenuItem();
