@@ -237,7 +237,7 @@ namespace example.GOODS
           //[9] SELECT LOANID and SELECT DATE Register Member INPUT : {TeacherNo}
           "SELECT LoanNo \r\n " +
           "FROM EmployeeBank.dbo.tblLoan  \r\n " +
-          "WHERE TeacherNo = '{TeacherNo}' and LoanStatusNo != 4 ; \r\n " +
+          "WHERE TeacherNo = '{TeacherNo}' and LoanStatusNo = 2 ; \r\n " +
           " \r\n " +
           "SELECT CAST(DateAdd as date) \r\n " +
           "FROM EmployeeBank.dbo.tblMember \r\n " +
@@ -1160,6 +1160,10 @@ namespace example.GOODS
                                 {
                                     StatusPay = "ยังไม่จ่าย";
                                 }
+                            }
+                            if(ds.Tables[1].Rows.Count == 0)
+                            {
+                                StatusPay = "ยังไม่จ่าย";
                             }
 
                         }

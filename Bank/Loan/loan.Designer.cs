@@ -42,6 +42,8 @@ namespace example.Bank.Loan
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.Delete = new System.Windows.Forms.Button();
+            this.label15 = new System.Windows.Forms.Label();
+            this.BPrintLoanDoc = new System.Windows.Forms.Button();
             this.BSave = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -92,13 +94,6 @@ namespace example.Bank.Loan
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
-            this.BPrintLoanDoc = new System.Windows.Forms.Button();
-            this.label15 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.TBSavingAmount = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
@@ -126,10 +121,6 @@ namespace example.Bank.Loan
             ((System.ComponentModel.ISupportInitialize)(this.DGVGuarantorCredit)).BeginInit();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVLoanDetail)).BeginInit();
-            this.tabPage4.SuspendLayout();
-            this.panel9.SuspendLayout();
-            this.panel4.SuspendLayout();
-            this.panel2.SuspendLayout();
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGV1112)).BeginInit();
@@ -161,6 +152,32 @@ namespace example.Bank.Loan
             this.Delete.UseVisualStyleBackColor = true;
             this.Delete.Click += new System.EventHandler(this.Delete_Click_1);
             // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label15.Location = new System.Drawing.Point(295, 648);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(183, 40);
+            this.label15.TabIndex = 5;
+            this.label15.Text = "พิมพ์เอกสารสัญญากู้";
+            this.label15.Visible = false;
+            // 
+            // BPrintLoanDoc
+            // 
+            this.BPrintLoanDoc.BackColor = System.Drawing.Color.White;
+            this.BPrintLoanDoc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BPrintLoanDoc.Cursor = System.Windows.Forms.Cursors.Default;
+            this.BPrintLoanDoc.Enabled = false;
+            this.BPrintLoanDoc.Location = new System.Drawing.Point(484, 637);
+            this.BPrintLoanDoc.Name = "BPrintLoanDoc";
+            this.BPrintLoanDoc.Size = new System.Drawing.Size(231, 65);
+            this.BPrintLoanDoc.TabIndex = 57;
+            this.BPrintLoanDoc.Text = "Print";
+            this.BPrintLoanDoc.UseVisualStyleBackColor = false;
+            this.BPrintLoanDoc.Visible = false;
+            this.BPrintLoanDoc.Click += new System.EventHandler(this.BPrintLoanDoc_Click_2);
+            // 
             // BSave
             // 
             this.BSave.BackColor = System.Drawing.SystemColors.ButtonHighlight;
@@ -179,7 +196,6 @@ namespace example.Bank.Loan
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(8, 165);
             this.tabControl1.Name = "tabControl1";
@@ -758,81 +774,6 @@ namespace example.Bank.Loan
             this.Column6.Name = "Column6";
             this.Column6.ReadOnly = true;
             // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.panel9);
-            this.tabPage4.Location = new System.Drawing.Point(4, 45);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(1130, 404);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "เอกสารกู้ยื่ม";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // panel9
-            // 
-            this.panel9.BackColor = System.Drawing.Color.White;
-            this.panel9.Controls.Add(this.panel4);
-            this.panel9.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel9.Location = new System.Drawing.Point(3, 3);
-            this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(1122, 398);
-            this.panel9.TabIndex = 109;
-            // 
-            // panel4
-            // 
-            this.panel4.BackColor = System.Drawing.Color.White;
-            this.panel4.Controls.Add(this.panel2);
-            this.panel4.Location = new System.Drawing.Point(14, 8);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1095, 370);
-            this.panel4.TabIndex = 122;
-            // 
-            // panel2
-            // 
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.label9);
-            this.panel2.Location = new System.Drawing.Point(7, 12);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1068, 215);
-            this.panel2.TabIndex = 89;
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(10, 156);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(136, 37);
-            this.label9.TabIndex = 90;
-            this.label9.Text = "Scan(  ไม่พบ  )";
-            // 
-            // BPrintLoanDoc
-            // 
-            this.BPrintLoanDoc.BackColor = System.Drawing.Color.White;
-            this.BPrintLoanDoc.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BPrintLoanDoc.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BPrintLoanDoc.Enabled = false;
-            this.BPrintLoanDoc.Location = new System.Drawing.Point(484, 637);
-            this.BPrintLoanDoc.Name = "BPrintLoanDoc";
-            this.BPrintLoanDoc.Size = new System.Drawing.Size(231, 65);
-            this.BPrintLoanDoc.TabIndex = 57;
-            this.BPrintLoanDoc.Text = "Print";
-            this.BPrintLoanDoc.UseVisualStyleBackColor = false;
-            this.BPrintLoanDoc.Visible = false;
-            this.BPrintLoanDoc.Click += new System.EventHandler(this.BPrintLoanDoc_Click_2);
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label15.Location = new System.Drawing.Point(295, 648);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(183, 40);
-            this.label15.TabIndex = 5;
-            this.label15.Text = "พิมพ์เอกสารสัญญากู้";
-            this.label15.Visible = false;
-            // 
             // panel7
             // 
             this.panel7.BackColor = System.Drawing.Color.White;
@@ -1060,11 +1001,6 @@ namespace example.Bank.Loan
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVLoanDetail)).EndInit();
-            this.tabPage4.ResumeLayout(false);
-            this.panel9.ResumeLayout(false);
-            this.panel4.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -1081,9 +1017,6 @@ namespace example.Bank.Loan
         private System.Windows.Forms.Button BTsave;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Button BSearchTeacher;
@@ -1131,8 +1064,6 @@ namespace example.Bank.Loan
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.Button BCalculate;
         private System.Windows.Forms.Button BPrintLoanDoc;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
