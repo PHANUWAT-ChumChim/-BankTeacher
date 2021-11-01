@@ -51,7 +51,7 @@ namespace example.Bank.Loan
           "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo   \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as c on a.TeacherNo = c.TeacherNo  \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo  \r\n " +
-          "WHERE a.TeacherNo = '{TeacherNo}' and LoanStatusNo = 1 and  LoanStatusNo != 3 and MemberStatusNo = 1 \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}' and a.LoanStatusNo = 1 \r\n " +
           "GROUP BY a.LoanNo , CAST(d.PrefixName + ' ' + Fname + ' ' + Lname AS NVARCHAR) ,ISNULL(CAST(a.PayDate as int) , 1) \r\n " +
           "ORDER BY a.LoanNo "
           

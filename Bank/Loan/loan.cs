@@ -590,7 +590,7 @@ namespace example.Bank.Loan
         // พิมพ์เอกสารกู้
         private void BPrintLoanDoc_Click_2(object sender, EventArgs e)
         {
-            label9.Text = "Scan(  พบไฟล์  )";
+            //label9.Text = "Scan(  พบไฟล์  )";
             P1 = 1;
             if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
             {

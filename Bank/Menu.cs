@@ -128,7 +128,8 @@ namespace example.GOODS
 
         private void pay_Click(object sender, EventArgs e)
         {
-
+            pay Mn = new pay(0);
+            CloseFrom(Mn);
         }
 
         private void Cancel_Click(object sender, EventArgs e)
