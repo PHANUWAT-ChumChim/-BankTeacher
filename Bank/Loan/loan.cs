@@ -15,7 +15,6 @@ namespace example.Bank.Loan
     {
         //------------------------- index -----------------
         Bitmap bmp;
-        int P1;
         string name = "", id = "";
         int StatusBoxFile = 0;
         String imgeLocation = "";
@@ -599,7 +598,6 @@ namespace example.Bank.Loan
         {
             if (DGVLoanDetail.Rows.Count != 0)
             {
-                P1 = 0;
                 if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                 {
                     printDocument1.Print();
@@ -657,11 +655,11 @@ namespace example.Bank.Loan
         // กระดาษปริ้น
         private void printDocument1_PrintPage_1(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            if (P1 == 1) 
-            {
-                Class.Print.PrintPreviewDialog.PrintLoan(e, SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text), example.Bank.Menu.Date[2], example.Bank.Menu.Monthname, (Convert.ToInt32(example.Bank.Menu.Date[0]) + 543).ToString(), TBTeacherNo.Text, TBLoanNo.Text);
-                
-            }
+
+                Class.Print.PrintPreviewDialog.PrintLoan(e, SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text), 
+                    example.GOODS.Menu.Date[2], example.GOODS.Menu.Monthname, (Convert.ToInt32(example.GOODS.Menu.Date[0]) + 543).ToString(), 
+                    TBTeacherNo.Text, TBLoanNo.Text,DGVGuarantor.RowCount);
+
         }
         //----------------------- End Printf -------------------- ////////
 
