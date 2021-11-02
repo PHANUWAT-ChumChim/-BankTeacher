@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 
-namespace example.Bank.Pay
+namespace BankTeacher.Bank.Pay
 {
     public partial class Calculator : Form
     {

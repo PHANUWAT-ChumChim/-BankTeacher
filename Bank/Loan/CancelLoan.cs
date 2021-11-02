@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace example.Bank.Loan
+namespace BankTeacher.Bank.Loan
 {
     public partial class CancelLoan : Form
     {
@@ -109,7 +109,7 @@ namespace example.Bank.Loan
                         {
                             for (int aa = 0; aa < cb.Length; aa++)
                             {
-                                cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[0][3].ToString(), dt.Rows[x][3].ToString()));
+                                cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[0][3].ToString(), dt.Rows[x][3].ToString()));
                             }
                         }
                         if(comboBox1.Items.Count != 0)
@@ -151,8 +151,8 @@ namespace example.Bank.Loan
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            example.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as example.Class.ComboBoxPayment);
-            DataTable dt = example.Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{LoanNo}",Loan.No));
+            BankTeacher.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as BankTeacher.Class.ComboBoxPayment);
+            DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{LoanNo}",Loan.No));
             if (dt.Rows.Count != 0)
             {
                 TBTeacherName.Text = dt.Rows[0][0].ToString();
@@ -213,7 +213,7 @@ namespace example.Bank.Loan
 
         private void BCancelSave_Click(object sender, EventArgs e)
         {
-            example.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as example.Class.ComboBoxPayment);
+            BankTeacher.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as BankTeacher.Class.ComboBoxPayment);
             if (TBTeacherNo.Text != "" && TBTeacherName.Text != "" && textBox6.Text == "ยังไม่ได้จ่าย" && MessageBox.Show("ยืนยันที่จะลบการกู้นี้หรือไม่","ระบบ",MessageBoxButtons.YesNo,MessageBoxIcon.Information) == DialogResult.Yes)
             {
                 Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]

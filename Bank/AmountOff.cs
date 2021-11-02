@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static example.Class.ProtocolSharing.ConnectSMB;
+using static BankTeacher.Class.ProtocolSharing.ConnectSMB;
 
-namespace example.Bank
+namespace BankTeacher.Bank
 {
     public partial class AmountOff : Form
     {
@@ -110,10 +110,10 @@ namespace example.Bank
             DataTable dtPayment = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4]);
             for (int a = 0; a < dtPayment.Rows.Count; a++)
                 for (int x = 0; x < cb.Length; x++)
-                    cb[x].Items.Add(new example.Class.ComboBoxPayment(dtPayment.Rows[a][0].ToString(),
+                    cb[x].Items.Add(new BankTeacher.Class.ComboBoxPayment(dtPayment.Rows[a][0].ToString(),
                         dtPayment.Rows[a][1].ToString()));
 
-            int Year = Convert.ToInt32(example.Bank.Menu.Date[0]);
+            int Year = Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]);
             for(int a = 0; a < 5; a++)
             {
                 CBYear.Items.Add(Year);
@@ -184,7 +184,7 @@ namespace example.Bank
 
         private void BSaveAmountOff_Click(object sender, EventArgs e)
         {
-            example.Class.ComboBoxPayment Payment = (CBTypePay.SelectedItem as example.Class.ComboBoxPayment);
+            BankTeacher.Class.ComboBoxPayment Payment = (CBTypePay.SelectedItem as BankTeacher.Class.ComboBoxPayment);
             if (TBWithDraw.Text != "" && CBTypePay.SelectedIndex != -1)
             {
                 try
@@ -271,7 +271,7 @@ namespace example.Bank
             {
                 CBMonth.SelectedIndex = -1;
                 CBMonth.Items.Clear();
-                int Month = Convert.ToInt32(example.Bank.Menu.Date[1]);
+                int Month = Convert.ToInt32(BankTeacher.Bank.Menu.Date[1]);
                 if(CBYear.SelectedIndex == 0)
                 {
                     for(int a = 0; a <= Month; a++)

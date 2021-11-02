@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static example.Class.ProtocolSharing.ConnectSMB;
+using static BankTeacher.Class.ProtocolSharing.ConnectSMB;
 
-namespace example.Bank
+namespace BankTeacher.Bank
 {
     public partial class CancelMembership : Form
     {
@@ -98,7 +98,7 @@ namespace example.Bank
                 { 
                     DocStaTus = 1;
                     
-                    var smb = new example.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("CancelLoan");
+                    var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("CancelLoan");
                     if (smb.IsValidConnection())
                     {
                         smb.SendFile(imgeLocation, TBTeacherName.Text + " Cancel.pdf");

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace example.Bank
+namespace BankTeacher.Bank
 {
     public partial class Menu : Form
     {
@@ -42,7 +42,7 @@ namespace example.Bank
         {
             InitializeComponent();
             Date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]).Rows[0][0].ToString().Split('-');
-            example.Bank.Menu.Monthname = Month[Convert.ToInt32(example.Bank.Menu.Date[1]) - 1];
+            BankTeacher.Bank.Menu.Monthname = Month[Convert.ToInt32(BankTeacher.Bank.Menu.Date[1]) - 1];
 
             Class.UserInfo.SetTeacherInformation("T43005", "Manit Hodkuntod", "1");
 
@@ -85,12 +85,12 @@ namespace example.Bank
 
         private void หนาเเรกToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            example.Bank.Home Hm = new example.Bank.Home();
+            BankTeacher.Bank.Home Hm = new BankTeacher.Bank.Home();
             CloseFrom(Hm);
         }
         private void loaninformation(object sender, EventArgs e)
         {
-            Bank.Pay.pay Mn = new example.Bank.Pay.pay(2);
+            Bank.Pay.pay Mn = new BankTeacher.Bank.Pay.pay(2);
             CloseFrom(Mn);
         }
 
@@ -107,7 +107,7 @@ namespace example.Bank
         }
         private void Menu_Load_1(object sender, EventArgs e)
         {
-            example.Bank.Home Hm = new example.Bank.Home();
+            BankTeacher.Bank.Home Hm = new BankTeacher.Bank.Home();
             CloseFrom(Hm);
         }
 
@@ -130,13 +130,13 @@ namespace example.Bank
 
         private void pay_Click(object sender, EventArgs e)
         {
-            example.Bank.Pay.pay Mn = new example.Bank.Pay.pay(0);
+            BankTeacher.Bank.Pay.pay Mn = new BankTeacher.Bank.Pay.pay(0);
             CloseFrom(Mn);
         }
 
         private void Cancel_Click(object sender, EventArgs e)
         {
-            example.Bank.Loan.CancelLoan Cl = new Bank.Loan.CancelLoan();
+            BankTeacher.Bank.Loan.CancelLoan Cl = new Bank.Loan.CancelLoan();
             CloseFrom(Cl);
         }
 

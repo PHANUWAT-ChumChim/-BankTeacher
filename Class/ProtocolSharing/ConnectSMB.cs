@@ -5,9 +5,9 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using static example.Class.ProtocolSharing.SBM;
+using static BankTeacher.Class.ProtocolSharing.SBM;
 
-namespace example.Class.ProtocolSharing
+namespace BankTeacher.Class.ProtocolSharing
 {
     class ConnectSMB
     {

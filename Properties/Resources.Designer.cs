@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace example.Properties {
+namespace BankTeacher.Properties {
     using System;
     
     
