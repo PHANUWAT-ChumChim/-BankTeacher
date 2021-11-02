@@ -1,5 +1,5 @@
 ﻿
-namespace example.Bank
+namespace BankTeacher.Bank
 {
     partial class CancelMembership
     {

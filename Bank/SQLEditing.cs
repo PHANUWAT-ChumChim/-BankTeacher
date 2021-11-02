@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace example.Bank
+namespace BankTeacher.Bank
 {
     public partial class SQLEditing : Form
     {
@@ -46,7 +46,7 @@ namespace example.Bank
 
         private void button1_Click(object sender, EventArgs e)
         {
-            example.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0]);
+            BankTeacher.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0]);
             MessageBox.Show("ลบเสร็จเรียบร้อย");
         }
 

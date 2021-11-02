@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace example.Class.ProtocolSharing
+namespace BankTeacher.Class.ProtocolSharing
 {
     class SBM
     {

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace example.Class.Print
+namespace BankTeacher.Class.Print
 {
     class PrintPreviewDialog
     {
@@ -35,7 +35,7 @@ namespace example.Class.Print
             {
                 if (Amount == "")
                 {
-                    Amount = example.Bank.Menu.startAmountMin.ToString();
+                    Amount = BankTeacher.Bank.Menu.startAmountMin.ToString();
                 }
                 // X 850 = 22 cm เเนะนำ 800 //
                 // A4 = 21 cm  {Width = 356.70163 Height = 136.230438} {Width = 356.70163 Height = 102.954086} // 
@@ -147,7 +147,7 @@ namespace example.Class.Print
                         Yearpay++;
                         PayNo = PayNo - 12;
                     }
-                    LimitMonthPay = example.Bank.Menu.Month[PayNo].ToString() + " พ.ศ. " + (Yearpay + 543).ToString();
+                    LimitMonthPay = BankTeacher.Bank.Menu.Month[PayNo].ToString() + " พ.ศ. " + (Yearpay + 543).ToString();
                     //LimitMonthPay = example.Bank.Menu.Monthname.ToString() + " พ.ศ. " + (Yearpay + 543).ToString();
                 }
                 //----------------------
@@ -267,7 +267,7 @@ namespace example.Class.Print
                 if (onetimestartColumns == 0)
                 {
                     // รูปภาพ
-                    System.Drawing.Image img = global::example.Properties.Resources._64x64_TLC;
+                    System.Drawing.Image img = global::BankTeacher.Properties.Resources._64x64_TLC;
                     // วาดภาw (โลโก้)
                     e.Graphics.DrawImage(img, 50, 50, imageX, imageY);
                     // ข้อความทั้งหมดที่ใช้พิมพ์

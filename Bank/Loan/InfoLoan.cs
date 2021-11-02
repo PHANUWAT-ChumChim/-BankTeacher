@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace example.Bank.Loan
+namespace BankTeacher.Bank.Loan
 {
     public partial class InfoLoan : Form
     {
@@ -147,7 +147,7 @@ namespace example.Bank.Loan
                         {
                             for (int aa = 0; aa < cb.Length; aa++)
                             {
-                                cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[x][0].ToString(), dt.Rows[x][0].ToString()));
+                                cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[x][0].ToString(), dt.Rows[x][0].ToString()));
                             }
                         }
                         if (comboBox1.Items.Count == 1)
@@ -197,8 +197,8 @@ namespace example.Bank.Loan
         {
             if(comboBox1.SelectedIndex != -1)
             {
-                example.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as example.Class.ComboBoxPayment);
-                DataSet ds = example.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2].Replace("{LoanID}", Loan.No));
+                BankTeacher.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as BankTeacher.Class.ComboBoxPayment);
+                DataSet ds = BankTeacher.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2].Replace("{LoanID}", Loan.No));
                 DGVGuarantor.Rows.Clear();
                 if (ds.Tables[0].Rows.Count != 0)
                 {
@@ -285,7 +285,7 @@ namespace example.Bank.Loan
 
         private void panel5_Paint(object sender, PaintEventArgs e)
         {
-
+           
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)

@@ -8,7 +8,7 @@ using System.Data;
 using System.Windows.Forms;
 using System.Drawing;
 
-namespace example.Class
+namespace BankTeacher.Class
 {
     class SQLMethod
     {

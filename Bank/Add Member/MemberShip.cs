@@ -10,9 +10,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static example.Class.ProtocolSharing.ConnectSMB;
+using static BankTeacher.Class.ProtocolSharing.ConnectSMB;
 
-namespace example.Bank
+namespace BankTeacher.Bank
 {
     public partial class MemberShip : Form
     {
@@ -26,7 +26,7 @@ namespace example.Bank
         public MemberShip()
         {
             InitializeComponent();
-            TBStartAmountShare.Text = example.Bank.Menu.startAmountMin.ToString();
+            TBStartAmountShare.Text = BankTeacher.Bank.Menu.startAmountMin.ToString();
         }
 
         //------------------------- FormSize -----------------
@@ -142,12 +142,12 @@ namespace example.Bank
             int AmountShare = Convert.ToInt32(TBStartAmountShare.Text);
             if(AmountShare.ToString() == "" || AmountShare == 0)
             {
-                AmountShare = example.Bank.Menu.startAmountMin;
+                AmountShare = BankTeacher.Bank.Menu.startAmountMin;
             }
             DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text));
             if (TBTeacherName.Text != "")
             {
-                if (AmountShare >= example.Bank.Menu.startAmountMin && AmountShare <= example.Bank.Menu.startAmountMax)
+                if (AmountShare >= BankTeacher.Bank.Menu.startAmountMin && AmountShare <= BankTeacher.Bank.Menu.startAmountMax)
                 {
                     if (dt.Rows.Count == 0)
                     {
@@ -156,10 +156,10 @@ namespace example.Bank
                         if (dialogResult == DialogResult.Yes)
                         {
                             Class.SQLConnection.InputSQLMSSQL(SQLDefault[3].Replace("{TeacherNo}", TBTeacherNo.Text)
-                            .Replace("{TeacherNoAddBy}", example.Class.UserInfo.TeacherNo)
+                            .Replace("{TeacherNoAddBy}", BankTeacher.Class.UserInfo.TeacherNo)
                             .Replace("{StartAmount}", AmountShare.ToString())
-                            .Replace("{Month}", example.Bank.Menu.Date[1])
-                            .Replace("{Year}", example.Bank.Menu.Date[0]));
+                            .Replace("{Month}", BankTeacher.Bank.Menu.Date[1])
+                            .Replace("{Year}", BankTeacher.Bank.Menu.Date[0]));
                             MessageBox.Show("สมัครเสร็จสิ้น", "สมัครสมาชิก", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             TBTeacherNo.Clear();
                             TBTeacherName.Clear(); 
@@ -262,7 +262,7 @@ namespace example.Bank
         //----------------------- Printf -------------------- ////////
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            example.Class.Print.PrintPreviewDialog.PrintMember(e,SQLDefault[2],example.Bank.Menu.Date[2],example.Bank.Menu.Monthname,(Convert.ToInt32(example.Bank.Menu.Date[0]) + 543).ToString(),TBTeacherNo.Text,TBStartAmountShare.Text);
+            BankTeacher.Class.Print.PrintPreviewDialog.PrintMember(e,SQLDefault[2],BankTeacher.Bank.Menu.Date[2],BankTeacher.Bank.Menu.Monthname,(Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + 543).ToString(),TBTeacherNo.Text,TBStartAmountShare.Text);
         }
 
         private void BTOpenfile_Click(object sender, EventArgs e)

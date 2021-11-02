@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 
 
-namespace example.Bank
+namespace BankTeacher.Bank
 {
     public partial class Setting : Form
     {
@@ -37,10 +37,10 @@ namespace example.Bank
             InitializeComponent();
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            TB_Min.Text = example.Bank.Menu.startAmountMin.ToString();
-            TB_Max.Text = example.Bank.Menu.startAmountMax.ToString();
-            TBPerShare.Text = example.Bank.Menu.perShare.ToString();
-            if (example.Bank.Menu.DateAmountChange == 1)
+            TB_Min.Text = BankTeacher.Bank.Menu.startAmountMin.ToString();
+            TB_Max.Text = BankTeacher.Bank.Menu.startAmountMax.ToString();
+            TBPerShare.Text = BankTeacher.Bank.Menu.perShare.ToString();
+            if (BankTeacher.Bank.Menu.DateAmountChange == 1)
             {
                 CHB_edittime.Checked = true;
             }
@@ -63,19 +63,19 @@ namespace example.Bank
                     if (CHB_edittime.Checked == true)
                     {
                         TranChbToInt = 1;
-                        example.Bank.Menu.DateAmountChange = TranChbToInt;
+                        BankTeacher.Bank.Menu.DateAmountChange = TranChbToInt;
                     }
                     else
                     {
                         TranChbToInt = 0;
-                        example.Bank.Menu.DateAmountChange = TranChbToInt;
+                        BankTeacher.Bank.Menu.DateAmountChange = TranChbToInt;
                     }
 
                     Class.SQLConnection.InputSQLMSSQL(SQLDefault[0].Replace("{DateAmountChange}", TranChbToInt.ToString())
                         .Replace("{StartAmountMin}", TB_Min.Text)
                         .Replace("{StartAmountMax}", TB_Max.Text));
-                    example.Bank.Menu.startAmountMin = Convert.ToInt32(TB_Min.Text);
-                    example.Bank.Menu.startAmountMax = Convert.ToInt32(TB_Max.Text);
+                    BankTeacher.Bank.Menu.startAmountMin = Convert.ToInt32(TB_Min.Text);
+                    BankTeacher.Bank.Menu.startAmountMax = Convert.ToInt32(TB_Max.Text);
                     this.Hide();
                 }
                 else
@@ -111,20 +111,20 @@ namespace example.Bank
                     if (CHB_edittime.Checked == true)
                     {
                         TranChbToInt = 1;
-                        example.Bank.Menu.DateAmountChange = TranChbToInt;
+                        BankTeacher.Bank.Menu.DateAmountChange = TranChbToInt;
                     }
                     else
                     {
                         TranChbToInt = 0;
-                        example.Bank.Menu.DateAmountChange = TranChbToInt;
+                        BankTeacher.Bank.Menu.DateAmountChange = TranChbToInt;
                     }
 
                     Class.SQLConnection.InputSQLMSSQL(SQLDefault[0].Replace("{DateAmountChange}", TranChbToInt.ToString())
                         .Replace("{StartAmountMin}", TB_Min.Text)
                         .Replace("{StartAmountMax}", TB_Max.Text)
                         .Replace("{PerShare}",TBPerShare.Text));
-                    example.Bank.Menu.startAmountMin = Convert.ToInt32(TB_Min.Text);
-                    example.Bank.Menu.startAmountMax = Convert.ToInt32(TB_Max.Text);
+                    BankTeacher.Bank.Menu.startAmountMin = Convert.ToInt32(TB_Min.Text);
+                    BankTeacher.Bank.Menu.startAmountMax = Convert.ToInt32(TB_Max.Text);
                     MessageBox.Show("เสร็จสิ้น", "ตั้งค่า", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     this.Hide();
                 }
@@ -150,7 +150,7 @@ namespace example.Bank
 
         private void button1_Click(object sender, EventArgs e)
         {
-            example.Bank.SQLEditing f = new SQLEditing();
+            BankTeacher.Bank.SQLEditing f = new SQLEditing();
             f.ShowDialog();
         }
 

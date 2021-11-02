@@ -1,5 +1,5 @@
 ﻿
-namespace example.Bank.Pay
+namespace BankTeacher.Bank.Pay
 {
     partial class pay
     {

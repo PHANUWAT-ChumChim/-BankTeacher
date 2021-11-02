@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static example.Class.ProtocolSharing.ConnectSMB;
+using static BankTeacher.Class.ProtocolSharing.ConnectSMB;
 
-namespace example.Bank.Loan
+namespace BankTeacher.Bank.Loan
 {
     public partial class PayLoan : Form
     {
@@ -85,7 +85,7 @@ namespace example.Bank.Loan
             DataTable dtPayment = Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]);
             for (int a = 0; a < dtPayment.Rows.Count; a++)
                 for (int x = 0; x < cb.Length; x++)
-                    cb[x].Items.Add(new example.Class.ComboBoxPayment(dtPayment.Rows[a][0].ToString(),
+                    cb[x].Items.Add(new BankTeacher.Class.ComboBoxPayment(dtPayment.Rows[a][0].ToString(),
                         dtPayment.Rows[a][1].ToString()));
         }
 
@@ -146,7 +146,7 @@ namespace example.Bank.Loan
                                 int.TryParse(dt.Rows[x][2].ToString(), out CheckPay);
                                 if (CheckPay == 1)
                                 {
-                                    cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[x][0], dt.Rows[x][0].ToString()));
+                                    cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[x][0], dt.Rows[x][0].ToString()));
                                 }
                             }
                         }
@@ -198,8 +198,8 @@ namespace example.Bank.Loan
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            example.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as example.Class.ComboBoxPayment);
-            DataTable dt = example.Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{LoanNo}", Loan.No));
+            BankTeacher.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as BankTeacher.Class.ComboBoxPayment);
+            DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{LoanNo}", Loan.No));
             if (dt.Rows.Count != 0)
             {
                 TBDate.Text = (Convert.ToDateTime(dt.Rows[0][1].ToString())).ToString("dd/MM/yyyy");
@@ -221,7 +221,7 @@ namespace example.Bank.Loan
             {
                 try
                 {
-                    example.Class.ComboBoxPayment Payment = (CBB4Oppay.SelectedItem as example.Class.ComboBoxPayment);
+                    BankTeacher.Class.ComboBoxPayment Payment = (CBB4Oppay.SelectedItem as BankTeacher.Class.ComboBoxPayment);
                     Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{LoanID}", TBLoanNo.Text)
                         .Replace("{TeacherNoPay}", Class.UserInfo.TeacherNo)
                         .Replace("{PaymentNo}", Payment.No));

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace example.Class
+namespace BankTeacher.Class
 {
     class UserInfo
     {

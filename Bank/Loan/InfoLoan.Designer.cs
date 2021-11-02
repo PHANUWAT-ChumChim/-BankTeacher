@@ -1,5 +1,5 @@
 ﻿
-namespace example.Bank.Loan
+namespace BankTeacher.Bank.Loan
 {
     partial class InfoLoan
     {
@@ -144,7 +144,7 @@ namespace example.Bank.Loan
             this.BTPrint.Font = new System.Drawing.Font("TH Sarabun New", 16.2F);
             this.BTPrint.ForeColor = System.Drawing.Color.Black;
             this.BTPrint.HoverState.Parent = this.BTPrint;
-            this.BTPrint.Image = global::example.Properties.Resources._64x64_Print;
+            this.BTPrint.Image = global::BankTeacher.Properties.Resources._64x64_Print;
             this.BTPrint.ImageSize = new System.Drawing.Size(50, 50);
             this.BTPrint.Location = new System.Drawing.Point(992, 181);
             this.BTPrint.Name = "BTPrint";
