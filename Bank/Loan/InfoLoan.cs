@@ -290,12 +290,7 @@ namespace BankTeacher.Bank.Loan
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (tabControl1.SelectedIndex == 2)
-            {
-                BTPrint.Visible = true;
-            }
-            else
-                BTPrint.Visible = false;
+          
         }
 
         private void BTPrint_Click(object sender, EventArgs e)

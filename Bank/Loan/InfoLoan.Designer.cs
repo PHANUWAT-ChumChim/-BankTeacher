@@ -36,7 +36,6 @@ namespace BankTeacher.Bank.Loan
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InfoLoan));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.BTPrint = new Guna.UI2.WinForms.Guna2Button();
             this.panel16 = new System.Windows.Forms.Panel();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -122,7 +121,6 @@ namespace BankTeacher.Bank.Loan
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.BTPrint);
             this.panel1.Controls.Add(this.panel16);
             this.panel1.Controls.Add(this.tabControl1);
             this.panel1.Controls.Add(this.panel7);
@@ -130,30 +128,6 @@ namespace BankTeacher.Bank.Loan
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1165, 712);
             this.panel1.TabIndex = 100;
-            // 
-            // BTPrint
-            // 
-            this.BTPrint.CheckedState.Parent = this.BTPrint;
-            this.BTPrint.CustomImages.Parent = this.BTPrint;
-            this.BTPrint.DisabledState.BorderColor = System.Drawing.Color.DarkGray;
-            this.BTPrint.DisabledState.CustomBorderColor = System.Drawing.Color.DarkGray;
-            this.BTPrint.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(169)))), ((int)(((byte)(169)))), ((int)(((byte)(169)))));
-            this.BTPrint.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(141)))), ((int)(((byte)(141)))), ((int)(((byte)(141)))));
-            this.BTPrint.DisabledState.Parent = this.BTPrint;
-            this.BTPrint.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.BTPrint.Font = new System.Drawing.Font("TH Sarabun New", 16.2F);
-            this.BTPrint.ForeColor = System.Drawing.Color.Black;
-            this.BTPrint.HoverState.Parent = this.BTPrint;
-            this.BTPrint.Image = global::BankTeacher.Properties.Resources._64x64_Print;
-            this.BTPrint.ImageSize = new System.Drawing.Size(50, 50);
-            this.BTPrint.Location = new System.Drawing.Point(992, 181);
-            this.BTPrint.Name = "BTPrint";
-            this.BTPrint.ShadowDecoration.Parent = this.BTPrint;
-            this.BTPrint.Size = new System.Drawing.Size(149, 64);
-            this.BTPrint.TabIndex = 105;
-            this.BTPrint.Text = "Print";
-            this.BTPrint.Visible = false;
-            this.BTPrint.Click += new System.EventHandler(this.BTPrint_Click);
             // 
             // panel16
             // 
@@ -1032,7 +1006,6 @@ namespace BankTeacher.Bank.Loan
         private System.Windows.Forms.TextBox TBFinishMonthPay_Detail;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label18;
-        private Guna.UI2.WinForms.Guna2Button BTPrint;
         private System.Drawing.Printing.PrintDocument printDocument1;
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
     }
