@@ -131,8 +131,8 @@ namespace example.Bank.Loan
         int Month;
         private void Loan_Load(object sender, EventArgs e)
         {
-            int Year = Convert.ToInt32(example.GOODS.Menu.Date[0]);
-            Month = Convert.ToInt32(example.GOODS.Menu.Date[1]);
+            int Year = Convert.ToInt32(example.Bank.Menu.Date[0]);
+            Month = Convert.ToInt32(example.Bank.Menu.Date[1]);
 
 
             for (int Num = 0; Num < 2; Num++)
@@ -172,7 +172,7 @@ namespace example.Bank.Loan
             AmountLimit = AmountLimit.Remove(AmountLimit.Length - 1);
             if (TBTeacherNo.Text != "" && CBPayMonth.SelectedIndex != -1 && CBPayYear.SelectedIndex != -1 &&
                 TBLoanAmount.Text != "" && TBPayNo.Text != "" && TBInterestRate.Text != "" && (DGVGuarantor.Rows.Count <= 4 && DGVGuarantor.Rows.Count != 0) && ((int.Parse(TBLoanAmount.Text) <= int.Parse(AmountLimit)) || UserOutCreditLimit == DialogResult.Yes) &&
-                Convert.ToInt32(LLackAmount.Text) == 0 && Convert.ToInt32(LOutCredit.Text) == 0 && Int32.TryParse(TBLoanAmount.Text, out int x ) && x >= example.GOODS.Menu.MinLoan && CheckMinus == true)
+                Convert.ToInt32(LLackAmount.Text) == 0 && Convert.ToInt32(LOutCredit.Text) == 0 && Int32.TryParse(TBLoanAmount.Text, out int x ) && x >= example.Bank.Menu.MinLoan && CheckMinus == true)
             {
 
                 DataSet dt = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[3]
@@ -253,7 +253,7 @@ namespace example.Bank.Loan
             if (tabControl1.SelectedIndex == 3 && (CBPayMonth.SelectedIndex != -1
                 && CBPayYear.SelectedIndex != -1 && TBPayNo.Text != "" && TBInterestRate.Text != ""))
             {
-                if (TBLoanAmount.Text != "" && Convert.ToInt32(TBLoanAmount.Text) >= example.GOODS.Menu.MinLoan)
+                if (TBLoanAmount.Text != "" && Convert.ToInt32(TBLoanAmount.Text) >= example.Bank.Menu.MinLoan)
                 {
                     DGVLoanDetail.Rows.Clear();
                     int Month = int.Parse(CBPayMonth.Text),
@@ -294,7 +294,7 @@ namespace example.Bank.Loan
             {
                 try
                 {
-                    if(Convert.ToInt32(TBLoanAmount.Text) < example.GOODS.Menu.MinLoan && TBLoanAmount.Text == "")
+                    if(Convert.ToInt32(TBLoanAmount.Text) < example.Bank.Menu.MinLoan && TBLoanAmount.Text == "")
                     {
                         tabControl1.SelectedIndex = 1;
                         TBLoanAmount.Focus();
@@ -655,9 +655,11 @@ namespace example.Bank.Loan
         // กระดาษปริ้น
         private void printDocument1_PrintPage_1(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
+
                 Class.Print.PrintPreviewDialog.PrintLoan(e, SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text), 
                     example.GOODS.Menu.Date[2], example.GOODS.Menu.Monthname, (Convert.ToInt32(example.GOODS.Menu.Date[0]) + 543).ToString(), 
                     TBTeacherNo.Text, TBLoanNo.Text,DGVGuarantor.RowCount);
+
         }
         //----------------------- End Printf -------------------- ////////
 
@@ -831,7 +833,7 @@ namespace example.Bank.Loan
             bool CheckNum = Double.TryParse(TBLoanAmount.Text, out Double LoanAmount);
             LoanAmount = LoanAmount * Convert.ToDouble((Convert.ToDouble(TBInterestRate.Text) / 100)) + LoanAmount;
             LTotal.Text = LoanAmount.ToString();
-            if (Int32.TryParse(TBLoanAmount.Text, out int x) && x >= example.GOODS.Menu.MinLoan && ((UserOutCreditLimit != DialogResult.No) || Convert.ToInt32(TBLoanAmount.Text) <= LimitAmount))
+            if (Int32.TryParse(TBLoanAmount.Text, out int x) && x >= example.Bank.Menu.MinLoan && ((UserOutCreditLimit != DialogResult.No) || Convert.ToInt32(TBLoanAmount.Text) <= LimitAmount))
             {
                 if (CheckNum == true && DGVGuarantor.Rows.Count > 0)
                 {
@@ -1081,13 +1083,19 @@ namespace example.Bank.Loan
         private void TBInterestRate_Leave(object sender, EventArgs e)
          {
             //Double aa = (Convert.ToDouble(TBInterestRate.Text) / 100);
-            if(Double.TryParse(TBInterestRate.Text , out Double Interestrate))
+            if(Double.TryParse(TBInterestRate.Text , out Double Interestrate) && Interestrate > 0)
             {
                 int LoanAmount = Convert.ToInt32(CreditLoanAmount - CreditLoanAmount * (Interestrate / 100));
                 LLoanAmount.Text = "(" + LoanAmount + ")";
                 LTotal.Text = "" + LoanAmount;
 
                 TBLoanAmount_Leave(sender, new EventArgs());
+            }
+            else if(Interestrate <= 0)
+            {
+                MessageBox.Show("อัตราดอกเบี้ยต้องมากกว่า 0 ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                TBInterestRate.Text = "";
+                TBInterestRate.Focus();
             }
             else
             {

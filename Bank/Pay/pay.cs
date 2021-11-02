@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace example.GOODS
+namespace example.Bank.Pay
 {
     public partial class pay : Form
     {
@@ -399,16 +399,16 @@ namespace example.GOODS
                         int YearRegister = Convert.ToInt32((Convert.ToDateTime(ds.Tables[1].Rows[0][0].ToString())).ToString("yyyy"));
                         int Yearlastofpay = Convert.ToInt32((Convert.ToDateTime(ds.Tables[2].Rows[0][2].ToString())).ToString("yyyy"));
                         Yearlastofpay = Yearlastofpay - YearRegister;
-                        if (YearRegister < Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2)
+                        if (YearRegister < Convert.ToInt32(example.Bank.Menu.Date[0]) - 2)
                         {
-                            int Yeard2 = Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2;
+                            int Yeard2 = Convert.ToInt32(example.Bank.Menu.Date[0]) - 2;
 
-                            while (Yeard2 <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + Yearlastofpay)
+                            while (Yeard2 <= Convert.ToInt32(example.Bank.Menu.Date[0]) + Yearlastofpay)
                             {
                                 CBYearSelection_Pay.Items.Add(Yeard2);
                                 CBYearSelection_ShareInfo.Items.Add(Yeard2);
                                 CBYearSelection_BillInfo.Items.Add(Yeard2);
-                                if(Yeard2 == Convert.ToInt32(example.GOODS.Menu.Date[0]) + Yearlastofpay)
+                                if(Yeard2 == Convert.ToInt32(example.Bank.Menu.Date[0]) + Yearlastofpay)
                                 {
                                     DataTable dtCheckMonthinlastyear = example.Class.SQLConnection.InputSQLMSSQL(SQLDefault[15]
                                         .Replace("{TeacherNo}", TBTeacherNo.Text)
@@ -421,14 +421,14 @@ namespace example.GOODS
                                 Yeard2++;
                             }
                         }
-                        else if (YearRegister > Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2)
+                        else if (YearRegister > Convert.ToInt32(example.Bank.Menu.Date[0]) - 2)
                         {
-                            while (YearRegister <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + Yearlastofpay)
+                            while (YearRegister <= Convert.ToInt32(example.Bank.Menu.Date[0]) + Yearlastofpay)
                             {
                                 CBYearSelection_Pay.Items.Add(YearRegister);
                                 CBYearSelection_ShareInfo.Items.Add(YearRegister);
                                 CBYearSelection_BillInfo.Items.Add(YearRegister);
-                                if (YearRegister == Convert.ToInt32(example.GOODS.Menu.Date[0]) + Yearlastofpay)
+                                if (YearRegister == Convert.ToInt32(example.Bank.Menu.Date[0]) + Yearlastofpay)
                                 {
                                     DataTable dtCheckMonthinlastyear = example.Class.SQLConnection.InputSQLMSSQL(SQLDefault[15]
                                         .Replace("{TeacherNo}", TBTeacherNo.Text)
@@ -445,7 +445,10 @@ namespace example.GOODS
                         {
                             BAutoSelection_Click(sender, new EventArgs());
                         }
-                        CBYearSelection_Pay.Text = example.GOODS.Menu.Date[0];
+                        CBYearSelection_Pay.Text = example.Bank.Menu.Date[0];
+                        CBYearSelection_ShareInfo.Text = example.Bank.Menu.Date[0];
+                        CBYearSelection_Pay.Text = example.Bank.Menu.Date[0];
+                        CBYearSelection_BillInfo.Text = example.Bank.Menu.Date[0];
                         CBMonthSelection_Pay.SelectedIndex = 0;
                     }
 
@@ -512,7 +515,7 @@ namespace example.GOODS
                 int lastYearofpay = Convert.ToInt32((Convert.ToDateTime(ds.Tables[2].Rows[0][2].ToString())).ToString("yyyy"));
                 CBMonthSelection_Pay.Enabled = true;
                 CBMonthSelection_Pay.Items.Clear();
-                CBMonthSelection_Pay.Text = example.GOODS.Menu.Date[1];
+                CBMonthSelection_Pay.Text = example.Bank.Menu.Date[1];
                 if (CBYearSelection_Pay.Text == Year.ToString())
                 {
                     while (Month <= 12)
@@ -585,11 +588,11 @@ namespace example.GOODS
 
                         for (int x = 0; x < CBYearSelection_Pay.Items.Count; x++)
                         {
-                            if (CBYearSelection_Pay.Items[x].ToString() == example.GOODS.Menu.Date[0])
+                            if (CBYearSelection_Pay.Items[x].ToString() == example.Bank.Menu.Date[0])
                             {
                                 for (int y = 0; y < CBMonthSelection_Pay.Items.Count; y++)
                                 {
-                                    if (CBMonthSelection_Pay.Items[y].ToString() == example.GOODS.Menu.Date[1])
+                                    if (CBMonthSelection_Pay.Items[y].ToString() == example.Bank.Menu.Date[1])
                                     {
                                         break;
                                     }
@@ -730,6 +733,7 @@ namespace example.GOODS
                 if (CBList_Pay.Items.Count == 1)
                     CBList_Pay.SelectedIndex = 0;
                 CBList_Pay.Enabled = true;
+                BAutoSelection_Click(new object(), new EventArgs());
             }
 
         }
@@ -1003,7 +1007,6 @@ namespace example.GOODS
                                                     .Replace("{BillNo}", dsbill.Tables[0].Rows[0][0].ToString())
                                                     .Replace("{LoanNo}", DGV_Pay.Rows[x].Cells[3].Value.ToString())
                                                     .Replace("{TeacherGuaNo1}", dtGuarantor.Rows[0][0].ToString())
-                                                    .Replace("{TeacherGuaNo2}", dtGuarantor.Rows[1][0].ToString())
                                                     .Replace("--{haveLoan1}", ""));
                                                 if (dsCheckMonth.Tables[0].Rows.Count == Convert.ToInt32(dsCheckMonth.Tables[0].Rows[0][1].ToString()))
                                                 {

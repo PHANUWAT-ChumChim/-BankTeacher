@@ -52,7 +52,7 @@ namespace example.Bank
          };
         private void Report_Load(object sender, EventArgs e)
         {
-            int Year = Convert.ToInt32(example.GOODS.Menu.Date[0]);
+            int Year = Convert.ToInt32(example.Bank.Menu.Date[0]);
             
             for(int a = 0; a < 5; a++)
             {
@@ -71,7 +71,7 @@ namespace example.Bank
                     CBMonth.Items.Clear();
                     CBMonth.SelectedIndex = -1;
                 }
-                int Month = Convert.ToInt32(example.GOODS.Menu.Date[1]);
+                int Month = Convert.ToInt32(example.Bank.Menu.Date[1]);
                 if (CBYear.SelectedIndex == 0)
                 {
                     for (int a = 0; a <= Month; a++)

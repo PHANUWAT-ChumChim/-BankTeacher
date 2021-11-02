@@ -6,12 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace example.CircularPics
+namespace example.UiRemake
 {
     class CircularPictureBox : PictureBox
     {
         protected override void OnPaint(PaintEventArgs pe)
         {
+            //
             GraphicsPath g = new GraphicsPath();
             g.AddEllipse(0, 0, ClientSize.Width, ClientSize.Height);
             this.Region = new System.Drawing.Region(g);

@@ -92,7 +92,6 @@ namespace example.Bank.Loan
                 comboBox1.SelectedIndex = -1;
                 TBTeacherName.Text = "";
                 TBYearPay_Detail.Text = "";
-                //textBox2.Text = "";
                 TBMonthPay_Detail.Text = "";
                 TBTotalAmount_Detail.Text = "";
                 TBPayNo_Detail.Text = "";
@@ -105,20 +104,12 @@ namespace example.Bank.Loan
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
                     .Replace("{TeacherNo}", TBTeacherNo.Text));
                 for (int x = 0; x < dt.Rows.Count; x++)
+                if(Bank.Search.Return[0].ToString() != "")
                 {
-                    for (int aa = 0; aa < cb.Length; aa++)
-                    {
-                        cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + (x + 1), dt.Rows[x][0].ToString()));
-                    }
+                    TBTeacherNo.Text = Bank.Search.Return[0];
+                    TBTeacherName.Text = Bank.Search.Return[1];
+                    TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
                 }
-                if(Bank.Search.Return[0] == "")
-                {
-                    comboBox1.Enabled = false;
-                    Check = 0;
-
-                }
-
-                TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
 
             }
             catch (Exception x)
@@ -133,7 +124,17 @@ namespace example.Bank.Loan
             {
                 if (TBTeacherNo.Text.Length == 6)
                 {
+                    comboBox1.Enabled = true;
+                    comboBox1.Items.Clear();
+                    Check = 1;
+                    comboBox1.Items.Clear();
+                    comboBox1.SelectedIndex = -1;
+                    TBTeacherName.Text = "";
+                    TBLoanStatus.Text = "";
+                    TBLoanNo.Text = "";
+                    TBSavingAmount.Text = "";
                     DGVGuarantor.Rows.Clear();
+                    DGVLoanDetail.Rows.Clear();
                     DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text));
                     if (dt.Rows.Count != 0)
                     {
@@ -230,6 +231,7 @@ namespace example.Bank.Loan
                     Double Interest = Convert.ToDouble(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString())) * (Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100) / Convert.ToDouble(ds.Tables[0].Rows[0][6].ToString());
 
                     int Pay = Convert.ToInt32(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) / Convert.ToInt32(ds.Tables[0].Rows[0][6].ToString()));
+                    //int Pay = Convert.ToInt32(Convert.ToInt32(ds.Tables[0].Rows[0][8].ToString()) / Convert.ToInt32(ds.Tables[0].Rows[0][6].ToString()));
                     int SumInstallment = Convert.ToInt32(Pay + Interest);
                     String StatusPay = "";
 
