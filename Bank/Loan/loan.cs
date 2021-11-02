@@ -15,7 +15,6 @@ namespace example.Bank.Loan
     {
         //------------------------- index -----------------
         Bitmap bmp;
-        int P1;
         string name = "", id = "";
         int StatusBoxFile = 0;
         String imgeLocation = "";
@@ -599,7 +598,6 @@ namespace example.Bank.Loan
         {
             if (DGVLoanDetail.Rows.Count != 0)
             {
-                P1 = 0;
                 if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                 {
                     printDocument1.Print();
