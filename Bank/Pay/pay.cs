@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace example.GOODS
+namespace BankTeacher.Bank.Pay
 {
     public partial class pay : Form
     {
@@ -83,21 +83,21 @@ namespace example.GOODS
           "--{haveLoan}INSERT INTO EmployeeBank.dbo.tblBillDetail (BillNo,TypeNo,LoanNo,Amount,Mount,Year,BillDetailPaymentNo) \r\n " +
           "--{haveLoan}VALUES({BillNo} , '2','{LoanNo}','{AmountPayLoan}','{Month}','{Year}','{Payment}') \r\n " +
           " \r\n " +
-          "--{haveLoan}UPDATE EmployeeBank.dbo.tblGuarantor \r\n " +
-          "--{haveLoan}SET RemainsAmount = (SELECT RemainsAmount FROM EmployeeBank.dbo.tblGuarantor WHERE TeacherNo = '{TeacherGuaNo1}' and LoanNo = {LoanNo}) - Convert(float , (((SELECT Amount FROM EmployeeBank.dbo.tblGuarantor WHERE TeacherNo = '{TeacherGuaNo1}' and LoanNo = {LoanNo}) / @Amount) * '{AmountPayLoan}')) \r\n " +
-          "--{haveLoan}WHERE TeacherNo = '{TeacherGuaNo1}' and LoanNo = {LoanNo}; \r\n " +
+          "--{haveLoan1}UPDATE EmployeeBank.dbo.tblGuarantor \r\n " +
+          "--{haveLoan1}SET RemainsAmount = (SELECT RemainsAmount FROM EmployeeBank.dbo.tblGuarantor WHERE TeacherNo = '{TeacherGuaNo1}' and LoanNo = {LoanNo}) - Convert(float , (((SELECT Amount FROM EmployeeBank.dbo.tblGuarantor WHERE TeacherNo = '{TeacherGuaNo1}' and LoanNo = {LoanNo}) / @Amount) * '{AmountPayLoan}')) \r\n " +
+          "--{haveLoan1}WHERE TeacherNo = '{TeacherGuaNo1}' and LoanNo = {LoanNo}; \r\n " +
           " \r\n " +
-          "--{haveLoan}UPDATE EmployeeBank.dbo.tblGuarantor \r\n " +
-          "--{haveLoan}SET RemainsAmount = (SELECT RemainsAmount FROM EmployeeBank.dbo.tblGuarantor WHERE TeacherNo = '{TeacherGuaNo2}' and LoanNo = {LoanNo}) - Convert(float , (((SELECT Amount FROM EmployeeBank.dbo.tblGuarantor WHERE TeacherNo = '{TeacherGuaNo2}' and LoanNo = {LoanNo}) / @Amount) * '{AmountPayLoan}')) \r\n " +
-          "--{haveLoan}WHERE TeacherNo = '{TeacherGuaNo2}' and LoanNo = {LoanNo}; \r\n " +
+          "--{haveLoan2}UPDATE EmployeeBank.dbo.tblGuarantor \r\n " +
+          "--{haveLoan2}SET RemainsAmount = (SELECT RemainsAmount FROM EmployeeBank.dbo.tblGuarantor WHERE TeacherNo = '{TeacherGuaNo2}' and LoanNo = {LoanNo}) - Convert(float , (((SELECT Amount FROM EmployeeBank.dbo.tblGuarantor WHERE TeacherNo = '{TeacherGuaNo2}' and LoanNo = {LoanNo}) / @Amount) * '{AmountPayLoan}')) \r\n " +
+          "--{haveLoan2}WHERE TeacherNo = '{TeacherGuaNo2}' and LoanNo = {LoanNo}; \r\n " +
           " \r\n " +
-          "--{haveLoan}UPDATE EmployeeBank.dbo.tblGuarantor \r\n " +
-          "--{haveLoan}SET RemainsAmount = (SELECT RemainsAmount FROM EmployeeBank.dbo.tblGuarantor WHERE TeacherNo = '{TeacherGuaNo3}' and LoanNo = {LoanNo}) - Convert(float , (((SELECT Amount FROM EmployeeBank.dbo.tblGuarantor WHERE TeacherNo = '{TeacherGuaNo3}' and LoanNo = {LoanNo}) / @Amount)* '{AmountPayLoan}')) \r\n " +
-          "--{haveLoan}WHERE TeacherNo = '{TeacherGuaNo3}' and LoanNo = {LoanNo}; \r\n " +
+          "--{haveLoan3}UPDATE EmployeeBank.dbo.tblGuarantor \r\n " +
+          "--{haveLoan3}SET RemainsAmount = (SELECT RemainsAmount FROM EmployeeBank.dbo.tblGuarantor WHERE TeacherNo = '{TeacherGuaNo3}' and LoanNo = {LoanNo}) - Convert(float , (((SELECT Amount FROM EmployeeBank.dbo.tblGuarantor WHERE TeacherNo = '{TeacherGuaNo3}' and LoanNo = {LoanNo}) / @Amount)* '{AmountPayLoan}')) \r\n " +
+          "--{haveLoan3}WHERE TeacherNo = '{TeacherGuaNo3}' and LoanNo = {LoanNo}; \r\n " +
           " \r\n " +
-          "--{haveLoan}UPDATE EmployeeBank.dbo.tblGuarantor \r\n " +
-          "--{haveLoan}SET RemainsAmount = (SELECT RemainsAmount FROM EmployeeBank.dbo.tblGuarantor WHERE TeacherNo = '{TeacherGuaNo4}' and LoanNo = {LoanNo}) - Convert(float , (((SELECT Amount FROM EmployeeBank.dbo.tblGuarantor WHERE TeacherNo = '{TeacherGuaNo4}' and LoanNo = {LoanNo}) /@Amount)* '{AmountPayLoan}')) \r\n " +
-          "--{haveLoan}WHERE TeacherNo = '{TeacherGuaNo4}' and LoanNo = {LoanNo}; \r\n " +
+          "--{haveLoan4}UPDATE EmployeeBank.dbo.tblGuarantor \r\n " +
+          "--{haveLoan4}SET RemainsAmount = (SELECT RemainsAmount FROM EmployeeBank.dbo.tblGuarantor WHERE TeacherNo = '{TeacherGuaNo4}' and LoanNo = {LoanNo}) - Convert(float , (((SELECT Amount FROM EmployeeBank.dbo.tblGuarantor WHERE TeacherNo = '{TeacherGuaNo4}' and LoanNo = {LoanNo}) /@Amount)* '{AmountPayLoan}')) \r\n " +
+          "--{haveLoan4}WHERE TeacherNo = '{TeacherGuaNo4}' and LoanNo = {LoanNo}; \r\n " +
           " \r\n " +
           "--{haveLoan}SELECT b.LoanNo , PayNo \r\n " +
           "--{haveLoan}FROM EmployeeBank.dbo.tblBill as a \r\n " +
@@ -296,7 +296,7 @@ namespace example.GOODS
           "SELECT IDENT_CURRENT('EmployeeBank.dbo.tblBill')+1 "
             ,
           //[14] Select Billinfomation INPUT: {TeacherNo , {Year}
-          "SELECT a.BillNo ,CAST(CAST(b.Mount as nvarchar(2))+'/'+CAST(b.Year as nvarchar(4)) as nvarchar(10))  , TypeName , Amount , d.Name , DateAdd \r\n " +
+          "SELECT a.BillNo ,CAST(CAST(b.Mount as nvarchar(2))+'/'+CAST(b.Year as nvarchar(4)) as nvarchar(10))  , TypeName , Amount ,CAST(d.Name as nvarchar), DateAdd \r\n " +
           "FROM EmployeeBank.dbo.tblBill as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as c on b.TypeNo = c.TypeNo \r\n " +
@@ -342,7 +342,7 @@ namespace example.GOODS
             DataTable dtPayment = Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]);
             for (int a = 0; a < dtPayment.Rows.Count; a++)
                 for (int x = 0; x < cb.Length; x++)
-                    cb[x].Items.Add(new example.Class.ComboBoxPayment(dtPayment.Rows[a][0].ToString(),
+                    cb[x].Items.Add(new BankTeacher.Class.ComboBoxPayment(dtPayment.Rows[a][0].ToString(),
                         dtPayment.Rows[a][1].ToString()));
         }
         //=============================================================================================
@@ -388,7 +388,7 @@ namespace example.GOODS
                         {
                             for (int aa = 0; aa < cb.Length; aa++)
                             {
-                                cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][0].ToString()));
+                                cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment("รายการกู้ " + ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][0].ToString()));
                             }
                         }
 
@@ -399,18 +399,18 @@ namespace example.GOODS
                         int YearRegister = Convert.ToInt32((Convert.ToDateTime(ds.Tables[1].Rows[0][0].ToString())).ToString("yyyy"));
                         int Yearlastofpay = Convert.ToInt32((Convert.ToDateTime(ds.Tables[2].Rows[0][2].ToString())).ToString("yyyy"));
                         Yearlastofpay = Yearlastofpay - YearRegister;
-                        if (YearRegister < Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2)
+                        if (YearRegister < Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) - 2)
                         {
-                            int Yeard2 = Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2;
+                            int Yeard2 = Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) - 2;
 
-                            while (Yeard2 <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + Yearlastofpay)
+                            while (Yeard2 <= Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + Yearlastofpay)
                             {
                                 CBYearSelection_Pay.Items.Add(Yeard2);
                                 CBYearSelection_ShareInfo.Items.Add(Yeard2);
                                 CBYearSelection_BillInfo.Items.Add(Yeard2);
-                                if(Yeard2 == Convert.ToInt32(example.GOODS.Menu.Date[0]) + Yearlastofpay)
+                                if(Yeard2 == Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + Yearlastofpay)
                                 {
-                                    DataTable dtCheckMonthinlastyear = example.Class.SQLConnection.InputSQLMSSQL(SQLDefault[15]
+                                    DataTable dtCheckMonthinlastyear = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[15]
                                         .Replace("{TeacherNo}", TBTeacherNo.Text)
                                         .Replace("{Year}", CBYearSelection_BillInfo.Items[CBYearSelection_BillInfo.Items.Count - 1].ToString()));
                                     if(dtCheckMonthinlastyear.Rows.Count == 0)
@@ -421,16 +421,16 @@ namespace example.GOODS
                                 Yeard2++;
                             }
                         }
-                        else if (YearRegister > Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2)
+                        else if (YearRegister > Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) - 2)
                         {
-                            while (YearRegister <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + Yearlastofpay)
+                            while (YearRegister <= Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + Yearlastofpay)
                             {
                                 CBYearSelection_Pay.Items.Add(YearRegister);
                                 CBYearSelection_ShareInfo.Items.Add(YearRegister);
                                 CBYearSelection_BillInfo.Items.Add(YearRegister);
-                                if (YearRegister == Convert.ToInt32(example.GOODS.Menu.Date[0]) + Yearlastofpay)
+                                if (YearRegister == Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + Yearlastofpay)
                                 {
-                                    DataTable dtCheckMonthinlastyear = example.Class.SQLConnection.InputSQLMSSQL(SQLDefault[15]
+                                    DataTable dtCheckMonthinlastyear = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[15]
                                         .Replace("{TeacherNo}", TBTeacherNo.Text)
                                         .Replace("{Year}", CBYearSelection_BillInfo.Items[CBYearSelection_BillInfo.Items.Count - 1].ToString()));
                                     if (dtCheckMonthinlastyear.Rows.Count == 0)
@@ -445,7 +445,11 @@ namespace example.GOODS
                         {
                             BAutoSelection_Click(sender, new EventArgs());
                         }
-                        CBYearSelection_Pay.Text = example.GOODS.Menu.Date[0];
+                        CBYearSelection_Pay.Text = BankTeacher.Bank.Menu.Date[0];
+                        CBYearSelection_ShareInfo.Text = BankTeacher.Bank.Menu.Date[0];
+                        CBYearSelection_Pay.Text = BankTeacher.Bank.Menu.Date[0];
+                        CBYearSelection_BillInfo.Text = BankTeacher.Bank.Menu.Date[0];
+                        CBMonthSelection_Pay.SelectedIndex = 0;
                     }
 
                 }
@@ -511,7 +515,7 @@ namespace example.GOODS
                 int lastYearofpay = Convert.ToInt32((Convert.ToDateTime(ds.Tables[2].Rows[0][2].ToString())).ToString("yyyy"));
                 CBMonthSelection_Pay.Enabled = true;
                 CBMonthSelection_Pay.Items.Clear();
-                CBMonthSelection_Pay.Text = example.GOODS.Menu.Date[1];
+                CBMonthSelection_Pay.Text = BankTeacher.Bank.Menu.Date[1];
                 if (CBYearSelection_Pay.Text == Year.ToString())
                 {
                     while (Month <= 12)
@@ -584,11 +588,11 @@ namespace example.GOODS
 
                         for (int x = 0; x < CBYearSelection_Pay.Items.Count; x++)
                         {
-                            if (CBYearSelection_Pay.Items[x].ToString() == example.GOODS.Menu.Date[0])
+                            if (CBYearSelection_Pay.Items[x].ToString() == BankTeacher.Bank.Menu.Date[0])
                             {
                                 for (int y = 0; y < CBMonthSelection_Pay.Items.Count; y++)
                                 {
-                                    if (CBMonthSelection_Pay.Items[y].ToString() == example.GOODS.Menu.Date[1])
+                                    if (CBMonthSelection_Pay.Items[y].ToString() == BankTeacher.Bank.Menu.Date[1])
                                     {
                                         break;
                                     }
@@ -654,7 +658,7 @@ namespace example.GOODS
                 {
                     for (int x = 0; x < cb.Length; x++)
                     {
-                        cb[x].Items.Add(new example.Class.ComboBoxPay(ds.Tables[0].Rows[a][2].ToString(),
+                        cb[x].Items.Add(new BankTeacher.Class.ComboBoxPay(ds.Tables[0].Rows[a][2].ToString(),
                         ds.Tables[0].Rows[a][1].ToString(),
                         "500"));
 
@@ -702,7 +706,7 @@ namespace example.GOODS
                                     {
                                         Balance = Convert.ToInt32(ds.Tables[1].Rows[a][1].ToString());
                                     }
-                                    cb[x].Items.Add(new example.Class.ComboBoxPay("รายการกู้ " + ds.Tables[1].Rows[a][3].ToString(), Balance.ToString(),
+                                    cb[x].Items.Add(new BankTeacher.Class.ComboBoxPay("รายการกู้ " + ds.Tables[1].Rows[a][3].ToString(), Balance.ToString(),
                                         ds.Tables[1].Rows[a][3].ToString()));
                                 }
 
@@ -716,7 +720,7 @@ namespace example.GOODS
                     {
                         if (ds.Tables[3].Rows.Count == 0)
                         {
-                            cb[0].Items.Add(new example.Class.ComboBoxPay("รายการกู้ " + ds.Tables[2].Rows[0][3].ToString(), ds.Tables[2].Rows[0][2].ToString(),
+                            cb[0].Items.Add(new BankTeacher.Class.ComboBoxPay("รายการกู้ " + ds.Tables[2].Rows[0][3].ToString(), ds.Tables[2].Rows[0][2].ToString(),
                                         ds.Tables[2].Rows[0][3].ToString()));
                         }
 
@@ -729,6 +733,7 @@ namespace example.GOODS
                 if (CBList_Pay.Items.Count == 1)
                     CBList_Pay.SelectedIndex = 0;
                 CBList_Pay.Enabled = true;
+                BAutoSelection_Click(new object(), new EventArgs());
             }
 
         }
@@ -749,7 +754,7 @@ namespace example.GOODS
                         for (int x = 0; x < CBList_Pay.Items.Count; x++)
                         {
                             CBList_Pay.SelectedIndex = x;
-                            example.Class.ComboBoxPay Loan = (CBList_Pay.SelectedItem as example.Class.ComboBoxPay);
+                            BankTeacher.Class.ComboBoxPay Loan = (CBList_Pay.SelectedItem as BankTeacher.Class.ComboBoxPay);
                             String Time = CBYearSelection_Pay.Text + "/" + CBMonthSelection_Pay.Text;
                             DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No);
                             sum += Convert.ToInt32(DGV_Pay.Rows[x].Cells[2].Value);
@@ -794,7 +799,7 @@ namespace example.GOODS
         //Select list in combobox
         private void CBList_Pay_SelectedIndexChanged(object sender, EventArgs e)
         {
-            example.Class.ComboBoxPay Status = (CBList_Pay.SelectedItem as example.Class.ComboBoxPay);
+            BankTeacher.Class.ComboBoxPay Status = (CBList_Pay.SelectedItem as BankTeacher.Class.ComboBoxPay);
             if (CBList_Pay.SelectedIndex != -1 && TBTeacherNo.Text.Length == 6)
             {
 
@@ -834,7 +839,7 @@ namespace example.GOODS
         //Add list to datagridview
         private void BListAdd_Pay_Click(object sender, EventArgs e)
         {
-            example.Class.ComboBoxPay Loan = (CBList_Pay.SelectedItem as example.Class.ComboBoxPay);
+            BankTeacher.Class.ComboBoxPay Loan = (CBList_Pay.SelectedItem as BankTeacher.Class.ComboBoxPay);
             if (TBAmount_Pay.Text != "")
             {
                 if (DGV_Pay.Rows.ToString() != "")
@@ -936,7 +941,7 @@ namespace example.GOODS
         //SaveInfo Button
         private void BSave_Pay_Click(object sender, EventArgs e)
         {
-            example.Class.ComboBoxPayment Payment = (CBPayment_Pay.SelectedItem as example.Class.ComboBoxPayment);
+            BankTeacher.Class.ComboBoxPayment Payment = (CBPayment_Pay.SelectedItem as BankTeacher.Class.ComboBoxPayment);
             if (DGV_Pay.Rows.Count != 0)
             {
                 DialogResult dialogResult = MessageBox.Show("ยืนยันการชำระ", "การเเจ้งเตือนการชำระ", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
@@ -945,13 +950,13 @@ namespace example.GOODS
                     TBTeacherBill.Text = Class.SQLConnection.InputSQLMSSQL(SQLDefault[13]).Rows[0][0].ToString();
                     int Balance = Convert.ToInt32(LBalance_Pay.Text);
                     Freezing_Form(false);
-                    example.Bank.Pay.Calculator calculator = new example.Bank.Pay.Calculator(Balance);
+                    BankTeacher.Bank.Pay.Calculator calculator = new BankTeacher.Bank.Pay.Calculator(Balance);
                     calculator.ShowDialog();
-                    if (example.Bank.Pay.Calculator.Return)
+                    if (BankTeacher.Bank.Pay.Calculator.Return)
                     {
-                        DataSet dsbill = example.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]
+                        DataSet dsbill = BankTeacher.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]
                                 .Replace("{TeacherNo}", TBTeacherNo.Text)
-                                .Replace("{TeacherNoaddby}", example.Class.UserInfo.TeacherNo)
+                                .Replace("{TeacherNoaddby}", BankTeacher.Class.UserInfo.TeacherNo)
                                 .Replace("{Month}", CBMonthSelection_Pay.Text)
                                 .Replace("{Year}", CBYearSelection_Pay.Text)
                                 .Replace("{Payment}", Payment.No.ToString())
@@ -965,9 +970,9 @@ namespace example.GOODS
                                 {
                                     try
                                     {
-                                        example.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]
+                                        BankTeacher.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]
                                         .Replace("{TeacherNo}", TBTeacherNo.Text)
-                                        .Replace("{TeacherNoaddby}", example.Class.UserInfo.TeacherNo)
+                                        .Replace("{TeacherNoaddby}", BankTeacher.Class.UserInfo.TeacherNo)
                                         .Replace("{Month}", CBMonthSelection_Pay.Text)
                                         .Replace("{Year}", CBYearSelection_Pay.Text)
                                         .Replace("{Payment}", Payment.No.ToString())
@@ -983,15 +988,92 @@ namespace example.GOODS
                                 }
                                 else if (DGV_Pay.Rows[x].Cells[1].Value.ToString().Contains("กู้"))
                                 {
-                                    DataTable dtGuarantor = example.Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
+                                    DataTable dtGuarantor = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
                                     .Replace("{LoanID}", DGV_Pay.Rows[x].Cells[3].Value.ToString()));
                                     if (dtGuarantor.Rows.Count != 0)
                                     {
                                         try
                                         {
-                                            DataSet dsCheckMonth = example.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]
+                                            if(dtGuarantor.Rows.Count == 1)
+                                            {
+                                                DataSet dsCheckMonth = BankTeacher.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]
+                                                    .Replace("{TeacherNo}", TBTeacherNo.Text)
+                                                    .Replace("{TeacherNoaddby}", BankTeacher.Class.UserInfo.TeacherNo)
+                                                    .Replace("{Month}", CBMonthSelection_Pay.Text)
+                                                    .Replace("{Year}", CBYearSelection_Pay.Text)
+                                                    .Replace("{Payment}", Payment.No.ToString())
+                                                    .Replace("--{haveLoan}", "")
+                                                    .Replace("{AmountPayLoan}", DGV_Pay.Rows[x].Cells[2].Value.ToString())
+                                                    .Replace("{BillNo}", dsbill.Tables[0].Rows[0][0].ToString())
+                                                    .Replace("{LoanNo}", DGV_Pay.Rows[x].Cells[3].Value.ToString())
+                                                    .Replace("{TeacherGuaNo1}", dtGuarantor.Rows[0][0].ToString())
+                                                    .Replace("--{haveLoan1}", ""));
+                                                if (dsCheckMonth.Tables[0].Rows.Count == Convert.ToInt32(dsCheckMonth.Tables[0].Rows[0][1].ToString()))
+                                                {
+                                                    BankTeacher.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]
+                                                        .Replace("--{Close}", "")
+                                                        .Replace("{LoanNo}", DGV_Pay.Rows[x].Cells[3].Value.ToString())
+                                                        .Replace("{TeacherGuaNo1}", dtGuarantor.Rows[0][0].ToString()));
+                                                }
+                                            }
+                                            else if (dtGuarantor.Rows.Count == 2)
+                                            {
+                                                DataSet dsCheckMonth = BankTeacher.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]
                                                 .Replace("{TeacherNo}", TBTeacherNo.Text)
-                                                .Replace("{TeacherNoaddby}", example.Class.UserInfo.TeacherNo)
+                                                .Replace("{TeacherNoaddby}", BankTeacher.Class.UserInfo.TeacherNo)
+                                                .Replace("{Month}", CBMonthSelection_Pay.Text)
+                                                .Replace("{Year}", CBYearSelection_Pay.Text)
+                                                .Replace("{Payment}", Payment.No.ToString())
+                                                .Replace("--{haveLoan}", "")
+                                                .Replace("{AmountPayLoan}", DGV_Pay.Rows[x].Cells[2].Value.ToString())
+                                                .Replace("{BillNo}", dsbill.Tables[0].Rows[0][0].ToString())
+                                                .Replace("{LoanNo}", DGV_Pay.Rows[x].Cells[3].Value.ToString())
+                                                .Replace("{TeacherGuaNo1}", dtGuarantor.Rows[0][0].ToString())
+                                                .Replace("{TeacherGuaNo2}", dtGuarantor.Rows[1][0].ToString())
+                                                .Replace("--{haveLoan1}", "")
+                                                .Replace("--{haveLoan2}", ""));
+                                                if (dsCheckMonth.Tables[0].Rows.Count == Convert.ToInt32(dsCheckMonth.Tables[0].Rows[0][1].ToString()))
+                                                {
+                                                    BankTeacher.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]
+                                                        .Replace("--{Close}", "")
+                                                        .Replace("{LoanNo}", DGV_Pay.Rows[x].Cells[3].Value.ToString())
+                                                        .Replace("{TeacherGuaNo1}", dtGuarantor.Rows[0][0].ToString())
+                                                        .Replace("{TeacherGuaNo2}", dtGuarantor.Rows[1][0].ToString()));
+                                                }
+                                            }
+                                            else if (dtGuarantor.Rows.Count == 3)
+                                            {
+                                                DataSet dsCheckMonth = BankTeacher.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]
+                                                    .Replace("{TeacherNo}", TBTeacherNo.Text)
+                                                    .Replace("{TeacherNoaddby}", BankTeacher.Class.UserInfo.TeacherNo)
+                                                    .Replace("{Month}", CBMonthSelection_Pay.Text)
+                                                    .Replace("{Year}", CBYearSelection_Pay.Text)
+                                                    .Replace("{Payment}", Payment.No.ToString())
+                                                    .Replace("--{haveLoan}", "")
+                                                    .Replace("{AmountPayLoan}", DGV_Pay.Rows[x].Cells[2].Value.ToString())
+                                                    .Replace("{BillNo}", dsbill.Tables[0].Rows[0][0].ToString())
+                                                    .Replace("{LoanNo}", DGV_Pay.Rows[x].Cells[3].Value.ToString())
+                                                    .Replace("{TeacherGuaNo1}", dtGuarantor.Rows[0][0].ToString())
+                                                    .Replace("{TeacherGuaNo2}", dtGuarantor.Rows[1][0].ToString())
+                                                    .Replace("{TeacherGuaNo3}", dtGuarantor.Rows[2][0].ToString())
+                                                    .Replace("--{haveLoan1}", "")
+                                                    .Replace("--{haveLoan2}", "")
+                                                    .Replace("--{haveLoan3}", ""));
+                                                if (dsCheckMonth.Tables[0].Rows.Count == Convert.ToInt32(dsCheckMonth.Tables[0].Rows[0][1].ToString()))
+                                                {
+                                                    BankTeacher.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]
+                                                        .Replace("--{Close}", "")
+                                                        .Replace("{LoanNo}", DGV_Pay.Rows[x].Cells[3].Value.ToString())
+                                                        .Replace("{TeacherGuaNo1}", dtGuarantor.Rows[0][0].ToString())
+                                                        .Replace("{TeacherGuaNo2}", dtGuarantor.Rows[1][0].ToString())
+                                                        .Replace("{TeacherGuaNo3}", dtGuarantor.Rows[2][0].ToString()));
+                                                }
+                                            }
+                                            else if(dtGuarantor.Rows.Count == 4)
+                                            {
+                                                DataSet dsCheckMonth = BankTeacher.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]
+                                                .Replace("{TeacherNo}", TBTeacherNo.Text)
+                                                .Replace("{TeacherNoaddby}", BankTeacher.Class.UserInfo.TeacherNo)
                                                 .Replace("{Month}", CBMonthSelection_Pay.Text)
                                                 .Replace("{Year}", CBYearSelection_Pay.Text)
                                                 .Replace("{Payment}", Payment.No.ToString())
@@ -1002,20 +1084,26 @@ namespace example.GOODS
                                                 .Replace("{TeacherGuaNo1}", dtGuarantor.Rows[0][0].ToString())
                                                 .Replace("{TeacherGuaNo2}", dtGuarantor.Rows[1][0].ToString())
                                                 .Replace("{TeacherGuaNo3}", dtGuarantor.Rows[2][0].ToString())
-                                                .Replace("{TeacherGuaNo4}", dtGuarantor.Rows[3][0].ToString()));
-                                            if (dsCheckMonth.Tables[0].Rows.Count == Convert.ToInt32(dsCheckMonth.Tables[0].Rows[0][1].ToString()))
-                                            {
-                                                example.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]
-                                                    .Replace("--{Close}", "")
-                                                    .Replace("{LoanNo}", DGV_Pay.Rows[x].Cells[3].Value.ToString())
-                                                    .Replace("{TeacherGuaNo1}", dtGuarantor.Rows[0][0].ToString())
-                                                    .Replace("{TeacherGuaNo2}", dtGuarantor.Rows[1][0].ToString())
-                                                    .Replace("{TeacherGuaNo3}", dtGuarantor.Rows[2][0].ToString())
-                                                    .Replace("{TeacherGuaNo4}", dtGuarantor.Rows[3][0].ToString()));
+                                                .Replace("{TeacherGuaNo4}", dtGuarantor.Rows[3][0].ToString())
+                                                .Replace("--{haveLoan1}", "")
+                                                .Replace("--{haveLoan2}", "")
+                                                .Replace("--{haveLoan3}", "")
+                                                .Replace("--{haveLoan4}", ""));
+                                                if (dsCheckMonth.Tables[0].Rows.Count == Convert.ToInt32(dsCheckMonth.Tables[0].Rows[0][1].ToString()))
+                                                {
+                                                    BankTeacher.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]
+                                                        .Replace("--{Close}", "")
+                                                        .Replace("{LoanNo}", DGV_Pay.Rows[x].Cells[3].Value.ToString())
+                                                        .Replace("{TeacherGuaNo1}", dtGuarantor.Rows[0][0].ToString())
+                                                        .Replace("{TeacherGuaNo2}", dtGuarantor.Rows[1][0].ToString())
+                                                        .Replace("{TeacherGuaNo3}", dtGuarantor.Rows[2][0].ToString())
+                                                        .Replace("{TeacherGuaNo4}", dtGuarantor.Rows[3][0].ToString()));
+                                                }
                                             }
                                         }
-                                        catch
+                                        catch ( Exception ex)
                                         {
+                                            Console.WriteLine(ex);
                                             MessageBox.Show("ชำระกู้ล้มเหลว", "แจ้งเตือนการขำระ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                         }
                                     }
@@ -1040,7 +1128,7 @@ namespace example.GOODS
                         TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
                         sum = 0;
                     }
-                    else if (!(example.Bank.Pay.Calculator.Return))
+                    else if (!(BankTeacher.Bank.Pay.Calculator.Return))
                     {
                         Freezing_Form(true);
                         MessageBox.Show("การชำระล้มเหลว", "การเเจ้งเตือนการชำระ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -1085,7 +1173,7 @@ namespace example.GOODS
             if (CBYearSelection_ShareInfo.Text != "")
             {
                 int Month = 1;
-                DataSet ds = example.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[11]
+                DataSet ds = BankTeacher.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[11]
                 .Replace("{TeacherNo}", TBTeacherNo.Text)
                 .Replace("{Year}", CBYearSelection_ShareInfo.Text));
                 TBToatalSaving_ShareInfo.Text = ds.Tables[1].Rows[0][1].ToString();
@@ -1131,10 +1219,10 @@ namespace example.GOODS
         //Select Loan
         private void CBLoanSelection_LoanInfo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            example.Class.ComboBoxPayment Loan = (CBLoanSelection_LoanInfo.SelectedItem as example.Class.ComboBoxPayment);
+            BankTeacher.Class.ComboBoxPayment Loan = (CBLoanSelection_LoanInfo.SelectedItem as BankTeacher.Class.ComboBoxPayment);
             if (CBLoanSelection_LoanInfo.SelectedIndex != -1)
             {
-                DataSet ds = example.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[10].Replace("{LoanID}", Loan.No));
+                DataSet ds = BankTeacher.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[10].Replace("{LoanID}", Loan.No));
                 DGV_LoanInfo.Rows.Clear();
                 if (ds.Tables[0].Rows.Count != 0)
                 {
@@ -1219,7 +1307,7 @@ namespace example.GOODS
         {
             if(CBYearSelection_Pay.SelectedIndex != -1)
             {
-                DataTable dt = example.Class.SQLConnection.InputSQLMSSQL(SQLDefault[14]
+                DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[14]
                 .Replace("{TeacherNo}", TBTeacherNo.Text)
                 .Replace("{Year}", CBYearSelection_BillInfo.Text));
                 if(dt.Rows.Count != 0)
@@ -1280,7 +1368,7 @@ namespace example.GOODS
             {
                 ComboBox[] cb = new ComboBox[] { CBList_Pay };
                 for (int x = 0; x < cb.Length; x++)
-                    cb[x].Items.Add(new example.Class.ComboBoxPay(DGV_Pay.Rows[SelectIndexRow].Cells[1].Value.ToString(), DGV_Pay.Rows[SelectIndexRow].Cells[2].Value.ToString(),
+                    cb[x].Items.Add(new BankTeacher.Class.ComboBoxPay(DGV_Pay.Rows[SelectIndexRow].Cells[1].Value.ToString(), DGV_Pay.Rows[SelectIndexRow].Cells[2].Value.ToString(),
                                              DGV_Pay.Rows[SelectIndexRow].Cells[3].Value.ToString()));
                 CBList_Pay.SelectedIndex = 0;
             }

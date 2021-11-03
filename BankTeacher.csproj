@@ -51,9 +51,6 @@
     <Reference Include="DocumentFormat.OpenXml, Version=2.7.2.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
       <HintPath>packages\DocumentFormat.OpenXml.2.7.2\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
-    <Reference Include="Guna.UI2, Version=2.0.2.0, Culture=neutral, PublicKeyToken=e4b9cdd7b4cde4b4, processorArchitecture=MSIL">
-      <HintPath>packages\Guna.UI2.WinForms.2.0.2\lib\net40\Guna.UI2.dll</HintPath>
-    </Reference>
     <Reference Include="OpenXmlPowerTools, Version=4.5.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\OpenXmlPowerTools.4.5.3.2\lib\net45\OpenXmlPowerTools.dll</HintPath>
     </Reference>
@@ -194,12 +191,6 @@
     <Compile Include="Bank\Pay\pay.Designer.cs">
       <DependentUpon>pay.cs</DependentUpon>
     </Compile>
-    <Compile Include="Reference\Orders.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Reference\Orders.Designer.cs">
-      <DependentUpon>Orders.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Bank\Add Member\CancelMembership.resx">
@@ -247,9 +238,6 @@
     <EmbeddedResource Include="Bank\SQLEditing.resx">
       <DependentUpon>SQLEditing.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reference\Orders.resx">
-      <DependentUpon>Orders.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Bank\Setting.resx">
       <DependentUpon>Setting.cs</DependentUpon>
     </EmbeddedResource>
@@ -261,6 +249,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram2.cd" />
@@ -289,6 +278,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\246780541_4376178429170260_1641245443089079880_n.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\print.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

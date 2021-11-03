@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace example.Bank
+namespace BankTeacher.Bank
 {
     public partial class SQLEditing : Form
     {
@@ -46,167 +46,24 @@ namespace example.Bank
 
         private void button1_Click(object sender, EventArgs e)
         {
-            example.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0]);
+            BankTeacher.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0]);
             MessageBox.Show("ลบเสร็จเรียบร้อย");
         }
 
         private void SQLEditing_Load(object sender, EventArgs e)
         {
-            if(MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            while (true)
             {
-                if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
                 {
-                    if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                    {
-                        if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                        {
-                            if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                            {
-                                if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                                {
-                                    if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                                    {
-                                        if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                                        {
-                                            if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                                            {
-                                                if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                                                {
-                                                    if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                                                    {
-                                                        if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                                                        {
-                                                            if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                                                            {
-                                                                if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                                                                {
-                                                                    if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                                                                    {
-                                                                        if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                                                                        {
-                                                                            if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                                                                            {
-                                                                                if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                                                                                {
-                                                                                    if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                                                                                    {
-                                                                                        if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                                                                                        {
-                                                                                            if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                                                                                            {
-                                                                                                if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                                                                                                {
-
-                                                                                                }
-                                                                                                else
-                                                                                                {
-                                                                                                    this.Close();
-                                                                                                }
-                                                                                            }
-                                                                                            else
-                                                                                            {
-                                                                                                this.Close();
-                                                                                            }
-                                                                                        }
-                                                                                        else
-                                                                                        {
-                                                                                            this.Close();
-                                                                                        }
-                                                                                    }
-                                                                                    else
-                                                                                    {
-                                                                                        this.Close();
-                                                                                    }
-                                                                                }
-                                                                                else
-                                                                                {
-                                                                                    this.Close();
-                                                                                }
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                this.Close();
-                                                                            }
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            this.Close();
-                                                                        }
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        this.Close();
-                                                                    }
-                                                                }
-                                                                else
-                                                                {
-                                                                    this.Close();
-                                                                }
-                                                            }
-                                                            else
-                                                            {
-                                                                this.Close();
-                                                            }
-                                                        }
-                                                        else
-                                                        {
-                                                            this.Close();
-                                                        }
-                                                    }
-                                                    else
-                                                    {
-                                                        this.Close();
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    this.Close();
-                                                }
-                                            }
-                                            else
-                                            {
-                                                this.Close();
-                                            }
-                                        }
-                                        else
-                                        {
-                                            this.Close();
-                                        }
-                                    }
-                                    else
-                                    {
-                                        this.Close();
-                                    }
-                                }
-                                else
-                                {
-                                    this.Close();
-                                }
-                            }
-                            else
-                            {
-                                this.Close();
-                            }
-                        }
-                        else
-                        {
-                            this.Close();
-                        }
-                    }
-                    else
-                    {
-                        this.Close();
-                    }
+                    break;
                 }
                 else
                 {
                     this.Close();
                 }
             }
-            else
-            {
-                this.Close();
-            }
+                
         }
     }
 }

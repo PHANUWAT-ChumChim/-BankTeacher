@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace example.Bank.Loan
+namespace BankTeacher.Bank.Loan
 {
     public partial class InfoLoan : Form
     {
@@ -92,7 +92,6 @@ namespace example.Bank.Loan
                 comboBox1.SelectedIndex = -1;
                 TBTeacherName.Text = "";
                 TBYearPay_Detail.Text = "";
-                //textBox2.Text = "";
                 TBMonthPay_Detail.Text = "";
                 TBTotalAmount_Detail.Text = "";
                 TBPayNo_Detail.Text = "";
@@ -105,20 +104,12 @@ namespace example.Bank.Loan
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
                     .Replace("{TeacherNo}", TBTeacherNo.Text));
                 for (int x = 0; x < dt.Rows.Count; x++)
+                if(Bank.Search.Return[0].ToString() != "")
                 {
-                    for (int aa = 0; aa < cb.Length; aa++)
-                    {
-                        cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + (x + 1), dt.Rows[x][0].ToString()));
-                    }
+                    TBTeacherNo.Text = Bank.Search.Return[0];
+                    TBTeacherName.Text = Bank.Search.Return[1];
+                    TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
                 }
-                if(Bank.Search.Return[0] == "")
-                {
-                    comboBox1.Enabled = false;
-                    Check = 0;
-
-                }
-
-                TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
 
             }
             catch (Exception x)
@@ -133,7 +124,17 @@ namespace example.Bank.Loan
             {
                 if (TBTeacherNo.Text.Length == 6)
                 {
+                    comboBox1.Enabled = true;
+                    comboBox1.Items.Clear();
+                    Check = 1;
+                    comboBox1.Items.Clear();
+                    comboBox1.SelectedIndex = -1;
+                    TBTeacherName.Text = "";
+                    TBLoanStatus.Text = "";
+                    TBLoanNo.Text = "";
+                    TBSavingAmount.Text = "";
                     DGVGuarantor.Rows.Clear();
+                    DGVLoanDetail.Rows.Clear();
                     DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text));
                     if (dt.Rows.Count != 0)
                     {
@@ -146,7 +147,7 @@ namespace example.Bank.Loan
                         {
                             for (int aa = 0; aa < cb.Length; aa++)
                             {
-                                cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[x][0].ToString(), dt.Rows[x][0].ToString()));
+                                cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[x][0].ToString(), dt.Rows[x][0].ToString()));
                             }
                         }
                         if (comboBox1.Items.Count == 1)
@@ -196,8 +197,8 @@ namespace example.Bank.Loan
         {
             if(comboBox1.SelectedIndex != -1)
             {
-                example.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as example.Class.ComboBoxPayment);
-                DataSet ds = example.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2].Replace("{LoanID}", Loan.No));
+                BankTeacher.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as BankTeacher.Class.ComboBoxPayment);
+                DataSet ds = BankTeacher.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2].Replace("{LoanID}", Loan.No));
                 DGVGuarantor.Rows.Clear();
                 if (ds.Tables[0].Rows.Count != 0)
                 {
@@ -284,7 +285,25 @@ namespace example.Bank.Loan
 
         private void panel5_Paint(object sender, PaintEventArgs e)
         {
+           
+        }
 
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+          
+        }
+
+        private void BTPrint_Click(object sender, EventArgs e)
+        {
+            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+            {
+                printDocument1.Print();
+            }
+        }
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Class.Print.PrintPreviewDialog.PrintDeReport(e, DGVLoanDetail);
+            
         }
     }
 }

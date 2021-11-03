@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static example.Class.ProtocolSharing.ConnectSMB;
+using static BankTeacher.Class.ProtocolSharing.ConnectSMB;
 
-namespace example.Bank.Loan
+namespace BankTeacher.Bank.Loan
 {
     public partial class PayLoan : Form
     {
@@ -51,7 +51,8 @@ namespace example.Bank.Loan
           "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo   \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as c on a.TeacherNo = c.TeacherNo  \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo  \r\n " +
-          "WHERE a.TeacherNo = '{TeacherNo}' and a.LoanStatusNo = 1 \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblMember as e on b.TeacherNo = e.TeacherNo \r\n" +
+          "WHERE a.TeacherNo = '{TeacherNo}' and LoanStatusNo = 1 and MemberStatusNo = 1 \r\n " +
           "GROUP BY a.LoanNo , CAST(d.PrefixName + ' ' + Fname + ' ' + Lname AS NVARCHAR) ,ISNULL(CAST(a.PayDate as int) , 1) \r\n " +
           "ORDER BY a.LoanNo "
           
@@ -84,7 +85,7 @@ namespace example.Bank.Loan
             DataTable dtPayment = Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]);
             for (int a = 0; a < dtPayment.Rows.Count; a++)
                 for (int x = 0; x < cb.Length; x++)
-                    cb[x].Items.Add(new example.Class.ComboBoxPayment(dtPayment.Rows[a][0].ToString(),
+                    cb[x].Items.Add(new BankTeacher.Class.ComboBoxPayment(dtPayment.Rows[a][0].ToString(),
                         dtPayment.Rows[a][1].ToString()));
         }
 
@@ -110,36 +111,9 @@ namespace example.Bank.Loan
                     label3.Text = "0";
                     CBB4Oppay.Enabled = false;
                     button1.Enabled = false;
-                    comboBox1.Enabled = true;
                     comboBox1.Items.Clear();
                     Check = 1;
-                    ComboBox[] cb = new ComboBox[] { comboBox1 };
-                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
-                        .Replace("{TeacherNo}", TBTeacherNo.Text));
-                    int CheckPay = 0;
-                    for (int x = 0; x < dt.Rows.Count; x++)
-                    {
-                        for (int aa = 0; aa < cb.Length; aa++)
-                        {
-                            int.TryParse(dt.Rows[x][2].ToString(), out CheckPay);
-                            cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[x][0], dt.Rows[x][0].ToString()));
-                            
-                        }
-                    }
-                    TBLoanNo.Text = "";
-                    TBLoanStatus.Text = "";
-                    TBDate.Text = "";
-                    comboBox1.Enabled = true;
-                    if (comboBox1.Items.Count == 1)
-                    {
-                        comboBox1.SelectedIndex = 0;
-                        label9.Visible = false;
-                    }
-                    else if(comboBox1.Items.Count == 0)
-                    {
-                        label9.Visible = true;
-                        comboBox1.Enabled = false;
-                    }
+                    TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
                 }
                 
             }
@@ -172,7 +146,7 @@ namespace example.Bank.Loan
                                 int.TryParse(dt.Rows[x][2].ToString(), out CheckPay);
                                 if (CheckPay == 1)
                                 {
-                                    cb[aa].Items.Add(new example.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[x][0], dt.Rows[x][0].ToString()));
+                                    cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[x][0], dt.Rows[x][0].ToString()));
                                 }
                             }
                         }
@@ -180,6 +154,7 @@ namespace example.Bank.Loan
                         TBLoanStatus.Text = "";
                         TBDate.Text = "";
                         comboBox1.Enabled = true;
+                        CBB4Oppay.SelectedIndex = 0;
                         if (comboBox1.Items.Count == 1)
                         {
                             comboBox1.SelectedIndex = 0;
@@ -223,8 +198,8 @@ namespace example.Bank.Loan
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            example.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as example.Class.ComboBoxPayment);
-            DataTable dt = example.Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{LoanNo}", Loan.No));
+            BankTeacher.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as BankTeacher.Class.ComboBoxPayment);
+            DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{LoanNo}", Loan.No));
             if (dt.Rows.Count != 0)
             {
                 TBDate.Text = (Convert.ToDateTime(dt.Rows[0][1].ToString())).ToString("dd/MM/yyyy");
@@ -246,7 +221,7 @@ namespace example.Bank.Loan
             {
                 try
                 {
-                    example.Class.ComboBoxPayment Payment = (CBB4Oppay.SelectedItem as example.Class.ComboBoxPayment);
+                    BankTeacher.Class.ComboBoxPayment Payment = (CBB4Oppay.SelectedItem as BankTeacher.Class.ComboBoxPayment);
                     Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{LoanID}", TBLoanNo.Text)
                         .Replace("{TeacherNoPay}", Class.UserInfo.TeacherNo)
                         .Replace("{PaymentNo}", Payment.No));

@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.Drawing.Text;
 using System.Drawing;
 
-namespace example.Class
+namespace BankTeacher.Class
 {
     class FromSettingMedtod
     {
@@ -24,8 +24,8 @@ namespace example.Class
             {
                 CB.Items.Add(F.Name.ToString());
             }
-            example.GOODS.Menu.FontSize = Fs.ToString();
-            example.GOODS.Home.F = F;
+            BankTeacher.Bank.Menu.FontSize = Fs.ToString();
+            BankTeacher.Bank.Home.F = F;
         }
        
          public static void ResetAllControls(Control form)

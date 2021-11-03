@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-namespace example.GOODS
+namespace BankTeacher.Bank
 {
     public partial class Home : Form
     {
@@ -163,26 +163,26 @@ namespace example.GOODS
                         int YearRegister = Convert.ToInt32((Convert.ToDateTime(dts.Rows[0][0].ToString())).ToString("yyyy"));
                         int Yearlastofpay = Convert.ToInt32((Convert.ToDateTime(dtss.Rows[0][2].ToString())).ToString("yyyy"));
                         Yearlastofpay = Yearlastofpay - YearRegister;
-                        if (YearRegister < Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2)
+                        if (YearRegister < Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) - 2)
                         {
-                            int Yeard2 = Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2;
+                            int Yeard2 = Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) - 2;
 
-                            while (Yeard2 <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + Yearlastofpay)
+                            while (Yeard2 <= Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + Yearlastofpay)
                             {
                                 CByear.Items.Add(Yeard2);
                                 Yeard2++;
                             }
                         }
-                        else if (YearRegister > Convert.ToInt32(example.GOODS.Menu.Date[0]) - 2)
+                        else if (YearRegister > Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) - 2)
                         {
-                            while (YearRegister <= Convert.ToInt32(example.GOODS.Menu.Date[0]) + Yearlastofpay)
+                            while (YearRegister <= Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + Yearlastofpay)
                             {
                                 CByear.Items.Add(YearRegister);
                                 YearRegister++;
                             }
                         }
                         CByear.SelectedIndex = 0;
-                        CByear.Text = example.GOODS.Menu.Date[0];
+                        CByear.Text = BankTeacher.Bank.Menu.Date[0];
                     }
                     else
                     {
@@ -221,10 +221,10 @@ namespace example.GOODS
             if (CByear.SelectedIndex != -1)
             {
                 dataGridView3.Rows.Clear();
-                DataSet ds = example.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
+                DataSet ds = BankTeacher.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
                             .Replace("{TeacherNo}", TBTeacherNo.Text)
                             .Replace("{Year}", CByear.Text));
-                DateTime RegisterDate = Convert.ToDateTime((Convert.ToDateTime(example.Class.SQLConnection.InputSQLMSSQL(SQLDefault[5]
+                DateTime RegisterDate = Convert.ToDateTime((Convert.ToDateTime(BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[5]
                         .Replace("{TeacherNo}", TBTeacherNo.Text)).Rows[0][0].ToString())).ToString("yyyy-MM-dd"));
                 int lastYear = 0;
                 int lastMonth = 0;

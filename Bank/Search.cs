@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace example.Bank
+namespace BankTeacher.Bank
 {
     public partial class Search : Form
     {
@@ -57,7 +57,6 @@ namespace example.Bank
 
         private void Search_Load(object sender, EventArgs e)
         {
-
         }
 
         private void TBTeacherNo_TextChanged(object sender, EventArgs e)
