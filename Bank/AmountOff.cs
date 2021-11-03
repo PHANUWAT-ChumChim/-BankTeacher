@@ -223,7 +223,6 @@ namespace BankTeacher.Bank
                 {
                     Console.Write(x);
                 }
-
                 //
             }
             else

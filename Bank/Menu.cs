@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -66,41 +67,16 @@ namespace BankTeacher.Bank
             F.WindowState = FormWindowState.Maximized;
             F.Show();
         }
-        public void shareinformation(object sender, EventArgs e)
-        {
-            Bank.Pay.pay Mn = new Bank.Pay.pay(1);
-            CloseFrom(Mn);
-        }
-
-        private void จายยอดToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Bank.Pay.pay Mn = new Bank.Pay.pay(0);
-            CloseFrom(Mn);
-        }
-
         private void menuStrip1_ItemAdded(object sender, ToolStripItemEventArgs e)
         {
             e.Item.Visible = false;
         }
-
-        private void หนาเเรกToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Menu_Home_Click(object sender, EventArgs e)
         {
             BankTeacher.Bank.Home Hm = new BankTeacher.Bank.Home();
             CloseFrom(Hm);
         }
-        private void loaninformation(object sender, EventArgs e)
-        {
-            Bank.Pay.pay Mn = new BankTeacher.Bank.Pay.pay(2);
-            CloseFrom(Mn);
-        }
-
-        private void member(object sender, EventArgs e)
-        {
-            Bank.Pay.pay Mn = new Bank.Pay.pay(3);
-            CloseFrom(Mn);
-        }
-
-        private void สมครสมาชกToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Menu_Membership_Click(object sender, EventArgs e)
         {
             Bank.MemberShip Ms = new Bank.MemberShip();
             CloseFrom(Ms);
@@ -110,8 +86,7 @@ namespace BankTeacher.Bank
             BankTeacher.Bank.Home Hm = new BankTeacher.Bank.Home();
             CloseFrom(Hm);
         }
-
-        private void SettingToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Menu_setring_Click(object sender, EventArgs e)
         {
             Bank.Setting St = new Bank.Setting();
             St.ShowDialog();
@@ -121,43 +96,36 @@ namespace BankTeacher.Bank
             Bank.CancelMembership Cm = new Bank.CancelMembership();
             CloseFrom(Cm);
         }
-
         private void ReportCancelMember_Click(object sender, EventArgs e)
         {
             Bank.ReportCancelMember Rc = new Bank.ReportCancelMember();
             CloseFrom(Rc);
         }
-
-        private void pay_Click(object sender, EventArgs e)
+        private void Menu_pay_Click(object sender, EventArgs e)
         {
             BankTeacher.Bank.Pay.pay Mn = new BankTeacher.Bank.Pay.pay(0);
             CloseFrom(Mn);
         }
-
         private void Cancel_Click(object sender, EventArgs e)
         {
             BankTeacher.Bank.Loan.CancelLoan Cl = new Bank.Loan.CancelLoan();
             CloseFrom(Cl);
         }
-
-        private void จายกToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Menubar_Click(object sender, EventArgs e)
         {
             Bank.Loan.PayLoan Pl = new Bank.Loan.PayLoan();
             CloseFrom(Pl);
         }
-
-        private void สมครกToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Menubar_MerberLoan_Click(object sender, EventArgs e)
         {
             Bank.Loan.loan Ln = new Bank.Loan.loan();
             CloseFrom(Ln);
         }
-
-        private void ดขอมลกToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Menubar_infoLoan_Click(object sender, EventArgs e)
         {
             Bank.Loan.InfoLoan If = new Bank.Loan.InfoLoan();
             CloseFrom(If);
         }
-
         private void AmountOff_Click(object sender, EventArgs e)
         {
             Bank.AmountOff Af = new Bank.AmountOff();

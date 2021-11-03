@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 
 namespace BankTeacher.Bank.Pay
 {
@@ -325,6 +327,10 @@ namespace BankTeacher.Bank.Pay
             Font F = new Font("TH Sarabun New", 16, FontStyle.Regular);
             DGV_Pay.ColumnHeadersDefaultCellStyle.Font = F;
             DGV_ShareInfo.ColumnHeadersDefaultCellStyle.Font = F;
+
+            var paperSize = printDocument1.PrinterSettings.PaperSizes.Cast<System.Drawing.Printing.PaperSize>().FirstOrDefault(e => e.PaperName == "A5");
+            printDocument1.PrinterSettings.DefaultPageSettings.PaperSize = paperSize;
+            
         }
 
         //ChangeSizeForm
@@ -982,6 +988,7 @@ namespace BankTeacher.Bank.Pay
                                     }
                                     catch
                                     {
+                                        //
                                         MessageBox.Show("ชำระเงินล้มเหลว", "แจ้งเตือนการขำระ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     }
 
@@ -1454,6 +1461,46 @@ namespace BankTeacher.Bank.Pay
             TBTeacherNo.Enabled = Status;
             BSearchTeacher.Enabled = Status;
         }
+
+        private void CBPapersize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (CBPapersize.SelectedItem.ToString() == "A4")
+            {
+                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4",794,1123);
+                printDocument1.DefaultPageSettings.Landscape = false;
+            }
+            else
+            {
+                //printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A5",420,595);
+                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+                printDocument1.DefaultPageSettings.Landscape = true;
+            }
+        }
+
+        private void BT_Print_Click(object sender, EventArgs e)
+        {
+            if (DGV_BillInfo.RowCount != 0)
+            {
+                //420 x 595 A5  794 x 1123 A4
+                //printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4",x,y);
+
+                if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    printDocument1.Print();
+                }
+            }
+            else
+            {
+                MessageBox.Show("ดูเหมือนคุณจะลืมอะไรนะ");
+            }
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Class.Print.PrintPreviewDialog.PrintDeReport(e,DGV_BillInfo,tabControl1.SelectedTab.Text);
+        }
+      
+
         //===============================================================================================
     }
 }

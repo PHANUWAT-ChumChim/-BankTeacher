@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -73,6 +74,12 @@ namespace BankTeacher.Bank.Loan
         {
             InitializeComponent();
             
+        }
+
+        //ChangeSizeForm
+        private void InfoLoan_SizeChanged(object sender, EventArgs e)
+        {
+            Class.FromSettingMedtod.ChangeSizePanal(this, panel1);
         }
 
         private void BSearchTeacher_Click(object sender, EventArgs e)
@@ -272,38 +279,53 @@ namespace BankTeacher.Bank.Loan
                 }
             }
         }
-
-        private void InfoLoan_SizeChanged(object sender, EventArgs e)
+        
+        private void CBPapersize_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Class.FromSettingMedtod.ChangeSizePanal(this, panel1);
+            if (CBPapersize.SelectedItem.ToString() == "A4")
+            {
+                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 794, 1123);
+                printDocument1.DefaultPageSettings.Landscape = false;
+            }
+            else
+            {
+                //printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A5",420,595);
+                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+                printDocument1.DefaultPageSettings.Landscape = true;
+            }
         }
 
-        private void BPrintLoanDoc_Click(object sender, EventArgs e)
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-
+            Class.Print.PrintPreviewDialog.PrintDeReport(e, DGVLoanDetail,tabControl1.SelectedTab.Text);
         }
 
-        private void panel5_Paint(object sender, PaintEventArgs e)
+        private void BTPrint_Click_1(object sender, EventArgs e)
         {
-           
+            if(DGVLoanDetail.RowCount != 0)
+            {
+                //printDocument1.DefaultPageSettings.Landscape = true;
+                if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    printDocument1.Print();
+                }
+            }
+            else
+            {
+                MessageBox.Show("ดูเหมือนคุณจะลืมอะไรนะ");
+            }
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-          
+            if (tabControl1.SelectedIndex == 2)
+            {
+                BTPrint.Visible = true;
+            }
+            else
+                BTPrint.Visible = false;
         }
 
-        private void BTPrint_Click(object sender, EventArgs e)
-        {
-            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
-            {
-                printDocument1.Print();
-            }
-        }
-        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
-        {
-            Class.Print.PrintPreviewDialog.PrintDeReport(e, DGVLoanDetail);
-            
-        }
+      
     }
 }
