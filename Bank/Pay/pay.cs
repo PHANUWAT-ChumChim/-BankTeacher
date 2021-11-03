@@ -982,6 +982,7 @@ namespace BankTeacher.Bank.Pay
                                     }
                                     catch
                                     {
+                                        //
                                         MessageBox.Show("ชำระเงินล้มเหลว", "แจ้งเตือนการขำระ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     }
 
