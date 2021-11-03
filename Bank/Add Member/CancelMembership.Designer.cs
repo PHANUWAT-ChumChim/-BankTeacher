@@ -34,13 +34,11 @@ namespace BankTeacher.Bank
             this.button1 = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.TBIDNo = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.TBTeacherNo = new System.Windows.Forms.TextBox();
             this.BSearchTeacher = new System.Windows.Forms.Button();
             this.TBTeacherName = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -103,13 +101,11 @@ namespace BankTeacher.Bank
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.TBIDNo);
             this.tabPage1.Controls.Add(this.label8);
             this.tabPage1.Controls.Add(this.label9);
             this.tabPage1.Controls.Add(this.TBTeacherNo);
             this.tabPage1.Controls.Add(this.BSearchTeacher);
             this.tabPage1.Controls.Add(this.TBTeacherName);
-            this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Location = new System.Drawing.Point(4, 39);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -117,15 +113,6 @@ namespace BankTeacher.Bank
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "ข้อมูลส่วนตัว";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // TBIDNo
-            // 
-            this.TBIDNo.Enabled = false;
-            this.TBIDNo.Location = new System.Drawing.Point(263, 144);
-            this.TBIDNo.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
-            this.TBIDNo.Name = "TBIDNo";
-            this.TBIDNo.Size = new System.Drawing.Size(310, 36);
-            this.TBIDNo.TabIndex = 20;
             // 
             // label8
             // 
@@ -183,17 +170,6 @@ namespace BankTeacher.Bank
             this.TBTeacherName.Size = new System.Drawing.Size(310, 36);
             this.TBTeacherName.TabIndex = 34;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(48, 144);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(165, 32);
-            this.label3.TabIndex = 36;
-            this.label3.Text = "หมายเลขบัตรประชาชน";
-            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.button4);
@@ -246,6 +222,7 @@ namespace BankTeacher.Bank
             this.button2.TabIndex = 21;
             this.button2.Text = "ปริ้นเอกสารยกเลิกสมาชิก";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // textBox1
             // 
@@ -368,13 +345,11 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TextBox TBIDNo;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox TBTeacherNo;
         private System.Windows.Forms.Button BSearchTeacher;
         private System.Windows.Forms.TextBox TBTeacherName;
-        private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button1;

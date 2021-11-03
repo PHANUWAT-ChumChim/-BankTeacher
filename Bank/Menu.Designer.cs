@@ -59,7 +59,8 @@ namespace BankTeacher.Bank
             this.Menu_setring});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1176, 45);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(882, 38);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemAdded += new System.Windows.Forms.ToolStripItemEventHandler(this.menuStrip1_ItemAdded);
@@ -129,7 +130,7 @@ namespace BankTeacher.Bank
             this.AmountOff.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AmountOff.Image = ((System.Drawing.Image)(resources.GetObject("AmountOff.Image")));
             this.AmountOff.Name = "AmountOff";
-            this.AmountOff.Size = new System.Drawing.Size(107, 41);
+            this.AmountOff.Size = new System.Drawing.Size(90, 34);
             this.AmountOff.Text = "ปิดยอด";
             this.AmountOff.Click += new System.EventHandler(this.AmountOff_Click);
             // 
@@ -172,15 +173,16 @@ namespace BankTeacher.Bank
             // 
             // Menu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1176, 791);
+            this.ClientSize = new System.Drawing.Size(882, 643);
             this.Controls.Add(this.menuStrip1);
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Menu";
             this.Text = "หน้าเเรก";
             this.Load += new System.EventHandler(this.Menu_Load_1);
@@ -191,13 +193,6 @@ namespace BankTeacher.Bank
 
         }
 
-        #endregion
-
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem Menu_Home;
-        private System.Windows.Forms.ToolStripMenuItem Menu_pay;
-        private System.Windows.Forms.ToolStripMenuItem Menu_Loan;
-        private System.Windows.Forms.ToolStripMenuItem AmountOff;
         private System.Windows.Forms.ToolStripMenuItem Menu_Membership;
         private System.Windows.Forms.ToolStripMenuItem Menu_setring;
         private System.Windows.Forms.ToolStripMenuItem TMLCancelMembers;
