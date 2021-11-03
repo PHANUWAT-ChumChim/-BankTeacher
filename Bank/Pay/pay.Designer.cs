@@ -118,11 +118,6 @@ namespace BankTeacher.Bank.Pay
             this.label4 = new System.Windows.Forms.Label();
             this.LBalance_BillInfo = new System.Windows.Forms.Label();
             this.DGV_BillInfo = new System.Windows.Forms.DataGridView();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
