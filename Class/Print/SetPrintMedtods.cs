@@ -9,13 +9,19 @@ namespace BankTeacher.Class.Print
 {
     class SetPrintMedtods
     {
+        // ถังขยะ 
         static float nu;
-        // Array
+        // Array ไม่เเน่ใจในการใช้งาน
         static List<float> OverMax = new List<float>();
 
 
         /// <summary>
-        /// <para> เก็บ Array  ราย Rows ส่วน Colimns ยังไม่เเน่ใจ ไม่สมบูรณ์ </para>
+        /// <para> การทำงาน </para>
+        /// <para> เก็บ Rows เเละ Columns เข้า Array เพื่อนำไปใช้งาน เเละสามารถ เก็บ เป็น Array2D ได้ (ถ้าต้องการColmns ให้สร้างเอง เพราะผู้สร้างไม่ได้ใช้) </para>>
+        /// <para> ควมาสามารภหลักๆ คือ การเช็คข้อมูลที่เก็บเข้าไปใน Array ว่าเกิน ระยะเเกน Y ที่กำหนดรึยังถ้าเกินให้เก็บใส่กล่องใหม่ จนกว่าจะครบ </para>
+        /// <para> วิธีใช้งาน </para>
+        /// <para> กรุณาเรียก System Pring ออกมาด้วย ตัวมันจำเป็นต้องเรียกใช้ใต้class / ขนาดการตัดของความ setcut ส่งให้ Metod / ตาราง G </para>
+        /// <para> Array ที่เข้าไปเเทนข้อมูลในตาราง Textpage / Array ที่รวมข้อมูลเป็นกล่องๆสำหรับใช้งาน โดยวิธีใช้ก็ loop ตัวมันเลย โดยจะมี Rows เเละ Cells ในตัว forTextpage / กำนหดจุดตัดเเกน Y lineToprint / ขนาดเริ่มของเเกน Y หรือ จุดเริ่มวาด เเกน Y RowsY </para> 
         /// </summary>
         public static List<string[]> CutString(System.Drawing.Printing.PrintPageEventArgs e, int SetCut, System.Windows.Forms.DataGridView G
                      , List<string[]> Textpage, List<string> forTextpage, float linesToPrint, float RowsY)
@@ -268,7 +274,12 @@ namespace BankTeacher.Class.Print
             return Max;
         }
 
-
+        /// <summary>
+        /// <para> การทำงาน </para>>
+        /// <para> สร้างตารางสำหรับรวมค่าตัวเลขทั้งหมด โดยสร้างต่อจากเเบบปริ้นหลังปริ้นเส้น </para>>
+        /// <para> วิธีการใช้งาน  </para>>
+        /// ประกาศคำสั่ง System ตาม Metod เลย / Pen คือ ปากกา ที่ใช้ว่าโดยกำหนดค่าเองได้เลย / array  ที่เอาไว้เเทน ค่าตัวเลขที่เราต้องการ รวม (ต้องเก็บค่าไว้ให้ด้วย) / แปรง สี B / ขนาดตัวหนังสือ Fontsize / x = ขนาดเริ่มวาดครั้งเเรก / y ขนาดที่เริ่มวาดไปทั้งหมดเเล้ว
+        /// </summary>
         public static void Tabletotal(System.Drawing.Printing.PrintPageEventArgs e, Pen pen, List<float> array, Brush B, float Fontsize, float x, float y)
         {
             float sum;
