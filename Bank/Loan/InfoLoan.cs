@@ -281,14 +281,22 @@ namespace BankTeacher.Bank.Loan
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             Class.Print.PrintPreviewDialog.PrintDeReport(e, DGVLoanDetail,tabControl1.SelectedTab.Text);
-            
         }
 
         private void BTPrint_Click_1(object sender, EventArgs e)
         {
-            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+            if(DGVLoanDetail.RowCount != 0)
             {
-                printDocument1.Print();
+                printDocument1.DefaultPageSettings.PaperSize = Bank.Menu.PrintD;
+                printDocument1.DefaultPageSettings.Landscape = true;
+                if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    printDocument1.Print();
+                }
+            }
+            else
+            {
+                MessageBox.Show("ดูเหมือนคุณจะลืมอะไรนะ");
             }
         }
 

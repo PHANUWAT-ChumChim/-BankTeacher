@@ -280,7 +280,7 @@ namespace BankTeacher.Class.Print
         /// <para> วิธีการใช้งาน  </para>>
         /// ประกาศคำสั่ง System ตาม Metod เลย / Pen คือ ปากกา ที่ใช้ว่าโดยกำหนดค่าเองได้เลย / array  ที่เอาไว้เเทน ค่าตัวเลขที่เราต้องการ รวม (ต้องเก็บค่าไว้ให้ด้วย) / แปรง สี B / ขนาดตัวหนังสือ Fontsize / x = ขนาดเริ่มวาดครั้งเเรก / y ขนาดที่เริ่มวาดไปทั้งหมดเเล้ว
         /// </summary>
-        public static void Tabletotal(System.Drawing.Printing.PrintPageEventArgs e, Pen pen, List<float> array, Brush B, float Fontsize, float x, float y)
+        public static void Tabletotal(System.Drawing.Printing.PrintPageEventArgs e, Pen pen, List<float> array, Brush B, float Fontsize, float x, float y,float Sizepaper)
         {
             float sum;
             // ยอดที่รวมได้ทั้งหมด 
@@ -291,9 +291,9 @@ namespace BankTeacher.Class.Print
             // เส้น
             e.Graphics.DrawRectangle(pen, x, y, SizeSUM.Width, SizeSUM.Height);
             // ตัวเลข
-            e.Graphics.DrawString($"{sum.ToString()} บาท", Class.Print.PrintPreviewDialog.FonT(Fontsize, "TH Sarabun New"), B, (750 - SizeSUM.Width) / 2 + SizeSUM.Width, y);
+            e.Graphics.DrawString($"{sum.ToString()} บาท", Class.Print.PrintPreviewDialog.FonT(Fontsize, "TH Sarabun New"), B, ((Sizepaper - 50) - SizeSUM.Width) / 2 + SizeSUM.Width, y);
             // เส้น
-            e.Graphics.DrawRectangle(pen, SizeSUM.Width + x, y, 750 - SizeSUM.Width, SizeSUM.Height);
+            e.Graphics.DrawRectangle(pen, SizeSUM.Width + x, y, (Sizepaper-50) - SizeSUM.Width, SizeSUM.Height);
         }
         // ของปุ้น
         public static void Center(System.Drawing.Printing.PrintPageEventArgs e, float LocY, String Text, Font fontText, Brush brush)
