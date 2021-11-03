@@ -193,6 +193,13 @@ namespace BankTeacher.Bank
 
         }
 
+        #endregion
+
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem Menu_Home;
+        private System.Windows.Forms.ToolStripMenuItem Menu_pay;
+        private System.Windows.Forms.ToolStripMenuItem Menu_Loan;
+        private System.Windows.Forms.ToolStripMenuItem AmountOff;
         private System.Windows.Forms.ToolStripMenuItem Menu_Membership;
         private System.Windows.Forms.ToolStripMenuItem Menu_setring;
         private System.Windows.Forms.ToolStripMenuItem TMLCancelMembers;
