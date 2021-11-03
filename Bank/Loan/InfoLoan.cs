@@ -75,6 +75,12 @@ namespace BankTeacher.Bank.Loan
             
         }
 
+        //ChangeSizeForm
+        private void InfoLoan_SizeChanged(object sender, EventArgs e)
+        {
+            Class.FromSettingMedtod.ChangeSizePanal(this, panel1);
+        }
+
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
             Bank.Search IN;
@@ -272,38 +278,28 @@ namespace BankTeacher.Bank.Loan
                 }
             }
         }
-
-        private void InfoLoan_SizeChanged(object sender, EventArgs e)
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.FromSettingMedtod.ChangeSizePanal(this, panel1);
+            Class.Print.PrintPreviewDialog.PrintDeReport(e, DGVLoanDetail,tabControl1.SelectedTab.Text);
+            
         }
 
-        private void BPrintLoanDoc_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel5_Paint(object sender, PaintEventArgs e)
-        {
-           
-        }
-
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-          
-        }
-
-        private void BTPrint_Click(object sender, EventArgs e)
+        private void BTPrint_Click_1(object sender, EventArgs e)
         {
             if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
             {
                 printDocument1.Print();
             }
         }
-        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Class.Print.PrintPreviewDialog.PrintDeReport(e, DGVLoanDetail);
-            
+            if (tabControl1.SelectedIndex == 2)
+            {
+                BTPrint.Visible = true;
+            }
+            else
+                BTPrint.Visible = false;
         }
     }
 }

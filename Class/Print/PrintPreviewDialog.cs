@@ -227,7 +227,7 @@ namespace BankTeacher.Class.Print
 
         }
         // เเบบ ปริ้น รายงาน สำหรับ ที่มีปุ่มปริ้น
-        public static void PrintDeReport(System.Drawing.Printing.PrintPageEventArgs e, DataGridView G)
+        public static void PrintDeReport(System.Drawing.Printing.PrintPageEventArgs e, DataGridView G,string header)
         {
             // ปากกา//
             Pen PenBlack = new Pen(Color.Black);
@@ -272,7 +272,6 @@ namespace BankTeacher.Class.Print
                     e.Graphics.DrawImage(img, 50, 50, imageX, imageY);
                     // ข้อความทั้งหมดที่ใช้พิมพ์
                     string TLC = "วิทยาลัยเทคโนโลยีอีอีซี เอ็นจิเนีย เเหลมฉบัง", tlc = "EEC ENGINEERING TECHNOLOGICAL COLLEGE";
-                    string duedate = "กำหนดการผ่อนชำระ";
                     // วันเวลาที่ปริ้น
                     Size = e.Graphics.MeasureString($"วันที่ออกใบ {DateTime.Now.Day}/{DateTime.Now.Month}/{DateTime.Now.Year}", FonT(16, ThaiSarabun));
                     e.Graphics.DrawString($"วันที่ออกใบ {DateTime.Now.Day}/{DateTime.Now.Month}/{DateTime.Now.Year}", FonT(16, ThaiSarabun), BrushBlack, 800 - Size.Width, 50);
@@ -286,9 +285,12 @@ namespace BankTeacher.Class.Print
                     Size = e.Graphics.MeasureString(tlc, FonT(16, ThaiSarabun));
                     TextY += Size.Height;
                     // หัวข้อรายการ
-                    Size = e.Graphics.MeasureString(duedate, FonT(18, ThaiSarabun));
-                    e.Graphics.DrawString(duedate, FonT(18, ThaiSarabun), BrushBlack, new RectangleF((850 / 2) - Size.Width / 2, TextY, 500, 100));
-                    TextY += Size.Height - SP;
+                   if(header != "")
+                   {
+                       Size = e.Graphics.MeasureString(header, FonT(18, ThaiSarabun));
+                       e.Graphics.DrawString(header, FonT(18, ThaiSarabun), BrushBlack, new RectangleF((850 / 2) - Size.Width / 2, TextY, 500, 100));
+                       TextY += Size.Height - SP;
+                   }
                     // บวกขนาดตารางเเละเส้น เพื่อทราบตำเเหน่ง ได้เเก่   startTableY ตาราง / y1&y2 เส้น
                     float IandT = 0;
                     if (imageY > TextY)
@@ -363,12 +365,21 @@ namespace BankTeacher.Class.Print
                         {
                             if (Cells == G.Rows[Rows].Cells.Count - 1)
                             {
-                                
-                                Type Checkstring = Convert.ToSingle(G.Rows[Rows].Cells[Cells-1].Value).GetType();
-                                if (Checkstring == typeof(float))
-                                    SUM.Add(Convert.ToSingle(G.Rows[Rows].Cells[Cells-1].Value));
-                                //SUM.Add(Convert.ToInt32(G.Rows[Rows].Cells[Cells].Value.ToString()));
-                            
+                                for(int returcells = G.Rows[Rows].Cells.Count-1; returcells > 0; returcells--)
+                                {
+                                    try
+                                    {
+                                        //float Checkstring = Convert.ToSingle(G.Rows[Rows].Cells[returcells].Value);
+                                        SUM.Add(Convert.ToSingle(G.Rows[Rows].Cells[returcells].Value));
+                                        break;
+                                    }
+                                    catch
+                                    {
+                                        //if (Checkstring == typeof(float))
+                                        //SUM.Add(Convert.ToInt32(G.Rows[Rows].Cells[Cells].Value.ToString()));
+                                        //if(G.Rows[Rows].Cells[returcells].Value == )
+                                    }
+                                }
                             }
                             // เรียกใช้ โรงงาน การตัด  เเละ การวัด ขนาดสี่เหลี่ยมพื้นผ้า
                             Class.Print.SetPrintMedtods.CutingCharAndString
