@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 
 namespace BankTeacher.Bank.Pay
 {
@@ -325,6 +327,10 @@ namespace BankTeacher.Bank.Pay
             Font F = new Font("TH Sarabun New", 16, FontStyle.Regular);
             DGV_Pay.ColumnHeadersDefaultCellStyle.Font = F;
             DGV_ShareInfo.ColumnHeadersDefaultCellStyle.Font = F;
+
+            var paperSize = printDocument1.PrinterSettings.PaperSizes.Cast<System.Drawing.Printing.PaperSize>().FirstOrDefault(e => e.PaperName == "A5");
+            printDocument1.PrinterSettings.DefaultPageSettings.PaperSize = paperSize;
+            
         }
 
         //ChangeSizeForm
@@ -1455,6 +1461,28 @@ namespace BankTeacher.Bank.Pay
             TBTeacherNo.Enabled = Status;
             BSearchTeacher.Enabled = Status;
         }
+
+        private void BTPrint_Click(object sender, EventArgs e)
+        {
+            if(DGV_BillInfo.RowCount != 0)
+            {
+                printDocument1.DefaultPageSettings.PaperSize = Bank.Menu.PrintD;
+                printDocument1.DefaultPageSettings.Landscape = true;
+                if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    printDocument1.Print();
+                }
+            }
+            else
+            {
+                MessageBox.Show("ดูเหมือนคุณจะลืมอะไรนะ");
+            }
+        }
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Class.Print.PrintPreviewDialog.PrintDeReport(e,DGV_BillInfo,tabControl1.SelectedTab.Text);
+        }
+
         //===============================================================================================
     }
 }
