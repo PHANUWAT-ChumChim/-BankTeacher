@@ -1462,12 +1462,28 @@ namespace BankTeacher.Bank.Pay
             BSearchTeacher.Enabled = Status;
         }
 
-        private void BTPrint_Click(object sender, EventArgs e)
+        private void CBPapersize_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(DGV_BillInfo.RowCount != 0)
+            if (CBPapersize.SelectedItem.ToString() == "A4")
             {
-                printDocument1.DefaultPageSettings.PaperSize = Bank.Menu.PrintD;
+                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4",794,1123);
+                printDocument1.DefaultPageSettings.Landscape = false;
+            }
+            else
+            {
+                //printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A5",420,595);
+                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                 printDocument1.DefaultPageSettings.Landscape = true;
+            }
+        }
+
+        private void BT_Print_Click(object sender, EventArgs e)
+        {
+            if (DGV_BillInfo.RowCount != 0)
+            {
+                //420 x 595 A5  794 x 1123 A4
+                //printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4",x,y);
+
                 if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                 {
                     printDocument1.Print();
@@ -1478,10 +1494,12 @@ namespace BankTeacher.Bank.Pay
                 MessageBox.Show("ดูเหมือนคุณจะลืมอะไรนะ");
             }
         }
+
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             Class.Print.PrintPreviewDialog.PrintDeReport(e,DGV_BillInfo,tabControl1.SelectedTab.Text);
         }
+      
 
         //===============================================================================================
     }

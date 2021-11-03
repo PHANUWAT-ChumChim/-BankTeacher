@@ -231,10 +231,10 @@ namespace BankTeacher.Class.Print
         // เเบบ ปริ้น รายงาน สำหรับ ที่มีปุ่มปริ้น
         public static void PrintDeReport(System.Drawing.Printing.PrintPageEventArgs e, DataGridView G,string header)
         {
-            linesToPrint = e.PageBounds.Height;
+            linesToPrint = e.PageBounds.Height-50;
             // ปากกา//
             Pen PenBlack = new Pen(Color.Black);
-            PenBlack.Width = 2;
+            PenBlack.Width = 1;
             Pen PenRed = new Pen(Color.Red);
             PenRed.Width = 1;
             Pen PenGreen = new Pen(Color.Green);

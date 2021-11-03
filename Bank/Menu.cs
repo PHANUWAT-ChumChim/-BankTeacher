@@ -13,7 +13,6 @@ namespace BankTeacher.Bank
 {
     public partial class Menu : Form
     {
-        public static System.Drawing.Printing.PaperSize PrintD;
         public static int startAmountMin;
         public static int startAmountMax;
         public static int perShare;
@@ -131,16 +130,6 @@ namespace BankTeacher.Bank
         {
             Bank.AmountOff Af = new Bank.AmountOff();
             CloseFrom(Af);  
-        }
-
-        public static void a(PrintPreviewDialog p)
-        {
-            
-        }
-        public void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
-        {
-           PrintD =  printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A5", 420, 595); 
-           printDocument1.DefaultPageSettings.Landscape = true;
         }
     }
 }

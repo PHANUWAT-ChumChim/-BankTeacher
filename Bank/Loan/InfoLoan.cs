@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -278,6 +279,22 @@ namespace BankTeacher.Bank.Loan
                 }
             }
         }
+        
+        private void CBPapersize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (CBPapersize.SelectedItem.ToString() == "A4")
+            {
+                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 794, 1123);
+                printDocument1.DefaultPageSettings.Landscape = false;
+            }
+            else
+            {
+                //printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A5",420,595);
+                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+                printDocument1.DefaultPageSettings.Landscape = true;
+            }
+        }
+
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             Class.Print.PrintPreviewDialog.PrintDeReport(e, DGVLoanDetail,tabControl1.SelectedTab.Text);
@@ -287,8 +304,7 @@ namespace BankTeacher.Bank.Loan
         {
             if(DGVLoanDetail.RowCount != 0)
             {
-                printDocument1.DefaultPageSettings.PaperSize = Bank.Menu.PrintD;
-                printDocument1.DefaultPageSettings.Landscape = true;
+                //printDocument1.DefaultPageSettings.Landscape = true;
                 if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                 {
                     printDocument1.Print();
@@ -309,5 +325,7 @@ namespace BankTeacher.Bank.Loan
             else
                 BTPrint.Visible = false;
         }
+
+      
     }
 }

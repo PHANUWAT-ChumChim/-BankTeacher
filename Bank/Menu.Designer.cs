@@ -43,7 +43,6 @@ namespace BankTeacher.Bank
             this.TMLCancelMembers = new System.Windows.Forms.ToolStripMenuItem();
             this.ReportCancelMember = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_setring = new System.Windows.Forms.ToolStripMenuItem();
-            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -100,28 +99,28 @@ namespace BankTeacher.Bank
             // Menubar_MerberLoan
             // 
             this.Menubar_MerberLoan.Name = "Menubar_MerberLoan";
-            this.Menubar_MerberLoan.Size = new System.Drawing.Size(224, 42);
+            this.Menubar_MerberLoan.Size = new System.Drawing.Size(176, 42);
             this.Menubar_MerberLoan.Text = "สมัครกู้";
             this.Menubar_MerberLoan.Click += new System.EventHandler(this.Menubar_MerberLoan_Click);
             // 
             // Menubar_payLoan
             // 
             this.Menubar_payLoan.Name = "Menubar_payLoan";
-            this.Menubar_payLoan.Size = new System.Drawing.Size(224, 42);
+            this.Menubar_payLoan.Size = new System.Drawing.Size(176, 42);
             this.Menubar_payLoan.Text = "จ่ายกู้";
             this.Menubar_payLoan.Click += new System.EventHandler(this.Menubar_Click);
             // 
             // Menubar_infoLoan
             // 
             this.Menubar_infoLoan.Name = "Menubar_infoLoan";
-            this.Menubar_infoLoan.Size = new System.Drawing.Size(224, 42);
+            this.Menubar_infoLoan.Size = new System.Drawing.Size(176, 42);
             this.Menubar_infoLoan.Text = "ดูข้อมุลกู้";
             this.Menubar_infoLoan.Click += new System.EventHandler(this.Menubar_infoLoan_Click);
             // 
             // Cancel
             // 
             this.Cancel.Name = "Cancel";
-            this.Cancel.Size = new System.Drawing.Size(224, 42);
+            this.Cancel.Size = new System.Drawing.Size(176, 42);
             this.Cancel.Text = "ยกเลิกกู้";
             this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
             // 
@@ -171,10 +170,6 @@ namespace BankTeacher.Bank
             this.Menu_setring.Text = "ตั้งค่า";
             this.Menu_setring.Click += new System.EventHandler(this.Menu_setring_Click);
             // 
-            // printDocument1
-            // 
-            this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
-            // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -211,6 +206,5 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.ToolStripMenuItem Menubar_infoLoan;
         private System.Windows.Forms.ToolStripMenuItem Cancel;
         private System.Windows.Forms.ToolStripMenuItem Menubar_MerberLoan;
-        private System.Drawing.Printing.PrintDocument printDocument1;
     }
 }
