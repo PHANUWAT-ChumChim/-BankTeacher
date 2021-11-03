@@ -77,16 +77,6 @@ namespace BankTeacher.Bank
 
         private void TBTeacherNo_TextChanged(object sender, EventArgs e)
         {
-            ////ต้องพิมพ์รหัสอาจารย์ถึง 6 ตัวถึงจะเข้าเงื่อนไข if
-            //if (TBTeacherNo.Text.Length == 6)
-            //{
-            //    Class.SQLMethod.ResearchUserAllTLC(TBTeacherNo.Text, TBTeacherName, TBIDNo,1);
-            //}
-            //else
-            //{
-            //    TBIDNo.Text = "";
-            //    TBTeacherName.Text = "";
-            //}
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -109,7 +99,6 @@ namespace BankTeacher.Bank
                     }
                 }
                 MessageBox.Show("ยกเลิกผู้ใช้เรียบร้อย","System",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                TBIDNo.Text = "";
                 TBTeacherName.Text = "";
                 TBTeacherNo.Text = "";
                 textBox1.Text = "";
@@ -176,7 +165,6 @@ namespace BankTeacher.Bank
                     {
                         DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1].Replace("{Text}", TBTeacherNo.Text));
                         TBTeacherName.Text = ds.Tables[0].Rows[0][1].ToString();
-                        TBIDNo.Text = "รอใส่จ้าาา";
                         Check = 1;
 
                     }
@@ -188,10 +176,14 @@ namespace BankTeacher.Bank
             }
             else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back && Check == 1)
             {
-                TBIDNo.Text = "";
                 TBTeacherName.Text = "";
                 Check = 0;
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
