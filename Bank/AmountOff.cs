@@ -139,7 +139,7 @@ namespace BankTeacher.Bank
                         Credit = ds.Tables[0].Rows[0][3].ToString().Split('.');
                         TBWithDraw.Enabled = true;
                         CBTypePay.Enabled = true;
-                        BSaveAmountOff.Enabled = true;
+                        //BSaveAmountOff.Enabled = true;
                         TBTeacherName.Text = ds.Tables[0].Rows[0][0].ToString();
                         TBShareNo.Text = ds.Tables[0].Rows[0][1].ToString();
                         TBSavingAmount.Text = ds.Tables[0].Rows[0][2].ToString();
@@ -153,6 +153,8 @@ namespace BankTeacher.Bank
                             Credit = ds.Tables[1].Rows[Num][1].ToString().Split('.');
                             DGVLoan.Rows.Add(ds.Tables[1].Rows[Num][0].ToString(), ds.Tables[1].Rows[Num][2].ToString(), Credit[0], ds.Tables[1].Rows[Num][3].ToString());
                         }
+                        if (CBTypePay.SelectedIndex != -1)
+                            CBTypePay.SelectedIndex = -1;
                     }
                     else
                     {
@@ -189,23 +191,29 @@ namespace BankTeacher.Bank
             {
                 try
                 {
-                    Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[2] +
+                    if(MessageBox.Show("ยืนยันการจ่าย", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                    {
+                        Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[2] +
                     "\r\n" +
                     SQLDefault[3])
                     .Replace("{ShareNo}", TBShareNo.Text)
-                    .Replace("{WithDraw}", TBWithDraw.Text)
+                    .Replace("{WithDraw}", TBCreditWithDraw.Text)
                     .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
                     .Replace("{PayMent}", Payment.No));
-                    MessageBox.Show("บันทึกสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Back));
-                    TBTeacherNo.Text = "";
+                        TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Back));
+                        TBTeacherNo.Text = "";
+                        MessageBox.Show("บันทึกสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
                 catch(Exception x)
                 {
                     Console.Write(x);
                 }
                 
+                //
             }
+            else
+                MessageBox.Show("ยอดเงินไม่เพียงพอ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void TBWithDraw_KeyPress(object sender, KeyPressEventArgs e)
@@ -328,6 +336,16 @@ namespace BankTeacher.Bank
                     MessageBox.Show("ไม่พบรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
+        }
+
+        private void CBTypePay_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (CBTypePay.SelectedIndex != -1)
+            {
+                BSaveAmountOff.Enabled = true;
+            }
+            else
+                BSaveAmountOff.Enabled = false;
         }
 
         //private void BTOpenfile_Click(object sender, EventArgs e)

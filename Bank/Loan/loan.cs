@@ -683,21 +683,6 @@ namespace BankTeacher.Bank.Loan
                     m.Show(DGVGuarantor, new Point(e.X, e.Y));
                     m.MenuItems[0].Click += new System.EventHandler(this.Delete_Click);
                 }
-                if (TBLoanAmount.Text != "")
-                {
-                    String AmountLimit = LLoanAmount.Text.Remove(0, 1);
-                    AmountLimit = AmountLimit.Remove(AmountLimit.Length - 1);
-                    if (Convert.ToInt32(TBLoanAmount.Text) > Convert.ToInt32(AmountLimit))
-                    {
-                        TBLoanAmount_Leave(sender, new EventArgs());
-                    }
-                    else
-                    {
-                        BCalculate_Click(sender, new EventArgs());
-                    }
-                }
-                
-                
             }
         }
         private void Delete_Click(object sender, EventArgs e)
@@ -707,6 +692,19 @@ namespace BankTeacher.Bank.Loan
                 DGVGuarantor.Rows.RemoveAt(SelectIndexRowDelete);
                 SelectIndexRowDelete = -1;
 
+            }
+            if (TBLoanAmount.Text != "")
+            {
+                String AmountLimit = LLoanAmount.Text.Remove(0, 1);
+                AmountLimit = AmountLimit.Remove(AmountLimit.Length - 1);
+                if (Convert.ToInt32(TBLoanAmount.Text) > Convert.ToInt32(AmountLimit))
+                {
+                    TBLoanAmount_Leave(sender, new EventArgs());
+                }
+                else
+                {
+                    BCalculate_Click(sender, new EventArgs());
+                }
             }
         }
         private void button1_Click(object sender, EventArgs e)
@@ -806,7 +804,11 @@ namespace BankTeacher.Bank.Loan
                         if (UserOutCreditLimit == DialogResult.No)
                         {
                             TBLoanAmount.Text = "";
-                            TBLoanAmount.Focus();
+                            if(tabControl1.SelectedIndex != 1)
+                            {
+                                tabControl1.SelectedIndex = 1;
+                                TBLoanAmount.Focus();
+                            }
                         }
                         else
                         {
