@@ -161,6 +161,7 @@ namespace BankTeacher.Bank
                         Credit = ds.Tables[0].Rows[0][4].ToString().Split('.');
                         TBCreditWithDraw.Text = Credit[0];
                         Check = 1;
+                        CBTypePay.SelectedIndex = 0;
 
                         for (int Num = 0; Num < ds.Tables[1].Rows.Count; Num++)
                         {
@@ -201,7 +202,7 @@ namespace BankTeacher.Bank
         private void BSaveAmountOff_Click(object sender, EventArgs e)
         {
             BankTeacher.Class.ComboBoxPayment Payment = (CBTypePay.SelectedItem as BankTeacher.Class.ComboBoxPayment);
-            if (TBWithDraw.Text != "" && CBTypePay.SelectedIndex != -1)
+            if (Convert.ToInt32(TBCreditWithDraw) >= 1 && CBTypePay.SelectedIndex != -1)
             {
                 try
                 {
