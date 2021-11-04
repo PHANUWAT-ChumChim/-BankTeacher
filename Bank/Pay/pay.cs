@@ -1329,6 +1329,7 @@ namespace BankTeacher.Bank.Pay
 
                         if (x % 2 == 1)
                         {
+                            //
                             DGV_BillInfo.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
                         }
                     }

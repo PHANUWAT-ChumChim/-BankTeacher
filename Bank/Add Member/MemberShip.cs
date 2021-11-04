@@ -364,7 +364,7 @@ namespace BankTeacher.Bank
                     {
                         Console.WriteLine(ex);
                     }
-                } 
+                }
             }
             else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back && Check == 1)
             {
