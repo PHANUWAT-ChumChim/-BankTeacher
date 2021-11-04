@@ -1082,25 +1082,34 @@ namespace BankTeacher.Bank.Loan
 
         private void TBInterestRate_Leave(object sender, EventArgs e)
          {
-            //Double aa = (Convert.ToDouble(TBInterestRate.Text) / 100);
-            if(Double.TryParse(TBInterestRate.Text , out Double Interestrate) && Interestrate > 0)
+            if(double.TryParse(TBInterestRate.Text , out double x) && x <= 100)
             {
-                int LoanAmount = Convert.ToInt32(CreditLoanAmount - CreditLoanAmount * (Interestrate / 100));
-                LLoanAmount.Text = "(" + LoanAmount + ")";
-                LTotal.Text = "" + LoanAmount;
 
-                TBLoanAmount_Leave(sender, new EventArgs());
-            }
-            else if(Interestrate <= 0)
-            {
-                MessageBox.Show("อัตราดอกเบี้ยต้องมากกว่า 0 ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                TBInterestRate.Text = "";
-                TBInterestRate.Focus();
+                //Double aa = (Convert.ToDouble(TBInterestRate.Text) / 100);
+                if(Double.TryParse(TBInterestRate.Text , out Double Interestrate) && Interestrate > 0)
+                {
+                    int LoanAmount = Convert.ToInt32(CreditLoanAmount - CreditLoanAmount * (Interestrate / 100));
+                    LLoanAmount.Text = "(" + LoanAmount + ")";
+                    LTotal.Text = "" + LoanAmount;
+
+                    TBLoanAmount_Leave(sender, new EventArgs());
+                }
+                else if(Interestrate <= 0)
+                {
+                    MessageBox.Show("อัตราดอกเบี้ยต้องมากกว่า 0 ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    TBInterestRate.Text = "";
+                    TBInterestRate.Focus();
+                }
+                else
+                {
+                    MessageBox.Show("ใสจำนวนเปอร์เซ็นต์ไม่ถูกต้อง");
+                    TBInterestRate.Text = "";
+                    TBInterestRate.Focus();
+                }
             }
             else
             {
-                MessageBox.Show("ใสจำนวนเปอร์เซ็นต์ไม่ถูกต้อง");
-                TBInterestRate.Text = "";
+                TBInterestRate.Text = "1";
                 TBInterestRate.Focus();
             }
         }

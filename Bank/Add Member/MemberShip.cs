@@ -174,7 +174,7 @@ namespace BankTeacher.Bank
         private void BSave_Click_1(object sender, EventArgs e)
         {
             int AmountShare = Convert.ToInt32(TBStartAmountShare_Reg.Text);
-            if (AmountShare.ToString() == "" || AmountShare == 0)
+            if(AmountShare.ToString() == "" || AmountShare == 0)
             {
                 AmountShare = BankTeacher.Bank.Menu.startAmountMin;
             }
@@ -288,12 +288,12 @@ namespace BankTeacher.Bank
         //----------------------- Printf -------------------- ////////
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            BankTeacher.Class.Print.PrintPreviewDialog.PrintMember(e, SQLDefault[2], BankTeacher.Bank.Menu.Date[2], BankTeacher.Bank.Menu.Monthname, (Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + 543).ToString(), TBTeacherNo_Reg.Text, TBStartAmountShare_Reg.Text);
+            BankTeacher.Class.Print.PrintPreviewDialog.PrintMember(e,SQLDefault[2],BankTeacher.Bank.Menu.Date[2],BankTeacher.Bank.Menu.Monthname,(Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + 543).ToString(),TBTeacherNo_Reg.Text,TBStartAmountShare_Reg.Text);
         }
 
         private void BTOpenfile_Click(object sender, EventArgs e)
         {
-            if (TBTeacherNo_Reg.Text.Length == 6)
+            if(TBTeacherNo_Reg.Text.Length == 6)
             {
                 if (StatusBoxFile == 0)
                 {
@@ -351,11 +351,11 @@ namespace BankTeacher.Bank
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (TBTeacherNo_Reg.Text.Length == 6)
+                if(TBTeacherNo_Reg.Text.Length == 6)
                 {
                     try
                     {
-                        DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1].Replace("{Text}", TBTeacherNo_Reg.Text));
+                         DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1].Replace("{Text}", TBTeacherNo_Reg.Text));
                         TBTeacherName_Reg.Text = ds.Tables[0].Rows[0][1].ToString();
                         Check = 1;
 
@@ -386,10 +386,10 @@ namespace BankTeacher.Bank
             {
                 Bank.Search IN = new Bank.Search(SQLDefault[5]);
                 IN.ShowDialog();
-                if (Bank.Search.Return[0] != "")
+                if(Bank.Search.Return[0] != "")
                 {
-                    TBTeacherNO_Cancel.Text = Bank.Search.Return[0];
-                    TBTeacherNO_Cancel_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
+                  TBTeacherNO_Cancel.Text = Bank.Search.Return[0];
+                    TBTeacherNO_Cancel_KeyDown(new object() , new KeyEventArgs(Keys.Enter));
                 }
             }
             catch (Exception x)
@@ -429,7 +429,7 @@ namespace BankTeacher.Bank
             if (TBTeacherNO_Cancel.Text != "")
             {
                 Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[4]
-                    .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
+                    .Replace("{TeacherNoAddBy}",Class.UserInfo.TeacherNo)
                     .Replace("{TeacherNo}", TBTeacherNO_Cancel.Text)
                     .Replace("{Note}", TBNote_Cancel.Text)
                     .Replace("{DocStatusNo}", "2")
@@ -515,9 +515,9 @@ namespace BankTeacher.Bank
             int Year = Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]);
             for (int a = 0; a < 5; a++)
             {
-                if (Class.SQLConnection.InputSQLMSSQL(SQLDefault[6]
-                    .Replace("{Date}", Year.ToString())).Rows.Count != 0)
-                    CBYear_HistoryCancel.Items.Add(Year);
+                if(Class.SQLConnection.InputSQLMSSQL(SQLDefault[6]
+                    .Replace("{Date}",Year.ToString())).Rows.Count != 0)
+                CBYear_HistoryCancel.Items.Add(Year);
                 Year--;
             }
         }
@@ -525,11 +525,11 @@ namespace BankTeacher.Bank
         private void CBYear_HistoryCancel_SelectedIndexChanged(object sender, EventArgs e)
         {
             DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("{Date}", CBYear_HistoryCancel.Text));
-            if (dt.Rows.Count != 0)
+            if(dt.Rows.Count != 0)
             {
-                for (int x = 0; x < dt.Rows.Count; x++)
-                    DGV_HistoryCancel.Rows.Add((Convert.ToDateTime(dt.Rows[x][0].ToString())).ToString("yyyy-MM-dd"), dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString());
-                for (int x = 0; x < dt.Rows.Count; x++)
+                for(int x = 0; x < dt.Rows.Count; x++)
+                    DGV_HistoryCancel.Rows.Add((Convert.ToDateTime(dt.Rows[x][0].ToString())).ToString("yyyy-MM-dd") , dt.Rows[x][1].ToString() , dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString());
+                for(int x = 0; x < dt.Rows.Count; x++)
                 {
                     if (x % 2 == 1)
                     {
