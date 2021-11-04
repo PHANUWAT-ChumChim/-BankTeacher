@@ -40,8 +40,6 @@ namespace BankTeacher.Bank
             this.Cancel = new System.Windows.Forms.ToolStripMenuItem();
             this.AmountOff = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Membership = new System.Windows.Forms.ToolStripMenuItem();
-            this.TMLCancelMembers = new System.Windows.Forms.ToolStripMenuItem();
-            this.ReportCancelMember = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_setring = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -71,7 +69,7 @@ namespace BankTeacher.Bank
             this.Menu_Home.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Menu_Home.Image = ((System.Drawing.Image)(resources.GetObject("Menu_Home.Image")));
             this.Menu_Home.Name = "Menu_Home";
-            this.Menu_Home.Size = new System.Drawing.Size(117, 41);
+            this.Menu_Home.Size = new System.Drawing.Size(99, 34);
             this.Menu_Home.Text = "หน้าเเรก";
             this.Menu_Home.Click += new System.EventHandler(this.Menu_Home_Click);
             // 
@@ -80,7 +78,7 @@ namespace BankTeacher.Bank
             this.Menu_pay.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Menu_pay.Image = ((System.Drawing.Image)(resources.GetObject("Menu_pay.Image")));
             this.Menu_pay.Name = "Menu_pay";
-            this.Menu_pay.Size = new System.Drawing.Size(152, 41);
+            this.Menu_pay.Size = new System.Drawing.Size(124, 34);
             this.Menu_pay.Text = "จ่าย สะสม/กู้";
             this.Menu_pay.Click += new System.EventHandler(this.Menu_pay_Click);
             // 
@@ -94,34 +92,34 @@ namespace BankTeacher.Bank
             this.Menu_Loan.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Menu_Loan.Image = ((System.Drawing.Image)(resources.GetObject("Menu_Loan.Image")));
             this.Menu_Loan.Name = "Menu_Loan";
-            this.Menu_Loan.Size = new System.Drawing.Size(62, 41);
+            this.Menu_Loan.Size = new System.Drawing.Size(54, 34);
             this.Menu_Loan.Text = "กู้";
             // 
             // Menubar_MerberLoan
             // 
             this.Menubar_MerberLoan.Name = "Menubar_MerberLoan";
-            this.Menubar_MerberLoan.Size = new System.Drawing.Size(176, 42);
+            this.Menubar_MerberLoan.Size = new System.Drawing.Size(140, 34);
             this.Menubar_MerberLoan.Text = "สมัครกู้";
             this.Menubar_MerberLoan.Click += new System.EventHandler(this.Menubar_MerberLoan_Click);
             // 
             // Menubar_payLoan
             // 
             this.Menubar_payLoan.Name = "Menubar_payLoan";
-            this.Menubar_payLoan.Size = new System.Drawing.Size(176, 42);
+            this.Menubar_payLoan.Size = new System.Drawing.Size(140, 34);
             this.Menubar_payLoan.Text = "จ่ายกู้";
             this.Menubar_payLoan.Click += new System.EventHandler(this.Menubar_Click);
             // 
             // Menubar_infoLoan
             // 
             this.Menubar_infoLoan.Name = "Menubar_infoLoan";
-            this.Menubar_infoLoan.Size = new System.Drawing.Size(176, 42);
+            this.Menubar_infoLoan.Size = new System.Drawing.Size(140, 34);
             this.Menubar_infoLoan.Text = "ดูข้อมุลกู้";
             this.Menubar_infoLoan.Click += new System.EventHandler(this.Menubar_infoLoan_Click);
             // 
             // Cancel
             // 
             this.Cancel.Name = "Cancel";
-            this.Cancel.Size = new System.Drawing.Size(176, 42);
+            this.Cancel.Size = new System.Drawing.Size(140, 34);
             this.Cancel.Text = "ยกเลิกกู้";
             this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
             // 
@@ -136,38 +134,19 @@ namespace BankTeacher.Bank
             // 
             // Menu_Membership
             // 
-            this.Menu_Membership.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TMLCancelMembers});
             this.Menu_Membership.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Menu_Membership.Image = ((System.Drawing.Image)(resources.GetObject("Menu_Membership.Image")));
             this.Menu_Membership.Name = "Menu_Membership";
-            this.Menu_Membership.Size = new System.Drawing.Size(149, 41);
+            this.Menu_Membership.Size = new System.Drawing.Size(123, 34);
             this.Menu_Membership.Text = "สมัครสมาชิก";
             this.Menu_Membership.Click += new System.EventHandler(this.Menu_Membership_Click);
-            // 
-            // TMLCancelMembers
-            // 
-            this.TMLCancelMembers.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ReportCancelMember});
-            this.TMLCancelMembers.Image = ((System.Drawing.Image)(resources.GetObject("TMLCancelMembers.Image")));
-            this.TMLCancelMembers.Name = "TMLCancelMembers";
-            this.TMLCancelMembers.Size = new System.Drawing.Size(213, 42);
-            this.TMLCancelMembers.Text = "ยกเลิกสมาชิก";
-            this.TMLCancelMembers.Click += new System.EventHandler(this.TMLCancelMembers_Click);
-            // 
-            // ReportCancelMember
-            // 
-            this.ReportCancelMember.Name = "ReportCancelMember";
-            this.ReportCancelMember.Size = new System.Drawing.Size(277, 42);
-            this.ReportCancelMember.Text = "รายชื่อผู้ยกเลิกสมาชิก";
-            this.ReportCancelMember.Click += new System.EventHandler(this.ReportCancelMember_Click);
             // 
             // Menu_setring
             // 
             this.Menu_setring.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Menu_setring.Image = ((System.Drawing.Image)(resources.GetObject("Menu_setring.Image")));
             this.Menu_setring.Name = "Menu_setring";
-            this.Menu_setring.Size = new System.Drawing.Size(92, 41);
+            this.Menu_setring.Size = new System.Drawing.Size(78, 34);
             this.Menu_setring.Text = "ตั้งค่า";
             this.Menu_setring.Click += new System.EventHandler(this.Menu_setring_Click);
             // 
@@ -182,7 +161,7 @@ namespace BankTeacher.Bank
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Menu";
             this.Text = "หน้าเเรก";
             this.Load += new System.EventHandler(this.Menu_Load_1);
@@ -202,8 +181,6 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.ToolStripMenuItem AmountOff;
         private System.Windows.Forms.ToolStripMenuItem Menu_Membership;
         private System.Windows.Forms.ToolStripMenuItem Menu_setring;
-        private System.Windows.Forms.ToolStripMenuItem TMLCancelMembers;
-        private System.Windows.Forms.ToolStripMenuItem ReportCancelMember;
         private System.Windows.Forms.ToolStripMenuItem Menubar_payLoan;
         private System.Windows.Forms.ToolStripMenuItem Menubar_infoLoan;
         private System.Windows.Forms.ToolStripMenuItem Cancel;
