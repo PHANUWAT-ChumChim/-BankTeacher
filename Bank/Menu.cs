@@ -93,12 +93,13 @@ namespace BankTeacher.Bank
         }
         private void TMLCancelMembers_Click(object sender, EventArgs e)
         {
-            Bank.CancelMembership Cm = new Bank.CancelMembership();
+            Bank.MemberShip Cm = new Bank.MemberShip();
             CloseFrom(Cm);
         }
         private void ReportCancelMember_Click(object sender, EventArgs e)
         {
-            Bank.ReportCancelMember Rc = new Bank.ReportCancelMember();
+            //
+            Bank.MemberShip Rc = new Bank.MemberShip();
             CloseFrom(Rc);
         }
         private void Menu_pay_Click(object sender, EventArgs e)
