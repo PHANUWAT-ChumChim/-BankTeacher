@@ -19,6 +19,8 @@ namespace BankTeacher.Bank
         int Check = 0;
         int StatusBoxFile = 0;
         String imgeLocation = "";
+        bool CheckBRegister = false;
+        bool CheckBCancel = false;
 
         //----------------------- index code -------------------- ////////
 
@@ -173,57 +175,55 @@ namespace BankTeacher.Bank
         // Available values|  SQLDefault[1] / TB /
         private void BSave_Click_1(object sender, EventArgs e)
         {
-            int AmountShare = Convert.ToInt32(TBStartAmountShare_Reg.Text);
-            if(AmountShare.ToString() == "" || AmountShare == 0)
+            if (CheckBRegister == false && TBTeacherName_Reg.Text != "")
             {
-                AmountShare = BankTeacher.Bank.Menu.startAmountMin;
-            }
-            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo_Reg.Text));
-            if (TBTeacherName_Reg.Text != "")
-            {
-                if (AmountShare >= BankTeacher.Bank.Menu.startAmountMin && AmountShare <= BankTeacher.Bank.Menu.startAmountMax)
+                int AmountShare = Convert.ToInt32(TBStartAmountShare_Reg.Text);
+                if (AmountShare.ToString() == "" || AmountShare == 0)
                 {
-                    if (dt.Rows.Count == 0)
-                    {
 
-                        DialogResult dialogResult = MessageBox.Show("ยืนยันการสมัคร", "สมัครสมาชิก", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                        if (dialogResult == DialogResult.Yes)
+                    AmountShare = BankTeacher.Bank.Menu.startAmountMin;
+                }
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo_Reg.Text));
+                if (TBTeacherName_Reg.Text != "")
+                {
+                    if (AmountShare >= BankTeacher.Bank.Menu.startAmountMin && AmountShare <= BankTeacher.Bank.Menu.startAmountMax)
+                    {
+                        if (dt.Rows.Count == 0)
                         {
-                            Class.SQLConnection.InputSQLMSSQL(SQLDefault[3].Replace("{TeacherNo}", TBTeacherNo_Reg.Text)
-                            .Replace("{TeacherNoAddBy}", BankTeacher.Class.UserInfo.TeacherNo)
-                            .Replace("{StartAmount}", AmountShare.ToString())
-                            .Replace("{Month}", BankTeacher.Bank.Menu.Date[1])
-                            .Replace("{Year}", BankTeacher.Bank.Menu.Date[0]));
-                            MessageBox.Show("สมัครเสร็จสิ้น", "สมัครสมาชิก", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            DialogResult dialogResult = MessageBox.Show("ยืนยันการสมัคร", "สมัครสมาชิก", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                            if (dialogResult == DialogResult.Yes)
+                            {
+                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[3].Replace("{TeacherNo}", TBTeacherNo_Reg.Text)
+                                .Replace("{TeacherNoAddBy}", BankTeacher.Class.UserInfo.TeacherNo)
+                                .Replace("{StartAmount}", AmountShare.ToString())
+                                .Replace("{Month}", BankTeacher.Bank.Menu.Date[1])
+                                .Replace("{Year}", BankTeacher.Bank.Menu.Date[0]));
+                                MessageBox.Show("สมัครเสร็จสิ้น", "สมัครสมาชิก", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                CheckBRegister = true;
+                            }
+                            else
+                            {
+                                MessageBox.Show("ยกเลิกการสมัคร", "สมัครสมาชิก", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+
                         }
                         else
                         {
-                            MessageBox.Show("ยกเลิกการสมัคร", "สมัครสมาชิก", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("รายชื่อซ้ำ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
-
                     }
                     else
                     {
-                        MessageBox.Show("รายชื่อซ้ำ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("ไม่สามารถสมัครสมาชิกได้เนื่องจาก \r\n ราคาหุ้นเริ่มต้นต่ำหรือสูงเกินไป \r\n โปรดแก้ไข ราคาหุ้นขั้นต่ำ หรือ สูงสุด ที่หน้าตั้งค่า", "System Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("ไม่สามารถสมัครสมาชิกได้เนื่องจาก \r\n ราคาหุ้นเริ่มต้นต่ำหรือสูงเกินไป \r\n โปรดแก้ไข ราคาหุ้นขั้นต่ำ หรือ สูงสุด ที่หน้าตั้งค่า", "System Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("โปรดเลือกสมาชิกในการสมัคร", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-            else
-            {
-                MessageBox.Show("โปรดเลือกสมาชิกในการสมัคร", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
         }
-        //----------------------- End code -------------------- ////////
-
-
-
-
-
-        //----------------------- EventKey -------------------- ////////
         // Available values| TB /
         private void TBStartAmountShare_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -232,19 +232,10 @@ namespace BankTeacher.Bank
                 e.Handled = true;
             }
         }
-
-        //----------------------- End code -------------------- ////////
-
-
-        //----------------------- Outgoing -------------------- ////////
         private void BExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-        //----------------------- End code -------------------- ////////
-
-
-        //----------------------- OpenPrintf -------------------- ////////
         private void BTPrintfShare_Click(object sender, EventArgs e)
         {
             if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
@@ -369,6 +360,7 @@ namespace BankTeacher.Bank
             else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back && Check == 1)
             {
                 TBTeacherName_Reg.Text = "";
+                CheckBRegister = false;
                 Check = 0;
             }
         }
@@ -420,27 +412,32 @@ namespace BankTeacher.Bank
             else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back && Check == 1)
             {
                 TBTeacherName_Cancel.Text = "";
+                CheckBCancel = false;
                 Check = 0;
             }
         }
 
         private void BSave_Cancel_Click(object sender, EventArgs e)
         {
-            if (TBTeacherNO_Cancel.Text != "")
+            if (CheckBCancel == false && TBTeacherName_Cancel.Text != "")
             {
-                Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[4]
-                    .Replace("{TeacherNoAddBy}",Class.UserInfo.TeacherNo)
-                    .Replace("{TeacherNo}", TBTeacherNO_Cancel.Text)
-                    .Replace("{Note}", TBNote_Cancel.Text)
-                    .Replace("{DocStatusNo}", "2")
-                    .Replace("{DocUploadPath}", "")
-                    .Replace("{Status}", "2"));
-                MessageBox.Show("ยกเลิกผู้ใช้เรียบร้อย", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                imgeLocation = "";
-            }
-            else
-            {
-                MessageBox.Show("กรุณาใส่รหัสให้ถูกต้อง", "เตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                if (TBTeacherNO_Cancel.Text != "")
+                {
+                    Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[4]
+                        .Replace("{TeacherNoAddBy}",Class.UserInfo.TeacherNo)
+                        .Replace("{TeacherNo}", TBTeacherNO_Cancel.Text)
+                        .Replace("{Note}", TBNote_Cancel.Text)
+                        .Replace("{DocStatusNo}", "2")
+                        .Replace("{DocUploadPath}", "")
+                        .Replace("{Status}", "2"));
+                    MessageBox.Show("ยกเลิกผู้ใช้เรียบร้อย", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    CheckBCancel = true;
+                    imgeLocation = "";
+                }
+                else
+                {
+                    MessageBox.Show("กรุณาใส่รหัสให้ถูกต้อง", "เตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
         }
 
@@ -520,6 +517,7 @@ namespace BankTeacher.Bank
                 CBYear_HistoryCancel.Items.Add(Year);
                 Year--;
             }
+            CBYear_HistoryCancel.SelectedIndex = 0;
         }
 
         private void CBYear_HistoryCancel_SelectedIndexChanged(object sender, EventArgs e)
@@ -527,6 +525,7 @@ namespace BankTeacher.Bank
             DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("{Date}", CBYear_HistoryCancel.Text));
             if(dt.Rows.Count != 0)
             {
+                DGV_HistoryCancel.Rows.Clear();
                 for(int x = 0; x < dt.Rows.Count; x++)
                     DGV_HistoryCancel.Rows.Add((Convert.ToDateTime(dt.Rows[x][0].ToString())).ToString("yyyy-MM-dd") , dt.Rows[x][1].ToString() , dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString());
                 for(int x = 0; x < dt.Rows.Count; x++)
@@ -536,6 +535,18 @@ namespace BankTeacher.Bank
                         DGV_HistoryCancel.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
                     }
                 }
+            }
+        }
+
+        private void tabControl1_TabIndexChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedIndex == 2)
+            {
+                CBYear_HistoryCancel_SelectedIndexChanged(new object(), new EventArgs());
             }
         }
     }

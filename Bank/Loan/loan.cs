@@ -1127,7 +1127,14 @@ namespace BankTeacher.Bank.Loan
             if (Int32.TryParse(TBPayNo.Text,out int aa) && aa <= 0)
             {
                 tabControl1.SelectedIndex = 1;
-                MessageBox.Show("จำนวนเดือนต้องไม่เท่ากับ 0", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("จำนวนเดือนต้องไม่เท่ากับ 0", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                TBPayNo.Text = "";
+                TBPayNo.Focus();
+            }
+            else if(aa > 24)
+            {
+                tabControl1.SelectedIndex = 1;
+                MessageBox.Show("ไม่สามารถกู้เกิน 24 เดือนได้", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 TBPayNo.Text = "";
                 TBPayNo.Focus();
             }
