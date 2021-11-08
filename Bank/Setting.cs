@@ -125,7 +125,7 @@ namespace BankTeacher.Bank
                         .Replace("{PerShare}",TBPerShare.Text));
                     BankTeacher.Bank.Menu.startAmountMin = Convert.ToInt32(TB_Min.Text);
                     BankTeacher.Bank.Menu.startAmountMax = Convert.ToInt32(TB_Max.Text);
-                    MessageBox.Show("เสร็จสิ้น", "ตั้งค่า", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("เสร็จสิ้น", "ตั้งค่า", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Hide();
                 }
                 else

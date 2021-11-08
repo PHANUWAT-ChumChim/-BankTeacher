@@ -202,7 +202,7 @@ namespace BankTeacher.Bank
         private void BSaveAmountOff_Click(object sender, EventArgs e)
         {
             BankTeacher.Class.ComboBoxPayment Payment = (CBTypePay.SelectedItem as BankTeacher.Class.ComboBoxPayment);
-            if (Convert.ToInt32(TBCreditWithDraw) >= 1 && CBTypePay.SelectedIndex != -1)
+            if (Int32.TryParse(TBCreditWithDraw.Text, out int CraditwithDraw)&& CraditwithDraw >= 1 && CBTypePay.SelectedIndex != -1)
             {
                 try
                 {
@@ -249,7 +249,7 @@ namespace BankTeacher.Bank
         {
             if (TBWithDraw.Text != "")
             {
-                if (int.Parse(TBWithDraw.Text) > int.Parse(TBCreditWithDraw.Text))
+                if (Int32.TryParse(TBWithDraw.Text , out int WithDraw) && Int32.TryParse(TBCreditWithDraw.Text , out int CraditWithDraw) && WithDraw > CraditWithDraw)
                 {
                     MessageBox.Show("ยอดเงินเกินกำหนด", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     TBWithDraw.Text = "";
