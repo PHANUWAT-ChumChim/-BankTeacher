@@ -87,14 +87,16 @@ namespace BankTeacher.Bank
 
             ,
 
-            //[6] SELECT ShareWithDraw INPUT: {Date}
-            "SELECT CAST(c.DateAdd as date) ,a.TeacherNo , CAST(ISNULL(e.PrefixNameFull , '') + d.Fname + ' ' + d.Lname as varchar) , c.Amount\r\n" +
-            "FROM EmployeeBank.dbo.tblMember as a\r\n" +
-            "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo\r\n" +
-            "LEFT JOIN EmployeeBank.dbo.tblShareWithdraw as c on b.ShareNo = c.ShareNo\r\n" +
-            "LEFT JOIN Personal.dbo.tblTeacherHis as d on a.TeacherNo = d.TeacherNo\r\n" +
-            "LEFT JOIN BaseData.dbo.tblPrefix as e on d.PrefixNo = e.PrefixNo\r\n" +
-            "WHERE CAST(CAST(c.DateAdd as date) as varchar) LIKE '{Date}%'\r\n"
+            //[6] SELECT ShareWithDraw INPUT: {Date} ,{TeacherNo}
+            "SELECT CAST(c.DateAdd as date) ,a.TeacherNo , CAST(ISNULL(e.PrefixNameFull , '') + d.Fname + ' ' + d.Lname as varchar) , c.Amount  \r\n " +
+            "FROM EmployeeBank.dbo.tblMember as a  \r\n " +
+            "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo  \r\n " +
+            "LEFT JOIN EmployeeBank.dbo.tblShareWithdraw as c on b.ShareNo = c.ShareNo  \r\n " +
+            "LEFT JOIN Personal.dbo.tblTeacherHis as d on a.TeacherNo = d.TeacherNo  \r\n " +
+            "LEFT JOIN BaseData.dbo.tblPrefix as e on d.PrefixNo = e.PrefixNo  \r\n " +
+            "WHERE CAST(CAST(c.DateAdd as date) as varchar) LIKE '{Date}%' and a.TeacherNo LIKE '{TeacherNo}%'"
+           
+
 
             ,
            //[7] SELECT Withdraw (Date) INPUT: {Date}
@@ -202,6 +204,7 @@ namespace BankTeacher.Bank
         private void BSaveAmountOff_Click(object sender, EventArgs e)
         {
             BankTeacher.Class.ComboBoxPayment Payment = (CBTypePay.SelectedItem as BankTeacher.Class.ComboBoxPayment);
+
             if (Int32.TryParse(TBCreditWithDraw.Text, out int CraditwithDraw)&& CraditwithDraw >= 1 && CBTypePay.SelectedIndex != -1)
             {
                 try
@@ -212,7 +215,7 @@ namespace BankTeacher.Bank
                     "\r\n" +
                     SQLDefault[3])
                     .Replace("{ShareNo}", TBShareNo.Text)
-                    .Replace("{WithDraw}", TBCreditWithDraw.Text)
+                    .Replace("{WithDraw}", TBWithDraw.Text)
                     .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
                     .Replace("{PayMent}", Payment.No));
                         TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Back));
@@ -345,17 +348,20 @@ namespace BankTeacher.Bank
                 if (Int32.TryParse(CBMonth.Text, out int Month) && Month >= 1 && Month < 10)
                 {
                     ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[6]
-                    .Replace("{Date}", CBYear.SelectedItem.ToString() + "-0" + CBMonth.SelectedItem.ToString()));
+                    .Replace("{Date}", CBYear.SelectedItem.ToString() + "-0" + CBMonth.SelectedItem.ToString())
+                    .Replace("{TeacherNo}", TBTeacherNo.Text));
                 }
                 else if (Int32.TryParse(CBMonth.Text, out int Montha) && Montha >= 10)
                 {
                     ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[6]
-                    .Replace("{Date}", CBYear.SelectedItem.ToString() + "-" + CBMonth.SelectedItem.ToString()));
+                    .Replace("{Date}", CBYear.SelectedItem.ToString() + "-" + CBMonth.SelectedItem.ToString())
+                    .Replace("{TeacherNo}", TBTeacherNo.Text));
                 }
                 else
                 {
                     ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[6]
-                   .Replace("{Date}", CBYear.SelectedItem.ToString() + "-"));
+                   .Replace("{Date}", CBYear.SelectedItem.ToString() + "-")
+                   .Replace("{TeacherNo}" , TBTeacherNo.Text));
                 }
 
                 DGVAmountOffHistory.Rows.Clear();
@@ -379,55 +385,5 @@ namespace BankTeacher.Bank
             else
                 BSaveAmountOff.Enabled = false;
         }
-
-        //private void BTOpenfile_Click(object sender, EventArgs e)
-        //{
-        //    if (StatusBoxFile == 0)
-        //    {
-        //        try
-        //        {
-        //            OpenFileDialog dialog = new OpenFileDialog();
-        //            dialog.Filter = "pdf files(*.pdf)|*.pdf";
-        //            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-        //            {
-        //                imgeLocation = dialog.FileName;
-        //            }
-        //            if (imgeLocation != "")
-        //            {
-        //                BTOpenfile.Text = "ส่งไฟล์";
-        //                StatusBoxFile = 1;
-        //                //label6.Text = "Scan(  พบไฟล์  )";
-        //            }
-
-        //        }
-        //        catch
-        //        {
-        //            MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //        }
-        //    }
-        //    else if (StatusBoxFile == 1)
-        //    {
-        //        var smb = new SmbFileContainer("CamcelMember");
-        //        if (smb.IsValidConnection())
-        //        {
-        //            String Return = smb.SendFile(imgeLocation, "CMember_" + TBTeacherNo.Text + ".pdf");
-        //            MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //            StatusBoxFile = 0;
-        //            BTOpenfile.Text = "เปิดไฟล์";
-        //            imgeLocation = "";
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //        }
-        //    }
-        //}
-
-        //private void BTdeletefile_Click(object sender, EventArgs e)
-        //{
-        //    StatusBoxFile = 0;
-        //    BTOpenfile.Text = "เปิดไฟล์";
-        //    imgeLocation = "";
-        //}
     }
 }

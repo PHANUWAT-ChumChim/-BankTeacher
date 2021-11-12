@@ -420,7 +420,7 @@ namespace BankTeacher.Bank.Loan
             this.TBInterestRate.Name = "TBInterestRate";
             this.TBInterestRate.Size = new System.Drawing.Size(68, 36);
             this.TBInterestRate.TabIndex = 12;
-            this.TBInterestRate.Text = "1";
+            this.TBInterestRate.Text = "0.25";
             this.TBInterestRate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.TBInterestRate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBInterestRate_KeyPress);
             this.TBInterestRate.Leave += new System.EventHandler(this.TBInterestRate_Leave);
@@ -748,7 +748,7 @@ namespace BankTeacher.Bank.Loan
             this.DGVLoanDetail.RowHeadersVisible = false;
             this.DGVLoanDetail.RowHeadersWidth = 51;
             this.DGVLoanDetail.RowTemplate.Height = 24;
-            this.DGVLoanDetail.Size = new System.Drawing.Size(1118, 395);
+            this.DGVLoanDetail.Size = new System.Drawing.Size(836, 306);
             this.DGVLoanDetail.TabIndex = 110;
             // 
             // dataGridViewTextBoxColumn1
