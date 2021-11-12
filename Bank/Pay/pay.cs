@@ -1455,6 +1455,11 @@ namespace BankTeacher.Bank.Pay
             TBTeacherNo.Enabled = Status;
             BSearchTeacher.Enabled = Status;
         }
+
+        private void DGV_Pay_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            MessageBox.Show("asd");
+        }
         //===============================================================================================
     }
 }

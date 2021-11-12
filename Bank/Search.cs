@@ -80,5 +80,13 @@ namespace BankTeacher.Bank
                 }
             }
         }
+
+        private void TBSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

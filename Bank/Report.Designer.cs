@@ -56,30 +56,30 @@ namespace BankTeacher.Bank
             this.TBLoanAmount = new System.Windows.Forms.TextBox();
             this.TBSavingAmount = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.CBMonth = new System.Windows.Forms.ComboBox();
-            this.CBYear = new System.Windows.Forms.ComboBox();
+            this.DGVExpensesReport = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.TBSumExpenses = new System.Windows.Forms.TextBox();
+            this.TBPayLoan_Expenses = new System.Windows.Forms.TextBox();
+            this.TBDividend_Expenses = new System.Windows.Forms.TextBox();
+            this.TBAmountOff_Expenses = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.CBMonth = new System.Windows.Forms.ComboBox();
+            this.CBYear = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVReportIncome)).BeginInit();
             this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGVExpensesReport)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -275,15 +275,15 @@ namespace BankTeacher.Bank
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.dataGridView1);
+            this.tabPage2.Controls.Add(this.DGVExpensesReport);
             this.tabPage2.Controls.Add(this.label7);
             this.tabPage2.Controls.Add(this.label8);
             this.tabPage2.Controls.Add(this.label9);
             this.tabPage2.Controls.Add(this.label10);
-            this.tabPage2.Controls.Add(this.textBox1);
-            this.tabPage2.Controls.Add(this.textBox2);
-            this.tabPage2.Controls.Add(this.textBox3);
-            this.tabPage2.Controls.Add(this.textBox4);
+            this.tabPage2.Controls.Add(this.TBSumExpenses);
+            this.tabPage2.Controls.Add(this.TBPayLoan_Expenses);
+            this.tabPage2.Controls.Add(this.TBDividend_Expenses);
+            this.tabPage2.Controls.Add(this.TBAmountOff_Expenses);
             this.tabPage2.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.tabPage2.Location = new System.Drawing.Point(4, 39);
             this.tabPage2.Name = "tabPage2";
@@ -293,28 +293,69 @@ namespace BankTeacher.Bank
             this.tabPage2.Text = "รายจ่าย";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // DGVExpensesReport
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.White;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DGVExpensesReport.AllowUserToAddRows = false;
+            this.DGVExpensesReport.AllowUserToResizeRows = false;
+            this.DGVExpensesReport.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DGVExpensesReport.BackgroundColor = System.Drawing.Color.White;
+            this.DGVExpensesReport.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGVExpensesReport.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn6,
             this.Column4,
             this.dataGridViewTextBoxColumn7,
             this.dataGridViewTextBoxColumn8,
             this.dataGridViewTextBoxColumn9});
-            this.dataGridView1.GridColor = System.Drawing.SystemColors.ControlLightLight;
-            this.dataGridView1.Location = new System.Drawing.Point(28, 98);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1046, 414);
-            this.dataGridView1.TabIndex = 76;
+            this.DGVExpensesReport.GridColor = System.Drawing.SystemColors.ControlLightLight;
+            this.DGVExpensesReport.Location = new System.Drawing.Point(28, 98);
+            this.DGVExpensesReport.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.DGVExpensesReport.Name = "DGVExpensesReport";
+            this.DGVExpensesReport.RowHeadersVisible = false;
+            this.DGVExpensesReport.RowHeadersWidth = 51;
+            this.DGVExpensesReport.RowTemplate.Height = 24;
+            this.DGVExpensesReport.Size = new System.Drawing.Size(1046, 414);
+            this.DGVExpensesReport.TabIndex = 76;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle6;
+            this.dataGridViewTextBoxColumn6.FillWeight = 68.52793F;
+            this.dataGridViewTextBoxColumn6.HeaderText = "รหัส";
+            this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            // 
+            // Column4
+            // 
+            this.Column4.FillWeight = 107.868F;
+            this.Column4.HeaderText = "ชื่อ - นามสกุล";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn7.DefaultCellStyle = dataGridViewCellStyle7;
+            this.dataGridViewTextBoxColumn7.FillWeight = 107.868F;
+            this.dataGridViewTextBoxColumn7.HeaderText = "คืนหุ้นสะสม";
+            this.dataGridViewTextBoxColumn7.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn8.DefaultCellStyle = dataGridViewCellStyle8;
+            this.dataGridViewTextBoxColumn8.FillWeight = 107.868F;
+            this.dataGridViewTextBoxColumn8.HeaderText = "ปันผลประจำปี";
+            this.dataGridViewTextBoxColumn8.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.FillWeight = 107.868F;
+            this.dataGridViewTextBoxColumn9.HeaderText = "จ่ายเงินกู้";
+            this.dataGridViewTextBoxColumn9.MinimumWidth = 6;
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
             // 
             // label7
             // 
@@ -352,33 +393,33 @@ namespace BankTeacher.Bank
             this.label10.TabIndex = 75;
             this.label10.Text = "คืนหุ้นสะสม";
             // 
-            // textBox1
+            // TBSumExpenses
             // 
-            this.textBox1.Location = new System.Drawing.Point(943, 27);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(139, 36);
-            this.textBox1.TabIndex = 68;
+            this.TBSumExpenses.Location = new System.Drawing.Point(943, 27);
+            this.TBSumExpenses.Name = "TBSumExpenses";
+            this.TBSumExpenses.Size = new System.Drawing.Size(139, 36);
+            this.TBSumExpenses.TabIndex = 68;
             // 
-            // textBox2
+            // TBPayLoan_Expenses
             // 
-            this.textBox2.Location = new System.Drawing.Point(673, 27);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(151, 36);
-            this.textBox2.TabIndex = 69;
+            this.TBPayLoan_Expenses.Location = new System.Drawing.Point(673, 27);
+            this.TBPayLoan_Expenses.Name = "TBPayLoan_Expenses";
+            this.TBPayLoan_Expenses.Size = new System.Drawing.Size(151, 36);
+            this.TBPayLoan_Expenses.TabIndex = 69;
             // 
-            // textBox3
+            // TBDividend_Expenses
             // 
-            this.textBox3.Location = new System.Drawing.Point(420, 27);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(159, 36);
-            this.textBox3.TabIndex = 70;
+            this.TBDividend_Expenses.Location = new System.Drawing.Point(420, 27);
+            this.TBDividend_Expenses.Name = "TBDividend_Expenses";
+            this.TBDividend_Expenses.Size = new System.Drawing.Size(159, 36);
+            this.TBDividend_Expenses.TabIndex = 70;
             // 
-            // textBox4
+            // TBAmountOff_Expenses
             // 
-            this.textBox4.Location = new System.Drawing.Point(193, 27);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(147, 36);
-            this.textBox4.TabIndex = 71;
+            this.TBAmountOff_Expenses.Location = new System.Drawing.Point(193, 27);
+            this.TBAmountOff_Expenses.Name = "TBAmountOff_Expenses";
+            this.TBAmountOff_Expenses.Size = new System.Drawing.Size(147, 36);
+            this.TBAmountOff_Expenses.TabIndex = 71;
             // 
             // label2
             // 
@@ -421,47 +462,6 @@ namespace BankTeacher.Bank
             this.CBYear.TabIndex = 3;
             this.CBYear.SelectedIndexChanged += new System.EventHandler(this.CBYear_SelectedIndexChanged);
             // 
-            // dataGridViewTextBoxColumn6
-            // 
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn6.DefaultCellStyle = dataGridViewCellStyle6;
-            this.dataGridViewTextBoxColumn6.FillWeight = 68.52793F;
-            this.dataGridViewTextBoxColumn6.HeaderText = "TeacherNo";
-            this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            // 
-            // Column4
-            // 
-            this.Column4.FillWeight = 107.868F;
-            this.Column4.HeaderText = "ชื่อ - นามสกุล";
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn7.DefaultCellStyle = dataGridViewCellStyle7;
-            this.dataGridViewTextBoxColumn7.FillWeight = 107.868F;
-            this.dataGridViewTextBoxColumn7.HeaderText = "คืนหุ้นสะสม";
-            this.dataGridViewTextBoxColumn7.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            // 
-            // dataGridViewTextBoxColumn8
-            // 
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn8.DefaultCellStyle = dataGridViewCellStyle8;
-            this.dataGridViewTextBoxColumn8.FillWeight = 107.868F;
-            this.dataGridViewTextBoxColumn8.HeaderText = "ปันผลประจำปี";
-            this.dataGridViewTextBoxColumn8.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            // 
-            // dataGridViewTextBoxColumn9
-            // 
-            this.dataGridViewTextBoxColumn9.FillWeight = 107.868F;
-            this.dataGridViewTextBoxColumn9.HeaderText = "จ่ายเงินกู้";
-            this.dataGridViewTextBoxColumn9.MinimumWidth = 6;
-            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            // 
             // Report
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 30F);
@@ -483,7 +483,7 @@ namespace BankTeacher.Bank
             ((System.ComponentModel.ISupportInitialize)(this.DGVReportIncome)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGVExpensesReport)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -506,15 +506,15 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.TextBox TBLoanAmount;
         private System.Windows.Forms.TextBox TBSavingAmount;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView DGVExpensesReport;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox TBSumExpenses;
+        private System.Windows.Forms.TextBox TBPayLoan_Expenses;
+        private System.Windows.Forms.TextBox TBDividend_Expenses;
+        private System.Windows.Forms.TextBox TBAmountOff_Expenses;
         private System.Windows.Forms.DataGridView DGVReportIncome;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column9;

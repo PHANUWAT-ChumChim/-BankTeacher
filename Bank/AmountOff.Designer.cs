@@ -245,7 +245,6 @@ namespace BankTeacher.Bank
             this.TBWithDraw.Size = new System.Drawing.Size(207, 36);
             this.TBWithDraw.TabIndex = 1;
             this.TBWithDraw.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.TBWithDraw.Visible = false;
             this.TBWithDraw.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBWithDraw_KeyPress);
             this.TBWithDraw.Leave += new System.EventHandler(this.TBWithDraw_Leave);
             // 
@@ -281,7 +280,6 @@ namespace BankTeacher.Bank
             this.label7.Size = new System.Drawing.Size(104, 30);
             this.label7.TabIndex = 0;
             this.label7.Text = "ยอดเงินที่ถอน";
-            this.label7.Visible = false;
             // 
             // label3
             // 

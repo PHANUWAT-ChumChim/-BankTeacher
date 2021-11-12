@@ -20,6 +20,7 @@ namespace BankTeacher.Bank
         /// <summary> 
         /// SQLDafault 
         /// <para>[0] SELECT Report Income INPUT: {Date} </para> 
+        /// <para>[1] Table(1) SELECT Expenses/Teacher , Table(2)SELECT SUMAmountOff , SUMDividend , SUMPayLoan INPUT: {Date} , {Year} </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -49,6 +50,66 @@ namespace BankTeacher.Bank
           "GROUP BY a.TeacherNo ,a.Name "
           ,
 
+          //[1]Table(1) SELECT Expenses/Teacher   Table(2)SELECT SUMAmountOff , SUMDividend , SUMPayLoan INPUT: {Date} , {Year}
+           "SELECT a.TeacherNo , a.Name , a.AmountOff , a.Dividend , a.LoanPay \r\n " +
+          "FROM(SELECT a.TeacherNo ,CAST(ISNULL(h.PrefixNameFull, '') + g.Fname + ' ' + g.Lname as varchar) as Name \r\n " +
+          ",SUM(ISNULL(c.Amount ,0)) as AmountOff ,d.DividendAmount as Dividend ,ISNULL(f.LoanPay ,0) as LoanPay , g.Fname \r\n " +
+          "FROM EmployeeBank.dbo.tblMember as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo \r\n " +
+          "LEFT JOIN ( \r\n " +
+          "SELECT ShareNo , SUM(Amount) as Amount \r\n " +
+          "FROM EmployeeBank.dbo.tblShareWithdraw \r\n " +
+          "WHERE CAST(DateAdd as date) LIKE '{Date}%' \r\n " +
+          "GROUP BY ShareNo) \r\n " +
+          "as c on b.ShareNo = c.ShareNo \r\n " +
+          "LEFT JOIN ( \r\n " +
+          "SELECT a.TeacherNo , SUM(DividendAmount) as DividendAmount \r\n " +
+          "FROM EmployeeBank.dbo.tblDividendDetail as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblDividend as b on a.DividendNo = b.DividendNo \r\n " +
+          "WHERE b.Year = {Year} \r\n " +
+          "GROUP BY a.TeacherNo) as d on a.TeacherNo = d.TeacherNo \r\n " +
+          "LEFT JOIN( \r\n " +
+          "SELECT SUM(ISNULL(a.LoanAmount ,0)) as LoanPay , a.TeacherNo \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
+          "WHERE CAST(a.PayDate as date) LIKE '{Date}%' \r\n " +
+          "GROUP BY a.TeacherNo) as f on a.TeacherNo = f.TeacherNo \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as g on a.TeacherNo = g.TeacherNo \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as h on g.PrefixNo = h.PrefixNo \r\n " +
+          "GROUP BY a.TeacherNo ,CAST(ISNULL(h.PrefixNameFull, '') + g.Fname + ' ' + g.Lname as varchar) , g.Fname ,ISNULL(f.LoanPay ,0) ,d.DividendAmount) as a \r\n " +
+          "ORDER BY a.Fname; \r\n " +
+          " \r\n " +
+          " \r\n " +
+          "SELECT SUM(a.AmountOff) , SUM(a.Dividend) , SUM(a.LoanPay) \r\n " +
+          "FROM(SELECT a.TeacherNo ,CAST(ISNULL(h.PrefixNameFull, '') + g.Fname + ' ' + g.Lname as varchar) as Name \r\n " +
+          ",SUM(ISNULL(c.Amount ,0)) as AmountOff ,d.DividendAmount as Dividend ,ISNULL(f.LoanPay ,0) as LoanPay , g.Fname \r\n " +
+          "FROM EmployeeBank.dbo.tblMember as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo \r\n " +
+          "LEFT JOIN ( \r\n " +
+          "SELECT ShareNo , SUM(Amount) as Amount \r\n " +
+          "FROM EmployeeBank.dbo.tblShareWithdraw \r\n " +
+          "WHERE CAST(DateAdd as date) LIKE '{Date}%' \r\n " +
+          "GROUP BY ShareNo) \r\n " +
+          "as c on b.ShareNo = c.ShareNo \r\n " +
+          "LEFT JOIN ( \r\n " +
+          "SELECT a.TeacherNo , SUM(DividendAmount) as DividendAmount \r\n " +
+          "FROM EmployeeBank.dbo.tblDividendDetail as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblDividend as b on a.DividendNo = b.DividendNo \r\n " +
+          "WHERE b.Year = {Year} \r\n " +
+          "GROUP BY a.TeacherNo) as d on a.TeacherNo = d.TeacherNo \r\n " +
+          "LEFT JOIN( \r\n " +
+          "SELECT SUM(ISNULL(a.LoanAmount ,0)) as LoanPay , a.TeacherNo \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
+          "WHERE CAST(a.PayDate as date) LIKE '{Date}%' \r\n " +
+          "GROUP BY a.TeacherNo) as f on a.TeacherNo = f.TeacherNo \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as g on a.TeacherNo = g.TeacherNo \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as h on g.PrefixNo = h.PrefixNo \r\n " +
+          "GROUP BY a.TeacherNo ,CAST(ISNULL(h.PrefixNameFull, '') + g.Fname + ' ' + g.Lname as varchar) , g.Fname ,ISNULL(f.LoanPay ,0) ,d.DividendAmount) as a \r\n " +
+          ""
+
+
+           ,
+
+
          };
         private void Report_Load(object sender, EventArgs e)
         {
@@ -65,7 +126,7 @@ namespace BankTeacher.Bank
         {
             if(CBYear.SelectedIndex != -1)
             {
-                int ShareSum = 0, LoanAmountSum = 0, InterestSum = 0, SumIncome = 0;
+                //int ShareSum = 0, LoanAmountSum = 0, InterestSum = 0, SumIncome = 0;
                 if(CBMonth.Items.Count != 0)
                 {
                     CBMonth.Items.Clear();
@@ -93,22 +154,23 @@ namespace BankTeacher.Bank
                     }
                 }
                 CBMonth.Enabled = true;
-                DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0]
-                    .Replace("{Date}", CBYear.Text));
-                DGVReportIncome.Rows.Clear();
-                for (int a = 0; a < ds.Tables[0].Rows.Count; a++)
-                {
-                    DGVReportIncome.Rows.Add(ds.Tables[0].Rows[a][0].ToString(), ds.Tables[0].Rows[a][1].ToString(), ds.Tables[0].Rows[a][2].ToString(), ds.Tables[0].Rows[a][3].ToString()
-                        ,ds.Tables[0].Rows[a][4].ToString(), ds.Tables[0].Rows[a][5].ToString());
-                    ShareSum += Convert.ToInt32(ds.Tables[0].Rows[a][2].ToString());
-                    LoanAmountSum += Convert.ToInt32(ds.Tables[0].Rows[a][3].ToString());
-                    InterestSum += Convert.ToInt32(ds.Tables[0].Rows[a][4].ToString());
-                    SumIncome += Convert.ToInt32(ds.Tables[0].Rows[a][5].ToString());
-                }
-                TBSavingAmount.Text = ShareSum.ToString();
-                TBLoanAmount.Text = LoanAmountSum.ToString();
-                TBInterest.Text = InterestSum.ToString();
-                TBSumIncome.Text = SumIncome.ToString();
+                CBMonth.SelectedIndex = 0;
+                //DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0]
+                //    .Replace("{Date}", CBYear.Text));
+                //DGVReportIncome.Rows.Clear();
+                //for (int a = 0; a < ds.Tables[0].Rows.Count; a++)
+                //{
+                //    DGVReportIncome.Rows.Add(ds.Tables[0].Rows[a][0].ToString(), ds.Tables[0].Rows[a][1].ToString(), ds.Tables[0].Rows[a][2].ToString(), ds.Tables[0].Rows[a][3].ToString()
+                //        ,ds.Tables[0].Rows[a][4].ToString(), ds.Tables[0].Rows[a][5].ToString());
+                //    ShareSum += Convert.ToInt32(ds.Tables[0].Rows[a][2].ToString());
+                //    LoanAmountSum += Convert.ToInt32(ds.Tables[0].Rows[a][3].ToString());
+                //    InterestSum += Convert.ToInt32(ds.Tables[0].Rows[a][4].ToString());
+                //    SumIncome += Convert.ToInt32(ds.Tables[0].Rows[a][5].ToString());
+                //}
+                //TBSavingAmount.Text = ShareSum.ToString();
+                //TBLoanAmount.Text = LoanAmountSum.ToString();
+                //TBInterest.Text = InterestSum.ToString();
+                //TBSumIncome.Text = SumIncome.ToString();
             }
         }
 
@@ -116,38 +178,64 @@ namespace BankTeacher.Bank
         {
             if (CBMonth.SelectedIndex != -1)
             {
-                DataSet ds;
+                DataSet dsIncomeReport;
+                DataSet dsExpensesReport;
                 int ShareSum = 0, LoanAmountSum = 0, InterestSum = 0, SumIncome = 0;
                 if (CBMonth.SelectedIndex >= 1 && CBMonth.SelectedIndex < 10)
                 {
-                    ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0]
-                    .Replace("{Date}", CBYear.SelectedItem.ToString() + "-0" + CBMonth.SelectedItem.ToString()));
+                    dsIncomeReport = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0]
+                        .Replace("{Date}", CBYear.SelectedItem.ToString() + "-0" + CBMonth.SelectedItem.ToString()));
+
+                    dsExpensesReport = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
+                        .Replace("{Date}", CBYear.SelectedItem.ToString() + "-0" + CBMonth.SelectedItem.ToString())
+                        .Replace("{Year}", CBYear.SelectedItem.ToString()));
                 }
                 else if (CBMonth.SelectedIndex >= 10)
                 {
-                    ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0]
-                    .Replace("{Date}", CBYear.SelectedItem.ToString() + "-" + CBMonth.SelectedItem.ToString()));
+                    dsIncomeReport = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0]
+                        .Replace("{Date}", CBYear.SelectedItem.ToString() + "-" + CBMonth.SelectedItem.ToString()));
+
+                    dsExpensesReport = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
+                        .Replace("{Date}", CBYear.SelectedItem.ToString() + "-" + CBMonth.SelectedItem.ToString())
+                        .Replace("{Year}", CBYear.SelectedItem.ToString()));
                 }
                 else
                 {
-                    ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0]
+                    dsIncomeReport = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0]
                    .Replace("{Date}", CBYear.SelectedItem.ToString() + "-"));
+
+                    dsExpensesReport = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
+                        .Replace("{Date}", CBYear.SelectedItem.ToString() + "-")
+                        .Replace("{Year}", CBYear.SelectedItem.ToString()));
                 }
                 DGVReportIncome.Rows.Clear();
 
-                for (int a = 0; a < ds.Tables[0].Rows.Count; a++)
+                //TabControl Page IncomeReport
+                for (int a = 0; a < dsIncomeReport.Tables[0].Rows.Count; a++)
                 {
-                    DGVReportIncome.Rows.Add(ds.Tables[0].Rows[a][0].ToString(), ds.Tables[0].Rows[a][1].ToString(), ds.Tables[0].Rows[a][2].ToString(), ds.Tables[0].Rows[a][3].ToString()
-                        , ds.Tables[0].Rows[a][4].ToString(), ds.Tables[0].Rows[a][5].ToString());
-                    ShareSum += Convert.ToInt32(ds.Tables[0].Rows[a][2].ToString());
-                    LoanAmountSum += Convert.ToInt32(ds.Tables[0].Rows[a][3].ToString());
-                    InterestSum += Convert.ToInt32(ds.Tables[0].Rows[a][4].ToString());
-                    SumIncome += Convert.ToInt32(ds.Tables[0].Rows[a][5].ToString());
+                    DGVReportIncome.Rows.Add(dsIncomeReport.Tables[0].Rows[a][0].ToString(), dsIncomeReport.Tables[0].Rows[a][1].ToString(), dsIncomeReport.Tables[0].Rows[a][2].ToString(), dsIncomeReport.Tables[0].Rows[a][3].ToString()
+                        , dsIncomeReport.Tables[0].Rows[a][4].ToString(), dsIncomeReport.Tables[0].Rows[a][5].ToString());
+                    ShareSum += Convert.ToInt32(dsIncomeReport.Tables[0].Rows[a][2].ToString());
+                    LoanAmountSum += Convert.ToInt32(dsIncomeReport.Tables[0].Rows[a][3].ToString());
+                    InterestSum += Convert.ToInt32(dsIncomeReport.Tables[0].Rows[a][4].ToString());
+                    SumIncome += Convert.ToInt32(dsIncomeReport.Tables[0].Rows[a][5].ToString());
                 }
                 TBSavingAmount.Text = ShareSum.ToString();
                 TBLoanAmount.Text = LoanAmountSum.ToString();
                 TBInterest.Text = InterestSum.ToString();
                 TBSumIncome.Text = SumIncome.ToString();
+
+                //TabControl Page ExpensesReport
+                DGVExpensesReport.Rows.Clear();
+                for(int a = 0; a < dsExpensesReport.Tables[0].Rows.Count; a++)
+                {
+                    DGVExpensesReport.Rows.Add(dsExpensesReport.Tables[0].Rows[a][0] , dsExpensesReport.Tables[0].Rows[a][1], dsExpensesReport.Tables[0].Rows[a][2]
+                        , dsExpensesReport.Tables[0].Rows[a][3], dsExpensesReport.Tables[0].Rows[a][4]);
+                }
+                TBAmountOff_Expenses.Text = dsExpensesReport.Tables[1].Rows[0][0].ToString();
+                TBDividend_Expenses.Text = dsExpensesReport.Tables[1].Rows[0][1].ToString();
+                TBPayLoan_Expenses.Text = dsExpensesReport.Tables[1].Rows[0][2].ToString();
+                TBSumExpenses.Text = dsExpensesReport.Tables[1].Rows[0][3].ToString();
             }
         }
     }
