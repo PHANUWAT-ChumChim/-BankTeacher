@@ -432,7 +432,7 @@ namespace BankTeacher.Bank.Loan
             this.TBPayNo.Margin = new System.Windows.Forms.Padding(2);
             this.TBPayNo.Name = "TBPayNo";
             this.TBPayNo.Size = new System.Drawing.Size(192, 36);
-            this.TBPayNo.TabIndex = 13;
+            this.TBPayNo.TabIndex = 2;
             this.TBPayNo.Text = "12";
             this.TBPayNo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.TBPayNo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBPayNo_KeyPress);
@@ -443,7 +443,7 @@ namespace BankTeacher.Bank.Loan
             this.TBLoanAmount.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBLoanAmount.Location = new System.Drawing.Point(269, 149);
             this.TBLoanAmount.Margin = new System.Windows.Forms.Padding(2);
-            this.TBLoanAmount.MaxLength = 9;
+            this.TBLoanAmount.MaxLength = 8;
             this.TBLoanAmount.Name = "TBLoanAmount";
             this.TBLoanAmount.Size = new System.Drawing.Size(192, 36);
             this.TBLoanAmount.TabIndex = 14;
@@ -741,7 +741,7 @@ namespace BankTeacher.Bank.Loan
             this.Column4,
             this.Column5,
             this.Column6});
-            this.DGVLoanDetail.Location = new System.Drawing.Point(6, 9);
+            this.DGVLoanDetail.Location = new System.Drawing.Point(6, 5);
             this.DGVLoanDetail.Margin = new System.Windows.Forms.Padding(2);
             this.DGVLoanDetail.Name = "DGVLoanDetail";
             this.DGVLoanDetail.ReadOnly = true;

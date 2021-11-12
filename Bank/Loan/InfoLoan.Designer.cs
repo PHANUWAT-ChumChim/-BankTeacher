@@ -105,6 +105,7 @@ namespace BankTeacher.Bank.Loan
             this.LB1Id = new System.Windows.Forms.Label();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
+            this.CBPapersize = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel16.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -122,6 +123,7 @@ namespace BankTeacher.Bank.Loan
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
+            this.panel1.Controls.Add(this.CBPapersize);
             this.panel1.Controls.Add(this.BTPrint);
             this.panel1.Controls.Add(this.panel16);
             this.panel1.Controls.Add(this.tabControl1);
@@ -920,6 +922,21 @@ namespace BankTeacher.Bank.Loan
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
             // 
+            // CBPapersize
+            // 
+            this.CBPapersize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBPapersize.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CBPapersize.FormattingEnabled = true;
+            this.CBPapersize.Items.AddRange(new object[] {
+            "A4",
+            "A5"});
+            this.CBPapersize.Location = new System.Drawing.Point(885, 201);
+            this.CBPapersize.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.CBPapersize.Name = "CBPapersize";
+            this.CBPapersize.Size = new System.Drawing.Size(123, 39);
+            this.CBPapersize.TabIndex = 108;
+            this.CBPapersize.SelectedIndexChanged += new System.EventHandler(this.CBPapersize_SelectedIndexChanged);
+            // 
             // InfoLoan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1022,5 +1039,6 @@ namespace BankTeacher.Bank.Loan
         private System.Drawing.Printing.PrintDocument printDocument1;
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Windows.Forms.Button BTPrint;
+        private System.Windows.Forms.ComboBox CBPapersize;
     }
 }

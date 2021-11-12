@@ -23,6 +23,7 @@ namespace BankTeacher.Bank
         /// <para>[4] Check BillDetailPayment INPUT: -  </para>
         /// <para>[5] SELECT MEMBER INPUT: {Text}</para>
         /// <para>[6] SELECT ShareWithDraw INPUT: {Date}</para>
+        /// <para>[7] SELECT Withdraw (Year) INPUT: {Year}</para>
         /// </summary>
         String[] SQLDefault = new String[]
         {
@@ -98,12 +99,19 @@ namespace BankTeacher.Bank
 
 
             ,
+           //[7] SELECT Withdraw (Date) INPUT: {Date}
+           "SELECT * \r\n " +
+          "FROM EmployeeBank.dbo.tblShareWithdraw  \r\n " +
+          "WHERE CAST(CAST(DateAdd as date) as nvarchar(50)) LIKE '{Date}%'"
+           ,
+
         };
 
         int Check;
         public AmountOff()
         {
             InitializeComponent();
+            CBMonth.Text = Bank.Menu.Date[1];
         }
 
         private void AmountOff_Load(object sender, EventArgs e)
@@ -116,11 +124,17 @@ namespace BankTeacher.Bank
                         dtPayment.Rows[a][1].ToString()));
 
             int Year = Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]);
-            for(int a = 0; a < 5; a++)
+            for (int a = 0; a < 5; a++)
             {
+                if (Class.SQLConnection.InputSQLMSSQL(SQLDefault[7]
+                    .Replace("{Date}", Year.ToString())).Rows.Count == 0)
+                {
+                    continue;
+                }
                 CBYear.Items.Add(Year);
                 Year--;
             }
+            CBYear.SelectedIndex = 0;
         }
 
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
@@ -132,7 +146,7 @@ namespace BankTeacher.Bank
 
                     DGVLoan.Rows.Clear();
                     DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(
-                        SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text) + 
+                        SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text) +
                         "\r\n" +
                         SQLDefault[0].Replace("{TeacherNo}", TBTeacherNo.Text));
                     String[] Credit = new string[] { };
@@ -151,7 +165,7 @@ namespace BankTeacher.Bank
                         Check = 1;
                         CBTypePay.SelectedIndex = 0;
 
-                        for(int Num = 0;Num < ds.Tables[1].Rows.Count; Num++)
+                        for (int Num = 0; Num < ds.Tables[1].Rows.Count; Num++)
                         {
                             Credit = ds.Tables[1].Rows[Num][1].ToString().Split('.');
                             DGVLoan.Rows.Add(ds.Tables[1].Rows[Num][0].ToString(), ds.Tables[1].Rows[Num][2].ToString(), Credit[0], ds.Tables[1].Rows[Num][3].ToString());
@@ -190,11 +204,12 @@ namespace BankTeacher.Bank
         private void BSaveAmountOff_Click(object sender, EventArgs e)
         {
             BankTeacher.Class.ComboBoxPayment Payment = (CBTypePay.SelectedItem as BankTeacher.Class.ComboBoxPayment);
-            if (Convert.ToInt32(TBWithDraw.Text) >= 1 && CBTypePay.SelectedIndex != -1)
+
+            if (Int32.TryParse(TBCreditWithDraw.Text, out int CraditwithDraw)&& CraditwithDraw >= 1 && CBTypePay.SelectedIndex != -1)
             {
                 try
                 {
-                    if(MessageBox.Show("ยืนยันการจ่าย", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
+                    if (MessageBox.Show("ยืนยันการจ่าย", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                     {
                         Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[2] +
                     "\r\n" +
@@ -208,11 +223,10 @@ namespace BankTeacher.Bank
                         MessageBox.Show("บันทึกสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-                catch(Exception x)
+                catch (Exception x)
                 {
                     Console.Write(x);
                 }
-                
                 //
             }
             else
@@ -236,9 +250,9 @@ namespace BankTeacher.Bank
 
         private void TBWithDraw_Leave(object sender, EventArgs e)
         {
-            if(TBWithDraw.Text != "")
+            if (TBWithDraw.Text != "")
             {
-                if (int.Parse(TBWithDraw.Text) > int.Parse(TBCreditWithDraw.Text))
+                if (Int32.TryParse(TBWithDraw.Text , out int WithDraw) && Int32.TryParse(TBCreditWithDraw.Text , out int CraditWithDraw) && WithDraw > CraditWithDraw)
                 {
                     MessageBox.Show("ยอดเงินเกินกำหนด", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     TBWithDraw.Text = "";
@@ -249,7 +263,7 @@ namespace BankTeacher.Bank
                     CBTypePay.Enabled = true;
                 }
             }
-            
+
         }
 
         private void AmountOff_SizeChanged(object sender, EventArgs e)
@@ -264,7 +278,7 @@ namespace BankTeacher.Bank
             {
                 Bank.Search IN = new Bank.Search(SQLDefault[5]);
                 IN.ShowDialog();
-                if(Bank.Search.Return[0] != "")
+                if (Bank.Search.Return[0] != "")
                 {
                     TBTeacherNo.Text = Bank.Search.Return[0];
                     TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
@@ -278,24 +292,42 @@ namespace BankTeacher.Bank
 
         private void CBYear_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(CBYear.SelectedIndex != -1)
+            if (CBYear.SelectedIndex != -1)
             {
                 CBMonth.SelectedIndex = -1;
                 CBMonth.Items.Clear();
+                String MonthInsert = "";
                 int Month = Convert.ToInt32(BankTeacher.Bank.Menu.Date[1]);
-                if(CBYear.SelectedIndex == 0)
+                if (CBYear.SelectedIndex == 0)
                 {
-                    for(int a = 0; a <= Month; a++)
+                    for (int a = 0; a <= Month; a++)
                     {
-                        if(a == 0)
-                            CBMonth.Items.Add("(none)");
+                        if (a < 10)
+                        {
+                            MonthInsert = "0" + a;
+                        }
                         else
+                        {
+                            MonthInsert = a.ToString();
+                        }
+                        if (a == 0)
+                        {
+                            CBMonth.Items.Add("(none)");
+                        }
+                        else
+                        {
+                            if (Class.SQLConnection.InputSQLMSSQL(SQLDefault[7]
+                                .Replace("{Date}", CBYear.Text + "-" + MonthInsert)).Rows.Count == 0)
+                            {
+                                continue;
+                            }
                             CBMonth.Items.Add(a);
+                        }
                     }
                 }
                 else
                 {
-                    for(int a = 0; a <= 12; a++)
+                    for (int a = 0; a <= 12; a++)
                     {
                         if (a == 0)
                             CBMonth.Items.Add("(none)");
@@ -310,16 +342,16 @@ namespace BankTeacher.Bank
 
         private void CBMonth_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(CBMonth.SelectedIndex != -1 && TBTeacherNo.TextLength == 6)
+            if (CBMonth.SelectedIndex != -1)
             {
                 DataSet ds;
-                if(CBMonth.SelectedIndex >= 1 && CBMonth.SelectedIndex < 10 )
+                if (Int32.TryParse(CBMonth.Text, out int Month) && Month >= 1 && Month < 10)
                 {
                     ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[6]
                     .Replace("{Date}", CBYear.SelectedItem.ToString() + "-0" + CBMonth.SelectedItem.ToString())
                     .Replace("{TeacherNo}", TBTeacherNo.Text));
                 }
-                else if (CBMonth.SelectedIndex >= 10)
+                else if (Int32.TryParse(CBMonth.Text, out int Montha) && Montha >= 10)
                 {
                     ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[6]
                     .Replace("{Date}", CBYear.SelectedItem.ToString() + "-" + CBMonth.SelectedItem.ToString())
@@ -331,9 +363,9 @@ namespace BankTeacher.Bank
                    .Replace("{Date}", CBYear.SelectedItem.ToString() + "-")
                    .Replace("{TeacherNo}" , TBTeacherNo.Text));
                 }
-                
+
                 DGVAmountOffHistory.Rows.Clear();
-                for(int a = 0; a < ds.Tables[0].Rows.Count; a++)
+                for (int a = 0; a < ds.Tables[0].Rows.Count; a++)
                 {
                     DGVAmountOffHistory.Rows.Add(ds.Tables[0].Rows[a][0], ds.Tables[0].Rows[a][1], ds.Tables[0].Rows[a][2], ds.Tables[0].Rows[a][3]);
                 }

@@ -85,7 +85,7 @@ namespace BankTeacher.Class.ProtocolSharing
                 }
                 catch
                 {
-                    return "UpLoadFail { Error อะ ก็ตามนั้น }";
+                    return "UploadFail { Error อะ ก็ตามนั้น }";
                 }
             }
         }
