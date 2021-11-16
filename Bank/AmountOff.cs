@@ -137,7 +137,7 @@ namespace BankTeacher.Bank
             CBYear.SelectedIndex = 0;
         }
 
-        private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
+        public void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -178,6 +178,8 @@ namespace BankTeacher.Bank
                         MessageBox.Show("รหัสผู้ใช้ไม่ถูกต้อง", "System", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
 
+                    //String[] d = (CBMonth.SelectedItem as String[]);
+                    //object eddd = CBMonth.SelectedItem;
                 }
 
             }
