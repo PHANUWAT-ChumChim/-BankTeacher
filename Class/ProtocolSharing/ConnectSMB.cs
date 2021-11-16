@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 using static BankTeacher.Class.ProtocolSharing.SBM;
 
 namespace BankTeacher.Class.ProtocolSharing
@@ -56,15 +57,64 @@ namespace BankTeacher.Class.ProtocolSharing
             }
             public String SendFile(String LocationFile, String TargetFile)
             {
+                //String[] d = (CBMonth.SelectedItem as String[]);
+                //String[] File = new string[] { LocationFile, TargetFile };
+                Locationfile_TargetFile SetFile = new Locationfile_TargetFile();
+                SetFile.LocationFile = LocationFile;
+                SetFile.TargetFile = TargetFile;
+
+                Thread SendFileThread = new Thread(() => FileSendThread(SetFile));
+                SendFileThread.Start();
+
+                if (SendFileThread.IsAlive)
+                {
+
+                }
+                //try
+                //{
+                //    using (NetworkConnection network = new NetworkConnection(networkPath, networkCredential))
+                //    {
+                //        network.Connect();
+                //        var path = Path.Combine(networkPath, TargetFile);
+                //        if (!File.Exists(path))
+                //        {
+                //            File.Copy(LocationFile, path, true);
+                //        }
+                //        else
+                //        {
+                //            for (int x = 0; x < x + 1; x++)
+                //            {
+                //                if (!File.Exists(path.Replace(".pdf", "_" + (x + 1) + ".pdf")))
+                //                {
+                //                    File.Copy(LocationFile, path
+                //                        .Replace(".pdf", "_" + (x + 1) + ".pdf"), true);
+                //                    break;
+                //                }
+                //            }
+
+                //        }
+                //        return "Upload File Complete";
+                //    }
+
+                //}
+                //catch
+                //{
+                //    return "UploadFail { Error อะ ก็ตามนั้น }";
+                //}
+            }
+
+            public void FileSendThread(Locationfile_TargetFile SetFile)
+            {
+                
                 try
                 {
                     using (NetworkConnection network = new NetworkConnection(networkPath, networkCredential))
                     {
                         network.Connect();
-                        var path = Path.Combine(networkPath, TargetFile);
+                        var path = Path.Combine(networkPath, SetFile.TargetFile);
                         if (!File.Exists(path))
                         {
-                            File.Copy(LocationFile, path, true);
+                            File.Copy(SetFile.LocationFile, path, true);
                         }
                         else
                         {
@@ -72,21 +122,38 @@ namespace BankTeacher.Class.ProtocolSharing
                             {
                                 if (!File.Exists(path.Replace(".pdf", "_" + (x + 1) + ".pdf")))
                                 {
-                                    File.Copy(LocationFile, path
+                                    File.Copy(SetFile.LocationFile, path
                                         .Replace(".pdf", "_" + (x + 1) + ".pdf"), true);
                                     break;
                                 }
                             }
 
                         }
-                        return "Upload File Complete";
                     }
-
+                    SetFile.Return = "อัพโหลดสำเร็จ";
                 }
                 catch
                 {
-                    return "UploadFail { Error อะ ก็ตามนั้น }";
+                    SetFile.Return = "ไม่สามารถอัพโหลดได้";
                 }
+            }
+        }
+        public class Locationfile_TargetFile
+        {
+            public String LocationFile
+            {
+                get;
+                set;
+            }
+            public String TargetFile
+            {
+                get;
+                set;
+            }
+            public String Return
+            {
+                get;
+                set;
             }
         }
     }

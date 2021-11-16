@@ -48,6 +48,7 @@ namespace BankTeacher.Bank
         /// <para>[4] Change Status Member INPUT: {TeacherNoAddBy} {TeacherNo} {Note} {DocStatusNo} {DocUploadPath} {Status} {TeacherNo}</para>
         /// <para>[5] SELECT MEMBER INPUT: {Text}</para>
         /// <para>[6] Select MemberResignation INPUT: {Date} </para>
+        /// <para>[7] SELECT Check SavingAmount INPUT: {TeacherNo} </para>
         /// </summary>
         private String[] SQLDefault = new String[]
         {
@@ -57,15 +58,16 @@ namespace BankTeacher.Bank
             ,
 
            //[1] SELECT Member  INPUT:{Text}
-          "SELECT TeacherNo,Name,null,Fname \r\n " +
-          "FROM(SELECT ISNULL(b.TeacherNo , a.TeacherNo) as TeacherNo ,  CAST(ISNULL(c.PrefixName , '') + '' + Fname +' '+ Lname as NVARCHAR)AS NAME, Fname , b.MemberStatusNo \r\n " +
-          "FROM Personal.dbo.tblTeacherHis as a \r\n " +
-          "FULL OUTER JOIN EmployeeBank.dbo.tblMember as b on a.TeacherNo = b.TeacherNo \r\n " +
-          "LEFT JOIN BaseData.dbo.tblPrefix as c ON a.PrefixNo = c.PrefixNo  \r\n " +
-          "WHERE a.TeacherNo LIKE '{Text}%' or CAST(Fname +' '+ Lname as NVARCHAR) LIKE '{Text}%' ) as a \r\n " +
-          "WHERE a.MemberStatusNo = 2 or a.MemberStatusNo IS NULL \r\n " +
+           "SELECT TeacherNo,Name,null,Fname  \r\n " +
+          "FROM(SELECT ISNULL(b.TeacherNo , a.TeacherNo) as TeacherNo ,  CAST(ISNULL(c.PrefixName , '') + '' + Fname +' '+ Lname as NVARCHAR)AS NAME, Fname , b.MemberStatusNo  \r\n " +
+          "FROM Personal.dbo.tblTeacherHis as a  \r\n " +
+          "FULL OUTER JOIN EmployeeBank.dbo.tblMember as b on a.TeacherNo = b.TeacherNo  \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as c ON a.PrefixNo = c.PrefixNo   \r\n " +
+          "WHERE (a.TeacherNo LIKE '%' or CAST(Fname +' '+ Lname as NVARCHAR) LIKE '%') and a.IsUse = 1 ) as a  \r\n " +
+          "WHERE a.MemberStatusNo = 2 or a.MemberStatusNo IS NULL  \r\n " +
           "ORDER BY a.Fname; "
-          ,
+           ,
+
 
           //[2]  Select Detail Memner INPUT: {TeacherNo} 
           "SELECT a.TeacherNo ,CAST(b.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS Name, a.IdNo ,a.cNo,a.cMu,c.TumBonName,d.AmPhurName,e.JangWatLongName,a.TelMobile \r\n " +
@@ -120,12 +122,22 @@ namespace BankTeacher.Bank
           ,
           
         //[4] Change Status Member INPUT: {TeacherNoAddBy} {TeacherNo} {Note} {DocStatusNo} {DocUploadPath} {Status}
-            "INSERT INTO EmployeeBank.dbo.tblMemberResignation (TeacherNoAddBy,TeacherNo,Date,Note,DocStatusNo,DocUploadPath) \r\n " +
-            "VALUES ('{TeacherNoAddBy}','{TeacherNo}',CURRENT_TIMESTAMP,'{Note}','{DocStatusNo}','{DocUploadPath}'); \r\n " +
-            " \r\n " +
-            "UPDATE EmployeeBank.dbo.tblMember \r\n " +
-            "SET MemberStatusNo = '{Status}' \r\n " +
-            "WHERE TeacherNo = '{TeacherNo}' "
+         "INSERT INTO EmployeeBank.dbo.tblMemberResignation (TeacherNoAddBy,TeacherNo,Date,Note,DocStatusNo,DocUploadPath)  \r\n " +
+         "VALUES ('{TeacherNoAddBy}','{TeacherNo}',CURRENT_TIMESTAMP,'{Note}','{DocStatusNo}','{DocUploadPath}');  \r\n " +
+         "   \r\n " +
+         "UPDATE EmployeeBank.dbo.tblMember  \r\n " +
+         "SET MemberStatusNo = '{Status}' \r\n " +
+         "WHERE TeacherNo = '{TeacherNo}'; \r\n " +
+         " \r\n " +
+         "UPDATE EmployeeBank.dbo.tblDividend  \r\n " +
+         "SET RemainInterestLastYear = ROUND(RemainInterestLastYear + b.SavingAmount,2,1) \r\n " +
+         "FROM (SELECT b.SavingAmount \r\n " +
+         "	FROM EmployeeBank.dbo.tblMember as a \r\n " +
+         "	LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo \r\n " +
+         "	WHERE a.TeacherNo LIKE '{TeacherNo}') as b \r\n " +
+         "WHERE DividendNo = (SELECT TOP 1 DividendNo FROM EmployeeBank.dbo.tblDividend ORDER BY DividendNo DESC);"
+           
+
         ,
         //[5] SELECT MEMBER INPUT: {Text}
             "SELECT TOP(20) a.TeacherNo , CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR)AS Name, e.SavingAmount,    \r\n " +
@@ -146,6 +158,13 @@ namespace BankTeacher.Bank
           "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo \r\n " +
           "WHERE CAST(CAST(DATE  as  date)as nvarchar(50))  LIKE  '{Date}%'"
+           ,
+
+           //[7] SELECT Check SavingAmount INPUT: {TeacherNo}
+           "SELECT b.SavingAmount \r\n " +
+          "FROM EmployeeBank.dbo.tblMember as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo \r\n " +
+          "WHERE a.TeacherNo LIKE '{TeacherNo}%'"
            ,
 
 
@@ -423,16 +442,32 @@ namespace BankTeacher.Bank
             {
                 if (TBTeacherNO_Cancel.Text != "")
                 {
-                    Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[4]
-                        .Replace("{TeacherNoAddBy}",Class.UserInfo.TeacherNo)
+                    DataTable dtCheckSavingAmount = Class.SQLConnection.InputSQLMSSQL(SQLDefault[7]
+                        .Replace("{TeacherNo}", TBTeacherNO_Cancel.Text));
+                    if (Convert.ToInt32(dtCheckSavingAmount.Rows[0][0].ToString()) < 1)
+                    {
+                        Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[4]
+                        .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
                         .Replace("{TeacherNo}", TBTeacherNO_Cancel.Text)
                         .Replace("{Note}", TBNote_Cancel.Text)
                         .Replace("{DocStatusNo}", "2")
                         .Replace("{DocUploadPath}", "")
                         .Replace("{Status}", "2"));
-                    MessageBox.Show("ยกเลิกผู้ใช้เรียบร้อย", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    CheckBCancel = true;
-                    imgeLocation = "";
+                        MessageBox.Show("ยกเลิกผู้ใช้เรียบร้อย", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        CheckBCancel = true;
+                        imgeLocation = "";
+                    }
+                    else
+                    {
+                        if((MessageBox.Show("มียอดเงินคงเหลือในระบบเกิน ต้องการถอนตอนนี้เลยหรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes))
+                        {
+                            AmountOff FAmountOff = new AmountOff();
+                            FAmountOff.TBTeacherNo.Text = TBTeacherNO_Cancel.Text;
+                            FAmountOff.Show();
+                            FAmountOff.TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+                        }
+                    }
+
                 }
                 else
                 {

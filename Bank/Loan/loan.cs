@@ -272,7 +272,7 @@ namespace BankTeacher.Bank.Loan
                             Month = 1;
                             Year++;
                         }
-                        SumCheckInterest += SumCheckInterest;
+                        
                         if(SumCheckInterest > Convert.ToInt32((Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100))))
                         {
                             Interest = SumCheckInterest - Convert.ToInt32((Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)));
@@ -291,6 +291,7 @@ namespace BankTeacher.Bank.Loan
                         }
                         DGVLoanDetail.Rows.Add($"{Month}/{Year}", Pay, Convert.ToInt32(Interest), SumInstallment);
                         Month++;
+                        SumCheckInterest += Convert.ToInt32(Interest);
                     }
                     
                 }
