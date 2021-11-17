@@ -63,7 +63,7 @@ namespace BankTeacher.Bank
           "FROM Personal.dbo.tblTeacherHis as a  \r\n " +
           "FULL OUTER JOIN EmployeeBank.dbo.tblMember as b on a.TeacherNo = b.TeacherNo  \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as c ON a.PrefixNo = c.PrefixNo   \r\n " +
-          "WHERE (a.TeacherNo LIKE '%' or CAST(Fname +' '+ Lname as NVARCHAR) LIKE '%') and a.IsUse = 1 ) as a  \r\n " +
+          "WHERE (a.TeacherNo LIKE '{Text}%' or CAST(Fname +' '+ Lname as NVARCHAR) LIKE '{Text}%') and a.IsUse = 1 ) as a  \r\n " +
           "WHERE a.MemberStatusNo = 2 or a.MemberStatusNo IS NULL  \r\n " +
           "ORDER BY a.Fname; "
            ,
@@ -463,8 +463,11 @@ namespace BankTeacher.Bank
                         {
                             AmountOff FAmountOff = new AmountOff();
                             FAmountOff.TBTeacherNo.Text = TBTeacherNO_Cancel.Text;
-                            FAmountOff.Show();
-                            FAmountOff.TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+                            this.Enabled = false;
+                            FAmountOff.FormBorderStyle = FormBorderStyle.Sizable;
+                            FAmountOff.ShowDialog();
+                            //FAmountOff.TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+                            //this.Enabled
                         }
                     }
 
@@ -474,6 +477,10 @@ namespace BankTeacher.Bank
                     MessageBox.Show("กรุณาใส่รหัสให้ถูกต้อง", "เตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
+        }
+        private void FormAmountOffOpening()
+        {
+            //if (Application.OpenForms.OfType<AmountOff>().Count() == 1)
         }
 
         private void BOpenFile_Cancel_Click(object sender, EventArgs e)

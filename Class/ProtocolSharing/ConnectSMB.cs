@@ -21,7 +21,7 @@ namespace BankTeacher.Class.ProtocolSharing
 
             public SmbFileContainer(String Location)
             {
-                PathFile = this.networkPath = @"\\166.166.4.189\Newfolder\" + Location + @"\";
+                PathFile = this.networkPath = @"\\166.166.4.189\ShareFileTestSBM" /*+ Location */+ @"\";
                 var userName = "tang1811";
                 var password = "123456789";
                 var domain = "";
@@ -63,49 +63,25 @@ namespace BankTeacher.Class.ProtocolSharing
                 SetFile.LocationFile = LocationFile;
                 SetFile.TargetFile = TargetFile;
 
-                Thread SendFileThread = new Thread(() => FileSendThread(SetFile));
-                SendFileThread.Start();
+                //Thread SendFileThread = new Thread(() => FileSendThread(SetFile));
+                //SendFileThread.Start();
 
-                if (SendFileThread.IsAlive)
+                var task = Task.Run(() => FileSendThread(SetFile));
+                if (task.Wait(TimeSpan.FromSeconds(5)))
                 {
 
                 }
-                //try
-                //{
-                //    using (NetworkConnection network = new NetworkConnection(networkPath, networkCredential))
-                //    {
-                //        network.Connect();
-                //        var path = Path.Combine(networkPath, TargetFile);
-                //        if (!File.Exists(path))
-                //        {
-                //            File.Copy(LocationFile, path, true);
-                //        }
-                //        else
-                //        {
-                //            for (int x = 0; x < x + 1; x++)
-                //            {
-                //                if (!File.Exists(path.Replace(".pdf", "_" + (x + 1) + ".pdf")))
-                //                {
-                //                    File.Copy(LocationFile, path
-                //                        .Replace(".pdf", "_" + (x + 1) + ".pdf"), true);
-                //                    break;
-                //                }
-                //            }
+                else
+                {
 
-                //        }
-                //        return "Upload File Complete";
-                //    }
+                    //throw new Exception("-----------Timed out-----------");
+                }
 
-                //}
-                //catch
-                //{
-                //    return "UploadFail { Error อะ ก็ตามนั้น }";
-                //}
+                return SetFile.Return;
             }
 
             public void FileSendThread(Locationfile_TargetFile SetFile)
             {
-                
                 try
                 {
                     using (NetworkConnection network = new NetworkConnection(networkPath, networkCredential))

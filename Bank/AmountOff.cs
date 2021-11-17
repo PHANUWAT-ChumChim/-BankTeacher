@@ -112,6 +112,7 @@ namespace BankTeacher.Bank
         {
             InitializeComponent();
             CBMonth.Text = Bank.Menu.Date[1];
+            
         }
 
         private void AmountOff_Load(object sender, EventArgs e)
@@ -135,6 +136,8 @@ namespace BankTeacher.Bank
                 Year--;
             }
             CBYear.SelectedIndex = 0;
+            if (TBTeacherNo.Text != "")
+                TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
         }
 
         public void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
@@ -170,8 +173,8 @@ namespace BankTeacher.Bank
                             Credit = ds.Tables[1].Rows[Num][1].ToString().Split('.');
                             DGVLoan.Rows.Add(ds.Tables[1].Rows[Num][0].ToString(), ds.Tables[1].Rows[Num][2].ToString(), Credit[0], ds.Tables[1].Rows[Num][3].ToString());
                         }
-                        if (CBTypePay.SelectedIndex != -1)
-                            CBTypePay.SelectedIndex = -1;
+                        //if (CBTypePay.SelectedIndex != -1)
+                        //    CBTypePay.SelectedIndex = -1;
                     }
                     else
                     {
@@ -386,6 +389,14 @@ namespace BankTeacher.Bank
             }
             else
                 BSaveAmountOff.Enabled = false;
+        }
+
+        private void BMaxWithDraw_AmountOff_Click(object sender, EventArgs e)
+        {
+            if(TBCreditWithDraw.Text != "")
+            {
+                TBWithDraw.Text = TBCreditWithDraw.Text;
+            }
         }
     }
 }
