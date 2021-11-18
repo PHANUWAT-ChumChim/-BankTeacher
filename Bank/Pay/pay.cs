@@ -395,6 +395,7 @@ namespace BankTeacher.Bank.Pay
                         DM.Clear();
                         BackupDM.Clear();
                         ClearForm();
+                        YearinCB.Clear();
                         CBYearSelection_Pay.Items.Clear();
                         CBMonthSelection_Pay.Items.Clear();
                         TBTeacherName.Text = dt.Rows[0][1].ToString();
@@ -1454,6 +1455,9 @@ namespace BankTeacher.Bank.Pay
         {
             if (SelectIndexRow != -1)
             {
+                bool Checklist = false;
+                if (DGV_Pay.Rows[SelectIndexRow].Cells[1].Value.ToString().Contains("กู้"))
+                    Checklist = true;
                 this.RestoreComboboxafterdelete();
                 DGV_Pay.Rows.RemoveAt(SelectIndexRow);
                 SelectIndexRow = -1;
@@ -1462,7 +1466,8 @@ namespace BankTeacher.Bank.Pay
                     CBPayment_Pay.Enabled = false;
                     CBPayment_Pay.SelectedIndex = -1;
                 }
-                ReloadYearMonth();
+                if(Checklist)
+                    ReloadYearMonth();
             }
             if (DGV_Pay.Rows.Count != 0)
             {
@@ -1519,9 +1524,25 @@ namespace BankTeacher.Bank.Pay
                         {
                             for (int CountDMMonth = 0; CountDMMonth < DM[CountDMYear].Count; CountDMMonth++)
                             {
-                                if (DGV_Pay.Rows[CountDGV].Cells[4].Value.ToString() == YearinCB[CountDMYear].ToString() && DGV_Pay.Rows[CountDGV].Cells[5].Value.ToString() == DM[CountDMYear][CountDMMonth].ToString() && DGV_Pay.Rows[CountDGV].Cells[1].Value.ToString().Contains("กู้"))
+                                if (DGV_Pay.Rows[CountDGV].Cells[4].Value.ToString() == YearinCB[CountDMYear].ToString() &&
+                                    DGV_Pay.Rows[CountDGV].Cells[5].Value.ToString() == DM[CountDMYear][CountDMMonth].ToString() &&
+                                    DGV_Pay.Rows[CountDGV].Cells[1].Value.ToString().Contains("กู้"))
                                 {
-                                    DM[CountDMYear].RemoveAt(CountDMMonth);
+                                    for(int CountDGV2 = 0; CountDGV2 < DGV_Pay.Rows.Count; CountDGV2++)
+                                    {
+                                        if(DGV_Pay.Rows[CountDGV].Cells[0].Value.ToString() == DGV_Pay.Rows[CountDGV2].Cells[0].Value.ToString() &&
+                                            DGV_Pay.Rows[CountDGV2].Cells[1].Value.ToString().Contains("หุ้น"))
+                                        {
+                                            break;
+                                        }
+                                        else if(CountDGV2 == DGV_Pay.Rows.Count - 1 && 
+                                            !(DGV_Pay.Rows[CountDGV2].Cells[1].Value.ToString().Contains("หุ้น"))&&
+                                            DGV_Pay.Rows[CountDGV].Cells[0].Value.ToString() == DGV_Pay.Rows[CountDGV2].Cells[0].Value.ToString())
+                                        {
+                                        DM[CountDMYear].RemoveAt(CountDMMonth);
+                                        break;
+                                        }
+                                    }
                                 }
                             }
                             if(DM[CountDMYear].Count == 0)

@@ -786,15 +786,15 @@ namespace BankTeacher.Bank.Loan
         DialogResult UserOutCreditLimit = DialogResult.No;
         private void TBLoanAmount_Leave(object sender, EventArgs e)
         {
+            int LimitAmount = 0;
+            int Amount;
+            String AmountLimit = LLoanAmount.Text.Remove(0, 1);
+            AmountLimit = AmountLimit.Remove(AmountLimit.Length - 1);
+            bool Check = int.TryParse(AmountLimit, out LimitAmount);
             if (panel1.Focused)
             {
-                int LimitAmount = 0;
                 if (DGVGuarantor.Rows.Count != 0)
                 {
-                    int Amount;
-                    String AmountLimit = LLoanAmount.Text.Remove(0, 1);
-                    AmountLimit = AmountLimit.Remove(AmountLimit.Length - 1);
-                    bool Check = int.TryParse(AmountLimit, out LimitAmount);
                     if (int.TryParse(TBLoanAmount.Text, out Amount) && (Check))
                     {
                         if (Amount > LimitAmount)

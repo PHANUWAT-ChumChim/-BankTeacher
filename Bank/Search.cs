@@ -86,7 +86,15 @@ namespace BankTeacher.Bank
         {
             if(e.KeyCode == Keys.Enter)
             {
-                e.Handled = true;
+                if(dataGridView1.Rows.Count != 0)
+                {
+                    Return = new String[]
+                    {
+                            dataGridView1.Rows[0].Cells[0].Value.ToString(),
+                            dataGridView1.Rows[0].Cells[1].Value.ToString(),
+                    };
+                    this.Dispose();
+                }
             }
         }
     }
