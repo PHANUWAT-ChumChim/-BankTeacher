@@ -67,6 +67,10 @@ namespace BankTeacher.Bank.Pay
             this.label8 = new System.Windows.Forms.Label();
             this.LBalance_Pay = new System.Windows.Forms.Label();
             this.DGV_Pay = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel16 = new System.Windows.Forms.Panel();
             this.CBMonthSelection_Pay = new System.Windows.Forms.ComboBox();
             this.LB5Mo = new System.Windows.Forms.Label();
@@ -588,6 +592,7 @@ namespace BankTeacher.Bank.Pay
             this.DGV_Pay.RowTemplate.Height = 24;
             this.DGV_Pay.Size = new System.Drawing.Size(842, 208);
             this.DGV_Pay.TabIndex = 99;
+            //this.DGV_Pay.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Pay_CellEndEdit);
             this.DGV_Pay.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DGV_Pay_MouseClick);
             // 
             // panel16

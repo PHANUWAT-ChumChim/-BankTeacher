@@ -1685,9 +1685,6 @@ namespace BankTeacher.Bank.Pay
         {
             Class.Print.PrintPreviewDialog.PrintDeReport(e,DGV_BillInfo,tabControl1.SelectedTab.Text);
         }
-
-
-
         //===============================================================================================
     }
 }

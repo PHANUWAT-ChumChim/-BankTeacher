@@ -78,6 +78,7 @@ namespace BankTeacher.Bank
             this.LB1Id = new System.Windows.Forms.Label();
             this.CBStatus = new System.Windows.Forms.ComboBox();
             this.BSave = new System.Windows.Forms.Button();
+            this.BMaxWithDraw_AmountOff = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -173,6 +174,7 @@ namespace BankTeacher.Bank
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.BMaxWithDraw_AmountOff);
             this.tabPage4.Controls.Add(this.DGVLoan);
             this.tabPage4.Controls.Add(this.TBWithDraw);
             this.tabPage4.Controls.Add(this.TBCreditWithDraw);
@@ -239,20 +241,19 @@ namespace BankTeacher.Bank
             // TBWithDraw
             // 
             this.TBWithDraw.Enabled = false;
-            this.TBWithDraw.Location = new System.Drawing.Point(573, 279);
+            this.TBWithDraw.Location = new System.Drawing.Point(528, 279);
             this.TBWithDraw.Margin = new System.Windows.Forms.Padding(2);
             this.TBWithDraw.Name = "TBWithDraw";
             this.TBWithDraw.Size = new System.Drawing.Size(207, 36);
             this.TBWithDraw.TabIndex = 1;
             this.TBWithDraw.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.TBWithDraw.Visible = false;
             this.TBWithDraw.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBWithDraw_KeyPress);
             this.TBWithDraw.Leave += new System.EventHandler(this.TBWithDraw_Leave);
             // 
             // TBCreditWithDraw
             // 
             this.TBCreditWithDraw.Enabled = false;
-            this.TBCreditWithDraw.Location = new System.Drawing.Point(573, 235);
+            this.TBCreditWithDraw.Location = new System.Drawing.Point(528, 235);
             this.TBCreditWithDraw.Margin = new System.Windows.Forms.Padding(2);
             this.TBCreditWithDraw.Name = "TBCreditWithDraw";
             this.TBCreditWithDraw.Size = new System.Drawing.Size(207, 36);
@@ -264,7 +265,7 @@ namespace BankTeacher.Bank
             // TBCreditSystem
             // 
             this.TBCreditSystem.Enabled = false;
-            this.TBCreditSystem.Location = new System.Drawing.Point(234, 235);
+            this.TBCreditSystem.Location = new System.Drawing.Point(189, 235);
             this.TBCreditSystem.Margin = new System.Windows.Forms.Padding(2);
             this.TBCreditSystem.Name = "TBCreditSystem";
             this.TBCreditSystem.Size = new System.Drawing.Size(207, 36);
@@ -275,18 +276,17 @@ namespace BankTeacher.Bank
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(468, 281);
+            this.label7.Location = new System.Drawing.Point(423, 281);
             this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(104, 30);
             this.label7.TabIndex = 0;
             this.label7.Text = "ยอดเงินที่ถอน";
-            this.label7.Visible = false;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(455, 237);
+            this.label3.Location = new System.Drawing.Point(410, 237);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(121, 30);
@@ -296,7 +296,7 @@ namespace BankTeacher.Bank
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(98, 237);
+            this.label2.Location = new System.Drawing.Point(53, 237);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(138, 30);
@@ -620,6 +620,16 @@ namespace BankTeacher.Bank
             this.BSave.Text = "บันทึก";
             this.BSave.UseVisualStyleBackColor = false;
             // 
+            // BMaxWithDraw_AmountOff
+            // 
+            this.BMaxWithDraw_AmountOff.Location = new System.Drawing.Point(742, 280);
+            this.BMaxWithDraw_AmountOff.Name = "BMaxWithDraw_AmountOff";
+            this.BMaxWithDraw_AmountOff.Size = new System.Drawing.Size(100, 36);
+            this.BMaxWithDraw_AmountOff.TabIndex = 3;
+            this.BMaxWithDraw_AmountOff.Text = "ถอนทั้งหมด";
+            this.BMaxWithDraw_AmountOff.UseVisualStyleBackColor = true;
+            this.BMaxWithDraw_AmountOff.Click += new System.EventHandler(this.BMaxWithDraw_AmountOff_Click);
+            // 
             // AmountOff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -663,7 +673,6 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.Label LBContractNumber;
         private System.Windows.Forms.Button BSearchTeacher;
         private System.Windows.Forms.TextBox TBTeacherName;
-        private System.Windows.Forms.TextBox TBTeacherNo;
         private System.Windows.Forms.Label LB2Ne;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label LB1Id;
@@ -692,5 +701,7 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        public System.Windows.Forms.TextBox TBTeacherNo;
+        private System.Windows.Forms.Button BMaxWithDraw_AmountOff;
     }
 }
