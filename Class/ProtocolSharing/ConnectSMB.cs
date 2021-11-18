@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Diagnostics;
 using static BankTeacher.Class.ProtocolSharing.SBM;
 
 namespace BankTeacher.Class.ProtocolSharing
@@ -21,8 +22,8 @@ namespace BankTeacher.Class.ProtocolSharing
 
             public SmbFileContainer(String Location)
             {
-                PathFile = this.networkPath = @"\\166.166.4.189\ShareFileTestSBM" /*+ Location */+ @"\";
-                var userName = "tang1811";
+                PathFile = this.networkPath = @"\\192.168.1.2\Test" /*+ Location */+ @"\";
+                var userName = "mon";
                 var password = "123456789";
                 var domain = "";
                 networkCredential = new NetworkCredential(userName, password, domain);
@@ -55,31 +56,29 @@ namespace BankTeacher.Class.ProtocolSharing
                     }
                 }
             }
+            Thread SendFileThread;
             public String SendFile(String LocationFile, String TargetFile)
             {
-                //String[] d = (CBMonth.SelectedItem as String[]);
-                //String[] File = new string[] { LocationFile, TargetFile };
                 Locationfile_TargetFile SetFile = new Locationfile_TargetFile();
                 SetFile.LocationFile = LocationFile;
                 SetFile.TargetFile = TargetFile;
+                Stopwatch time = new Stopwatch();
+                SendFileThread = new Thread(() => FileSendThread(SetFile));
+                SendFileThread.Start();
+                time.Start();
 
-                //Thread SendFileThread = new Thread(() => FileSendThread(SetFile));
-                //SendFileThread.Start();
-
-                var task = Task.Run(() => FileSendThread(SetFile));
-                if (task.Wait(TimeSpan.FromSeconds(5)))
+                while (SendFileThread.ThreadState == System.Threading.ThreadState.Running)
                 {
-
+                    if (time.ElapsedMilliseconds >= 5000 && SendFileThread.IsAlive)
+                    {
+                        SendFileThread.Abort();
+                        SetFile.Return = "ไม่สารถอัพโหลดได้";
+                    }
                 }
-                else
-                {
-
-                    //throw new Exception("-----------Timed out-----------");
-                }
+                time.Stop();
 
                 return SetFile.Return;
             }
-
             public void FileSendThread(Locationfile_TargetFile SetFile)
             {
                 try
