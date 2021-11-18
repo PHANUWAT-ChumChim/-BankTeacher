@@ -21,12 +21,14 @@ namespace BankTeacher.Bank
         String imgeLocation = "";
         bool CheckBRegister = false;
         bool CheckBCancel = false;
+        double Saving = 0;
 
         //----------------------- index code -------------------- ////////
 
         public MemberShip()
         {
             InitializeComponent();
+            Console.WriteLine("==================Open MemberShip Form======================");
             TBStartAmountShare_Reg.Text = BankTeacher.Bank.Menu.startAmountMin.ToString();
             Relaodcancelmember();
         }
@@ -400,6 +402,7 @@ namespace BankTeacher.Bank
                     {
                         DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[5].Replace("{Text}", TBTeacherNO_Cancel.Text));
                         TBTeacherName_Cancel.Text = ds.Tables[0].Rows[0][1].ToString();
+                        Saving = Convert.ToDouble(ds.Tables[0].Rows[0][2].ToString());
                         Check = 1;
 
                     }
@@ -423,16 +426,23 @@ namespace BankTeacher.Bank
             {
                 if (TBTeacherNO_Cancel.Text != "")
                 {
-                    Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[4]
-                        .Replace("{TeacherNoAddBy}",Class.UserInfo.TeacherNo)
-                        .Replace("{TeacherNo}", TBTeacherNO_Cancel.Text)
-                        .Replace("{Note}", TBNote_Cancel.Text)
-                        .Replace("{DocStatusNo}", "2")
-                        .Replace("{DocUploadPath}", "")
-                        .Replace("{Status}", "2"));
-                    MessageBox.Show("ยกเลิกผู้ใช้เรียบร้อย", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    CheckBCancel = true;
-                    imgeLocation = "";
+                    if(Saving < 1)
+                    {
+                        Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[4]
+                            .Replace("{TeacherNoAddBy}",Class.UserInfo.TeacherNo)
+                            .Replace("{TeacherNo}", TBTeacherNO_Cancel.Text)
+                            .Replace("{Note}", TBNote_Cancel.Text)
+                            .Replace("{DocStatusNo}", "2")
+                            .Replace("{DocUploadPath}", "")
+                            .Replace("{Status}", "2"));
+                        MessageBox.Show("ยกเลิกผู้ใช้เรียบร้อย", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        CheckBCancel = true;
+                        imgeLocation = "";
+                    }
+                    else
+                    {
+                        MessageBox.Show("ยังมียอดเงินคงเหลือในระบบ กรุณาถอดเงินออกก่อนยกเลิกสมาชิก", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
                 else
                 {

@@ -109,6 +109,7 @@ namespace BankTeacher.Bank
         public AmountOff()
         {
             InitializeComponent();
+            Console.WriteLine("==================Open AmountOff Form======================");
             CBMonth.Text = Bank.Menu.Date[1];
         }
 
