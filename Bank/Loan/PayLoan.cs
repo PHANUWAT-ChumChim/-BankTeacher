@@ -81,6 +81,8 @@ namespace BankTeacher.Bank.Loan
         public PayLoan()
         {
             InitializeComponent();
+
+            Console.WriteLine("==================Open Pay Loan Form======================");
             ComboBox[] cb = new ComboBox[] { CBB4Oppay };
             DataTable dtPayment = Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]);
             for (int a = 0; a < dtPayment.Rows.Count; a++)

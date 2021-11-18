@@ -35,6 +35,7 @@ namespace BankTeacher.Bank
         public Setting()
         {
             InitializeComponent();
+            Console.WriteLine("==================Open Setting Form======================");
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             TB_Min.Text = BankTeacher.Bank.Menu.startAmountMin.ToString();

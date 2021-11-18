@@ -19,6 +19,7 @@ namespace BankTeacher.Bank
         public Search(String SQLCode)
         {
             InitializeComponent();
+            Console.WriteLine("==================Open Search Form======================");
             Return = new String[] { "" };
             this.MaximizeBox = false;
             this.MinimizeBox = false;

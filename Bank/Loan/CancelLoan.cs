@@ -73,6 +73,7 @@ namespace BankTeacher.Bank.Loan
         public CancelLoan()
         {
             InitializeComponent();
+            Console.WriteLine("==================Open CancelLoan Form======================");
         }
 
         private void BSearchTeacher_Click_1(object sender, EventArgs e)

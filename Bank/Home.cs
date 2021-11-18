@@ -110,6 +110,7 @@ namespace BankTeacher.Bank
         public Home()
         {
             InitializeComponent();
+            Console.WriteLine("==================Open Home Form======================");
         }
      
 
