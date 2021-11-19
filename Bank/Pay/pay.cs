@@ -57,7 +57,7 @@ namespace BankTeacher.Bank.Pay
           "LEFT JOIN BaseData.dbo.tblPrefix as c ON c.PrefixNo = b.PrefixNo   \r\n " +
           "INNER JOIN EmployeeBank.dbo.tblMemberStatus as d on a.MemberStatusNo = d.MemberStatusNo  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblShare as e on a.TeacherNo = e.TeacherNo \r\n " +
-          "WHERE a.MemberStatusNo = 1 and a.TeacherNo LIKE '%{Text}%'  or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%'   and a.MemberStatusNo = 1         \r\n " +
+          "WHERE a.MemberStatusNo = 1 and a.TeacherNo LIKE '%{Text}%'  or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%'   and a.MemberStatusNo = 1 \r\n " +
           "GROUP BY a.TeacherNo , CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR), e.SavingAmount,    \r\n " +
           "b.TeacherLicenseNo,b.IdNo ,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar)   \r\n " +
           "ORDER BY a.TeacherNo; "
@@ -189,11 +189,10 @@ namespace BankTeacher.Bank.Pay
           "FROM EmployeeBank.dbo.tblBill as aa     \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as bb on aa.BillNo = bb.BillNo     \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblLoan as cc on aa.TeacherNo = cc.TeacherNo   \r\n " +
-          "WHERE bb.Mount = {Month} and bb.Year = {Year} and bb.TypeNo = 1 and MemberStatusNo = 1 and DATEADD(YYYY,0,'{DateSet}') >= a.DateAdd  )   \r\n " +
-          "and a.TeacherNo = '{TeacherNo}' and c.TypeNo = 1 and MemberStatusNo = 1 \r\n " +
+          "WHERE bb.Mount = {Month} and bb.Year = {Year} and bb.TypeNo = 1 and MemberStatusNo = 1 and DATEADD(YYYY,0,'{DateSet}') >= a.DateAdd  and aa.Cancel = 1)   \r\n " +
+          "and a.TeacherNo = '{TeacherNo}' and c.TypeNo = 1 and MemberStatusNo = 1 and b.Cancel = 1\r\n " +
           "GROUP BY a.TeacherNo,f.TypeName, StartAmount   ;  \r\n"+
           "   \r\n " +
-
           "  SELECT a.TeacherNo , \r\n " +
           "  ROUND(Convert(float, ( (g.InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0) , \r\n " +
           "  f.TypeName  ,g.LoanNo ,PayNo , g.MonthPay, g.YearPay , \r\n " +
@@ -212,8 +211,9 @@ namespace BankTeacher.Bank.Pay
           "  LEFT JOIN EmployeeBank.dbo.tblBillDetail as bb on aa.BillNo = bb.BillNo     \r\n " +
           "  LEFT JOIN EmployeeBank.dbo.tblLoan as cc on bb.LoanNo = cc.LoanNo \r\n " +
           "  LEFT JOIN EmployeeBank.dbo.tblMember as dd on aa.TeacherNo = dd.TeacherNo \r\n " +
-          "  WHERE bb.Mount = {Month} and bb.Year = {Year} \r\n " +
+          "  WHERE bb.Mount = {Month} and bb.Year = {Year} and aa.Cancel = 1\r\n " +
           "  and dd.MemberStatusNo = 1 and bb.TypeNo = 2  and LoanStatusNo = 2 )and a.TeacherNo = '{TeacherNo}'  and c.TypeNo = 2 and LoanStatusNo =2 and DATEADD(YYYY,0,'{DateSet}') <= EOMONTH(DATEADD(MONTH , PayNo-1,CAST(CAST(CAST(YearPay as nvarchar) +'/' + CAST(MonthPay AS nvarchar) + '/01' AS nvarchar) AS date)))) and (DATEADD(YYYY,0,'{DateSet}') >= EOMONTH(CAST(YearPay as nvarchar) +'/' + CAST(MonthPay as nvarchar) +'/01') ) \r\n " +
+             "and b.Cancel = 1 \r\n" +
           "  GROUP BY  a.TeacherNo ,  \r\n " +
           "  ROUND(Convert(float, ( (g.InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0) ,  \r\n " +
           "  f.TypeName  ,g.LoanNo ,PayNo , g.MonthPay, g.YearPay ,  \r\n " +
@@ -291,7 +291,7 @@ namespace BankTeacher.Bank.Pay
           "SELECT EOMONTH(CAST(CAST(Year as nvarchar)+'-'+ CAST(Mount as nvarchar) +'-10' as nvarchar))as MaxDate , b.BillNo ,DATEADD(MONTH,5,CAST(CAST(CAST(Year as nvarchar) +'/' + CAST(Mount AS nvarchar) + '/05' AS nvarchar) AS date))  \r\n " +
           "FROM EmployeeBank.dbo.tblBill as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo \r\n " +
-          "WHERE TeacherNo = '{TeacherNo}' \r\n " +
+          "WHERE TeacherNo = '{TeacherNo}' and a.Cancel = 1\r\n " +
           "ORDER BY Maxdate DESC; "
           ,
           //[13] SELECT lasted billno INPUT: 
@@ -310,7 +310,7 @@ namespace BankTeacher.Bank.Pay
           "SELECT b.BillNo \r\n " +
           "FROM EmployeeBank.dbo.tblBillDetail as a \r\n " +
           "RIGHT JOIN EmployeeBank.dbo.tblBill as b on b.BillNo = a.BillNo \r\n " +
-          "WHERE TeacherNo = '{TeacherNo}' and Year = {Year} "
+          "WHERE TeacherNo = '{TeacherNo}' and Year = {Year} and b.Cancel = 1"
           ,
 
 
