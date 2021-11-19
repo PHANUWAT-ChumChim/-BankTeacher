@@ -63,7 +63,7 @@ namespace BankTeacher.Bank.Loan
             , 
 
             //[1] SELECT CreditLimit Data INPUT:{Text} , {TeacherNoNotLike}
-            "SELECT TeacherNo, Name, RemainAmount, ISNULL(a.LoanStatusNo , 0)\r\n" +
+            "SELECT TOP(20)TeacherNo, Name, RemainAmount, ISNULL(a.LoanStatusNo , 0)\r\n" +
             "FROM (SELECT a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS Name, \r\n" +
             "ISNULL(e.SavingAmount,0) - ISNULL(SUM(d.RemainsAmount),0) as RemainAmount, Fname , f.LoanStatusNo\r\n" +
             "FROM EmployeeBank.dbo.tblMember as a  \r\n" +
@@ -72,7 +72,7 @@ namespace BankTeacher.Bank.Loan
             "LEFT JOIN EmployeeBank.dbo.tblGuarantor as d on a.TeacherNo = d.TeacherNo \r\n" +
             "LEFT JOIN EmployeeBank.dbo.tblShare as e ON e.TeacherNo = a.TeacherNo \r\n" +
             "LEFT JOIN EmployeeBank.dbo.tblLoan as f on a.TeacherNo = f.TeacherNo\r\n" +
-            "WHERE a.TeacherNo LIKE '%{Text}%' or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%' and a.MemberStatusNo = 1\r\n" +
+            "WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1\r\n" +
             "GROUP BY a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname, f.LoanStatusNo) as a \r\n" +
             "WHERE RemainAmount >= 500 {TeacherNoNotLike} \r\n" +
             "ORDER BY a.Fname; \r\n"
@@ -220,22 +220,7 @@ namespace BankTeacher.Bank.Loan
             {
                 MessageBox.Show("กรอกข้อมูลไม่ถูกต้อง", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-
-            //TBGuarantorNo.Cop
         }
-        //----------------------- End code -------------------- ////////
-
-        //------------------------- Pull SQL Member & CheckTBTeacherNo ---------
-        // ค้นหารายชชื่อผู้สมัครสมาชิกครูสหกร์จากฐานข้อมูล
-
-        //int RowDGV;
-        //----------------------- End code -------------------- ////////
-
-        //----------------------- DatagridView -------------------- ////////
-        //-------------------- End code -------------------- ////////
-
-        //----------------------- INNERTNumber in Labal -------------------- ////////
-        // Comment!
         bool IsInt(float x)
         {
             try
@@ -248,7 +233,6 @@ namespace BankTeacher.Bank.Loan
                 return false;
             }
         }
-        // Comment!
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabControl1.SelectedIndex == 3 && (CBPayMonth.SelectedIndex != -1
