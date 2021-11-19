@@ -19,6 +19,7 @@ namespace BankTeacher.Bank
         public Search(String SQLCode)
         {
             InitializeComponent();
+            Console.WriteLine("==================Open Search Form======================");
             Return = new String[] { "" };
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -76,6 +77,7 @@ namespace BankTeacher.Bank
                 }
                 if (x % 2 == 1)
                 {
+                    //
                     dataGridView1.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
                 }
             }
@@ -85,7 +87,15 @@ namespace BankTeacher.Bank
         {
             if(e.KeyCode == Keys.Enter)
             {
-                e.Handled = true;
+                if(dataGridView1.Rows.Count != 0)
+                {
+                    Return = new String[]
+                    {
+                            dataGridView1.Rows[0].Cells[0].Value.ToString(),
+                            dataGridView1.Rows[0].Cells[1].Value.ToString(),
+                    };
+                    this.Dispose();
+                }
             }
         }
     }

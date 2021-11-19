@@ -73,7 +73,9 @@ namespace BankTeacher.Bank.Loan
         public InfoLoan()
         {
             InitializeComponent();
-            
+
+            Console.WriteLine("==================Open InfoLoan Form======================");
+
         }
 
         //ChangeSizeForm
