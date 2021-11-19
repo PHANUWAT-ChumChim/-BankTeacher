@@ -132,5 +132,11 @@ namespace BankTeacher.Bank
             Bank.AmountOff Af = new Bank.AmountOff();
             CloseFrom(Af);  
         }
+
+        private void aaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Bank.Report report = new Bank.Report();
+            CloseFrom(report);
+        }
     }
 }

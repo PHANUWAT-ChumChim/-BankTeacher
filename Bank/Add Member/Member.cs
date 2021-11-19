@@ -465,12 +465,22 @@ namespace BankTeacher.Bank
                         if((MessageBox.Show("มียอดเงินคงเหลือในระบบเกิน ต้องการถอนตอนนี้เลยหรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes))
                         {
                             AmountOff FAmountOff = new AmountOff();
-                            FAmountOff.TBTeacherNo.Text = TBTeacherNO_Cancel.Text;
-                            this.Enabled = false;
+                            Menu menu = new Menu();
+                            //menu.Visible = false;
+                            
                             FAmountOff.FormBorderStyle = FormBorderStyle.Sizable;
-                            FAmountOff.ShowDialog();
-                            //FAmountOff.TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
-                            //this.Enabled
+                            FAmountOff.Show();
+                            FAmountOff.TBTeacherNo.Text = TBTeacherNO_Cancel.Text;
+                            FAmountOff.TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+
+                            List<Form> openForms = new List<Form>();
+
+                            foreach (Form f in Application.OpenForms)
+                            {
+                                if (f.Name == "Menu")
+                                    f.Enabled = false;
+                            }
+
                         }
                     }
                 }
@@ -479,10 +489,6 @@ namespace BankTeacher.Bank
                     MessageBox.Show("กรุณาใส่รหัสให้ถูกต้อง", "เตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-        }
-        private void FormAmountOffOpening()
-        {
-            //if (Application.OpenForms.OfType<AmountOff>().Count() == 1)
         }
 
         private void BOpenFile_Cancel_Click(object sender, EventArgs e)

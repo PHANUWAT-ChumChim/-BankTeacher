@@ -25,91 +25,92 @@ namespace BankTeacher.Bank
         private String[] SQLDefault = new String[]
          { 
           //[0] SELECT Report Income INPUT: {Date} 
-          "SELECT a.TeacherNo ,a.Name ,SUM(ISNULL(a.Amount , 0)) - (SUM(ISNULL(a.DefualtPayOfMonth , 0)) + SUM(ISNULL(a.Interest , 0))) as Share , SUM(ISNULL(a.DefualtPayOfMonth , 0)) as PayIncome , SUM(ISNULL(a.Interest , 0)) as Interest \r\n " +
-          ",(SUM(ISNULL(a.Amount , 0)) - (SUM(ISNULL(a.DefualtPayOfMonth , 0)) + SUM(ISNULL(a.Interest , 0)))) + (SUM(ISNULL(a.DefualtPayOfMonth , 0))) + (SUM(ISNULL(a.Interest , 0))) as SumIncome \r\n " +
-          "FROM(SELECT a.TeacherNo ,c.Amount , \r\n " +
-          "CASE  \r\n " +
+           "SELECT a.TeacherNo ,a.Name ,SUM(ISNULL(a.Amount , 0)) - (SUM(ISNULL(a.DefualtPayOfMonth , 0)) + SUM(ISNULL(a.Interest , 0))) as Share , SUM(ISNULL(a.DefualtPayOfMonth , 0)) as PayIncome , SUM(ISNULL(a.Interest , 0)) as Interest \r\n " +
+          ",(SUM(ISNULL(a.Amount , 0)) - (SUM(ISNULL(a.DefualtPayOfMonth , 0)) + SUM(ISNULL(a.Interest , 0)))) + (SUM(ISNULL(a.DefualtPayOfMonth , 0))) + (SUM(ISNULL(a.Interest , 0))) as SumIncome  \r\n " +
+          "FROM(SELECT a.TeacherNo ,c.Amount ,  \r\n " +
+          "CASE   \r\n " +
           "    WHEN CAST(CAST(c.Year as varchar) + '/' + CAST(c.Mount as varchar) + '/01' as date) LIKE DATEADD(MONTH, d.PayNo - 1,CAST(CAST(d.YearPay as varchar) + '/' + CAST(d.MonthPay as varchar) + '/01' as date)) \r\n " +
-          "    THEN d.LoanAmount - ((d.LoanAmount / d.PayNo) * (d.PayNo - 1)) \r\n " +
-          "ELSE (d.LoanAmount / d.PayNo) \r\n " +
-          "END as DefualtPayOfMonth \r\n " +
-          "    , \r\n " +
-          "CASE  \r\n " +
-          "    WHEN CAST(CAST(c.Year as varchar) + '/' + CAST(c.Mount as varchar) + '/01' as date) LIKE DATEADD(MONTH, d.PayNo - 1,CAST(CAST(d.YearPay as varchar) + '/' + CAST(d.MonthPay as varchar) + '/01' as date)) \r\n " +
-          "    THEN c.Amount - (d.LoanAmount - ((d.LoanAmount / d.PayNo) * (d.PayNo - 1))) \r\n " +
-          "ELSE c.Amount - (d.LoanAmount / d.PayNo) \r\n " +
-          "END as Interest \r\n " +
-          ",CAST(ISNULL(f.PrefixNameFull , '') + e.Fname + e.Lname as varchar) as Name , e.Fname \r\n " +
-          "FROM EmployeeBank.dbo.tblMember as a \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblBill as b on a.TeacherNo = b.TeacherNo \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as c on b.BillNo = c.BillNo \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblLoan as d on c.LoanNo = d.LoanNo \r\n " +
-          "LEFT JOIN Personal.dbo.tblTeacherHis as e on a.TeacherNo = e.TeacherNo \r\n " +
-          "LEFT JOIN BaseData.dbo.tblPrefix as f on e.PrefixNo = f.PrefixNo \r\n " +
-          "WHERE CAST(CAST(b.DateAdd as date) as varchar) LIKE '{Date}%') as a \r\n " +
+          "    THEN d.LoanAmount - ((d.LoanAmount / d.PayNo) * (d.PayNo - 1))  \r\n " +
+          "ELSE (d.LoanAmount / d.PayNo)  \r\n " +
+          "END as DefualtPayOfMonth  \r\n " +
+          "    ,  \r\n " +
+          "CASE   \r\n " +
+          "    WHEN CAST(CAST(c.Year as varchar) + '/' + CAST(c.Mount as varchar) + '/01' as date) LIKE DATEADD(MONTH, d.PayNo - 1,CAST(CAST(d.YearPay as varchar) + '/' + CAST(d.MonthPay as varchar) + '/01' as date))  \r\n " +
+          "    THEN c.Amount - (d.LoanAmount - ((d.LoanAmount / d.PayNo) * (d.PayNo - 1)))  \r\n " +
+          "ELSE c.Amount - (d.LoanAmount / d.PayNo)  \r\n " +
+          "END as Interest  \r\n " +
+          ",CAST(ISNULL(f.PrefixNameFull , '') + e.Fname + e.Lname as varchar) as Name , e.Fname  \r\n " +
+          "FROM EmployeeBank.dbo.tblMember as a  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBill as b on a.TeacherNo = b.TeacherNo  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as c on b.BillNo = c.BillNo  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblLoan as d on c.LoanNo = d.LoanNo  \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as e on a.TeacherNo = e.TeacherNo  \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as f on e.PrefixNo = f.PrefixNo  \r\n " +
+          "WHERE CAST(CAST(b.DateAdd as date) as varchar) LIKE '%' and b.Cancel = 1 ) as a  \r\n " +
           "GROUP BY a.TeacherNo ,a.Name "
+           
           ,
 
           //[1]Table(1) SELECT Expenses/Teacher   Table(2)SELECT SUMAmountOff , SUMDividend , SUMPayLoan INPUT: {Date} , {Year}
-           "SELECT a.TeacherNo , a.Name , a.AmountOff , a.Dividend , a.LoanPay \r\n " +
+           "SELECT a.TeacherNo , a.Name , a.AmountOff , a.Dividend , a.LoanPay  \r\n " +
           "FROM(SELECT a.TeacherNo ,CAST(ISNULL(h.PrefixNameFull, '') + g.Fname + ' ' + g.Lname as varchar) as Name \r\n " +
-          ",SUM(ISNULL(c.Amount ,0)) as AmountOff ,d.DividendAmount as Dividend ,ISNULL(f.LoanPay ,0) as LoanPay , g.Fname \r\n " +
-          "FROM EmployeeBank.dbo.tblMember as a \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo \r\n " +
-          "LEFT JOIN ( \r\n " +
-          "SELECT ShareNo , SUM(Amount) as Amount \r\n " +
-          "FROM EmployeeBank.dbo.tblShareWithdraw \r\n " +
-          "WHERE CAST(DateAdd as date) LIKE '{Date}%' \r\n " +
-          "GROUP BY ShareNo) \r\n " +
-          "as c on b.ShareNo = c.ShareNo \r\n " +
-          "LEFT JOIN ( \r\n " +
-          "SELECT a.TeacherNo , SUM(DividendAmount) as DividendAmount \r\n " +
-          "FROM EmployeeBank.dbo.tblDividendDetail as a \r\n " +
+          ",SUM(ISNULL(c.Amount ,0)) as AmountOff ,d.DividendAmount as Dividend ,ISNULL(f.LoanPay ,0) as LoanPay , g.Fname  \r\n " +
+          "FROM (SELECT *  \r\n " +
+          "FROM EmployeeBank.dbo.tblMember)as a  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo  \r\n " +
+          "LEFT JOIN (  \r\n " +
+          "SELECT ShareNo , SUM(Amount) as Amount  \r\n " +
+          "FROM EmployeeBank.dbo.tblShareWithdraw  \r\n " +
+          "WHERE CAST(DateAdd as date) LIKE '%' \r\n " +
+          "GROUP BY ShareNo)  \r\n " +
+          "as c on b.ShareNo = c.ShareNo  \r\n " +
+          "LEFT JOIN (  \r\n " +
+          "SELECT a.TeacherNo , SUM(DividendAmount) as DividendAmount  \r\n " +
+          "FROM EmployeeBank.dbo.tblDividendDetail as a  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblDividend as b on a.DividendNo = b.DividendNo \r\n " +
-          "WHERE b.Year = {Year} \r\n " +
+          "WHERE b.Year = 2021 \r\n " +
           "GROUP BY a.TeacherNo) as d on a.TeacherNo = d.TeacherNo \r\n " +
-          "LEFT JOIN( \r\n " +
-          "SELECT SUM(ISNULL(a.LoanAmount ,0)) as LoanPay , a.TeacherNo \r\n " +
+          "LEFT JOIN(  \r\n " +
+          "SELECT SUM(ISNULL(a.LoanAmount ,0)) as LoanPay , a.TeacherNo  \r\n " +
           "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
-          "WHERE CAST(a.PayDate as date) LIKE '{Date}%' \r\n " +
-          "GROUP BY a.TeacherNo) as f on a.TeacherNo = f.TeacherNo \r\n " +
-          "LEFT JOIN Personal.dbo.tblTeacherHis as g on a.TeacherNo = g.TeacherNo \r\n " +
-          "LEFT JOIN BaseData.dbo.tblPrefix as h on g.PrefixNo = h.PrefixNo \r\n " +
-          "GROUP BY a.TeacherNo ,CAST(ISNULL(h.PrefixNameFull, '') + g.Fname + ' ' + g.Lname as varchar) , g.Fname ,ISNULL(f.LoanPay ,0) ,d.DividendAmount) as a \r\n " +
-          "ORDER BY a.Fname; \r\n " +
+          "WHERE CAST(a.PayDate as date) LIKE '%' and a.LoanStatusNo != 4 \r\n " +
+          "GROUP BY a.TeacherNo) as f on a.TeacherNo = f.TeacherNo  \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as g on a.TeacherNo = g.TeacherNo  \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as h on g.PrefixNo = h.PrefixNo  \r\n " +
+          "GROUP BY a.TeacherNo ,CAST(ISNULL(h.PrefixNameFull, '') + g.Fname + ' ' + g.Lname as varchar) , g.Fname ,ISNULL(f.LoanPay ,0) ,d.DividendAmount) as a  \r\n " +
+          "ORDER BY a.Fname;  \r\n " +
           " \r\n " +
           " \r\n " +
-          "SELECT SUM(a.AmountOff) , SUM(a.Dividend) , SUM(a.LoanPay) \r\n " +
-          "FROM(SELECT a.TeacherNo ,CAST(ISNULL(h.PrefixNameFull, '') + g.Fname + ' ' + g.Lname as varchar) as Name \r\n " +
-          ",SUM(ISNULL(c.Amount ,0)) as AmountOff ,d.DividendAmount as Dividend ,ISNULL(f.LoanPay ,0) as LoanPay , g.Fname \r\n " +
-          "FROM EmployeeBank.dbo.tblMember as a \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo \r\n " +
-          "LEFT JOIN ( \r\n " +
-          "SELECT ShareNo , SUM(Amount) as Amount \r\n " +
-          "FROM EmployeeBank.dbo.tblShareWithdraw \r\n " +
-          "WHERE CAST(DateAdd as date) LIKE '{Date}%' \r\n " +
-          "GROUP BY ShareNo) \r\n " +
+          "SELECT SUM(a.AmountOff) , SUM(a.Dividend) , SUM(a.LoanPay)  \r\n " +
+          "FROM(SELECT a.TeacherNo ,CAST(ISNULL(h.PrefixNameFull, '') + g.Fname + ' ' + g.Lname as varchar) as Name  \r\n " +
+          ",SUM(ISNULL(c.Amount ,0)) as AmountOff ,d.DividendAmount as Dividend ,ISNULL(f.LoanPay ,0) as LoanPay , g.Fname  \r\n " +
+          "FROM (SELECT *  \r\n " +
+          "FROM EmployeeBank.dbo.tblMember  \r\n " +
+          "WHERE MemberStatusNo = 1) as a  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo  \r\n " +
+          "LEFT JOIN (  \r\n " +
+          "SELECT ShareNo , SUM(Amount) as Amount  \r\n " +
+          "FROM EmployeeBank.dbo.tblShareWithdraw  \r\n " +
+          "WHERE CAST(DateAdd as date) LIKE '%'  \r\n " +
+          "GROUP BY ShareNo)  \r\n " +
           "as c on b.ShareNo = c.ShareNo \r\n " +
-          "LEFT JOIN ( \r\n " +
-          "SELECT a.TeacherNo , SUM(DividendAmount) as DividendAmount \r\n " +
-          "FROM EmployeeBank.dbo.tblDividendDetail as a \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblDividend as b on a.DividendNo = b.DividendNo \r\n " +
-          "WHERE b.Year = {Year} \r\n " +
-          "GROUP BY a.TeacherNo) as d on a.TeacherNo = d.TeacherNo \r\n " +
-          "LEFT JOIN( \r\n " +
-          "SELECT SUM(ISNULL(a.LoanAmount ,0)) as LoanPay , a.TeacherNo \r\n " +
-          "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
-          "WHERE CAST(a.PayDate as date) LIKE '{Date}%' \r\n " +
+          "LEFT JOIN (  \r\n " +
+          "SELECT a.TeacherNo , SUM(DividendAmount) as DividendAmount  \r\n " +
+          "FROM EmployeeBank.dbo.tblDividendDetail as a  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblDividend as b on a.DividendNo = b.DividendNo  \r\n " +
+          "WHERE b.Year = 2021 \r\n " +
+          "GROUP BY a.TeacherNo) as d on a.TeacherNo = d.TeacherNo  \r\n " +
+          "LEFT JOIN(  \r\n " +
+          "SELECT SUM(ISNULL(a.LoanAmount ,0)) as LoanPay , a.TeacherNo  \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
+          "WHERE CAST(a.PayDate as date) LIKE '%' and a.LoanStatusNo != 4 \r\n " +
           "GROUP BY a.TeacherNo) as f on a.TeacherNo = f.TeacherNo \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as g on a.TeacherNo = g.TeacherNo \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as h on g.PrefixNo = h.PrefixNo \r\n " +
           "GROUP BY a.TeacherNo ,CAST(ISNULL(h.PrefixNameFull, '') + g.Fname + ' ' + g.Lname as varchar) , g.Fname ,ISNULL(f.LoanPay ,0) ,d.DividendAmount) as a \r\n " +
           ""
 
-
            ,
-
-
          };
         private void Report_Load(object sender, EventArgs e)
         {
@@ -237,6 +238,11 @@ namespace BankTeacher.Bank
                 TBPayLoan_Expenses.Text = dsExpensesReport.Tables[1].Rows[0][2].ToString();
                 TBSumExpenses.Text = dsExpensesReport.Tables[1].Rows[0][3].ToString();
             }
+        }
+
+        private void tabPage1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

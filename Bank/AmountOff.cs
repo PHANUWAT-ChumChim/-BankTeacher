@@ -237,6 +237,15 @@ namespace BankTeacher.Bank
             }
             else
                 MessageBox.Show("ยอดเงินไม่เพียงพอ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f.Name == "Menu" && f.Visible == false)
+                {
+                    f.Enabled = true;
+                    this.Close();
+                }
+            }
         }
 
         private void TBWithDraw_KeyPress(object sender, KeyPressEventArgs e)
@@ -397,6 +406,18 @@ namespace BankTeacher.Bank
             if(TBCreditWithDraw.Text != "")
             {
                 TBWithDraw.Text = TBCreditWithDraw.Text;
+            }
+        }
+
+        private void AmountOff_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            foreach (Form f in Application.OpenForms)
+            {
+                if (f.Name == "Menu" && f.Visible == false)
+                {
+                    f.Enabled = true;
+                    this.Close();
+                }
             }
         }
     }

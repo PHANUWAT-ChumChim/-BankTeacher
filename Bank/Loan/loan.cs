@@ -65,7 +65,7 @@ namespace BankTeacher.Bank.Loan
             //[1] SELECT CreditLimit Data INPUT:{Text} , {TeacherNoNotLike}
             "SELECT TOP(20)TeacherNo, Name, RemainAmount, ISNULL(a.LoanStatusNo , 0)\r\n" +
             "FROM (SELECT a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS Name, \r\n" +
-            "ISNULL(e.SavingAmount,0) - ISNULL(SUM(d.RemainsAmount),0) as RemainAmount, Fname , f.LoanStatusNo\r\n" +
+            "ROUND(ISNULL(e.SavingAmount,0) - ISNULL(SUM(d.RemainsAmount),0),0,1) as RemainAmount, Fname , f.LoanStatusNo\r\n" +
             "FROM EmployeeBank.dbo.tblMember as a  \r\n" +
             "LEFT JOIN Personal.dbo.tblTeacherHis as b ON a.TeacherNo = b.TeacherNo  \r\n" +
             "LEFT JOIN BaseData.dbo.tblPrefix as c ON b.PrefixNo = c.PrefixNo  \r\n" +
@@ -274,7 +274,7 @@ namespace BankTeacher.Bank.Loan
                             Pay = Convert.ToInt32(TBLoanAmount.Text) - Pay;
                             SumInstallment = Convert.ToInt32(Pay + Interest);
                         }
-                        DGVLoanDetail.Rows.Add($"{Month}/{Year}", Pay, Convert.ToInt32(Interest), SumInstallment);
+                        DGVLoanDetail.Rows.Add($"{Year}/{Month}", Pay, Convert.ToInt32(Interest), SumInstallment);
                         Month++;
                         SumCheckInterest += Convert.ToInt32(Interest);
                     }
@@ -469,7 +469,7 @@ namespace BankTeacher.Bank.Loan
 
                         String[] Credit = new string[] { };
                         Credit = dt.Rows[0][2].ToString().Split('.');
-                        //float Percent = 100 / DGVGuarantor.Rows.Count;
+                        // float Percent = 100 / DGVGuarantor.Rows.Count;
 
                         DGVGuarantor.Rows.Clear();
                         DGVGuarantorCredit.Rows.Clear();
