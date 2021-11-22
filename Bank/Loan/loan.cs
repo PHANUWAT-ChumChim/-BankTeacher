@@ -64,16 +64,16 @@ namespace BankTeacher.Bank.Loan
 
             //[1] SELECT CreditLimit Data INPUT:{Text} , {TeacherNoNotLike}
             "SELECT TOP(20)TeacherNo, Name, RemainAmount, ISNULL(a.LoanStatusNo , 0)\r\n" +
-            "FROM (SELECT a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS Name, \r\n" +
-            "ROUND(ISNULL(e.SavingAmount,0) - ISNULL(SUM(d.RemainsAmount),0),0,1) as RemainAmount, Fname , f.LoanStatusNo\r\n" +
+            "FROM (SELECT a.TeacherNo , CAST(ISNULL(c.PrefixName+' ','')+Fname +' '+ Lname as NVARCHAR)AS Name, \r\n" +
+            "ISNULL(e.SavingAmount,0) - ISNULL(SUM(d.RemainsAmount),0) as RemainAmount, Fname , f.LoanStatusNo\r\n" +
             "FROM EmployeeBank.dbo.tblMember as a  \r\n" +
             "LEFT JOIN Personal.dbo.tblTeacherHis as b ON a.TeacherNo = b.TeacherNo  \r\n" +
             "LEFT JOIN BaseData.dbo.tblPrefix as c ON b.PrefixNo = c.PrefixNo  \r\n" +
             "LEFT JOIN EmployeeBank.dbo.tblGuarantor as d on a.TeacherNo = d.TeacherNo \r\n" +
             "LEFT JOIN EmployeeBank.dbo.tblShare as e ON e.TeacherNo = a.TeacherNo \r\n" +
             "LEFT JOIN EmployeeBank.dbo.tblLoan as f on a.TeacherNo = f.TeacherNo\r\n" +
-            "WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1\r\n" +
-            "GROUP BY a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname, f.LoanStatusNo) as a \r\n" +
+            "WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(c.PrefixName+' ','')+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1\r\n" +
+            "GROUP BY a.TeacherNo , CAST(ISNULL(c.PrefixName+' ','')+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname, f.LoanStatusNo) as a \r\n" +
             "WHERE RemainAmount >= 500 {TeacherNoNotLike} \r\n" +
             "ORDER BY a.Fname; \r\n"
             , 
@@ -99,7 +99,7 @@ namespace BankTeacher.Bank.Loan
             "VALUES ('{LoanNo}','{TeacherNo}','{Amount}','{RemainsAmount}');\r\n"
             ,
             //[5] Detail Loan Print  INPUT: TeacherNo
-            "SELECT a.TeacherNo,CAST(d.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS Name,LoanAmount , \r\n " +
+            "SELECT a.TeacherNo,CAST(ISNULL(d.PrefixName+' ','')+Fname +' '+ Lname as NVARCHAR)AS Name,LoanAmount , \r\n " +
             "CAST(cNo + ' หมู่ ' + cMu + 'ซอย  ' + cSoi + ' ถนน' + cRoad + ' ตำบล' +  TumBonName + ' อำเภอ'  + AmphurName + ' จังหวัด ' + JangWatLongName + ' รหัสไปรสณี ' + ZipCode as NVARCHAR(255)) AS ADDRESS, \r\n " +
             "MonthPay , YearPay , PayNo , InterestRate \r\n " +
             "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
@@ -112,7 +112,7 @@ namespace BankTeacher.Bank.Loan
             "WHERE a.TeacherNo = '{TeacherNo}' "
             ,
              //[6] SELECT MemberLona  INPUT: {TeacherNo}
-            "SELECT a.TeacherNo,CAST(c.PrefixName+''+b.Fname+''+b.Lname as NVARCHAR),d.StartAmount  \r\n "+
+            "SELECT a.TeacherNo,CAST(ISNULL(c.PrefixName+' ','')+b.Fname+' '+b.Lname as NVARCHAR),d.StartAmount  \r\n "+
             "FROM EmployeeBank.dbo.tblLoan as a  \r\n "+
             "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo  \r\n "+
             "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo  \r\n "+
