@@ -26,30 +26,30 @@ namespace BankTeacher.Bank.Loan
              //[0] SELECT MemberLona  INPUT: {Text}
           " SELECT TOP(20) TeacherNo , NAME , SavingAmount  \r\n" +
           " FROM(   \r\n " +
-          " SELECT a.TeacherNo, CAST(c.PrefixName + ' ' + Fname + ' ' + Lname AS nvarchar)AS NAME,SavingAmount,Fname ,LoanStatusNo \r\n " +
+          " SELECT a.TeacherNo, CAST(ISNULL(c.PrefixName+' ','') + Fname + ' ' + Lname AS nvarchar)AS NAME,SavingAmount,Fname ,LoanStatusNo \r\n " +
           " FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
           " LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo  \r\n " +
           " LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo  \r\n " +
           " LEFT JOIN EmployeeBank.dbo.tblShare as d on a.TeacherNo = d.TeacherNo  \r\n " +
           " WHERE a.LoanStatusNo = 1 \r\n " +
-          " GROUP BY a.TeacherNo,CAST(c.PrefixName+' '+Fname+' '+Lname as NVARCHAR),d.SavingAmount ,Fname , LoanStatusNo) AS A   \r\n " +
+          " GROUP BY a.TeacherNo,CAST(ISNULL(c.PrefixName+' ','')+Fname+' '+Lname as NVARCHAR),d.SavingAmount ,Fname , LoanStatusNo) AS A   \r\n " +
           " WHERE a.TeacherNo LIKE '%{Text}%' or Fname LIKE '%{Text}%'  \r\n " +
           " ORDER BY Fname;   "
           ,
           //[1] SELECT LOAN INPUT: {TeacherNo} : 
-          "SELECT CAST(ISNULL(d.PrefixName , '') + ' ' + Fname + ' ' + Lname AS NVARCHAR) , a.DateAdd ,a.PayDate  ,a. LoanNo  \r\n " +
+          "SELECT CASTISNULL(d.PrefixName , '') + ' ' + Fname + ' ' + Lname AS NVARCHAR) , a.DateAdd ,a.PayDate  ,a. LoanNo  \r\n " +
           " FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
           " LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo  \r\n " +
           " LEFT JOIN Personal.dbo.tblTeacherHis as c on a.TeacherNo = c.TeacherNo \r\n " +
           " LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblMember as e on c.TeacherNo = e.TeacherNo \r\n" +
           " WHERE a.TeacherNo = '{TeacherNo}' and LoanStatusNo = 1 and MemberStatusNo = 1 \r\n " +
-          " GROUP BY CAST(ISNULL(d.PrefixName , '') + ' ' + Fname + ' ' + Lname AS NVARCHAR) , a.DateAdd ,a.PayDate  ,a. LoanNo \r\n " +
+          " GROUP BY CASTISNULL(d.PrefixName , '') + ' ' + Fname + ' ' + Lname AS NVARCHAR) , a.DateAdd ,a.PayDate  ,a. LoanNo \r\n " +
           " ORDER BY a.LoanNo  "
 
           ,
          //[2] SELECT Detail Loan INPUT: {LoanNo} 
-          "SELECT CAST(d.PrefixName + ' ' + Fname + ' ' + Lname AS NVARCHAR) ,DateAdd,a.PayDate ,b. Amount\r\n " +
+          "SELECT CAST(ISNULL(d.PrefixName+' ','') + Fname + ' ' + Lname AS NVARCHAR) ,DateAdd,a.PayDate ,b. Amount\r\n " +
           "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo \r\n " +
