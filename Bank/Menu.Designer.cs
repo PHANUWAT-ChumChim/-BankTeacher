@@ -40,6 +40,7 @@ namespace BankTeacher.Bank
             this.Cancel = new System.Windows.Forms.ToolStripMenuItem();
             this.AmountOff = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Membership = new System.Windows.Forms.ToolStripMenuItem();
+            this.aaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_setring = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -54,11 +55,12 @@ namespace BankTeacher.Bank
             this.Menu_Loan,
             this.AmountOff,
             this.Menu_Membership,
+            this.aaToolStripMenuItem,
             this.Menu_setring});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(882, 38);
+            this.menuStrip1.Size = new System.Drawing.Size(882, 39);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemAdded += new System.Windows.Forms.ToolStripItemEventHandler(this.menuStrip1_ItemAdded);
@@ -69,7 +71,7 @@ namespace BankTeacher.Bank
             this.Menu_Home.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Menu_Home.Image = ((System.Drawing.Image)(resources.GetObject("Menu_Home.Image")));
             this.Menu_Home.Name = "Menu_Home";
-            this.Menu_Home.Size = new System.Drawing.Size(99, 34);
+            this.Menu_Home.Size = new System.Drawing.Size(99, 35);
             this.Menu_Home.Text = "หน้าเเรก";
             this.Menu_Home.Click += new System.EventHandler(this.Menu_Home_Click);
             // 
@@ -78,7 +80,7 @@ namespace BankTeacher.Bank
             this.Menu_pay.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Menu_pay.Image = ((System.Drawing.Image)(resources.GetObject("Menu_pay.Image")));
             this.Menu_pay.Name = "Menu_pay";
-            this.Menu_pay.Size = new System.Drawing.Size(124, 34);
+            this.Menu_pay.Size = new System.Drawing.Size(124, 35);
             this.Menu_pay.Text = "จ่าย สะสม/กู้";
             this.Menu_pay.Click += new System.EventHandler(this.Menu_pay_Click);
             // 
@@ -92,7 +94,7 @@ namespace BankTeacher.Bank
             this.Menu_Loan.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Menu_Loan.Image = ((System.Drawing.Image)(resources.GetObject("Menu_Loan.Image")));
             this.Menu_Loan.Name = "Menu_Loan";
-            this.Menu_Loan.Size = new System.Drawing.Size(54, 34);
+            this.Menu_Loan.Size = new System.Drawing.Size(54, 35);
             this.Menu_Loan.Text = "กู้";
             // 
             // Menubar_MerberLoan
@@ -128,7 +130,7 @@ namespace BankTeacher.Bank
             this.AmountOff.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AmountOff.Image = ((System.Drawing.Image)(resources.GetObject("AmountOff.Image")));
             this.AmountOff.Name = "AmountOff";
-            this.AmountOff.Size = new System.Drawing.Size(90, 34);
+            this.AmountOff.Size = new System.Drawing.Size(90, 35);
             this.AmountOff.Text = "ปิดยอด";
             this.AmountOff.Click += new System.EventHandler(this.AmountOff_Click);
             // 
@@ -137,16 +139,25 @@ namespace BankTeacher.Bank
             this.Menu_Membership.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Menu_Membership.Image = ((System.Drawing.Image)(resources.GetObject("Menu_Membership.Image")));
             this.Menu_Membership.Name = "Menu_Membership";
-            this.Menu_Membership.Size = new System.Drawing.Size(123, 34);
+            this.Menu_Membership.Size = new System.Drawing.Size(123, 35);
             this.Menu_Membership.Text = "สมัครสมาชิก";
             this.Menu_Membership.Click += new System.EventHandler(this.Menu_Membership_Click);
             // 
+            // aaToolStripMenuItem
+            // 
+            this.aaToolStripMenuItem.Font = new System.Drawing.Font("TH Sarabun New", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.aaToolStripMenuItem.Image = global::BankTeacher.Properties.Resources.Reports1;
+            this.aaToolStripMenuItem.Name = "aaToolStripMenuItem";
+            this.aaToolStripMenuItem.Size = new System.Drawing.Size(92, 35);
+            this.aaToolStripMenuItem.Text = "รายงาน";
+            this.aaToolStripMenuItem.Click += new System.EventHandler(this.aaToolStripMenuItem_Click);
+            // 
             // Menu_setring
             // 
-            this.Menu_setring.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Menu_setring.Font = new System.Drawing.Font("TH Sarabun New", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Menu_setring.Image = ((System.Drawing.Image)(resources.GetObject("Menu_setring.Image")));
             this.Menu_setring.Name = "Menu_setring";
-            this.Menu_setring.Size = new System.Drawing.Size(78, 34);
+            this.Menu_setring.Size = new System.Drawing.Size(78, 35);
             this.Menu_setring.Text = "ตั้งค่า";
             this.Menu_setring.Click += new System.EventHandler(this.Menu_setring_Click);
             // 
@@ -185,5 +196,6 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.ToolStripMenuItem Menubar_infoLoan;
         private System.Windows.Forms.ToolStripMenuItem Cancel;
         private System.Windows.Forms.ToolStripMenuItem Menubar_MerberLoan;
+        private System.Windows.Forms.ToolStripMenuItem aaToolStripMenuItem;
     }
 }

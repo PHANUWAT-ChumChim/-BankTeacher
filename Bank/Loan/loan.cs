@@ -274,7 +274,7 @@ namespace BankTeacher.Bank.Loan
                             Pay = Convert.ToInt32(TBLoanAmount.Text) - Pay;
                             SumInstallment = Convert.ToInt32(Pay + Interest);
                         }
-                        DGVLoanDetail.Rows.Add($"{Month}/{Year}", Pay, Convert.ToInt32(Interest), SumInstallment);
+                        DGVLoanDetail.Rows.Add($"{Year}/{Month}", Pay, Convert.ToInt32(Interest), SumInstallment);
                         Month++;
                         SumCheckInterest += Convert.ToInt32(Interest);
                     }
@@ -469,7 +469,7 @@ namespace BankTeacher.Bank.Loan
 
                         String[] Credit = new string[] { };
                         Credit = dt.Rows[0][2].ToString().Split('.');
-                        //float Percent = 100 / DGVGuarantor.Rows.Count;
+                        // float Percent = 100 / DGVGuarantor.Rows.Count;
 
                         DGVGuarantor.Rows.Clear();
                         DGVGuarantorCredit.Rows.Clear();

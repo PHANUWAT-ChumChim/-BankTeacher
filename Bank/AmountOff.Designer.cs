@@ -42,6 +42,7 @@ namespace BankTeacher.Bank
             this.BExit = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.BMaxWithDraw_AmountOff = new System.Windows.Forms.Button();
             this.DGVLoan = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -78,7 +79,6 @@ namespace BankTeacher.Bank
             this.LB1Id = new System.Windows.Forms.Label();
             this.CBStatus = new System.Windows.Forms.ComboBox();
             this.BSave = new System.Windows.Forms.Button();
-            this.BMaxWithDraw_AmountOff = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -191,6 +191,16 @@ namespace BankTeacher.Bank
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "ปิดยอดหุ้นสะสม";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // BMaxWithDraw_AmountOff
+            // 
+            this.BMaxWithDraw_AmountOff.Location = new System.Drawing.Point(742, 280);
+            this.BMaxWithDraw_AmountOff.Name = "BMaxWithDraw_AmountOff";
+            this.BMaxWithDraw_AmountOff.Size = new System.Drawing.Size(100, 36);
+            this.BMaxWithDraw_AmountOff.TabIndex = 3;
+            this.BMaxWithDraw_AmountOff.Text = "ถอนทั้งหมด";
+            this.BMaxWithDraw_AmountOff.UseVisualStyleBackColor = true;
+            this.BMaxWithDraw_AmountOff.Click += new System.EventHandler(this.BMaxWithDraw_AmountOff_Click);
             // 
             // DGVLoan
             // 
@@ -620,16 +630,6 @@ namespace BankTeacher.Bank
             this.BSave.Text = "บันทึก";
             this.BSave.UseVisualStyleBackColor = false;
             // 
-            // BMaxWithDraw_AmountOff
-            // 
-            this.BMaxWithDraw_AmountOff.Location = new System.Drawing.Point(742, 280);
-            this.BMaxWithDraw_AmountOff.Name = "BMaxWithDraw_AmountOff";
-            this.BMaxWithDraw_AmountOff.Size = new System.Drawing.Size(100, 36);
-            this.BMaxWithDraw_AmountOff.TabIndex = 3;
-            this.BMaxWithDraw_AmountOff.Text = "ถอนทั้งหมด";
-            this.BMaxWithDraw_AmountOff.UseVisualStyleBackColor = true;
-            this.BMaxWithDraw_AmountOff.Click += new System.EventHandler(this.BMaxWithDraw_AmountOff_Click);
-            // 
             // AmountOff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -640,6 +640,7 @@ namespace BankTeacher.Bank
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "AmountOff";
             this.Text = "AmountOff";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AmountOff_FormClosed);
             this.Load += new System.EventHandler(this.AmountOff_Load);
             this.SizeChanged += new System.EventHandler(this.AmountOff_SizeChanged);
             this.panel1.ResumeLayout(false);
