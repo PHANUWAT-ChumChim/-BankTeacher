@@ -21,6 +21,7 @@ namespace BankTeacher.Bank.Pay
         
         int SelectIndexRow = -1;
         bool CheckInputTeacher = false;
+        bool CheckInputBill = false;
         List<List<String>> DM = new List<List<String>>();
         List<List<String>> BackupDM = new List<List<string>>();
         List<int> YearinCB = new List<int>();
@@ -52,19 +53,23 @@ namespace BankTeacher.Bank.Pay
         ///<para>[14] Select Billinfomation INPUT: {TeacherNo , {Year}</para>
         ///<para>[15] Check Month in year INPUT: {TeacherNo} {Year} </para>
         ///<para>[16] Select and Check StartPay (Loan) INPUT: {TeacherNo} </para>
+        ///<para>[17] Select Bill (CancelBill) INPUT: {BillNo}</para>
+        ///<para>[18] Update Cancel Bill INPUT: {BillNo} </para>
+        ///<para>[19] Update Saving (CancelBill) INPUT: {TeacherNo} {Amount}</para>
+        ///<para>[20] Check Loan (CancelBill) INPUT: {LoanNo} </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
           //[0] SELECT MEMBER INPUT: {Text} 
-          "SELECT TOP(20) a.TeacherNo , CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR)AS Name, e.SavingAmount,    \r\n " +
+          "SELECT TOP(20) a.TeacherNo , CAST(ISNULL(c.PrefixName+' ','')+[Fname] +' '+ [Lname] as NVARCHAR)AS Name, e.SavingAmount,    \r\n " +
           "b.TeacherLicenseNo,b.IdNo AS IDNo,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar) AS UserStatususing    \r\n " +
           "FROM EmployeeBank.dbo.tblMember as a    \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as b ON a.TeacherNo = b.TeacherNo    \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as c ON c.PrefixNo = b.PrefixNo   \r\n " +
           "INNER JOIN EmployeeBank.dbo.tblMemberStatus as d on a.MemberStatusNo = d.MemberStatusNo  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblShare as e on a.TeacherNo = e.TeacherNo \r\n " +
-          "WHERE a.MemberStatusNo = 1 and a.TeacherNo LIKE '%{Text}%'  or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%'   and a.MemberStatusNo = 1 \r\n " +
-          "GROUP BY a.TeacherNo , CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR), e.SavingAmount,    \r\n " +
+          "WHERE a.MemberStatusNo = 1 and a.TeacherNo LIKE '%{Text}%'  or CAST(ISNULL(c.PrefixName+' ','')+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%'   and a.MemberStatusNo = 1         \r\n " +
+          "GROUP BY a.TeacherNo , CAST(ISNULL(c.PrefixName+' ','')+[Fname] +' '+ [Lname] as NVARCHAR), e.SavingAmount,    \r\n " +
           "b.TeacherLicenseNo,b.IdNo ,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar)   \r\n " +
           "ORDER BY a.TeacherNo; "
 
@@ -172,7 +177,7 @@ namespace BankTeacher.Bank.Pay
           "WHERE Mb.TeacherNo = '{TeacherNo}';"
              ,
           //[6] SELECT Detail Member INPUT: {TeacherNo}
-          "SELECT a.TeacherNo , CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR)AS Name, b.IdNo AS TeacherID,   \r\n " +
+          "SELECT a.TeacherNo , CAST(ISNULL(c.PrefixName+' ','')+[Fname] +' '+ [Lname] as NVARCHAR)AS Name, b.IdNo AS TeacherID,   \r\n " +
           " b.TeacherLicenseNo,b.IdNo AS IDNo,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar) AS UserStatususing   \r\n " +
           " FROM EmployeeBank.dbo.tblMember as a   \r\n " +
           " LEFT JOIN Personal.dbo.tblTeacherHis as b ON a.TeacherNo = b.TeacherNo   \r\n " +
@@ -227,7 +232,9 @@ namespace BankTeacher.Bank.Pay
           "  (LoanAmount  + Convert(float , (InterestRate / 100) * LoanAmount)) - (ROUND(Convert(float, ( (InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0)) * (PayNo -1)  \r\n" + 
              "\r\n\r\n"+
 
-          "  SELECT MonthPay , YearPay , ROUND(Convert(float, ( (InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0) ,LoanNo\r\n " +
+          "  SELECT MonthPay , YearPay , ROUND(Convert(float, ( (InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float ," +
+             " LoanAmount / PayNo),0) ,LoanNo , (LoanAmount  + Convert(float , (InterestRate / 100) * LoanAmount)) - (ROUND(Convert(float, ( (InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0)) * (PayNo -1) ," +
+             " EOMONTH(DATEADD(MONTH,PayNo,CAST(CAST(CAST(YearPay as nvarchar) +'/' + CAST(MonthPay AS nvarchar) + '/05' AS nvarchar) AS date))) \r\n " +
           "   FROM EmployeeBank.dbo.tblLoan \r\n " +
           "   WHERE TeacherNo = '{TeacherNo}' and LoanStatusNo = 2 ; \r\n\r\n" +
 
@@ -328,6 +335,39 @@ namespace BankTeacher.Bank.Pay
           "  FROM EmployeeBank.dbo.tblBill as a \r\n " +
           "  LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo \r\n " +
           "  WHERE TeacherNo = '{TeacherNo}' and LoanNo = @@LoanNo"
+           ,
+           //[17] Select Bill (CancelBill) INPUT: {BillNo}
+           "SELECT a.DateAdd,a.TeacherNo,CAST(ISNULL(e.PrefixName,'') +  Fname + ' ' + LName as nvarchar(255))as Name ,b.Year ,b.Mount , TypeName,LoanNo , b.Amount \r\n " +
+          "FROM EmployeeBank.dbo.tblBill as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblMember as c on a.TeacherNo = c.TeacherNo \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as d on a.TeacherNo = d.TeacherNo \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as e on d.PrefixNo = e.PrefixNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as f on b.TypeNo = f.TypeNo \r\n " +
+          "WHERE a.BillNo = {BillNo} and MemberStatusNo != 2 and Cancel = 1"
+           ,
+           //[18] Update Cancel Bill INPUT: {BillNo} 
+           "Update EmployeeBank.dbo.tblBill \r\n " +
+          "SET Cancel = 2 \r\n " +
+          "WHERE BillNo = {BillNo}"
+           ,
+           //[19] Update Saving (CancelBill) INPUT: {TeacherNo} {Amount}
+           "DECLARE @@SavingAmount INT; \r\n " +
+          " \r\n " +
+          "SET @@SavingAmount = (SELECT SavingAmount \r\n " +
+          "FROM EmployeeBank.dbo.tblShare \r\n " +
+          "WHERE TeacherNo = '{TeacherNo}') \r\n " +
+          " \r\n " +
+          "UPDATE EmployeeBank.dbo.tblShare \r\n " +
+          "SET SavingAmount = @@SavingAmount - {Amount} \r\n " +
+          "WHERE  TeacherNo = '{TeacherNo}'"
+           ,
+           //[20] Check Loan (CancelBill) INPUT: {LoanNo} 
+           "SELECT EOMONTH( CAST(CAST(YearPay as nvarchar(4)) + '-'+Cast(MonthPay as nvarchar(2))+'-1'as nvarchar(255))), EOMONTH(DATEADD(MONTH,PayNo,CAST(CAST(CAST(YearPay as nvarchar) +'/' + CAST(MonthPay AS nvarchar) + '/05' AS nvarchar) AS date)))  , PayNo , LoanStatusNo , Count(b.TeacherNo) as GuanrantorCount \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo \r\n " +
+          "WHERE a.LoanNo = {LoanNo} \r\n " +
+          "GROUP BY EOMONTH( CAST(CAST(YearPay as nvarchar(4)) + '-'+Cast(MonthPay as nvarchar(2))+'-1'as nvarchar(255))), EOMONTH(DATEADD(MONTH,PayNo,CAST(CAST(CAST(YearPay as nvarchar) +'/' + CAST(MonthPay AS nvarchar) + '/05' AS nvarchar) AS date)))  ,  PayNo , LoanStatusNo "
            ,
 
 
@@ -515,6 +555,9 @@ namespace BankTeacher.Bank.Pay
                             
                             List<int> RemovePosistion = new List<int>();
                             int Monthloop = 0;
+                            DateTime startDatePayLoan = Convert.ToDateTime(Convert.ToDateTime("1999-01-1").ToString("yyyy-MM-dd"));
+                            DateTime EndDatePayLoan = Convert.ToDateTime(Convert.ToDateTime("1999-01-1").ToString("yyyy-MM-dd"));
+                            DateTime Now = Convert.ToDateTime(Convert.ToDateTime("1999-01-1").ToString("yyyy-MM-dd")); ;
                             for (int x = 0; x < DM[Yearloop].Count; x++)
                             {
                                 Monthloop = Convert.ToInt32(DM[Yearloop][x]);
@@ -523,8 +566,21 @@ namespace BankTeacher.Bank.Pay
                                             .Replace("{Year}", CBYearSelection_Pay.Items[Yearloop].ToString())
                                             .Replace("{TeacherNo}", TBTeacherNo.Text)
                                             .Replace("{DateSet}", (Convert.ToDateTime(CBYearSelection_Pay.Items[Yearloop].ToString() + "-" + Monthloop.ToString() + "-" + DateTime.DaysInMonth(Convert.ToInt32(CBYearSelection_Pay.Items[Yearloop].ToString()), Convert.ToInt32(Monthloop)))).ToString("yyyy-MM-dd")));
-                                //หากมีกู้ที่ยังจ่ายอยู่ (เอาตรงๆเอาไว้นับเดือนแรกเฉยๆ)
-                                if (dss.Tables[2].Rows.Count != 0 && dss.Tables[1].Rows.Count == 0 && Monthloop.ToString() == dss.Tables[2].Rows[0][0].ToString() && CBYearSelection_Pay.Items[Yearloop].ToString() == dss.Tables[2].Rows[0][1].ToString() && dss.Tables[3].Rows.Count == 0)
+                                Now = Convert.ToDateTime((Convert.ToDateTime((CBYearSelection_Pay.Items[Yearloop].ToString() + '-' + Monthloop.ToString() + '-' + 
+                                    DateTime.DaysInMonth(Convert.ToInt32(CBYearSelection_Pay.Items[Yearloop].ToString()), Monthloop))
+                                    .ToString())).ToString("yyyy-MM-dd"));
+                                if(dss.Tables[2].Rows.Count != 0) 
+                                {
+                                    startDatePayLoan= Convert.ToDateTime((Convert.ToDateTime((dss.Tables[2].Rows[0][1].ToString()
+                                        + '-'+ dss.Tables[2].Rows[0][0].ToString()
+                                        + '-'+DateTime.DaysInMonth(Convert.ToInt32(dss.Tables[2].Rows[0][1].ToString())
+                                        ,  Convert.ToInt32(dss.Tables[2].Rows[0][0].ToString()))).ToString())).ToString("yyyy-MM-dd"));
+                                    EndDatePayLoan = Convert.ToDateTime((Convert.ToDateTime(dss.Tables[2].Rows[0][5].ToString())).ToString("yyyy-MM-dd"));
+                                }
+                                //หากมีกู้ที่ยังจ่ายอยู่ (เอาตรงๆเอาไว้นับเดือนแรกเฉยๆ) ต้องมีการกู้ แต่ยังไม่ได้จ่ายเดือนแรก และต้อง เดือนปีต้องมากกว่า วันที่เริ่มแจ่าย แต่ ห้ามเยอะกว่าวันที่สิ้นสุด
+                                if (dss.Tables[2].Rows.Count != 0 && dss.Tables[1].Rows.Count == 0 &&
+                                    Now >= startDatePayLoan &&
+                                    Now <= EndDatePayLoan && dss.Tables[3].Rows.Count == 0)
                                 {
                                     continue;
                                 }
@@ -719,7 +775,23 @@ namespace BankTeacher.Bank.Pay
                     .Replace("{Year}", CBYearSelection_Pay.Text)
                     .Replace("{TeacherNo}", TBTeacherNo.Text)
                     .Replace("{DateSet}", (Convert.ToDateTime(CBYearSelection_Pay.Text + "-" + CBMonthSelection_Pay.Text + "-" + DateTime.DaysInMonth(Convert.ToInt32(CBYearSelection_Pay.Text), Convert.ToInt32(CBMonthSelection_Pay.Text)))).ToString("yyyy-MM-dd")));
-                //หุ้นสะสม
+
+                DateTime startDatePayLoan = Convert.ToDateTime(Convert.ToDateTime("1999-01-1").ToString("yyyy-MM-dd"));
+                DateTime EndDatePayLoan = Convert.ToDateTime(Convert.ToDateTime("1999-01-1").ToString("yyyy-MM-dd"));
+                DateTime Now = Convert.ToDateTime(Convert.ToDateTime("1999-01-1").ToString("yyyy-MM-dd")); ;
+
+                    Now = Convert.ToDateTime((Convert.ToDateTime((CBYearSelection_Pay.Text.ToString() + '-' + CBMonthSelection_Pay.Text.ToString() + '-' +
+                        DateTime.DaysInMonth(Convert.ToInt32(CBYearSelection_Pay.Text.ToString()), Convert.ToInt32(CBMonthSelection_Pay.Text)))
+                        .ToString())).ToString("yyyy-MM-dd"));
+                    if (ds.Tables[2].Rows.Count != 0)
+                    {
+                        startDatePayLoan = Convert.ToDateTime((Convert.ToDateTime((ds.Tables[2].Rows[0][1].ToString()
+                            + '-' + ds.Tables[2].Rows[0][0].ToString()
+                            + '-' + DateTime.DaysInMonth(Convert.ToInt32(ds.Tables[2].Rows[0][1].ToString())
+                            , Convert.ToInt32(ds.Tables[2].Rows[0][0].ToString()))).ToString())).ToString("yyyy-MM-dd"));
+                        EndDatePayLoan = Convert.ToDateTime((Convert.ToDateTime(ds.Tables[2].Rows[0][5].ToString())).ToString("yyyy-MM-dd"));
+                    }
+                    //หุ้นสะสม
                 for (int a = 0; a < ds.Tables[0].Rows.Count; a++)
                 {
                     for (int x = 0; x < cb.Length; x++)
@@ -799,13 +871,15 @@ namespace BankTeacher.Bank.Pay
 
                         }
                     }
-                    //หากวันที่จ่ายเป็นเดือนแรก
-                    else if (ds.Tables[1].Rows.Count <= 0 && (Convert.ToDateTime(ds.Tables[2].Rows[0][1].ToString() + '-' + ds.Tables[2].Rows[0][0].ToString() + '-' +
-                        DateTime.DaysInMonth(Convert.ToInt32(ds.Tables[2].Rows[0][1].ToString()), Convert.ToInt32(ds.Tables[2].Rows[0][0].ToString())).ToString())).ToString() == (Convert.ToDateTime(CBYearSelection_Pay.Text + '-' + CBMonthSelection_Pay.Text + '-' + DateTime.DaysInMonth(Convert.ToInt32(CBYearSelection_Pay.Text), Convert.ToInt32(CBMonthSelection_Pay.Text)).ToString())).ToString())
+                    //หากยังไม่ได้จ่ายกู้เลย (ปกติต้องจ่ายก่อน 1 บิล ถึงจะ รัน) แล้วจะให้รัน
+                    else if (ds.Tables[1].Rows.Count <= 0 && Now >= startDatePayLoan && Now <= EndDatePayLoan)
                     {
                         if (ds.Tables[3].Rows.Count == 0)
                         {
-                            if(DGV_Pay.Rows.Count != 0)
+                            int AmountPay = Convert.ToInt32(ds.Tables[2].Rows[0][2].ToString());
+                            if(Now == EndDatePayLoan)
+                                AmountPay = Convert.ToInt32(ds.Tables[2].Rows[0][4].ToString());
+                            if (DGV_Pay.Rows.Count != 0)
                             {
                                 for (int Count = 0; Count < DGV_Pay.Rows.Count; Count++)
                                 {
@@ -816,14 +890,14 @@ namespace BankTeacher.Bank.Pay
                                     }
                                     else if (Count == DGV_Pay.Rows.Count - 1)
                                     {
-                                        cb[0].Items.Add(new BankTeacher.Class.ComboBoxPay("รายการกู้ " + ds.Tables[2].Rows[0][3].ToString(), ds.Tables[2].Rows[0][2].ToString(),
+                                        cb[0].Items.Add(new BankTeacher.Class.ComboBoxPay("รายการกู้ " + ds.Tables[2].Rows[0][3].ToString(), AmountPay.ToString(),
                                             ds.Tables[2].Rows[0][3].ToString()));
                                     }
                                 }
                             }
                             else
                             {
-                                cb[0].Items.Add(new BankTeacher.Class.ComboBoxPay("รายการกู้ " + ds.Tables[2].Rows[0][3].ToString(), ds.Tables[2].Rows[0][2].ToString(),
+                                cb[0].Items.Add(new BankTeacher.Class.ComboBoxPay("รายการกู้ " + ds.Tables[2].Rows[0][3].ToString(), AmountPay.ToString(),
                                     ds.Tables[2].Rows[0][3].ToString()));
                             }
                         }
@@ -1038,21 +1112,6 @@ namespace BankTeacher.Bank.Pay
         //Select Payment
         private void CBPayment_Pay_SelectIndexChange(object sender, EventArgs e)
         {
-            if(CBPayment_Pay.SelectedIndex != -1)
-            {
-                if (CBPayment_Pay.Enabled == true)
-                {
-                    BSave_Pay.Enabled = true;
-                }
-                else
-                {
-                    BSave_Pay.Enabled = false;
-                }
-            }
-            else
-            {
-                BSave_Pay.Enabled = false;
-            }
         }
 
         //Cleartabpage 1 Button
@@ -1283,6 +1342,14 @@ namespace BankTeacher.Bank.Pay
                 }
             }
         }
+        //Enable Buttion Save
+        private void DGV_Pay_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
+        {
+            if (DGV_Pay.Rows.Count == 1 && CBPayment_Pay.Items.Count != 0)
+                BSave_Pay.Enabled = true;
+            else if (DGV_Pay.Rows.Count == 0)
+                BSave_Pay.Enabled = false;
+        }
         //==============================================================================================
 
 
@@ -1454,6 +1521,107 @@ namespace BankTeacher.Bank.Pay
                 }
             }
             
+        }
+        //==============================================================================================
+
+
+        //============================== tabpage 5 (Cancel Bill) ============================================
+        //Select Bill
+        private void TBBillNo_Cancelbill_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                if(Int32.TryParse(TBBillNo_Cancelbill.Text, out int BillNo))
+                {
+                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[17]
+                        .Replace("{BillNo}", BillNo.ToString()));
+                    if(dt.Rows.Count != 0)
+                    {
+                        Cleartabpage5();
+                        TBBIllDate_Cancelbill.Text = (Convert.ToDateTime(dt.Rows[0][0].ToString())).ToString("yyyy-MM-dd");
+                        TBTeacherNO_Cancelbill.Text = dt.Rows[0][1].ToString();
+                        TBTeacherName_Cancelbill.Text = dt.Rows[0][2].ToString();
+                        int Amount = 0;
+                        for(int x = 0; x < dt.Rows.Count; x++)
+                        {
+                            if (dt.Rows[x][5].ToString().Contains("หุ้น"))
+                                DGV_Cancelbill.Rows.Add(dt.Rows[x][3].ToString() + '/' + dt.Rows[x][4].ToString(), "หุ้นสะสม", dt.Rows[x][7].ToString() ,'-', dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
+                            else
+                                DGV_Cancelbill.Rows.Add(dt.Rows[x][3].ToString() + '/' + dt.Rows[x][4].ToString(), "รายการกู้ " + dt.Rows[x][6].ToString(), dt.Rows[x][7].ToString(), dt.Rows[x][6].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
+                            Amount = Amount + Convert.ToInt32(dt.Rows[x][7].ToString());
+                            if (x % 2 == 1)
+                            {
+                                //
+                                DGV_Cancelbill.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
+                            }
+                        }
+                        LSumAmount_CancelBill.Text = Amount.ToString();
+                        
+                        CheckInputBill = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("ไม่มีหมายเลขบิลล์นี้ \r\n หรือผู้ใช้ได้ทำการยกเลิกสมาชิกไปแล้ว", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+            }
+            else if(e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
+            {
+                CheckInputBill = false;
+                Cleartabpage5();
+            }
+        }
+        //Cleartab
+        private void BClear_Cancelbill_Click(object sender, EventArgs e)
+        {
+            TBBillNo_Cancelbill.Text = "";
+            Cleartabpage5();
+            TBTeacherNo_KeyDown(new object() , new KeyEventArgs(Keys.Enter));
+        }
+        //SaveCancel
+        private void BSave_Cancelbill_Click(object sender, EventArgs e)
+        {
+            if(TBBillNo_Cancelbill.Text != "")
+            {
+                // Format yyyy-mm-dd EX: 2020-1-15
+                String today = (Convert.ToDateTime((Bank.Menu.Date[0] + '-' + Bank.Menu.Date[1] + '-' + Bank.Menu.Date[2]).ToString())).ToString("yyyy-MM-dd");
+                if (today == TBBIllDate_Cancelbill.Text)
+                {
+                    if(DGV_Cancelbill.Rows.Count != 0)
+                    {
+                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[18]
+                            .Replace("{BillNo}", TBBillNo_Cancelbill.Text));
+                        for(int x = 0; x < DGV_Cancelbill.Rows.Count; x++)
+                        {
+                            if (DGV_Cancelbill.Rows[x].Cells[1].Value.ToString().Contains("หุ้น"))
+                            {
+                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[19]
+                                    .Replace("{TeacherNo}", TBTeacherNO_Cancelbill.Text)
+                                    .Replace("{Amount}", DGV_Cancelbill.Rows[x].Cells[2].Value.ToString()));
+                            }
+                            else if (DGV_Cancelbill.Rows[x].Cells[1].Value.ToString().Contains("กู้"))
+                            {
+                                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[20]
+                                    .Replace("{LoanNo}", DGV_Cancelbill.Rows[x].Cells[3].Value.ToString()));
+                                if(dt.Rows.Count != 0)
+                                {
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
+               
+                else
+                {
+                    DialogResult MSB = MessageBox.Show("ไม่สามารถยกเลิกได้เนื่องจาก\r\nบิลล์หมายเลขที่เพิ่มมานานกว่า 1 วัน\r\nคุณต้องการดำเนินการต่อหรือไม่", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if(MSB == DialogResult.Yes)
+                    {
+                        //เดี๋ยวมาแก้จ้าาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาา
+                        MessageBox.Show("ขึ้นอยู่กับสิทธ์ของผู้ทำรายการ");
+                    }
+                }
+            }
         }
         //==============================================================================================
         //--------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1634,6 +1802,18 @@ namespace BankTeacher.Bank.Pay
             LBalance_BillInfo.Text = "0";
             //====================================================================
         }
+        //Cleartabpage 5
+        private void Cleartabpage5()
+        {
+            //tabpage 5 (Cancel Bill) ==============================================
+            BClear_Cancelbill.Enabled = false;
+            DGV_Cancelbill.Rows.Clear();
+            LSumAmount_CancelBill.Text = "0";
+            TBBIllDate_Cancelbill.Text = "";
+            TBTeacherName_Cancelbill.Text = "";
+            TBTeacherNO_Cancelbill.Text = "";
+            //====================================================================
+        }
 
         //Clear all tab (all Form)
         private void ClearForm()
@@ -1642,6 +1822,7 @@ namespace BankTeacher.Bank.Pay
             Cleartabpage2();
             Cleartabpage3();
             Cleartabpage4();
+            Cleartabpage5();
         }
 
         private void CBPapersize_SelectedIndexChanged(object sender, EventArgs e)
@@ -1716,6 +1897,7 @@ namespace BankTeacher.Bank.Pay
         {
             Class.Print.PrintPreviewDialog.PrintDeReport(e,DGV_BillInfo,tabControl1.SelectedTab.Text);
         }
+
         //===============================================================================================
     }
 }

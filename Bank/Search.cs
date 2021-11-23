@@ -77,7 +77,6 @@ namespace BankTeacher.Bank
                 }
                 if (x % 2 == 1)
                 {
-                    //
                     dataGridView1.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
                 }
             }

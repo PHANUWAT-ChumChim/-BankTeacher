@@ -83,13 +83,11 @@ namespace BankTeacher.Bank.Loan
             "WHERE RemainAmount >= 500 {TeacherNoNotLike}\r\n " +
             "ORDER BY a.Fname; "
            
-
             , 
 
-
-
             //[2] SELECT Date Data
-            "SELECT CAST(CURRENT_TIMESTAMP as DATE); \r\n\r\n",
+            "SELECT CAST(CURRENT_TIMESTAMP as DATE); \r\n\r\n"
+            ,
 
             //[3] INSERT Loan and Get LoanNo INPUT: {TeacherNoAdd}, {TeacherNo}, {MonthPay}, {YearPay}, {LoanAmount}, {PayNo}, {InterestRate}
             "DECLARE @LoanNo INT;\r\n" +
@@ -107,7 +105,7 @@ namespace BankTeacher.Bank.Loan
             "VALUES ('{LoanNo}','{TeacherNo}','{Amount}','{RemainsAmount}');\r\n"
             ,
             //[5] Detail Loan Print  INPUT: TeacherNo
-            "SELECT a.TeacherNo,CAST(d.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS Name,LoanAmount , \r\n " +
+            "SELECT a.TeacherNo,CAST(ISNULL(d.PrefixName+' ','')+Fname +' '+ Lname as NVARCHAR)AS Name,LoanAmount , \r\n " +
             "CAST(cNo + ' หมู่ ' + cMu + 'ซอย  ' + cSoi + ' ถนน' + cRoad + ' ตำบล' +  TumBonName + ' อำเภอ'  + AmphurName + ' จังหวัด ' + JangWatLongName + ' รหัสไปรสณี ' + ZipCode as NVARCHAR(255)) AS ADDRESS, \r\n " +
             "MonthPay , YearPay , PayNo , InterestRate \r\n " +
             "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
@@ -120,7 +118,7 @@ namespace BankTeacher.Bank.Loan
             "WHERE a.TeacherNo = '{TeacherNo}' "
             ,
              //[6] SELECT MemberLona  INPUT: {TeacherNo}
-            "SELECT a.TeacherNo,CAST(c.PrefixName+''+b.Fname+''+b.Lname as NVARCHAR),d.StartAmount  \r\n "+
+            "SELECT a.TeacherNo,CAST(ISNULL(c.PrefixName+' ','')+b.Fname+' '+b.Lname as NVARCHAR),d.StartAmount  \r\n "+
             "FROM EmployeeBank.dbo.tblLoan as a  \r\n "+
             "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo  \r\n "+
             "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo  \r\n "+
