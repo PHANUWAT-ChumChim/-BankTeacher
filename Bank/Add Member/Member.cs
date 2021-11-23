@@ -320,9 +320,27 @@ namespace BankTeacher.Bank
                         }
                         if (imgeLocation != "")
                         {
-                            BTOpenfile_Reg.Text = "ส่งไฟล์";
+                            //BTOpenfile_Reg.Text = "ส่งไฟล์";
                             StatusBoxFile = 1;
-                            LScan_Reg.Text = "Scan(  พบไฟล์  )";
+                            
+                            var smb = new SmbFileContainer("Member");
+                            if (smb.IsValidConnection())
+                            {
+                                String Return = smb.SendFile(imgeLocation, "Member" + TBTeacherNo_Reg.Text + ".pdf");
+                                MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                if (Return.Contains("อัพโหลดสำเร็จ"))
+                                {
+                                    BTdeletefile_Reg.Enabled = true;
+                                    LScan_Reg.Text = "อัพโหลดไฟล์สำเร็จ";
+                                    LScan_Reg.ForeColor = Color.Green;
+                                    imgeLocation = "";
+                                }
+                                
+                            }
+                            else
+                            {
+                                MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
                         }
 
                     }
@@ -333,19 +351,7 @@ namespace BankTeacher.Bank
                 }
                 else if (StatusBoxFile == 1)
                 {
-                    var smb = new SmbFileContainer("Member");
-                    if (smb.IsValidConnection())
-                    {
-                        String Return = smb.SendFile(imgeLocation, "Member" + TBTeacherNo_Reg.Text + ".pdf");
-                        MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        StatusBoxFile = 0;
-                        BTOpenfile_Reg.Text = "เปิดไฟล์";
-                        imgeLocation = "";
-                    }
-                    else
-                    {
-                        MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
+                    MessageBox.Show("ทำการส่งไฟล์แล้ว ไม่สามารถดำเนินการส่งไฟล์ซ้ำได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
@@ -388,9 +394,11 @@ namespace BankTeacher.Bank
 
         private void BTdeletefile_Click(object sender, EventArgs e)
         {
-            StatusBoxFile = 0;
-            BTOpenfile_Reg.Text = "เปิดไฟล์";
-            imgeLocation = "";
+            //StatusBoxFile = 0;
+            ////BTOpenfile_Reg.Text = "เปิดไฟล์";
+            //LScan_Reg.Text = "ยังไม่ได้อัพโหลดไฟล์";
+            //LScan_Reg.ForeColor = Color.Black;
+            //imgeLocation = "";
         }
 
         private void BSearch_Cancel_Click(object sender, EventArgs e)
@@ -465,7 +473,7 @@ namespace BankTeacher.Bank
                         if((MessageBox.Show("มียอดเงินคงเหลือในระบบเกิน ต้องการถอนตอนนี้เลยหรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes))
                         {
                             AmountOff FAmountOff = new AmountOff();
-                            Menu menu = new Menu();
+                            //Menu menu = new Menu();
                             //menu.Visible = false;
                             
                             FAmountOff.FormBorderStyle = FormBorderStyle.Sizable;
@@ -511,6 +519,24 @@ namespace BankTeacher.Bank
                             LScan_Cancel.Text = "Scan( พบไฟล์ )";
                             BOpenFile_Cancel.Text = "ส่งไฟล์";
                             StatusBoxFile = 1;
+                            var smb = new SmbFileContainer("CancelMember");
+                            if (smb.IsValidConnection())
+                            {
+                                String Return = smb.SendFile(imgeLocation, "CancelMember" + TBTeacherNO_Cancel.Text + ".pdf");
+                                MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                if (Return.Contains("อัพโหลดสำเร็จ"))
+                                {
+                                    //BOpenFile_Cancel.Text = "เปิดไฟล์";
+                                    LScan_Cancel.Text = Return;
+                                    LScan_Cancel.ForeColor = Color.Green;
+                                    imgeLocation = "";
+                                    BDeleteFile_Cancel.Enabled = true;
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
                         }
 
                     }
@@ -521,27 +547,7 @@ namespace BankTeacher.Bank
                 }
                 else if (StatusBoxFile == 1)
                 {
-                    var smb = new SmbFileContainer("CancelMember");
-                    if (smb.IsValidConnection())
-                    {
-                        String Return = smb.SendFile(imgeLocation, "CancelMember" + TBTeacherNO_Cancel.Text + ".pdf");
-                        if (Return.Contains("Fail"))
-                        {
-                            MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        }
-                        else
-                        {
-                            MessageBox.Show(Return, "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        StatusBoxFile = 0;
-                        BOpenFile_Cancel.Text = "เปิดไฟล์";
-                        LScan_Cancel.Text = "Scan(  ไม่พบ  )";
-                        imgeLocation = "";
-                    }
-                    else
-                    {
-                        MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
+                    MessageBox.Show("ทำการส่งไฟล์แล้ว ไม่สามารถดำเนินการส่งไฟล์ซ้ำได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
@@ -552,10 +558,11 @@ namespace BankTeacher.Bank
 
         private void BDeleteFile_Cancel_Click(object sender, EventArgs e)
         {
-            imgeLocation = "";
-            BOpenFile_Cancel.Text = "เปิดไฟล์";
-            LScan_Cancel.Text = "Scan(  ไม่พบ  )";
-            StatusBoxFile = 0;
+            //LScan_Cancel.Text = "ยังไม่ได้อัพโหลดไฟล์";
+            //LScan_Cancel.ForeColor = Color.Black;
+            //imgeLocation = "";
+            //BDeleteFile_Cancel.Enabled = false;
+            //StatusBoxFile = 0;
         }
         private void Relaodcancelmember()
         {

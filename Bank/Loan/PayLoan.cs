@@ -219,7 +219,7 @@ namespace BankTeacher.Bank.Loan
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(MessageBox.Show("ยืนยันการจ่ายเงิน","ระบบ", MessageBoxButtons.YesNo ,MessageBoxIcon.Information) == DialogResult.Yes)
+            if (MessageBox.Show("ยืนยันการจ่ายเงิน", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes && CBB4Oppay.SelectedIndex != -1/* && StatusBoxFile == 1*/)
             {
                 try
                 {
@@ -249,6 +249,12 @@ namespace BankTeacher.Bank.Loan
                     MessageBox.Show("จ่ายล้มเหลว", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
+            else if (StatusBoxFile == 0)
+            {
+                MessageBox.Show("จ่ายไม่สำเร็จ โปรดอัพโหลดไฟล์ก่อน", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else if (CBB4Oppay.SelectedIndex == -1)
+                MessageBox.Show("จ่ายไม่สำเร็จ โปรดระบุช่องทางการจ่ายเงิน", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             
         }
 
@@ -257,7 +263,6 @@ namespace BankTeacher.Bank.Loan
         {
             if (StatusBoxFile == 0)
             {
-
                 try
                 {
                     OpenFileDialog dialog = new OpenFileDialog();
@@ -268,8 +273,25 @@ namespace BankTeacher.Bank.Loan
                     }
                     if (imgeLocation != "")
                     {
-                        BTOpenfile.Text = "ส่งไฟล์";
                         StatusBoxFile = 1;
+                        var smb = new SmbFileContainer("Loan");
+                        if (smb.IsValidConnection())
+                        {
+                            String Return = smb.SendFile(imgeLocation, "Loan_" + TBTeacherNo.Text + ".pdf");
+                            MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            if (Return.Contains("อัพโหลดสำเร็จ"))
+                            {
+                                imgeLocation = "";
+                                label5.ForeColor = Color.Green;
+                                label5.Text = "สอัพโหลดไฟล์สำเร็จ";
+                                BTdeletefile.Enabled = true;
+                            }
+                            
+                        }
+                        else
+                        {
+                            MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
                     }
 
                 }
@@ -280,29 +302,19 @@ namespace BankTeacher.Bank.Loan
             }
             else if (StatusBoxFile == 1)
             {
-                var smb = new SmbFileContainer("Loan");
-                if (smb.IsValidConnection())
-                {
-                    String Return = smb.SendFile(imgeLocation, "Loan_" + TBTeacherNo.Text + ".pdf");
-                    MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    StatusBoxFile = 0;
-                    BTOpenfile.Text = "เปิดไฟล์";
-                    //label6.Text = "Scan(  ไม่พบ  )";
-                    imgeLocation = "";
-                }
-                else
-                {
-                    MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
+                MessageBox.Show("ทำการส่งไฟล์แล้ว ไม่สามารถดำเนินการส่งไฟล์ซ้ำได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
         private void BTdeletefile_Click(object sender, EventArgs e)
         {
-            StatusBoxFile = 0;
-            BTOpenfile.Text = "เปิดไฟล์";
-            //label6.Text = "Scan(  ไม่พบ  )";
-            imgeLocation = "";
+            //StatusBoxFile = 0;
+            ////BTOpenfile.Text = "เปิดไฟล์";
+            ////label6.Text = "Scan(  ไม่พบ  )";
+            //label5.ForeColor = Color.Black;
+            //label5.Text = "อัพโหลดเอกสารสัญญากู้ที่มีลายเซ็นครบถ้วน";
+            //imgeLocation = "";
+            //BTdeletefile.Enabled = false;
         }
         private void PayLoan_SizeChanged(object sender, EventArgs e)
         {

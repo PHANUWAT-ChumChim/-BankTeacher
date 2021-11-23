@@ -30,10 +30,10 @@ namespace BankTeacher.Bank
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MemberShip));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -181,9 +181,9 @@ namespace BankTeacher.Bank
             this.groupBox2.Controls.Add(this.BTOpenfile_Reg);
             this.groupBox2.Controls.Add(this.BTdeletefile_Reg);
             this.groupBox2.Controls.Add(this.BTPrintfShare_Reg);
-            this.groupBox2.Location = new System.Drawing.Point(499, 64);
+            this.groupBox2.Location = new System.Drawing.Point(472, 64);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(277, 345);
+            this.groupBox2.Size = new System.Drawing.Size(304, 345);
             this.groupBox2.TabIndex = 49;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "ส่งเอกสาร";
@@ -192,18 +192,18 @@ namespace BankTeacher.Bank
             // 
             this.LScan_Reg.AutoSize = true;
             this.LScan_Reg.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LScan_Reg.Location = new System.Drawing.Point(10, 179);
+            this.LScan_Reg.Location = new System.Drawing.Point(23, 179);
             this.LScan_Reg.Name = "LScan_Reg";
-            this.LScan_Reg.Size = new System.Drawing.Size(107, 30);
+            this.LScan_Reg.Size = new System.Drawing.Size(131, 30);
             this.LScan_Reg.TabIndex = 53;
-            this.LScan_Reg.Text = "Scan(  ไม่พบ  )";
+            this.LScan_Reg.Text = "ยังไม่ได้อัพโหลดไฟล์";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(10, 57);
+            this.label5.Location = new System.Drawing.Point(22, 57);
             this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(196, 30);
@@ -215,11 +215,11 @@ namespace BankTeacher.Bank
             this.BTOpenfile_Reg.BackColor = System.Drawing.Color.White;
             this.BTOpenfile_Reg.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BTOpenfile_Reg.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BTOpenfile_Reg.Location = new System.Drawing.Point(148, 171);
+            this.BTOpenfile_Reg.Location = new System.Drawing.Point(160, 171);
             this.BTOpenfile_Reg.Name = "BTOpenfile_Reg";
             this.BTOpenfile_Reg.Size = new System.Drawing.Size(123, 46);
             this.BTOpenfile_Reg.TabIndex = 20;
-            this.BTOpenfile_Reg.Text = "เปิดไฟล์";
+            this.BTOpenfile_Reg.Text = "อัพโหลดไฟล์";
             this.BTOpenfile_Reg.UseVisualStyleBackColor = false;
             this.BTOpenfile_Reg.Click += new System.EventHandler(this.BTOpenfile_Click);
             // 
@@ -228,7 +228,8 @@ namespace BankTeacher.Bank
             this.BTdeletefile_Reg.BackColor = System.Drawing.Color.White;
             this.BTdeletefile_Reg.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BTdeletefile_Reg.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BTdeletefile_Reg.Location = new System.Drawing.Point(148, 241);
+            this.BTdeletefile_Reg.Enabled = false;
+            this.BTdeletefile_Reg.Location = new System.Drawing.Point(160, 241);
             this.BTdeletefile_Reg.Name = "BTdeletefile_Reg";
             this.BTdeletefile_Reg.Size = new System.Drawing.Size(123, 47);
             this.BTdeletefile_Reg.TabIndex = 21;
@@ -241,7 +242,7 @@ namespace BankTeacher.Bank
             this.BTPrintfShare_Reg.BackColor = System.Drawing.Color.White;
             this.BTPrintfShare_Reg.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BTPrintfShare_Reg.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BTPrintfShare_Reg.Location = new System.Drawing.Point(15, 99);
+            this.BTPrintfShare_Reg.Location = new System.Drawing.Point(27, 99);
             this.BTPrintfShare_Reg.Name = "BTPrintfShare_Reg";
             this.BTPrintfShare_Reg.Size = new System.Drawing.Size(256, 47);
             this.BTPrintfShare_Reg.TabIndex = 22;
@@ -373,9 +374,9 @@ namespace BankTeacher.Bank
             this.groupBox4.Controls.Add(this.BDeleteFile_Cancel);
             this.groupBox4.Controls.Add(this.BPrint_Cancel);
             this.groupBox4.Controls.Add(this.BOpenFile_Cancel);
-            this.groupBox4.Location = new System.Drawing.Point(448, 16);
+            this.groupBox4.Location = new System.Drawing.Point(416, 16);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(332, 435);
+            this.groupBox4.Size = new System.Drawing.Size(364, 435);
             this.groupBox4.TabIndex = 58;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "ส่งเอกสาร";
@@ -383,18 +384,18 @@ namespace BankTeacher.Bank
             // LScan_Cancel
             // 
             this.LScan_Cancel.AutoSize = true;
-            this.LScan_Cancel.Location = new System.Drawing.Point(35, 295);
+            this.LScan_Cancel.Location = new System.Drawing.Point(28, 295);
             this.LScan_Cancel.Name = "LScan_Cancel";
-            this.LScan_Cancel.Size = new System.Drawing.Size(107, 30);
+            this.LScan_Cancel.Size = new System.Drawing.Size(131, 30);
             this.LScan_Cancel.TabIndex = 23;
-            this.LScan_Cancel.Text = "Scan(  ไม่พบ  )";
+            this.LScan_Cancel.Text = "ยังไม่ได้อัพโหลดไฟล์";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Red;
-            this.label3.Location = new System.Drawing.Point(16, 32);
+            this.label3.Location = new System.Drawing.Point(33, 32);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(75, 30);
@@ -403,7 +404,7 @@ namespace BankTeacher.Bank
             // 
             // TBNote_Cancel
             // 
-            this.TBNote_Cancel.Location = new System.Drawing.Point(15, 65);
+            this.TBNote_Cancel.Location = new System.Drawing.Point(32, 65);
             this.TBNote_Cancel.Multiline = true;
             this.TBNote_Cancel.Name = "TBNote_Cancel";
             this.TBNote_Cancel.Size = new System.Drawing.Size(300, 163);
@@ -414,7 +415,8 @@ namespace BankTeacher.Bank
             this.BDeleteFile_Cancel.BackColor = System.Drawing.Color.White;
             this.BDeleteFile_Cancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BDeleteFile_Cancel.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BDeleteFile_Cancel.Location = new System.Drawing.Point(148, 355);
+            this.BDeleteFile_Cancel.Enabled = false;
+            this.BDeleteFile_Cancel.Location = new System.Drawing.Point(165, 355);
             this.BDeleteFile_Cancel.Name = "BDeleteFile_Cancel";
             this.BDeleteFile_Cancel.Size = new System.Drawing.Size(167, 46);
             this.BDeleteFile_Cancel.TabIndex = 22;
@@ -427,7 +429,7 @@ namespace BankTeacher.Bank
             this.BPrint_Cancel.BackColor = System.Drawing.Color.White;
             this.BPrint_Cancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BPrint_Cancel.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BPrint_Cancel.Location = new System.Drawing.Point(21, 234);
+            this.BPrint_Cancel.Location = new System.Drawing.Point(38, 234);
             this.BPrint_Cancel.Name = "BPrint_Cancel";
             this.BPrint_Cancel.Size = new System.Drawing.Size(294, 47);
             this.BPrint_Cancel.TabIndex = 21;
@@ -439,7 +441,7 @@ namespace BankTeacher.Bank
             this.BOpenFile_Cancel.BackColor = System.Drawing.Color.White;
             this.BOpenFile_Cancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BOpenFile_Cancel.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BOpenFile_Cancel.Location = new System.Drawing.Point(148, 287);
+            this.BOpenFile_Cancel.Location = new System.Drawing.Point(165, 287);
             this.BOpenFile_Cancel.Name = "BOpenFile_Cancel";
             this.BOpenFile_Cancel.Size = new System.Drawing.Size(167, 47);
             this.BOpenFile_Cancel.TabIndex = 22;
@@ -582,8 +584,8 @@ namespace BankTeacher.Bank
             // 
             this.DGV_HistoryCancel.AllowUserToAddRows = false;
             this.DGV_HistoryCancel.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DGV_HistoryCancel.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle21.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DGV_HistoryCancel.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle21;
             this.DGV_HistoryCancel.BackgroundColor = System.Drawing.Color.White;
             this.DGV_HistoryCancel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_HistoryCancel.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -603,8 +605,8 @@ namespace BankTeacher.Bank
             // 
             // Column1
             // 
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle22;
             this.Column1.HeaderText = "วัน/เดือน//ปี";
             this.Column1.MinimumWidth = 6;
             this.Column1.Name = "Column1";
@@ -620,8 +622,8 @@ namespace BankTeacher.Bank
             // 
             // Column2
             // 
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle23.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle23;
             this.Column2.HeaderText = "ชื่อ";
             this.Column2.MinimumWidth = 6;
             this.Column2.Name = "Column2";
@@ -631,8 +633,8 @@ namespace BankTeacher.Bank
             // Column3
             // 
             this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column3.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle24.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column3.DefaultCellStyle = dataGridViewCellStyle24;
             this.Column3.HeaderText = "สาเหตุ";
             this.Column3.MinimumWidth = 6;
             this.Column3.Name = "Column3";

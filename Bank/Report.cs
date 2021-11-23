@@ -81,7 +81,7 @@ namespace BankTeacher.Bank
           "ORDER BY a.Fname;  \r\n " +
           " \r\n " +
           " \r\n " +
-          "SELECT SUM(a.AmountOff) , SUM(a.Dividend) , SUM(a.LoanPay)  \r\n " +
+          " SELECT SUM(ISNULL(a.AmountOff , 0)) , SUM(ISNULL(a.Dividend,0)) , SUM(ISNULL(a.LoanPay,0))  , SUM(ISNULL(a.AmountOff,0)) + SUM(ISNULL(a.Dividend,0)) + SUM(ISNULL(a.LoanPay,0))\r\n " +
           "FROM(SELECT a.TeacherNo ,CAST(ISNULL(h.PrefixNameFull, '') + g.Fname + ' ' + g.Lname as varchar) as Name  \r\n " +
           ",SUM(ISNULL(c.Amount ,0)) as AmountOff ,d.DividendAmount as Dividend ,ISNULL(f.LoanPay ,0) as LoanPay , g.Fname  \r\n " +
           "FROM (SELECT *  \r\n " +
