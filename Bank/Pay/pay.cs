@@ -451,6 +451,7 @@ namespace BankTeacher.Bank.Pay
                         TBTeacherName.Text = dt.Rows[0][1].ToString();
                         CheckInputTeacher = true;
                         CBList_Pay.SelectedIndex = -1;
+                        //หน้าดูข้อมูลกู้
                         ComboBox[] cb = new ComboBox[] { CBLoanSelection_LoanInfo };
                         DataSet ds = Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[9]+
                             "\r\n" +
@@ -1098,6 +1099,14 @@ namespace BankTeacher.Bank.Pay
                             CBList_Pay.SelectedIndex = 0;
                             CBList_Pay_SelectedIndexChanged(new object(), new EventArgs());
                         }
+                    }
+                    else
+                    {
+                        if (CBMonthSelection_Pay.Items.Count != 0)
+                            CBMonthSelection_Pay.SelectedIndex = 0;
+                        else
+                            if (CBYearSelection_Pay.Items.Count != 0)
+                            CBYearSelection_Pay.SelectedIndex = 0;
                     }
                 }
                 else
