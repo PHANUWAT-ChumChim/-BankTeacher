@@ -21,6 +21,7 @@ namespace BankTeacher.Bank.Loan
         int Check = 0;
         int DefaultEdit = 0;
         public static int SelectIndexRowDelete;
+        DialogResult CheckLimitLoan = DialogResult.No;
 
         //----------------------- index code -------------------- ////////
         public loan()
@@ -63,25 +64,30 @@ namespace BankTeacher.Bank.Loan
             , 
 
             //[1] SELECT CreditLimit Data INPUT:{Text} , {TeacherNoNotLike}
-            "SELECT TOP(20)TeacherNo, Name, RemainAmount, ISNULL(a.LoanStatusNo , 0)\r\n" +
-            "FROM (SELECT a.TeacherNo , CAST(ISNULL(c.PrefixName+' ','')+Fname +' '+ Lname as NVARCHAR)AS Name, \r\n" +
-            "ISNULL(e.SavingAmount,0) - ISNULL(SUM(d.RemainsAmount),0) as RemainAmount, Fname , f.LoanStatusNo\r\n" +
-            "FROM EmployeeBank.dbo.tblMember as a  \r\n" +
-            "LEFT JOIN Personal.dbo.tblTeacherHis as b ON a.TeacherNo = b.TeacherNo  \r\n" +
-            "LEFT JOIN BaseData.dbo.tblPrefix as c ON b.PrefixNo = c.PrefixNo  \r\n" +
-            "LEFT JOIN EmployeeBank.dbo.tblGuarantor as d on a.TeacherNo = d.TeacherNo \r\n" +
-            "LEFT JOIN EmployeeBank.dbo.tblShare as e ON e.TeacherNo = a.TeacherNo \r\n" +
-            "LEFT JOIN EmployeeBank.dbo.tblLoan as f on a.TeacherNo = f.TeacherNo\r\n" +
-            "WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(c.PrefixName+' ','')+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1\r\n" +
-            "GROUP BY a.TeacherNo , CAST(ISNULL(c.PrefixName+' ','')+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname, f.LoanStatusNo) as a \r\n" +
-            "WHERE RemainAmount >= 500 {TeacherNoNotLike} \r\n" +
-            "ORDER BY a.Fname; \r\n"
+            "SELECT TOP(20)TeacherNo, Name, RemainAmount, ISNULL(a.LoanStatusNo , 0) as LoanS \r\n " +
+            "FROM (SELECT a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS Name,  \r\n " +
+            "ROUND(ISNULL(e.SavingAmount,0) - ISNULL(SUM(d.RemainsAmount),0),0,1) as RemainAmount, Fname , f.LoanStatusNo \r\n " +
+            "FROM EmployeeBank.dbo.tblMember as a   \r\n " +
+            "LEFT JOIN ( \r\n " +
+            "SELECT TeacherNo , Fname , Lname , PrefixNo \r\n " +
+            "FROM Personal.dbo.tblTeacherHis  \r\n " +
+            ") as b ON a.TeacherNo = b.TeacherNo   \r\n " +
+            "LEFT JOIN BaseData.dbo.tblPrefix as c ON b.PrefixNo = c.PrefixNo   \r\n " +
+            "LEFT JOIN EmployeeBank.dbo.tblGuarantor as d on a.TeacherNo = d.TeacherNo  \r\n " +
+            "LEFT JOIN EmployeeBank.dbo.tblShare as e ON e.TeacherNo = a.TeacherNo  \r\n " +
+            "LEFT JOIN (SELECT * \r\n " +
+            "FROM EmployeeBank.dbo.tblLoan \r\n " +
+            "WHERE LoanStatusNo = 1 or LoanStatusNo = 2 ) as f on a.TeacherNo = f.TeacherNo \r\n " +
+            "WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1 \r\n " +
+            "GROUP BY a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname, f.LoanStatusNo) as a  \r\n " +
+            "WHERE RemainAmount >= 500 {TeacherNoNotLike}\r\n " +
+            "ORDER BY a.Fname; "
+           
             , 
 
-
-
             //[2] SELECT Date Data
-            "SELECT CAST(CURRENT_TIMESTAMP as DATE); \r\n\r\n",
+            "SELECT CAST(CURRENT_TIMESTAMP as DATE); \r\n\r\n"
+            ,
 
             //[3] INSERT Loan and Get LoanNo INPUT: {TeacherNoAdd}, {TeacherNo}, {MonthPay}, {YearPay}, {LoanAmount}, {PayNo}, {InterestRate}
             "DECLARE @LoanNo INT;\r\n" +
@@ -216,23 +222,40 @@ namespace BankTeacher.Bank.Loan
                 //BPrintLoanDoc.Enabled = true;
 
             }
+            else if(LLackAmount.Text == "0" || LOutCredit.Text == "0")
+            {
+                MessageBox.Show("กรอกจำนวนเงินค้ำไม่ถูกต้อง", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tabControl1.SelectedIndex = 2;
+            }
+            else if(CBPayMonth.SelectedIndex == -1 || CBPayYear.SelectedIndex == -1)
+            {
+                MessageBox.Show("กรอกข้อมูลวันที่เริ่มจ่ายไม่ถูกต้อง", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tabControl1.SelectedIndex = 1;
+            }
+            else if(TBLoanAmount.Text == "")
+            {
+                MessageBox.Show("กรอกจำนวนเงินกู้ไม่ถูกต้อง", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tabControl1.SelectedIndex = 1;
+                TBLoanAmount.Focus();
+            }
+            else if(TBInterestRate.Text == "" || Double.TryParse(TBInterestRate.Text , out Double Interest))
+            {
+                MessageBox.Show("กรอกข้อมูลเปอเซนต์ดอกเบี้ยไม่ถูกต้อง", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tabControl1.SelectedIndex = 1;
+                TBInterestRate.Focus();
+            }
+            else if(TBPayNo.Text == "" || Int32.TryParse(TBPayNo.Text,out int PayNo))
+            {
+                MessageBox.Show("กรอกจำนวนงวดไม่ถูกต้อง", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tabControl1.SelectedIndex = 1;
+                TBPayNo.Focus();
+            }
             else
             {
                 MessageBox.Show("กรอกข้อมูลไม่ถูกต้อง", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-        bool IsInt(float x)
-        {
-            try
-            {
-                int y = Int16.Parse(x.ToString());
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
+
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabControl1.SelectedIndex == 3 && (CBPayMonth.SelectedIndex != -1
@@ -407,7 +430,7 @@ namespace BankTeacher.Bank.Loan
                        .Replace("{TeacherNoNotLike}", NotLike));
 
                 IN.ShowDialog();
-                if (Bank.Search.Return[0] != "")
+                if (Bank.Search.Return[0] != "" && CheckLimitLoan == DialogResult.No)
                 {
                     TBTeacherNo.Text = Bank.Search.Return[0];
                     TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
@@ -458,7 +481,44 @@ namespace BankTeacher.Bank.Loan
                 {
                     if (int.Parse(dt.Rows[0][3].ToString()) == 2 || int.Parse(dt.Rows[0][3].ToString()) == 1)
                     {
-                        MessageBox.Show("ผู้ใช้นี้มียอดกู้อยู่ในระบบ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        CheckLimitLoan = MessageBox.Show("ผู้ใช้นี้มียอดกู้อยู่ในระบบ ต้องการจะกู้ต่อหรือไม่\r\n", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if (CheckLimitLoan == DialogResult.Yes)
+                        {
+                            //Form Loan = this;
+                            ////Pay.pay aa = new Pay.pay(0);
+                            ////aa.TeacherNoOtherForm = TBTeacherNo.Text;
+                            ////Loan.Close();
+                            //Menu Mn = new Menu();
+                            ////Mn.CloseFrom(aa);
+                            //BankTeacher.Bank.Pay.pay pay = new BankTeacher.Bank.Pay.pay(0);
+                            //pay.TeacherNoOtherForm = TBTeacherNo.Text;
+                            //Mn.Menu_pay_Click(sender, new EventArgs());
+                            ////pay.MdiParent = Loan;
+                            ////Mn.CloseFrom(pay);
+                            TBTeacherName.Text = dt.Rows[0][1].ToString();
+                            TBLoanNo.Text = "-";
+                            TBLoanStatus.Text = "ดำเนินการ";
+                            TBSavingAmount.Text = dt.Rows[0][2].ToString();
+
+                            String[] Credit = new string[] { };
+                            Credit = dt.Rows[0][2].ToString().Split('.');
+                            // float Percent = 100 / DGVGuarantor.Rows.Count;
+
+                            DGVGuarantor.Rows.Clear();
+                            DGVGuarantorCredit.Rows.Clear();
+                            DGVGuarantor.Rows.Add(dt.Rows[0][0], dt.Rows[0][1], Credit[0]);
+                            TBLoanAmount.Text = "";
+                            CBPayMonth.SelectedIndex = -1;
+                            CBPayYear.SelectedIndex = -1;
+                            TBSavingAmount.Text = Credit[0];
+                            tabControl1.SelectedIndex = 0;
+                            TBGuarantorNo.Focus();
+                            Check = 1;
+                        }
+                        else
+                        {
+                            TBTeacherNo.Text = "";
+                        }
                     }
                     else
                     {
@@ -596,49 +656,49 @@ namespace BankTeacher.Bank.Loan
             }
         }
         // อัพเอกสารส่ง เซิร์ฟเวอร์
-        private void BTOpenfile_Click(object sender, EventArgs e)
-        {
-            if (StatusBoxFile == 0)
-            {
+        //private void BTOpenfile_Click(object sender, EventArgs e)
+        //{
+        //    if (StatusBoxFile == 0)
+        //    {
 
-                try
-                {
-                    OpenFileDialog dialog = new OpenFileDialog();
-                    dialog.Filter = "pdf files(*.pdf)|*.pdf";
-                    if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    {
-                        imgeLocation = dialog.FileName;
-                    }
-                    if (imgeLocation != "")
-                    {
+        //        try
+        //        {
+        //            OpenFileDialog dialog = new OpenFileDialog();
+        //            dialog.Filter = "pdf files(*.pdf)|*.pdf";
+        //            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+        //            {
+        //                imgeLocation = dialog.FileName;
+        //            }
+        //            if (imgeLocation != "")
+        //            {
                        
-                        StatusBoxFile = 1;
+        //                StatusBoxFile = 1;
                 
-                    }
+        //            }
 
-                }
-                catch
-                {
-                    MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else if (StatusBoxFile == 1)
-            {
-                var smb = new SmbFileContainer("Loan");
-                if (smb.IsValidConnection())
-                {
-                    String Return = smb.SendFile(imgeLocation, "Loan_" + TBTeacherNo.Text + ".pdf");
-                    MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    StatusBoxFile = 0;
+        //        }
+        //        catch
+        //        {
+        //            MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        }
+        //    }
+        //    else if (StatusBoxFile == 1)
+        //    {
+        //        var smb = new SmbFileContainer("Loan");
+        //        if (smb.IsValidConnection())
+        //        {
+        //            String Return = smb.SendFile(imgeLocation, "Loan_" + TBTeacherNo.Text + ".pdf");
+        //            MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //            StatusBoxFile = 0;
                  
-                    imgeLocation = "";
-                }
-                else
-                {
-                    MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-        }
+        //            imgeLocation = "";
+        //        }
+        //        else
+        //        {
+        //            MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        //        }
+        //    }
+        //}
         // กระดาษปริ้น
         private void printDocument1_PrintPage_1(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
@@ -775,42 +835,42 @@ namespace BankTeacher.Bank.Loan
             String AmountLimit = LLoanAmount.Text.Remove(0, 1);
             AmountLimit = AmountLimit.Remove(AmountLimit.Length - 1);
             bool Check = int.TryParse(AmountLimit, out LimitAmount);
-            if (panel1.Focused)
+            if (DGVGuarantor.Rows.Count != 0)
             {
-                if (DGVGuarantor.Rows.Count != 0)
+                if (int.TryParse(TBLoanAmount.Text, out Amount) && (Check))
                 {
-                    if (int.TryParse(TBLoanAmount.Text, out Amount) && (Check))
+                    if (Amount > LimitAmount && UserOutCreditLimit == DialogResult.No)
                     {
-                        if (Amount > LimitAmount)
+                        UserOutCreditLimit = MessageBox.Show("จำนวนเงินกู้ เกินกำหนดเงินค้ำ\r\n ต้องการทำต่อหรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if (UserOutCreditLimit == DialogResult.No)
                         {
-                            UserOutCreditLimit = MessageBox.Show("จำนวนเงินกู้ เกินกำหนดเงินค้ำ\r\n ต้องการทำต่อหรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                            if (UserOutCreditLimit == DialogResult.No)
+                            TBLoanAmount.Text = "";
+                            if (tabControl1.SelectedIndex != 1)
                             {
-                                TBLoanAmount.Text = "";
-                                if (tabControl1.SelectedIndex != 1)
-                                {
-                                    tabControl1.SelectedIndex = 1;
-                                    TBLoanAmount.Focus();
-                                }
-                            }
-                            else
-                            {
-                                //เช็คดูว่า User นี้ มีสิทหรือไม่
-                                //ถ้าไม่ให้เปลี่ยน UserOutCreditLimit เป็น No
-                                //และขึ้นแจ้งเตือนว่าไม่สามารถทำได้
+                                tabControl1.SelectedIndex = 1;
+                                TBLoanAmount.Focus();
                             }
                         }
+                        else
+                        {
+                            //เช็คดูว่า User นี้ มีสิทหรือไม่
+                            //ถ้าไม่ให้เปลี่ยน UserOutCreditLimit เป็น No
+                            //และขึ้นแจ้งเตือนว่าไม่สามารถทำได้
+                        }
                     }
-                    else if (!Check)
-                    {
-                        TBTeacherNo.Focus();
-                    }
+                    else if (Amount < LimitAmount && UserOutCreditLimit == DialogResult.Yes)
+                        UserOutCreditLimit = DialogResult.No;
                 }
                 else if (!Check)
                 {
                     TBTeacherNo.Focus();
                 }
             }
+            else if (!Check)
+            {
+                TBTeacherNo.Focus();
+            }
+            
 
             bool CheckNum = Double.TryParse(TBLoanAmount.Text, out Double LoanAmount);
             LoanAmount = LoanAmount * Convert.ToDouble((Convert.ToDouble(TBInterestRate.Text) / 100)) + LoanAmount;
@@ -932,12 +992,14 @@ namespace BankTeacher.Bank.Loan
                         {
                             DGVGuarantorCredit.Rows[e.RowIndex].Cells[3].Value = Convert.ToInt32(Credit);
                         }
-                        else
+                        else if(UserOutCreditLimit != DialogResult.Yes)
                         {
                             MessageBox.Show("เกินวงเงินที่ค้ำได้ จะปรับเป็นยอดค้ำสูงสุด", "ระบบ");
                             DGVGuarantorCredit.Rows[e.RowIndex].Cells[3].Value = Convert.ToDouble(DGVGuarantor.Rows[e.RowIndex].Cells[2].Value.ToString());
                             //Double Interest = (Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)) + Convert.ToDouble(TBLoanAmount.Text);
                             DGVGuarantorCredit.Rows[e.RowIndex].Cells[2].Value = Convert.ToInt32((Convert.ToDouble(DGVGuarantorCredit.Rows[e.RowIndex].Cells[3].Value.ToString()) * 100 / Total));
+                            if(UserOutCreditLimit == DialogResult.Yes)
+                                BCalculate_Click(sender, new EventArgs());
                         }
                     }
                     else if (e.ColumnIndex == 3 && Check)

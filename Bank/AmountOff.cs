@@ -94,7 +94,7 @@ namespace BankTeacher.Bank
             "LEFT JOIN EmployeeBank.dbo.tblShareWithdraw as c on b.ShareNo = c.ShareNo  \r\n " +
             "LEFT JOIN Personal.dbo.tblTeacherHis as d on a.TeacherNo = d.TeacherNo  \r\n " +
             "LEFT JOIN BaseData.dbo.tblPrefix as e on d.PrefixNo = e.PrefixNo  \r\n " +
-            "WHERE CAST(CAST(c.DateAdd as date) as varchar) LIKE '{Date}%' and a.TeacherNo LIKE '{TeacherNo}%'"
+            "WHERE CAST(CAST(c.DateAdd as date) as varchar) LIKE '{Date}%' and a.TeacherNo LIKE '{TeacherNo}%' "
            
 
 
@@ -136,7 +136,7 @@ namespace BankTeacher.Bank
                 CBYear.Items.Add(Year);
                 Year--;
             }
-            CBYear.SelectedIndex = 0;
+            //CBYear.SelectedIndex = 0;
             if (TBTeacherNo.Text != "")
                 TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
         }
@@ -174,6 +174,7 @@ namespace BankTeacher.Bank
                             Credit = ds.Tables[1].Rows[Num][1].ToString().Split('.');
                             DGVLoan.Rows.Add(ds.Tables[1].Rows[Num][0].ToString(), ds.Tables[1].Rows[Num][2].ToString(), Credit[0], ds.Tables[1].Rows[Num][3].ToString());
                         }
+                        CBYear.SelectedIndex = 0;
                         //if (CBTypePay.SelectedIndex != -1)
                         //    CBTypePay.SelectedIndex = -1;
                     }
