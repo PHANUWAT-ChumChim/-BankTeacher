@@ -294,7 +294,6 @@ namespace BankTeacher.Bank.Loan
                                 label5.Text = "อัพโหลดไฟล์ไม่สำเร็จ";
                                 BTdeletefile.Enabled = false;
                             }
-                            
                         }
                         else
                         {
