@@ -174,7 +174,8 @@ namespace BankTeacher.Bank
                             Credit = ds.Tables[1].Rows[Num][1].ToString().Split('.');
                             DGVLoan.Rows.Add(ds.Tables[1].Rows[Num][0].ToString(), ds.Tables[1].Rows[Num][2].ToString(), Credit[0], ds.Tables[1].Rows[Num][3].ToString());
                         }
-                        CBYear.SelectedIndex = 0;
+                        if(CBYear.Items.Count != 0)
+                            CBYear.SelectedIndex = 0;
                         //if (CBTypePay.SelectedIndex != -1)
                         //    CBTypePay.SelectedIndex = -1;
                     }
