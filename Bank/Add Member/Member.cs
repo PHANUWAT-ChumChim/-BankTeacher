@@ -574,6 +574,7 @@ namespace BankTeacher.Bank
                 CBYear_HistoryCancel.Items.Add(Year);
                 Year--;
             }
+            //
             CBYear_HistoryCancel.SelectedIndex = 0;
         }
 
