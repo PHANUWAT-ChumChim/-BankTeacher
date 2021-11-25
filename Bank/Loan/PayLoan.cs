@@ -46,14 +46,14 @@ namespace BankTeacher.Bank.Loan
 
           ,
           //[1] SELECT LOAN INPUT: {TeacherNo}
-          "SELECT a.LoanNo , CAST(ISNULL(c.PrefixName+' ','')+ Fname + ' ' + Lname AS NVARCHAR) , ISNULL(CAST(a.PayDate as int) , 1) \r\n " +
+          "SELECT a.LoanNo , CAST(ISNULL(d.PrefixName+' ','')+ Fname + ' ' + Lname AS NVARCHAR) , ISNULL(CAST(a.PayDate as int) , 1) \r\n " +
           "FROM EmployeeBank.dbo.tblLoan as a   \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo   \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as c on a.TeacherNo = c.TeacherNo  \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblMember as e on b.TeacherNo = e.TeacherNo \r\n" +
           "WHERE a.TeacherNo = '{TeacherNo}' and LoanStatusNo = 1 and MemberStatusNo = 1 \r\n " +
-          "GROUP BY a.LoanNo , CAST(ISNULL(c.PrefixName+' ','') + Fname + ' ' + Lname AS NVARCHAR) ,ISNULL(CAST(a.PayDate as int) , 1) \r\n " +
+          "GROUP BY a.LoanNo , CAST(ISNULL(d.PrefixName+' ','') + Fname + ' ' + Lname AS NVARCHAR) ,ISNULL(CAST(a.PayDate as int) , 1) \r\n " +
           "ORDER BY a.LoanNo "
           
 
@@ -219,7 +219,7 @@ namespace BankTeacher.Bank.Loan
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("ยืนยันการจ่ายเงิน", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes && CBB4Oppay.SelectedIndex != -1/* && StatusBoxFile == 1*/)
+            if (MessageBox.Show("ยืนยันการจ่ายเงิน", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes && CBB4Oppay.SelectedIndex != -1 && StatusBoxFile == 1)
             {
                 try
                 {
