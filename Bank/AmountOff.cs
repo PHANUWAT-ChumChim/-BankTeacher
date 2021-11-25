@@ -119,8 +119,6 @@ namespace BankTeacher.Bank
         public AmountOff()
         {
             InitializeComponent();
-            Console.WriteLine("==================Open AmountOff Form======================");
-            
         }
 
         private void AmountOff_Load(object sender, EventArgs e)
