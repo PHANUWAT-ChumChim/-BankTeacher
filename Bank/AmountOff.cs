@@ -240,12 +240,14 @@ namespace BankTeacher.Bank
             else
                 MessageBox.Show("ยอดเงินไม่เพียงพอ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+            //Form ThisAmountOff = this;
             foreach (Form f in Application.OpenForms)
             {
-                if (f.Name == "Menu" && f.Visible == false)
+                if (f.Name == "Menu" && f.Enabled == false)
                 {
                     f.Enabled = true;
                     this.Close();
+                    break;
                 }
             }
         }
@@ -415,10 +417,10 @@ namespace BankTeacher.Bank
         {
             foreach (Form f in Application.OpenForms)
             {
-                if (f.Name == "Menu" && f.Visible == false)
+                if (f.Name == "Menu" && f.Enabled == false)
                 {
                     f.Enabled = true;
-                    this.Close();
+                    break;
                 }
             }
         }

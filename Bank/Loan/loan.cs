@@ -209,6 +209,7 @@ namespace BankTeacher.Bank.Loan
                 BSave.Enabled = false;
                 BPrintLoanDoc.Visible = true;
                 label15.Visible = true;
+                UserOutCreditLimit = DialogResult.No;
                 //DGVGuarantor.Rows.Clear();
                 //DGVGuarantorCredit.Rows.Clear();
                 //DGVLoanDetail.Rows.Clear();
@@ -484,17 +485,6 @@ namespace BankTeacher.Bank.Loan
                         CheckLimitLoan = MessageBox.Show("ผู้ใช้นี้มียอดกู้อยู่ในระบบ ต้องการจะกู้ต่อหรือไม่\r\n", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                         if (CheckLimitLoan == DialogResult.Yes)
                         {
-                            //Form Loan = this;
-                            ////Pay.pay aa = new Pay.pay(0);
-                            ////aa.TeacherNoOtherForm = TBTeacherNo.Text;
-                            ////Loan.Close();
-                            //Menu Mn = new Menu();
-                            ////Mn.CloseFrom(aa);
-                            //BankTeacher.Bank.Pay.pay pay = new BankTeacher.Bank.Pay.pay(0);
-                            //pay.TeacherNoOtherForm = TBTeacherNo.Text;
-                            //Mn.Menu_pay_Click(sender, new EventArgs());
-                            ////pay.MdiParent = Loan;
-                            ////Mn.CloseFrom(pay);
                             TBTeacherName.Text = dt.Rows[0][1].ToString();
                             TBLoanNo.Text = "-";
                             TBLoanStatus.Text = "ดำเนินการ";

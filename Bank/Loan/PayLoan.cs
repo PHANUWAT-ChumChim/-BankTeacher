@@ -219,7 +219,7 @@ namespace BankTeacher.Bank.Loan
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("ยืนยันการจ่ายเงิน", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes && CBB4Oppay.SelectedIndex != -1/* && StatusBoxFile == 1*/)
+            if (MessageBox.Show("ยืนยันการจ่ายเงิน", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes && CBB4Oppay.SelectedIndex != -1 && StatusBoxFile == 1)
             {
                 try
                 {
