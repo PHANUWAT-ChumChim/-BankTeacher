@@ -139,7 +139,8 @@ namespace BankTeacher.Bank
             {
                 if (TBTeacherNo.Text.Length == 6)
                 {
-
+                    DGVAmountOffHistory.Rows.Clear();
+                    CBYear.Items.Clear();
                     DGVLoan.Rows.Clear();
                     DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(
                         SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text) +

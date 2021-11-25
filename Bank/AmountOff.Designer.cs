@@ -203,6 +203,7 @@ namespace BankTeacher.Bank
             // DGVLoan
             // 
             this.DGVLoan.AllowUserToAddRows = false;
+            this.DGVLoan.AllowUserToResizeColumns = false;
             this.DGVLoan.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVLoan.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
@@ -349,13 +350,13 @@ namespace BankTeacher.Bank
             this.Column9,
             this.Column6});
             this.DGVAmountOffHistory.GridColor = System.Drawing.SystemColors.Control;
-            this.DGVAmountOffHistory.Location = new System.Drawing.Point(83, 72);
+            this.DGVAmountOffHistory.Location = new System.Drawing.Point(16, 60);
             this.DGVAmountOffHistory.Margin = new System.Windows.Forms.Padding(2);
             this.DGVAmountOffHistory.Name = "DGVAmountOffHistory";
             this.DGVAmountOffHistory.RowHeadersVisible = false;
             this.DGVAmountOffHistory.RowHeadersWidth = 51;
             this.DGVAmountOffHistory.RowTemplate.Height = 24;
-            this.DGVAmountOffHistory.Size = new System.Drawing.Size(696, 232);
+            this.DGVAmountOffHistory.Size = new System.Drawing.Size(830, 244);
             this.DGVAmountOffHistory.TabIndex = 2;
             // 
             // Column5
