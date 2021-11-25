@@ -992,14 +992,18 @@ namespace BankTeacher.Bank.Loan
                         {
                             DGVGuarantorCredit.Rows[e.RowIndex].Cells[3].Value = Convert.ToInt32(Credit);
                         }
-                        else if(UserOutCreditLimit != DialogResult.Yes)
+                        else if (UserOutCreditLimit != DialogResult.Yes)
                         {
                             MessageBox.Show("เกินวงเงินที่ค้ำได้ จะปรับเป็นยอดค้ำสูงสุด", "ระบบ");
                             DGVGuarantorCredit.Rows[e.RowIndex].Cells[3].Value = Convert.ToDouble(DGVGuarantor.Rows[e.RowIndex].Cells[2].Value.ToString());
                             //Double Interest = (Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)) + Convert.ToDouble(TBLoanAmount.Text);
                             DGVGuarantorCredit.Rows[e.RowIndex].Cells[2].Value = Convert.ToInt32((Convert.ToDouble(DGVGuarantorCredit.Rows[e.RowIndex].Cells[3].Value.ToString()) * 100 / Total));
-                            if(UserOutCreditLimit == DialogResult.Yes)
-                                BCalculate_Click(sender, new EventArgs());
+                            //if(UserOutCreditLimit == DialogResult.Yes)
+                            //    BCalculate_Click(sender, new EventArgs());
+                        }
+                        else if(UserOutCreditLimit == DialogResult.Yes)
+                        {
+                            DGVGuarantorCredit.Rows[e.RowIndex].Cells[3].Value = Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[e.RowIndex].Cells[2].Value) * Total / 100);
                         }
                     }
                     else if (e.ColumnIndex == 3 && Check)
@@ -1294,7 +1298,7 @@ namespace BankTeacher.Bank.Loan
                     LLackAmount.ForeColor = Color.Green;
                     LOutCredit.ForeColor = Color.Red;
                     LLackAmount.Text = 0 + "";
-                    LOutCredit.Text = SumAmountCredit + "";
+                    LOutCredit.Text = (SumAmountCredit * -1).ToString();
                 }
                 else
                 {
@@ -1307,10 +1311,19 @@ namespace BankTeacher.Bank.Loan
                 AmountLimit = AmountLimit.Remove(AmountLimit.Length - 1);
                 if (Convert.ToInt32(TBLoanAmount.Text) > Convert.ToInt32(AmountLimit))
                 {
-                    DGVGuarantorCredit.Rows[0].Cells[3].Value = Convert.ToInt32(DGVGuarantorCredit.Rows[0].Cells[3].Value.ToString()) + Convert.ToInt32(LLackAmount.Text);
+                    DGVGuarantorCredit.Rows[0].Cells[3].Value = Convert.ToInt32(DGVGuarantorCredit.Rows[0].Cells[3].Value.ToString()) + SumAmountCredit;
                     DGVGuarantorCredit.Rows[0].Cells[2].Value = Convert.ToInt32((Convert.ToDouble(DGVGuarantorCredit.Rows[0].Cells[3].Value.ToString()) * 100) / Interest);
-                    LLackAmount.ForeColor = Color.Green;
-                    LLackAmount.Text = "0";
+                    if(LLackAmount.Text != "0")
+                    {
+                        LLackAmount.ForeColor = Color.Green;
+                        LLackAmount.Text = "0";
+                    }
+                    else if(LOutCredit.Text != "0")
+                    {
+                        LOutCredit.ForeColor = Color.Green;
+                        LOutCredit.Text = "0";
+                    }
+                    
                 }
             }
         }
