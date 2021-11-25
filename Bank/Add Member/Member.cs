@@ -567,7 +567,8 @@ namespace BankTeacher.Bank
                 CBYear_HistoryCancel.Items.Add(Year);
                 Year--;
             }
-            CBYear_HistoryCancel.SelectedIndex = 0;
+            if(CBYear_HistoryCancel.Items.Count != 0)
+                CBYear_HistoryCancel.SelectedIndex = 0;
         }
 
         private void CBYear_HistoryCancel_SelectedIndexChanged(object sender, EventArgs e)
