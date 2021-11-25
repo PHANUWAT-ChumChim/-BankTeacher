@@ -60,8 +60,6 @@ namespace BankTeacher.Bank
             this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CBMonth = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.CBYear = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
@@ -316,8 +314,6 @@ namespace BankTeacher.Bank
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.DGVAmountOffHistory);
-            this.tabPage1.Controls.Add(this.CBMonth);
-            this.tabPage1.Controls.Add(this.label6);
             this.tabPage1.Controls.Add(this.CBYear);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Location = new System.Drawing.Point(4, 39);
@@ -399,28 +395,6 @@ namespace BankTeacher.Bank
             this.Column6.MinimumWidth = 6;
             this.Column6.Name = "Column6";
             this.Column6.ReadOnly = true;
-            // 
-            // CBMonth
-            // 
-            this.CBMonth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CBMonth.Enabled = false;
-            this.CBMonth.FormattingEnabled = true;
-            this.CBMonth.Location = new System.Drawing.Point(255, 18);
-            this.CBMonth.Margin = new System.Windows.Forms.Padding(2);
-            this.CBMonth.Name = "CBMonth";
-            this.CBMonth.Size = new System.Drawing.Size(122, 38);
-            this.CBMonth.TabIndex = 1;
-            this.CBMonth.SelectedIndexChanged += new System.EventHandler(this.CBMonth_SelectedIndexChanged);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(210, 20);
-            this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(46, 30);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "เดือน";
             // 
             // CBYear
             // 
@@ -693,8 +667,6 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.ComboBox CBMonth;
-        private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox CBYear;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridView DGVAmountOffHistory;
