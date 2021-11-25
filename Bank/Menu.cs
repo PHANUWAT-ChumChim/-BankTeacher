@@ -102,7 +102,7 @@ namespace BankTeacher.Bank
             Bank.MemberShip Rc = new Bank.MemberShip();
             CloseFrom(Rc);
         }
-        private void Menu_pay_Click(object sender, EventArgs e)
+        public void Menu_pay_Click(object sender, EventArgs e)
         {
             BankTeacher.Bank.Pay.pay Mn = new BankTeacher.Bank.Pay.pay(0);
             CloseFrom(Mn);

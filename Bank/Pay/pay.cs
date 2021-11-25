@@ -13,10 +13,12 @@ using System.Diagnostics;
 
 namespace BankTeacher.Bank.Pay
 {
+    
     public partial class pay : Form
     {
 
         //------------------------- index -----------------
+        
         int SelectIndexRow = -1;
         bool CheckInputTeacher = false;
         bool CheckInputBill = false;
@@ -24,6 +26,7 @@ namespace BankTeacher.Bank.Pay
         List<List<String>> BackupDM = new List<List<string>>();
         List<int> YearinCB = new List<int>();
         String[] StartLoan = new String[] {"Year","Month"};
+        public String TeacherNoOtherForm;
         //----------------------- index code -------------------- ////////
 
 
@@ -324,6 +327,12 @@ namespace BankTeacher.Bank.Pay
                 for (int x = 0; x < cb.Length; x++)
                     cb[x].Items.Add(new BankTeacher.Class.ComboBoxPayment(dtPayment.Rows[a][0].ToString(),
                         dtPayment.Rows[a][1].ToString()));
+
+            if(TeacherNoOtherForm != "")
+            {
+                TBTeacherNo.Text = TeacherNoOtherForm;
+                TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+            }
         }
         //=============================================================================================
 
@@ -1095,6 +1104,14 @@ namespace BankTeacher.Bank.Pay
                             CBList_Pay.SelectedIndex = 0;
                             CBList_Pay_SelectedIndexChanged(new object(), new EventArgs());
                         }
+                    }
+                    else
+                    {
+                        if (CBMonthSelection_Pay.Items.Count != 0)
+                            CBMonthSelection_Pay.SelectedIndex = 0;
+                        else
+                            if (CBYearSelection_Pay.Items.Count != 0)
+                            CBYearSelection_Pay.SelectedIndex = 0;
                     }
                 }
                 else

@@ -1777,7 +1777,6 @@ namespace BankTeacher.Bank.Pay
         private System.Windows.Forms.Button BListAdd_Pay;
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox TBTeacherNo;
         private System.Windows.Forms.TextBox TBTeacherBill;
         private System.Windows.Forms.TextBox TBTeacherName;
         private System.Windows.Forms.Label LB5Ye;

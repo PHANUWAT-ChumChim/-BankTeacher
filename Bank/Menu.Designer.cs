@@ -187,7 +187,6 @@ namespace BankTeacher.Bank
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem Menu_Home;
-        private System.Windows.Forms.ToolStripMenuItem Menu_pay;
         private System.Windows.Forms.ToolStripMenuItem Menu_Loan;
         private System.Windows.Forms.ToolStripMenuItem AmountOff;
         private System.Windows.Forms.ToolStripMenuItem Menu_Membership;
@@ -197,5 +196,6 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.ToolStripMenuItem Cancel;
         private System.Windows.Forms.ToolStripMenuItem Menubar_MerberLoan;
         private System.Windows.Forms.ToolStripMenuItem aaToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem Menu_pay;
     }
 }
