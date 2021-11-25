@@ -40,6 +40,7 @@ namespace BankTeacher.Bank
                     dataGridView1.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
                 }
             }
+            TBSearch.Focus();
         }
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -95,6 +96,18 @@ namespace BankTeacher.Bank
                     };
                     this.Dispose();
                 }
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                this.Close();
+            }
+        }
+
+        private void Search_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Escape)
+            {
+                this.Close();
             }
         }
     }

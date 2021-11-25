@@ -376,6 +376,7 @@ namespace BankTeacher.Bank
                          DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1].Replace("{Text}", TBTeacherNo_Reg.Text));
                         TBTeacherName_Reg.Text = ds.Tables[0].Rows[0][1].ToString();
                         Check = 1;
+                        CheckBRegister = false;
 
                     }
                     catch (Exception ex)
