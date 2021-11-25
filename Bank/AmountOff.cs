@@ -130,7 +130,7 @@ namespace BankTeacher.Bank
             {
                 if (Class.SQLConnection.InputSQLMSSQL(SQLDefault[7]
                     .Replace("{Date}", Year.ToString())).Rows.Count == 0)
-                {
+                {//
                     continue;
                 }
                 CBYear.Items.Add(Year);

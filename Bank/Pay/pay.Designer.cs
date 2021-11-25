@@ -168,6 +168,7 @@ namespace BankTeacher.Bank.Pay
             this.panel1 = new System.Windows.Forms.Panel();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
+            this.BUploadFile_Pay = new System.Windows.Forms.Button();
             this.panel7.SuspendLayout();
             this.panel8.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -524,6 +525,7 @@ namespace BankTeacher.Bank.Pay
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.White;
+            this.tabPage1.Controls.Add(this.BUploadFile_Pay);
             this.tabPage1.Controls.Add(this.BClearTab_Pay);
             this.tabPage1.Controls.Add(this.panel14);
             this.tabPage1.Controls.Add(this.panel13);
@@ -1698,6 +1700,20 @@ namespace BankTeacher.Bank.Pay
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
             // 
+            // BUploadFile_Pay
+            // 
+            this.BUploadFile_Pay.BackColor = System.Drawing.Color.White;
+            this.BUploadFile_Pay.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BUploadFile_Pay.Cursor = System.Windows.Forms.Cursors.Default;
+            this.BUploadFile_Pay.Location = new System.Drawing.Point(273, 399);
+            this.BUploadFile_Pay.Margin = new System.Windows.Forms.Padding(2);
+            this.BUploadFile_Pay.Name = "BUploadFile_Pay";
+            this.BUploadFile_Pay.Size = new System.Drawing.Size(130, 51);
+            this.BUploadFile_Pay.TabIndex = 102;
+            this.BUploadFile_Pay.Text = "อัพโหลดสลีป";
+            this.BUploadFile_Pay.UseVisualStyleBackColor = false;
+            this.BUploadFile_Pay.Visible = false;
+            // 
             // pay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1890,5 +1906,6 @@ namespace BankTeacher.Bank.Pay
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.Button BUploadFile_Pay;
     }
 }
