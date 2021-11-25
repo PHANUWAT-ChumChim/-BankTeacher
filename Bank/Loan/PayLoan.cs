@@ -101,7 +101,7 @@ namespace BankTeacher.Bank.Loan
             Bank.Search IN;
             try
             {
-
+                StatusBoxFile = 0;
                 IN = new Bank.Search(SQLDefault[0]);
                 IN.ShowDialog();
                 
@@ -283,8 +283,16 @@ namespace BankTeacher.Bank.Loan
                             {
                                 imgeLocation = "";
                                 label5.ForeColor = Color.Green;
-                                label5.Text = "สอัพโหลดไฟล์สำเร็จ";
+                                label5.Text = "อัพโหลดไฟล์สำเร็จ";
                                 BTdeletefile.Enabled = true;
+                            }
+                            else
+                            {
+                                StatusBoxFile = 0;
+                                imgeLocation = "";
+                                label5.ForeColor = Color.Red;
+                                label5.Text = "อัพโหลดไฟล์ไม่สำเร็จ";
+                                BTdeletefile.Enabled = false;
                             }
                             
                         }
