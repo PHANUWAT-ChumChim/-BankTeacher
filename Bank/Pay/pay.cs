@@ -166,9 +166,9 @@ namespace BankTeacher.Bank.Pay
            ,
 
 
-          //[8]Insert BillDetails Use ForLoop INPUT: {BillNo},{TypeNo},{LoanNo},{Amount},{Month},{Year}
-           "INSERT INTO EmployeeBank.dbo.tblBillDetail (BillNo,TypeNo,LoanNo,Amount,Mount,Year) \r\n " +
-          "VALUES ({BillNo},{TypeNo},{LoanNo},{Amount},{Month},{Year});"
+          //[8]Insert BillDetails Use ForLoop INPUT: {BillNo},{TypeNo},{LoanNo},{Amount},{Month},{Year},{BillDetailPaymentNo}
+           "INSERT INTO EmployeeBank.dbo.tblBillDetail (BillNo,TypeNo,LoanNo,Amount,Mount,Year,BillDetailPaymentNo)  \r\n " +
+          "VALUES ({BillNo},{TypeNo},{LoanNo},{Amount},{Month},{Year},{BillDetailPaymentNo});"
            ,
            //[9]Update Guarantor and Loan (BSavePayLoop) INPUT: {LoanAmount}  {LoanNo}
            "-- ลบ คนค้ำ + ปิดกู้ \r\n " +
@@ -1162,21 +1162,22 @@ namespace BankTeacher.Bank.Pay
                     {
                         try
                         {
-                            DataTable dtBillNo = Class.SQLConnection.InputSQLMSSQL(SQLDefault[7]
+                            DataSet dtBillNo = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[7]
                                 .Replace("{TeacherNo}", TBTeacherNo.Text)
-                                .Replace("{TeacherNoaddby", Class.UserInfo.TeacherNo));
-                            String BillNo = dtBillNo.Rows[0][0].ToString();
+                                .Replace("{TeacherNoaddby}", Class.UserInfo.TeacherNo));
+                            String BillNo = dtBillNo.Tables[0].Rows[0][0].ToString();
                             for (int x = 0; x < DGV_Pay.Rows.Count; x++)
                             {
                                 if (DGV_Pay.Rows[x].Cells[1].Value.ToString().Contains("หุ้น"))
                                 {
                                     Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
-                                    .Replace("{BillNo", BillNo)
+                                    .Replace("{BillNo}", BillNo)
                                     .Replace("{TypeNo}", "1")
-                                    .Replace("{LoanNo}", "")
+                                    .Replace("{LoanNo}", "null")
                                     .Replace("{Amount}", DGV_Pay.Rows[x].Cells[2].Value.ToString())
-                                    .Replace("{Mount}", DGV_Pay.Rows[x].Cells[5].Value.ToString())
-                                    .Replace("{Year}", DGV_Pay.Rows[x].Cells[4].Value.ToString()));
+                                    .Replace("{Month}", DGV_Pay.Rows[x].Cells[5].Value.ToString())
+                                    .Replace("{Year}", DGV_Pay.Rows[x].Cells[4].Value.ToString())
+                                    .Replace("{BillDetailPaymentNo}", (CBPayment_Pay.SelectedIndex + 1).ToString()));
                                 }
                                 else if (DGV_Pay.Rows[x].Cells[1].Value.ToString().Contains("กู้"))
                                 {
@@ -1185,12 +1186,11 @@ namespace BankTeacher.Bank.Pay
                                     .Replace("{TypeNo}", "2")
                                     .Replace("{LoanNo}", DGV_Pay.Rows[x].Cells[3].Value.ToString())
                                     .Replace("{Amount}", DGV_Pay.Rows[x].Cells[2].Value.ToString())
-                                    .Replace("{Mount}", DGV_Pay.Rows[x].Cells[5].Value.ToString())
-                                    .Replace("{Year}", DGV_Pay.Rows[x].Cells[4].Value.ToString()));
+                                    .Replace("{Month}", DGV_Pay.Rows[x].Cells[5].Value.ToString())
+                                    .Replace("{Year}", DGV_Pay.Rows[x].Cells[4].Value.ToString())
+                                    .Replace("{BillDetailPaymentNo}", (CBPayment_Pay.SelectedIndex + 1).ToString()));
                                 }
-
                             }
-
                             for (int a = 0; a < DGV_Pay.Rows.Count; a++)
                             {
                                 if (DGV_Pay.Rows[a].Cells[1].Value.ToString().Contains("หุ้น"))
