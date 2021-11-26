@@ -273,7 +273,7 @@ namespace BankTeacher.Bank.Loan
                     }
                     if (imgeLocation != "")
                     {
-                        StatusBoxFile = 1;
+                        
                         var smb = new SmbFileContainer("Loan");
                         if (smb.IsValidConnection())
                         {
@@ -285,19 +285,15 @@ namespace BankTeacher.Bank.Loan
                                 label5.ForeColor = Color.Green;
                                 label5.Text = "อัพโหลดไฟล์สำเร็จ";
                                 BTdeletefile.Enabled = true;
+                                StatusBoxFile = 1;
                             }
                             else
-                            {
                                 StatusBoxFile = 0;
-                                imgeLocation = "";
-                                label5.ForeColor = Color.Red;
-                                label5.Text = "อัพโหลดไฟล์ไม่สำเร็จ";
-                                BTdeletefile.Enabled = false;
-                            }
                         }
                         else
                         {
                             MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            StatusBoxFile = 0;
                         }
                     }
 
