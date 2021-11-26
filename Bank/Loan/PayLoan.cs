@@ -101,7 +101,7 @@ namespace BankTeacher.Bank.Loan
             Bank.Search IN;
             try
             {
-
+                StatusBoxFile = 0;
                 IN = new Bank.Search(SQLDefault[0]);
                 IN.ShowDialog();
                 
@@ -289,7 +289,6 @@ namespace BankTeacher.Bank.Loan
                             }
                             else
                                 StatusBoxFile = 0;
-                            
                         }
                         else
                         {
