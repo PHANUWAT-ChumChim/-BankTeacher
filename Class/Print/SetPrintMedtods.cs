@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing.Printing;
 
 namespace BankTeacher.Class.Print
 {
@@ -284,14 +285,14 @@ namespace BankTeacher.Class.Print
         {
             float sum;
             // ยอดที่รวมได้ทั้งหมด 
-            sum = array.Sum();
-            SizeF SizeSUM = e.Graphics.MeasureString(Class.Print.PrintPreviewDialog.NumToBath(sum.ToString()), Class.Print.PrintPreviewDialog.FonT(Fontsize, "TH Sarabun New"));
+            sum = Convert.ToInt32(array.Sum());
+            SizeF SizeSUM = e.Graphics.MeasureString(Class.Print.PrintPreviewDialog.NumToBath(sum.ToString()), Class.Print.PrintPreviewDialog.FonT(Fontsize, "TH Sarabun New", FontStyle.Bold));
             // ตัวหนังสือเลข
-            e.Graphics.DrawString(Class.Print.PrintPreviewDialog.NumToBath(sum.ToString()), Class.Print.PrintPreviewDialog.FonT(Fontsize, "TH Sarabun New"), B, x, y);
+            e.Graphics.DrawString(Class.Print.PrintPreviewDialog.NumToBath(sum.ToString()), Class.Print.PrintPreviewDialog.FonT(18, "TH Sarabun New", FontStyle.Bold), B, x, y);
             // เส้น
             e.Graphics.DrawRectangle(pen, x, y, SizeSUM.Width, SizeSUM.Height);
             // ตัวเลข
-            e.Graphics.DrawString($"{sum.ToString()} บาท", Class.Print.PrintPreviewDialog.FonT(Fontsize, "TH Sarabun New"), B, ((Sizepaper - 50) - SizeSUM.Width) / 2 + SizeSUM.Width, y);
+            e.Graphics.DrawString($"{Convert.ToInt32(sum).ToString("D")} บาท", Class.Print.PrintPreviewDialog.FonT(18, "TH Sarabun New", FontStyle.Bold), B, ((Sizepaper - 50) - SizeSUM.Width) / 2 + SizeSUM.Width, y);
             // เส้น
             e.Graphics.DrawRectangle(pen, SizeSUM.Width + x, y, (Sizepaper-50) - SizeSUM.Width, SizeSUM.Height);
         }

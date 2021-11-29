@@ -1933,7 +1933,7 @@ namespace BankTeacher.Bank.Pay
         }
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.Print.PrintPreviewDialog.PrintDeReport(e,DGV_BillInfo,tabControl1.SelectedTab.Text);
+            //Class.Print.PrintPreviewDialog.PrintDeReport(e,DGV_BillInfo,tabControl1.SelectedTab.Text);
         }
         private static void NumericCheck(object sender, KeyPressEventArgs e)
         {
