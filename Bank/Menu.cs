@@ -37,7 +37,6 @@ namespace BankTeacher.Bank
              //[1]Select Date Input :  -
              "SELECT CAST(CURRENT_TIMESTAMP as DATE);"
              ,
-             
          };
         public Menu()
         {

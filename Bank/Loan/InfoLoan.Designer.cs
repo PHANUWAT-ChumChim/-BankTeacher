@@ -29,13 +29,15 @@ namespace BankTeacher.Bank.Loan
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InfoLoan));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.CBPapersize = new System.Windows.Forms.ComboBox();
             this.BTPrint = new System.Windows.Forms.Button();
             this.panel16 = new System.Windows.Forms.Panel();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -46,9 +48,16 @@ namespace BankTeacher.Bank.Loan
             this.DGVGuarantor = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.C_Guarantor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.TB_PayLoanAmount = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
+            this.TB_TotalLoan = new System.Windows.Forms.TextBox();
+            this.label23 = new System.Windows.Forms.Label();
+            this.TB_LoanAmount = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
             this.TBYearPay_Detail = new System.Windows.Forms.TextBox();
             this.TBSignUpDate_Detail = new System.Windows.Forms.TextBox();
             this.TBFinishYearPay_Detail = new System.Windows.Forms.TextBox();
@@ -105,7 +114,6 @@ namespace BankTeacher.Bank.Loan
             this.LB1Id = new System.Windows.Forms.Label();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-            this.CBPapersize = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel16.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -132,6 +140,21 @@ namespace BankTeacher.Bank.Loan
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1165, 712);
             this.panel1.TabIndex = 100;
+            // 
+            // CBPapersize
+            // 
+            this.CBPapersize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBPapersize.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CBPapersize.FormattingEnabled = true;
+            this.CBPapersize.Items.AddRange(new object[] {
+            "A4",
+            "A5"});
+            this.CBPapersize.Location = new System.Drawing.Point(885, 203);
+            this.CBPapersize.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.CBPapersize.Name = "CBPapersize";
+            this.CBPapersize.Size = new System.Drawing.Size(123, 39);
+            this.CBPapersize.TabIndex = 108;
+            this.CBPapersize.SelectedIndexChanged += new System.EventHandler(this.CBPapersize_SelectedIndexChanged);
             // 
             // BTPrint
             // 
@@ -221,13 +244,14 @@ namespace BankTeacher.Bank.Loan
             // 
             this.DGVGuarantor.AllowUserToAddRows = false;
             this.DGVGuarantor.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DGVGuarantor.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DGVGuarantor.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
             this.DGVGuarantor.BackgroundColor = System.Drawing.Color.White;
             this.DGVGuarantor.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVGuarantor.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2,
+            this.C_Guarantor,
             this.Column3});
             this.DGVGuarantor.Enabled = false;
             this.DGVGuarantor.Location = new System.Drawing.Point(12, 35);
@@ -240,8 +264,8 @@ namespace BankTeacher.Bank.Loan
             // 
             // Column1
             // 
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle8;
             this.Column1.HeaderText = "รหัส";
             this.Column1.MinimumWidth = 6;
             this.Column1.Name = "Column1";
@@ -250,19 +274,28 @@ namespace BankTeacher.Bank.Loan
             // 
             // Column2
             // 
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle9;
             this.Column2.HeaderText = "ชื่อ";
             this.Column2.MinimumWidth = 6;
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
             this.Column2.Width = 250;
             // 
+            // C_Guarantor
+            // 
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.C_Guarantor.DefaultCellStyle = dataGridViewCellStyle10;
+            this.C_Guarantor.HeaderText = "เปอร์เซ็นค้ำ";
+            this.C_Guarantor.MinimumWidth = 6;
+            this.C_Guarantor.Name = "C_Guarantor";
+            this.C_Guarantor.Width = 250;
+            // 
             // Column3
             // 
             this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column3.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column3.DefaultCellStyle = dataGridViewCellStyle11;
             this.Column3.HeaderText = "ยอดเงินค้ำ";
             this.Column3.MinimumWidth = 6;
             this.Column3.Name = "Column3";
@@ -284,6 +317,12 @@ namespace BankTeacher.Bank.Loan
             // 
             this.panel5.BackColor = System.Drawing.Color.White;
             this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel5.Controls.Add(this.TB_PayLoanAmount);
+            this.panel5.Controls.Add(this.label24);
+            this.panel5.Controls.Add(this.TB_TotalLoan);
+            this.panel5.Controls.Add(this.label23);
+            this.panel5.Controls.Add(this.TB_LoanAmount);
+            this.panel5.Controls.Add(this.label22);
             this.panel5.Controls.Add(this.TBYearPay_Detail);
             this.panel5.Controls.Add(this.TBSignUpDate_Detail);
             this.panel5.Controls.Add(this.TBFinishYearPay_Detail);
@@ -315,16 +354,79 @@ namespace BankTeacher.Bank.Loan
             this.panel5.Controls.Add(this.label18);
             this.panel5.Controls.Add(this.label12);
             this.panel5.Controls.Add(this.TBInterestRate_Detail);
-            this.panel5.Location = new System.Drawing.Point(6, 24);
+            this.panel5.Location = new System.Drawing.Point(6, 6);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(1118, 382);
+            this.panel5.Size = new System.Drawing.Size(1118, 419);
             this.panel5.TabIndex = 105;
+            // 
+            // TB_PayLoanAmount
+            // 
+            this.TB_PayLoanAmount.Enabled = false;
+            this.TB_PayLoanAmount.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TB_PayLoanAmount.Location = new System.Drawing.Point(934, 141);
+            this.TB_PayLoanAmount.MaxLength = 8;
+            this.TB_PayLoanAmount.Name = "TB_PayLoanAmount";
+            this.TB_PayLoanAmount.Size = new System.Drawing.Size(151, 43);
+            this.TB_PayLoanAmount.TabIndex = 28;
+            this.TB_PayLoanAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label24.Location = new System.Drawing.Point(570, 141);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(152, 40);
+            this.label24.TabIndex = 27;
+            this.label24.Text = "ยอดชำคงเหลือ";
+            // 
+            // TB_TotalLoan
+            // 
+            this.TB_TotalLoan.Enabled = false;
+            this.TB_TotalLoan.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TB_TotalLoan.Location = new System.Drawing.Point(740, 141);
+            this.TB_TotalLoan.MaxLength = 8;
+            this.TB_TotalLoan.Name = "TB_TotalLoan";
+            this.TB_TotalLoan.Size = new System.Drawing.Size(151, 43);
+            this.TB_TotalLoan.TabIndex = 26;
+            this.TB_TotalLoan.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label23.Location = new System.Drawing.Point(955, 82);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(115, 40);
+            this.label23.TabIndex = 25;
+            this.label23.Text = "ยอดที่ชำระ";
+            // 
+            // TB_LoanAmount
+            // 
+            this.TB_LoanAmount.Enabled = false;
+            this.TB_LoanAmount.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TB_LoanAmount.Location = new System.Drawing.Point(645, 82);
+            this.TB_LoanAmount.MaxLength = 8;
+            this.TB_LoanAmount.Name = "TB_LoanAmount";
+            this.TB_LoanAmount.Size = new System.Drawing.Size(246, 43);
+            this.TB_LoanAmount.TabIndex = 24;
+            this.TB_LoanAmount.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label22.Location = new System.Drawing.Point(570, 82);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(69, 40);
+            this.label22.TabIndex = 23;
+            this.label22.Text = "ยอดกู้";
             // 
             // TBYearPay_Detail
             // 
             this.TBYearPay_Detail.Enabled = false;
             this.TBYearPay_Detail.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBYearPay_Detail.Location = new System.Drawing.Point(247, 82);
+            this.TBYearPay_Detail.Location = new System.Drawing.Point(223, 82);
             this.TBYearPay_Detail.MaxLength = 8;
             this.TBYearPay_Detail.Name = "TBYearPay_Detail";
             this.TBYearPay_Detail.Size = new System.Drawing.Size(122, 43);
@@ -346,7 +448,7 @@ namespace BankTeacher.Bank.Loan
             // 
             this.TBFinishYearPay_Detail.Enabled = false;
             this.TBFinishYearPay_Detail.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBFinishYearPay_Detail.Location = new System.Drawing.Point(247, 141);
+            this.TBFinishYearPay_Detail.Location = new System.Drawing.Point(223, 141);
             this.TBFinishYearPay_Detail.MaxLength = 8;
             this.TBFinishYearPay_Detail.Name = "TBFinishYearPay_Detail";
             this.TBFinishYearPay_Detail.Size = new System.Drawing.Size(122, 43);
@@ -367,7 +469,7 @@ namespace BankTeacher.Bank.Loan
             // 
             this.label21.AutoSize = true;
             this.label21.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label21.Location = new System.Drawing.Point(19, 141);
+            this.label21.Location = new System.Drawing.Point(11, 141);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(168, 40);
             this.label21.TabIndex = 9;
@@ -377,7 +479,7 @@ namespace BankTeacher.Bank.Loan
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label10.Location = new System.Drawing.Point(24, 82);
+            this.label10.Location = new System.Drawing.Point(16, 82);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(94, 40);
             this.label10.TabIndex = 9;
@@ -398,7 +500,7 @@ namespace BankTeacher.Bank.Loan
             // 
             this.TBPayNo_Detail.Enabled = false;
             this.TBPayNo_Detail.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBPayNo_Detail.Location = new System.Drawing.Point(159, 204);
+            this.TBPayNo_Detail.Location = new System.Drawing.Point(151, 204);
             this.TBPayNo_Detail.MaxLength = 8;
             this.TBPayNo_Detail.Name = "TBPayNo_Detail";
             this.TBPayNo_Detail.Size = new System.Drawing.Size(254, 43);
@@ -429,7 +531,7 @@ namespace BankTeacher.Bank.Loan
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label13.Location = new System.Drawing.Point(19, 204);
+            this.label13.Location = new System.Drawing.Point(11, 204);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(116, 40);
             this.label13.TabIndex = 10;
@@ -461,7 +563,7 @@ namespace BankTeacher.Bank.Loan
             // 
             this.TBInterest_Detail.Enabled = false;
             this.TBInterest_Detail.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBInterest_Detail.Location = new System.Drawing.Point(159, 320);
+            this.TBInterest_Detail.Location = new System.Drawing.Point(151, 320);
             this.TBInterest_Detail.MaxLength = 8;
             this.TBInterest_Detail.Name = "TBInterest_Detail";
             this.TBInterest_Detail.Size = new System.Drawing.Size(159, 43);
@@ -472,7 +574,7 @@ namespace BankTeacher.Bank.Loan
             // 
             this.TBLoanAmount_Deatail.Enabled = false;
             this.TBLoanAmount_Deatail.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBLoanAmount_Deatail.Location = new System.Drawing.Point(159, 261);
+            this.TBLoanAmount_Deatail.Location = new System.Drawing.Point(151, 261);
             this.TBLoanAmount_Deatail.MaxLength = 8;
             this.TBLoanAmount_Deatail.Name = "TBLoanAmount_Deatail";
             this.TBLoanAmount_Deatail.Size = new System.Drawing.Size(254, 43);
@@ -504,7 +606,7 @@ namespace BankTeacher.Bank.Loan
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label16.Location = new System.Drawing.Point(336, 320);
+            this.label16.Location = new System.Drawing.Point(328, 320);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(55, 40);
             this.label16.TabIndex = 20;
@@ -514,7 +616,7 @@ namespace BankTeacher.Bank.Loan
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label9.Location = new System.Drawing.Point(19, 320);
+            this.label9.Location = new System.Drawing.Point(11, 320);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(90, 40);
             this.label9.TabIndex = 20;
@@ -534,7 +636,7 @@ namespace BankTeacher.Bank.Loan
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label7.Location = new System.Drawing.Point(19, 261);
+            this.label7.Location = new System.Drawing.Point(11, 261);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(76, 40);
             this.label7.TabIndex = 20;
@@ -574,7 +676,7 @@ namespace BankTeacher.Bank.Loan
             // 
             this.TBFinishMonthPay_Detail.Enabled = false;
             this.TBFinishMonthPay_Detail.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBFinishMonthPay_Detail.Location = new System.Drawing.Point(456, 141);
+            this.TBFinishMonthPay_Detail.Location = new System.Drawing.Point(432, 141);
             this.TBFinishMonthPay_Detail.MaxLength = 8;
             this.TBFinishMonthPay_Detail.Name = "TBFinishMonthPay_Detail";
             this.TBFinishMonthPay_Detail.Size = new System.Drawing.Size(122, 43);
@@ -585,7 +687,7 @@ namespace BankTeacher.Bank.Loan
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label20.Location = new System.Drawing.Point(212, 141);
+            this.label20.Location = new System.Drawing.Point(188, 141);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(31, 40);
             this.label20.TabIndex = 7;
@@ -595,7 +697,7 @@ namespace BankTeacher.Bank.Loan
             // 
             this.TBMonthPay_Detail.Enabled = false;
             this.TBMonthPay_Detail.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBMonthPay_Detail.Location = new System.Drawing.Point(456, 82);
+            this.TBMonthPay_Detail.Location = new System.Drawing.Point(432, 82);
             this.TBMonthPay_Detail.MaxLength = 8;
             this.TBMonthPay_Detail.Name = "TBMonthPay_Detail";
             this.TBMonthPay_Detail.Size = new System.Drawing.Size(122, 43);
@@ -606,7 +708,7 @@ namespace BankTeacher.Bank.Loan
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label11.Location = new System.Drawing.Point(214, 82);
+            this.label11.Location = new System.Drawing.Point(190, 82);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(31, 40);
             this.label11.TabIndex = 7;
@@ -616,7 +718,7 @@ namespace BankTeacher.Bank.Loan
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label18.Location = new System.Drawing.Point(389, 141);
+            this.label18.Location = new System.Drawing.Point(365, 141);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(64, 40);
             this.label18.TabIndex = 6;
@@ -626,7 +728,7 @@ namespace BankTeacher.Bank.Loan
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label12.Location = new System.Drawing.Point(389, 82);
+            this.label12.Location = new System.Drawing.Point(365, 82);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(64, 40);
             this.label12.TabIndex = 6;
@@ -659,14 +761,14 @@ namespace BankTeacher.Bank.Loan
             this.DGVLoanDetail.AllowUserToDeleteRows = false;
             this.DGVLoanDetail.AllowUserToResizeRows = false;
             this.DGVLoanDetail.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVLoanDetail.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVLoanDetail.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.DGVLoanDetail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVLoanDetail.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
@@ -709,7 +811,7 @@ namespace BankTeacher.Bank.Loan
             // 
             // Column6
             // 
-            this.Column6.HeaderText = "รวมที่ต้องจ่าย";
+            this.Column6.HeaderText = "สถาณะการชำระ";
             this.Column6.MinimumWidth = 6;
             this.Column6.Name = "Column6";
             this.Column6.ReadOnly = true;
@@ -718,7 +820,7 @@ namespace BankTeacher.Bank.Loan
             // Column7
             // 
             this.Column7.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column7.HeaderText = "สถาณะการชำระ";
+            this.Column7.HeaderText = "จำนวนเงิน";
             this.Column7.MinimumWidth = 6;
             this.Column7.Name = "Column7";
             this.Column7.ReadOnly = true;
@@ -922,21 +1024,6 @@ namespace BankTeacher.Bank.Loan
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
             // 
-            // CBPapersize
-            // 
-            this.CBPapersize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CBPapersize.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CBPapersize.FormattingEnabled = true;
-            this.CBPapersize.Items.AddRange(new object[] {
-            "A4",
-            "A5"});
-            this.CBPapersize.Location = new System.Drawing.Point(885, 201);
-            this.CBPapersize.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.CBPapersize.Name = "CBPapersize";
-            this.CBPapersize.Size = new System.Drawing.Size(123, 39);
-            this.CBPapersize.TabIndex = 108;
-            this.CBPapersize.SelectedIndexChanged += new System.EventHandler(this.CBPapersize_SelectedIndexChanged);
-            // 
             // InfoLoan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1008,19 +1095,11 @@ namespace BankTeacher.Bank.Loan
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.TextBox TBMonthPay_Detail;
         private System.Windows.Forms.TextBox TBYearPay_Detail;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.TextBox TBTeacheraddbyNo;
         private System.Windows.Forms.TextBox TBTeacheraddbyname;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.TextBox TBSignUpDate_Detail;
         private System.Windows.Forms.TextBox TBFinishYearPay_Detail;
         private System.Windows.Forms.Label label15;
@@ -1040,5 +1119,20 @@ namespace BankTeacher.Bank.Loan
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Windows.Forms.Button BTPrint;
         private System.Windows.Forms.ComboBox CBPapersize;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn C_Guarantor;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.TextBox TB_TotalLoan;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.TextBox TB_LoanAmount;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.TextBox TB_PayLoanAmount;
     }
 }

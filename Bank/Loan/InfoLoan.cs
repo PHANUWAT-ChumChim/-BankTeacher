@@ -14,6 +14,26 @@ namespace BankTeacher.Bank.Loan
     public partial class InfoLoan : Form
     {
         int Check = 0;
+        // ======================= ข้อมูลเเบบปริ้นนะงับโผม ====================
+        public static string info_name;
+        public static string info_id;
+        public static string info_Loanid;
+        public static string info_startdate;
+        public static string info_duedate;
+        // เงินตรา
+        public static float info_Sum;
+        public static string info_totelLoan;
+        public static string info_Loanpayall;
+        public static List<float> Amount = new List<float>();
+        public static List<Double> Percent = new List<double>();
+        // ผู้ค้ำ
+        public static List<string> info_GuarantrN = new List<string>();
+        public static List<string> info_GuarantrAmount = new List<string>();
+        public static List<string> info_GuarantrPercent = new List<string>();
+        public static List<string> info_Guarantrtotel = new List<string>();
+        // รอบ
+        public static int how_many_laps;
+
         /// <summary>
         /// <para>[0] SELECT MemberLonn  INPUT: {TeacherNo}</para>
         /// <para>[1] SELECT LOAN INPUT: {TeacherNo} </para>
@@ -52,7 +72,7 @@ namespace BankTeacher.Bank.Loan
           " ,TeacherNoAddBy, CAST(ISNULL(f.PrefixNameFull , '') + e.Fname + ' ' + e.Lname AS NVARCHAR) AS NameTeacherAddby   \r\n " +
           " , DATEADD(MONTH,a.PayNo-1,CAST(CAST(a.YearPay as varchar) + '/' + CAST(a.MonthPay as varchar) +'/01' as date)) as FinishDate \r\n " +
           " , (a.InterestRate / 100) * a.LoanAmount as Interest  \r\n " +
-          " ,((a.InterestRate / 100) * a.LoanAmount) + a.LoanAmount as TotalLoanAmount \r\n " +
+          " ,((a.InterestRate / 100) * a.LoanAmount) + a.LoanAmount as TotalLoanAmount,b.RemainsAmount \r\n " +
           " FROM EmployeeBank.dbo.tblLoan as a    \r\n " +
           " LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo   \r\n " +
           " LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo    \r\n " +
@@ -65,17 +85,25 @@ namespace BankTeacher.Bank.Loan
           " FROM EmployeeBank.dbo.tblLoan as a   \r\n " +
           " LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.LoanNo = b.LoanNo  \r\n " +
           " LEFT JOIN EmployeeBank.dbo.tblBill as c on b.BillNo = c.BillNo  \r\n " +
-          " WHERE a.LoanNo = '{LoanID}' and TypeNo = '2' and Cancel != 0; "
+          " WHERE a.LoanNo = '{LoanID}' and TypeNo = '2' and Cancel != 0;  \r\n" +
+          " \r\n" +
+          "SELECT (b.LoanAmount / 100) * b.InterestRate + b.LoanAmount as LoanAmount  \r\n" +
+          ",SUM(a.RemainsAmount) as totelLoan  \r\n" +
+          ",IIF(LoanAmount != SUM(a.RemainsAmount),(b.LoanAmount / 100) * b.InterestRate + b.LoanAmount-SUM(a.RemainsAmount),SUM(a.RemainsAmount)) AS TotelpayLoan  \r\n" +
+          ",ROUND(((b.LoanAmount / 100) * b.InterestRate + b.LoanAmount) / b.PayNo,0) as payall  \r\n" +
+          "FROM EmployeeBank.dbo.tblGuarantor as a  \r\n" +
+          "LEFT JOIN EmployeeBank.dbo.tblLoan as b on a.LoanNo = b.LoanNo  \r\n" +
+          "WHERE a.LoanNo = '{LoanID}'  \r\n" +
+          "GROUP BY b.LoanAmount,b.InterestRate,b.PayNo"
+
+
            ,
-
-
         };
         public InfoLoan()
         {
             InitializeComponent();
-            
         }
-
+          
         //ChangeSizeForm
         private void InfoLoan_SizeChanged(object sender, EventArgs e)
         {
@@ -209,9 +237,45 @@ namespace BankTeacher.Bank.Loan
                 DGVGuarantor.Rows.Clear();
                 if (ds.Tables[0].Rows.Count != 0)
                 {
+                    Amount.Clear();
+                    Percent.Clear();
+                    info_Sum = 0;
+                    for (int loopPS = 0; loopPS < ds.Tables[0].Rows.Count; loopPS++)
+                    {
+                        info_Sum += Convert.ToSingle(ds.Tables[0].Rows[loopPS][9].ToString());
+                        Amount.Add(Convert.ToSingle(ds.Tables[0].Rows[loopPS][9].ToString()));
+                        //ผู้ค้ำ
+                        if(loopPS != 0)
+                        {
+                            info_GuarantrN.Add (ds.Tables[0].Rows[loopPS][1].ToString());
+                            info_GuarantrAmount.Add (ds.Tables[0].Rows[loopPS][9].ToString());
+                            info_Guarantrtotel.Add(ds.Tables[0].Rows[loopPS][16].ToString());
+                        }
+                    }
+                    for (int looPS1 = 0; looPS1 < Amount.Count; looPS1++)
+                    {
+                        Double Percent = Amount[looPS1] / info_Sum * 100;
+                        Double ppp = Convert.ToDouble(Convert.ToInt32(Percent)) + 0.5;
+                        if (Math.Round(Percent, 0) > Convert.ToDouble(Convert.ToInt32(Percent)) + 0.5)
+                        {
+                            Percent += 1;
+                            InfoLoan.Percent.Add(Percent);
+                            // ผู้ค้ำ
+                            if(looPS1 != 0)
+                                info_GuarantrPercent.Add (Percent.ToString());
+                        }
+                        else
+                        {
+                            Percent = Math.Round(Percent, 0);
+                            // ผู้ค้ำ
+                            if (looPS1 != 0)
+                                info_GuarantrPercent.Add(Percent.ToString());
+                            InfoLoan.Percent.Add(Percent);
+                        }
+                    }
                     for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
                     {
-                        DGVGuarantor.Rows.Add(ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][1].ToString(), ds.Tables[0].Rows[x][9].ToString());
+                        DGVGuarantor.Rows.Add(ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][1].ToString(), Percent[x], ds.Tables[0].Rows[x][9].ToString());
                     }
                     TBLoanNo.Text = Loan.No;
                     TBYearPay_Detail.Text = ds.Tables[0].Rows[0][5].ToString();
@@ -234,6 +298,7 @@ namespace BankTeacher.Bank.Loan
                     TBLoanAmount_Deatail.Text = ds.Tables[0].Rows[0][8].ToString();
                     TBInterest_Detail.Text = ds.Tables[0].Rows[0][14].ToString();
                     DGVLoanDetail.Rows.Clear();
+                    //int a = (int.Parse(ds.Tables[0].Rows[0][8].ToString()) / 100) * int.Parse(ds.Tables[0].Rows[0][5].ToString());
 
                     Double Interest = Convert.ToDouble(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString())) * (Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100) / Convert.ToDouble(ds.Tables[0].Rows[0][6].ToString());
 
@@ -241,7 +306,7 @@ namespace BankTeacher.Bank.Loan
                     //int Pay = Convert.ToInt32(Convert.ToInt32(ds.Tables[0].Rows[0][8].ToString()) / Convert.ToInt32(ds.Tables[0].Rows[0][6].ToString()));
                     int SumInstallment = Convert.ToInt32(Pay + Interest);
                     String StatusPay = "";
-
+                 
                     for (int Num = 0; Num < int.Parse(ds.Tables[0].Rows[0][6].ToString()); Num++)
                     {
                         if (Month > 12)
@@ -255,7 +320,7 @@ namespace BankTeacher.Bank.Loan
                             Pay = Pay * Num;
                             Pay = Convert.ToInt32(ds.Tables[0].Rows[0][8].ToString()) - Pay;
                             SumInstallment = Convert.ToInt32(Pay + Interest);
-                        
+
                         }
                         try
                         {
@@ -273,13 +338,28 @@ namespace BankTeacher.Bank.Loan
                             StatusPay = "ยังไม่จ่าย";
                         }
 
-                        DGVLoanDetail.Rows.Add($"{Month}/{Year}", Pay, Convert.ToInt32(Interest), SumInstallment,StatusPay);
+                        DGVLoanDetail.Rows.Add($"{Month}/{Year}", Pay, Convert.ToInt32(Interest), StatusPay, SumInstallment);
                         Month++;
                     }
+                    // ------ ของของข้า
+                  info_name = TBTeacherName.Text;
+                  info_id = TBTeacherNo.Text;
+                  info_Loanid = TBLoanNo.Text;
+                  info_Loanpayall = ds.Tables[2].Rows[0][2].ToString();
+                  info_startdate = ds.Tables[0].Rows[0][2].ToString();
+                  info_duedate = ds.Tables[0].Rows[0][13].ToString();
+                  info_totelLoan = ds.Tables[2].Rows[0][1].ToString(); 
+                    // ตารางที่ 3
+                 TB_LoanAmount.Text = ds.Tables[2].Rows[0][0].ToString();
+                 TB_TotalLoan.Text = ds.Tables[2].Rows[0][1].ToString();
+                 TB_PayLoanAmount.Text = ds.Tables[2].Rows[0][2].ToString();
+                
+                    how_many_laps = DGVGuarantor.RowCount - 1;
                 }
             }
         }
-        
+
+     
         private void CBPapersize_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (CBPapersize.SelectedItem.ToString() == "A4")
@@ -288,18 +368,18 @@ namespace BankTeacher.Bank.Loan
                 printDocument1.DefaultPageSettings.Landscape = false;
             }
             else
-            {
+            {    //297 x 420
                 //printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A5",420,595);
                 printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                 printDocument1.DefaultPageSettings.Landscape = true;
             }
         }
-
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.Print.PrintPreviewDialog.PrintDeReport(e, DGVLoanDetail,tabControl1.SelectedTab.Text);
+            //DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text));
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVLoanDetail,tabControl1.SelectedTab.Text,this.AccessibilityObject.Name);
         }
-
+        
         private void BTPrint_Click_1(object sender, EventArgs e)
         {
             if(DGVLoanDetail.RowCount != 0)
@@ -315,7 +395,6 @@ namespace BankTeacher.Bank.Loan
                 MessageBox.Show("ดูเหมือนคุณจะลืมอะไรนะ");
             }
         }
-
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabControl1.SelectedIndex == 2)

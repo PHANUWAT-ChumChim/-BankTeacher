@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,7 +52,7 @@ namespace BankTeacher.Class.Print
                             // เเทนค่า ตาราง G ที่ได้รับมาเก็บไว้ ใน array สำหรับการ Add
                             forTextpage.Add(G.Rows[somtring].Cells[cells].Value.ToString());
                             // เก็บขนาข้อความที่ได้มา เพื่อเอาไปตวรจสอบใน โรงงานการตัด
-                            RowsY += CutingCharAndString(e, G.Rows[somtring].Cells[cells].Value.ToString(), SetCut, 0, RowsY, out nu, out nu, 0);
+                            RowsY += CutingCharAndString(e, G.Rows[somtring].Cells[cells].Value.ToString(), SetCut,Class.Print.PrintPreviewDialog.THsarabun18, 0, RowsY, out nu, out nu, 0);
                             // ตรวจสอบว่า ขนาดของ Y มากกว่า หน้า page ที่กำหนดไว้มั้ย
                             if (RowsY >= linesToPrint)
                             {
@@ -93,6 +94,11 @@ namespace BankTeacher.Class.Print
             return Textpage;
         }
 
+        private static float CutingCharAndString(PrintPageEventArgs e, string v1, int setCut, Font hsarabun18, int v2, float rowsY, out float nu1, out float nu2, int v3)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// การทำงาน
         /// ตัดข้อความที่เกิน / บวกตำเเหน่งเป็นPoint / ตวรจสอบสระ / เช็คขนาด / อื่นสามารถเพิ่มเติ่มต่อได้
@@ -105,11 +111,11 @@ namespace BankTeacher.Class.Print
         /// <para> X ใช้ในกรณีที่มีการใช้งาน ปริ้นเเบบ เว้นบรรดทัด เพื่อ ทราบขนาดที่เเน่นอน </para>
         ///        Y ใช้สำหรับการตวรจสอบ ความยาวที่มากที่สุดเมื่อมีการ ตัด หรือ ไม่ก็ได้ เพื่อบอกเเบบปริ้นที่อยู่ปัจจุบัน
         /// </summary>
-        public static float CutingCharAndString(System.Drawing.Printing.PrintPageEventArgs e, string TextToCut
+        public static float CutingCharAndString(System.Drawing.Printing.PrintPageEventArgs e, string TextToCut,Font F
             , int SetCut, float X, float Y, out float ReturnX, out float ReturnY, int selectresult)
         {
             // ขนาด Point ข้อความ
-            SizeF SizeText = e.Graphics.MeasureString("", Class.Print.PrintPreviewDialog.THsarabun18);
+            SizeF SizeText = e.Graphics.MeasureString("",F);
             // สระ
             Char[] Word = { 'ำ', 'ะ', 'ั', 'ี', 'ุ', 'ึ', 'เ', '็', '้', '๋', 'ิ', 'ื', '์', '.', ' ' }; //  ,'่'
             // ตัด สระ
@@ -165,7 +171,7 @@ namespace BankTeacher.Class.Print
                     // เเทนค่าที่เเยกออกมาสู่กระบวนการผลิต
                     TextToCut = storeCut;
                     // ตรวจสอบขนาด ข้อคววาม ความยาว
-                    SizeText = e.Graphics.MeasureString(splitCut, Class.Print.PrintPreviewDialog.THsarabun18);
+                    SizeText = e.Graphics.MeasureString(splitCut,F);
                     // ทำการเก็บขนาดข้อความที่ยาวที่สุดไว้
                     if (one == 0)
                     {
@@ -181,11 +187,11 @@ namespace BankTeacher.Class.Print
             }
             else
             {
-                SizeText = e.Graphics.MeasureString(TextToCut, Class.Print.PrintPreviewDialog.THsarabun18);
+                SizeText = e.Graphics.MeasureString(TextToCut,F);
                 Y += SizeText.Height;
                 OverMax.Add(Y);
 
-                SizeText = e.Graphics.MeasureString(TextToCut, Class.Print.PrintPreviewDialog.THsarabun18);
+                SizeText = e.Graphics.MeasureString(TextToCut,F);
                 X += SizeText.Width;
             }
             // ส่งกรอบกำหนด เเก X กลับไป กว้าง
@@ -217,7 +223,7 @@ namespace BankTeacher.Class.Print
             if (G.ColumnCount != 0)
             {
                 // เก็บขนาดที่ตัดมาเเล้ว
-                cm = CutingCharAndString(e, Text, SetCut, X, Y, out nu, out nu, 2);
+                cm = CutingCharAndString(e, Text,F, SetCut, X, Y, out nu, out nu, 2);
                 // เก็บค่าที่ได้เข้า  Values เเล้วใช้สำหรับเปลียบเทียบ ค่าที่มากที่สุด
                 Values.Add(cm);
             }
@@ -234,7 +240,7 @@ namespace BankTeacher.Class.Print
                             // นับตำเเหน่ง Rows ที่ถูกเทียบไปทั้งหมด
                             p++;
                             cm = CutingCharAndString(e, G.Rows[RowsNo].Cells[Loca - 1].Value.ToString()
-                         , SetCut, X, Y, out nu, out over, 2);
+                         ,F, SetCut, X, Y, out nu, out over, 2);
                             notover += over;
                             Values.Add(cm);
                         }
@@ -284,14 +290,14 @@ namespace BankTeacher.Class.Print
         {
             float sum;
             // ยอดที่รวมได้ทั้งหมด 
-            sum = array.Sum();
-            SizeF SizeSUM = e.Graphics.MeasureString(Class.Print.PrintPreviewDialog.NumToBath(sum.ToString()), Class.Print.PrintPreviewDialog.FonT(Fontsize, "TH Sarabun New"));
+            sum = Convert.ToInt32(array.Sum());
+            SizeF SizeSUM = e.Graphics.MeasureString(Class.Print.PrintPreviewDialog.NumToBath(sum.ToString()), Class.Print.PrintPreviewDialog.FonT(Fontsize, "TH Sarabun New",FontStyle.Bold));
             // ตัวหนังสือเลข
-            e.Graphics.DrawString(Class.Print.PrintPreviewDialog.NumToBath(sum.ToString()), Class.Print.PrintPreviewDialog.FonT(Fontsize, "TH Sarabun New"), B, x, y);
+            e.Graphics.DrawString(Class.Print.PrintPreviewDialog.NumToBath(sum.ToString()), Class.Print.PrintPreviewDialog.FonT(Fontsize, "TH Sarabun New",FontStyle.Bold), B, x, y);
             // เส้น
             e.Graphics.DrawRectangle(pen, x, y, SizeSUM.Width, SizeSUM.Height);
             // ตัวเลข
-            e.Graphics.DrawString($"{sum.ToString()} บาท", Class.Print.PrintPreviewDialog.FonT(Fontsize, "TH Sarabun New"), B, ((Sizepaper - 50) - SizeSUM.Width) / 2 + SizeSUM.Width, y);
+            e.Graphics.DrawString($"{Convert.ToInt32(sum).ToString("D")} บาท", Class.Print.PrintPreviewDialog.FonT(Fontsize, "TH Sarabun New",FontStyle.Bold), B, ((Sizepaper - 50) - SizeSUM.Width) / 2 + SizeSUM.Width, y);
             // เส้น
             e.Graphics.DrawRectangle(pen, SizeSUM.Width + x, y, (Sizepaper-50) - SizeSUM.Width, SizeSUM.Height);
         }

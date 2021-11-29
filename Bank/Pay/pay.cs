@@ -21,6 +21,7 @@ namespace BankTeacher.Bank.Pay
         public static int SelectIndexRow = -1;
         int Check = 0;
         int Auto = 0;
+        int OpenBT_Print;
         //----------------------- index code -------------------- ////////
 
 
@@ -378,7 +379,6 @@ namespace BankTeacher.Bank.Pay
                     if (dt.Rows.Count != 0)
                     {
                         sum = 0; x = 0;
-
                         TBTeacherBill.Text = "";
                         Freezing_Form(true);
                         ClearForm();
@@ -457,9 +457,7 @@ namespace BankTeacher.Bank.Pay
                         CBYearSelection_BillInfo.Text = BankTeacher.Bank.Menu.Date[0];
                         CBMonthSelection_Pay.SelectedIndex = 0;
                     }
-
                 }
-
             }
             else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back || e.KeyCode == Keys.Escape)
             {
@@ -848,6 +846,8 @@ namespace BankTeacher.Bank.Pay
             BankTeacher.Class.ComboBoxPay Loan = (CBList_Pay.SelectedItem as BankTeacher.Class.ComboBoxPay);
             if (TBAmount_Pay.Text != "")
             {
+                // ปิดปริ้น
+                BT_Printpay.Visible = false;
                 if (DGV_Pay.Rows.ToString() != "")
                 {
 
@@ -942,6 +942,8 @@ namespace BankTeacher.Bank.Pay
         private void BClearTab_Pay_Click(object sender, EventArgs e)
         {
             Cleartabpage1();
+            // ปิดปริ้น
+            BT_Printpay.Visible = false;
         }
 
         //SaveInfo Button
@@ -950,6 +952,8 @@ namespace BankTeacher.Bank.Pay
             BankTeacher.Class.ComboBoxPayment Payment = (CBPayment_Pay.SelectedItem as BankTeacher.Class.ComboBoxPayment);
             if (DGV_Pay.Rows.Count != 0)
             {
+                // เปิดปุ่มปริ้น
+                OpenBT_Print = 1;
                 DialogResult dialogResult = MessageBox.Show("ยืนยันการชำระ", "การเเจ้งเตือนการชำระ", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if (dialogResult == DialogResult.Yes)
                 {
@@ -1494,12 +1498,25 @@ namespace BankTeacher.Bank.Pay
                 MessageBox.Show("ดูเหมือนคุณจะลืมอะไรนะ");
             }
         }
-
+        
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.Print.PrintPreviewDialog.PrintDeReport(e,DGV_BillInfo,tabControl1.SelectedTab.Text);
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_BillInfo,tabControl1.SelectedTab.Text,this.AccessibilityObject.Name);
         }
-      
+     
+        private void DGV_Pay_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            if(OpenBT_Print == 1)
+            {
+                // ปิดปริ้น
+                BT_Printpay.Visible = true;
+                OpenBT_Print = 0;
+            }
+            else
+            {
+                BT_Printpay.Visible = false;
+            }
+        }
 
         //===============================================================================================
     }
