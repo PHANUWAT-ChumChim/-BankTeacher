@@ -1635,6 +1635,7 @@ namespace BankTeacher.Bank.Pay
                         //ถ้าเดือนที่ลบ มีใน DM[ปีที่ลบ]
                         if (Month == DM[Count][CountMonth].ToString())
                         {
+                            CheckSometing = true;
                             break;
                         }
                         //หากหายันอันสุดท้ายของ CBMonth แล้วยังไม่เจอ ให้เพิ่มเข้าไป
@@ -1660,7 +1661,7 @@ namespace BankTeacher.Bank.Pay
                         {
                             break;
                         }
-                        else if (Count == DM.Count - 1 && Year != Month[Count].ToString())
+                        else if (Count == DM.Count - 1 && Year != YearinCB[Count].ToString())
                         {
                             DM.Insert(YearPositionInBackupDM, new List<int>());
                             DM[YearPositionInBackupDM].Add(Convert.ToInt32(Month));
@@ -1674,14 +1675,16 @@ namespace BankTeacher.Bank.Pay
                     try
                     {
                         DM.Insert(YearPositionInBackupDM, new List<int>());
+                        DM[YearPositionInBackupDM].Add(Convert.ToInt32(Month));
+                        DM[YearPositionInBackupDM].Sort();
                     }
                     catch
                     {
                         //อีกนิด
                         DM.Add(new List<int>());
+                        DM[0].Add(Convert.ToInt32(Month));
                     }
-                    DM[YearPositionInBackupDM].Add(Convert.ToInt32(Month));
-                    DM[YearPositionInBackupDM].Sort();
+                    
                 }
                 CBYearSelection_Pay.Items.Clear();
                 for(int x = 0; x < DM.Count; x++)
