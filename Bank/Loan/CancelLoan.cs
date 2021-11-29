@@ -37,14 +37,14 @@ namespace BankTeacher.Bank.Loan
           " ORDER BY Fname;   "
           ,
           //[1] SELECT LOAN INPUT: {TeacherNo} : 
-          "SELECT CASTISNULL(d.PrefixName , '') + ' ' + Fname + ' ' + Lname AS NVARCHAR) , a.DateAdd ,a.PayDate  ,a. LoanNo  \r\n " +
+          "SELECT CAST(ISNULL(d.PrefixName , '') + ' ' + Fname + ' ' + Lname AS NVARCHAR) , a.DateAdd ,a.PayDate  ,a. LoanNo  \r\n " +
           " FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
           " LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo  \r\n " +
           " LEFT JOIN Personal.dbo.tblTeacherHis as c on a.TeacherNo = c.TeacherNo \r\n " +
           " LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblMember as e on c.TeacherNo = e.TeacherNo \r\n" +
           " WHERE a.TeacherNo = '{TeacherNo}' and LoanStatusNo = 1 and MemberStatusNo = 1 \r\n " +
-          " GROUP BY CASTISNULL(d.PrefixName , '') + ' ' + Fname + ' ' + Lname AS NVARCHAR) , a.DateAdd ,a.PayDate  ,a. LoanNo \r\n " +
+          " GROUP BY CAST(ISNULL(d.PrefixName , '') + ' ' + Fname + ' ' + Lname AS NVARCHAR) , a.DateAdd ,a.PayDate  ,a. LoanNo \r\n " +
           " ORDER BY a.LoanNo  "
 
           ,
@@ -231,6 +231,10 @@ namespace BankTeacher.Bank.Loan
                 textBox4.Text = "";
                 textBox5.Text = "";
                 textBox6.Text = "";
+                textBox8.Text = "";
+                textBox9.Text = "";
+                textBox10.Text = "";
+                textBox11.Text = "";
 
             }
         }
