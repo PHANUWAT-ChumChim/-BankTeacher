@@ -190,6 +190,8 @@ namespace BankTeacher.Bank.Loan
                     TBLoanStatus.Text = "";
                     TBDate.Text = "";
                     label3.Text = "0";
+                    if (CBB4Oppay.SelectedIndex != -1)
+                        CBB4Oppay.SelectedIndex = -1;
                     CBB4Oppay.Enabled = false;
                     button1.Enabled = false;
                     comboBox1.Enabled = false;
@@ -235,14 +237,15 @@ namespace BankTeacher.Bank.Loan
                     TBLoanStatus.Text = "";
                     TBDate.Text = "";
                     label3.Text = "0";
-                    CBB4Oppay.Enabled = false;
                     CBB4Oppay.SelectedIndex = -1;
+                    CBB4Oppay.Enabled = false;
                     TBTeacherNo.Text = "";
                     textBox1.Text = "";
                     button1.Enabled = false;
                     comboBox1.Enabled = false;
                     TBTeacherNo.Focus();
                     Check = 0;
+
                 }
                 catch
                 {
