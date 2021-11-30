@@ -124,7 +124,7 @@
   <data name="_64x64_TLC" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\246780541_4376178429170260_1641245443089079880_n.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="_64x64_Print" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="_10x10_Print" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\print.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Reports1" type="System.Resources.ResXFileRef, System.Windows.Forms">

@@ -16,9 +16,19 @@ namespace BankTeacher.Bank.Pay
     
     public partial class pay : Form
     {
-
+        // ======================= ข้อมูลเเบบปริ้น ====================
+        //ข้อมูลส่วนตัว
+        public static string info_name;
+        public static string info_id;
+        // จ่าย
+        public static string info_totelAmountpay;
+        public static string info_Billpay;
+        // กู้
+        public static string info_Lona_AmountRemain;
+        // ต้นฉบับ
+        public static int script = 1;
         //------------------------- index -----------------
-        
+
         int SelectIndexRow = -1;
         bool CheckInputTeacher = false;
         bool CheckInputBill = false;
@@ -1232,6 +1242,19 @@ namespace BankTeacher.Bank.Pay
                         }
 
                         MessageBox.Show("ชำระสำเร็จ", "แจ้งเตือนการขำระ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        info_name = TBTeacherName.Text;
+                        info_id = TBTeacherNo.Text;
+                        info_totelAmountpay = TBToatalSaving_ShareInfo.Text;
+                        info_Billpay = TBTeacherBill.Text;
+                        info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
+                        if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                        {
+                            printDocument1.Print();
+                        }
+                        if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                        {
+                            printDocument1.Print();
+                        }
                         ClearForm();
                         TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
                     }
@@ -1936,7 +1959,8 @@ namespace BankTeacher.Bank.Pay
         }
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            //Class.Print.PrintPreviewDialog.PrintDeReport(e,DGV_BillInfo,tabControl1.SelectedTab.Text);
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Pay, "ใบเสร็จรับเงิน", this.AccessibilityObject.Name,script);
+            script = 0;
         }
         private static void NumericCheck(object sender, KeyPressEventArgs e)
         {
