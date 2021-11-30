@@ -23,10 +23,12 @@ namespace BankTeacher.Bank.Pay
         // จ่าย
         public static string info_totelAmountpay;
         public static string info_Billpay;
+        public static string info_datepay;
         // กู้
         public static string info_Lona_AmountRemain;
         // ต้นฉบับ
         public static int script = 1;
+        public static int SELECT = 1;
         //------------------------- index -----------------
 
         int SelectIndexRow = -1;
@@ -61,6 +63,7 @@ namespace BankTeacher.Bank.Pay
         /// <para>[16] Update Cancel Bill INPUT: {BillNo} </para>
         /// <para>[17] Update Saving (CancelBill) INPUT: {TeacherNo} {Amount}</para>
         /// <para>[18] + RemainAmount In Guarantor (CancelBill) INPUT: {LoanNo} , {LoanAmount}</para>
+        /// <para>[19] print backwards IN: {billl} </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -263,7 +266,7 @@ namespace BankTeacher.Bank.Pay
           "ORDER BY b.Mount "
           ,
           //[15] Select Bill (CancelBill) INPUT: {BillNo}
-           "SELECT a.DateAdd,a.TeacherNo,CAST(ISNULL(e.PrefixName,'') +  Fname + ' ' + LName as nvarchar(255))as Name ,b.Year ,b.Mount , TypeName,LoanNo , b.Amount \r\n " +
+           "SELECT CAST(a.DateAdd as date),a.TeacherNo,CAST(ISNULL(e.PrefixName,'') +  Fname + ' ' + LName as nvarchar(255))as Name ,b.Year ,b.Mount , TypeName,LoanNo , b.Amount \r\n " +
           "FROM EmployeeBank.dbo.tblBill as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblMember as c on a.TeacherNo = c.TeacherNo \r\n " +
@@ -296,6 +299,12 @@ namespace BankTeacher.Bank.Pay
           "WHERE a.LoanNo = {LoanNo} and EmployeeBank.dbo.tblGuarantor.TeacherNo LIKE a.TeacherNo) \r\n " +
           "WHERE EmployeeBank.dbo.tblGuarantor.LoanNo = {LoanNo}"
 
+           ,
+           //[19] print backwards IN: {billl}
+           "SELECT  a.BillNo,a.Amount,b.TypeName,CAST(a.Mount as nvarchar)+'/'+CAST(a.Year as nvarchar)  as  Mountandyear \r\n" +
+           "FROM EmployeeBank.dbo.tblBillDetail as a \r\n" +
+           "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as b ON a.TypeNo = b.TypeNo \r\n" +
+           "WHERE a.BillNo = {bill}"
            ,
          };
 
@@ -1247,6 +1256,8 @@ namespace BankTeacher.Bank.Pay
                         info_totelAmountpay = TBToatalSaving_ShareInfo.Text;
                         info_Billpay = TBTeacherBill.Text;
                         info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
+                        info_datepay = DateTime.Today.Day.ToString() + DateTime.Today.Month.ToString() + DateTime.Today.Year.ToString();
+                        SELECT = 1;
                         if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                         {
                             printDocument1.Print();
@@ -1959,8 +1970,18 @@ namespace BankTeacher.Bank.Pay
         }
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Pay, "ใบเสร็จรับเงิน", this.AccessibilityObject.Name,script);
-            script = 0;
+            if (SELECT == 1)
+            {
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Pay, "ใบเสร็จรับเงิน", this.AccessibilityObject.Name, script);
+            }
+            else
+            {
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Tester, "ใบเสร็จรับเงิน(ย้อนหลัง)", this.AccessibilityObject.Name, script);
+            }
+            script++;
+            if (script > 2)
+                script = 1;
+           
         }
         private static void NumericCheck(object sender, KeyPressEventArgs e)
         {
@@ -1972,6 +1993,58 @@ namespace BankTeacher.Bank.Pay
             }
             else
                 e.Handled = !char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar);
+        }
+
+        // คลิ๊กเพื่อปริ้นข้อมูลย้อนหลัง
+        private void DGV_BillInfo_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                SELECT = 0;
+                info_name = TBTeacherName.Text;
+                info_id = TBTeacherNo.Text;
+                info_totelAmountpay = TBToatalSaving_ShareInfo.Text;
+                info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
+                info_Billpay = DGV_BillInfo.Rows[e.RowIndex].Cells[0].Value.ToString();
+                DGV_Tester.Rows.Clear();
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[19].Replace("{bill}", DGV_BillInfo.Rows[e.RowIndex].Cells[0].Value.ToString()));
+                for (int Row = 0; Row < dt.Rows.Count; Row++)
+                {
+                    DGV_Tester.Rows.Add(dt.Rows[Row][3].ToString(), dt.Rows[Row][2].ToString(), dt.Rows[Row][1]);
+                }
+            }
+            catch
+            {
+                //  Catach ทำไม
+            }
+            if (DGV_Tester.Rows.Count != 0)
+            {
+                BT_Printf.Visible = true;
+                DataTable dts = Class.SQLConnection.InputSQLMSSQL(SQLDefault[15].Replace("{BillNo}", DGV_BillInfo.Rows[e.RowIndex].Cells[0].Value.ToString()));
+                info_datepay = dts.Rows[0][0].ToString();
+            }
+            else
+            {
+                BT_Printf.Visible = false;
+            }
+        }
+        // ปริ้น
+        private void BT_Printf_Click(object sender, EventArgs e)
+        {
+            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+            {
+                printDocument1.Print();
+            }
+            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+            {
+                printDocument1.Print();
+            }
+        }
+        // เคลียร์ Clear เเบบปริ้น
+        private void DGV_BillInfo_RowValidated(object sender, DataGridViewCellEventArgs e)
+        {
+            DGV_Tester.Rows.Clear();
+            BT_Printf.Visible = false;
         }
         //===============================================================================================
     }
