@@ -1141,37 +1141,36 @@ namespace BankTeacher.Bank.Loan
 
         private void TBInterestRate_Leave(object sender, EventArgs e)
          {
-            if(panel1.Focused)
-                if(double.TryParse(TBInterestRate.Text , out double x) && x <= 100)
+            if(double.TryParse(TBInterestRate.Text , out double x) && x <= 100)
+            {
+
+                //Double aa = (Convert.ToDouble(TBInterestRate.Text) / 100);
+                if(Double.TryParse(TBInterestRate.Text , out Double Interestrate) && Interestrate > 0)
                 {
+                    int LoanAmount = Convert.ToInt32(CreditLoanAmount - CreditLoanAmount * (Interestrate / 100));
+                    LLoanAmount.Text = "(" + LoanAmount + ")";
+                    LTotal.Text = "" + LoanAmount;
 
-                    //Double aa = (Convert.ToDouble(TBInterestRate.Text) / 100);
-                    if(Double.TryParse(TBInterestRate.Text , out Double Interestrate) && Interestrate > 0)
-                    {
-                        int LoanAmount = Convert.ToInt32(CreditLoanAmount - CreditLoanAmount * (Interestrate / 100));
-                        LLoanAmount.Text = "(" + LoanAmount + ")";
-                        LTotal.Text = "" + LoanAmount;
-
-                        TBLoanAmount_Leave(sender, new EventArgs());
-                    }
-                    else if(Interestrate <= 0)
-                    {
-                        MessageBox.Show("อัตราดอกเบี้ยต้องมากกว่า 0 ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        TBInterestRate.Text = "";
-                        TBInterestRate.Focus();
-                    }
-                    else
-                    {
-                        MessageBox.Show("ใสจำนวนเปอร์เซ็นต์ไม่ถูกต้อง");
-                        TBInterestRate.Text = "";
-                        TBInterestRate.Focus();
-                    }
+                    TBLoanAmount_Leave(sender, new EventArgs());
+                }
+                else if(Interestrate <= 0)
+                {
+                    MessageBox.Show("อัตราดอกเบี้ยต้องมากกว่า 0 ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    TBInterestRate.Text = "";
+                    TBInterestRate.Focus();
                 }
                 else
                 {
-                    TBInterestRate.Text = "1";
+                    MessageBox.Show("ใสจำนวนเปอร์เซ็นต์ไม่ถูกต้อง");
+                    TBInterestRate.Text = "";
                     TBInterestRate.Focus();
                 }
+            }
+            else
+            {
+                TBInterestRate.Text = "1";
+                TBInterestRate.Focus();
+            }
         }
 
         private void Delete_Click_1(object sender, EventArgs e)
