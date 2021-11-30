@@ -81,7 +81,7 @@ namespace BankTeacher.Class.Print
                 CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, $"{MemberID}\r\n" +
                                                       $"{School}\r\n" +
                                                       $"วันที่ {Day} เดือน {Month} พ.ศ. {Year}\r\n",
-                          THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 400f, 200, false);
+                          THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++)+10, 400f, 200, false);
 
                 Class.Print.SetPrintMedtods.CenterLeft(e, "ถึงคณะกรรมการดำเนืนการกิจกรรมสหกรณ์ครูวิทยาลัยเทคโนโลยีอีอีซี เอ็นจิเนีย เเหลมฉบัง", THsarabun18, BrushBlack, X + XD, Y + (SpacePerRow * CurrentRows++), XP, XD);
 
@@ -108,11 +108,11 @@ namespace BankTeacher.Class.Print
                                            $"{quantity} {price}\r\n", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 700, 200, false);
 
                 CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "ข้อที่ 3 เมื่อ ข้าพเจ้าเป็นสมาชิกจะปฎิบัติตามข้อบังคับทุกประการ เเละจะพยายามส่งเสริมให้กิจกรรมสหกณ์ครูให้เจริญก้าวหน้ายิี่งขึ้นไป", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 750, 700);
-                //// ตกลง
-                //CurrentRows += Centerset(e, "ลงชื่อ......................................................." +
-                //                            "(..............................................................)", Normal01, Normal, X + 400, Y + (SpacePerRow * CurrentRows++) + 50, 400, 700);
+                // ตกลง
+                CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "ลงชื่อ......................................................." +
+                                            "       (..............................................................)",FonT(18,ThaiSarabun,FontStyle.Regular),BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 50, 400, 700);
 
-                //CenterRight(e, "ผู้สมัคร", Normal01, Normal, X + 550, Y + (SpacePerRow * CurrentRows++) + 50, XP, XD);
+                Class.Print.SetPrintMedtods.CenterRight(e, "ผู้สมัคร",FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 50, XP, XD+230);
             }
 
         }
@@ -293,7 +293,7 @@ namespace BankTeacher.Class.Print
             List<float> ColseLine = new List<float>();
             //================= CloseLise =====================
             // ขนาดการตัด
-            int setcut = 25;
+            int setcut = 20;
             //================= Cut =====================
             // ตัววัดขนาด ข้อความที่ได้รับมา สำหรับเรียกใช้เเล้วทิ้งเพราะงั้นเรียกใช้ได้เบย
             SizeF Size = e.Graphics.MeasureString("", THsarabun16);

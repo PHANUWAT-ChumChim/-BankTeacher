@@ -391,7 +391,6 @@ namespace BankTeacher.Bank.Loan
         {
             if(DGVLoanDetail.RowCount != 0)
             {
-                //printDocument1.DefaultPageSettings.Landscape = true;
                 if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                 {
                     printDocument1.Print();

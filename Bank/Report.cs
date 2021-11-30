@@ -121,6 +121,14 @@ namespace BankTeacher.Bank
                 CBYear.Items.Add(Year - a);
             }
             CBYear.SelectedIndex = 0;
+            if(DGVReportIncome.Rows.Count != 0)
+            {
+                BTPrint.Visible = true;
+            }
+            else
+            {
+                BTPrint.Visible = false;
+            }
         }
 
         private void CBYear_SelectedIndexChanged(object sender, EventArgs e)
@@ -243,6 +251,23 @@ namespace BankTeacher.Bank
         private void tabPage1_Click(object sender, EventArgs e)
         {
 
+        }
+        private void Report_SizeChanged(object sender, EventArgs e)
+        {
+            Class.FromSettingMedtod.ChangeSizePanal(this, panel1);
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVReportIncome, tabControl1.Name, this.AccessibilityObject.Name, 0);
+        }
+
+        private void BTPrint_Click(object sender, EventArgs e)
+        {
+            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+            {
+                printDocument1.Print();
+            }
         }
     }
 }

@@ -1129,6 +1129,7 @@ namespace BankTeacher.Bank.Pay
                             else
                             {
                                 DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
+                               
                                 CBList_Pay.Items.RemoveAt(CBList_Pay.SelectedIndex);
                                 ReadonlyDGVPay();
                                 RemoveComboboxhAfterAdd();
@@ -1812,6 +1813,7 @@ namespace BankTeacher.Bank.Pay
         private void Cleartabpage1()
         {
             //tabpage 1 (Pay) ===================================================
+            DGV_Printbypoon.Rows.Clear();
             DGV_Pay.Rows.Clear();
             CBYearSelection_Pay.SelectedIndex = -1;
             CBMonthSelection_Pay.SelectedIndex = -1;
@@ -1974,7 +1976,7 @@ namespace BankTeacher.Bank.Pay
         {
             if (SELECT == 1)
             {
-                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Pay, "ใบเสร็จรับเงิน", this.AccessibilityObject.Name, script);
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Printbypoon, "ใบเสร็จรับเงิน", this.AccessibilityObject.Name, script);
             }
             else
             {
@@ -1996,9 +1998,8 @@ namespace BankTeacher.Bank.Pay
             else
                 e.Handled = !char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar);
         }
-
         // คลิ๊กเพื่อปริ้นข้อมูลย้อนหลัง
-        private void DGV_BillInfo_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void DGV_BillInfo_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
@@ -2043,10 +2044,23 @@ namespace BankTeacher.Bank.Pay
             }
         }
         // เคลียร์ Clear เเบบปริ้น
-        private void DGV_BillInfo_RowValidated(object sender, DataGridViewCellEventArgs e)
+        private void DGV_BillInfo_RowValidated_1(object sender, DataGridViewCellEventArgs e)
         {
             DGV_Tester.Rows.Clear();
             BT_Printf.Visible = false;
+        }
+        // เปลี่ยนรูปเเบบตามต้นฉบับ
+        private void DGV_Pay_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            if(DGV_Printbypoon.Rows.Count != 0)
+            {
+                DGV_Printbypoon.Rows.RemoveAt(e.RowIndex);
+            }
+        }
+        // เพิ่มความมูลตามต้นฉบับ
+        private void DGV_Pay_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            DGV_Printbypoon.Rows.Add(DGV_Pay.Rows[e.RowIndex].Cells[0].Value.ToString(), CBList_Pay.Text, TBAmount_Pay.Text, DGV_Pay.Rows[e.RowIndex].Cells[3].Value.ToString(), CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
         }
         //===============================================================================================
     }
