@@ -1223,7 +1223,7 @@ namespace BankTeacher.Bank.Pay
                                 else if (DGV_Pay.Rows[x].Cells[1].Value.ToString().Contains("กู้"))
                                 {
                                     Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
-                                    .Replace("{BillNo", BillNo)
+                                    .Replace("{BillNo}", BillNo)
                                     .Replace("{TypeNo}", "2")
                                     .Replace("{LoanNo}", DGV_Pay.Rows[x].Cells[3].Value.ToString())
                                     .Replace("{Amount}", DGV_Pay.Rows[x].Cells[2].Value.ToString())
