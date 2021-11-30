@@ -231,6 +231,7 @@ namespace BankTeacher.Bank.Loan
                 textBox4.Text = "";
                 textBox5.Text = "";
                 textBox6.Text = "";
+                textBox7.Text = "";
                 textBox8.Text = "";
                 textBox9.Text = "";
                 textBox10.Text = "";
