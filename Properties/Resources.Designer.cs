@@ -73,6 +73,66 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _64x64_gear {
+            get {
+                object obj = ResourceManager.GetObject("_64x64_gear", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _64x64_home {
+            get {
+                object obj = ResourceManager.GetObject("_64x64_home", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _64x64_magnifying_glass {
+            get {
+                object obj = ResourceManager.GetObject("_64x64_magnifying_glass", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _64x64_money_bag {
+            get {
+                object obj = ResourceManager.GetObject("_64x64_money_bag", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _64x64_money_bag__1_ {
+            get {
+                object obj = ResourceManager.GetObject("_64x64_money_bag__1_", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _64x64_Reports {
+            get {
+                object obj = ResourceManager.GetObject("_64x64_Reports", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap _64x64_TLC {
             get {
                 object obj = ResourceManager.GetObject("_64x64_TLC", resourceCulture);
@@ -83,9 +143,19 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Reports {
+        internal static System.Drawing.Bitmap _64x64_user {
             get {
-                object obj = ResourceManager.GetObject("Reports", resourceCulture);
+                object obj = ResourceManager.GetObject("_64x64_user", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _64x64_wallet {
+            get {
+                object obj = ResourceManager.GetObject("_64x64_wallet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

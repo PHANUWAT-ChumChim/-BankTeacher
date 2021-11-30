@@ -204,6 +204,14 @@ namespace BankTeacher.Bank.Loan
                 }
 
                 MessageBox.Show("บันทึกข้อมูลเสร็จเรียบร้อยแล้ว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if(DGVLoanDetail.Rows.Count != 0)
+                {
+                    BTPrint.Visible = true;
+                }
+                else
+                {
+                    BTPrint.Visible = false;
+                }
                 BPrintLoanDoc.Enabled = true;
                 TBLoanNo.Text = LoanNo;
                 BSave.Enabled = false;
@@ -1224,6 +1232,14 @@ namespace BankTeacher.Bank.Loan
                 {
                     TBLoanAmount.Text = "";
                 }
+            }
+        }
+
+        private void BTPrint_Click(object sender, EventArgs e)
+        {
+            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+            {
+                printDocument1.Print();
             }
         }
 

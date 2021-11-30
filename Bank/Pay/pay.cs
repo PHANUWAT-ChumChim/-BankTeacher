@@ -1259,14 +1259,18 @@ namespace BankTeacher.Bank.Pay
                         info_totelAmountpay = TBToatalSaving_ShareInfo.Text;
                         info_Billpay = TBTeacherBill.Text;
                         info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
-                        info_datepay = DateTime.Today.Day.ToString() + DateTime.Today.Month.ToString() + DateTime.Today.Year.ToString();
+                        info_datepay = DateTime.Today.Day.ToString() +'/'+ DateTime.Today.Month.ToString() +'/'+ DateTime.Today.Year.ToString();
                         SELECT = 1;
                         if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                         {
+                            printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+                            printDocument1.DefaultPageSettings.Landscape = true;
                             printDocument1.Print();
                         }
                         if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                         {
+                            printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+                            printDocument1.DefaultPageSettings.Landscape = true;
                             printDocument1.Print();
                         }
                         ClearForm();
@@ -1972,14 +1976,17 @@ namespace BankTeacher.Bank.Pay
                 }
             }
         }
+       
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
+          
             if (SELECT == 1)
             {
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Printbypoon, "ใบเสร็จรับเงิน", this.AccessibilityObject.Name, script);
             }
             else
             {
+               
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Tester, "ใบเสร็จรับเงิน(ย้อนหลัง)", this.AccessibilityObject.Name, script);
             }
             script++;
@@ -2034,6 +2041,8 @@ namespace BankTeacher.Bank.Pay
         // ปริ้น
         private void BT_Printf_Click(object sender, EventArgs e)
         {
+            printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+            printDocument1.DefaultPageSettings.Landscape = true;
             if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
             {
                 printDocument1.Print();

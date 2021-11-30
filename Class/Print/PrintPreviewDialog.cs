@@ -245,7 +245,8 @@ namespace BankTeacher.Class.Print
             e.Graphics.DrawString(Text, fontText, brush, new RectangleF(TextX, TextY, Rectangle_width, Rectangle_height));
             return ExtraRow;
         }
-
+        // SUM จำนวนเลขท้ายสุด เพื่อเเสดงผลยอดรวม
+        public static List<float> SUM = new List<float>();
         // เเบบ ปริ้น รายงาน สำหรับ ที่มีปุ่มปริ้น
         public static void PrintReportGrid(System.Drawing.Printing.PrintPageEventArgs e, DataGridView G, string header, string TextForm,int Aroundscript)
         {
@@ -293,7 +294,7 @@ namespace BankTeacher.Class.Print
             List<float> ColseLine = new List<float>();
             //================= CloseLise =====================
             // ขนาดการตัด
-            int setcut = 20;
+            int setcut = 21;
             //================= Cut =====================
             // ตัววัดขนาด ข้อความที่ได้รับมา สำหรับเรียกใช้เเล้วทิ้งเพราะงั้นเรียกใช้ได้เบย
             SizeF Size = e.Graphics.MeasureString("", THsarabun16);
@@ -536,8 +537,6 @@ namespace BankTeacher.Class.Print
                 // ปิด Columns
                 onetimestartColumns++;
             }
-            // SUM จำนวนเลขท้ายสุด เพื่อเเสดงผลยอดรวม
-            List<float> SUM = new List<float>();
             if (G.RowCount != 0)
             {
                 for (int Rows = 0; Rows < G.RowCount; Rows++)
@@ -604,27 +603,30 @@ namespace BankTeacher.Class.Print
             if (startTableY < linesToPrint - 100)
             {
                 // วาด ตารางรวม
-                if (TextForm != "ตารางการผ่อนชำระ")
+                if (TextForm != "Home")
                 {
                     Class.Print.SetPrintMedtods.Tabletotal(e, PenBlack, SUM, BrushBlack, 18, X, startTableY, x2);
                 }
                     
 
-                SizeF TextSize = e.Graphics.MeasureString("", THsarabun16);
-                SizeF TextSize1 = e.Graphics.MeasureString("", THsarabun16);
+                if(TextForm == "pay")
+                {
+                    SizeF TextSize = e.Graphics.MeasureString("", THsarabun16);
+                    SizeF TextSize1 = e.Graphics.MeasureString("", THsarabun16);
 
-                e.Graphics.DrawString("หมายเหตุ", FonT(18, ThaiSarabun, FontStyle.Bold), BrushBlack, 50, startTableY + 80);
-                TextSize = e.Graphics.MeasureString("หมายเหตุ", FonT(18, ThaiSarabun, FontStyle.Regular));
+                    e.Graphics.DrawString("หมายเหตุ", FonT(18, ThaiSarabun, FontStyle.Bold), BrushBlack, 50, startTableY + 80);
+                    TextSize = e.Graphics.MeasureString("หมายเหตุ", FonT(18, ThaiSarabun, FontStyle.Regular));
 
-                e.Graphics.DrawString("ใบเสร็จรับเงินฉบับนี้จะสมบูรณ์เมื่อผู้รับเงินลงลายมือชื่อเป็นอันเสร็จสิ้น \r\n" +
-                                    "ชำระเเล้วไม่สามารถรับคืนหรือเปลี่ยนตัวไม่ว่ากรณีใดๆ", FonT(12, ThaiSarabun, FontStyle.Bold), BrushBlack, 50 + TextSize.Width, startTableY + 80);
-                TextSize = e.Graphics.MeasureString("_____________________________", FonT(13, ThaiSarabun, FontStyle.Regular));
-                e.Graphics.DrawString("_____________________________", FonT(13, ThaiSarabun, FontStyle.Regular), BrushBlack, x2 - TextSize.Width, startTableY + 100);
-                TextSize1 = e.Graphics.MeasureString("ลงนาม", FonT(18, ThaiSarabun, FontStyle.Bold));
-                e.Graphics.DrawString("ลงนาม", FonT(18, ThaiSarabun, FontStyle.Bold), BrushBlack, x2 - (TextSize.Width + TextSize1.Width), startTableY + 90);
-                // คนทำรายการ
-                TextSize1 = e.Graphics.MeasureString("ผู้ทำรายการ", FonT(18, ThaiSarabun, FontStyle.Regular));
-                e.Graphics.DrawString("ผู้ทำรายการ", FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, (x2 - TextSize1.Width) - ((TextSize.Width - TextSize1.Width) / 2), startTableY + 120);
+                    e.Graphics.DrawString("ใบเสร็จรับเงินฉบับนี้จะสมบูรณ์เมื่อผู้รับเงินลงลายมือชื่อเป็นอันเสร็จสิ้น \r\n" +
+                                        "ชำระเเล้วไม่สามารถรับคืนหรือเปลี่ยนตัวไม่ว่ากรณีใดๆ", FonT(12, ThaiSarabun, FontStyle.Bold), BrushBlack, 50 + TextSize.Width, startTableY + 80);
+                    TextSize = e.Graphics.MeasureString("_____________________________", FonT(13, ThaiSarabun, FontStyle.Regular));
+                    e.Graphics.DrawString("_____________________________", FonT(13, ThaiSarabun, FontStyle.Regular), BrushBlack, x2 - TextSize.Width, startTableY + 100);
+                    TextSize1 = e.Graphics.MeasureString("ลงนาม", FonT(18, ThaiSarabun, FontStyle.Bold));
+                    e.Graphics.DrawString("ลงนาม", FonT(18, ThaiSarabun, FontStyle.Bold), BrushBlack, x2 - (TextSize.Width + TextSize1.Width), startTableY + 90);
+                    // คนทำรายการ
+                    TextSize1 = e.Graphics.MeasureString("ผู้ทำรายการ", FonT(18, ThaiSarabun, FontStyle.Regular));
+                    e.Graphics.DrawString("ผู้ทำรายการ", FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, (x2 - TextSize1.Width) - ((TextSize.Width - TextSize1.Width) / 2), startTableY + 120);
+                }
             }
             else
             {
@@ -637,12 +639,12 @@ namespace BankTeacher.Class.Print
            
             if (startTableY <= linesToPrint || Currentposition >= G.RowCount)
             {
+                SUM.Clear();
                 cutline.Clear();
                 e.HasMorePages = false;
                 Center.Clear();
                 onetimestartColumns = 0;
                 Currentposition = 0;
-                // ข้อความเเสดงความสมบูรณ์แบบ
             }
             else
             {
