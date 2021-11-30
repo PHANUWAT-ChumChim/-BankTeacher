@@ -448,6 +448,19 @@ namespace BankTeacher.Class.Print
                         e.Graphics.DrawString(Bank.Pay.pay.info_Billpay, FonT(18, ThaiSarabun, FontStyle.Bold), BrushBlack, x2 - (Box_SizeX / 2) - Size.Width / 2, location_Box);
                         // กล่อง
                         e.Graphics.DrawRectangle(PenBlack, x2 - Box_SizeX, location_Box, Box_SizeX, Box_SizeY);
+
+                        location_Box += Box_SizeY;
+                        Size = e.Graphics.MeasureString(Bank.Pay.pay.info_datepay, FonT(18, ThaiSarabun, FontStyle.Bold));
+                        Size1 = e.Graphics.MeasureString("จ่ายวันที่", FonT(16, ThaiSarabun, FontStyle.Regular));
+                        e.Graphics.DrawString("จ่ายวันที่", FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, (x2 - Box_SizeX) - Size1.Width, location_Box + 5);
+                        // ข้อความ
+                        e.Graphics.DrawString(Bank.Pay.pay.info_datepay, FonT(18, ThaiSarabun, FontStyle.Bold), BrushBlack, x2 - (Box_SizeX / 2) - Size.Width / 2, location_Box);
+                        // กล่อง
+                        e.Graphics.DrawRectangle(PenBlack, x2 - Box_SizeX, location_Box, Box_SizeX, Box_SizeY);
+                    }
+                    else if (TextForm == "")
+                    {
+
                     }
                     // ปริ้นข้อความต้นฉบับ
                     if (Aroundscript == 1)
