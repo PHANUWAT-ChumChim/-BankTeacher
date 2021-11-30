@@ -293,7 +293,7 @@ namespace BankTeacher.Class.Print
             List<float> ColseLine = new List<float>();
             //================= CloseLise =====================
             // ขนาดการตัด
-            int setcut = 20;
+            int setcut = 21;
             //================= Cut =====================
             // ตัววัดขนาด ข้อความที่ได้รับมา สำหรับเรียกใช้เเล้วทิ้งเพราะงั้นเรียกใช้ได้เบย
             SizeF Size = e.Graphics.MeasureString("", THsarabun16);

@@ -39,7 +39,7 @@ namespace BankTeacher.Bank
           "    THEN c.Amount - (d.LoanAmount - ((d.LoanAmount / d.PayNo) * (d.PayNo - 1)))  \r\n " +
           "ELSE c.Amount - (d.LoanAmount / d.PayNo)  \r\n " +
           "END as Interest  \r\n " +
-          ",CAST(ISNULL(f.PrefixNameFull , '') + e.Fname + e.Lname as varchar) as Name , e.Fname  \r\n " +
+          ",CAST(ISNULL(f.PrefixNameFull , '') + e.Fname + ' ' + e.Lname as varchar) as Name , e.Fname  \r\n " +
           "FROM EmployeeBank.dbo.tblMember as a  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBill as b on a.TeacherNo = b.TeacherNo  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as c on b.BillNo = c.BillNo  \r\n " +
