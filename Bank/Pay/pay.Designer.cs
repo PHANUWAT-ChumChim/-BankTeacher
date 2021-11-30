@@ -861,16 +861,16 @@ namespace BankTeacher.Bank.Pay
             this.Column4,
             this.Column5,
             this.Column6});
-            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle19.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.DGV_ShareInfo.DefaultCellStyle = dataGridViewCellStyle19;
-            this.DGV_ShareInfo.Location = new System.Drawing.Point(4, 164);
-            this.DGV_ShareInfo.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DGV_ShareInfo.DefaultCellStyle = dataGridViewCellStyle7;
+            this.DGV_ShareInfo.Location = new System.Drawing.Point(3, 133);
+            this.DGV_ShareInfo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DGV_ShareInfo.Name = "DGV_ShareInfo";
             this.DGV_ShareInfo.RowHeadersVisible = false;
             this.DGV_ShareInfo.RowHeadersWidth = 51;
@@ -1635,8 +1635,7 @@ namespace BankTeacher.Bank.Pay
             this.Column15,
             this.Column16,
             this.Column21});
-            this.DGV_Cancelbill.Location = new System.Drawing.Point(11, 160);
-            this.DGV_Cancelbill.Margin = new System.Windows.Forms.Padding(4);
+            this.DGV_Cancelbill.Location = new System.Drawing.Point(8, 136);
             this.DGV_Cancelbill.Name = "DGV_Cancelbill";
             this.DGV_Cancelbill.ReadOnly = true;
             this.DGV_Cancelbill.RowHeadersVisible = false;
@@ -2014,10 +2013,8 @@ namespace BankTeacher.Bank.Pay
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridView DGV_Tester;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column11;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column22;
-        private System.Windows.Forms.Button BT_Printf;
     }
 }

@@ -1094,6 +1094,8 @@ namespace BankTeacher.Bank.Pay
         //Add list to datagridview
         private void BListAdd_Pay_Click(object sender, EventArgs e)
         {
+            //
+            //
             if(CBList_Pay.SelectedIndex != -1)
             {
                 if(CBYearSelection_Pay.SelectedIndex != -1 && CBMonthSelection_Pay.SelectedIndex != -1)
