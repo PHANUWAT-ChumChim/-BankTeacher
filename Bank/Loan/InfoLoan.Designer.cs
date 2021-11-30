@@ -36,6 +36,7 @@ namespace BankTeacher.Bank.Loan
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InfoLoan));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.CBPapersize = new System.Windows.Forms.ComboBox();
             this.BTPrint = new System.Windows.Forms.Button();
             this.panel16 = new System.Windows.Forms.Panel();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -105,7 +106,6 @@ namespace BankTeacher.Bank.Loan
             this.LB1Id = new System.Windows.Forms.Label();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-            this.CBPapersize = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel16.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -133,14 +133,31 @@ namespace BankTeacher.Bank.Loan
             this.panel1.Size = new System.Drawing.Size(1165, 712);
             this.panel1.TabIndex = 100;
             // 
+            // CBPapersize
+            // 
+            this.CBPapersize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBPapersize.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CBPapersize.FormattingEnabled = true;
+            this.CBPapersize.Items.AddRange(new object[] {
+            "A4",
+            "A5"});
+            this.CBPapersize.Location = new System.Drawing.Point(881, 201);
+            this.CBPapersize.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.CBPapersize.Name = "CBPapersize";
+            this.CBPapersize.Size = new System.Drawing.Size(123, 39);
+            this.CBPapersize.TabIndex = 108;
+            this.CBPapersize.SelectedIndexChanged += new System.EventHandler(this.CBPapersize_SelectedIndexChanged);
+            // 
             // BTPrint
             // 
+            this.BTPrint.BackgroundImage = global::BankTeacher.Properties.Resources._10x10_Print;
+            this.BTPrint.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BTPrint.CausesValidation = false;
             this.BTPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTPrint.Location = new System.Drawing.Point(1014, 203);
+            this.BTPrint.Location = new System.Drawing.Point(1010, 182);
             this.BTPrint.Name = "BTPrint";
-            this.BTPrint.Size = new System.Drawing.Size(127, 54);
+            this.BTPrint.Size = new System.Drawing.Size(127, 58);
             this.BTPrint.TabIndex = 105;
-            this.BTPrint.Text = "Print";
             this.BTPrint.UseVisualStyleBackColor = true;
             this.BTPrint.Visible = false;
             this.BTPrint.Click += new System.EventHandler(this.BTPrint_Click_1);
@@ -921,21 +938,6 @@ namespace BankTeacher.Bank.Loan
             this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
-            // 
-            // CBPapersize
-            // 
-            this.CBPapersize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CBPapersize.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CBPapersize.FormattingEnabled = true;
-            this.CBPapersize.Items.AddRange(new object[] {
-            "A4",
-            "A5"});
-            this.CBPapersize.Location = new System.Drawing.Point(885, 201);
-            this.CBPapersize.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.CBPapersize.Name = "CBPapersize";
-            this.CBPapersize.Size = new System.Drawing.Size(123, 39);
-            this.CBPapersize.TabIndex = 108;
-            this.CBPapersize.SelectedIndexChanged += new System.EventHandler(this.CBPapersize_SelectedIndexChanged);
             // 
             // InfoLoan
             // 

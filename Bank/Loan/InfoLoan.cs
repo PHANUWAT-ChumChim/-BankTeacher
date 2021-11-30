@@ -14,7 +14,7 @@ namespace BankTeacher.Bank.Loan
     public partial class InfoLoan : Form
     {
         int Check = 0;
-        // ======================= ข้อมูลเเบบปริ้นนะงับโผม ====================
+        // ======================= ข้อมูลเเบบปริ้น ====================
         public static string info_name;
         public static string info_id;
         public static string info_Loanid;
@@ -30,7 +30,7 @@ namespace BankTeacher.Bank.Loan
         public static List<string> info_GuarantrN = new List<string>();
         public static List<string> info_GuarantrAmount = new List<string>();
         public static List<string> info_GuarantrPercent = new List<string>();
-        public static List<string> info_Guarantrtotel = new List<string>();
+        public static List<string> info_GuarantRemains = new List<string>();
         // รอบ
         public static int how_many_laps;
         /// <summary>
@@ -71,7 +71,7 @@ namespace BankTeacher.Bank.Loan
           " ,TeacherNoAddBy, CAST(ISNULL(f.PrefixNameFull , '') + e.Fname + ' ' + e.Lname AS NVARCHAR) AS NameTeacherAddby   \r\n " +
           " , DATEADD(MONTH,a.PayNo-1,CAST(CAST(a.YearPay as varchar) + '/' + CAST(a.MonthPay as varchar) +'/01' as date)) as FinishDate \r\n " +
           " , (a.InterestRate / 100) * a.LoanAmount as Interest  \r\n " +
-          " ,((a.InterestRate / 100) * a.LoanAmount) + a.LoanAmount as TotalLoanAmount,b.RemainsAmount \r\n " +
+          " ,ROUND(((a.InterestRate / 100) * a.LoanAmount) + a.LoanAmount,0) as TotalLoanAmount,b.RemainsAmount  \r\n " +
           " FROM EmployeeBank.dbo.tblLoan as a    \r\n " +
           " LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo   \r\n " +
           " LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo    \r\n " +
@@ -86,9 +86,9 @@ namespace BankTeacher.Bank.Loan
           " LEFT JOIN EmployeeBank.dbo.tblBill as c on b.BillNo = c.BillNo  \r\n " +
           " WHERE a.LoanNo = '{LoanID}' and TypeNo = '2' and Cancel != 0;  \r\n" +
           " \r\n" +
-          "SELECT (b.LoanAmount / 100) * b.InterestRate + b.LoanAmount as LoanAmount  \r\n" +
+          "SELECT ROUND((b.LoanAmount / 100) * b.InterestRate + b.LoanAmount,0) as LoanAmount  \r\n" +
           ",SUM(a.RemainsAmount) as totelLoan  \r\n" +
-          ",IIF(LoanAmount != SUM(a.RemainsAmount),(b.LoanAmount / 100) * b.InterestRate + b.LoanAmount-SUM(a.RemainsAmount),SUM(a.RemainsAmount)) AS TotelpayLoan  \r\n" +
+          ",IIF(LoanAmount != SUM(a.RemainsAmount),ROUND((b.LoanAmount / 100) * b.InterestRate + b.LoanAmount,0)-SUM(a.RemainsAmount),SUM(a.RemainsAmount)) AS TotelpayLoan  \r\n" +
           ",ROUND(((b.LoanAmount / 100) * b.InterestRate + b.LoanAmount) / b.PayNo,0) as payall  \r\n" +
           "FROM EmployeeBank.dbo.tblGuarantor as a  \r\n" +
           "LEFT JOIN EmployeeBank.dbo.tblLoan as b on a.LoanNo = b.LoanNo  \r\n" +
@@ -241,7 +241,13 @@ namespace BankTeacher.Bank.Loan
                 {
                     Amount.Clear();
                     Percent.Clear();
+                    //==== Clear info ====
                     info_Sum = 0;
+                    how_many_laps = 0;
+                    info_GuarantrAmount.Clear();
+                    info_GuarantrN.Clear();
+                    info_GuarantrPercent.Clear();
+                    info_GuarantRemains.Clear();
                     for (int loopPS = 0; loopPS < ds.Tables[0].Rows.Count; loopPS++)
                     {
                         info_Sum += Convert.ToSingle(ds.Tables[0].Rows[loopPS][9].ToString());
@@ -251,7 +257,7 @@ namespace BankTeacher.Bank.Loan
                         {
                             info_GuarantrN.Add(ds.Tables[0].Rows[loopPS][1].ToString());
                             info_GuarantrAmount.Add(ds.Tables[0].Rows[loopPS][9].ToString());
-                            info_Guarantrtotel.Add(ds.Tables[0].Rows[loopPS][16].ToString());
+                            info_GuarantRemains.Add(ds.Tables[0].Rows[loopPS][16].ToString());
                         }
                     }
                     for (int looPS1 = 0; looPS1 < Amount.Count; looPS1++)
@@ -346,6 +352,7 @@ namespace BankTeacher.Bank.Loan
                     info_name = TBTeacherName.Text;
                     info_id = TBTeacherNo.Text;
                     info_Loanid = TBLoanNo.Text;
+                    info_Sum =  Convert.ToInt32(ds.Tables[2].Rows[0][0].ToString());
                     info_Loanpayall = ds.Tables[2].Rows[0][2].ToString();
                     info_startdate = ds.Tables[0].Rows[0][2].ToString();
                     info_duedate = ds.Tables[0].Rows[0][13].ToString();
@@ -377,7 +384,7 @@ namespace BankTeacher.Bank.Loan
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVLoanDetail, tabControl1.SelectedTab.Text, this.AccessibilityObject.Name);
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVLoanDetail, tabControl1.SelectedTab.Text, this.AccessibilityObject.Name,1);
         }
 
         private void BTPrint_Click_1(object sender, EventArgs e)

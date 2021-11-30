@@ -358,6 +358,27 @@ namespace BankTeacher.Bank
         private void dataGridView3_MouseClick(object sender, MouseEventArgs e)
         {
         }
+
+
+        private void BTPrint_Click(object sender, EventArgs e)
+        {
+            if (dataGridView3.RowCount != 0)
+            {
+                if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    printDocument1.Print();
+                }
+            }
+            else
+            {
+                MessageBox.Show("ดูเหมือนคุณจะลืมอะไรนะ");
+            }
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e, dataGridView3, "ตารางการผ่อนชำระ", this.AccessibilityObject.Name,0);
+        }
     }
 }
 

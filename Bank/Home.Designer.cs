@@ -29,7 +29,7 @@ namespace BankTeacher.Bank
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BankTeacher.Bank.Home));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -44,6 +44,7 @@ namespace BankTeacher.Bank
             this.label1 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.P1 = new System.Windows.Forms.Panel();
+            this.BTPrint = new System.Windows.Forms.Button();
             this.panel16 = new System.Windows.Forms.Panel();
             this.LB5Ye = new System.Windows.Forms.Label();
             this.CByear = new System.Windows.Forms.ComboBox();
@@ -52,6 +53,8 @@ namespace BankTeacher.Bank
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.panel7.SuspendLayout();
             this.P1.SuspendLayout();
             this.panel16.SuspendLayout();
@@ -174,6 +177,7 @@ namespace BankTeacher.Bank
             // 
             this.P1.BackColor = System.Drawing.Color.White;
             this.P1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.P1.Controls.Add(this.BTPrint);
             this.P1.Controls.Add(this.panel16);
             this.P1.Controls.Add(this.dataGridView3);
             this.P1.Controls.Add(this.panel7);
@@ -182,6 +186,19 @@ namespace BankTeacher.Bank
             this.P1.Name = "P1";
             this.P1.Size = new System.Drawing.Size(1157, 724);
             this.P1.TabIndex = 98;
+            // 
+            // BTPrint
+            // 
+            this.BTPrint.BackgroundImage = global::BankTeacher.Properties.Resources._10x10_Print;
+            this.BTPrint.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BTPrint.CausesValidation = false;
+            this.BTPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTPrint.Location = new System.Drawing.Point(1014, 96);
+            this.BTPrint.Name = "BTPrint";
+            this.BTPrint.Size = new System.Drawing.Size(127, 58);
+            this.BTPrint.TabIndex = 106;
+            this.BTPrint.UseVisualStyleBackColor = true;
+            this.BTPrint.Click += new System.EventHandler(this.BTPrint_Click);
             // 
             // panel16
             // 
@@ -286,6 +303,21 @@ namespace BankTeacher.Bank
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
             // 
+            // printDocument1
+            // 
+            this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
+            // 
+            // printPreviewDialog1
+            // 
+            this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
+            this.printPreviewDialog1.Document = this.printDocument1;
+            this.printPreviewDialog1.Enabled = true;
+            this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
+            this.printPreviewDialog1.Name = "printPreviewDialog1";
+            this.printPreviewDialog1.Visible = false;
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -330,5 +362,8 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.Button BTPrint;
+        private System.Drawing.Printing.PrintDocument printDocument1;
+        private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
     }
 }

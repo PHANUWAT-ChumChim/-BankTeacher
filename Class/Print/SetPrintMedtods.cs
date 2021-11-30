@@ -296,6 +296,7 @@ namespace BankTeacher.Class.Print
             // เส้น
             e.Graphics.DrawRectangle(pen, SizeSUM.Width + x, y, (Sizepaper-50) - SizeSUM.Width, SizeSUM.Height);
         }
+
         // ของปุ้น
         public static void Center(System.Drawing.Printing.PrintPageEventArgs e, float LocY, String Text, Font fontText, Brush brush)
         {
