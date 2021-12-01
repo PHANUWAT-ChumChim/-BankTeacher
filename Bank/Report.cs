@@ -39,21 +39,21 @@ namespace BankTeacher.Bank
           "    THEN c.Amount - (d.LoanAmount - ((d.LoanAmount / d.PayNo) * (d.PayNo - 1)))  \r\n " +
           "ELSE c.Amount - (d.LoanAmount / d.PayNo)  \r\n " +
           "END as Interest  \r\n " +
-          ",CAST(ISNULL(f.PrefixNameFull , '') + e.Fname + ' ' + e.Lname as varchar) as Name , e.Fname  \r\n " +
+          ",CAST(ISNULL(f.PrefixNameFull , '') + e.Fname + ' ' + e.Lname as nvarchar) as Name , e.Fname  \r\n " +
           "FROM EmployeeBank.dbo.tblMember as a  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBill as b on a.TeacherNo = b.TeacherNo  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as c on b.BillNo = c.BillNo  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblLoan as d on c.LoanNo = d.LoanNo  \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as e on a.TeacherNo = e.TeacherNo  \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as f on e.PrefixNo = f.PrefixNo  \r\n " +
-          "WHERE CAST(CAST(b.DateAdd as date) as varchar) LIKE '%' and b.Cancel = 1 ) as a  \r\n " +
+          "WHERE CAST(CAST(b.DateAdd as date) as nvarchar) LIKE '%' and b.Cancel = 1 ) as a  \r\n " +
           "GROUP BY a.TeacherNo ,a.Name "
            
           ,
 
           //[1]Table(1) SELECT Expenses/Teacher   Table(2)SELECT SUMAmountOff , SUMDividend , SUMPayLoan INPUT: {Date} , {Year}
            "SELECT a.TeacherNo , a.Name , a.AmountOff , a.Dividend , a.LoanPay  \r\n " +
-          "FROM(SELECT a.TeacherNo ,CAST(ISNULL(h.PrefixNameFull, '') + g.Fname + ' ' + g.Lname as varchar) as Name \r\n " +
+          "FROM(SELECT a.TeacherNo ,CAST(ISNULL(h.PrefixNameFull, '') + g.Fname + ' ' + g.Lname as nvarchar) as Name \r\n " +
           ",SUM(ISNULL(c.Amount ,0)) as AmountOff ,d.DividendAmount as Dividend ,ISNULL(f.LoanPay ,0) as LoanPay , g.Fname  \r\n " +
           "FROM (SELECT *  \r\n " +
           "FROM EmployeeBank.dbo.tblMember)as a  \r\n " +
@@ -77,12 +77,12 @@ namespace BankTeacher.Bank
           "GROUP BY a.TeacherNo) as f on a.TeacherNo = f.TeacherNo  \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as g on a.TeacherNo = g.TeacherNo  \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as h on g.PrefixNo = h.PrefixNo  \r\n " +
-          "GROUP BY a.TeacherNo ,CAST(ISNULL(h.PrefixNameFull, '') + g.Fname + ' ' + g.Lname as varchar) , g.Fname ,ISNULL(f.LoanPay ,0) ,d.DividendAmount) as a  \r\n " +
+          "GROUP BY a.TeacherNo ,CAST(ISNULL(h.PrefixNameFull, '') + g.Fname + ' ' + g.Lname as nvarchar) , g.Fname ,ISNULL(f.LoanPay ,0) ,d.DividendAmount) as a  \r\n " +
           "ORDER BY a.Fname;  \r\n " +
           " \r\n " +
           " \r\n " +
           " SELECT SUM(ISNULL(a.AmountOff , 0)) , SUM(ISNULL(a.Dividend,0)) , SUM(ISNULL(a.LoanPay,0))  , SUM(ISNULL(a.AmountOff,0)) + SUM(ISNULL(a.Dividend,0)) + SUM(ISNULL(a.LoanPay,0))\r\n " +
-          "FROM(SELECT a.TeacherNo ,CAST(ISNULL(h.PrefixNameFull, '') + g.Fname + ' ' + g.Lname as varchar) as Name  \r\n " +
+          "FROM(SELECT a.TeacherNo ,CAST(ISNULL(h.PrefixNameFull, '') + g.Fname + ' ' + g.Lname as nvarchar) as Name  \r\n " +
           ",SUM(ISNULL(c.Amount ,0)) as AmountOff ,d.DividendAmount as Dividend ,ISNULL(f.LoanPay ,0) as LoanPay , g.Fname  \r\n " +
           "FROM (SELECT *  \r\n " +
           "FROM EmployeeBank.dbo.tblMember  \r\n " +
@@ -107,7 +107,7 @@ namespace BankTeacher.Bank
           "GROUP BY a.TeacherNo) as f on a.TeacherNo = f.TeacherNo \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as g on a.TeacherNo = g.TeacherNo \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as h on g.PrefixNo = h.PrefixNo \r\n " +
-          "GROUP BY a.TeacherNo ,CAST(ISNULL(h.PrefixNameFull, '') + g.Fname + ' ' + g.Lname as varchar) , g.Fname ,ISNULL(f.LoanPay ,0) ,d.DividendAmount) as a \r\n " +
+          "GROUP BY a.TeacherNo ,CAST(ISNULL(h.PrefixNameFull, '') + g.Fname + ' ' + g.Lname as nvarchar) , g.Fname ,ISNULL(f.LoanPay ,0) ,d.DividendAmount) as a \r\n " +
           ""
 
            ,
