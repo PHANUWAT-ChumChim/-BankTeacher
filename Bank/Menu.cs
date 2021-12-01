@@ -98,7 +98,6 @@ namespace BankTeacher.Bank
         }
         private void ReportCancelMember_Click(object sender, EventArgs e)
         {
-            //
             Bank.MemberShip Rc = new Bank.MemberShip();
             CloseFrom(Rc);
         }
