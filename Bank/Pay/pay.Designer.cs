@@ -884,6 +884,7 @@ namespace BankTeacher.Bank.Pay
             this.DGV_ShareInfo.AllowDrop = true;
             this.DGV_ShareInfo.AllowUserToAddRows = false;
             this.DGV_ShareInfo.AllowUserToDeleteRows = false;
+            this.DGV_ShareInfo.AllowUserToResizeColumns = false;
             this.DGV_ShareInfo.AllowUserToResizeRows = false;
             dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.DGV_ShareInfo.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
@@ -1060,6 +1061,7 @@ namespace BankTeacher.Bank.Pay
             this.DGV_LoanInfo.AllowDrop = true;
             this.DGV_LoanInfo.AllowUserToAddRows = false;
             this.DGV_LoanInfo.AllowUserToDeleteRows = false;
+            this.DGV_LoanInfo.AllowUserToResizeColumns = false;
             this.DGV_LoanInfo.AllowUserToResizeRows = false;
             dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.DGV_LoanInfo.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle12;
@@ -1339,6 +1341,7 @@ namespace BankTeacher.Bank.Pay
             // DGV_BillInfo
             // 
             this.DGV_BillInfo.AllowUserToAddRows = false;
+            this.DGV_BillInfo.AllowUserToResizeColumns = false;
             this.DGV_BillInfo.AllowUserToResizeRows = false;
             this.DGV_BillInfo.BackgroundColor = System.Drawing.Color.White;
             this.DGV_BillInfo.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -1549,6 +1552,10 @@ namespace BankTeacher.Bank.Pay
             this.DGV_Cancelbill.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column14,
             this.Column12,
+            this.Column13,
+            this.Column15,
+            this.Column16,
+            this.Column21});
             this.Column13});
             this.DGV_Cancelbill.Location = new System.Drawing.Point(8, 136);
             this.DGV_Cancelbill.Name = "DGV_Cancelbill";
