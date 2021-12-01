@@ -1263,14 +1263,10 @@ namespace BankTeacher.Bank.Pay
                         SELECT = 1;
                         if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                         {
-                            printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
-                            printDocument1.DefaultPageSettings.Landscape = true;
                             printDocument1.Print();
                         }
                         if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                         {
-                            printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
-                            printDocument1.DefaultPageSettings.Landscape = true;
                             printDocument1.Print();
                         }
                         ClearForm();
@@ -1979,7 +1975,8 @@ namespace BankTeacher.Bank.Pay
        
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-          
+            printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+            printDocument1.DefaultPageSettings.Landscape = true;
             if (SELECT == 1)
             {
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Printbypoon, "ใบเสร็จรับเงิน", this.AccessibilityObject.Name, script);

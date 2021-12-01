@@ -172,7 +172,7 @@ namespace BankTeacher.Bank
             this.Column2,
             this.Column3});
             this.DGVReportIncome.GridColor = System.Drawing.SystemColors.Control;
-            this.DGVReportIncome.Location = new System.Drawing.Point(14, 15);
+            this.DGVReportIncome.Location = new System.Drawing.Point(20, 6);
             this.DGVReportIncome.Name = "DGVReportIncome";
             this.DGVReportIncome.RowHeadersVisible = false;
             this.DGVReportIncome.RowHeadersWidth = 51;
