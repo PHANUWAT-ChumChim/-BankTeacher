@@ -435,6 +435,7 @@ namespace BankTeacher.Bank.Pay
                                     if (dtCheckMonthinlastyear.Rows.Count == 0)
                                     {
                                         CBYearSelection_BillInfo.Items.RemoveAt(CBYearSelection_BillInfo.Items.Count - 1);
+                                        CBYearSelection_ShareInfo.Items.RemoveAt(CBYearSelection_ShareInfo.Items.Count - 1);
                                     }
                                 }
                                 //thisyeardiscount2year +1 หลังจบ loop ทุกรอบ
@@ -461,6 +462,7 @@ namespace BankTeacher.Bank.Pay
                                     if (dtCheckMonthinlastyear.Rows.Count == 0)
                                     {
                                         CBYearSelection_BillInfo.Items.RemoveAt(CBYearSelection_BillInfo.Items.Count - 1);
+                                        CBYearSelection_ShareInfo.Items.RemoveAt(CBYearSelection_ShareInfo.Items.Count - 1);
                                     }
                                 }
                                 //YearRegister + 1 หลังจบ loop ทุกรอบ
