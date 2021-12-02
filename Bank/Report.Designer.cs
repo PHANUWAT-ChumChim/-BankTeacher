@@ -137,10 +137,10 @@ namespace BankTeacher.Bank
             this.tabPage1.Controls.Add(this.TBLoanAmount);
             this.tabPage1.Controls.Add(this.TBSavingAmount);
             this.tabPage1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.tabPage1.Location = new System.Drawing.Point(4, 45);
+            this.tabPage1.Location = new System.Drawing.Point(4, 39);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(836, 462);
+            this.tabPage1.Size = new System.Drawing.Size(836, 468);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "รายรับ";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -236,7 +236,7 @@ namespace BankTeacher.Bank
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(857, 27);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(81, 37);
+            this.label6.Size = new System.Drawing.Size(64, 30);
             this.label6.TabIndex = 1;
             this.label6.Text = "เงินรวม";
             // 
@@ -245,7 +245,7 @@ namespace BankTeacher.Bank
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(513, 421);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(116, 37);
+            this.label5.Size = new System.Drawing.Size(89, 30);
             this.label5.TabIndex = 1;
             this.label5.Text = "เงินดอกเบี้ย";
             // 
@@ -254,7 +254,7 @@ namespace BankTeacher.Bank
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(276, 420);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(58, 37);
+            this.label4.Size = new System.Drawing.Size(45, 30);
             this.label4.TabIndex = 1;
             this.label4.Text = "เงินกู้";
             // 
@@ -263,7 +263,7 @@ namespace BankTeacher.Bank
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(9, 418);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(121, 37);
+            this.label3.Size = new System.Drawing.Size(95, 30);
             this.label3.TabIndex = 1;
             this.label3.Text = "เงินหุ้นสะสม";
             // 
@@ -271,28 +271,28 @@ namespace BankTeacher.Bank
             // 
             this.TBSumIncome.Location = new System.Drawing.Point(942, 23);
             this.TBSumIncome.Name = "TBSumIncome";
-            this.TBSumIncome.Size = new System.Drawing.Size(139, 43);
+            this.TBSumIncome.Size = new System.Drawing.Size(139, 36);
             this.TBSumIncome.TabIndex = 0;
             // 
             // TBInterest
             // 
             this.TBInterest.Location = new System.Drawing.Point(608, 418);
             this.TBInterest.Name = "TBInterest";
-            this.TBInterest.Size = new System.Drawing.Size(151, 43);
+            this.TBInterest.Size = new System.Drawing.Size(151, 36);
             this.TBInterest.TabIndex = 0;
             // 
             // TBLoanAmount
             // 
             this.TBLoanAmount.Location = new System.Drawing.Point(327, 418);
             this.TBLoanAmount.Name = "TBLoanAmount";
-            this.TBLoanAmount.Size = new System.Drawing.Size(159, 43);
+            this.TBLoanAmount.Size = new System.Drawing.Size(159, 36);
             this.TBLoanAmount.TabIndex = 0;
             // 
             // TBSavingAmount
             // 
             this.TBSavingAmount.Location = new System.Drawing.Point(110, 418);
             this.TBSavingAmount.Name = "TBSavingAmount";
-            this.TBSavingAmount.Size = new System.Drawing.Size(147, 43);
+            this.TBSavingAmount.Size = new System.Drawing.Size(147, 36);
             this.TBSavingAmount.TabIndex = 0;
             // 
             // tabPage2
@@ -307,10 +307,10 @@ namespace BankTeacher.Bank
             this.tabPage2.Controls.Add(this.TBDividend_Expenses);
             this.tabPage2.Controls.Add(this.TBAmountOff_Expenses);
             this.tabPage2.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.tabPage2.Location = new System.Drawing.Point(4, 45);
+            this.tabPage2.Location = new System.Drawing.Point(4, 39);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(836, 462);
+            this.tabPage2.Size = new System.Drawing.Size(836, 468);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "รายจ่าย";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -388,7 +388,7 @@ namespace BankTeacher.Bank
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(845, 30);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(118, 37);
+            this.label7.Size = new System.Drawing.Size(92, 30);
             this.label7.TabIndex = 72;
             this.label7.Text = "รายจ่ายรวม";
             // 
@@ -397,7 +397,7 @@ namespace BankTeacher.Bank
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(562, 422);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(92, 37);
+            this.label8.Size = new System.Drawing.Size(71, 30);
             this.label8.TabIndex = 73;
             this.label8.Text = "จ่ายเงินกู้";
             // 
@@ -406,7 +406,7 @@ namespace BankTeacher.Bank
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(331, 422);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(70, 37);
+            this.label9.Size = new System.Drawing.Size(53, 30);
             this.label9.TabIndex = 74;
             this.label9.Text = "ปันผล";
             // 
@@ -415,7 +415,7 @@ namespace BankTeacher.Bank
             this.label10.AutoSize = true;
             this.label10.Location = new System.Drawing.Point(60, 422);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(118, 37);
+            this.label10.Size = new System.Drawing.Size(93, 30);
             this.label10.TabIndex = 75;
             this.label10.Text = "คืนหุ้นสะสม";
             // 
@@ -423,28 +423,28 @@ namespace BankTeacher.Bank
             // 
             this.TBSumExpenses.Location = new System.Drawing.Point(943, 27);
             this.TBSumExpenses.Name = "TBSumExpenses";
-            this.TBSumExpenses.Size = new System.Drawing.Size(139, 43);
+            this.TBSumExpenses.Size = new System.Drawing.Size(139, 36);
             this.TBSumExpenses.TabIndex = 68;
             // 
             // TBPayLoan_Expenses
             // 
             this.TBPayLoan_Expenses.Location = new System.Drawing.Point(639, 419);
             this.TBPayLoan_Expenses.Name = "TBPayLoan_Expenses";
-            this.TBPayLoan_Expenses.Size = new System.Drawing.Size(151, 43);
+            this.TBPayLoan_Expenses.Size = new System.Drawing.Size(151, 36);
             this.TBPayLoan_Expenses.TabIndex = 69;
             // 
             // TBDividend_Expenses
             // 
             this.TBDividend_Expenses.Location = new System.Drawing.Point(386, 419);
             this.TBDividend_Expenses.Name = "TBDividend_Expenses";
-            this.TBDividend_Expenses.Size = new System.Drawing.Size(159, 43);
+            this.TBDividend_Expenses.Size = new System.Drawing.Size(159, 36);
             this.TBDividend_Expenses.TabIndex = 70;
             // 
             // TBAmountOff_Expenses
             // 
             this.TBAmountOff_Expenses.Location = new System.Drawing.Point(159, 419);
             this.TBAmountOff_Expenses.Name = "TBAmountOff_Expenses";
-            this.TBAmountOff_Expenses.Size = new System.Drawing.Size(147, 43);
+            this.TBAmountOff_Expenses.Size = new System.Drawing.Size(147, 36);
             this.TBAmountOff_Expenses.TabIndex = 71;
             // 
             // label2
@@ -453,7 +453,7 @@ namespace BankTeacher.Bank
             this.label2.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label2.Location = new System.Drawing.Point(203, 25);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 37);
+            this.label2.Size = new System.Drawing.Size(44, 30);
             this.label2.TabIndex = 4;
             this.label2.Text = "เดือน";
             // 
@@ -463,7 +463,7 @@ namespace BankTeacher.Bank
             this.label1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label1.Location = new System.Drawing.Point(29, 25);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 37);
+            this.label1.Size = new System.Drawing.Size(22, 30);
             this.label1.TabIndex = 5;
             this.label1.Text = "ปี";
             // 
@@ -474,7 +474,7 @@ namespace BankTeacher.Bank
             this.CBMonth.FormattingEnabled = true;
             this.CBMonth.Location = new System.Drawing.Point(252, 22);
             this.CBMonth.Name = "CBMonth";
-            this.CBMonth.Size = new System.Drawing.Size(112, 44);
+            this.CBMonth.Size = new System.Drawing.Size(112, 38);
             this.CBMonth.TabIndex = 2;
             this.CBMonth.SelectedIndexChanged += new System.EventHandler(this.CBMonth_SelectedIndexChanged);
             // 
@@ -484,7 +484,7 @@ namespace BankTeacher.Bank
             this.CBYear.FormattingEnabled = true;
             this.CBYear.Location = new System.Drawing.Point(62, 22);
             this.CBYear.Name = "CBYear";
-            this.CBYear.Size = new System.Drawing.Size(112, 44);
+            this.CBYear.Size = new System.Drawing.Size(112, 38);
             this.CBYear.TabIndex = 3;
             this.CBYear.SelectedIndexChanged += new System.EventHandler(this.CBYear_SelectedIndexChanged);
             // 
@@ -505,7 +505,7 @@ namespace BankTeacher.Bank
             // 
             // Report
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 36F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(907, 622);

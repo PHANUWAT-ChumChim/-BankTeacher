@@ -137,6 +137,18 @@
     <Compile Include="Bank\Report.Designer.cs">
       <DependentUpon>Report.cs</DependentUpon>
     </Compile>
+    <Compile Include="Bank\ReportEpenses.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bank\ReportEpenses.Designer.cs">
+      <DependentUpon>ReportEpenses.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Bank\ReportIncome.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bank\ReportIncome.Designer.cs">
+      <DependentUpon>ReportIncome.cs</DependentUpon>
+    </Compile>
     <Compile Include="Bank\Search.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -219,6 +231,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Report.resx">
       <DependentUpon>Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bank\ReportEpenses.resx">
+      <DependentUpon>ReportEpenses.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bank\ReportIncome.resx">
+      <DependentUpon>ReportIncome.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Search.resx">
       <DependentUpon>Search.cs</DependentUpon>
