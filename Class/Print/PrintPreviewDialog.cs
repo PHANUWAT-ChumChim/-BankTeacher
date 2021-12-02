@@ -149,7 +149,9 @@ namespace BankTeacher.Class.Print
                         Yearpay++;
                         PayNo = PayNo - 12;
                     }
-                    LimitMonthPay = BankTeacher.Bank.Menu.Month[PayNo].ToString() + " พ.ศ. " + (Yearpay + 543).ToString();
+                    if (PayNo == 12)
+                        PayNo--;
+                    LimitMonthPay = BankTeacher.Bank.Menu.Month[PayNo].ToString() + " พ.ศ. " + (Yearpay + (Convert.ToInt32(Year) - Yearpay)).ToString();
                     //LimitMonthPay = example.Bank.Menu.Monthname.ToString() + " พ.ศ. " + (Yearpay + 543).ToString();
                 }
                 //----------------------

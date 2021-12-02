@@ -138,5 +138,11 @@ namespace BankTeacher.Bank
             Bank.Report report = new Bank.Report();
             CloseFrom(report);
         }
+
+        private void Manu_Cancel_Click(object sender, EventArgs e)
+        {
+            Bank.Pay.CancelBill CancelBill = new Bank.Pay.CancelBill();
+            CloseFrom(CancelBill);
+        }
     }
 }

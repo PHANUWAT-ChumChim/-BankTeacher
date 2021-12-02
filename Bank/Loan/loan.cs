@@ -28,6 +28,7 @@ namespace BankTeacher.Bank.Loan
         {
             InitializeComponent();
             Console.WriteLine("==================Open Loan Form======================");
+            Delete.Visible = Class.UserInfo.Debug;
         }
 
         //------------------------- FormSize -----------------
@@ -1186,6 +1187,7 @@ namespace BankTeacher.Bank.Loan
 
         private void Delete_Click_1(object sender, EventArgs e)
         {
+            if(DialogResult.OK == MessageBox.Show("คุณแน่ใจจะลบขช้อมูลทั้งหมด","ข้อมูล",MessageBoxButtons.OKCancel))
             Class.SQLConnection.InputSQLMSSQL(SQLDefault[7]);
         }
 
