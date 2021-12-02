@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static BankTeacher.Class.ProtocolSharing.ConnectSMB;
 
-namespace BankTeacher.Bank
+namespace BankTeacher.Bank.Add_Member
 {
-    public partial class MemberShip : Form
+    public partial class Member : Form
     {
         //------------------------- index -----------------
         int Check = 0;
@@ -25,7 +25,7 @@ namespace BankTeacher.Bank
 
         //----------------------- index code -------------------- ////////
 
-        public MemberShip()
+        public Member()
         {
             InitializeComponent();
             Console.WriteLine("==================Open MemberShip Form======================");

@@ -29,26 +29,22 @@ namespace BankTeacher.Bank.Pay
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.PL_Form = new System.Windows.Forms.Panel();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.TB_2 = new System.Windows.Forms.TabControl();
             this.tabpage5 = new System.Windows.Forms.TabPage();
             this.panel18 = new System.Windows.Forms.Panel();
             this.label27 = new System.Windows.Forms.Label();
             this.LSumAmount_CancelBill = new System.Windows.Forms.Label();
             this.panel17 = new System.Windows.Forms.Panel();
             this.label25 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
+            this.panel12 = new System.Windows.Forms.Panel();
+            this.TBTeacherName_Cancelbill = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.TBTeacherNO_Cancelbill = new System.Windows.Forms.TextBox();
-            this.TBTeacherName_Cancelbill = new System.Windows.Forms.TextBox();
-            this.panel12 = new System.Windows.Forms.Panel();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.TBBIllDate_Cancelbill = new System.Windows.Forms.TextBox();
-            this.TBBillNo_Cancelbill = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.BSave_Cancelbill = new System.Windows.Forms.Button();
             this.DGV_Cancelbill = new System.Windows.Forms.DataGridView();
             this.Column14 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -57,55 +53,82 @@ namespace BankTeacher.Bank.Pay
             this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column16 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
             this.TBteacharnoby_billcancel = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.TBBIllDate_Cancelbill = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.TBBillNo_Cancelbill = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.TB5 = new System.Windows.Forms.TabPage();
+            this.DGV_Bill = new System.Windows.Forms.DataGridView();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel16 = new System.Windows.Forms.Panel();
+            this.CBMonthSelection_Bill = new System.Windows.Forms.ComboBox();
+            this.LB5Mo = new System.Windows.Forms.Label();
+            this.LB5Ye = new System.Windows.Forms.Label();
+            this.CBYearSelection_Bill = new System.Windows.Forms.ComboBox();
             this.PL_Form.SuspendLayout();
-            this.tabControl1.SuspendLayout();
+            this.TB_2.SuspendLayout();
             this.tabpage5.SuspendLayout();
             this.panel18.SuspendLayout();
             this.panel17.SuspendLayout();
             this.panel12.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Cancelbill)).BeginInit();
-            this.panel7.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.TB5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_Bill)).BeginInit();
+            this.panel16.SuspendLayout();
             this.SuspendLayout();
             // 
             // PL_Form
             // 
             this.PL_Form.BackColor = System.Drawing.Color.White;
-            this.PL_Form.Controls.Add(this.tabControl1);
-            this.PL_Form.Controls.Add(this.panel7);
+            this.PL_Form.Controls.Add(this.TB_2);
             this.PL_Form.Location = new System.Drawing.Point(16, 16);
             this.PL_Form.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.PL_Form.Name = "PL_Form";
             this.PL_Form.Size = new System.Drawing.Size(1168, 711);
             this.PL_Form.TabIndex = 99;
             // 
-            // tabControl1
+            // TB_2
             // 
-            this.tabControl1.Controls.Add(this.tabpage5);
-            this.tabControl1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tabControl1.Location = new System.Drawing.Point(8, 78);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1139, 625);
-            this.tabControl1.TabIndex = 97;
+            this.TB_2.Controls.Add(this.tabpage5);
+            this.TB_2.Controls.Add(this.TB5);
+            this.TB_2.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TB_2.Location = new System.Drawing.Point(8, 2);
+            this.TB_2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TB_2.Name = "TB_2";
+            this.TB_2.SelectedIndex = 0;
+            this.TB_2.Size = new System.Drawing.Size(1139, 701);
+            this.TB_2.TabIndex = 97;
             // 
             // tabpage5
             // 
             this.tabpage5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tabpage5.Controls.Add(this.label1);
+            this.tabpage5.Controls.Add(this.label14);
+            this.tabpage5.Controls.Add(this.TBBIllDate_Cancelbill);
+            this.tabpage5.Controls.Add(this.TBteacharnoby_billcancel);
             this.tabpage5.Controls.Add(this.panel18);
+            this.tabpage5.Controls.Add(this.label2);
             this.tabpage5.Controls.Add(this.panel17);
             this.tabpage5.Controls.Add(this.panel12);
             this.tabpage5.Controls.Add(this.BSave_Cancelbill);
             this.tabpage5.Controls.Add(this.DGV_Cancelbill);
+            this.tabpage5.Controls.Add(this.panel1);
+            this.tabpage5.Controls.Add(this.panel2);
             this.tabpage5.Location = new System.Drawing.Point(4, 45);
             this.tabpage5.Margin = new System.Windows.Forms.Padding(4);
             this.tabpage5.Name = "tabpage5";
             this.tabpage5.Padding = new System.Windows.Forms.Padding(4);
-            this.tabpage5.Size = new System.Drawing.Size(1131, 576);
+            this.tabpage5.Size = new System.Drawing.Size(1131, 652);
             this.tabpage5.TabIndex = 4;
             this.tabpage5.Text = "ยกเลิกบิลล์";
             this.tabpage5.UseVisualStyleBackColor = true;
@@ -115,7 +138,7 @@ namespace BankTeacher.Bank.Pay
             this.panel18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel18.Controls.Add(this.label27);
             this.panel18.Controls.Add(this.LSumAmount_CancelBill);
-            this.panel18.Location = new System.Drawing.Point(764, 428);
+            this.panel18.Location = new System.Drawing.Point(765, 506);
             this.panel18.Margin = new System.Windows.Forms.Padding(4);
             this.panel18.Name = "panel18";
             this.panel18.Size = new System.Drawing.Size(339, 36);
@@ -127,7 +150,7 @@ namespace BankTeacher.Bank.Pay
             this.label27.Location = new System.Drawing.Point(279, -2);
             this.label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(48, 36);
+            this.label27.Size = new System.Drawing.Size(50, 37);
             this.label27.TabIndex = 5;
             this.label27.Text = "บาท";
             // 
@@ -137,7 +160,7 @@ namespace BankTeacher.Bank.Pay
             this.LSumAmount_CancelBill.Location = new System.Drawing.Point(4, 0);
             this.LSumAmount_CancelBill.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.LSumAmount_CancelBill.Name = "LSumAmount_CancelBill";
-            this.LSumAmount_CancelBill.Size = new System.Drawing.Size(25, 36);
+            this.LSumAmount_CancelBill.Size = new System.Drawing.Size(27, 37);
             this.LSumAmount_CancelBill.TabIndex = 5;
             this.LSumAmount_CancelBill.Text = "0";
             // 
@@ -145,7 +168,7 @@ namespace BankTeacher.Bank.Pay
             // 
             this.panel17.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel17.Controls.Add(this.label25);
-            this.panel17.Location = new System.Drawing.Point(11, 428);
+            this.panel17.Location = new System.Drawing.Point(11, 505);
             this.panel17.Margin = new System.Windows.Forms.Padding(4);
             this.panel17.Name = "panel17";
             this.panel17.Size = new System.Drawing.Size(1094, 38);
@@ -157,26 +180,36 @@ namespace BankTeacher.Bank.Pay
             this.label25.Location = new System.Drawing.Point(7, -1);
             this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(75, 36);
+            this.label25.Size = new System.Drawing.Size(82, 37);
             this.label25.TabIndex = 5;
             this.label25.Text = "ยอดรวม";
             // 
-            // label6
+            // panel12
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(27, 10);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(52, 40);
-            this.label6.TabIndex = 3;
-            this.label6.Text = "รหัส";
+            this.panel12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel12.Controls.Add(this.label5);
+            this.panel12.Controls.Add(this.TBBillNo_Cancelbill);
+            this.panel12.Location = new System.Drawing.Point(11, 10);
+            this.panel12.Margin = new System.Windows.Forms.Padding(4);
+            this.panel12.Name = "panel12";
+            this.panel12.Size = new System.Drawing.Size(329, 73);
+            this.panel12.TabIndex = 4;
+            // 
+            // TBTeacherName_Cancelbill
+            // 
+            this.TBTeacherName_Cancelbill.Enabled = false;
+            this.TBTeacherName_Cancelbill.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBTeacherName_Cancelbill.Location = new System.Drawing.Point(437, 4);
+            this.TBTeacherName_Cancelbill.Margin = new System.Windows.Forms.Padding(4);
+            this.TBTeacherName_Cancelbill.Name = "TBTeacherName_Cancelbill";
+            this.TBTeacherName_Cancelbill.Size = new System.Drawing.Size(305, 47);
+            this.TBTeacherName_Cancelbill.TabIndex = 1;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(307, 10);
+            this.label7.Location = new System.Drawing.Point(316, 7);
             this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(83, 40);
@@ -187,81 +220,27 @@ namespace BankTeacher.Bank.Pay
             // 
             this.TBTeacherNO_Cancelbill.Enabled = false;
             this.TBTeacherNO_Cancelbill.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBTeacherNO_Cancelbill.Location = new System.Drawing.Point(94, 4);
+            this.TBTeacherNO_Cancelbill.Location = new System.Drawing.Point(99, 4);
             this.TBTeacherNO_Cancelbill.Margin = new System.Windows.Forms.Padding(4);
             this.TBTeacherNO_Cancelbill.Name = "TBTeacherNO_Cancelbill";
             this.TBTeacherNO_Cancelbill.Size = new System.Drawing.Size(169, 47);
             this.TBTeacherNO_Cancelbill.TabIndex = 1;
             // 
-            // TBTeacherName_Cancelbill
+            // label6
             // 
-            this.TBTeacherName_Cancelbill.Enabled = false;
-            this.TBTeacherName_Cancelbill.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBTeacherName_Cancelbill.Location = new System.Drawing.Point(427, 7);
-            this.TBTeacherName_Cancelbill.Margin = new System.Windows.Forms.Padding(4);
-            this.TBTeacherName_Cancelbill.Name = "TBTeacherName_Cancelbill";
-            this.TBTeacherName_Cancelbill.Size = new System.Drawing.Size(305, 47);
-            this.TBTeacherName_Cancelbill.TabIndex = 1;
-            // 
-            // panel12
-            // 
-            this.panel12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel12.Controls.Add(this.TBTeacherName_Cancelbill);
-            this.panel12.Controls.Add(this.label7);
-            this.panel12.Controls.Add(this.TBTeacherNO_Cancelbill);
-            this.panel12.Controls.Add(this.label6);
-            this.panel12.Location = new System.Drawing.Point(11, 10);
-            this.panel12.Margin = new System.Windows.Forms.Padding(4);
-            this.panel12.Name = "panel12";
-            this.panel12.Size = new System.Drawing.Size(1095, 149);
-            this.panel12.TabIndex = 4;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(738, 20);
-            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(90, 40);
-            this.label14.TabIndex = 3;
-            this.label14.Text = "บิลล์วันที่";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(26, 17);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(84, 40);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "เลขบิลล์";
-            // 
-            // TBBIllDate_Cancelbill
-            // 
-            this.TBBIllDate_Cancelbill.Enabled = false;
-            this.TBBIllDate_Cancelbill.Font = new System.Drawing.Font("TH Sarabun New", 18F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBBIllDate_Cancelbill.Location = new System.Drawing.Point(836, 14);
-            this.TBBIllDate_Cancelbill.Margin = new System.Windows.Forms.Padding(4);
-            this.TBBIllDate_Cancelbill.Name = "TBBIllDate_Cancelbill";
-            this.TBBIllDate_Cancelbill.Size = new System.Drawing.Size(222, 47);
-            this.TBBIllDate_Cancelbill.TabIndex = 1;
-            // 
-            // TBBillNo_Cancelbill
-            // 
-            this.TBBillNo_Cancelbill.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBBillNo_Cancelbill.Location = new System.Drawing.Point(118, 13);
-            this.TBBillNo_Cancelbill.Margin = new System.Windows.Forms.Padding(4);
-            this.TBBillNo_Cancelbill.Name = "TBBillNo_Cancelbill";
-            this.TBBillNo_Cancelbill.Size = new System.Drawing.Size(185, 47);
-            this.TBBillNo_Cancelbill.TabIndex = 1;
-            this.TBBillNo_Cancelbill.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TBBillNo_Cancelbill_KeyDown);
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label6.Location = new System.Drawing.Point(39, 7);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(52, 40);
+            this.label6.TabIndex = 3;
+            this.label6.Text = "รหัส";
             // 
             // BSave_Cancelbill
             // 
             this.BSave_Cancelbill.BackColor = System.Drawing.Color.White;
-            this.BSave_Cancelbill.Location = new System.Drawing.Point(764, 486);
+            this.BSave_Cancelbill.Location = new System.Drawing.Point(765, 558);
             this.BSave_Cancelbill.Margin = new System.Windows.Forms.Padding(4);
             this.BSave_Cancelbill.Name = "BSave_Cancelbill";
             this.BSave_Cancelbill.Size = new System.Drawing.Size(341, 79);
@@ -284,7 +263,7 @@ namespace BankTeacher.Bank.Pay
             this.Column15,
             this.Column16,
             this.Column21});
-            this.DGV_Cancelbill.Location = new System.Drawing.Point(11, 167);
+            this.DGV_Cancelbill.Location = new System.Drawing.Point(11, 245);
             this.DGV_Cancelbill.Margin = new System.Windows.Forms.Padding(4);
             this.DGV_Cancelbill.Name = "DGV_Cancelbill";
             this.DGV_Cancelbill.ReadOnly = true;
@@ -295,8 +274,8 @@ namespace BankTeacher.Bank.Pay
             // 
             // Column14
             // 
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("TH Sarabun New", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.Column14.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("TH Sarabun New", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.Column14.DefaultCellStyle = dataGridViewCellStyle4;
             this.Column14.HeaderText = "ปี / เดือน";
             this.Column14.MinimumWidth = 6;
             this.Column14.Name = "Column14";
@@ -306,8 +285,8 @@ namespace BankTeacher.Bank.Pay
             // Column12
             // 
             this.Column12.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("TH Sarabun New", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.Column12.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("TH Sarabun New", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.Column12.DefaultCellStyle = dataGridViewCellStyle5;
             this.Column12.HeaderText = "รายการ";
             this.Column12.MinimumWidth = 6;
             this.Column12.Name = "Column12";
@@ -315,8 +294,8 @@ namespace BankTeacher.Bank.Pay
             // 
             // Column13
             // 
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("TH Sarabun New", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.Column13.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("TH Sarabun New", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.Column13.DefaultCellStyle = dataGridViewCellStyle6;
             this.Column13.HeaderText = "จำนวนเงิน";
             this.Column13.MinimumWidth = 6;
             this.Column13.Name = "Column13";
@@ -350,57 +329,235 @@ namespace BankTeacher.Bank.Pay
             this.Column21.Visible = false;
             this.Column21.Width = 125;
             // 
-            // label1
+            // TBteacharnoby_billcancel
             // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(243, 17);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 32);
-            this.label1.TabIndex = 68;
+            this.TBteacharnoby_billcancel.Enabled = false;
+            this.TBteacharnoby_billcancel.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBteacharnoby_billcancel.Location = new System.Drawing.Point(148, 189);
+            this.TBteacharnoby_billcancel.Margin = new System.Windows.Forms.Padding(4);
+            this.TBteacharnoby_billcancel.Name = "TBteacharnoby_billcancel";
+            this.TBteacharnoby_billcancel.Size = new System.Drawing.Size(268, 47);
+            this.TBteacharnoby_billcancel.TabIndex = 69;
             // 
-            // panel7
+            // label14
             // 
-            this.panel7.BackColor = System.Drawing.Color.White;
-            this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel7.Controls.Add(this.TBteacharnoby_billcancel);
-            this.panel7.Controls.Add(this.label14);
-            this.panel7.Controls.Add(this.TBBIllDate_Cancelbill);
-            this.panel7.Controls.Add(this.label2);
-            this.panel7.Controls.Add(this.label1);
-            this.panel7.Controls.Add(this.label5);
-            this.panel7.Controls.Add(this.TBBillNo_Cancelbill);
-            this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel7.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel7.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.panel7.Location = new System.Drawing.Point(0, 0);
-            this.panel7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(1168, 72);
-            this.panel7.TabIndex = 63;
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(449, 194);
+            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(90, 40);
+            this.label14.TabIndex = 3;
+            this.label14.Text = "บิลล์วันที่";
+            // 
+            // TBBIllDate_Cancelbill
+            // 
+            this.TBBIllDate_Cancelbill.Enabled = false;
+            this.TBBIllDate_Cancelbill.Font = new System.Drawing.Font("TH Sarabun New", 18F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBBIllDate_Cancelbill.Location = new System.Drawing.Point(547, 187);
+            this.TBBIllDate_Cancelbill.Margin = new System.Windows.Forms.Padding(4);
+            this.TBBIllDate_Cancelbill.Name = "TBBIllDate_Cancelbill";
+            this.TBBIllDate_Cancelbill.Size = new System.Drawing.Size(222, 47);
+            this.TBBIllDate_Cancelbill.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(331, 17);
+            this.label2.Location = new System.Drawing.Point(19, 196);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(112, 40);
             this.label2.TabIndex = 4;
             this.label2.Text = "ผู้ทำรายการ";
             // 
-            // TBteacharnoby_billcancel
+            // label5
             // 
-            this.TBteacharnoby_billcancel.Enabled = false;
-            this.TBteacharnoby_billcancel.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBteacharnoby_billcancel.Location = new System.Drawing.Point(451, 13);
-            this.TBteacharnoby_billcancel.Margin = new System.Windows.Forms.Padding(4);
-            this.TBteacharnoby_billcancel.Name = "TBteacharnoby_billcancel";
-            this.TBteacharnoby_billcancel.Size = new System.Drawing.Size(268, 47);
-            this.TBteacharnoby_billcancel.TabIndex = 69;
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(7, 15);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(84, 40);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "เลขบิลล์";
+            // 
+            // TBBillNo_Cancelbill
+            // 
+            this.TBBillNo_Cancelbill.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBBillNo_Cancelbill.Location = new System.Drawing.Point(99, 12);
+            this.TBBillNo_Cancelbill.Margin = new System.Windows.Forms.Padding(4);
+            this.TBBillNo_Cancelbill.Name = "TBBillNo_Cancelbill";
+            this.TBBillNo_Cancelbill.Size = new System.Drawing.Size(185, 47);
+            this.TBBillNo_Cancelbill.TabIndex = 1;
+            this.TBBillNo_Cancelbill.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TBBillNo_Cancelbill_KeyDown);
+            // 
+            // panel1
+            // 
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.TBTeacherName_Cancelbill);
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.TBTeacherNO_Cancelbill);
+            this.panel1.Location = new System.Drawing.Point(11, 109);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1094, 61);
+            this.panel1.TabIndex = 70;
+            // 
+            // panel2
+            // 
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Location = new System.Drawing.Point(12, 176);
+            this.panel2.Margin = new System.Windows.Forms.Padding(4);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1094, 82);
+            this.panel2.TabIndex = 71;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(14, 84);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(87, 40);
+            this.label1.TabIndex = 72;
+            this.label1.Text = "บิลล์ของ";
+            // 
+            // TB5
+            // 
+            this.TB5.Controls.Add(this.panel16);
+            this.TB5.Controls.Add(this.DGV_Bill);
+            this.TB5.Location = new System.Drawing.Point(4, 45);
+            this.TB5.Name = "TB5";
+            this.TB5.Padding = new System.Windows.Forms.Padding(3);
+            this.TB5.Size = new System.Drawing.Size(1131, 652);
+            this.TB5.TabIndex = 5;
+            this.TB5.Text = "ประวัติการยกเลิก";
+            this.TB5.UseVisualStyleBackColor = true;
+            // 
+            // DGV_Bill
+            // 
+            this.DGV_Bill.AllowUserToAddRows = false;
+            this.DGV_Bill.AllowUserToDeleteRows = false;
+            this.DGV_Bill.AllowUserToResizeRows = false;
+            this.DGV_Bill.BackgroundColor = System.Drawing.Color.White;
+            this.DGV_Bill.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV_Bill.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column3,
+            this.Column1,
+            this.Column2,
+            this.Column4,
+            this.Column5});
+            this.DGV_Bill.Location = new System.Drawing.Point(18, 83);
+            this.DGV_Bill.Margin = new System.Windows.Forms.Padding(4);
+            this.DGV_Bill.Name = "DGV_Bill";
+            this.DGV_Bill.ReadOnly = true;
+            this.DGV_Bill.RowHeadersVisible = false;
+            this.DGV_Bill.RowHeadersWidth = 51;
+            this.DGV_Bill.Size = new System.Drawing.Size(1095, 544);
+            this.DGV_Bill.TabIndex = 1;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "ผู้ทำรายการ";
+            this.Column3.MinimumWidth = 6;
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.Width = 250;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "บิลล์";
+            this.Column1.MinimumWidth = 6;
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 130;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "วันที่";
+            this.Column2.MinimumWidth = 6;
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Width = 125;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "รายการ";
+            this.Column4.MinimumWidth = 6;
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.Width = 180;
+            // 
+            // Column5
+            // 
+            this.Column5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column5.HeaderText = "เงิน";
+            this.Column5.MinimumWidth = 6;
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            // 
+            // panel16
+            // 
+            this.panel16.BackColor = System.Drawing.Color.White;
+            this.panel16.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel16.Controls.Add(this.CBMonthSelection_Bill);
+            this.panel16.Controls.Add(this.LB5Mo);
+            this.panel16.Controls.Add(this.LB5Ye);
+            this.panel16.Controls.Add(this.CBYearSelection_Bill);
+            this.panel16.Location = new System.Drawing.Point(18, 5);
+            this.panel16.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel16.Name = "panel16";
+            this.panel16.Size = new System.Drawing.Size(510, 72);
+            this.panel16.TabIndex = 99;
+            // 
+            // CBMonthSelection_Bill
+            // 
+            this.CBMonthSelection_Bill.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBMonthSelection_Bill.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CBMonthSelection_Bill.FormattingEnabled = true;
+            this.CBMonthSelection_Bill.Location = new System.Drawing.Point(295, 17);
+            this.CBMonthSelection_Bill.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.CBMonthSelection_Bill.Name = "CBMonthSelection_Bill";
+            this.CBMonthSelection_Bill.Size = new System.Drawing.Size(129, 39);
+            this.CBMonthSelection_Bill.TabIndex = 101;
+            // 
+            // LB5Mo
+            // 
+            this.LB5Mo.AutoSize = true;
+            this.LB5Mo.BackColor = System.Drawing.Color.White;
+            this.LB5Mo.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LB5Mo.ForeColor = System.Drawing.Color.Black;
+            this.LB5Mo.Location = new System.Drawing.Point(216, 18);
+            this.LB5Mo.Name = "LB5Mo";
+            this.LB5Mo.Size = new System.Drawing.Size(57, 37);
+            this.LB5Mo.TabIndex = 100;
+            this.LB5Mo.Text = "เดือน";
+            // 
+            // LB5Ye
+            // 
+            this.LB5Ye.AutoSize = true;
+            this.LB5Ye.BackColor = System.Drawing.Color.White;
+            this.LB5Ye.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LB5Ye.ForeColor = System.Drawing.Color.Black;
+            this.LB5Ye.Location = new System.Drawing.Point(19, 18);
+            this.LB5Ye.Name = "LB5Ye";
+            this.LB5Ye.Size = new System.Drawing.Size(29, 37);
+            this.LB5Ye.TabIndex = 99;
+            this.LB5Ye.Text = "ปี";
+            // 
+            // CBYearSelection_Bill
+            // 
+            this.CBYearSelection_Bill.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBYearSelection_Bill.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CBYearSelection_Bill.FormattingEnabled = true;
+            this.CBYearSelection_Bill.Location = new System.Drawing.Point(71, 17);
+            this.CBYearSelection_Bill.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.CBYearSelection_Bill.Name = "CBYearSelection_Bill";
+            this.CBYearSelection_Bill.Size = new System.Drawing.Size(103, 39);
+            this.CBYearSelection_Bill.TabIndex = 84;
             // 
             // CancelBill
             // 
@@ -411,10 +568,12 @@ namespace BankTeacher.Bank.Pay
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "CancelBill";
             this.Text = "CancellBill";
+            this.Load += new System.EventHandler(this.CancelBill_Load);
             this.SizeChanged += new System.EventHandler(this.CancelBill_SizeChanged);
             this.PL_Form.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
+            this.TB_2.ResumeLayout(false);
             this.tabpage5.ResumeLayout(false);
+            this.tabpage5.PerformLayout();
             this.panel18.ResumeLayout(false);
             this.panel18.PerformLayout();
             this.panel17.ResumeLayout(false);
@@ -422,8 +581,12 @@ namespace BankTeacher.Bank.Pay
             this.panel12.ResumeLayout(false);
             this.panel12.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Cancelbill)).EndInit();
-            this.panel7.ResumeLayout(false);
-            this.panel7.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.TB5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_Bill)).EndInit();
+            this.panel16.ResumeLayout(false);
+            this.panel16.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -431,7 +594,7 @@ namespace BankTeacher.Bank.Pay
         #endregion
 
         private System.Windows.Forms.Panel PL_Form;
-        public System.Windows.Forms.TabControl tabControl1;
+        public System.Windows.Forms.TabControl TB_2;
         private System.Windows.Forms.TabPage tabpage5;
         private System.Windows.Forms.Panel panel18;
         private System.Windows.Forms.Label label27;
@@ -455,9 +618,22 @@ namespace BankTeacher.Bank.Pay
         private System.Windows.Forms.DataGridViewTextBoxColumn Column15;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column16;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column21;
-        private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox TBteacharnoby_billcancel;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TabPage TB5;
+        private System.Windows.Forms.DataGridView DGV_Bill;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.Panel panel16;
+        private System.Windows.Forms.ComboBox CBMonthSelection_Bill;
+        private System.Windows.Forms.Label LB5Mo;
+        private System.Windows.Forms.Label LB5Ye;
+        private System.Windows.Forms.ComboBox CBYearSelection_Bill;
     }
 }
