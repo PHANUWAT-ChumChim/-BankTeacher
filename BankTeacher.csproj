@@ -83,6 +83,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bank\Add Member\CancelMember.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bank\Add Member\CancelMember.Designer.cs">
+      <DependentUpon>CancelMember.cs</DependentUpon>
+    </Compile>
     <Compile Include="Bank\AmountOff.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -187,6 +193,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Bank\Add Member\CancelMember.resx">
+      <DependentUpon>CancelMember.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Bank\AmountOff.resx">
       <DependentUpon>AmountOff.cs</DependentUpon>
     </EmbeddedResource>

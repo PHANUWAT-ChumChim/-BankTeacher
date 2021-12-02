@@ -376,6 +376,7 @@ namespace BankTeacher.Bank.Pay
             //หากมีการกด Enter
             if (e.KeyCode == Keys.Enter)
             {
+                tabControl1.SelectedIndex = 0; ;
                 List<int> Loan = new List<int>();
                 List<List<int>> RMonth = new List<List<int>>();
                 //ลองค้นหาดูว่ามี ID สมาชิกนี้ในระบบมั้ย หากมีให้ทำใน if
@@ -411,12 +412,12 @@ namespace BankTeacher.Bank.Pay
                         //ประกาศตัวแปร ปีที่สมัครและปีที่จ่ายล่าสุด
                         int YearRegister = Convert.ToInt32((Convert.ToDateTime(ds.Tables[1].Rows[0][0].ToString())).ToString("yyyy"));
                         int Yearlastofpay = Convert.ToInt32((Convert.ToDateTime(ds.Tables[2].Rows[0][2].ToString())).ToString("yyyy"));
-                        Yearlastofpay = Yearlastofpay - YearRegister;
+                        Yearlastofpay = Yearlastofpay - Convert.ToInt32(Bank.Menu.Date[0]);
                         //ถ้าปีที่สมัคร น้อยกว่าปีนี้ -2 ปีให้ทำ
-                        if (YearRegister < Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) - 2)
+                        if (YearRegister < Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) - 5)
                         {
                             //ประกาศให้ตัวแปร thisyeardiscount2year = ปีนี้ - 2 ปี
-                            int thisyeardiscount2year = Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) - 2;
+                            int thisyeardiscount2year = Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) - 5;
                             //หาก thisyeardiscount2year น้อยกว่าหรือเท่ากับ ปีนี้ + จำนวนปีที่จ่ายล่าสุด ให้ loop
                             while (thisyeardiscount2year <= Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + Yearlastofpay)
                             {
@@ -440,8 +441,8 @@ namespace BankTeacher.Bank.Pay
                                 thisyeardiscount2year++;
                             }
                         }
-                        //หาก if บนไม่เป็นจริง ให้มาดูเงื่อนไขนี้ต่อ หาก วันที่สมัคร มากกว่า หรือ เท่ากับ ปีนี้ -2 ปี
-                        else if (YearRegister >= Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) - 2)
+                        //หาก if บนไม่เป็นจริง ให้มาดูเงื่อนไขนี้ต่อ หาก วันที่สมัคร มากกว่า หรือ เท่ากับ ปีนี้ -5 ปี
+                        else if (YearRegister >= Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) - 5)
                         {
                             //หาก วันที่สมัคร น้อยกว่า หรือเท่ากับ ปีนี้ + จำนวนปีที่จ่ายล่าสุด ให้ loop
                             while (YearRegister <= Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + Yearlastofpay)
@@ -595,11 +596,37 @@ namespace BankTeacher.Bank.Pay
                                 //loop เอาเดือนจาก RMonth แล้ว loop จาก RMonth[เดือน] ออกมา
                                 //หาว่ามีรายการอยู่ในนั้นมั้ย หาก มี ให้ข้าม หาก ไม่จน loop หมดทั้งเดือน ให้ ลบ
                                 for (int Count = 0; Count < RMonth.Count; Count++)
+                                {
                                     for (int CountDetail = 0; CountDetail < RMonth[Count].Count; CountDetail++)
+                                    {
                                         if (RMonth[Count][CountDetail] == 1)
+                                        {
                                             break;
+                                        }
                                         else if (CountDetail == RMonth[Count].Count - 1)
-                                            RemovePosistion.Add(x);
+                                        {
+                                            if(RemovePosistion.Count != 0)
+                                            {
+                                                for(int y = 0; y < RemovePosistion.Count; y++)
+                                                {
+                                                    if(RemovePosistion[y] == x)
+                                                    {
+                                                        break;
+                                                    }
+                                                    else if(y == RemovePosistion.Count - 1 && RemovePosistion[y] != x && RMonth[x][CountDetail] == 0)
+                                                    {
+                                                        RemovePosistion.Add(x);
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                RemovePosistion.Add(x);
+                                            }
+                                        }
+                                    }
+                                }
                             }
                             //loop ลบเดือนของ DM ตามที่เช็คมาก่อนหน้า
                             for (int x = 0; x < RemovePosistion.Count; x++)
@@ -1474,7 +1501,6 @@ namespace BankTeacher.Bank.Pay
 
                         if (x % 2 == 1)
                         {
-                            //
                             DGV_BillInfo.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
                         }
                     }
