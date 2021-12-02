@@ -2052,13 +2052,13 @@ namespace BankTeacher.Bank.Pay
             }
             if (DGV_Tester.Rows.Count != 0)
             {
-                BT_Printf.Visible = true;
+                BT_Printf.Enabled = true;
                 DataTable dts = Class.SQLConnection.InputSQLMSSQL(SQLDefault[15].Replace("{BillNo}", DGV_BillInfo.Rows[e.RowIndex].Cells[0].Value.ToString()));
                 info_datepay = dts.Rows[0][0].ToString();
             }
             else
             {
-                BT_Printf.Visible = false;
+                BT_Printf.Enabled = false;
             }
         }
         // ปริ้น
@@ -2079,7 +2079,7 @@ namespace BankTeacher.Bank.Pay
         private void DGV_BillInfo_RowValidated_1(object sender, DataGridViewCellEventArgs e)
         {
             DGV_Tester.Rows.Clear();
-            BT_Printf.Visible = false;
+            BT_Printf.Enabled = false;
         }
         // เปลี่ยนรูปเเบบตามต้นฉบับ
         private void DGV_Pay_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)

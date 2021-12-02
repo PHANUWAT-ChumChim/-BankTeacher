@@ -12,6 +12,8 @@ namespace BankTeacher.Class
         public static String TeacherName;
         public static String TeacherNoMYSQL;
 
+        public static Boolean Debug = false;
+
         public static void SetTeacherInformation(String teacherNo, String teacherName, String teacherNoMYSQL)
         {
             TeacherNo = teacherNo;

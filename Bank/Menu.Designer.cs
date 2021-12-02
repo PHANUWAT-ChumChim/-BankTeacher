@@ -32,6 +32,7 @@ namespace BankTeacher.Bank
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.Menu_Home = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_pay = new System.Windows.Forms.ToolStripMenuItem();
+            this.Manu_Cancel = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Loan = new System.Windows.Forms.ToolStripMenuItem();
             this.Menubar_MerberLoan = new System.Windows.Forms.ToolStripMenuItem();
             this.Menubar_payLoan = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,12 +77,21 @@ namespace BankTeacher.Bank
             // 
             // Menu_pay
             // 
+            this.Menu_pay.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Manu_Cancel});
             this.Menu_pay.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Menu_pay.Image = global::BankTeacher.Properties.Resources._64x64_wallet;
             this.Menu_pay.Name = "Menu_pay";
             this.Menu_pay.Size = new System.Drawing.Size(124, 35);
             this.Menu_pay.Text = "จ่าย สะสม/กู้";
             this.Menu_pay.Click += new System.EventHandler(this.Menu_pay_Click);
+            // 
+            // Manu_Cancel
+            // 
+            this.Manu_Cancel.Name = "Manu_Cancel";
+            this.Manu_Cancel.Size = new System.Drawing.Size(224, 42);
+            this.Manu_Cancel.Text = "ยกเลิกบิลล์";
+            this.Manu_Cancel.Click += new System.EventHandler(this.Manu_Cancel_Click);
             // 
             // Menu_Loan
             // 
@@ -99,28 +109,28 @@ namespace BankTeacher.Bank
             // Menubar_MerberLoan
             // 
             this.Menubar_MerberLoan.Name = "Menubar_MerberLoan";
-            this.Menubar_MerberLoan.Size = new System.Drawing.Size(140, 34);
+            this.Menubar_MerberLoan.Size = new System.Drawing.Size(176, 42);
             this.Menubar_MerberLoan.Text = "สมัครกู้";
             this.Menubar_MerberLoan.Click += new System.EventHandler(this.Menubar_MerberLoan_Click);
             // 
             // Menubar_payLoan
             // 
             this.Menubar_payLoan.Name = "Menubar_payLoan";
-            this.Menubar_payLoan.Size = new System.Drawing.Size(140, 34);
+            this.Menubar_payLoan.Size = new System.Drawing.Size(176, 42);
             this.Menubar_payLoan.Text = "จ่ายกู้";
             this.Menubar_payLoan.Click += new System.EventHandler(this.Menubar_Click);
             // 
             // Menubar_infoLoan
             // 
             this.Menubar_infoLoan.Name = "Menubar_infoLoan";
-            this.Menubar_infoLoan.Size = new System.Drawing.Size(140, 34);
+            this.Menubar_infoLoan.Size = new System.Drawing.Size(176, 42);
             this.Menubar_infoLoan.Text = "ดูข้อมุลกู้";
             this.Menubar_infoLoan.Click += new System.EventHandler(this.Menubar_infoLoan_Click);
             // 
             // Cancel
             // 
             this.Cancel.Name = "Cancel";
-            this.Cancel.Size = new System.Drawing.Size(140, 34);
+            this.Cancel.Size = new System.Drawing.Size(176, 42);
             this.Cancel.Text = "ยกเลิกกู้";
             this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
             // 
@@ -196,5 +206,6 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.ToolStripMenuItem Menubar_MerberLoan;
         private System.Windows.Forms.ToolStripMenuItem aaToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem Menu_pay;
+        private System.Windows.Forms.ToolStripMenuItem Manu_Cancel;
     }
 }
