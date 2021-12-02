@@ -23,10 +23,11 @@ namespace BankTeacher.Bank.Pay
         /// <para>[1] Update Cancel Bill INPUT: {BillNo} {--} {---} </para>
         /// <para>[2] Update Saving (CancelBill) INPUT: {TeacherNo} {Amount}</para>
         /// <para>[3] + RemainAmount In Guarantor (CancelBill) INPUT: {LoanNo} , {LoanAmount}</para>
+        /// <para>[4] datagrind  Select billType INPUT: {Mount} {Year} {Type}  </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
         {
-              //[0] Select Bill (CancelBill) INPUT: {BillNo}
+              //[0] Select Bill (CancelBill) INPUT: {BillNo} 
            "SELECT CAST(a.DateAdd as date),a.TeacherNo,CAST(ISNULL(e.PrefixName,'') +  Fname + ' ' + LName as nvarchar(255))as Name ,b.Year ,b.Mount , TypeName,LoanNo , b.Amount \r\n " +
           "FROM EmployeeBank.dbo.tblBill as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo \r\n " +
@@ -77,6 +78,15 @@ namespace BankTeacher.Bank.Pay
           "LEFT JOIN EmployeeBank.dbo.tblLoan as b on a.LoanNo = b.LoanNo \r\n " +
           "WHERE a.LoanNo = {LoanNo} and EmployeeBank.dbo.tblGuarantor.TeacherNo LIKE a.TeacherNo) \r\n " +
           "WHERE EmployeeBank.dbo.tblGuarantor.LoanNo = {LoanNo}"
+            ,
+           //[4] datagrind  Select billType INPUT: {Mount} {Year} {Type}
+          "SELECT CAST(e.PrefixName+''+d.Fname+''+d.Lname as nvarchar) as TeacherAddby,a.BillNo,a.DateAdd,c.TypeName,b.Amount,a.Cancel,CAST(Year(a.DateAdd) as nvarchar),CAST(MONTH(a.DateAdd) as nvarchar)  \r\n" +
+          "FROM EmployeeBank.dbo.tblBill as a \r\n" +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b ON a.BillNo = b.BillNo \r\n" +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as c ON b.TypeNo = c.TypeNo \r\n" +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as d on a.TeacherNoAddBy = d.TeacherNo \r\n" +
+          "LEFT JOIN BaseData.dbo.tblPrefix as e on d.PrefixNo = e.PrefixNo \r\n" +
+          "WHERE CAST(Year(a.DateAdd) as nvarchar) = {Year} or CAST(MONTH(a.DateAdd) as nvarchar) = {Mount}  AND a.Cancel != {Type}"
         };
 
 
@@ -198,6 +208,41 @@ namespace BankTeacher.Bank.Pay
                     }
                 }
             }
+        }
+        private void CancelBill_Load(object sender, EventArgs e)
+        {
+            int Mount = 0, Year = 0;
+            x:
+            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{Mount}",Convert.ToInt32(DateTime.Today.Month - Mount).ToString())
+                .Replace("{Year}",Convert.ToInt32(DateTime.Today.Year - Year).ToString()).Replace("{Type}","0"));
+            if(dt.Rows.Count != 0)
+            {
+                CBYearSelection_Bill.Items.Add(Convert.ToInt32(DateTime.Today.Year - Year));
+                CBYearSelection_Bill.SelectedIndex = 0;
+                CBMonthSelection_Bill.Items.Add(DateTime.Today.Month - Mount);
+                CBMonthSelection_Bill.SelectedIndex = 0;
+
+                for(int Row = 0; Row < dt.Rows.Count; Row++)
+                {
+                    DGV_Bill.Rows.Add(dt.Rows[0][0].ToString(), dt.Rows[0][1].ToString(),dt.Rows[0][2].ToString(),dt.Rows[0][3].ToString(),dt.Rows[0][4].ToString(),dt.Rows[0][5].ToString());
+                }
+            }
+            else
+            {
+                if (Mount < Convert.ToInt32(DateTime.Today.Month))
+                   Mount++;
+                else
+                {
+                    Mount = 0;
+                    Year++;
+                }
+                goto x;
+            }
+
+
+
+        
+          
         }
     }
 }

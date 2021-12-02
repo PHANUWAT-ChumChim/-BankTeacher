@@ -76,6 +76,10 @@ namespace BankTeacher.Bank.Add_Member
             InitializeComponent();
             Relaodcancelmember();
         }
+        private void CancelMember_SizeChanged_1(object sender, EventArgs e)
+        {
+            Class.FromSettingMedtod.ChangeSizePanal(this,panel1);
+        }
 
         private void BSearch_Click(object sender, EventArgs e)
         {
@@ -85,7 +89,8 @@ namespace BankTeacher.Bank.Add_Member
                 IN.ShowDialog();
                 if (Bank.Search.Return[0] != "")
                 {
-                    TBTeacherNO_Cancel.Text = Bank.Search.Return[0];
+                    TBTeacherNo.Text = Bank.Search.Return[0];
+                    TBTeacherName.Text = Bank.Search.Return[1];
                     TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
                 }
             }
@@ -97,14 +102,14 @@ namespace BankTeacher.Bank.Add_Member
 
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter && TBTeacherNo.Text.Length == 6)
             {
-                if (TBTeacherNO_Cancel.Text.Length == 6)
+                if (TBTeacherNo.Text.Length == 6)
                 {
                     try
                     {
                         DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0].Replace("{Text}", TBTeacherNO_Cancel.Text));
-                        TBTeacherName_Cancel.Text = ds.Tables[0].Rows[0][1].ToString();
+                        TBTeacherName.Text = ds.Tables[0].Rows[0][1].ToString();
                         Saving = Convert.ToDouble(ds.Tables[0].Rows[0][2].ToString());
                         Check = 1;
 
@@ -117,7 +122,7 @@ namespace BankTeacher.Bank.Add_Member
             }
             else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back && Check == 1)
             {
-                TBTeacherName_Cancel.Text = "";
+                TBTeacherName.Text = "";
                 CheckBCancel = false;
                 Check = 0;
             }
@@ -263,7 +268,7 @@ namespace BankTeacher.Bank.Add_Member
             int Year = Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]);
             for (int a = 0; a < 5; a++)
             {
-                if (Class.SQLConnection.InputSQLMSSQL(SQLDefault[6]
+                if (Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
                     .Replace("{Date}", Year.ToString())).Rows.Count != 0)
                     CBYear_HistoryCancel.Items.Add(Year);
                 Year--;
@@ -272,10 +277,7 @@ namespace BankTeacher.Bank.Add_Member
                 CBYear_HistoryCancel.SelectedIndex = 0;
         }
 
-        private void CancelMember_SizeChanged(object sender, EventArgs e)
-        {
-             Class.FromSettingMedtod.ChangeSizePanal(this, panel1);
-        }
+      
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {

@@ -73,63 +73,43 @@ namespace BankTeacher.Bank
         }
         private void Menu_Home_Click(object sender, EventArgs e)
         {
-            BankTeacher.Bank.Home Hm = new BankTeacher.Bank.Home();
-            CloseFrom(Hm);
-        }
-        private void Menu_Membership_Click(object sender, EventArgs e)
-        {
-            Bank.MemberShip Ms = new Bank.MemberShip();
-            CloseFrom(Ms);
+            BankTeacher.Bank.Home Home = new BankTeacher.Bank.Home();
+            CloseFrom(Home);
         }
         private void Menu_Load_1(object sender, EventArgs e)
         {
-            BankTeacher.Bank.Home Hm = new BankTeacher.Bank.Home();
-            CloseFrom(Hm);
+            BankTeacher.Bank.Home startHome = new BankTeacher.Bank.Home();
+            CloseFrom(startHome);
         }
         private void Menu_setring_Click(object sender, EventArgs e)
         {
             Bank.Setting St = new Bank.Setting();
             St.ShowDialog();
         }
-        private void TMLCancelMembers_Click(object sender, EventArgs e)
-        {
-            Bank.MemberShip Cm = new Bank.MemberShip();
-            CloseFrom(Cm);
-        }
-        private void ReportCancelMember_Click(object sender, EventArgs e)
-        {
-            Bank.MemberShip Rc = new Bank.MemberShip();
-            CloseFrom(Rc);
-        }
-        public void Menu_pay_Click(object sender, EventArgs e)
-        {
-            BankTeacher.Bank.Pay.pay Mn = new BankTeacher.Bank.Pay.pay(0);
-            CloseFrom(Mn);
-        }
         private void Cancel_Click(object sender, EventArgs e)
         {
-            BankTeacher.Bank.Loan.CancelLoan Cl = new Bank.Loan.CancelLoan();
-            CloseFrom(Cl);
+            BankTeacher.Bank.Loan.CancelLoan CancelLoan = new Bank.Loan.CancelLoan();
+            CloseFrom(CancelLoan);
         }
         private void Menubar_Click(object sender, EventArgs e)
         {
-            Bank.Loan.PayLoan Pl = new Bank.Loan.PayLoan();
-            CloseFrom(Pl);
+            Bank.Loan.PayLoan PayLoan = new Bank.Loan.PayLoan();
+            CloseFrom(PayLoan);
         }
         private void Menubar_MerberLoan_Click(object sender, EventArgs e)
         {
-            Bank.Loan.loan Ln = new Bank.Loan.loan();
-            CloseFrom(Ln);
+            Bank.Loan.loan loan = new Bank.Loan.loan();
+            CloseFrom(loan);
         }
         private void Menubar_infoLoan_Click(object sender, EventArgs e)
         {
-            Bank.Loan.InfoLoan If = new Bank.Loan.InfoLoan();
-            CloseFrom(If);
+            Bank.Loan.InfoLoan InfoLoan = new Bank.Loan.InfoLoan();
+            CloseFrom(InfoLoan);
         }
         private void AmountOff_Click(object sender, EventArgs e)
         {
-            Bank.AmountOff Af = new Bank.AmountOff();
-            CloseFrom(Af);  
+            Bank.AmountOff AmountOff = new Bank.AmountOff();
+            CloseFrom(AmountOff);  
         }
 
         private void aaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -138,10 +118,28 @@ namespace BankTeacher.Bank
             CloseFrom(report);
         }
 
-        private void Manu_Cancel_Click(object sender, EventArgs e)
+        private void Manu_pay_Click(object sender, EventArgs e)
         {
-            Bank.Pay.CancelBill CancelBill = new Bank.Pay.CancelBill();
-            CloseFrom(CancelBill);
+            Bank.Pay.pay pay = new Pay.pay();
+            CloseFrom(pay);
+        }
+
+        private void สมครสมาชกToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Bank.Add_Member.Member Merber = new Bank.Add_Member.Member();
+            CloseFrom(Merber);
+        }
+
+        private void ยกเลกสมาชกToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Bank.Add_Member.CancelMember cancelMembers = new Bank.Add_Member.CancelMember();
+            CloseFrom(cancelMembers);
+        }
+
+        private void Menu_CanCelBill_Click(object sender, EventArgs e)
+        {
+            Bank.Pay.CancelBill cancelBill = new Pay.CancelBill();
+            CloseFrom(cancelBill);
         }
     }
 }

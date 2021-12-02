@@ -59,11 +59,7 @@ namespace BankTeacher.Bank.Pay
         /// <para>[12] SELECT SharePayBill and SELECT ShareOfYear INPUT: {TeacherNo} , {Year}</para>
         /// <para>[13] SELECT Detail Loan INPUT: {LoanID}</para>
         /// <para>[14] Select Billinfomation INPUT: {TeacherNo , {Year}</para>
-        /// <para>[15] Select Bill (CancelBill) INPUT: {BillNo}</para>
-        /// <para>[16] Update Cancel Bill INPUT: {BillNo} </para>
-        /// <para>[17] Update Saving (CancelBill) INPUT: {TeacherNo} {Amount}</para>
-        /// <para>[18] + RemainAmount In Guarantor (CancelBill) INPUT: {LoanNo} , {LoanAmount}</para>
-        /// <para>[19] print backwards IN: {billl} </para>
+         /// <para>[15] print backwards IN: {billl} </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -265,42 +261,7 @@ namespace BankTeacher.Bank.Pay
           "WHERE TeacherNo = '{TeacherNo}' and Year = {Year} and Cancel = 1 \r\n " +
           "ORDER BY b.Mount "
           ,
-          //[15] Select Bill (CancelBill) INPUT: {BillNo}
-           "SELECT CAST(a.DateAdd as date),a.TeacherNo,CAST(ISNULL(e.PrefixName,'') +  Fname + ' ' + LName as nvarchar(255))as Name ,b.Year ,b.Mount , TypeName,LoanNo , b.Amount \r\n " +
-          "FROM EmployeeBank.dbo.tblBill as a \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblMember as c on a.TeacherNo = c.TeacherNo \r\n " +
-          "LEFT JOIN Personal.dbo.tblTeacherHis as d on a.TeacherNo = d.TeacherNo \r\n " +
-          "LEFT JOIN BaseData.dbo.tblPrefix as e on d.PrefixNo = e.PrefixNo \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as f on b.TypeNo = f.TypeNo \r\n " +
-          "WHERE a.BillNo = {BillNo} and MemberStatusNo != 2 and Cancel = 1"
-           ,
-           //[16] Update Cancel Bill INPUT: {BillNo} 
-           "Update EmployeeBank.dbo.tblBill \r\n " +
-          "SET Cancel = 2 \r\n " +
-          "WHERE BillNo = {BillNo}"
-           ,
-           //[17] Update Saving (CancelBill) INPUT: {TeacherNo} {Amount}
-           "DECLARE @@SavingAmount INT; \r\n " +
-          " \r\n " +
-          "SET @@SavingAmount = (SELECT SavingAmount \r\n " +
-          "FROM EmployeeBank.dbo.tblShare \r\n " +
-          "WHERE TeacherNo = '{TeacherNo}') \r\n " +
-          " \r\n " +
-          "UPDATE EmployeeBank.dbo.tblShare \r\n " +
-          "SET SavingAmount = @@SavingAmount - {Amount} \r\n " +
-          "WHERE  TeacherNo = '{TeacherNo}'"
-           ,
-           //[18] + RemainAmount In Guarantor (CancelBill) INPUT: {LoanNo} , {LoanAmount}
-           "UPDATE EmployeeBank.dbo.tblGuarantor  \r\n " +
-          "SET RemainsAmount = EmployeeBank.dbo.tblGuarantor.RemainsAmount + (SELECT ((a.Amount * 100 ) / (b.LoanAmount * (b.InterestRate/100) + b.LoanAmount) * {LoanAmount} / 100) as AmountPerTeacher \r\n " +
-          "FROM EmployeeBank.dbo.tblGuarantor as a \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblLoan as b on a.LoanNo = b.LoanNo \r\n " +
-          "WHERE a.LoanNo = {LoanNo} and EmployeeBank.dbo.tblGuarantor.TeacherNo LIKE a.TeacherNo) \r\n " +
-          "WHERE EmployeeBank.dbo.tblGuarantor.LoanNo = {LoanNo}"
-
-           ,
-           //[19] print backwards IN: {billl}
+           //[15] print backwards IN: {billl}
            "SELECT  a.BillNo,a.Amount,b.TypeName,CAST(a.Mount as nvarchar)+'/'+CAST(a.Year as nvarchar)  as  Mountandyear \r\n" +
            "FROM EmployeeBank.dbo.tblBillDetail as a \r\n" +
            "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as b ON a.TypeNo = b.TypeNo \r\n" +
@@ -311,12 +272,10 @@ namespace BankTeacher.Bank.Pay
 
         //=================================== Load Form ============================================
         //Open Form
-        public pay(int TabIndex)
+        public pay()
         {
             InitializeComponent();
             Console.WriteLine("==================Open Pay Form======================");
-            tabControl1.SelectedIndex = TabIndex;
-
             Font F = new Font("TH Sarabun New", 16, FontStyle.Regular);
             DGV_Pay.ColumnHeadersDefaultCellStyle.Font = F;
             DGV_ShareInfo.ColumnHeadersDefaultCellStyle.Font = F;
@@ -1516,106 +1475,7 @@ namespace BankTeacher.Bank.Pay
 
 
         //============================== tabpage 5 (Cancel Bill) ============================================
-        //Select Bill
-        private void TBBillNo_Cancelbill_KeyDown(object sender, KeyEventArgs e)
-        {
-            if(e.KeyCode == Keys.Enter)
-            {
-                if(Int32.TryParse(TBBillNo_Cancelbill.Text, out int BillNo))
-                {
-                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[15]
-                        .Replace("{BillNo}", BillNo.ToString()));
-                    if(dt.Rows.Count != 0)
-                    {
-                        Cleartabpage5();
-                        TBBIllDate_Cancelbill.Text = (Convert.ToDateTime(dt.Rows[0][0].ToString())).ToString("yyyy-MM-dd");
-                        TBTeacherNO_Cancelbill.Text = dt.Rows[0][1].ToString();
-                        TBTeacherName_Cancelbill.Text = dt.Rows[0][2].ToString();
-                        int Amount = 0;
-                        for(int x = 0; x < dt.Rows.Count; x++)
-                        {
-                            if (dt.Rows[x][5].ToString().Contains("หุ้น"))
-                                DGV_Cancelbill.Rows.Add(dt.Rows[x][3].ToString() + '/' + dt.Rows[x][4].ToString(), "หุ้นสะสม", dt.Rows[x][7].ToString() ,'-', dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
-                            else
-                                DGV_Cancelbill.Rows.Add(dt.Rows[x][3].ToString() + '/' + dt.Rows[x][4].ToString(), "รายการกู้ " + dt.Rows[x][6].ToString(), dt.Rows[x][7].ToString(), dt.Rows[x][6].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
-                            Amount = Amount + Convert.ToInt32(dt.Rows[x][7].ToString());
-                            if (x % 2 == 1)
-                            {
-                                //
-                                DGV_Cancelbill.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
-                            }
-                        }
-                        LSumAmount_CancelBill.Text = Amount.ToString();
-                        
-                        CheckInputBill = true;
-                    }
-                    else
-                    {
-                        MessageBox.Show("ไม่มีหมายเลขบิลล์นี้ \r\n หรือผู้ใช้ได้ทำการยกเลิกสมาชิกไปแล้ว", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }
-            }
-            else if(e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
-            {
-                CheckInputBill = false;
-                Cleartabpage5();
-            }
-        }
-        //Cleartab
-        private void BClear_Cancelbill_Click(object sender, EventArgs e)
-        {
-            TBBillNo_Cancelbill.Text = "";
-            Cleartabpage5();
-            TBTeacherNo_KeyDown(new object() , new KeyEventArgs(Keys.Enter));
-        }
-        //SaveCancel
-        private void BSave_Cancelbill_Click(object sender, EventArgs e)
-        {
-            if (TBBillNo_Cancelbill.Text != "")
-            {
-                // Format yyyy-mm-dd EX: 2020-1-15
-                String today = (Convert.ToDateTime((Bank.Menu.Date[0] + '-' + Bank.Menu.Date[1] + '-' + Bank.Menu.Date[2]).ToString())).ToString("yyyy-MM-dd");
-                if (today == TBBIllDate_Cancelbill.Text)
-                {
-                    if (DGV_Cancelbill.Rows.Count != 0)
-                    {
-                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[16]
-                            .Replace("{BillNo}", TBBillNo_Cancelbill.Text));
-                        //int SumLoanAmount = 0;
-                        for (int x = 0; x < DGV_Cancelbill.Rows.Count; x++)
-                        {
-                            if (DGV_Cancelbill.Rows[x].Cells[1].Value.ToString().Contains("หุ้น"))
-                            {
-                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[17]
-                                    .Replace("{TeacherNo}", TBTeacherNO_Cancelbill.Text)
-                                    .Replace("{Amount}", DGV_Cancelbill.Rows[x].Cells[2].Value.ToString()));
-                            }
-                            else if (DGV_Cancelbill.Rows[x].Cells[1].Value.ToString().Contains("กู้"))
-                            {
-                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[18]
-                                .Replace("{LoanNo}", DGV_Cancelbill.Rows[x].Cells[3].Value.ToString())
-                                .Replace("{LoanAmount}", DGV_Cancelbill.Rows[x].Cells[2].Value.ToString()));
-                            }
-                        }
-
-                    }
-                }
-
-                else
-                {
-                    DialogResult MSB = MessageBox.Show("ไม่สามารถยกเลิกได้เนื่องจาก\r\nบิลล์หมายเลขที่เพิ่มมานานกว่า 1 วัน\r\nคุณต้องการดำเนินการต่อหรือไม่", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                    if (MSB == DialogResult.Yes)
-                    {
-                        //เดี๋ยวมาแก้จ้าาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาาา
-                        MessageBox.Show("ขึ้นอยู่กับสิทธ์ของผู้ทำรายการ");
-                    }
-                }
-            }
-        }
-        //==============================================================================================
-        //--------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
+     
         //======================================= Method ===============================================
         private void ReadonlyDGVPay()
         {
@@ -1893,8 +1753,6 @@ namespace BankTeacher.Bank.Pay
         private void Cleartabpage5()
         {
             //tabpage 5 (Cancel Bill) ==============================================
-            BClear_Cancelbill.Enabled = false;
-            DGV_Cancelbill.Rows.Clear();
             LSumAmount_CancelBill.Text = "0";
             TBBIllDate_Cancelbill.Text = "";
             TBTeacherName_Cancelbill.Text = "";

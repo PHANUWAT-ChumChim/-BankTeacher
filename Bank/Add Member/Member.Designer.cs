@@ -1,7 +1,7 @@
 ﻿
-namespace BankTeacher.Bank
+namespace BankTeacher.Bank.Add_Member
 {
-    partial class MemberShip
+    partial class Member
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@ namespace BankTeacher.Bank
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MemberShip));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Member));
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
