@@ -95,6 +95,12 @@
     <Compile Include="Bank\AmountOff.Designer.cs">
       <DependentUpon>AmountOff.cs</DependentUpon>
     </Compile>
+    <Compile Include="Bank\DatailBill.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bank\DatailBill.Designer.cs">
+      <DependentUpon>DatailBill.cs</DependentUpon>
+    </Compile>
     <Compile Include="Bank\Loan\CancelLoan.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -198,6 +204,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\AmountOff.resx">
       <DependentUpon>AmountOff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bank\DatailBill.resx">
+      <DependentUpon>DatailBill.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Loan\CancelLoan.resx">
       <DependentUpon>CancelLoan.cs</DependentUpon>
