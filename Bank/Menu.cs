@@ -162,8 +162,8 @@ namespace BankTeacher.Bank
 
         private void MenuAllEpenses_Click(object sender, EventArgs e)
         {
-            Bank.ReportEpenses reportEpenses = new Bank.ReportEpenses();
-            CloseFrom(reportEpenses);
+            Bank.ReportEpensesAll reportEpensesall = new Bank.ReportEpensesAll();
+            CloseFrom(reportEpensesall);
             ///ljsbdkawbfjklanfljkesbflka
         }
     }
