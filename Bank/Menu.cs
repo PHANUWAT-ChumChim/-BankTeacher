@@ -150,8 +150,8 @@ namespace BankTeacher.Bank
 
         private void MenuAllIncome_Click(object sender, EventArgs e)
         {
-            Bank.ReportIncome reportIncome = new Bank.ReportIncome();
-            CloseFrom(reportIncome);
+            Bank.ReportIncomeAll reportIncomeall = new Bank.ReportIncomeAll();
+            CloseFrom(reportIncomeall);
         }
 
         private void MenuOneEpenses_Click(object sender, EventArgs e)
