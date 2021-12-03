@@ -67,12 +67,13 @@ namespace BankTeacher.Bank.Add_Member
 
 
           //[2]  Select Detail Memner INPUT: {TeacherNo} 
-          "SELECT a.TeacherNo ,CAST(ISNULL(b.PrefixName+' ','')+Fname +' '+ Lname as NVARCHAR)AS Name, a.IdNo ,a.cNo,a.cMu,c.TumBonName,d.AmPhurName,e.JangWatLongName,a.TelMobile \r\n " +
+          "SELECT a.TeacherNo ,CAST(ISNULL(b.PrefixName+' ','')+Fname +' '+ Lname as NVARCHAR)AS Name,a.IdNo, IIF(a.cNo != null,a.cNo,'-'),IIF(CAST(a.cMu as nvarchar) != null,a.cMu,'-'),IIF(CAST(c.TumBonName as nvarchar) != null,c.TumBonName,'-'),IIF(CAST(d.AmPhurName as nvarchar) != null,d.AmPhurName,'-'),IIF(CAST(e.JangWatLongName as nvarchar) != null,e.JangWatLongName,'-'),a.TelMobile,f.StartAmount  \r\n " +
           "FROM Personal.dbo.tblTeacherHis as a \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as b ON a.PrefixNo = b.PrefixNo  \r\n " +
           "LEFT JOIN BaseData.dbo.tblTumBon as c on a.cTumBonNo = c.TumBonNo \r\n " +
           "LEFT JOIN BaseData.dbo.tblAmphur as d on a.cAmPhurNo = d.AmphurNo \r\n " +
           "LEFT JOIN BaseData.dbo.tblJangWat as e on a.cJangWatNo = e.JangWatNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblMember as f on a.TeacherNo = f.TeacherNo  \r\n " +
           "WHERE a.TeacherNo = '{TeacherNo}'; "
 
           ,
@@ -295,10 +296,11 @@ namespace BankTeacher.Bank.Add_Member
                         TBTeacherName_Reg.Text = ds.Tables[0].Rows[0][1].ToString();
                         Check = 1;
                         CheckBRegister = false;
-
+                        BTPrintfShare_Reg.Enabled = true;
                     }
                     catch (Exception ex)
                     {
+                        BTPrintfShare_Reg.Enabled = false;
                         Console.WriteLine(ex);
                     }
                 }

@@ -30,10 +30,10 @@ namespace BankTeacher.Bank.Add_Member
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CancelMember));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.BOpenFile_Cancel = new System.Windows.Forms.Button();
             this.BPrint_Cancel = new System.Windows.Forms.Button();
             this.BDeleteFile_Cancel = new System.Windows.Forms.Button();
@@ -353,7 +353,7 @@ namespace BankTeacher.Bank.Add_Member
             // 
             // TBNote
             // 
-            this.TBNote.Location = new System.Drawing.Point(28, 38);
+            this.TBNote.Location = new System.Drawing.Point(28, 47);
             this.TBNote.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.TBNote.Multiline = true;
             this.TBNote.Name = "TBNote";
@@ -392,9 +392,9 @@ namespace BankTeacher.Bank.Add_Member
             this.BSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BSearch.ForeColor = System.Drawing.Color.White;
             this.BSearch.ImageKey = "(none)";
-            this.BSearch.Location = new System.Drawing.Point(424, 37);
+            this.BSearch.Location = new System.Drawing.Point(403, 38);
             this.BSearch.Name = "BSearch";
-            this.BSearch.Size = new System.Drawing.Size(48, 43);
+            this.BSearch.Size = new System.Drawing.Size(42, 42);
             this.BSearch.TabIndex = 47;
             this.BSearch.UseVisualStyleBackColor = false;
             this.BSearch.Click += new System.EventHandler(this.BSearch_Click);
@@ -481,8 +481,8 @@ namespace BankTeacher.Bank.Add_Member
             // 
             this.DGV_HistoryCancel.AllowUserToAddRows = false;
             this.DGV_HistoryCancel.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DGV_HistoryCancel.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DGV_HistoryCancel.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DGV_HistoryCancel.BackgroundColor = System.Drawing.Color.White;
             this.DGV_HistoryCancel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_HistoryCancel.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -502,8 +502,8 @@ namespace BankTeacher.Bank.Add_Member
             // 
             // Column1
             // 
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle2;
             this.Column1.HeaderText = "วัน/เดือน//ปี";
             this.Column1.MinimumWidth = 6;
             this.Column1.Name = "Column1";
@@ -520,8 +520,8 @@ namespace BankTeacher.Bank.Add_Member
             // 
             // Column2
             // 
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle3;
             this.Column2.HeaderText = "ชื่อ";
             this.Column2.MinimumWidth = 6;
             this.Column2.Name = "Column2";
@@ -531,8 +531,8 @@ namespace BankTeacher.Bank.Add_Member
             // Column3
             // 
             this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column3.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column3.DefaultCellStyle = dataGridViewCellStyle4;
             this.Column3.HeaderText = "สาเหตุ";
             this.Column3.MinimumWidth = 6;
             this.Column3.Name = "Column3";

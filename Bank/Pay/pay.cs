@@ -335,7 +335,9 @@ namespace BankTeacher.Bank.Pay
             //หากมีการกด Enter
             if (e.KeyCode == Keys.Enter)
             {
-                tabControl1.SelectedIndex = 0; ;
+                tabControl1.SelectedIndex = 0;
+                BTPrint.Enabled = false;
+                BTPrint.BackColor = Color.Red;
                 List<int> Loan = new List<int>();
                 List<List<int>> RMonth = new List<List<int>>();
                 //ลองค้นหาดูว่ามี ID สมาชิกนี้ในระบบมั้ย หากมีให้ทำใน if
@@ -1893,53 +1895,44 @@ namespace BankTeacher.Bank.Pay
         {
             try
             {
-                SELECT = 0;
-                info_name = TBTeacherName.Text;
-                info_id = TBTeacherNo.Text;
-                info_totelAmountpay = TBToatalSaving_ShareInfo.Text;
-                info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
-                info_Billpay = DGV_BillInfo.Rows[e.RowIndex].Cells[0].Value.ToString();
-                DGV_Tester.Rows.Clear();
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[19].Replace("{bill}", DGV_BillInfo.Rows[e.RowIndex].Cells[0].Value.ToString()));
-                for (int Row = 0; Row < dt.Rows.Count; Row++)
+                if(e.RowIndex != -1)
                 {
-                    DGV_Tester.Rows.Add(dt.Rows[Row][3].ToString(), dt.Rows[Row][2].ToString(), dt.Rows[Row][1]);
+                    SELECT = 0;
+                    info_name = TBTeacherName.Text;
+                    info_id = TBTeacherNo.Text;
+                    info_totelAmountpay = TBToatalSaving_ShareInfo.Text;
+                    info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
+                    info_Billpay = DGV_BillInfo.Rows[e.RowIndex].Cells[0].Value.ToString();
+                    BTPrint.Enabled = true;
+                    BTPrint.BackColor = Color.White;
+                    DGV_Tester.Rows.Clear();
+                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[15].Replace("{bill}", DGV_BillInfo.Rows[e.RowIndex].Cells[0].Value.ToString()));
+                    for (int Row = 0; Row < dt.Rows.Count; Row++)
+                    {
+                        DGV_Tester.Rows.Add(dt.Rows[Row][3].ToString(), dt.Rows[Row][2].ToString(), dt.Rows[Row][1]);
+                    }
                 }
             }
             catch
             {
                 //  Catach ทำไม
             }
-            if (DGV_Tester.Rows.Count != 0)
+            if (DGV_Tester.Rows.Count != 0 && e.RowIndex != -1)
             {
-                BT_Printf.Enabled = true;
-                DataTable dts = Class.SQLConnection.InputSQLMSSQL(SQLDefault[15].Replace("{BillNo}", DGV_BillInfo.Rows[e.RowIndex].Cells[0].Value.ToString()));
-                info_datepay = dts.Rows[0][0].ToString();
+                BTPrint.Enabled = true;
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[15].Replace("{bill}", DGV_BillInfo.Rows[e.RowIndex].Cells[0].Value.ToString()));
+                info_datepay = dt.Rows[0][3].ToString();
             }
             else
             {
-                BT_Printf.Enabled = false;
-            }
-        }
-        // ปริ้น
-        private void BT_Printf_Click(object sender, EventArgs e)
-        {
-            printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
-            printDocument1.DefaultPageSettings.Landscape = true;
-            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
-            {
-                printDocument1.Print();
-            }
-            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
-            {
-                printDocument1.Print();
+                BTPrint.Enabled = false;
             }
         }
         // เคลียร์ Clear เเบบปริ้น
         private void DGV_BillInfo_RowValidated_1(object sender, DataGridViewCellEventArgs e)
         {
             DGV_Tester.Rows.Clear();
-            BT_Printf.Enabled = false;
+            BTPrint.Enabled = false;
         }
         // เปลี่ยนรูปเเบบตามต้นฉบับ
         private void DGV_Pay_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
@@ -1953,6 +1946,20 @@ namespace BankTeacher.Bank.Pay
         private void DGV_Pay_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
             DGV_Printbypoon.Rows.Add(DGV_Pay.Rows[e.RowIndex].Cells[0].Value.ToString(), CBList_Pay.Text, TBAmount_Pay.Text, DGV_Pay.Rows[e.RowIndex].Cells[3].Value.ToString(), CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
+        }
+        // ปริ้น
+        private void BTPrint_Click(object sender, EventArgs e)
+        {
+            printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+            printDocument1.DefaultPageSettings.Landscape = true;
+            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+            {
+                printDocument1.Print();
+            }
+            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+            {
+                printDocument1.Print();
+            }
         }
         //===============================================================================================
     }
