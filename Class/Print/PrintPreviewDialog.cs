@@ -471,7 +471,7 @@ namespace BankTeacher.Class.Print
                     else if (TextForm == "Home")
                     {
                         string Remain;
-                        if (Bank.Pay.pay.info_Lona_AmountRemain != "0")
+                        if (Bank.Home.info_Lona_AmountRemain != "0")
                         {
                             Remain = $"ยอดกู้คงเหลือ : {Bank.Home.info_Lona_AmountRemain}";
                         }
@@ -479,8 +479,29 @@ namespace BankTeacher.Class.Print
                         {
                             Remain = "";
                         }
-                        string infopay = $"ชื่อ-นามสกุล : {Bank.Pay.pay.info_name}            รหัสประจำตัว : {Bank.Pay.pay.info_id}           \r\n" +
-                                         $"หุ้นสะสมทั้งหมด : {Bank.Pay.pay.info_totelAmountpay}            {Remain}        ";
+                        string infoHome = $"ชื่อ-นามสกุล : {Bank.Home.info_name}            รหัสประจำตัว : {Bank.Home.info_id}           \r\n" +
+                                         $"หุ้นสะสมทั้งหมด : {Bank.Home.info_totelAmountpay}            {Remain}        ";
+
+                        Size = e.Graphics.MeasureString(infoHome, FonT(18, ThaiSarabun, FontStyle.Regular));
+                        //// กรอบ
+                        //e.Graphics.DrawRectangle(PenBlack, 50, TextY, x2 - 50, Size.Height - 20 + 5);
+
+                        Size = e.Graphics.MeasureString("infopay", FonT(16, ThaiSarabun, FontStyle.Regular));
+                        result = Centerset(e, infoHome, FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50, TextY, 700, 300, x2, Size.Height + 5);
+                        TextY += (Size.Height * result);
+                    }
+                    else if(TextForm == "AmountOff")
+                    {
+                        string infoAmountoff = $"ชื่อ-นามสกุล : {Bank.AmountOff.info_name}            รหัสประจำตัว : {Bank.AmountOff.info_id}            เลขที่หุ้นสะสม : {Bank.AmountOff.info_ShareNo}\r\n" +
+                                           $"ยอดเงินสะสมทั้งหมด : {Bank.AmountOff.info_totelAmountpay} บาท          ยอดเงินที่ถอนออกได้ : {Bank.AmountOff.info_canbeAmounoff}            สถานะ : {Bank.AmountOff.info_status}\r\n" +
+                                           $"ยอดที่ถอนออก : {Bank.AmountOff.info_Amounoff} บาท                      ยอดเงินค้ำในระบบ : {Bank.AmountOff.info_Amounoffinsystem}";
+                        Size = e.Graphics.MeasureString(infoAmountoff, FonT(18, ThaiSarabun, FontStyle.Regular));
+                        //// กรอบ
+                        //e.Graphics.DrawRectangle(PenBlack, 50, TextY, x2 - 50, Size.Height - 20 + 5);
+
+                        Size = e.Graphics.MeasureString("infoAmountoff", FonT(16, ThaiSarabun, FontStyle.Regular));
+                        result = Centerset(e, infoAmountoff, FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50, TextY, 700, 300, x2, Size.Height + 5);
+                        TextY += (Size.Height * result);
                     }
                     // ปริ้นข้อความต้นฉบับ
                     if (Aroundscript == 1)
@@ -628,7 +649,7 @@ namespace BankTeacher.Class.Print
                 }
                     
 
-                if(TextForm == "pay")
+                if(TextForm == "pay" || TextForm == "AmountOff")
                 {
                     SizeF TextSize = e.Graphics.MeasureString("", THsarabun16);
                     SizeF TextSize1 = e.Graphics.MeasureString("", THsarabun16);

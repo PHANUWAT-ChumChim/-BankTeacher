@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +13,21 @@ namespace BankTeacher.Bank
 {
     public partial class AmountOff : Form
     {
+        // ======================= ข้อมูลเเบบปริ้น ====================
+        //ข้อมูลส่วนตัว
+        public static string info_name;
+        public static string info_id;
+        // จ่าย
+        public static string info_totelAmountpay;
+        public static string info_status;
+        public static string info_ShareNo;
+        public static string info_datepay;
+        // ยอดที่ถอน
+        public static string info_Amounoff;
+        public static string info_Amounoffinsystem;
+        public static string info_canbeAmounoff;
+        // ต้นฉบับ
+        public static int script = 1;
         int StatusBoxFile = 0;
         String imgeLocation = "";
         /// <summary>
@@ -152,7 +167,6 @@ namespace BankTeacher.Bank
                         Credit = ds.Tables[0].Rows[0][3].ToString().Split('.');
                         TBWithDraw.Enabled = true;
                         CBTypePay.Enabled = true;
-                        //BSaveAmountOff.Enabled = true;
                         TBTeacherName.Text = ds.Tables[0].Rows[0][0].ToString();
                         TBShareNo.Text = ds.Tables[0].Rows[0][1].ToString();
                         TBSavingAmount.Text = ds.Tables[0].Rows[0][2].ToString();
@@ -169,6 +183,12 @@ namespace BankTeacher.Bank
                         }
                         if(CBYear.Items.Count != 0)
                             CBYear.SelectedIndex = 0;
+                        if (DGVLoan.Rows.Count != 0)
+                        {
+                            TBLoanStatus.Text = "ติดกู้";
+                        }
+                        else
+                            TBLoanStatus.Text = "ปกติ";
                     }
                     else
                     {
@@ -186,6 +206,7 @@ namespace BankTeacher.Bank
                     if (CBYear.Items.Count != 0)
                         CBYear.SelectedIndex = 0;
                     CBYear.Enabled = true;
+                 
                 }
 
             }
@@ -219,6 +240,8 @@ namespace BankTeacher.Bank
                 {
                     if (MessageBox.Show("ยืนยันการจ่าย", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                     {
+                        DGV_Testter.Rows.Clear();
+                        DGV_Testter.Rows.Add(DateTime.Today.Day.ToString() +'/'+ DateTime.Today.Month.ToString() +'/'+ DateTime.Today.Year.ToString(), "ถอนหุ้นสะสม",TBWithDraw.Text);
                         Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[2] +
                     "\r\n" +
                     SQLDefault[3])
@@ -226,9 +249,27 @@ namespace BankTeacher.Bank
                     .Replace("{WithDraw}", TBWithDraw.Text)
                     .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
                     .Replace("{PayMent}", Payment.No));
-                        TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Back));
-                        TBTeacherNo.Text = "";
                         MessageBox.Show("บันทึกสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //======== INFO =================
+                        info_name = TBTeacherName.Text;
+                        info_id = TBTeacherNo.Text;
+                        info_totelAmountpay = TBSavingAmount.Text;
+                        info_Amounoff = TBWithDraw.Text;
+                        info_ShareNo = TBShareNo.Text;
+                        info_status = TBLoanStatus.Text;
+                        info_Amounoffinsystem = TBCreditSystem.Text;
+                        info_canbeAmounoff = TBCreditWithDraw.Text;
+                        if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                        {
+                            printDocument1.Print();
+                        }
+                        if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                        {
+                            printDocument1.Print();
+                        }
+                        TBTeacherNo.Text = "";
+                       
+                        TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Back));
                     }
                 }
                 catch (Exception x)
@@ -328,22 +369,6 @@ namespace BankTeacher.Bank
                 }
             }
         }
-
-        private void CBMonth_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void CBTypePay_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (CBTypePay.SelectedIndex != -1)
-            {
-                BSaveAmountOff.Enabled = true;
-            }
-            else
-                BSaveAmountOff.Enabled = false;
-        }
-
         private void BMaxWithDraw_AmountOff_Click(object sender, EventArgs e)
         {
             if(TBCreditWithDraw.Text != "")
@@ -364,9 +389,23 @@ namespace BankTeacher.Bank
             }
         }
 
-        private void label6_Click(object sender, EventArgs e)
+        private void TBWithDraw_TextChanged(object sender, EventArgs e)
         {
-
+           if(TBWithDraw.Text!= "")
+           {
+                BSaveAmountOff.Enabled = true;
+           }
+           else
+                BSaveAmountOff.Enabled = false;
+        }
+        private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+            printDocument1.DefaultPageSettings.Landscape = true;
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Testter,"ถอนหุ้นสะสม", this.AccessibilityObject.Name, script);
+            script++;
+            if (script > 2)
+                script = 1;
         }
     }
 }
