@@ -149,6 +149,12 @@
     <Compile Include="Bank\Report.Designer.cs">
       <DependentUpon>Report.cs</DependentUpon>
     </Compile>
+    <Compile Include="Bank\ReportEpensesAll.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bank\ReportEpensesAll.Designer.cs">
+      <DependentUpon>ReportEpensesAll.cs</DependentUpon>
+    </Compile>
     <Compile Include="Bank\ReportEpenses.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -255,6 +261,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Report.resx">
       <DependentUpon>Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bank\ReportEpensesAll.resx">
+      <DependentUpon>ReportEpensesAll.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\ReportEpenses.resx">
       <DependentUpon>ReportEpenses.cs</DependentUpon>

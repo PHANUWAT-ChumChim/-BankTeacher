@@ -58,9 +58,10 @@ namespace BankTeacher.Bank
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
-            TBTeacherNo.Text = "";
+            DGV_one.Rows.Clear();
             CheckMember = false;
-            
+            TBTeacherNo.Text = "";
+
         }
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
@@ -70,7 +71,7 @@ namespace BankTeacher.Bank
             {
                 TBTeacherNo.Text = Bank.Search.Return[0];
                 CheckMember = false;
-                TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+                TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
             }
         }
 
