@@ -442,7 +442,7 @@ namespace BankTeacher.Bank.Loan
                        .Replace("{TeacherNoNotLike}", NotLike));
 
                 IN.ShowDialog();
-                if (Bank.Search.Return[0] != "" && CheckLimitLoan == DialogResult.No)
+                if (Bank.Search.Return[0] != "" /*&& CheckLimitLoan == DialogResult.No*/)
                 {
                     TBTeacherNo.Text = Bank.Search.Return[0];
                     TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
