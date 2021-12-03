@@ -174,6 +174,7 @@ namespace BankTeacher.Bank
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1159, 449);
             this.tabControl1.TabIndex = 97;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabPage4
             // 
@@ -299,6 +300,7 @@ namespace BankTeacher.Bank
             this.TBWithDraw.Enabled = false;
             this.TBWithDraw.Location = new System.Drawing.Point(704, 343);
             this.TBWithDraw.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+
             this.TBWithDraw.Name = "TBWithDraw";
             this.TBWithDraw.Size = new System.Drawing.Size(275, 43);
             this.TBWithDraw.TabIndex = 1;

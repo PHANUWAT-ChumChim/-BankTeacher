@@ -41,18 +41,22 @@ namespace BankTeacher.Bank.Loan
         private String[] SQLDefault =
         {
              //[0] SELECT MemberLonn  INPUT: {Text}
-          " SELECT TOP(20) TeacherNo , NAME , SavingAmount  \r\n" +
-          " FROM(   \r\n " +
-          " SELECT a.TeacherNo, CAST(ISNULL(c.PrefixName+' ','') + Fname + ' ' + Lname AS nvarchar)AS NAME,SavingAmount,Fname ,LoanStatusNo \r\n " +
-          " FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
-          " LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo  \r\n " +
-          " LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo  \r\n " +
-          " LEFT JOIN EmployeeBank.dbo.tblShare as d on a.TeacherNo = d.TeacherNo  \r\n " +
-          " LEFT JOIN EmployeeBank.dbo.tblMember as e on b.TeacherNo = e.TeacherNo \r\n" + 
-          " WHERE a.LoanStatusNo != 4 and a.LoanStatusNo != 3 and MemberStatusNo = 1\r\n " +
-          " GROUP BY a.TeacherNo,CAST(ISNULL(c.PrefixName+' ','')+Fname+' '+Lname as NVARCHAR),d.SavingAmount ,Fname , LoanStatusNo) AS A   \r\n " +
-          " WHERE a.TeacherNo LIKE '%{Text}%' or Fname LIKE '%{Text}%'  \r\n " +
-          " ORDER BY Fname;   "
+           "SELECT TOP(20) TeacherNo , NAME , SavingAmount   \r\n " +
+          "FROM(SELECT a.TeacherNo, CAST(ISNULL(c.PrefixName+' ','') + Fname + ' ' + Lname AS nvarchar)AS NAME,SavingAmount,Fname  \r\n " +
+          "FROM (SELECT TeacherNo \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan \r\n " +
+          "WHERE LoanStatusNo = 1 or LoanStatusNo = 2 \r\n " +
+          "GROUP BY TeacherNo) as a   \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo   \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo   \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblShare as d on a.TeacherNo = d.TeacherNo   \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblMember as e on b.TeacherNo = e.TeacherNo  \r\n " +
+          "WHERE MemberStatusNo = 1 \r\n " +
+          "GROUP BY a.TeacherNo,CAST(ISNULL(c.PrefixName+' ','')+Fname+' '+Lname as NVARCHAR),d.SavingAmount ,Fname ) AS A    \r\n " +
+          "WHERE a.TeacherNo LIKE '%%' or Fname LIKE '%%'   \r\n " +
+          "ORDER BY Fname;   "
+           
+
                 ,
           //[1] SELECT LOAN INPUT: {TeacherNo} : 
            "SELECT a.LoanNo , CAST(ISNULL(d.PrefixNameFull , '') + Fname + ' ' + Lname AS NVARCHAR)  \r\n " +

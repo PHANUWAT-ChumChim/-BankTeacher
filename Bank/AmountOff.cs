@@ -407,5 +407,11 @@ namespace BankTeacher.Bank
             if (script > 2)
                 script = 1;
         }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (CBYear.Items.Count != 0)
+                CBYear.SelectedIndex = 0;
+        }
     }
 }

@@ -206,7 +206,7 @@ namespace BankTeacher.Bank.Pay
           "SET RemainsAmount = EmployeeBank.dbo.tblGuarantor.RemainsAmount - (SELECT ((a.Amount * 100 ) / (b.LoanAmount * (b.InterestRate/100) + b.LoanAmount) * {LoanAmount} / 100) as AmountPerTeacher \r\n " +
           "FROM EmployeeBank.dbo.tblGuarantor as a  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblLoan as b on a.LoanNo = b.LoanNo  \r\n " +
-          "WHERE a.LoanNo = 200 and EmployeeBank.dbo.tblGuarantor.TeacherNo LIKE a.TeacherNo)  \r\n " +
+          "WHERE a.LoanNo = {LoanNo} and EmployeeBank.dbo.tblGuarantor.TeacherNo LIKE a.TeacherNo)  \r\n " +
           "WHERE EmployeeBank.dbo.tblGuarantor.LoanNo = {LoanNo} \r\n " +
           "END"
            ,
@@ -396,6 +396,7 @@ namespace BankTeacher.Bank.Pay
                                     if (dtCheckMonthinlastyear.Rows.Count == 0)
                                     {
                                         CBYearSelection_BillInfo.Items.RemoveAt(CBYearSelection_BillInfo.Items.Count - 1);
+                                        CBYearSelection_ShareInfo.Items.RemoveAt(CBYearSelection_ShareInfo.Items.Count - 1);
                                     }
                                 }
                                 //thisyeardiscount2year +1 หลังจบ loop ทุกรอบ
@@ -422,6 +423,7 @@ namespace BankTeacher.Bank.Pay
                                     if (dtCheckMonthinlastyear.Rows.Count == 0)
                                     {
                                         CBYearSelection_BillInfo.Items.RemoveAt(CBYearSelection_BillInfo.Items.Count - 1);
+                                        CBYearSelection_ShareInfo.Items.RemoveAt(CBYearSelection_ShareInfo.Items.Count - 1);
                                     }
                                 }
                                 //YearRegister + 1 หลังจบ loop ทุกรอบ
