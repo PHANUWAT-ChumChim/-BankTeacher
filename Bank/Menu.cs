@@ -141,5 +141,29 @@ namespace BankTeacher.Bank
             Bank.Pay.CancelBill cancelBill = new Pay.CancelBill();
             CloseFrom(cancelBill);
         }
+
+        private void MenuOneIncome_Click(object sender, EventArgs e)
+        {
+            Bank.ReportIncome reportIncome = new Bank.ReportIncome();
+            CloseFrom(reportIncome);
+        }
+
+        private void MenuAllIncome_Click(object sender, EventArgs e)
+        {
+            Bank.ReportIncome reportIncome = new Bank.ReportIncome();
+            CloseFrom(reportIncome);
+        }
+
+        private void MenuOneEpenses_Click(object sender, EventArgs e)
+        {
+            Bank.ReportEpenses reportEpenses = new Bank.ReportEpenses();
+            CloseFrom(reportEpenses);
+        }
+
+        private void MenuAllEpenses_Click(object sender, EventArgs e)
+        {
+            Bank.ReportEpenses reportEpenses = new Bank.ReportEpenses();
+            CloseFrom(reportEpenses);
+        }
     }
 }
