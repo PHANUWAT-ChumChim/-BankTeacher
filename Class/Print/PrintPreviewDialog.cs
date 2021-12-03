@@ -33,86 +33,93 @@ namespace BankTeacher.Class.Print
         // เเบบ ปริ้น หน้า สมัคร
         public static void PrintMember(System.Drawing.Printing.PrintPageEventArgs e, String SQLCode, String Day, String Month, String Year, String TeacherNo, String Amount)
         {
-            if (TeacherNo != "")
+            try
             {
-                if (Amount == "")
+                if (TeacherNo != "")
                 {
-                    Amount = BankTeacher.Bank.Menu.startAmountMin.ToString();
+                    if (Amount == "")
+                    {
+                        Amount = BankTeacher.Bank.Menu.startAmountMin.ToString();
+                    }
+                    // X 850 = 22 cm เเนะนำ 800 //
+                    // A4 = 21 cm  {Width = 356.70163 Height = 136.230438} {Width = 356.70163 Height = 102.954086} // 
+                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLCode.Replace("{TeacherNo}", TeacherNo));
+                    int PageX = (e.PageBounds.Width);
+                    int PageY = (e.PageBounds.Height);
+                    int XP = 0;
+                    int XD = 0;
+                    int X = 50;
+                    int Y = 50;
+                    int SpacePerRow = 35;
+                    int CurrentRows = 0;
+                    //------------------------
+
+                    // ส่วนหัว
+
+                    Class.Print.SetPrintMedtods.Center(e, Y + (SpacePerRow * CurrentRows++), "ใบสมัครสมาชิกสหกรณ์ครู", THsarabun30, BrushBlack);
+                    Class.Print.SetPrintMedtods.Center(e, Y + (SpacePerRow * CurrentRows++), "วิทยาลัยเทคโนโลยี อีอีซีเอ็นจิเนีย แหลมฉบัง", THsarabun30, BrushBlack);
+                    // วันที่
+                    string MemberID = "สมาชิกเลขที่ " + dt.Rows[0][0].ToString();
+                    string School = "เขียนที่ วิทยาลัยเทคโนโลยี อีอีซีเอ็นจิเนีย แหลมฉบัง";
+
+                    //ข้อมูลส่วนตัว
+                    string Name = "ข้าพเจ้า " + dt.Rows[0][1].ToString();
+                    string IdCardNum = "เลขประจำตัวประชาชน " + dt.Rows[0][2].ToString();
+                    string HouseNum = "อยู่บ้านเลขที่ " + dt.Rows[0][3].ToString();
+                    string Village = "หมู่ " + dt.Rows[0][4].ToString();
+                    string SubDistrict = "ตำบล " + dt.Rows[0][5].ToString();
+                    string District = "อำเภอ " + dt.Rows[0][6].ToString();
+                    string Province = "จังหวัด " + dt.Rows[0][7].ToString();
+                    string TelNo = "เบอร์โทร " + dt.Rows[0][8].ToString();
+
+                    //รายละเอียด
+                    string amountbauy = "ข้อ 2 ข้าพเจ้าขอถือหุ้นของกิจกรรมสหกรณ์ครู ซึ่งมีค่าหุ้นล่ะ 500 บาท";
+                    string buy = $"2.1 ข้อซื้อหุ้นจำนวน " + dt.Rows[0][9].ToString() + " บาท";
+                    string share = "2.2 รับโอนหุ้นจาก -";
+                    string Who = "สมาชิกเลขที่ " + TeacherNo;
+                    string quantity = "จำนวน 1 หุ้น (ถ้ามี)";
+                    string price = "เเละชำระค่าหุ้น " + dt.Rows[0][9].ToString() + " บาท ทันทีที่ได้รับเเจ้งให้เข้าเป็นสมาชิก";
+
+                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, $"{MemberID}\r\n" +
+                                                          $"{School}\r\n" +
+                                                          $"วันที่ {Day} เดือน {Month} พ.ศ. {Year}\r\n",
+                              THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 10, 400f, 200, false);
+
+                    Class.Print.SetPrintMedtods.CenterLeft(e, "ถึงคณะกรรมการดำเนืนการกิจกรรมสหกรณ์ครูวิทยาลัยเทคโนโลยีอีอีซี เอ็นจิเนีย เเหลมฉบัง", THsarabun18, BrushBlack, X + XD, Y + (SpacePerRow * CurrentRows++), XP, XD);
+
+
+                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, $"{Name} {IdCardNum}\r\n" +
+                                               $"{HouseNum} {Village}\r\n" +
+                                               $"{SubDistrict} {District}\r\n" +
+                                               $"{Province} {TelNo}\r\n", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 700, 200, false);
+
+
+                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "ได้ทราบข้อบังคับของกิจกรรมสหกรณ์ครูวิทยาลัยเทคโนโลยีอีอีซี เอ็นจิเนีย เเหลมฉบัง ขอสมัครเป็นสมาชิกของสหกรณ์ครู  เเละขอให้คำเป็นหลักฐานดังต่อไปนี้", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows), 750, 200, false);
+
+                    string status = "ข้อที่ 1 ข้าพเจ้าเป็นผู้มีคุณสมบัติถูกต้องตามข้อบังคับทุกประการ";
+                    string teacher = "1.เป็นครู - อาจารย์";
+                    string officer = "2.เป็นเจ้าหน้าที่ - ภารโรง";
+
+                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, $"{status}\r\n" +
+                                                $"  {teacher}\r\n" +
+                                                $"  {officer}\r\n", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 700, 200, false);
+
+                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, $"{amountbauy}\r\n" +
+                                               $"  {buy}\r\n" +
+                                               $"  {share} {Who}\r\n" +
+                                               $"{quantity} {price}\r\n", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 700, 200, false);
+
+                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "ข้อที่ 3 เมื่อ ข้าพเจ้าเป็นสมาชิกจะปฎิบัติตามข้อบังคับทุกประการ เเละจะพยายามส่งเสริมให้กิจกรรมสหกณ์ครูให้เจริญก้าวหน้ายิี่งขึ้นไป", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 750, 700);
+                    // ตกลง
+                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "ลงชื่อ......................................................." +
+                                                "       (..............................................................)", FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 50, 400, 700);
+
+                    Class.Print.SetPrintMedtods.CenterRight(e, "ผู้สมัคร", FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 50, XP, XD + 230);
                 }
-                // X 850 = 22 cm เเนะนำ 800 //
-                // A4 = 21 cm  {Width = 356.70163 Height = 136.230438} {Width = 356.70163 Height = 102.954086} // 
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLCode.Replace("{TeacherNo}", TeacherNo));
-                int PageX = (e.PageBounds.Width);
-                int PageY = (e.PageBounds.Height);
-                int XP = 0;
-                int XD = 0;
-                int X = 50;
-                int Y = 50;
-                int SpacePerRow = 35;
-                int CurrentRows = 0;
-                //------------------------
-
-                // ส่วนหัว
-
-                Class.Print.SetPrintMedtods.Center(e, Y + (SpacePerRow * CurrentRows++), "ใบสมัครสมาชิกสหกรณ์ครู", THsarabun30, BrushBlack);
-                Class.Print.SetPrintMedtods.Center(e, Y + (SpacePerRow * CurrentRows++), "วิทยาลัยเทคโนโลยี อีอีซีเอ็นจิเนีย แหลมฉบัง", THsarabun30, BrushBlack);
-                // วันที่
-                string MemberID = "สมาชิกเลขที่ " + dt.Rows[0][0].ToString();
-                string School = "เขียนที่ วิทยาลัยเทคโนโลยี อีอีซีเอ็นจิเนีย แหลมฉบัง";
-
-                //ข้อมูลส่วนตัว
-                string Name = "ข้าพเจ้า " + dt.Rows[0][1].ToString();
-                string IdCardNum = "เลขประจำตัวประชาชน " + dt.Rows[0][2].ToString();
-                string HouseNum = "อยู่บ้านเลขที่ " + dt.Rows[0][3].ToString();
-                string Village = "หมู่ " + dt.Rows[0][4].ToString();
-                string SubDistrict = "ตำบล " + dt.Rows[0][5].ToString();
-                string District = "อำเภอ " + dt.Rows[0][6].ToString();
-                string Province = "จังหวัด " + dt.Rows[0][7].ToString();
-                string TelNo = "เบอร์โทร " + dt.Rows[0][8].ToString();
-
-                //รายละเอียด
-                string amountbauy = "ข้อ 2 ข้าพเจ้าขอถือหุ้นของกิจกรรมสหกรณ์ครู ซึ่งมีค่าหุ้นล่ะ 500 บาท";
-                string buy = $"2.1 ข้อซื้อหุ้นจำนวน " + Amount + " บาท";
-                string share = "2.2 รับโอนหุ้นจาก -";
-                string Who = "สมาชิกเลขที่ " + TeacherNo;
-                string quantity = "จำนวน 1 หุ้น (ถ้ามี)";
-                string price = "เเละชำระค่าหุ้น " + Amount + " บาท ทันทีที่ได้รับเเจ้งให้เข้าเป็นสมาชิก";
-
-                CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, $"{MemberID}\r\n" +
-                                                      $"{School}\r\n" +
-                                                      $"วันที่ {Day} เดือน {Month} พ.ศ. {Year}\r\n",
-                          THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++)+10, 400f, 200, false);
-
-                Class.Print.SetPrintMedtods.CenterLeft(e, "ถึงคณะกรรมการดำเนืนการกิจกรรมสหกรณ์ครูวิทยาลัยเทคโนโลยีอีอีซี เอ็นจิเนีย เเหลมฉบัง", THsarabun18, BrushBlack, X + XD, Y + (SpacePerRow * CurrentRows++), XP, XD);
-
-
-                CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, $"{Name} {IdCardNum}\r\n" +
-                                           $"{HouseNum} {Village}\r\n" +
-                                           $"{SubDistrict} {District}\r\n" +
-                                           $"{Province} {TelNo}\r\n", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 700, 200, false);
-
-
-                CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "ได้ทราบข้อบังคับของกิจกรรมสหกรณ์ครูวิทยาลัยเทคโนโลยีอีอีซี เอ็นจิเนีย เเหลมฉบัง ขอสมัครเป็นสมาชิกของสหกรณ์ครู  เเละขอให้คำเป็นหลักฐานดังต่อไปนี้", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows), 750, 200, false);
-
-                string status = "ข้อที่ 1 ข้าพเจ้าเป็นผู้มีคุณสมบัติถูกต้องตามข้อบังคับทุกประการ";
-                string teacher = "1.เป็นครู - อาจารย์";
-                string officer = "2.เป็นเจ้าหน้าที่ - ภารโรง";
-
-                CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, $"{status}\r\n" +
-                                            $"  {teacher}\r\n" +
-                                            $"  {officer}\r\n", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 700, 200, false);
-
-                CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, $"{amountbauy}\r\n" +
-                                           $"  {buy}\r\n" +
-                                           $"  {share} {Who}\r\n" +
-                                           $"{quantity} {price}\r\n", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 700, 200, false);
-
-                CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "ข้อที่ 3 เมื่อ ข้าพเจ้าเป็นสมาชิกจะปฎิบัติตามข้อบังคับทุกประการ เเละจะพยายามส่งเสริมให้กิจกรรมสหกณ์ครูให้เจริญก้าวหน้ายิี่งขึ้นไป", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 750, 700);
-                // ตกลง
-                CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "ลงชื่อ......................................................." +
-                                            "       (..............................................................)",FonT(18,ThaiSarabun,FontStyle.Regular),BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 50, 400, 700);
-
-                Class.Print.SetPrintMedtods.CenterRight(e, "ผู้สมัคร",FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 50, XP, XD+230);
+            }
+            catch
+            {
+                MessageBox.Show("ตรวจสอบรหัสใหม่อีกครั้ง", "เเจ้งเตือนข้อผิดพลาด", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
         }
@@ -346,16 +353,16 @@ namespace BankTeacher.Class.Print
                     float result = 0;
                     if (TextForm == "InfoLoan")
                     {
-                        string infomeber = $"ชื่อ-นามสกุล : {Bank.Loan.InfoLoan.info_name}            รหัสประจำตัว : {Bank.Loan.InfoLoan.info_id}            เลขที่สัญญากู้ : {Bank.Loan.InfoLoan.info_Loanid}\r\n" +
+                        string infomember = $"ชื่อ-นามสกุล : {Bank.Loan.InfoLoan.info_name}            รหัสประจำตัว : {Bank.Loan.InfoLoan.info_id}            เลขที่สัญญากู้ : {Bank.Loan.InfoLoan.info_Loanid}\r\n" +
                                            $"ยอดเงินค้ำ : {Bank.Loan.InfoLoan.Amount[0]} บาท                      เปอร์เซ็นต์ค้ำ : {Bank.Loan.InfoLoan.Percent[0]}%\r\n" +
                                            $"ยอดที่กู้ : {Bank.Loan.InfoLoan.info_Sum} บาท                   ยอดคงเหลือ : {Bank.Loan.InfoLoan.info_totelLoan} บาท                   ยอดที่ชำระ : {Bank.Loan.InfoLoan.info_Loanpayall}";
                         // กรอบ อร่อยต้อง Rectangle
-                        Size = e.Graphics.MeasureString(infomeber, FonT(18, ThaiSarabun, FontStyle.Regular));
+                        Size = e.Graphics.MeasureString(infomember, FonT(18, ThaiSarabun, FontStyle.Regular));
                         // กรอบ
                         e.Graphics.DrawRectangle(PenBlack, 50, TextY, x2 - 50, Size.Height - 20 + 5);
 
                         Size = e.Graphics.MeasureString("infomeber", FonT(16, ThaiSarabun, FontStyle.Regular));
-                        result = Centerset(e, infomeber, FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50, TextY, 700, 300, x2, Size.Height + 5 );
+                        result = Centerset(e, infomember, FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50, TextY, 700, 300, x2, Size.Height + 5 );
                         TextY += (Size.Height * result);
 
                         // เว้นระยะตัวหนังสือกัวกรอบ
@@ -461,9 +468,19 @@ namespace BankTeacher.Class.Print
                         // กล่อง
                         e.Graphics.DrawRectangle(PenBlack, x2 - Box_SizeX, location_Box, Box_SizeX, Box_SizeY);
                     }
-                    else if (TextForm == "")
+                    else if (TextForm == "Home")
                     {
-
+                        string Remain;
+                        if (Bank.Pay.pay.info_Lona_AmountRemain != "0")
+                        {
+                            Remain = $"ยอดกู้คงเหลือ : {Bank.Home.info_Lona_AmountRemain}";
+                        }
+                        else
+                        {
+                            Remain = "";
+                        }
+                        string infopay = $"ชื่อ-นามสกุล : {Bank.Pay.pay.info_name}            รหัสประจำตัว : {Bank.Pay.pay.info_id}           \r\n" +
+                                         $"หุ้นสะสมทั้งหมด : {Bank.Pay.pay.info_totelAmountpay}            {Remain}        ";
                     }
                     // ปริ้นข้อความต้นฉบับ
                     if (Aroundscript == 1)

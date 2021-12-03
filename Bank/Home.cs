@@ -11,6 +11,16 @@ namespace BankTeacher.Bank
 {
     public partial class Home : Form
     {
+        // ======================= ข้อมูลเเบบปริ้น ====================
+        //ข้อมูลส่วนตัว
+        public static string info_name;
+        public static string info_id;
+        // จ่าย
+        public static string info_totelAmountpay;
+        public static string info_datepay;
+        // กู้
+        public static string info_Lona_AmountRemain;
+        //--------------------------------------------------------
         public static Font F = new Font("TH Sarabun New",16,FontStyle.Regular);
         int Check = 0;
         public static int SelectIndexRow = -1;
@@ -24,6 +34,7 @@ namespace BankTeacher.Bank
         /// <para>[4] SELECT pay IN Mont INPUT:  {TeacherNo} {CByear} {CBMonth} </para>
         /// <para>[5] SELECT DATE Register Member INPUT : {TeacherNo}</para>
         /// <para>[6] Check last pay date INPUT: {TeacherNo} </para>
+        /// <para>[7]  SELECT info of printf INPUT: {TeacherNo}  </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
         {
@@ -105,6 +116,12 @@ namespace BankTeacher.Bank
           "WHERE TeacherNo = '{TeacherNo}' \r\n " +
           "ORDER BY DateAdd DESC; "
           ,
+          //[7]  SELECT info of printf INPUT: {TeacherNo}
+          "SELECT a.TeacherNo,b.SavingAmount,IIF(c.Amount != null,c.Amount,0) as startpay,IIF(ROUND(c.RemainsAmount,0) != null,ROUND(c.RemainsAmount,0),0) as Remains \r\n " +
+          "FROM EmployeeBank.dbo.tblMember as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblGuarantor as c on b.TeacherNo = c.TeacherNo \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}'"
         };
 
         public Home()
@@ -203,16 +220,6 @@ namespace BankTeacher.Bank
         private void Home_Load(object sender, EventArgs e)
         {
         }
-
-        private void automatic_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void CBMonth_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-        
         private void CByear_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (CByear.SelectedIndex != -1)
@@ -337,25 +344,6 @@ namespace BankTeacher.Bank
                     dataGridView3.Rows[x].Cells[3].Style = new DataGridViewCellStyle { ForeColor = Color.Green };
             }
         }
-        private void BTClean_Click(object sender, EventArgs e)
-        {
-            CByear.SelectedIndex = -1;
-            dataGridView3.Rows.Clear();
-            TBTeacherNo.Clear();
-            TBTeacherName.Clear();
-            TBTeacherBill.Clear();
-        }
-
-        private void TBTeacherNo_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void dataGridView3_MouseClick(object sender, MouseEventArgs e)
-        {
-        }
-
-
         private void BTPrint_Click(object sender, EventArgs e)
         {
             if (dataGridView3.RowCount != 0)
@@ -373,6 +361,12 @@ namespace BankTeacher.Bank
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
+            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[7]
+                .Replace("{TeacherNo}", TBTeacherNo.Text));
+            info_name = TBTeacherName.Text;
+            info_id = TBTeacherNo.Text;
+            info_totelAmountpay = dt.Rows[0][1].ToString();
+            info_Lona_AmountRemain = dt.Rows[0][2].ToString();
             Class.Print.PrintPreviewDialog.PrintReportGrid(e, dataGridView3, "ตารางการผ่อนชำระ", this.AccessibilityObject.Name,0);
         }
     }
