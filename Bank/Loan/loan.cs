@@ -50,6 +50,7 @@ namespace BankTeacher.Bank.Loan
         /// <para>[5] Detail Loan Print  INPUT: TeacherNo</para>
         /// <para>[6] SELECT MemberLona  INPUT: {TeacherNo} </para>
         /// <para>[7] Delete Loan INPUT: NO </para>
+        /// <para>[8] Check Dividend Year INPUT: </para>
         /// </summary>
         private String[] SQLDefault = new String[]
         {
@@ -131,6 +132,11 @@ namespace BankTeacher.Bank.Loan
             "DELETE FROM EmployeeBank.dbo.tblLoan;\r\n" +
             "DELETE FROM EmployeeBank.dbo.tblGuarantor\r\n"
             ,
+            //[8] Check Dividend Year INPUT: 
+            "SELECT TOP 1 MAX(Year)\r\n " +
+            "FROM EmployeeBank.dbo.tblDividend"
+           ,
+
 
         };
 
@@ -142,12 +148,19 @@ namespace BankTeacher.Bank.Loan
             int Year = Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]);
             Month = Convert.ToInt32(BankTeacher.Bank.Menu.Date[1]);
 
+            DataSet DividendCheckYear = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[8]);
+            if (Year == Convert.ToInt32(DividendCheckYear.Tables[0].Rows[0][0].ToString()))
+            {
+                Year++;
+                Month = 1;
+            }
 
             for (int Num = 0; Num < 2; Num++)
             {
                 CBPayYear.Items.Add(Year);
                 Year++;
             }
+
             for (int a = Month; a <= 12; a++)
             {
                 CBPayMonth.Items.Add(a);
@@ -219,17 +232,6 @@ namespace BankTeacher.Bank.Loan
                 BPrintLoanDoc.Visible = true;
                 label15.Visible = true;
                 UserOutCreditLimit = DialogResult.No;
-                //DGVGuarantor.Rows.Clear();
-                //DGVGuarantorCredit.Rows.Clear();
-                //DGVLoanDetail.Rows.Clear();
-                //CBPayMonth.SelectedIndex = -1;
-                //CBPayYear.SelectedIndex = -1;
-                //TBLoanAmount.Text = "";
-                //tabControl1.SelectedIndex = 0;
-                //LGuarantorAmount.Text = "0/4";
-                //LLoanAmount.Text = "( )";
-                //BTOpenfile.Enabled = true;
-                //BPrintLoanDoc.Enabled = true;
 
             }
             else if(LLackAmount.Text == "0" || LOutCredit.Text == "0")
