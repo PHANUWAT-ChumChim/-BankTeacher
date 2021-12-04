@@ -108,7 +108,7 @@ namespace BankTeacher.Bank.Add_Member
                 {
                     try
                     {
-                        DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0].Replace("{Text}", TBTeacherNO_Cancel.Text));
+                        DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0].Replace("{Text}", TBTeacherNo.Text));
                         TBTeacherName.Text = ds.Tables[0].Rows[0][1].ToString();
                         Saving = Convert.ToDouble(ds.Tables[0].Rows[0][2].ToString());
                         Check = 1;
@@ -130,18 +130,18 @@ namespace BankTeacher.Bank.Add_Member
 
         private void BSave_Click(object sender, EventArgs e)
         {
-            if (CheckBCancel == false && TBTeacherName_Cancel.Text != "")
+            if (CheckBCancel == false && TBTeacherName.Text != "")
             {
-                if (TBTeacherNO_Cancel.Text != "")
+                if (TBTeacherNo.Text != "")
                 {
                     DataTable dtCheckSavingAmount = Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
-                        .Replace("{TeacherNo}", TBTeacherNO_Cancel.Text));
+                        .Replace("{TeacherNo}", TBTeacherNo.Text));
                     if (Convert.ToInt32(dtCheckSavingAmount.Rows[0][0].ToString()) < 1)
                     {
                         Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
                         .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
-                        .Replace("{TeacherNo}", TBTeacherNO_Cancel.Text)
-                        .Replace("{Note}", TBNote_Cancel.Text)
+                        .Replace("{TeacherNo}", TBTeacherNo.Text)
+                        .Replace("{Note}", TBNote.Text)
                         .Replace("{DocStatusNo}", "2")
                         .Replace("{DocUploadPath}", "")
                         .Replace("{Status}", "2"));
@@ -151,7 +151,7 @@ namespace BankTeacher.Bank.Add_Member
                     }
                     else
                     {
-                        if ((MessageBox.Show("มียอดเงินคงเหลือในระบบเกิน ต้องการถอนตอนนี้เลยหรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes))
+                        if ((MessageBox.Show("ยอดเงินคงเหลือของท่านยังอยู่ในระบบ", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes))
                         {
                             AmountOff FAmountOff = new AmountOff();
                             //Menu menu = new Menu();
@@ -159,7 +159,7 @@ namespace BankTeacher.Bank.Add_Member
 
                             FAmountOff.FormBorderStyle = FormBorderStyle.Sizable;
                             FAmountOff.Show();
-                            FAmountOff.TBTeacherNo.Text = TBTeacherNO_Cancel.Text;
+                            FAmountOff.TBTeacherNo.Text = TBTeacherNo.Text;
                             FAmountOff.TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
 
                             List<Form> openForms = new List<Form>();

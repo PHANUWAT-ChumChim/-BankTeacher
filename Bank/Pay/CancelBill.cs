@@ -21,9 +21,8 @@ namespace BankTeacher.Bank.Pay
         /// SQLDafault 
         /// <para>[0] Select Bill (CancelBill) INPUT: {BillNo}</para>
         /// <para>[1] Update Cancel Bill INPUT: {BillNo} {--} {---} </para>
-        /// <para>[2] Update Saving (CancelBill) INPUT: {TeacherNo} {Amount}</para>
+        /// <para>[2] Update Saving (CancelBill) INPUT: {TeacherNo} {Amount} {BillNo} {DateTime}</para>
         /// <para>[3] + RemainAmount In Guarantor (CancelBill) INPUT: {LoanNo} , {LoanAmount}</para>
-        /// <para>[4] datagrind  Select billType INPUT: {Mount} {Year} {Type} {--}  </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
         {
@@ -60,7 +59,7 @@ namespace BankTeacher.Bank.Pay
           "{--}WHERE CAST(c.Mount as nvarchar)+'/'+CAST(c.Year as nvarchar) != CAST(MONTH(b.DateAdd) as nvarchar)+'/'+CAST(YEAR(b.DateAdd) as nvarchar) and a.BillNo = {BillNo}   \r\n" +
           "{---}WHERE a.BillNo = {BillNo}"
             ,
-           //[2] Update Saving (CancelBill) INPUT: {TeacherNo} {Amount}
+           //[2] Update Saving (CancelBill) INPUT: {TeacherNo} {Amount} {BillNo} {DateTime}
            "DECLARE @@SavingAmount INT; \r\n " +
           " \r\n " +
           "SET @@SavingAmount = (SELECT SavingAmount \r\n " +
@@ -69,25 +68,23 @@ namespace BankTeacher.Bank.Pay
           " \r\n " +
           "UPDATE EmployeeBank.dbo.tblShare \r\n " +
           "SET SavingAmount = @@SavingAmount - {Amount} \r\n " +
-          "WHERE  TeacherNo = '{TeacherNo}'"
+          "WHERE  TeacherNo = '{TeacherNo}' \r\n " +
+          " UPDATE EmployeeBank.dbo.tblBill \r\n " +
+          "SET CancelDate = '{DateTime}' \r\n " +
+         "WHERE BillNo = '{BillNo}' "
            ,
-           //[3] + RemainAmount In Guarantor (CancelBill) INPUT: {LoanNo} , {LoanAmount}
+           //[3] + RemainAmount In Guarantor (CancelBill) INPUT: {LoanNo} , {LoanAmount} {BillNo} {DateTime}
            "UPDATE EmployeeBank.dbo.tblGuarantor  \r\n " +
           "SET RemainsAmount = EmployeeBank.dbo.tblGuarantor.RemainsAmount + (SELECT ((a.Amount * 100 ) / (b.LoanAmount * (b.InterestRate/100) + b.LoanAmount) * {LoanAmount} / 100) as AmountPerTeacher \r\n " +
           "FROM EmployeeBank.dbo.tblGuarantor as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblLoan as b on a.LoanNo = b.LoanNo \r\n " +
           "WHERE a.LoanNo = {LoanNo} and EmployeeBank.dbo.tblGuarantor.TeacherNo LIKE a.TeacherNo) \r\n " +
-          "WHERE EmployeeBank.dbo.tblGuarantor.LoanNo = {LoanNo}"
+          "WHERE EmployeeBank.dbo.tblGuarantor.LoanNo = {LoanNo} \r\n " +
+
+          " UPDATE EmployeeBank.dbo.tblBill \r\n " +
+          "SET CancelDate = '{DateTime}' \r\n " +
+          "WHERE BillNo = '{BillNo}' "
             ,
-           //[4] datagrind  Select billType INPUT: {Mount} {Year} {Type} {--}
-          "SELECT CAST(e.PrefixName+''+d.Fname+''+d.Lname as nvarchar) as TeacherAddby,a.BillNo,CAST(a.DateAdd as date),c.TypeName,b.Amount,a.Cancel,CAST(Year(a.DateAdd) as nvarchar),CAST(MONTH(a.DateAdd) as nvarchar)  \r\n" +
-          "FROM EmployeeBank.dbo.tblBill as a \r\n" +
-          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b ON a.BillNo = b.BillNo \r\n" +
-          "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as c ON b.TypeNo = c.TypeNo \r\n" +
-          "LEFT JOIN Personal.dbo.tblTeacherHis as d on a.TeacherNoAddBy = d.TeacherNo \r\n" +
-          "LEFT JOIN BaseData.dbo.tblPrefix as e on d.PrefixNo = e.PrefixNo \r\n" +
-          "WHERE CAST(Year(a.DateAdd) as nvarchar) = {Year}  \r\n" +
-          "{--}AND CAST(MONTH(a.DateAdd) as nvarchar) = {Mount}  AND a.Cancel != {Type}"
         };
 
 
@@ -139,18 +136,19 @@ namespace BankTeacher.Bank.Pay
                             }
                         }
                         LSumAmount_CancelBill.Text = Amount.ToString();
-
+                        BSave_Cancelbill.Enabled = true;
                         CheckInputBill = true;
                     }
                     else
                     {
-                        MessageBox.Show("ไม่มีหมายเลขบิลล์นี้ \r\n หรือผู้ใช้ได้ทำการยกเลิกสมาชิกไปแล้ว", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("ไม่มีหมายเลขบิลล์นี้ \r\n หรือ รายการบิลล์ถูกยกเลิก", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
             }
             else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
             {
                 CheckInputBill = false;
+                BSave_Cancelbill.Enabled = false;
                 Clear();
             }
         }
@@ -162,9 +160,11 @@ namespace BankTeacher.Bank.Pay
                 MessageBox.Show("ยืนยันการยกเลิกบิลล์", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 // Format yyyy-mm-dd EX: 2020-1-15
                 String today = (Convert.ToDateTime((Bank.Menu.Date[0] + '-' + Bank.Menu.Date[1] + '-' + Bank.Menu.Date[2]).ToString())).ToString("yyyy-MM-dd");
-                if (today == TBBIllDate_Cancelbill.Text && Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
+                if ( Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
                             .Replace("{BillNo}", TBBillNo_Cancelbill.Text).Replace("{--}","").Replace("{---}","---")).Tables[0].Rows.Count != 0)
                 {
+
+                    //today == TBBIllDate_Cancelbill.Text && เเก้ใน if 
                     string CheckType = "";
                     string CheckType1 = "";
                     if (DGV_Cancelbill.Rows.Count != 0)
@@ -181,7 +181,9 @@ namespace BankTeacher.Bank.Pay
                                 CheckType = "";
                                 Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
                                     .Replace("{TeacherNo}", TBTeacherNO_Cancelbill.Text)
-                                    .Replace("{Amount}", DGV_Cancelbill.Rows[x].Cells[2].Value.ToString()));
+                                    .Replace("{Amount}", DGV_Cancelbill.Rows[x].Cells[2].Value.ToString())
+                                    .Replace("{BillNo}",TBBillNo_Cancelbill.Text)
+                                    .Replace("{DateTime}",DateTime.Now.ToString()));
                             }
                             else if (DGV_Cancelbill.Rows[x].Cells[1].Value.ToString().Contains("กู้"))
                             {
@@ -189,14 +191,17 @@ namespace BankTeacher.Bank.Pay
                                 CheckType1 = "";
                                 Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
                                 .Replace("{LoanNo}", DGV_Cancelbill.Rows[x].Cells[3].Value.ToString())
-                                .Replace("{LoanAmount}", DGV_Cancelbill.Rows[x].Cells[2].Value.ToString()));
+                                .Replace("{LoanAmount}", DGV_Cancelbill.Rows[x].Cells[2].Value.ToString())
+                                 .Replace("{BillNo}", TBBillNo_Cancelbill.Text)
+                                .Replace("{DateTime}", DateTime.Now.ToString()));
                             }
                         }
-                        Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
-                           .Replace("{BillNo}", TBBillNo_Cancelbill.Text)
-                           .Replace("{--}", $"{CheckType}").Replace("{---}",$"{CheckType1}"));
+                        //Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
+                        //   .Replace("{BillNo}", TBBillNo_Cancelbill.Text)
+                        //   .Replace("{--}", $"{CheckType}").Replace("{---}",$"{CheckType1}"));
                         CheckType = "";
                         MessageBox.Show("ยกเลิกบิลล์สำเร็จ");
+                        TBBillNo_Cancelbill_KeyDown(sender, new KeyEventArgs(Keys.Delete));
                     }
                 }
                 else
@@ -209,124 +214,6 @@ namespace BankTeacher.Bank.Pay
                     }
                 }
             }
-        }
-        // ประเภทบิลล์
-        public static string TypeBill = "";
-        public static int Mont = 0, Year = 0;
-        private void CancelBill_Load(object sender, EventArgs e)
-        {
-            Mont = 0; Year = 0;
-            x:
-            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{Mount}",Convert.ToInt32(DateTime.Today.Month - Mont).ToString())
-                .Replace("{Year}",Convert.ToInt32(DateTime.Today.Year - Year).ToString()).Replace("{Type}","0")
-                .Replace("{--}","--"));
-            if(dt.Rows.Count != 0)
-            {
-                for(int Row = 0; Row < dt.Rows.Count; Row++)
-                {
-                    
-                    if (dt.Rows[Row][5].ToString() == "1")
-                    {
-                        TypeBill = "บิลล์";
-                    }
-                    else if(dt.Rows[Row][5].ToString() == "2")
-                    {
-                        TypeBill = "ยกเลิกบิลล์";
-                    }
-                        DGV_Bill.Rows.Add(dt.Rows[Row][0].ToString(), dt.Rows[Row][1].ToString(),dt.Rows[Row][2].ToString(),dt.Rows[Row][3].ToString(), TypeBill, dt.Rows[Row][4].ToString());
-                }
-            }
-            else
-            {
-                if (Mont < Convert.ToInt32(DateTime.Today.Month))
-                {
-                    Mont++;
-                }
-                else
-                {
-                    Mont = 0;
-                    Year++;
-                }
-                goto x;
-            }
-            Year = Convert.ToInt32(DateTime.Today.Year - Year);
-            Mont = Convert.ToInt32(DateTime.Today.Month - Mont);
-            for (int Y = 0; Y < 2; Y++)
-            {
-                dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4]
-                    .Replace("{Mount}", Convert.ToInt32(Mont).ToString())
-                    .Replace("{Year}", Convert.ToInt32(Year - Y).ToString())
-                    .Replace("{Type}", "0")
-                    .Replace("{--}","--"));
-                if (dt.Rows.Count != 0)
-                {
-                    CBYearSelection_Bill.Items.Add(Convert.ToInt32(Year - Y));
-                }
-                else
-                {
-                    break;
-                }
-            }
-                CBYearSelection_Bill.SelectedIndex = 0;
-                CBMonthSelection_Bill.SelectedIndex = 0;
-                CB_Typebill.SelectedIndex = 0;
-            
-        }
-        // ค้นหารายการบิลล์
-        private void BListAdd_Pay_Click(object sender, EventArgs e)
-        {
-            DGV_Bill.Rows.Clear();
-            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{Mount}",CBMonthSelection_Bill.Text)
-               .Replace("{Year}",CBYearSelection_Bill.Text).Replace("{Type}",CB_Typebill.SelectedIndex.ToString())
-               .Replace("{--}",""));
-            if (dt.Rows.Count != 0)
-            {
-                for (int Row = 0; Row < dt.Rows.Count; Row++)
-                {
-                    if (dt.Rows[Row][5].ToString() == "1")
-                    {
-                        TypeBill = "บิลล์";
-                    }
-                    else if (dt.Rows[Row][5].ToString() == "2")
-                    {
-                        TypeBill = "ยกเลิกบิลล์";
-                    }
-
-                    DGV_Bill.Rows.Add(dt.Rows[Row][0].ToString(), dt.Rows[Row][1].ToString(), dt.Rows[0][2].ToString(), dt.Rows[Row][3].ToString(), TypeBill, dt.Rows[Row][4].ToString());
-                }
-            }
-        }
-        // เลือกปี เเล้ว บอกข้อมูลรายการ เดือนที่มีบิลล์ย้อนหลัง ไม่เกิน 2 ปี
-        private void CBYearSelection_Bill_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            CBMonthSelection_Bill.Items.Clear();
-         
-            for(int M = 1; M <= 12; M++)
-            {
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4]
-                  .Replace("{Mount}", Mont.ToString())
-                  .Replace("{Year}", CBYearSelection_Bill.Text)
-                  .Replace("{Type}", "0")
-                  .Replace("{--}", ""));
-                if (dt.Rows.Count != 0)
-                {
-                    CBMonthSelection_Bill.Items.Add(Mont);
-                    Mont--;
-                    if (Mont == 0)
-                    {
-                        Mont = 12;
-                    }
-                }
-                else
-                {
-                    Mont--;
-                    if (Mont == 0)
-                    {
-                        Mont = 12;
-                    }
-                }
-            }
-            CBMonthSelection_Bill.SelectedIndex = 0;
         }
     }
 }
