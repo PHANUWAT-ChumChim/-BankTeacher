@@ -13,6 +13,7 @@ namespace BankTeacher.Bank
 {
     public partial class Menu : Form
     {
+        public static int MenuEnabled;
         public static int startAmountMin;
         public static int startAmountMax;
         public static int perShare;
@@ -29,24 +30,22 @@ namespace BankTeacher.Bank
         /// <para>[1]Select Date Input - </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
-         { 
+        { 
              //[0]Check Setting INPUT: - 
              "SELECT DateAmountChange , StartAmountMin , StartAmountMax,MinLoan , PerShare\r\n" +
              "FROM EmployeeBank.dbo.tblSettingAmount;"
           ,
              //[1]Select Date Input :  -
              "SELECT CAST(CURRENT_TIMESTAMP as DATE);"
-             ,
+          ,
              
-         };
+        };
         public Menu()
         {
             InitializeComponent();
             Date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]).Rows[0][0].ToString().Split('-');
             BankTeacher.Bank.Menu.Monthname = Month[Convert.ToInt32(BankTeacher.Bank.Menu.Date[1]) - 1];
-
             Class.UserInfo.SetTeacherInformation("T43005", "Manit Hodkuntod", "1");
-
             dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]);
             DateAmountChange = Convert.ToInt32(dt.Rows[0][0]);
             startAmountMin = Convert.ToInt32(dt.Rows[0][1]);
@@ -65,9 +64,9 @@ namespace BankTeacher.Bank
             }
             F.MdiParent = this;
             F.WindowState = FormWindowState.Maximized;
-            F.Show();
+            F.Show(); 
         }
-        private void menuStrip1_ItemAdded(object sender, ToolStripItemEventArgs e)
+        public void menuStrip1_ItemAdded(object sender, ToolStripItemEventArgs e)
         {
             e.Item.Visible = false;
         }
@@ -165,6 +164,18 @@ namespace BankTeacher.Bank
             Bank.ReportEpensesAll reportEpensesall = new Bank.ReportEpensesAll();
             CloseFrom(reportEpensesall);
             ///ljsbdkawbfjklanfljkesbflka
+        }
+
+        private void Billcancelhistory_Click(object sender, EventArgs e)
+        {
+            Bank.Pay.Billcancelhistory Billcancelhistory = new Bank.Pay.Billcancelhistory();
+            CloseFrom(Billcancelhistory);
+        }
+
+        private void infoMeber_Click(object sender, EventArgs e)
+        {
+            Bank.Add_Member.infoMeber infoMeber = new Bank.Add_Member.infoMeber();
+            CloseFrom(infoMeber);
         }
     }
 }

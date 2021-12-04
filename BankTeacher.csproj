@@ -89,6 +89,12 @@
     <Compile Include="Bank\Add Member\CancelMember.Designer.cs">
       <DependentUpon>CancelMember.cs</DependentUpon>
     </Compile>
+    <Compile Include="Bank\Add Member\infoMeber.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bank\Add Member\infoMeber.Designer.cs">
+      <DependentUpon>infoMeber.cs</DependentUpon>
+    </Compile>
     <Compile Include="Bank\AmountOff.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +136,12 @@
     </Compile>
     <Compile Include="Bank\Loan\PayLoan.Designer.cs">
       <DependentUpon>PayLoan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Bank\Pay\Billcancelhistory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bank\Pay\Billcancelhistory.Designer.cs">
+      <DependentUpon>Billcancelhistory.cs</DependentUpon>
     </Compile>
     <Compile Include="Bank\Pay\Calculator.cs">
       <SubType>Form</SubType>
@@ -232,6 +244,9 @@
     <EmbeddedResource Include="Bank\Add Member\CancelMember.resx">
       <DependentUpon>CancelMember.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Bank\Add Member\infoMeber.resx">
+      <DependentUpon>infoMeber.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Bank\AmountOff.resx">
       <DependentUpon>AmountOff.cs</DependentUpon>
     </EmbeddedResource>
@@ -252,6 +267,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Loan\PayLoan.resx">
       <DependentUpon>PayLoan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bank\Pay\Billcancelhistory.resx">
+      <DependentUpon>Billcancelhistory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Pay\Calculator.resx">
       <DependentUpon>Calculator.cs</DependentUpon>
