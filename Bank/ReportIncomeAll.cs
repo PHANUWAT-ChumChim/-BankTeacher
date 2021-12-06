@@ -49,6 +49,10 @@ namespace BankTeacher.Bank
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
+            TBAmountCash_All.Text = "0";
+            TBAmountCradit_All.Text = "0";
+            TBAmount_All.Text = "0";
+            TBAmountTranfer_All.Text = "0";
             CheckMember = false;
             String Year = DTP.Value.ToString("yyyy");
             String Month = DTP.Value.ToString("MM");
