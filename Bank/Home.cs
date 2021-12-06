@@ -117,7 +117,7 @@ namespace BankTeacher.Bank
           "ORDER BY DateAdd DESC; "
           ,
           //[7]  SELECT info of printf INPUT: {TeacherNo}
-          "SELECT a.TeacherNo,b.SavingAmount,IIF(c.Amount != null,c.Amount,0) as startpay,IIF(ROUND(c.RemainsAmount,0) != null,ROUND(c.RemainsAmount,0),0) as Remains \r\n " +
+          "SELECT a.TeacherNo,b.SavingAmount,IIF(c.Amount != 0,c.Amount,0) as startpay,IIF(ROUND(c.RemainsAmount,0) != 0,ROUND(c.RemainsAmount,0),0) as Remains \r\n " +
           "FROM EmployeeBank.dbo.tblMember as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblGuarantor as c on b.TeacherNo = c.TeacherNo \r\n " +

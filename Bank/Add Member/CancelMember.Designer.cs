@@ -34,18 +34,11 @@ namespace BankTeacher.Bank.Add_Member
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.BOpenFile_Cancel = new System.Windows.Forms.Button();
-            this.BPrint_Cancel = new System.Windows.Forms.Button();
-            this.BDeleteFile_Cancel = new System.Windows.Forms.Button();
-            this.TBNote_Cancel = new System.Windows.Forms.TextBox();
+       
+    
             this.label3 = new System.Windows.Forms.Label();
-            this.LScan_Cancel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.TBTeacherName_Cancel = new System.Windows.Forms.TextBox();
-            this.BSave_Cancel = new System.Windows.Forms.Button();
-            this.TBTeacherNO_Cancel = new System.Windows.Forms.TextBox();
-            this.BSearch_Cancel = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -82,56 +75,6 @@ namespace BankTeacher.Bank.Add_Member
             ((System.ComponentModel.ISupportInitialize)(this.DGV_HistoryCancel)).BeginInit();
             this.SuspendLayout();
             // 
-            // BOpenFile_Cancel
-            // 
-            this.BOpenFile_Cancel.BackColor = System.Drawing.Color.White;
-            this.BOpenFile_Cancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BOpenFile_Cancel.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BOpenFile_Cancel.Location = new System.Drawing.Point(348, 358);
-            this.BOpenFile_Cancel.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
-            this.BOpenFile_Cancel.Name = "BOpenFile_Cancel";
-            this.BOpenFile_Cancel.Size = new System.Drawing.Size(154, 73);
-            this.BOpenFile_Cancel.TabIndex = 22;
-            this.BOpenFile_Cancel.Text = "เปิดไฟล์";
-            this.BOpenFile_Cancel.UseVisualStyleBackColor = false;
-            // 
-            // BPrint_Cancel
-            // 
-            this.BPrint_Cancel.BackColor = System.Drawing.Color.White;
-            this.BPrint_Cancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BPrint_Cancel.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BPrint_Cancel.Location = new System.Drawing.Point(267, 282);
-            this.BPrint_Cancel.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
-            this.BPrint_Cancel.Name = "BPrint_Cancel";
-            this.BPrint_Cancel.Size = new System.Drawing.Size(235, 62);
-            this.BPrint_Cancel.TabIndex = 21;
-            this.BPrint_Cancel.Text = "ปริ้นเอกสารยกเลิกสมาชิก";
-            this.BPrint_Cancel.UseVisualStyleBackColor = false;
-            // 
-            // BDeleteFile_Cancel
-            // 
-            this.BDeleteFile_Cancel.BackColor = System.Drawing.Color.White;
-            this.BDeleteFile_Cancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BDeleteFile_Cancel.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BDeleteFile_Cancel.Enabled = false;
-            this.BDeleteFile_Cancel.Location = new System.Drawing.Point(348, 445);
-            this.BDeleteFile_Cancel.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
-            this.BDeleteFile_Cancel.Name = "BDeleteFile_Cancel";
-            this.BDeleteFile_Cancel.Size = new System.Drawing.Size(154, 73);
-            this.BDeleteFile_Cancel.TabIndex = 22;
-            this.BDeleteFile_Cancel.Text = "ลบไฟล์";
-            this.BDeleteFile_Cancel.UseVisualStyleBackColor = false;
-            // 
-            // TBNote_Cancel
-            // 
-            this.TBNote_Cancel.Location = new System.Drawing.Point(43, 75);
-            this.TBNote_Cancel.Margin = new System.Windows.Forms.Padding(4, 7, 4, 7);
-            this.TBNote_Cancel.Multiline = true;
-            this.TBNote_Cancel.Name = "TBNote_Cancel";
-            this.TBNote_Cancel.Size = new System.Drawing.Size(500, 500);
-            this.TBNote_Cancel.TabIndex = 18;
-            this.TBNote_Cancel.Text = "sfdgfgfg";
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -143,14 +86,6 @@ namespace BankTeacher.Bank.Add_Member
             this.label3.Size = new System.Drawing.Size(75, 30);
             this.label3.TabIndex = 17;
             // 
-            // LScan_Cancel
-            // 
-            this.LScan_Cancel.AutoSize = true;
-            this.LScan_Cancel.Location = new System.Drawing.Point(37, 358);
-            this.LScan_Cancel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.LScan_Cancel.Name = "LScan_Cancel";
-            this.LScan_Cancel.Size = new System.Drawing.Size(137, 31);
-            this.LScan_Cancel.TabIndex = 23;
             // 
             // label1
             // 
@@ -171,49 +106,6 @@ namespace BankTeacher.Bank.Add_Member
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(42, 32);
             this.label2.TabIndex = 8;
-            // 
-            // TBTeacherName_Cancel
-            // 
-            this.TBTeacherName_Cancel.Enabled = false;
-            this.TBTeacherName_Cancel.Location = new System.Drawing.Point(124, 105);
-            this.TBTeacherName_Cancel.Margin = new System.Windows.Forms.Padding(5, 17, 5, 17);
-            this.TBTeacherName_Cancel.Name = "TBTeacherName_Cancel";
-            this.TBTeacherName_Cancel.Size = new System.Drawing.Size(216, 22);
-            this.TBTeacherName_Cancel.TabIndex = 34;
-            // 
-            // BSave_Cancel
-            // 
-            this.BSave_Cancel.BackColor = System.Drawing.Color.White;
-            this.BSave_Cancel.Font = new System.Drawing.Font("TH Sarabun New", 19.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BSave_Cancel.Location = new System.Drawing.Point(124, 154);
-            this.BSave_Cancel.Margin = new System.Windows.Forms.Padding(5, 17, 5, 17);
-            this.BSave_Cancel.Name = "BSave_Cancel";
-            this.BSave_Cancel.Size = new System.Drawing.Size(216, 83);
-            this.BSave_Cancel.TabIndex = 56;
-            this.BSave_Cancel.Text = "บันทึก";
-            this.BSave_Cancel.UseVisualStyleBackColor = false;
-            // 
-            // TBTeacherNO_Cancel
-            // 
-            this.TBTeacherNO_Cancel.Location = new System.Drawing.Point(124, 55);
-            this.TBTeacherNO_Cancel.Margin = new System.Windows.Forms.Padding(5, 17, 5, 17);
-            this.TBTeacherNO_Cancel.Name = "TBTeacherNO_Cancel";
-            this.TBTeacherNO_Cancel.Size = new System.Drawing.Size(167, 22);
-            this.TBTeacherNO_Cancel.TabIndex = 18;
-            // 
-            // BSearch_Cancel
-            // 
-            this.BSearch_Cancel.BackColor = System.Drawing.Color.White;
-            this.BSearch_Cancel.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BSearch_Cancel.BackgroundImage")));
-            this.BSearch_Cancel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BSearch_Cancel.ForeColor = System.Drawing.Color.White;
-            this.BSearch_Cancel.ImageKey = "(none)";
-            this.BSearch_Cancel.Location = new System.Drawing.Point(301, 44);
-            this.BSearch_Cancel.Margin = new System.Windows.Forms.Padding(5, 17, 5, 17);
-            this.BSearch_Cancel.Name = "BSearch_Cancel";
-            this.BSearch_Cancel.Size = new System.Drawing.Size(48, 49);
-            this.BSearch_Cancel.TabIndex = 47;
-            this.BSearch_Cancel.UseVisualStyleBackColor = false;
             // 
             // panel1
             // 

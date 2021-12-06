@@ -16,6 +16,13 @@ namespace BankTeacher.Class
             myPanal.Location = new System.Drawing.Point(myForm.Width / 2 - myPanal.Size.Width / 2,
             myForm.Height / 2 - myPanal.Size.Height / 2);
         }
+        public static void Eb(MenuStrip Ms)
+        {
+            for(int r = 0; r < Ms.Items.Count; r++)
+            {
+                Ms.Items[r].Enabled = false;
+            }
+        }
         public static void SetFont(ComboBox CB,float Fs,Label Lb)
         {
             int Num = 0;
