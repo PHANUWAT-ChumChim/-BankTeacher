@@ -38,7 +38,7 @@ namespace BankTeacher.Bank
              //[1]Select Date Input :  -
              "SELECT CAST(CURRENT_TIMESTAMP as DATE);"
           ,
-             
+
         };
         public Menu()
         {
@@ -64,7 +64,7 @@ namespace BankTeacher.Bank
             }
             F.MdiParent = this;
             F.WindowState = FormWindowState.Maximized;
-            F.Show(); 
+            F.Show();
         }
         public void menuStrip1_ItemAdded(object sender, ToolStripItemEventArgs e)
         {
@@ -108,7 +108,7 @@ namespace BankTeacher.Bank
         private void AmountOff_Click(object sender, EventArgs e)
         {
             Bank.AmountOff AmountOff = new Bank.AmountOff();
-            CloseFrom(AmountOff);  
+            CloseFrom(AmountOff);
         }
 
         private void aaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -119,7 +119,8 @@ namespace BankTeacher.Bank
 
         private void Manu_pay_Click(object sender, EventArgs e)
         {
-            
+            Bank.Pay.pay pay = new Pay.pay();
+            CloseFrom(pay);
         }
 
         private void สมครสมาชกToolStripMenuItem_Click(object sender, EventArgs e)
@@ -133,7 +134,13 @@ namespace BankTeacher.Bank
             Bank.Add_Member.CancelMember cancelMembers = new Bank.Add_Member.CancelMember();
             CloseFrom(cancelMembers);
         }
-        
+
+        private void Menu_CanCelBill_Click(object sender, EventArgs e)
+        {
+            Bank.Pay.CancelBill cancelBill = new Pay.CancelBill();
+            CloseFrom(cancelBill);
+        }
+
         private void MenuOneIncome_Click(object sender, EventArgs e)
         {
             Bank.ReportIncome reportIncome = new Bank.ReportIncome();
@@ -156,18 +163,23 @@ namespace BankTeacher.Bank
         {
             Bank.ReportEpensesAll reportEpensesall = new Bank.ReportEpensesAll();
             CloseFrom(reportEpensesall);
+            ///ljsbdkawbfjklanfljkesbflka
         }
 
-        private void CancelBill_Click(object sender, EventArgs e)
+        private void Billcancelhistory_Click(object sender, EventArgs e)
         {
-            Bank.Pay.CancelBill cancelBill = new Pay.CancelBill();
-            CloseFrom(cancelBill);
         }
 
-        private void Menu_Pay_Click(object sender, EventArgs e)
+        private void infoMeber_Click(object sender, EventArgs e)
         {
-            Bank.Pay.pay pay = new Pay.pay();
-            CloseFrom(pay);
+            Bank.Add_Member.infoMeber infoMeber = new Bank.Add_Member.infoMeber();
+            CloseFrom(infoMeber);
+        }
+
+        private void ประวตการยกเลกบลลToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Bank.Pay.Billcancelhistory Billcancelhistory = new Bank.Pay.Billcancelhistory();
+            CloseFrom(Billcancelhistory);
         }
     }
 }
