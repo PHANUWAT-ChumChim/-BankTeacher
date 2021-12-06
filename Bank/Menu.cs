@@ -163,7 +163,6 @@ namespace BankTeacher.Bank
         {
             Bank.ReportEpensesAll reportEpensesall = new Bank.ReportEpensesAll();
             CloseFrom(reportEpensesall);
-            ///ljsbdkawbfjklanfljkesbflka
         }
 
         private void Billcancelhistory_Click(object sender, EventArgs e)
