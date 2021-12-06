@@ -134,11 +134,7 @@ namespace BankTeacher.Bank
             Bank.Add_Member.CancelMember cancelMembers = new Bank.Add_Member.CancelMember();
             CloseFrom(cancelMembers);
         }
-
-        private void Menu_CanCelBill_Click(object sender, EventArgs e)
-        {
-        }
-
+        
         private void MenuOneIncome_Click(object sender, EventArgs e)
         {
             Bank.ReportIncome reportIncome = new Bank.ReportIncome();
