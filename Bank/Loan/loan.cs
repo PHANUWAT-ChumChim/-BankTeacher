@@ -134,7 +134,8 @@ namespace BankTeacher.Bank.Loan
             ,
             //[8] Check Dividend Year INPUT: 
             "SELECT TOP 1 MAX(Year)\r\n " +
-            "FROM EmployeeBank.dbo.tblDividend"
+            "FROM EmployeeBank.dbo.tblDividend\r\n" +
+            "WHERE Cancel = 1;"
            ,
 
 
@@ -193,7 +194,8 @@ namespace BankTeacher.Bank.Loan
             AmountLimit = AmountLimit.Remove(AmountLimit.Length - 1);
             if (TBTeacherNo.Text != "" && CBPayMonth.SelectedIndex != -1 && CBPayYear.SelectedIndex != -1 &&
                 TBLoanAmount.Text != "" && TBPayNo.Text != "" && TBInterestRate.Text != "" && (DGVGuarantor.Rows.Count <= 4 && DGVGuarantor.Rows.Count != 0) && ((int.Parse(TBLoanAmount.Text) <= int.Parse(AmountLimit)) || UserOutCreditLimit == DialogResult.Yes) &&
-                Convert.ToInt32(LLackAmount.Text) == 0 && Convert.ToInt32(LOutCredit.Text) == 0 && Int32.TryParse(TBLoanAmount.Text, out int x ) && x >= BankTeacher.Bank.Menu.MinLoan && CheckMinus == true)
+                Convert.ToInt32(LLackAmount.Text) == 0 && Convert.ToInt32(LOutCredit.Text) == 0 && Int32.TryParse(TBLoanAmount.Text, out int x ) && x >= BankTeacher.Bank.Menu.MinLoan && CheckMinus == true
+                && MessageBox.Show("ยืนยันการบันทึกหรือไม่","ระบบ",MessageBoxButtons.YesNo,MessageBoxIcon.Information) == DialogResult.Yes)
             {
 
                 DataSet dt = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[3]
