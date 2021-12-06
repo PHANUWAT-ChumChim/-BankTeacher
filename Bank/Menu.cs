@@ -119,8 +119,7 @@ namespace BankTeacher.Bank
 
         private void Manu_pay_Click(object sender, EventArgs e)
         {
-            Bank.Pay.pay pay = new Pay.pay();
-            CloseFrom(pay);
+            
         }
 
         private void สมครสมาชกToolStripMenuItem_Click(object sender, EventArgs e)
@@ -134,13 +133,7 @@ namespace BankTeacher.Bank
             Bank.Add_Member.CancelMember cancelMembers = new Bank.Add_Member.CancelMember();
             CloseFrom(cancelMembers);
         }
-
-        private void Menu_CanCelBill_Click(object sender, EventArgs e)
-        {
-            Bank.Pay.CancelBill cancelBill = new Pay.CancelBill();
-            CloseFrom(cancelBill);
-        }
-
+        
         private void MenuOneIncome_Click(object sender, EventArgs e)
         {
             Bank.ReportIncome reportIncome = new Bank.ReportIncome();
@@ -165,16 +158,16 @@ namespace BankTeacher.Bank
             CloseFrom(reportEpensesall);
         }
 
-        private void Billcancelhistory_Click(object sender, EventArgs e)
+        private void CancelBill_Click(object sender, EventArgs e)
         {
-            Bank.Pay.Billcancelhistory Billcancelhistory = new Bank.Pay.Billcancelhistory();
-            CloseFrom(Billcancelhistory);
+            Bank.Pay.CancelBill cancelBill = new Pay.CancelBill();
+            CloseFrom(cancelBill);
         }
 
-        private void infoMeber_Click(object sender, EventArgs e)
+        private void Menu_Pay_Click(object sender, EventArgs e)
         {
-            Bank.Add_Member.infoMeber infoMeber = new Bank.Add_Member.infoMeber();
-            CloseFrom(infoMeber);
+            Bank.Pay.pay pay = new Pay.pay();
+            CloseFrom(pay);
         }
     }
 }

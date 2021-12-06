@@ -32,9 +32,7 @@ namespace BankTeacher.Bank
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.Menu_Home = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Pay = new System.Windows.Forms.ToolStripMenuItem();
-            this.Manu_pay = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_CanCelBill = new System.Windows.Forms.ToolStripMenuItem();
-            this.Billcancelhistory = new System.Windows.Forms.ToolStripMenuItem();
+
             this.Menu_Loan = new System.Windows.Forms.ToolStripMenuItem();
             this.Menubar_MerberLoan = new System.Windows.Forms.ToolStripMenuItem();
             this.Menubar_payLoan = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,6 +50,7 @@ namespace BankTeacher.Bank
             this.MenuReportIncome = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuOneEpenses = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuAllEpenses = new System.Windows.Forms.ToolStripMenuItem();
+            this.CancelBill = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_setring = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_AddMembers = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_CancelMembers = new System.Windows.Forms.ToolStripMenuItem();
@@ -90,30 +89,12 @@ namespace BankTeacher.Bank
             // 
             // Menu_Pay
             // 
-            this.Menu_Pay.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Manu_pay,
-            this.Menu_CanCelBill});
             this.Menu_Pay.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Menu_Pay.Image = global::BankTeacher.Properties.Resources._64x64_wallet;
             this.Menu_Pay.Name = "Menu_Pay";
             this.Menu_Pay.Size = new System.Drawing.Size(100, 43);
             this.Menu_Pay.Text = "2 จ่าย";
-            // 
-            // Manu_pay
-            // 
-            this.Manu_pay.Name = "Manu_pay";
-            this.Manu_pay.Size = new System.Drawing.Size(242, 42);
-            this.Manu_pay.Text = "2.1 จ่าย สะสม/กู้";
-            this.Manu_pay.Click += new System.EventHandler(this.Manu_pay_Click);
-            // 
-            // Menu_CanCelBill
-            // 
-            this.Menu_CanCelBill.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Billcancelhistory});
-            this.Menu_CanCelBill.Name = "Menu_CanCelBill";
-            this.Menu_CanCelBill.Size = new System.Drawing.Size(242, 42);
-            this.Menu_CanCelBill.Text = "2.2 ยกเลิกบิลล์";
-            this.Menu_CanCelBill.Click += new System.EventHandler(this.Menu_CanCelBill_Click);
+            this.Menu_Pay.Click += new System.EventHandler(this.Menu_Pay_Click);
             // 
             // Billcancelhistory
             // 
@@ -212,7 +193,8 @@ namespace BankTeacher.Bank
             // 
             this.Menu_RePornt.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuReportExpenses,
-            this.MenuReportIncome});
+            this.MenuReportIncome,
+            this.CancelBill});
             this.Menu_RePornt.Font = new System.Drawing.Font("TH Sarabun New", 17.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Menu_RePornt.Image = global::BankTeacher.Properties.Resources.Reports1;
             this.Menu_RePornt.Name = "Menu_RePornt";
@@ -254,6 +236,7 @@ namespace BankTeacher.Bank
             // MenuOneEpenses
             // 
             this.MenuOneEpenses.Name = "MenuOneEpenses";
+            this.MenuOneEpenses.Size = new System.Drawing.Size(174, 36);
             this.MenuOneEpenses.Size = new System.Drawing.Size(217, 44);
             this.MenuOneEpenses.Text = "6.2.1 รายคน";
             this.MenuOneEpenses.Click += new System.EventHandler(this.MenuOneEpenses_Click);
@@ -261,9 +244,17 @@ namespace BankTeacher.Bank
             // MenuAllEpenses
             // 
             this.MenuAllEpenses.Name = "MenuAllEpenses";
+            this.MenuAllEpenses.Size = new System.Drawing.Size(174, 36);
             this.MenuAllEpenses.Size = new System.Drawing.Size(217, 44);
             this.MenuAllEpenses.Text = "6.2.2 ทั้งหมด";
             this.MenuAllEpenses.Click += new System.EventHandler(this.MenuAllEpenses_Click);
+            // 
+            // CancelBill
+            // 
+            this.CancelBill.Name = "CancelBill";
+            this.CancelBill.Size = new System.Drawing.Size(216, 36);
+            this.CancelBill.Text = "6.3 ยกเลิกบิลล์";
+            this.CancelBill.Click += new System.EventHandler(this.CancelBill_Click);
             // 
             // Menu_setring
             // 
@@ -322,10 +313,8 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.ToolStripMenuItem Menubar_MerberLoan;
         private System.Windows.Forms.ToolStripMenuItem Menu_RePornt;
         public System.Windows.Forms.ToolStripMenuItem Menu_Pay;
-        private System.Windows.Forms.ToolStripMenuItem Manu_pay;
         private System.Windows.Forms.ToolStripMenuItem Menu_AddMembers;
         private System.Windows.Forms.ToolStripMenuItem Menu_CancelMembers;
-        private System.Windows.Forms.ToolStripMenuItem Menu_CanCelBill;
         private System.Windows.Forms.ToolStripMenuItem สมครสมาชกToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ยกเลกสมาชกToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem MenuReportExpenses;
@@ -334,7 +323,6 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.ToolStripMenuItem MenuAllIncome;
         private System.Windows.Forms.ToolStripMenuItem MenuOneEpenses;
         private System.Windows.Forms.ToolStripMenuItem MenuAllEpenses;
-        private System.Windows.Forms.ToolStripMenuItem Billcancelhistory;
-        private System.Windows.Forms.ToolStripMenuItem infoMeber;
+        private System.Windows.Forms.ToolStripMenuItem CancelBill;
     }
 }
