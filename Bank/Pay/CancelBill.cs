@@ -228,6 +228,7 @@ namespace BankTeacher.Bank.Pay
                 if (TBBillNo_Cancelbill.Text.Length != 0)
                 {
                     Clear();
+                    TBBillNo_Cancelbill.Text = "";
                 }
                 else
                 {
