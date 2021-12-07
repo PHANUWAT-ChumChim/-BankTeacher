@@ -29,7 +29,7 @@ namespace BankTeacher.Bank.Loan
 
             {
           //[0] SELECT MemberLona  INPUT: {Text} 
-          " SELECT TOP(20) TeacherNo , NAME , SavingAmount  \r\n" +
+          " SELECT TOP(20) TeacherNo , NAME  \r\n" +
           " FROM(   \r\n " +
           " SELECT a.TeacherNo, CAST(ISNULL(c.PrefixName+' ','') + Fname + ' ' + Lname AS nvarchar)AS NAME,SavingAmount,Fname ,LoanStatusNo \r\n " +
           " FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
@@ -81,8 +81,6 @@ namespace BankTeacher.Bank.Loan
         public PayLoan()
         {
             InitializeComponent();
-
-            Console.WriteLine("==================Open Pay Loan Form======================");
             ComboBox[] cb = new ComboBox[] { CBB4Oppay };
             DataTable dtPayment = Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]);
             for (int a = 0; a < dtPayment.Rows.Count; a++)
@@ -102,7 +100,7 @@ namespace BankTeacher.Bank.Loan
             try
             {
                 StatusBoxFile = 0;
-                IN = new Bank.Search(SQLDefault[0]);
+                IN = new Bank.Search(SQLDefault[0],"");
                 IN.ShowDialog();
                 
                 if(Bank.Search.Return.Length != 1)
@@ -195,6 +193,8 @@ namespace BankTeacher.Bank.Loan
                     CBB4Oppay.Enabled = false;
                     button1.Enabled = false;
                     comboBox1.Enabled = false;
+                    StatusBoxFile = 0;
+                    imgeLocation = "";
                     Check = 0;
                 }
             }
@@ -325,6 +325,41 @@ namespace BankTeacher.Bank.Loan
         private void PayLoan_SizeChanged(object sender, EventArgs e)
         {
             Class.FromSettingMedtod.ChangeSizePanal(this, panel1);
+        }
+
+        private void BExitForm_Click(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
+
+        private void PayLoan_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (TBTeacherNo.Text.Length != 0)
+                {
+                    TBTeacherNo.Text = "";
+                    comboBox1.Items.Clear();
+                    comboBox1.SelectedIndex = -1;
+                    TBTeacherName.Text = "";
+                    TBLoanNo.Text = "";
+                    TBLoanStatus.Text = "";
+                    TBDate.Text = "";
+                    label3.Text = "0";
+                    if (CBB4Oppay.SelectedIndex != -1)
+                        CBB4Oppay.SelectedIndex = -1;
+                    CBB4Oppay.Enabled = false;
+                    button1.Enabled = false;
+                    comboBox1.Enabled = false;
+                    StatusBoxFile = 0;
+                    imgeLocation = "";
+                    Check = 0;
+                }
+                else
+                {
+                    BExitForm_Click(new object(), new EventArgs());
+                }
+            }
         }
     }
 }

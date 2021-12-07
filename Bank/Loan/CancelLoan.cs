@@ -24,7 +24,7 @@ namespace BankTeacher.Bank.Loan
         private String[] SQLDefault =
         {
              //[0] SELECT MemberLona  INPUT: {Text}
-          " SELECT TOP(20) TeacherNo , NAME , SavingAmount  \r\n" +
+          " SELECT TOP(20) TeacherNo , NAME  \r\n" +
           " FROM(   \r\n " +
           " SELECT a.TeacherNo, CAST(ISNULL(c.PrefixName+' ','') + Fname + ' ' + Lname AS nvarchar)AS NAME,SavingAmount,Fname ,LoanStatusNo \r\n " +
           " FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
@@ -73,14 +73,13 @@ namespace BankTeacher.Bank.Loan
         public CancelLoan()
         {
             InitializeComponent();
-            Console.WriteLine("==================Open CancelLoan Form======================");
         }
 
         private void BSearchTeacher_Click_1(object sender, EventArgs e)
         {
             TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Escape));
             Bank.Search IN;
-            IN = new Bank.Search(SQLDefault[0]);
+            IN = new Bank.Search(SQLDefault[0], "");
             IN.ShowDialog();
             if (Bank.Search.Return[0].ToString() != "")
             {
@@ -243,6 +242,41 @@ namespace BankTeacher.Bank.Loan
         private void CancelLoan_SizeChanged(object sender, EventArgs e)
         {
             Class.FromSettingMedtod.ChangeSizePanal(this, panel1);
+        }
+
+        private void BExitForm_Click(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
+
+        private void CancelLoan_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (TBTeacherNo.Text.Length != 0)
+                {
+                    TBTeacherNo.Text = "";
+                    comboBox1.Items.Clear();
+                    comboBox1.SelectedIndex = -1;
+                    TBTeacherName.Text = "";
+                    textBox2.Text = "";
+                    textBox3.Text = "";
+                    textBox4.Text = "";
+                    textBox5.Text = "";
+                    textBox6.Text = "";
+                    textBox7.Text = "";
+                    textBox8.Text = "";
+                    textBox9.Text = "";
+                    textBox10.Text = "";
+                    textBox11.Text = "";
+                    comboBox1.Enabled = false;
+                    Check = 0;
+                }
+                else
+                {
+                    BExitForm_Click(new object(), new EventArgs());
+                }
+            }
         }
     }
 }

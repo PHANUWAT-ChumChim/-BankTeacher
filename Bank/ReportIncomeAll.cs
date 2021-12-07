@@ -49,6 +49,10 @@ namespace BankTeacher.Bank
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
+            TBAmountCash_All.Text = "0";
+            TBAmountCradit_All.Text = "0";
+            TBAmount_All.Text = "0";
+            TBAmountTranfer_All.Text = "0";
             CheckMember = false;
             String Year = DTP.Value.ToString("yyyy");
             String Month = DTP.Value.ToString("MM");
@@ -124,5 +128,17 @@ namespace BankTeacher.Bank
             }
         }
 
+        private void BExitForm_Click(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
+
+        private void ReportIncomeAll_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                BExitForm_Click(new object(), new EventArgs());
+            }
+        }
     }
 }

@@ -20,6 +20,7 @@ namespace BankTeacher.Bank
         public static int DateAmountChange;
         public static string FontSize;
         public static int MinLoan;
+        public static Form Parent;
         public static String[] Date;
         public static String Monthname;
         public static String[] Month = { "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" };
@@ -38,11 +39,12 @@ namespace BankTeacher.Bank
              //[1]Select Date Input :  -
              "SELECT CAST(CURRENT_TIMESTAMP as DATE);"
           ,
-             
+
         };
         public Menu()
         {
             InitializeComponent();
+            menuStrip1.Visible = true;
             Date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]).Rows[0][0].ToString().Split('-');
             BankTeacher.Bank.Menu.Monthname = Month[Convert.ToInt32(BankTeacher.Bank.Menu.Date[1]) - 1];
             Class.UserInfo.SetTeacherInformation("T43005", "Manit Hodkuntod", "1");
@@ -63,22 +65,26 @@ namespace BankTeacher.Bank
                     return;
             }
             F.MdiParent = this;
+            Parent = this;
             F.WindowState = FormWindowState.Maximized;
-            F.Show(); 
+            F.Show();
+            this.menuStrip1.Visible = false;
         }
         public void menuStrip1_ItemAdded(object sender, ToolStripItemEventArgs e)
         {
             e.Item.Visible = false;
         }
-        private void Menu_Home_Click(object sender, EventArgs e)
+        public void Menu_Home_Click(object sender, EventArgs e)
         {
             BankTeacher.Bank.Home Home = new BankTeacher.Bank.Home();
             CloseFrom(Home);
+            menuStrip1.Visible = true;
         }
         private void Menu_Load_1(object sender, EventArgs e)
         {
             BankTeacher.Bank.Home startHome = new BankTeacher.Bank.Home();
             CloseFrom(startHome);
+            menuStrip1.Visible = true;
         }
         private void Menu_setring_Click(object sender, EventArgs e)
         {
@@ -108,7 +114,7 @@ namespace BankTeacher.Bank
         private void AmountOff_Click(object sender, EventArgs e)
         {
             Bank.AmountOff AmountOff = new Bank.AmountOff();
-            CloseFrom(AmountOff);  
+            CloseFrom(AmountOff);
         }
 
         private void aaToolStripMenuItem_Click(object sender, EventArgs e)
@@ -166,13 +172,14 @@ namespace BankTeacher.Bank
             ///ljsbdkawbfjklanfljkesbflka
         }
 
-        private void Billcancelhistory_Click(object sender, EventArgs e)
+
+        private void ประวตการยกเลกบลลToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Bank.Pay.Billcancelhistory Billcancelhistory = new Bank.Pay.Billcancelhistory();
             CloseFrom(Billcancelhistory);
         }
 
-        private void infoMeber_Click(object sender, EventArgs e)
+        private void memberInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Bank.Add_Member.infoMeber infoMeber = new Bank.Add_Member.infoMeber();
             CloseFrom(infoMeber);

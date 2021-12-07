@@ -27,8 +27,6 @@ namespace BankTeacher.Bank.Loan
         public loan()
         {
             InitializeComponent();
-            Console.WriteLine("==================Open Loan Form======================");
-            Delete.Visible = Class.UserInfo.Debug;
         }
 
         //------------------------- FormSize -----------------
@@ -435,7 +433,7 @@ namespace BankTeacher.Bank.Loan
                     }
                 }
                 IN = new Bank.Search(SQLDefault[1]
-                       .Replace("{TeacherNoNotLike}", NotLike));
+                       .Replace("{TeacherNoNotLike}", NotLike), "หุ้นสะสม");
 
                 IN.ShowDialog();
                 if (Bank.Search.Return[0] != "" /*&& CheckLimitLoan == DialogResult.No*/)
@@ -551,6 +549,10 @@ namespace BankTeacher.Bank.Loan
                     Check = 0;
                 }
 
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                TBTeacherNo.Focus();
             }
         }
         //TB คำค้ำ event กด
@@ -732,7 +734,7 @@ namespace BankTeacher.Bank.Loan
                         NotLike = NotLike.Remove(NotLike.Length - 1);
                     }
                     IN = new Bank.Search(SQLDefault[1]
-                           .Replace("{TeacherNoNotLike}", NotLike));
+                           .Replace("{TeacherNoNotLike}", NotLike), "หุ้นสะสม");
 
                     IN.ShowDialog();
                     if (Bank.Search.Return[0] != "")
@@ -1207,6 +1209,8 @@ namespace BankTeacher.Bank.Loan
             }
         }
 
+
+
         private void BCalculate_Click(object sender, EventArgs e)
         {
             if (DGVGuarantorCredit.Rows.Count > 0 && TBLoanAmount.Text != "")
@@ -1295,23 +1299,56 @@ namespace BankTeacher.Bank.Loan
                 }
                 String AmountLimit = LLoanAmount.Text.Remove(0, 1);
                 AmountLimit = AmountLimit.Remove(AmountLimit.Length - 1);
-                //if (Convert.ToInt32(TBLoanAmount.Text) > Convert.ToInt32(AmountLimit))
-                //{
-                    DGVGuarantorCredit.Rows[0].Cells[3].Value = Convert.ToInt32(DGVGuarantorCredit.Rows[0].Cells[3].Value.ToString()) + SumAmountCredit;
-                    DGVGuarantorCredit.Rows[0].Cells[2].Value = Convert.ToInt32((Convert.ToDouble(DGVGuarantorCredit.Rows[0].Cells[3].Value.ToString()) * 100) / Interest);
-                    if(LLackAmount.Text != "0")
-                    {
-                        LLackAmount.ForeColor = Color.Green;
-                        LLackAmount.Text = "0";
-                    }
-                    else if(LOutCredit.Text != "0")
-                    {
-                        LOutCredit.ForeColor = Color.Green;
-                        LOutCredit.Text = "0";
-                    }
-                    
-                //}
+                DGVGuarantorCredit.Rows[0].Cells[3].Value = Convert.ToInt32(DGVGuarantorCredit.Rows[0].Cells[3].Value.ToString()) + SumAmountCredit;
+                DGVGuarantorCredit.Rows[0].Cells[2].Value = Convert.ToInt32((Convert.ToDouble(DGVGuarantorCredit.Rows[0].Cells[3].Value.ToString()) * 100) / Interest);
+                if(LLackAmount.Text != "0")
+                {
+                    LLackAmount.ForeColor = Color.Green;
+                    LLackAmount.Text = "0";
+                }
+                else if(LOutCredit.Text != "0")
+                {
+                    LOutCredit.ForeColor = Color.Green;
+                    LOutCredit.Text = "0";
+                }
             }
+        }
+
+        private void loan_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (TBTeacherNo.Text.Length != 0)
+                {
+                    // ======= Tab 1 Clear ===============
+                    TBLoanAmount.Text = "";
+                    TBTeacherName.Text = "";
+                    TBLoanNo.Text = "";
+                    TBLoanStatus.Text = "";
+                    TBSavingAmount.Text = "";
+                    TBTeacherNo.Text = "";
+                    TBGuarantorNo.Focus();
+                    DGVGuarantor.Rows.Clear();
+                    // ======= Tab 2 Clear ===============
+                    CBPayMonth.SelectedIndex = -1;
+                    CBPayYear.SelectedIndex = -1;
+                    DGVGuarantorCredit.Rows.Clear();
+                    // ======= Tab 3 Clear ===============
+                    DGVGuarantorCredit.Rows.Clear();
+                    // ======= Tab 4 Clear ===============
+                    DGVLoanDetail.Rows.Clear();
+                    Check = 0;
+                }
+                else
+                {
+                    BExitForm_Click(new object(), new EventArgs());
+                }
+            }
+        }
+
+        private void BExitForm_Click(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
         }
     }
 }

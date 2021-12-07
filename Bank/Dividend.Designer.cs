@@ -47,7 +47,7 @@ namespace BankTeacher.Bank
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(15, 16);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(877, 590);
+            this.panel1.Size = new System.Drawing.Size(877, 622);
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
@@ -98,20 +98,22 @@ namespace BankTeacher.Bank
             this.label1.Size = new System.Drawing.Size(303, 28);
             this.label1.TabIndex = 5;
             this.label1.Text = "**เมื่อปันผลแล้วจะไม่สามารถจ่ายเงินกู้ภายในปีนั้นได้";
-            // 
+            //
             // Dividend
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 28F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(907, 622);
+            this.ClientSize = new System.Drawing.Size(905, 650);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.Name = "Dividend";
             this.Text = "Dividend";
             this.Load += new System.EventHandler(this.Dividend_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Dividend_KeyDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);

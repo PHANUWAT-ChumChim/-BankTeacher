@@ -41,7 +41,7 @@ namespace BankTeacher.Bank.Loan
         private String[] SQLDefault =
         {
              //[0] SELECT MemberLonn  INPUT: {Text}
-           "SELECT TOP(20) TeacherNo , NAME , SavingAmount   \r\n " +
+           "SELECT TOP(20) TeacherNo , NAME  \r\n " +
           "FROM(SELECT a.TeacherNo, CAST(ISNULL(c.PrefixName+' ','') + Fname + ' ' + Lname AS nvarchar)AS NAME,SavingAmount,Fname  \r\n " +
           "FROM (SELECT TeacherNo \r\n " +
           "FROM EmployeeBank.dbo.tblLoan \r\n " +
@@ -106,7 +106,6 @@ namespace BankTeacher.Bank.Loan
         {
             InitializeComponent();
 
-            Console.WriteLine("==================Open InfoLoan Form======================");
 
         }
 
@@ -122,7 +121,7 @@ namespace BankTeacher.Bank.Loan
             try
             {
 
-                IN = new Bank.Search(SQLDefault[0]);
+                IN = new Bank.Search(SQLDefault[0],"");
                 IN.ShowDialog();
                 TBTeacherNo.Text = Bank.Search.Return[0];
                 TBTeacherName.Text = Bank.Search.Return[1];
@@ -416,6 +415,47 @@ namespace BankTeacher.Bank.Loan
                 BTPrint.Visible = false;
         }
 
-      
+        private void BExitForm_Click(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
+
+        private void InfoLoan_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (TBTeacherNo.Text.Length != 0)
+                {
+                    TBTeacherNo.Text = "";
+                    comboBox1.Items.Clear();
+                    comboBox1.SelectedIndex = -1;
+                    TBTeacherName.Text = "";
+                    DGVGuarantor.Rows.Clear();
+                    comboBox1.Enabled = false;
+                    Check = 0;
+                    TBLoanNo.Text = "";
+                    TBYearPay_Detail.Text = "";
+                    TBMonthPay_Detail.Text = "";
+                    TBTotalAmount_Detail.Text = "";
+                    TBPayNo_Detail.Text = "";
+                    TBInterestRate_Detail.Text = "";
+                    TBLoanStatus.Text = "";
+                    TBSavingAmount.Text = "";
+                    DGVLoanDetail.Rows.Clear();
+                    TBTeacheraddbyNo.Text = "";
+                    TBTeacheraddbyname.Text = "";
+                    TBSignUpDate_Detail.Text = "";
+                    TBFinishYearPay_Detail.Text = "";
+                    TBFinishMonthPay_Detail.Text = "";
+                    TBPaidNo_Detail.Text = "";
+                    TBLoanAmount_Deatail.Text = "";
+                    TBInterest_Detail.Text = "";
+                }
+                else
+                {
+                    BExitForm_Click(new object(), new EventArgs());
+                }
+            }
+        }
     }
 }

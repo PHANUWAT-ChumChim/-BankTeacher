@@ -275,7 +275,6 @@ namespace BankTeacher.Bank.Pay
         public pay()
         {
             InitializeComponent();
-            Console.WriteLine("==================Open Pay Form======================");
             Font F = new Font("TH Sarabun New", 16, FontStyle.Regular);
             DGV_Pay.ColumnHeadersDefaultCellStyle.Font = F;
             DGV_ShareInfo.ColumnHeadersDefaultCellStyle.Font = F;
@@ -319,7 +318,7 @@ namespace BankTeacher.Bank.Pay
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
             //เปิดหน้าค้นหาแล้วให้ใส่ Code จาก SQLDefault[0] ที่ใช้สำหรับค้นหาสมาชิก
-            Bank.Search IN = new Bank.Search(SQLDefault[0]);
+            Bank.Search IN = new Bank.Search(SQLDefault[0] , "หุ้นสะสม");
             IN.ShowDialog();
             //ถ้า ID สมาชิกที่เลือกไม่เป็นว่างเปล่า ให้ ใส่ลงใน TBTeacherNo และ ไปทำ event Keydown ของ TBTeacherNo
             if(Bank.Search.Return[0] != "")
@@ -1973,6 +1972,27 @@ namespace BankTeacher.Bank.Pay
                 if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                 {
                     printDocument1.Print();
+                }
+            }
+        }
+
+        private void BExitForm_Click(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
+
+        private void pay_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (TBTeacherNo.Text.Length != 0)
+                {
+                    ClearForm();
+                    TBTeacherNo.Text = "";
+                }
+                else
+                {
+                    BExitForm_Click(new object(), new EventArgs());
                 }
             }
         }

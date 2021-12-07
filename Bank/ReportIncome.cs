@@ -53,19 +53,23 @@ namespace BankTeacher.Bank
         public ReportIncome()
         {
             InitializeComponent();
-            dateTimePicker1_ValueChanged(new object(), new EventArgs());
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
             DGV_one.Rows.Clear();
             CheckMember = false;
+            TBAmount.Text = "0";
+            TBPaymentCash.Text = "0";
+            TBPaymentCradit.Text = "0";
+            TBPaymentTranfer.Text = "0";
+            TBTeacherName.Text = "";
             TBTeacherNo.Text = "";
 
         }
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
-            Bank.Search IN = new Bank.Search(SQLDefault[2]);
+            Bank.Search IN = new Bank.Search(SQLDefault[2],"");
             IN.ShowDialog();
             if (Bank.Search.Return[0] != "")
             {
@@ -86,6 +90,14 @@ namespace BankTeacher.Bank
                         String Year = DTP.Value.ToString("yyyy");
                         String Month = DTP.Value.ToString("MM");
                         String Day = DTP.Value.ToString("dd");
+                        if (Convert.ToInt32(Month) < 10)
+                        {
+                            Month = "0" + Convert.ToInt32(Month);
+                        }
+                        if (Convert.ToInt32(Day) < 10)
+                        {
+                            Day = "0" + Convert.ToInt32(Day);
+                        }
                         DataTable dtTeacherAddbill = Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
                             .Replace("{Text}", TBTeacherNo.Text));
                         if (dtTeacherAddbill.Rows.Count != 0)
@@ -180,5 +192,25 @@ namespace BankTeacher.Bank
             TBTeacherName.Text = "";
         }
 
+        private void BExitForm_Click(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
+
+        private void ReportIncome_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if(TBTeacherNo.Text.Length != 0)
+                {
+                    TBTeacherNo.Text = "";
+                    Cleartabpage1();
+                }
+                else
+                {
+                    BExitForm_Click(new object(), new EventArgs());
+                }
+            }
+        }
     }
 }
