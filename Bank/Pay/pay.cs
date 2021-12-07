@@ -1988,6 +1988,7 @@ namespace BankTeacher.Bank.Pay
                 if (TBTeacherNo.Text.Length != 0)
                 {
                     ClearForm();
+                    TBTeacherNo.Text = "";
                 }
                 else
                 {

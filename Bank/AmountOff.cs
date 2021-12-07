@@ -425,6 +425,7 @@ namespace BankTeacher.Bank
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
+                    TBTeacherNo.Text = "";
                     TBTeacherName.Text = "";
                     TBShareNo.Text = "";
                     TBSavingAmount.Text = "";

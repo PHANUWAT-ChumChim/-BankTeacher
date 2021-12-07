@@ -550,6 +550,10 @@ namespace BankTeacher.Bank.Loan
                 }
 
             }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                TBTeacherNo.Focus();
+            }
         }
         //TB คำค้ำ event กด
         private void TBGuarantorNo_KeyDown(object sender, KeyEventArgs e)

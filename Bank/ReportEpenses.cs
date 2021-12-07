@@ -169,6 +169,7 @@ namespace BankTeacher.Bank
             {
                 if(TBTeacherNo.Text.Length != 0)
                 {
+                    TBTeacherNo.Text = "";
                     ClearForm();
                 }
                 else

@@ -203,6 +203,7 @@ namespace BankTeacher.Bank
             {
                 if(TBTeacherNo.Text.Length != 0)
                 {
+                    TBTeacherNo.Text = "";
                     Cleartabpage1();
                 }
                 else

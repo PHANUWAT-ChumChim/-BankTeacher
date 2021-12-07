@@ -255,6 +255,7 @@ namespace BankTeacher.Bank.Loan
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
+                    TBTeacherNo.Text = "";
                     comboBox1.Items.Clear();
                     comboBox1.SelectedIndex = -1;
                     TBTeacherName.Text = "";
