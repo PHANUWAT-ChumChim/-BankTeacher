@@ -113,7 +113,7 @@ namespace BankTeacher.Bank
             this.Name = "Dividend";
             this.Text = "Dividend";
             this.Load += new System.EventHandler(this.Dividend_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Dividend_KeyDown);
+            //this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Dividend_KeyDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
