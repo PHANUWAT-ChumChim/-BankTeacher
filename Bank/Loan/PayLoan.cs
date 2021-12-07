@@ -29,7 +29,7 @@ namespace BankTeacher.Bank.Loan
 
             {
           //[0] SELECT MemberLona  INPUT: {Text} 
-          " SELECT TOP(20) TeacherNo , NAME , SavingAmount  \r\n" +
+          " SELECT TOP(20) TeacherNo , NAME  \r\n" +
           " FROM(   \r\n " +
           " SELECT a.TeacherNo, CAST(ISNULL(c.PrefixName+' ','') + Fname + ' ' + Lname AS nvarchar)AS NAME,SavingAmount,Fname ,LoanStatusNo \r\n " +
           " FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
@@ -102,7 +102,7 @@ namespace BankTeacher.Bank.Loan
             try
             {
                 StatusBoxFile = 0;
-                IN = new Bank.Search(SQLDefault[0]);
+                IN = new Bank.Search(SQLDefault[0],"");
                 IN.ShowDialog();
                 
                 if(Bank.Search.Return.Length != 1)

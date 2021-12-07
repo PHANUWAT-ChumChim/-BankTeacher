@@ -85,7 +85,7 @@ namespace BankTeacher.Bank.Add_Member
         {
             try
             {
-                Bank.Search IN = new Bank.Search(SQLDefault[0]);
+                Bank.Search IN = new Bank.Search(SQLDefault[0] , "หุ้นสะสม");
                 IN.ShowDialog();
                 if (Bank.Search.Return[0] != "")
                 {

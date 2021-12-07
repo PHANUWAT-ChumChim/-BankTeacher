@@ -24,7 +24,7 @@ namespace BankTeacher.Bank.Loan
         private String[] SQLDefault =
         {
              //[0] SELECT MemberLona  INPUT: {Text}
-          " SELECT TOP(20) TeacherNo , NAME , SavingAmount  \r\n" +
+          " SELECT TOP(20) TeacherNo , NAME  \r\n" +
           " FROM(   \r\n " +
           " SELECT a.TeacherNo, CAST(ISNULL(c.PrefixName+' ','') + Fname + ' ' + Lname AS nvarchar)AS NAME,SavingAmount,Fname ,LoanStatusNo \r\n " +
           " FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
@@ -80,7 +80,7 @@ namespace BankTeacher.Bank.Loan
         {
             TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Escape));
             Bank.Search IN;
-            IN = new Bank.Search(SQLDefault[0]);
+            IN = new Bank.Search(SQLDefault[0], "");
             IN.ShowDialog();
             if (Bank.Search.Return[0].ToString() != "")
             {
