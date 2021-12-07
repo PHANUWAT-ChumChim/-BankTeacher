@@ -367,7 +367,7 @@ namespace BankTeacher.Bank
             info_id = TBTeacherNo.Text;
             info_totelAmountpay = dt.Rows[0][1].ToString();
             info_Lona_AmountRemain = dt.Rows[0][2].ToString();
-            Class.Print.PrintPreviewDialog.PrintReportGrid(e, dataGridView3, "ตารางการผ่อนชำระ", this.AccessibilityObject.Name,0);
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e, dataGridView3, "ตารางการผ่อนชำระ", this.AccessibilityObject.Name,1,"A4",1);
         }
     }
 }

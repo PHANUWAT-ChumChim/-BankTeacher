@@ -259,7 +259,7 @@ namespace BankTeacher.Bank
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVReportIncome, TP_LUP.SelectedTab.Text, this.AccessibilityObject.Name, 0);
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVReportIncome, TP_LUP.SelectedTab.Text, this.AccessibilityObject.Name,2,"A4",0);
         }
 
         private void BTPrint_Click(object sender, EventArgs e)

@@ -26,8 +26,6 @@ namespace BankTeacher.Bank.Pay
         public static string info_datepay;
         // กู้
         public static string info_Lona_AmountRemain;
-        // ต้นฉบับ
-        public static int script = 1;
         public static int SELECT = 1;
         //------------------------- index -----------------
 
@@ -1253,10 +1251,8 @@ namespace BankTeacher.Bank.Pay
                         info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
                         info_datepay = DateTime.Today.Day.ToString() +'/'+ DateTime.Today.Month.ToString() +'/'+ DateTime.Today.Year.ToString();
                         SELECT = 1;
-                        if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
-                        {
-                            printDocument1.Print();
-                        }
+                        printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+                        printDocument1.DefaultPageSettings.Landscape = true;
                         if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                         {
                             printDocument1.Print();
@@ -1460,7 +1456,7 @@ namespace BankTeacher.Bank.Pay
                     int Sum = 0;
                     for(int x = 0; x < dt.Rows.Count; x++)
                     {
-                        DGV_BillInfo.Rows.Add(dt.Rows[x][0].ToString(), Convert.ToDateTime(dt.Rows[x][5].ToString()).ToString("dd-MM-yyyy"), dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
+                        DGV_BillInfo.Rows.Add(x+1,dt.Rows[x][0].ToString(), Convert.ToDateTime(dt.Rows[x][5].ToString()).ToString("dd-MM-yyyy"), dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
 
                         Sum = Sum + Convert.ToInt32(dt.Rows[x][3].ToString());
                         LBalance_BillInfo.Text = Sum.ToString();
@@ -1863,28 +1859,22 @@ namespace BankTeacher.Bank.Pay
                 }
             }
         }
-       
+
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
-            printDocument1.DefaultPageSettings.Landscape = true;
             if (SELECT == 1)
             {
-                Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Printbypoon, "ใบเสร็จรับเงิน", this.AccessibilityObject.Name, script);
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Printbypoon, "ใบเสร็จรับเงิน", this.AccessibilityObject.Name,1,"A5",0);
             }
             else if(CB_Printback.Checked != false)
             {
                
-                Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Tester, "ใบเสร็จรับเงิน(ย้อนหลัง)", this.AccessibilityObject.Name, script);
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Tester, "ใบเสร็จรับเงิน(ย้อนหลัง)", this.AccessibilityObject.Name,1,"A5",0);
             }
             else
             {
-                Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_BillInfo, "บิลล์การจ่าย", this.AccessibilityObject.Name,0);
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_BillInfo, "บิลล์การจ่าย", this.AccessibilityObject.Name,2,"A4",1);
             }
-            script++;
-            if (script > 2)
-                script = 1;
-           
         }
         private static void NumericCheck(object sender, KeyPressEventArgs e)
         {
@@ -1913,10 +1903,10 @@ namespace BankTeacher.Bank.Pay
                 BTPrint.Enabled = true;
                 BTPrint.BackColor = Color.White;
                 DGV_Tester.Rows.Clear();
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[15].Replace("{bill}", DGV_BillInfo.Rows[e.RowIndex].Cells[0].Value.ToString()));
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[15].Replace("{bill}", DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString()));
                 for (int Row = 0; Row < dt.Rows.Count; Row++)
                 {
-                    DGV_Tester.Rows.Add(dt.Rows[Row][3].ToString(), dt.Rows[Row][2].ToString(), dt.Rows[Row][1]);
+                    DGV_Tester.Rows.Add(Row+1,dt.Rows[Row][3].ToString(), dt.Rows[Row][2].ToString(), dt.Rows[Row][1]);
                 }
             }
             else
@@ -1925,7 +1915,7 @@ namespace BankTeacher.Bank.Pay
             if (DGV_Tester.Rows.Count != 0 && e.RowIndex != -1)
             {
                 BTPrint.Enabled = true;
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[15].Replace("{bill}", DGV_BillInfo.Rows[e.RowIndex].Cells[0].Value.ToString()));
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[15].Replace("{bill}", DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString()));
                 info_datepay = dt.Rows[0][3].ToString();
             }
             else
@@ -1963,13 +1953,11 @@ namespace BankTeacher.Bank.Pay
                 {
                     printDocument1.Print();
                 }
-                if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    printDocument1.Print();
-                }
             }
             else
             {
+                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("Letter",850,1100);
+                printDocument1.DefaultPageSettings.Landscape = false;
                 if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                 {
                     printDocument1.Print();
