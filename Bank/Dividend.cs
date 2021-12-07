@@ -42,25 +42,30 @@ namespace BankTeacher.Bank
           " \r\n " +
           "--Interest \r\n " +
           "SELECT @Interest = SUM(ISNULL(CASE \r\n " +
-          "	WHEN a.YearPay = {Year} - 1 and a.MonthPay + a.PayNo - 1 > 12  THEN (ROUND((CAST(a.InterestRate as float) / 100) * a.LoanAmount , 0) / a.PayNo  * (a.PayNo - (12 - a.MonthPay + 1))) \r\n " +
-          "	WHEN a.YearPay = {Year} THEN (ROUND((CAST(a.InterestRate as float) / 100) * a.LoanAmount , 0) / a.PayNo  * (12 - a.MonthPay + 1)) \r\n " +
+          "    WHEN a.YearPay = {Year} - 1 and a.MonthPay + a.PayNo - 1 > 12  THEN (ROUND((CAST(a.InterestRate as float) / 100) * a.LoanAmount , 0) / a.PayNo  * (a.PayNo - (12 - a.MonthPay + 1))) \r\n " +
+          "    WHEN a.YearPay = {Year} THEN (ROUND((CAST(a.InterestRate as float) / 100) * a.LoanAmount , 0) / a.PayNo  * (12 - a.MonthPay + 1)) \r\n " +
           "END , 0)) \r\n " +
           "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
-          "WHERE a.LoanStatusNo = 2 and a.YearPay = {Year} or a.YearPay = {Year} - 1 \r\n " +
+          "WHERE a.LoanStatusNo = 2 and a.YearPay = {Year} or a.YearPay = {Year} - 1; \r\n " +
+          " \r\n " +
+          "SELECT @Interest = RemainInterestLastYear \r\n " +
+          "FROM EmployeeBank.dbo.tblDividend \r\n " +
+          "WHERE Cancel = 1 and Year = {Year} \r\n " +
           " \r\n " +
           "SET @AVGDivident = @Interest/@AmountShare; \r\n " +
           " \r\n " +
           "INSERT EmployeeBank.dbo.tblDividend (Interest,AverageDividend,Year,Cancel) \r\n " +
-          "VALUES (@Interest, ROUND(@AVGDivident,2,1,1),Year(GETDATE())); \r\n " +
+          "VALUES (@Interest, ROUND(@AVGDivident,2,1),{Year},1); \r\n " +
           " \r\n " +
           "SET @DividendNo = SCOPE_IDENTITY(); \r\n " +
           " \r\n " +
-          "INSERT INTO EmployeeBank.dbo.tblDividendDetail (DividendNo,TeacherNo,SavingAmount,DividendAmount) \r\n " +
+          "INSERT INTO EmployeeBank.dbo.tblDividendDetail (DividendNo , TeacherNo , SavingAmount , DividendAmount) \r\n " +
           "SELECT @DividendNo,a.TeacherNo  , b.SavingAmount , ROUND(ROUND((b.SavingAmount/@PerShare), 2 ,1) * @AVGDivident ,2 , 1) as Dividend \r\n " +
           "FROM EmployeeBank.dbo.tblMember as a  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo \r\n " +
           "WHERE a.MemberStatusNo = 1;"
            ,
+
 
            //[1] Table[1]Select StartYear and Table[2]Select EndYear INPUT: 
            "SELECT TOP 1 MAX(a.Year) + 1 \r\n " +
@@ -93,7 +98,7 @@ namespace BankTeacher.Bank
 
         private void BSaveDividend_Click(object sender, EventArgs e)
         {
-            if(MessageBox.Show("ยืนยันที่จะบันทึกหรือไม่","แจ้งเตือน",MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == DialogResult.Yes)
+            if (MessageBox.Show("ยืนยันที่จะบันทึกหรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes && CBYearDividend.SelectedIndex != -1)
             {
                 try
                 {
@@ -103,20 +108,28 @@ namespace BankTeacher.Bank
 
                     CBYearDividend.Items.RemoveAt(CBYearDividend.SelectedIndex);
                     CBYearDividend.SelectedIndex = -1;
+                    BSaveDividend.Enabled = false;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine($"------------------------{ex}-------------------------");
                     MessageBox.Show("บันทึกล้มเหลว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-                
+
             }
+            else if (CBYearDividend.SelectedIndex == -1)
+                MessageBox.Show("โปรดทำการเลือกปีที่จะปันผลก่อน", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void CBYearDividend_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (CBYearDividend.SelectedIndex != -1)
                 BSaveDividend.Enabled = true;
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
