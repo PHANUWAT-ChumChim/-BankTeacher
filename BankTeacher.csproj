@@ -101,12 +101,6 @@
     <Compile Include="Bank\AmountOff.Designer.cs">
       <DependentUpon>AmountOff.cs</DependentUpon>
     </Compile>
-    <Compile Include="Bank\DatailBill.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Bank\DatailBill.Designer.cs">
-      <DependentUpon>DatailBill.cs</DependentUpon>
-    </Compile>
     <Compile Include="Bank\Dividend.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -250,9 +244,6 @@
     <EmbeddedResource Include="Bank\AmountOff.resx">
       <DependentUpon>AmountOff.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Bank\DatailBill.resx">
-      <DependentUpon>DatailBill.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Bank\Dividend.resx">
       <DependentUpon>Dividend.cs</DependentUpon>
     </EmbeddedResource>
@@ -383,6 +374,18 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\magnifying-glass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logout.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Exit.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Exit.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logout.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

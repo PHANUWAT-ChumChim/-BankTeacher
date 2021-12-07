@@ -122,6 +122,9 @@ namespace BankTeacher.Bank.Pay
                 }
             }
         }
+
+
+
         // เลือกปี เเล้ว บอกข้อมูลรายการ เดือนที่มีบิลล์ย้อนหลัง ไม่เกิน 2 ปี
         private void CBYearSelection_Bill_SelectedIndexChanged_1(object sender, EventArgs e)
         {
@@ -153,6 +156,19 @@ namespace BankTeacher.Bank.Pay
                 }
             }
             CBMonthSelection_Bill.SelectedIndex = 0;
+        }
+
+        private void Billcancelhistory_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                BExitForm_Click(new object(), new EventArgs());
+            }
+        }
+
+        private void BExitForm_Click(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
         }
     }
 }

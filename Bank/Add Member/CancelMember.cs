@@ -286,5 +286,33 @@ namespace BankTeacher.Bank.Add_Member
                 CBYear_HistoryCancel_SelectedIndexChanged(new object(), new EventArgs());
             }
         }
+
+        private void BExitForm_Click(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
+
+        private void CancelMember_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Escape)
+            {
+                if(TBTeacherNo.Text.Length != 0)
+                {
+                    TBTeacherNo.Text = "";
+                    TBTeacherName.Text = "";
+                    TBNote.Text = "";
+                    Check = 0;
+                    StatusBoxFile = 0;
+                    imgeLocation = "";
+                    CheckBRegister = false;
+                    CheckBCancel = false;
+                    Saving = 0;
+                }
+                else
+                {
+                    BExitForm_Click(new object(), new EventArgs());
+                }
+            }
+        }
     }
 }

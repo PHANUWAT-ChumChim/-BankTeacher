@@ -158,5 +158,24 @@ namespace BankTeacher.Bank
             DGV.Rows.Clear();
         }
 
+        private void BExitForm_Click(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
+
+        private void ReportEpenses_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if(TBTeacherNo.Text.Length != 0)
+                {
+                    ClearForm();
+                }
+                else
+                {
+                    BExitForm_Click(new object(), new EventArgs());
+                }
+            }
+        }
     }
 }

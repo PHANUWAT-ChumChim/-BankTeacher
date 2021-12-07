@@ -85,7 +85,7 @@ namespace BankTeacher.Bank
         {
             DataSet dsStartYear = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]);
 
-            for(int x = Convert.ToInt32(dsStartYear.Tables[0].Rows[0][0].ToString()); x <= Convert.ToInt32(dsStartYear.Tables[1].Rows[0][0].ToString()); x++)
+            for (int x = Convert.ToInt32(dsStartYear.Tables[0].Rows[0][0].ToString()); x <= Convert.ToInt32(dsStartYear.Tables[1].Rows[0][0].ToString()); x++)
             {
                 CBYearDividend.Items.Add(x);
             }
@@ -93,7 +93,7 @@ namespace BankTeacher.Bank
 
         private void BSaveDividend_Click(object sender, EventArgs e)
         {
-            if(MessageBox.Show("ยืนยันที่จะบันทึกหรือไม่","แจ้งเตือน",MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == DialogResult.Yes)
+            if (MessageBox.Show("ยืนยันที่จะบันทึกหรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 try
                 {
@@ -104,12 +104,12 @@ namespace BankTeacher.Bank
                     CBYearDividend.Items.RemoveAt(CBYearDividend.SelectedIndex);
                     CBYearDividend.SelectedIndex = -1;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine($"------------------------{ex}-------------------------");
                     MessageBox.Show("บันทึกล้มเหลว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-                
+
             }
         }
 
@@ -117,6 +117,19 @@ namespace BankTeacher.Bank
         {
             if (CBYearDividend.SelectedIndex != -1)
                 BSaveDividend.Enabled = true;
+        }
+
+        private void BExitForm_Click(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
+
+        private void Dividend_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                BExitForm_Click(new object(), new EventArgs());
+            }
         }
     }
 }
