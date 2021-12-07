@@ -336,7 +336,7 @@ namespace BankTeacher.Bank
         {
             try
             {
-                Bank.Search IN = new Bank.Search(SQLDefault[5]);
+                Bank.Search IN = new Bank.Search(SQLDefault[5],"หุ้นสะสม");
                 IN.ShowDialog();
                 if (Bank.Search.Return[0] != "")
                 {

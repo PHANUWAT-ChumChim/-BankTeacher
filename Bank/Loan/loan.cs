@@ -435,7 +435,7 @@ namespace BankTeacher.Bank.Loan
                     }
                 }
                 IN = new Bank.Search(SQLDefault[1]
-                       .Replace("{TeacherNoNotLike}", NotLike));
+                       .Replace("{TeacherNoNotLike}", NotLike), "หุ้นสะสม");
 
                 IN.ShowDialog();
                 if (Bank.Search.Return[0] != "" /*&& CheckLimitLoan == DialogResult.No*/)
@@ -732,7 +732,7 @@ namespace BankTeacher.Bank.Loan
                         NotLike = NotLike.Remove(NotLike.Length - 1);
                     }
                     IN = new Bank.Search(SQLDefault[1]
-                           .Replace("{TeacherNoNotLike}", NotLike));
+                           .Replace("{TeacherNoNotLike}", NotLike), "หุ้นสะสม");
 
                     IN.ShowDialog();
                     if (Bank.Search.Return[0] != "")

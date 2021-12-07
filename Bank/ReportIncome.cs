@@ -69,7 +69,7 @@ namespace BankTeacher.Bank
         }
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
-            Bank.Search IN = new Bank.Search(SQLDefault[2]);
+            Bank.Search IN = new Bank.Search(SQLDefault[2],"");
             IN.ShowDialog();
             if (Bank.Search.Return[0] != "")
             {
