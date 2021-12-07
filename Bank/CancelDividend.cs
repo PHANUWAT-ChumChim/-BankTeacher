@@ -120,6 +120,7 @@ namespace BankTeacher.Bank
             BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
         }
 
+
         private void CancelDividend_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
