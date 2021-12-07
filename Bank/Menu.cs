@@ -184,5 +184,23 @@ namespace BankTeacher.Bank
             Bank.Add_Member.infoMeber infoMeber = new Bank.Add_Member.infoMeber();
             CloseFrom(infoMeber);
         }
+
+        private void ReprotDividend_Click(object sender, EventArgs e)
+        {
+            Bank.ReportDividend Reportdividend = new Bank.ReportDividend();
+            CloseFrom(Reportdividend);
+        }
+
+        private void DevidendYear_Click(object sender, EventArgs e)
+        {
+            Bank.Dividend Dividend = new Bank.Dividend();
+            CloseFrom(Dividend);
+        }
+
+        private void CancelDevind_Click(object sender, EventArgs e)
+        {
+            Bank.CancelDividend CancelDividend = new Bank.CancelDividend();
+            CloseFrom(CancelDividend);
+        }
     }
 }

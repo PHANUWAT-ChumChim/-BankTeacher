@@ -35,11 +35,13 @@ namespace BankTeacher.Bank
             this.BSaveDividend = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.BExitForm = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.BExitForm);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.CBYearDividend);
             this.panel1.Controls.Add(this.BSaveDividend);
@@ -98,7 +100,19 @@ namespace BankTeacher.Bank
             this.label1.Size = new System.Drawing.Size(303, 28);
             this.label1.TabIndex = 5;
             this.label1.Text = "**เมื่อปันผลแล้วจะไม่สามารถจ่ายเงินกู้ภายในปีนั้นได้";
-            //
+            // 
+            // BExitForm
+            // 
+            this.BExitForm.BackgroundImage = global::BankTeacher.Properties.Resources.logout;
+            this.BExitForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BExitForm.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.BExitForm.Location = new System.Drawing.Point(786, 535);
+            this.BExitForm.Name = "BExitForm";
+            this.BExitForm.Size = new System.Drawing.Size(73, 66);
+            this.BExitForm.TabIndex = 114;
+            this.BExitForm.UseVisualStyleBackColor = true;
+            this.BExitForm.Click += new System.EventHandler(this.BExitForm_Click);
+            // 
             // Dividend
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 28F);
@@ -113,7 +127,7 @@ namespace BankTeacher.Bank
             this.Name = "Dividend";
             this.Text = "Dividend";
             this.Load += new System.EventHandler(this.Dividend_Load);
-            //this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Dividend_KeyDown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Dividend_KeyDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -128,5 +142,6 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.Button BSaveDividend;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button BExitForm;
     }
 }

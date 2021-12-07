@@ -86,5 +86,18 @@ namespace BankTeacher.Bank
         {
 
         }
+
+        private void BExitForm_Click(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
+
+        private void ReportDividend_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                BExitForm_Click(new object(), new EventArgs());
+            }
+        }
     }
 }

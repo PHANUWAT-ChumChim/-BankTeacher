@@ -29,10 +29,11 @@ namespace BankTeacher.Bank
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.BSaveCancelDividend = new System.Windows.Forms.Button();
             this.CBYear = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
@@ -52,13 +53,14 @@ namespace BankTeacher.Bank
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BSaveCancelDividend = new System.Windows.Forms.Button();
+            this.BExitForm = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVReportDividend)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.BExitForm);
             this.panel1.Controls.Add(this.BSaveCancelDividend);
             this.panel1.Controls.Add(this.CBYear);
             this.panel1.Controls.Add(this.label5);
@@ -79,6 +81,17 @@ namespace BankTeacher.Bank
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(877, 590);
             this.panel1.TabIndex = 1;
+            // 
+            // BSaveCancelDividend
+            // 
+            this.BSaveCancelDividend.Enabled = false;
+            this.BSaveCancelDividend.Location = new System.Drawing.Point(644, 444);
+            this.BSaveCancelDividend.Name = "BSaveCancelDividend";
+            this.BSaveCancelDividend.Size = new System.Drawing.Size(188, 73);
+            this.BSaveCancelDividend.TabIndex = 103;
+            this.BSaveCancelDividend.Text = "บันทึกยกเลิกการปันผล";
+            this.BSaveCancelDividend.UseVisualStyleBackColor = true;
+            this.BSaveCancelDividend.Click += new System.EventHandler(this.BSaveCancelDividend_Click);
             // 
             // CBYear
             // 
@@ -229,18 +242,18 @@ namespace BankTeacher.Bank
             this.DGVReportDividend.AllowUserToAddRows = false;
             this.DGVReportDividend.AllowUserToDeleteRows = false;
             this.DGVReportDividend.AllowUserToResizeRows = false;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.DGVReportDividend.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.DGVReportDividend.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             this.DGVReportDividend.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVReportDividend.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVReportDividend.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.DGVReportDividend.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVReportDividend.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn2,
@@ -248,23 +261,23 @@ namespace BankTeacher.Bank
             this.dataGridViewTextBoxColumn4,
             this.Column1});
             this.DGVReportDividend.GridColor = System.Drawing.SystemColors.Control;
-            this.DGVReportDividend.Location = new System.Drawing.Point(100, 163);
+            this.DGVReportDividend.Location = new System.Drawing.Point(53, 163);
             this.DGVReportDividend.Name = "DGVReportDividend";
             this.DGVReportDividend.RowHeadersVisible = false;
             this.DGVReportDividend.RowHeadersWidth = 51;
             this.DGVReportDividend.RowTemplate.Height = 24;
-            this.DGVReportDividend.Size = new System.Drawing.Size(677, 316);
+            this.DGVReportDividend.Size = new System.Drawing.Size(779, 263);
             this.DGVReportDividend.TabIndex = 97;
             // 
             // dataGridViewTextBoxColumn2
             // 
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle12;
+            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle6;
             this.dataGridViewTextBoxColumn2.HeaderText = "ชื่อ - นามสกุล";
             this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Width = 250;
             // 
             // Column2
             // 
@@ -289,16 +302,17 @@ namespace BankTeacher.Bank
             this.Column1.ReadOnly = true;
             this.Column1.Visible = false;
             // 
-            // BSaveCancelDividend
+            // BExitForm
             // 
-            this.BSaveCancelDividend.Enabled = false;
-            this.BSaveCancelDividend.Location = new System.Drawing.Point(659, 501);
-            this.BSaveCancelDividend.Name = "BSaveCancelDividend";
-            this.BSaveCancelDividend.Size = new System.Drawing.Size(188, 73);
-            this.BSaveCancelDividend.TabIndex = 103;
-            this.BSaveCancelDividend.Text = "บันทึกยกเลิกการปันผล";
-            this.BSaveCancelDividend.UseVisualStyleBackColor = true;
-            this.BSaveCancelDividend.Click += new System.EventHandler(this.BSaveCancelDividend_Click);
+            this.BExitForm.BackgroundImage = global::BankTeacher.Properties.Resources.logout;
+            this.BExitForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BExitForm.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.BExitForm.Location = new System.Drawing.Point(759, 521);
+            this.BExitForm.Name = "BExitForm";
+            this.BExitForm.Size = new System.Drawing.Size(73, 66);
+            this.BExitForm.TabIndex = 114;
+            this.BExitForm.UseVisualStyleBackColor = true;
+            this.BExitForm.Click += new System.EventHandler(this.BExitForm_Click);
             // 
             // CancelDividend
             // 
@@ -308,9 +322,11 @@ namespace BankTeacher.Bank
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.Name = "CancelDividend";
             this.Text = "CancelDividend";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CancelDividend_KeyDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVReportDividend)).EndInit();
@@ -337,6 +353,7 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.Label LInterestAmount;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DataGridView DGVReportDividend;
+        private System.Windows.Forms.Button BExitForm;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;

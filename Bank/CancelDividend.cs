@@ -114,5 +114,25 @@ namespace BankTeacher.Bank
             }
             
         }
+
+        private void BExitForm_Click(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
+
+        private void CancelDividend_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (CBYear.SelectedIndex != -1)
+                {
+                    CBYear.SelectedIndex = -1;
+                }
+                else
+                {
+                    BExitForm_Click(new object(), new EventArgs());
+                }
+            }
+        }
     }
 }

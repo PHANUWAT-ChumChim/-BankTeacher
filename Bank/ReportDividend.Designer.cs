@@ -29,35 +29,37 @@ namespace BankTeacher.Bank
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.CBYear = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.LRemainInterest = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.LDividendAmount = new System.Windows.Forms.Label();
+            this.LInterestNextYear = new System.Windows.Forms.Label();
+            this.LDividendPerShare = new System.Windows.Forms.Label();
+            this.LSavingAmount = new System.Windows.Forms.Label();
+            this.LInterestAmount = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.DGVReportDividend = new System.Windows.Forms.DataGridView();
-            this.LInterestAmount = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.LRemainInterest = new System.Windows.Forms.Label();
-            this.LSavingAmount = new System.Windows.Forms.Label();
-            this.LDividendPerShare = new System.Windows.Forms.Label();
-            this.LInterestNextYear = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.CBYear = new System.Windows.Forms.ComboBox();
-            this.LDividendAmount = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BExitForm = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVReportDividend)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.BExitForm);
             this.panel1.Controls.Add(this.CBYear);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.label7);
@@ -79,11 +81,30 @@ namespace BankTeacher.Bank
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
+            // CBYear
+            // 
+            this.CBYear.FormattingEnabled = true;
+            this.CBYear.Location = new System.Drawing.Point(87, 24);
+            this.CBYear.Name = "CBYear";
+            this.CBYear.Size = new System.Drawing.Size(140, 36);
+            this.CBYear.TabIndex = 102;
+            this.CBYear.SelectedIndexChanged += new System.EventHandler(this.CBYear_SelectedIndexChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label5.Location = new System.Drawing.Point(663, 115);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(129, 32);
+            this.label5.TabIndex = 98;
+            this.label5.Text = "จำนวนเงินปันผล :";
+            // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label7.Location = new System.Drawing.Point(630, 83);
+            this.label7.Location = new System.Drawing.Point(663, 83);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(132, 32);
             this.label7.TabIndex = 98;
@@ -109,6 +130,92 @@ namespace BankTeacher.Bank
             this.label4.TabIndex = 100;
             this.label4.Text = "เงินหุ้นสะสม :";
             // 
+            // LRemainInterest
+            // 
+            this.LRemainInterest.AutoSize = true;
+            this.LRemainInterest.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.LRemainInterest.ForeColor = System.Drawing.Color.Black;
+            this.LRemainInterest.Location = new System.Drawing.Point(259, 78);
+            this.LRemainInterest.Name = "LRemainInterest";
+            this.LRemainInterest.Size = new System.Drawing.Size(24, 32);
+            this.LRemainInterest.TabIndex = 101;
+            this.LRemainInterest.Text = "0";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label11.Location = new System.Drawing.Point(24, 24);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(57, 32);
+            this.label11.TabIndex = 101;
+            this.label11.Text = "เลือกปี";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label2.Location = new System.Drawing.Point(47, 78);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(215, 32);
+            this.label2.TabIndex = 101;
+            this.label2.Text = "ดอกเบี้ยคงเหลือจากปี่ที่ผ่านมา :";
+            // 
+            // LDividendAmount
+            // 
+            this.LDividendAmount.AutoSize = true;
+            this.LDividendAmount.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.LDividendAmount.ForeColor = System.Drawing.Color.Black;
+            this.LDividendAmount.Location = new System.Drawing.Point(791, 115);
+            this.LDividendAmount.Name = "LDividendAmount";
+            this.LDividendAmount.Size = new System.Drawing.Size(24, 32);
+            this.LDividendAmount.TabIndex = 101;
+            this.LDividendAmount.Text = "0";
+            // 
+            // LInterestNextYear
+            // 
+            this.LInterestNextYear.AutoSize = true;
+            this.LInterestNextYear.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.LInterestNextYear.ForeColor = System.Drawing.Color.Black;
+            this.LInterestNextYear.Location = new System.Drawing.Point(521, 115);
+            this.LInterestNextYear.Name = "LInterestNextYear";
+            this.LInterestNextYear.Size = new System.Drawing.Size(24, 32);
+            this.LInterestNextYear.TabIndex = 101;
+            this.LInterestNextYear.Text = "0";
+            // 
+            // LDividendPerShare
+            // 
+            this.LDividendPerShare.AutoSize = true;
+            this.LDividendPerShare.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.LDividendPerShare.ForeColor = System.Drawing.Color.Black;
+            this.LDividendPerShare.Location = new System.Drawing.Point(791, 83);
+            this.LDividendPerShare.Name = "LDividendPerShare";
+            this.LDividendPerShare.Size = new System.Drawing.Size(24, 32);
+            this.LDividendPerShare.TabIndex = 101;
+            this.LDividendPerShare.Text = "0";
+            // 
+            // LSavingAmount
+            // 
+            this.LSavingAmount.AutoSize = true;
+            this.LSavingAmount.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.LSavingAmount.ForeColor = System.Drawing.Color.Black;
+            this.LSavingAmount.Location = new System.Drawing.Point(468, 78);
+            this.LSavingAmount.Name = "LSavingAmount";
+            this.LSavingAmount.Size = new System.Drawing.Size(24, 32);
+            this.LSavingAmount.TabIndex = 101;
+            this.LSavingAmount.Text = "0";
+            // 
+            // LInterestAmount
+            // 
+            this.LInterestAmount.AutoSize = true;
+            this.LInterestAmount.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.LInterestAmount.ForeColor = System.Drawing.Color.Black;
+            this.LInterestAmount.Location = new System.Drawing.Point(163, 115);
+            this.LInterestAmount.Name = "LInterestAmount";
+            this.LInterestAmount.Size = new System.Drawing.Size(24, 32);
+            this.LInterestAmount.TabIndex = 101;
+            this.LInterestAmount.Text = "0";
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -124,18 +231,18 @@ namespace BankTeacher.Bank
             this.DGVReportDividend.AllowUserToAddRows = false;
             this.DGVReportDividend.AllowUserToDeleteRows = false;
             this.DGVReportDividend.AllowUserToResizeRows = false;
-            dataGridViewCellStyle16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.DGVReportDividend.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.DGVReportDividend.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
             this.DGVReportDividend.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle17.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle17.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVReportDividend.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVReportDividend.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.DGVReportDividend.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVReportDividend.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn2,
@@ -143,128 +250,23 @@ namespace BankTeacher.Bank
             this.dataGridViewTextBoxColumn4,
             this.Column1});
             this.DGVReportDividend.GridColor = System.Drawing.SystemColors.Control;
-            this.DGVReportDividend.Location = new System.Drawing.Point(100, 163);
+            this.DGVReportDividend.Location = new System.Drawing.Point(53, 162);
             this.DGVReportDividend.Name = "DGVReportDividend";
             this.DGVReportDividend.RowHeadersVisible = false;
             this.DGVReportDividend.RowHeadersWidth = 51;
             this.DGVReportDividend.RowTemplate.Height = 24;
-            this.DGVReportDividend.Size = new System.Drawing.Size(677, 413);
+            this.DGVReportDividend.Size = new System.Drawing.Size(764, 318);
             this.DGVReportDividend.TabIndex = 97;
-            // 
-            // LInterestAmount
-            // 
-            this.LInterestAmount.AutoSize = true;
-            this.LInterestAmount.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.LInterestAmount.ForeColor = System.Drawing.Color.Black;
-            this.LInterestAmount.Location = new System.Drawing.Point(163, 115);
-            this.LInterestAmount.Name = "LInterestAmount";
-            this.LInterestAmount.Size = new System.Drawing.Size(24, 32);
-            this.LInterestAmount.TabIndex = 101;
-            this.LInterestAmount.Text = "0";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label2.Location = new System.Drawing.Point(47, 78);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(215, 32);
-            this.label2.TabIndex = 101;
-            this.label2.Text = "ดอกเบี้ยคงเหลือจากปี่ที่ผ่านมา :";
-            // 
-            // LRemainInterest
-            // 
-            this.LRemainInterest.AutoSize = true;
-            this.LRemainInterest.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.LRemainInterest.ForeColor = System.Drawing.Color.Black;
-            this.LRemainInterest.Location = new System.Drawing.Point(259, 78);
-            this.LRemainInterest.Name = "LRemainInterest";
-            this.LRemainInterest.Size = new System.Drawing.Size(24, 32);
-            this.LRemainInterest.TabIndex = 101;
-            this.LRemainInterest.Text = "0";
-            // 
-            // LSavingAmount
-            // 
-            this.LSavingAmount.AutoSize = true;
-            this.LSavingAmount.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.LSavingAmount.ForeColor = System.Drawing.Color.Black;
-            this.LSavingAmount.Location = new System.Drawing.Point(468, 78);
-            this.LSavingAmount.Name = "LSavingAmount";
-            this.LSavingAmount.Size = new System.Drawing.Size(24, 32);
-            this.LSavingAmount.TabIndex = 101;
-            this.LSavingAmount.Text = "0";
-            // 
-            // LDividendPerShare
-            // 
-            this.LDividendPerShare.AutoSize = true;
-            this.LDividendPerShare.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.LDividendPerShare.ForeColor = System.Drawing.Color.Black;
-            this.LDividendPerShare.Location = new System.Drawing.Point(758, 83);
-            this.LDividendPerShare.Name = "LDividendPerShare";
-            this.LDividendPerShare.Size = new System.Drawing.Size(24, 32);
-            this.LDividendPerShare.TabIndex = 101;
-            this.LDividendPerShare.Text = "0";
-            // 
-            // LInterestNextYear
-            // 
-            this.LInterestNextYear.AutoSize = true;
-            this.LInterestNextYear.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.LInterestNextYear.ForeColor = System.Drawing.Color.Black;
-            this.LInterestNextYear.Location = new System.Drawing.Point(521, 115);
-            this.LInterestNextYear.Name = "LInterestNextYear";
-            this.LInterestNextYear.Size = new System.Drawing.Size(24, 32);
-            this.LInterestNextYear.TabIndex = 101;
-            this.LInterestNextYear.Text = "0";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label11.Location = new System.Drawing.Point(24, 24);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(57, 32);
-            this.label11.TabIndex = 101;
-            this.label11.Text = "เลือกปี";
-            // 
-            // CBYear
-            // 
-            this.CBYear.FormattingEnabled = true;
-            this.CBYear.Location = new System.Drawing.Point(87, 24);
-            this.CBYear.Name = "CBYear";
-            this.CBYear.Size = new System.Drawing.Size(140, 36);
-            this.CBYear.TabIndex = 102;
-            this.CBYear.SelectedIndexChanged += new System.EventHandler(this.CBYear_SelectedIndexChanged);
-            // 
-            // LDividendAmount
-            // 
-            this.LDividendAmount.AutoSize = true;
-            this.LDividendAmount.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.LDividendAmount.ForeColor = System.Drawing.Color.Black;
-            this.LDividendAmount.Location = new System.Drawing.Point(758, 115);
-            this.LDividendAmount.Name = "LDividendAmount";
-            this.LDividendAmount.Size = new System.Drawing.Size(24, 32);
-            this.LDividendAmount.TabIndex = 101;
-            this.LDividendAmount.Text = "0";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label5.Location = new System.Drawing.Point(630, 115);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(129, 32);
-            this.label5.TabIndex = 98;
-            this.label5.Text = "จำนวนเงินปันผล :";
             // 
             // dataGridViewTextBoxColumn2
             // 
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle18;
+            this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewTextBoxColumn2.DefaultCellStyle = dataGridViewCellStyle9;
             this.dataGridViewTextBoxColumn2.HeaderText = "ชื่อ - นามสกุล";
             this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.ReadOnly = true;
-            this.dataGridViewTextBoxColumn2.Width = 250;
             // 
             // Column2
             // 
@@ -289,6 +291,18 @@ namespace BankTeacher.Bank
             this.Column1.ReadOnly = true;
             this.Column1.Visible = false;
             // 
+            // BExitForm
+            // 
+            this.BExitForm.BackgroundImage = global::BankTeacher.Properties.Resources.logout;
+            this.BExitForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BExitForm.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.BExitForm.Location = new System.Drawing.Point(744, 486);
+            this.BExitForm.Name = "BExitForm";
+            this.BExitForm.Size = new System.Drawing.Size(73, 66);
+            this.BExitForm.TabIndex = 114;
+            this.BExitForm.UseVisualStyleBackColor = true;
+            this.BExitForm.Click += new System.EventHandler(this.BExitForm_Click);
+            // 
             // ReportDividend
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 28F);
@@ -297,10 +311,12 @@ namespace BankTeacher.Bank
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.Name = "ReportDividend";
             this.Text = "ReportDividend";
             this.Load += new System.EventHandler(this.ReportDividend_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ReportDividend_KeyDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVReportDividend)).EndInit();
@@ -330,5 +346,6 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.Button BExitForm;
     }
 }
