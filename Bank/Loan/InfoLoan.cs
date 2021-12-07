@@ -106,7 +106,6 @@ namespace BankTeacher.Bank.Loan
         {
             InitializeComponent();
 
-            Console.WriteLine("==================Open InfoLoan Form======================");
 
         }
 
@@ -416,6 +415,46 @@ namespace BankTeacher.Bank.Loan
                 BTPrint.Visible = false;
         }
 
-      
+        private void BExitForm_Click(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
+
+        private void InfoLoan_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (TBTeacherNo.Text.Length != 0)
+                {
+                    comboBox1.Items.Clear();
+                    comboBox1.SelectedIndex = -1;
+                    TBTeacherName.Text = "";
+                    DGVGuarantor.Rows.Clear();
+                    comboBox1.Enabled = false;
+                    Check = 0;
+                    TBLoanNo.Text = "";
+                    TBYearPay_Detail.Text = "";
+                    TBMonthPay_Detail.Text = "";
+                    TBTotalAmount_Detail.Text = "";
+                    TBPayNo_Detail.Text = "";
+                    TBInterestRate_Detail.Text = "";
+                    TBLoanStatus.Text = "";
+                    TBSavingAmount.Text = "";
+                    DGVLoanDetail.Rows.Clear();
+                    TBTeacheraddbyNo.Text = "";
+                    TBTeacheraddbyname.Text = "";
+                    TBSignUpDate_Detail.Text = "";
+                    TBFinishYearPay_Detail.Text = "";
+                    TBFinishMonthPay_Detail.Text = "";
+                    TBPaidNo_Detail.Text = "";
+                    TBLoanAmount_Deatail.Text = "";
+                    TBInterest_Detail.Text = "";
+                }
+                else
+                {
+                    BExitForm_Click(new object(), new EventArgs());
+                }
+            }
+        }
     }
 }

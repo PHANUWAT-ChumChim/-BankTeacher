@@ -192,5 +192,24 @@ namespace BankTeacher.Bank
             TBTeacherName.Text = "";
         }
 
+        private void BExitForm_Click(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
+
+        private void ReportIncome_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if(TBTeacherNo.Text.Length != 0)
+                {
+                    Cleartabpage1();
+                }
+                else
+                {
+                    BExitForm_Click(new object(), new EventArgs());
+                }
+            }
+        }
     }
 }

@@ -275,7 +275,6 @@ namespace BankTeacher.Bank.Pay
         public pay()
         {
             InitializeComponent();
-            Console.WriteLine("==================Open Pay Form======================");
             Font F = new Font("TH Sarabun New", 16, FontStyle.Regular);
             DGV_Pay.ColumnHeadersDefaultCellStyle.Font = F;
             DGV_ShareInfo.ColumnHeadersDefaultCellStyle.Font = F;
@@ -1973,6 +1972,26 @@ namespace BankTeacher.Bank.Pay
                 if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                 {
                     printDocument1.Print();
+                }
+            }
+        }
+
+        private void BExitForm_Click(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
+
+        private void pay_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (TBTeacherNo.Text.Length != 0)
+                {
+                    ClearForm();
+                }
+                else
+                {
+                    BExitForm_Click(new object(), new EventArgs());
                 }
             }
         }
