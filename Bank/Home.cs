@@ -127,7 +127,6 @@ namespace BankTeacher.Bank
         public Home()
         {
             InitializeComponent();
-            Console.WriteLine("==================Open Home Form======================");
         }
      
 
@@ -140,7 +139,7 @@ namespace BankTeacher.Bank
         {
             try
             {
-                Bank.Search IN = new Bank.Search(SQLDefault[3]);
+                Bank.Search IN = new Bank.Search(SQLDefault[3], "หุ้นสะสม");
                 IN.ShowDialog();
                 TBTeacherNo.Text = Bank.Search.Return[0];
                 TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));

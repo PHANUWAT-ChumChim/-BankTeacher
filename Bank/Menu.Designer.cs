@@ -42,8 +42,8 @@ namespace BankTeacher.Bank
             this.AmountOff = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Membership = new System.Windows.Forms.ToolStripMenuItem();
             this.สมครสมาชกToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.infoMeber = new System.Windows.Forms.ToolStripMenuItem();
             this.ยกเลกสมาชกToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.memberInfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_RePornt = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuReportExpenses = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuOneIncome = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,10 +51,14 @@ namespace BankTeacher.Bank
             this.MenuReportIncome = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuOneEpenses = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuAllEpenses = new System.Windows.Forms.ToolStripMenuItem();
+            this.ประวตการยกเลกบลลToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ReprotDividend = new System.Windows.Forms.ToolStripMenuItem();
+            this.Dividend = new System.Windows.Forms.ToolStripMenuItem();
+            this.DevidendYear = new System.Windows.Forms.ToolStripMenuItem();
+            this.CancelDevind = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_setring = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_AddMembers = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_CancelMembers = new System.Windows.Forms.ToolStripMenuItem();
-            this.ประวตการยกเลกบลลToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -69,6 +73,7 @@ namespace BankTeacher.Bank
             this.AmountOff,
             this.Menu_Membership,
             this.Menu_RePornt,
+            this.Dividend,
             this.Menu_setring});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -168,7 +173,8 @@ namespace BankTeacher.Bank
             this.Menu_Membership.BackgroundImage = global::BankTeacher.Properties.Resources._64x64_user;
             this.Menu_Membership.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.สมครสมาชกToolStripMenuItem,
-            this.ยกเลกสมาชกToolStripMenuItem});
+            this.ยกเลกสมาชกToolStripMenuItem,
+            this.memberInfoToolStripMenuItem});
             this.Menu_Membership.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Menu_Membership.Image = global::BankTeacher.Properties.Resources._64x64_user;
             this.Menu_Membership.Name = "Menu_Membership";
@@ -178,33 +184,32 @@ namespace BankTeacher.Bank
             // 
             // สมครสมาชกToolStripMenuItem
             // 
-            this.สมครสมาชกToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.infoMeber});
             this.สมครสมาชกToolStripMenuItem.Name = "สมครสมาชกToolStripMenuItem";
-            this.สมครสมาชกToolStripMenuItem.Size = new System.Drawing.Size(170, 34);
-            this.สมครสมาชกToolStripMenuItem.Text = "สมัครสมาชิก";
+            this.สมครสมาชกToolStripMenuItem.Size = new System.Drawing.Size(195, 34);
+            this.สมครสมาชกToolStripMenuItem.Text = "5.1 สมัครสมาชิก";
             this.สมครสมาชกToolStripMenuItem.Click += new System.EventHandler(this.สมครสมาชกToolStripMenuItem_Click);
-            // 
-            // infoMeber
-            // 
-            this.infoMeber.Name = "infoMeber";
-            this.infoMeber.Size = new System.Drawing.Size(166, 34);
-            this.infoMeber.Text = "ข้อมูลสมาชิก";
-            this.infoMeber.Click += new System.EventHandler(this.infoMeber_Click);
             // 
             // ยกเลกสมาชกToolStripMenuItem
             // 
             this.ยกเลกสมาชกToolStripMenuItem.Name = "ยกเลกสมาชกToolStripMenuItem";
-            this.ยกเลกสมาชกToolStripMenuItem.Size = new System.Drawing.Size(170, 34);
-            this.ยกเลกสมาชกToolStripMenuItem.Text = "ยกเลิกสมาชิก";
+            this.ยกเลกสมาชกToolStripMenuItem.Size = new System.Drawing.Size(195, 34);
+            this.ยกเลกสมาชกToolStripMenuItem.Text = "5.2 ยกเลิกสมาชิก";
             this.ยกเลกสมาชกToolStripMenuItem.Click += new System.EventHandler(this.ยกเลกสมาชกToolStripMenuItem_Click);
+            // 
+            // memberInfoToolStripMenuItem
+            // 
+            this.memberInfoToolStripMenuItem.Name = "memberInfoToolStripMenuItem";
+            this.memberInfoToolStripMenuItem.Size = new System.Drawing.Size(195, 34);
+            this.memberInfoToolStripMenuItem.Text = "5.3 ข้อมูลสมาชิก";
+            this.memberInfoToolStripMenuItem.Click += new System.EventHandler(this.memberInfoToolStripMenuItem_Click);
             // 
             // Menu_RePornt
             // 
             this.Menu_RePornt.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MenuReportExpenses,
             this.MenuReportIncome,
-            this.ประวตการยกเลกบลลToolStripMenuItem});
+            this.ประวตการยกเลกบลลToolStripMenuItem,
+            this.ReprotDividend});
             this.Menu_RePornt.Font = new System.Drawing.Font("TH Sarabun New", 17.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Menu_RePornt.Image = global::BankTeacher.Properties.Resources.Reports1;
             this.Menu_RePornt.Name = "Menu_RePornt";
@@ -257,6 +262,45 @@ namespace BankTeacher.Bank
             this.MenuAllEpenses.Text = "6.2.2 ทั้งหมด";
             this.MenuAllEpenses.Click += new System.EventHandler(this.MenuAllEpenses_Click);
             // 
+            // ประวตการยกเลกบลลToolStripMenuItem
+            // 
+            this.ประวตการยกเลกบลลToolStripMenuItem.Name = "ประวตการยกเลกบลลToolStripMenuItem";
+            this.ประวตการยกเลกบลลToolStripMenuItem.Size = new System.Drawing.Size(253, 36);
+            this.ประวตการยกเลกบลลToolStripMenuItem.Text = "6.3 ประวัติการยกเลิกบิลล์";
+            this.ประวตการยกเลกบลลToolStripMenuItem.Click += new System.EventHandler(this.ประวตการยกเลกบลลToolStripMenuItem_Click);
+            // 
+            // ReprotDividend
+            // 
+            this.ReprotDividend.Name = "ReprotDividend";
+            this.ReprotDividend.Size = new System.Drawing.Size(253, 36);
+            this.ReprotDividend.Text = "6.4 รายงานปันผล";
+            this.ReprotDividend.Click += new System.EventHandler(this.ReprotDividend_Click);
+            // 
+            // Dividend
+            // 
+            this.Dividend.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.DevidendYear,
+            this.CancelDevind});
+            this.Dividend.Font = new System.Drawing.Font("TH Sarabun New", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Dividend.Image = global::BankTeacher.Properties.Resources.dividends;
+            this.Dividend.Name = "Dividend";
+            this.Dividend.Size = new System.Drawing.Size(97, 35);
+            this.Dividend.Text = "7 ปันผล";
+            // 
+            // DevidendYear
+            // 
+            this.DevidendYear.Name = "DevidendYear";
+            this.DevidendYear.Size = new System.Drawing.Size(191, 36);
+            this.DevidendYear.Text = "7.1 ปันผลรายปี";
+            this.DevidendYear.Click += new System.EventHandler(this.DevidendYear_Click);
+            // 
+            // CancelDevind
+            // 
+            this.CancelDevind.Name = "CancelDevind";
+            this.CancelDevind.Size = new System.Drawing.Size(191, 36);
+            this.CancelDevind.Text = "7.2 ยกเลิกปันผล";
+            this.CancelDevind.Click += new System.EventHandler(this.CancelDevind_Click);
+            // 
             // Menu_setring
             // 
             this.Menu_setring.Font = new System.Drawing.Font("TH Sarabun New", 17.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -278,13 +322,6 @@ namespace BankTeacher.Bank
             this.Menu_CancelMembers.Size = new System.Drawing.Size(246, 42);
             this.Menu_CancelMembers.Text = "5.2 ยกเลิกสมาชิก";
             // 
-            // ประวตการยกเลกบลลToolStripMenuItem
-            // 
-            this.ประวตการยกเลกบลลToolStripMenuItem.Name = "ประวตการยกเลกบลลToolStripMenuItem";
-            this.ประวตการยกเลกบลลToolStripMenuItem.Size = new System.Drawing.Size(253, 36);
-            this.ประวตการยกเลกบลลToolStripMenuItem.Text = "6.3 ประวัติการยกเลิกบิลล์";
-            this.ประวตการยกเลกบลลToolStripMenuItem.Click += new System.EventHandler(this.ประวตการยกเลกบลลToolStripMenuItem_Click);
-            // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -296,7 +333,7 @@ namespace BankTeacher.Bank
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Menu";
             this.Text = "หน้าเเรก";
             this.Load += new System.EventHandler(this.Menu_Load_1);
@@ -308,9 +345,7 @@ namespace BankTeacher.Bank
         }
 
         #endregion
-
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem Menu_Home;
+        public System.Windows.Forms.ToolStripMenuItem Menu_Home;
         private System.Windows.Forms.ToolStripMenuItem Menu_Loan;
         private System.Windows.Forms.ToolStripMenuItem AmountOff;
         private System.Windows.Forms.ToolStripMenuItem Menu_Membership;
@@ -333,7 +368,12 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.ToolStripMenuItem MenuAllIncome;
         private System.Windows.Forms.ToolStripMenuItem MenuOneEpenses;
         private System.Windows.Forms.ToolStripMenuItem MenuAllEpenses;
-        private System.Windows.Forms.ToolStripMenuItem infoMeber;
         private System.Windows.Forms.ToolStripMenuItem ประวตการยกเลกบลลToolStripMenuItem;
+        public System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem memberInfoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ReprotDividend;
+        private System.Windows.Forms.ToolStripMenuItem Dividend;
+        private System.Windows.Forms.ToolStripMenuItem DevidendYear;
+        private System.Windows.Forms.ToolStripMenuItem CancelDevind;
     }
 }

@@ -28,7 +28,6 @@ namespace BankTeacher.Bank.Add_Member
         public Member()
         {
             InitializeComponent();
-            Console.WriteLine("==================Open MemberShip Form======================");
             TBStartAmountShare_Reg.Text = BankTeacher.Bank.Menu.startAmountMin.ToString();
         }
 
@@ -127,7 +126,7 @@ namespace BankTeacher.Bank.Add_Member
         {
             try
             {
-                Search IN = new Search(SQLDefault[1]);
+                Search IN = new Search(SQLDefault[1], "");
                 IN.ShowDialog();
                 if (Search.Return[0] != "")
                 {
@@ -310,6 +309,34 @@ namespace BankTeacher.Bank.Add_Member
                 TBTeacherName_Reg.Text = "";
                 CheckBRegister = false;
                 Check = 0;
+            }
+        }
+
+        private void BExitForm_Click(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
+
+        private void Member_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (TBTeacherNo_Reg.Text.Length != 0)
+                {
+                    TBTeacherNo_Reg.Text = "";
+                    TBTeacherName_Reg.Text = "";
+                    TBStartAmountShare_Reg.Text = "";
+                    Check = 0;
+                    StatusBoxFile = 0;
+                    imgeLocation = "";
+                    CheckBRegister = false;
+                    CheckBCancel = false;
+                    Saving = 0;
+                }
+                else
+                {
+                    BExitForm_Click(new object(), new EventArgs());
+                }
             }
         }
     }

@@ -40,7 +40,7 @@ namespace BankTeacher.Bank
           "WHERE CAST(DateAdd  as date) LIKE '{Date}%' and f.TeacherNo LIKE '%{TeacherNo}%' and f.IsUse = 1"
            ,
            //[1] Select TeacherAdd INPUT: {Text}
-           "SELECT a.TeacherNo, CAST(ISNULL(b.PrefixName , '') + ' ' + a.Fname + ' ' + a.LName as nvarchar) ,null\r\n " +
+           "SELECT a.TeacherNo, CAST(ISNULL(b.PrefixName , '') + ' ' + a.Fname + ' ' + a.LName as nvarchar)\r\n " +
           "FROM Personal.dbo.tblTeacherHis as a \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as b on a.PrefixNo = b.PrefixNo \r\n " +
           "WHERE (a.TeacherNo IN (SELECT TeacherNoAddBy FROM EmployeeBank.dbo.tblLoan) or a.TeacherNo IN (SELECT TeacherNoAddBy FROM EmployeeBank.dbo.tblShareWithdraw))and a.TeacherNo LIKE '%{Text}%' \r\n " +
@@ -66,7 +66,7 @@ namespace BankTeacher.Bank
         }
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
-            Bank.Search IN = new Bank.Search(SQLDefault[1]);
+            Bank.Search IN = new Bank.Search(SQLDefault[1],"");
             IN.ShowDialog();
             if (Bank.Search.Return[0] != "")
             {
@@ -158,5 +158,25 @@ namespace BankTeacher.Bank
             DGV.Rows.Clear();
         }
 
+        private void BExitForm_Click(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
+
+        private void ReportEpenses_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if(TBTeacherNo.Text.Length != 0)
+                {
+                    TBTeacherNo.Text = "";
+                    ClearForm();
+                }
+                else
+                {
+                    BExitForm_Click(new object(), new EventArgs());
+                }
+            }
+        }
     }
 }

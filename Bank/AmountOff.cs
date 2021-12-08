@@ -336,7 +336,7 @@ namespace BankTeacher.Bank
         {
             try
             {
-                Bank.Search IN = new Bank.Search(SQLDefault[5]);
+                Bank.Search IN = new Bank.Search(SQLDefault[5],"หุ้นสะสม");
                 IN.ShowDialog();
                 if (Bank.Search.Return[0] != "")
                 {
@@ -412,6 +412,41 @@ namespace BankTeacher.Bank
         {
             if (CBYear.Items.Count != 0)
                 CBYear.SelectedIndex = 0;
+        }
+
+        private void BExitForm_Click(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
+
+        private void AmountOff_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (TBTeacherNo.Text.Length != 0)
+                {
+                    TBTeacherNo.Text = "";
+                    TBTeacherName.Text = "";
+                    TBShareNo.Text = "";
+                    TBSavingAmount.Text = "";
+                    DGVLoan.Rows.Clear();
+                    TBCreditSystem.Text = "";
+                    TBCreditWithDraw.Text = "";
+                    TBWithDraw.Text = "";
+                    TBWithDraw.Enabled = false;
+                    CBTypePay.SelectedIndex = -1;
+                    CBTypePay.Enabled = false;
+                    BSaveAmountOff.Enabled = false;
+                    Check = 0;
+                    script = 1;
+                    StatusBoxFile = 0;
+                    imgeLocation = "";
+    }
+                else
+                {
+                    BExitForm_Click(new object(), new EventArgs());
+                }
+            }
         }
     }
 }

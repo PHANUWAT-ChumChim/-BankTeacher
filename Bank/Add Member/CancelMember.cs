@@ -25,6 +25,7 @@ namespace BankTeacher.Bank.Add_Member
         /// <para>[1] Change Status Member INPUT: {TeacherNoAddBy} {TeacherNo} {Note} {DocStatusNo} {DocUploadPath} {Status}</para>
         /// <para>[2] SELECT Check SavingAmount INPUT: {TeacherNo}</para>
         /// <para>[3] Select MemberResignation INPUT: {Date}</para>
+        /// <para>[4] SELECT Year INPUT: </para>
         /// </summary>
         private String[] SQLDefault = new string[]
         {
@@ -70,10 +71,24 @@ namespace BankTeacher.Bank.Add_Member
           "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo \r\n " +
           "WHERE CAST(CAST(DATE  as  date)as nvarchar(50))  LIKE  '{Date}%'"
            ,
+           //[4] SELECT Year INPUT: 
+           "SELECT YEAR(Date) as Year \r\n " +
+          "FROM EmployeeBank.dbo.tblMemberResignation \r\n " +
+          "GROUP BY  YEAR(Date) "
+           ,
+
         };
         public CancelMember()
         {
             InitializeComponent();
+            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4]);
+            if(dt.Rows.Count != 0)
+            {
+                for (int x = 0; x < dt.Rows.Count; x++)
+                {
+                    CBYear_HistoryCancel.Items.Add(dt.Rows[x][0].ToString());
+                }
+            }
             Relaodcancelmember();
         }
         private void CancelMember_SizeChanged_1(object sender, EventArgs e)
@@ -85,7 +100,7 @@ namespace BankTeacher.Bank.Add_Member
         {
             try
             {
-                Bank.Search IN = new Bank.Search(SQLDefault[0]);
+                Bank.Search IN = new Bank.Search(SQLDefault[0] , "หุ้นสะสม");
                 IN.ShowDialog();
                 if (Bank.Search.Return[0] != "")
                 {
@@ -284,6 +299,34 @@ namespace BankTeacher.Bank.Add_Member
             if (tabControl1.SelectedIndex == 1)
             {
                 CBYear_HistoryCancel_SelectedIndexChanged(new object(), new EventArgs());
+            }
+        }
+
+        private void BExitForm_Click(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
+
+        private void CancelMember_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Escape)
+            {
+                if(TBTeacherNo.Text.Length != 0)
+                {
+                    TBTeacherNo.Text = "";
+                    TBTeacherName.Text = "";
+                    TBNote.Text = "";
+                    Check = 0;
+                    StatusBoxFile = 0;
+                    imgeLocation = "";
+                    CheckBRegister = false;
+                    CheckBCancel = false;
+                    Saving = 0;
+                }
+                else
+                {
+                    BExitForm_Click(new object(), new EventArgs());
+                }
             }
         }
     }

@@ -101,11 +101,11 @@
     <Compile Include="Bank\AmountOff.Designer.cs">
       <DependentUpon>AmountOff.cs</DependentUpon>
     </Compile>
-    <Compile Include="Bank\DatailBill.cs">
+    <Compile Include="Bank\CancelDividend.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Bank\DatailBill.Designer.cs">
-      <DependentUpon>DatailBill.cs</DependentUpon>
+    <Compile Include="Bank\CancelDividend.Designer.cs">
+      <DependentUpon>CancelDividend.cs</DependentUpon>
     </Compile>
     <Compile Include="Bank\Dividend.cs">
       <SubType>Form</SubType>
@@ -160,6 +160,12 @@
     </Compile>
     <Compile Include="Bank\Report.Designer.cs">
       <DependentUpon>Report.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Bank\ReportDividend.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bank\ReportDividend.Designer.cs">
+      <DependentUpon>ReportDividend.cs</DependentUpon>
     </Compile>
     <Compile Include="Bank\ReportEpensesAll.cs">
       <SubType>Form</SubType>
@@ -250,8 +256,8 @@
     <EmbeddedResource Include="Bank\AmountOff.resx">
       <DependentUpon>AmountOff.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Bank\DatailBill.resx">
-      <DependentUpon>DatailBill.cs</DependentUpon>
+    <EmbeddedResource Include="Bank\CancelDividend.resx">
+      <DependentUpon>CancelDividend.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Dividend.resx">
       <DependentUpon>Dividend.cs</DependentUpon>
@@ -279,6 +285,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Report.resx">
       <DependentUpon>Report.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bank\ReportDividend.resx">
+      <DependentUpon>ReportDividend.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\ReportEpensesAll.resx">
       <DependentUpon>ReportEpensesAll.cs</DependentUpon>
@@ -383,6 +392,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\magnifying-glass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logout.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Exit.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Exit.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\dividends.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
