@@ -20,7 +20,7 @@ namespace BankTeacher.Bank
         /// SQLDefault 
         /// <para>[0]SELECT Max 1 Year INPUT:  </para> 
         /// <para>[1] Table[1]Get Name , a.SavingAmount , a.DividendAmount , a.Interest , a.RemainInterestLastYear , a.AverageDividend Table[2]Get InterestLastYear INPUT: {Year} </para>
-        /// <para>[2]Save Cancel Dividend and - SavingAmount INPUT: {Year} </para>
+        /// <para>[2]Save Cancel Dividend and - SavingAmount INPUT: {Year}  {TeacherNo} </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -46,7 +46,7 @@ namespace BankTeacher.Bank
           "WHERE a.Year = {Year} - 1 and a.Cancel = 1"
            ,
 
-           //[2]Save Cancel Dividend and - SavingAmount INPUT: {Year}
+           //[2]Save Cancel Dividend and - SavingAmount INPUT: {Year}  {TeacherNo}
            "UPDATE EmployeeBank.dbo.tblShare \r\n " +
           "SET SavingAmount = EmployeeBank.dbo.tblShare.SavingAmount - (SELECT b.DividendAmount \r\n " +
           "FROM EmployeeBank.dbo.tblDividend as a \r\n " +
@@ -58,7 +58,7 @@ namespace BankTeacher.Bank
           "WHERE b.Cancel = 1 and b.Year = {Year}) \r\n " +
           " \r\n " +
           "UPDATE EmployeeBank.dbo.tblDividend \r\n " +
-          "SET Cancel = 2 \r\n " +
+          "SET Cancel = 2 , CancelBy = '{TeacherNo}'\r\n " +
           "WHERE Year = {Year} and Cancel = 1"
            ,
 
@@ -105,14 +105,14 @@ namespace BankTeacher.Bank
             try
             {
                 Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
-                .Replace("{Year}", CBYear.SelectedItem.ToString()));
+                .Replace("{Year}", CBYear.SelectedItem.ToString())
+                .Replace("{TeacherNo}" , Class.UserInfo.TeacherNo));
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"-------------------{ex}---------------------");
                 MessageBox.Show("การบันทึกล้มเหลว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            
         }
     }
 }
