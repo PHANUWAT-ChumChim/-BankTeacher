@@ -15,7 +15,7 @@ namespace BankTeacher.Bank
         /// <summary> 
         /// SQLDefault 
         /// <para>[0] Report Epenses Info(Loan and ShareWithdraw) INPUT: {TeacherNo} , {Date} </para> 
-        /// <para>[1] Select TeacherAdd INPUT: {Text}</para>
+        /// <para>[1] Select TeacherAdd INPUT: {Text} {Date}</para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -39,12 +39,13 @@ namespace BankTeacher.Bank
           "LEFT JOIN BaseData.dbo.tblPrefix as g on f.PrefixNo = g.PrefixNo \r\n " +
           "WHERE CAST(DateAdd  as date) LIKE '{Date}%' and f.TeacherNo LIKE '%{TeacherNo}%' and f.IsUse = 1"
            ,
-           //[1] Select TeacherAdd INPUT: {Text}
-           "SELECT a.TeacherNo, CAST(ISNULL(b.PrefixName , '') + ' ' + a.Fname + ' ' + a.LName as nvarchar)\r\n " +
-          "FROM Personal.dbo.tblTeacherHis as a \r\n " +
-          "LEFT JOIN BaseData.dbo.tblPrefix as b on a.PrefixNo = b.PrefixNo \r\n " +
-          "WHERE (a.TeacherNo IN (SELECT TeacherNoAddBy FROM EmployeeBank.dbo.tblLoan) or a.TeacherNo IN (SELECT TeacherNoAddBy FROM EmployeeBank.dbo.tblShareWithdraw))and a.TeacherNo LIKE '%{Text}%' \r\n " +
-          "GROUP BY a.TeacherNo , CAST(ISNULL(b.PrefixName , '') + ' ' + a.Fname + ' ' + a.LName as nvarchar)"
+           //[1] Select TeacherAdd INPUT: {Text} {Date}
+           "SELECT a.TeacherNo, CAST(ISNULL(b.PrefixName , '') + ' ' + a.Fname + ' ' + a.LName as nvarchar) \r\n " +
+          " FROM Personal.dbo.tblTeacherHis as a  \r\n " +
+          " LEFT JOIN BaseData.dbo.tblPrefix as b on a.PrefixNo = b.PrefixNo  \r\n " +
+          " WHERE (a.TeacherNo IN (SELECT TeacherNoAddBy FROM EmployeeBank.dbo.tblLoan WHERE CAST(PayDate as date) LIKE  '%{Date}%') or a.TeacherNo IN (SELECT TeacherNoAddBy FROM EmployeeBank.dbo.tblShareWithdraw WHERE CAST(DateAdd as Date) LIKE '%{Date}%')) and (a.TeacherNo LIKE '%{Text}%'  or  CAST(ISNULL(b.PrefixName , '') + ' ' + a.Fname + ' ' + a.LName as nvarchar) LIKE '%{Text}%') \r\n " +
+          " GROUP BY a.TeacherNo , CAST(ISNULL(b.PrefixName , '') + ' ' + a.Fname + ' ' + a.LName as nvarchar)"
+
            ,
 
 
@@ -66,7 +67,19 @@ namespace BankTeacher.Bank
         }
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
-            Bank.Search IN = new Bank.Search(SQLDefault[1],"");
+            String Year = DTP.Value.ToString("yyyy");
+            String Month = DTP.Value.ToString("MM");
+            String Day = DTP.Value.ToString("dd");
+            if (Convert.ToInt32(Month) < 10)
+            {
+                Month = "0" + Convert.ToInt32(Month);
+            }
+            if (Convert.ToInt32(Day) < 10)
+            {
+                Day = "0" + Convert.ToInt32(Day);
+            }
+            Bank.Search IN = new Bank.Search(SQLDefault[1]
+                .Replace("{Date}", (Convert.ToDateTime(Year + '-' + Month + '-' + Day)).ToString("yyyy-MM-dd")),"");
             IN.ShowDialog();
             if (Bank.Search.Return[0] != "")
             {
