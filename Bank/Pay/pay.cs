@@ -757,6 +757,7 @@ namespace BankTeacher.Bank.Pay
             }
             else
             {
+                CBYearSelection_Pay.Enabled = false;
                 CBMonthSelection_Pay.Enabled = false;
             }
 
@@ -1039,6 +1040,8 @@ namespace BankTeacher.Bank.Pay
                             }
                             else
                             {
+                                CBYearSelection_Pay.Enabled = false;
+                                CBMonthSelection_Pay.Enabled = false;
                                 MessageBox.Show("ไม่พบรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
                         }
@@ -1498,6 +1501,8 @@ namespace BankTeacher.Bank.Pay
                 }
                 else
                 {
+                    CBYearSelection_Pay.Enabled = false;
+                    CBMonthSelection_Pay.Enabled = false;
                     MessageBox.Show("ไม่พบรายการ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                 }
             }
@@ -1543,6 +1548,7 @@ namespace BankTeacher.Bank.Pay
             if(CBYearSelection_Pay.Items.Count != 0)
                 if(CBYearSelection_Pay.SelectedIndex == -1)
                 {
+                    CBYearSelection_Pay.Enabled = true;
                     CBYearSelection_Pay.SelectedIndex = 0;
                 }
         }
@@ -1865,6 +1871,8 @@ namespace BankTeacher.Bank.Pay
                             }
                             else
                             {
+                                CBYearSelection_Pay.Enabled = false;
+                                CBMonthSelection_Pay.Enabled = false;
                                 MessageBox.Show("ไม่พบรายการให้ชำระเพิ่มแล้ว", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
                         }
@@ -1879,11 +1887,15 @@ namespace BankTeacher.Bank.Pay
                         }
                         else
                         {
+                            CBYearSelection_Pay.Enabled = false;
+                            CBMonthSelection_Pay.Enabled = false;
                             MessageBox.Show("ไม่พบรายการให้ชำระเพิ่มแล้ว", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
                     else
                     {
+                        CBYearSelection_Pay.Enabled = false;
+                        CBMonthSelection_Pay.Enabled = false;
                         MessageBox.Show("ไม่พบรายการให้ชำระเพิ่มแล้ว", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
