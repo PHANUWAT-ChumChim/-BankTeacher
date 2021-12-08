@@ -204,7 +204,7 @@ namespace BankTeacher.Class.Print
         /// เช็คระยะ ห่างของ ข้อความ ไม่สมบูรณ์
         /// </summary>
         public static float Chcekspan(System.Drawing.Printing.PrintPageEventArgs e, System.Windows.Forms.DataGridView G
-            , float X, float Y, string Text, int SetCut, int Loca, Font F, int p, int c, out int position, out int Currentposition)
+            , float X, float Y, string Text, int SetCut, int Loca, Font F, int p, int c)
         {
             List<float> Values = new List<float>();
             //SizeF Size = e.Graphics.MeasureString("", Class.Print.PrintPreviewDialog.THsarabun18);
@@ -230,7 +230,7 @@ namespace BankTeacher.Class.Print
                     if (RowsNo >= c)
                     {
                         // ค่าที่ไม่เกิน กำหนดการขึ้นหน้าใหม่
-                        if (notover <= Class.Print.PrintPreviewDialog.linesToPrint)
+                        if (notover <= Class.Print.PrintPreviewDialog.page_length)
                         {
                             // นับตำเเหน่ง Rows ที่ถูกเทียบไปทั้งหมด
                             p++;
@@ -243,9 +243,6 @@ namespace BankTeacher.Class.Print
                 }
 
             }
-            // บอกตำเเหน่งที่ถูกนับไปเเล้ว
-            Currentposition = 0;
-            position = 0;
             // เก็บค่าที่มากที่สุดของระยะวาดต่อไป
             v = MaxValues(v, Values);
             // ส่งค่ากลับไปวาด

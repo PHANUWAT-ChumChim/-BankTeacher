@@ -387,7 +387,7 @@ namespace BankTeacher.Bank.Loan
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVLoanDetail, tabControl1.SelectedTab.Text, this.AccessibilityObject.Name,0);
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVLoanDetail, tabControl1.SelectedTab.Text, this.AccessibilityObject.Name,2,"A4",1);
         }
 
         private void BTPrint_Click_1(object sender, EventArgs e)

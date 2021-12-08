@@ -402,7 +402,7 @@ namespace BankTeacher.Bank
         {
             printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
             printDocument1.DefaultPageSettings.Landscape = true;
-            Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Testter,"ถอนหุ้นสะสม", this.AccessibilityObject.Name, script);
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Testter,"ถอนหุ้นสะสม", this.AccessibilityObject.Name,1,"A5",1);
             script++;
             if (script > 2)
                 script = 1;
