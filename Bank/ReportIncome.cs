@@ -17,7 +17,7 @@ namespace BankTeacher.Bank
         /// SQLDefault 
         /// <para>[0] Select all bill in Day INPUT: {Date} {TeacherNoAddBy} </para> 
         /// <para>[1] Select Bill Detail INPUT: {BillNo} </para>
-        /// <para>[2] SELECT TeacherAddBill INPUT: {Text}</para>
+        /// <para>[2] SELECT TeacherAddBill INPUT: {Text} {Date}</para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -39,12 +39,12 @@ namespace BankTeacher.Bank
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailPayment as c on a.BillDetailPaymentNo = c.BillDetailPaymentNo \r\n " +
           "WHERE BillNo = '{BillNo}'"
            ,
-           //[2] SELECT TeacherAddBill INPUT: {Text}
+           //[2] SELECT TeacherAddBill INPUT: {Text} {Date}
            "SELECT TOP(20) TeacherNoAddBy,CAST(ISNULL(c.PrefixName,'') +' '+ b.FName + ' ' + b.LName as nvarchar) , null \r\n " +
           "FROM EmployeeBank.dbo.tblBill as a \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNoAddBy = b.TeacherNo \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo \r\n " +
-          "WHERE (Cancel = 1 and b.IsUse = 1) and a.TeacherNoAddBy LIKE '%{Text}%' or CAST(ISNULL(c.PrefixName,'') + b.FName + ' ' + b.LName as nvarchar)  LIKE '%{Text}%'   \r\n " +
+          "WHERE (Cancel = 1 and b.IsUse = 1 and Cast(a.DateAdd as date) Like '%{Date}%') and (a.TeacherNoAddBy LIKE '%{Text}%' or CAST(ISNULL(c.PrefixName,'') + b.FName + ' ' + b.LName as nvarchar)  LIKE '%{Text}%')   \r\n " +
           "GROUP BY TeacherNoAddBy,CAST(ISNULL(c.PrefixName,'') +' '+ b.FName + ' ' + b.LName as nvarchar) "
            ,
 
@@ -69,7 +69,19 @@ namespace BankTeacher.Bank
         }
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
-            Bank.Search IN = new Bank.Search(SQLDefault[2],"");
+            String Year = DTP.Value.ToString("yyyy");
+            String Month = DTP.Value.ToString("MM");
+            String Day = DTP.Value.ToString("dd");
+            if (Convert.ToInt32(Month) < 10)
+            {
+                Month = "0" + Convert.ToInt32(Month);
+            }
+            if (Convert.ToInt32(Day) < 10)
+            {
+                Day = "0" + Convert.ToInt32(Day);
+            }
+            Bank.Search IN = new Bank.Search(SQLDefault[2]
+                .Replace("{Date}", Year + '-' + Month + '-' + Day),"");
             IN.ShowDialog();
             if (Bank.Search.Return[0] != "")
             {
@@ -99,7 +111,8 @@ namespace BankTeacher.Bank
                             Day = "0" + Convert.ToInt32(Day);
                         }
                         DataTable dtTeacherAddbill = Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
-                            .Replace("{Text}", TBTeacherNo.Text));
+                            .Replace("{Text}", TBTeacherNo.Text)
+                            .Replace("{Date}", Year + '-' + Month + '-' + Day));
                         if (dtTeacherAddbill.Rows.Count != 0)
                         {
                             TBTeacherName.Text = dtTeacherAddbill.Rows[0][1].ToString();
