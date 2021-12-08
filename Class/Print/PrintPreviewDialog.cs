@@ -355,11 +355,13 @@ namespace BankTeacher.Class.Print
                 // ข้อความทั้งหมดที่ใช้พิมพ์
                 string TLC = "วิทยาลัยเทคโนโลยีอีอีซี เอ็นจิเนีย เเหลมฉบัง", tlc = "EEC ENGINEERING TECHNOLOGICAL COLLEGE";
                 string address = "75/2 หมู่ที่ : 10 ถนน : สุขาภิบาล ตำบล : ทุ่งสุขลา อำเภอ : ศรีราชา จังหวัด : ชลบุรี 20230 โทร : 088-888-888 WWW.EEC.AC";
-                Size = e.Graphics.MeasureString($"วันที่ออกใบ {DateTime.Now.Day}/{DateTime.Now.Month}/{DateTime.Now.Year}", FonT(16, ThaiSarabun, FontStyle.Bold));
-                e.Graphics.DrawString($"วันที่ออกใบ {DateTime.Now.Day}/{DateTime.Now.Month}/{DateTime.Now.Year}", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - Size.Width, 50);
+                //Size = e.Graphics.MeasureString($"วันที่ออกใบ {DateTime.Now.Day}/{DateTime.Now.Month}/{DateTime.Now.Year}", FonT(16, ThaiSarabun, FontStyle.Bold));
+                Size = e.Graphics.MeasureString($"วันที่ออกใบ {Bank.Pay.pay.info_datepay}", FonT(16, ThaiSarabun, FontStyle.Bold));
+                e.Graphics.DrawString($"วันที่ออกใบ {Bank.Pay.pay.info_datepay}", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - Size.Width, 50);
+                //e.Graphics.DrawString($"วันที่ออกใบ {DateTime.Now.Day}/{DateTime.Now.Month}/{DateTime.Now.Year}", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - Size.Width, 50);
                 // เลขหน้า
-                Size = e.Graphics.MeasureString($"page {pagepaper} ", FonT(16, ThaiSarabun, FontStyle.Bold));
-                e.Graphics.DrawString($"page {pagepaper} ",FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack,Line2_x-Size.Width,30);
+                Size = e.Graphics.MeasureString($"หน้า 1/{pagepaper} ", FonT(16, ThaiSarabun, FontStyle.Bold));
+                e.Graphics.DrawString($"หน้า 1/{pagepaper} ",FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack,Line2_x-Size.Width,30);
                 // เเบบพิมพ์ชื่อ วิทยาลัยเทคโนโลยีเเหลมฉบัง Thai
                 TextX += imageX;
                 e.Graphics.DrawString(TLC, FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, new RectangleF(TextX+10, TextY, 600, 100));
@@ -618,15 +620,38 @@ namespace BankTeacher.Class.Print
                 Line1_y = IandT;
                 y2 = IandT;
                 // ====================== ลูป ตาราง =============================
+                int CheckList = 0;
                 for (int Columns = 0; Columns < G.ColumnCount; Columns++)
                 {
                     if (Columns != 0)
                     {
-                        // โรงงานบอกระยะของการวาด เก็บค่า Wihte ไว้
-                        Getwidth += Class.Print.SetPrintMedtods.Chcekspan(e, G, startTableX, startTableY, G.Columns[Columns - 1].HeaderText
+                        if(G.Columns[Columns].HeaderText == "รายการ" || CheckList == 1)
+                        {
+                            if(CheckList == 1)
+                            {
+                                Getwidth += 100 + Class.Print.SetPrintMedtods.Chcekspan(e, G, startTableX, startTableY, G.Columns[Columns - 1].HeaderText
                                 , setcut, Columns, FonT(18, ThaiSarabun, FontStyle.Regular), 0, 0);
-                        if(onetimestartColumns == 0)
-                        cutline.Add(Getwidth);
+                                if (onetimestartColumns == 0)
+                                    cutline.Add(Getwidth);
+                            }
+                            else
+                            {
+                                Getwidth += Class.Print.SetPrintMedtods.Chcekspan(e, G, startTableX, startTableY, G.Columns[Columns - 1].HeaderText
+                             , setcut, Columns, FonT(18, ThaiSarabun, FontStyle.Regular), 0, 0);
+                                if (onetimestartColumns == 0)
+                                    cutline.Add(Getwidth);
+                            }
+                            CheckList++;
+                        }
+                        else
+                        {
+                            Getwidth += Class.Print.SetPrintMedtods.Chcekspan(e, G, startTableX, startTableY, G.Columns[Columns - 1].HeaderText
+                              , setcut, Columns, FonT(18, ThaiSarabun, FontStyle.Regular), 0, 0);
+                            if (onetimestartColumns == 0)
+                                cutline.Add(Getwidth);
+                        }
+                        // โรงงานบอกระยะของการวาด เก็บค่า Wihte ไว้
+                      
                     }
                     else
                     {
@@ -869,8 +894,8 @@ namespace BankTeacher.Class.Print
                 startTableY = 2000; // ทำให้ความยาวหน้ากระดาษ เกิน 
             }
             //
-           
-            if (startTableY <= page_length || Currentposition_Row >= G.RowCount)
+            // เเก้ไข startTableY <= page_length ||
+            if (Currentposition_Row >= G.RowCount)
             {
                 SUM.Clear();
                 Pay.Clear();

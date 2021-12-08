@@ -27,7 +27,6 @@ namespace BankTeacher.Bank
         public static string info_Amounoffinsystem;
         public static string info_canbeAmounoff;
         // ต้นฉบับ
-        public static int script = 1;
         int StatusBoxFile = 0;
         String imgeLocation = "";
         /// <summary>
@@ -241,7 +240,7 @@ namespace BankTeacher.Bank
                     if (MessageBox.Show("ยืนยันการจ่าย", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                     {
                         DGV_Testter.Rows.Clear();
-                        DGV_Testter.Rows.Add(DateTime.Today.Day.ToString() +'/'+ DateTime.Today.Month.ToString() +'/'+ DateTime.Today.Year.ToString(), "ถอนหุ้นสะสม",TBWithDraw.Text);
+                        DGV_Testter.Rows.Add(1,DateTime.Today.Day.ToString() +'/'+ DateTime.Today.Month.ToString() +'/'+ DateTime.Today.Year.ToString(), "ถอนหุ้นสะสม",TBWithDraw.Text);
                         Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[2] +
                     "\r\n" +
                     SQLDefault[3])
@@ -259,10 +258,8 @@ namespace BankTeacher.Bank
                         info_status = TBLoanStatus.Text;
                         info_Amounoffinsystem = TBCreditSystem.Text;
                         info_canbeAmounoff = TBCreditWithDraw.Text;
-                        if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
-                        {
-                            printDocument1.Print();
-                        }
+                        printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+                        printDocument1.DefaultPageSettings.Landscape = true;
                         if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                         {
                             printDocument1.Print();
@@ -400,12 +397,7 @@ namespace BankTeacher.Bank
         }
         private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
         {
-            printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
-            printDocument1.DefaultPageSettings.Landscape = true;
             Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Testter,"ถอนหุ้นสะสม", this.AccessibilityObject.Name,1,"A5",1);
-            script++;
-            if (script > 2)
-                script = 1;
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -438,7 +430,6 @@ namespace BankTeacher.Bank
                     CBTypePay.Enabled = false;
                     BSaveAmountOff.Enabled = false;
                     Check = 0;
-                    script = 1;
                     StatusBoxFile = 0;
                     imgeLocation = "";
     }

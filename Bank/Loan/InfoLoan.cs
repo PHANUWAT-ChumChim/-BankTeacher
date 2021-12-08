@@ -348,7 +348,7 @@ namespace BankTeacher.Bank.Loan
                             StatusPay = "ยังไม่จ่าย";
                         }
 
-                        DGVLoanDetail.Rows.Add($"{Month}/{Year}", Pay, Convert.ToInt32(Interest), StatusPay, SumInstallment);
+                        DGVLoanDetail.Rows.Add(Num+1,$"{Month}/{Year}", Pay, Convert.ToInt32(Interest), StatusPay, SumInstallment);
                         Month++;
                     }
                     // ------ ของของข้า

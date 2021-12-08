@@ -57,7 +57,7 @@ namespace BankTeacher.Bank.Pay
         /// <para>[12] SELECT SharePayBill and SELECT ShareOfYear INPUT: {TeacherNo} , {Year}</para>
         /// <para>[13] SELECT Detail Loan INPUT: {LoanID}</para>
         /// <para>[14] Select Billinfomation INPUT: {TeacherNo , {Year}</para>
-         /// <para>[15] print backwards IN: {billl} </para>
+        /// <para>[15] print backwards IN: {billl} </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -264,6 +264,11 @@ namespace BankTeacher.Bank.Pay
            "FROM EmployeeBank.dbo.tblBillDetail as a \r\n" +
            "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as b ON a.TypeNo = b.TypeNo \r\n" +
            "WHERE a.BillNo = {bill}"
+           ,
+           //[16] print data IN: {BillNo}
+           "SELECT a.DateAdd,CAST(YEAR(a.DateAdd) as nvarchar)+'/'+CAST(MONTH(a.DateAdd) as nvarchar)+'/'+CAST(DAY(a.DateAdd) as nvarchar) \r\n" +
+           "FROM EmployeeBank.dbo.tblBill as a \r\n" +
+           "WHERE a.BillNo = {Bill}"
            ,
          };
 
@@ -1705,6 +1710,7 @@ namespace BankTeacher.Bank.Pay
             DGV_Pay.Rows.Clear();
             CBYearSelection_Pay.SelectedIndex = -1;
             CBMonthSelection_Pay.SelectedIndex = -1;
+            Num = 0;
             CBYearSelection_Pay.Items.Clear();
             CBMonthSelection_Pay.Items.Clear();
             CBList_Pay.SelectedIndex = -1;
@@ -1867,7 +1873,6 @@ namespace BankTeacher.Bank.Pay
             }
             else if(CB_Printback.Checked != false)
             {
-               
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Tester, "ใบเสร็จรับเงิน(ย้อนหลัง)", this.AccessibilityObject.Name,1,"A5",0);
             }
             else
@@ -1889,7 +1894,6 @@ namespace BankTeacher.Bank.Pay
         // คลิ๊กเพื่อปริ้นข้อมูลย้อนหลัง
         private void DGV_BillInfo_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
-          
             BTPrint.BackColor = Color.White;
             if (e.RowIndex != -1)
             {
@@ -1898,7 +1902,7 @@ namespace BankTeacher.Bank.Pay
                 info_id = TBTeacherNo.Text;
                 info_totelAmountpay = TBToatalSaving_ShareInfo.Text;
                 info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
-                info_Billpay = DGV_BillInfo.Rows[e.RowIndex].Cells[0].Value.ToString();
+                info_Billpay = DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString();
                 BTPrint.Enabled = true;
                 BTPrint.BackColor = Color.White;
                 DGV_Tester.Rows.Clear();
@@ -1914,8 +1918,8 @@ namespace BankTeacher.Bank.Pay
             if (DGV_Tester.Rows.Count != 0 && e.RowIndex != -1)
             {
                 BTPrint.Enabled = true;
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[15].Replace("{bill}", DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString()));
-                info_datepay = dt.Rows[0][3].ToString();
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[16].Replace("{Bill}", DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString()));
+                info_datepay = dt.Rows[0][1].ToString();
             }
             else
             {
@@ -1934,12 +1938,24 @@ namespace BankTeacher.Bank.Pay
             if(DGV_Printbypoon.Rows.Count != 0)
             {
                 DGV_Printbypoon.Rows.RemoveAt(e.RowIndex);
+                DGV_Printbypoon.Rows.Clear();
+                for(int r = 0; r < DGV_Pay.RowCount; r++)
+                {
+                    DGV_Printbypoon.Rows.Add(r + 1, DGV_Pay.Rows[r].Cells[0].Value.ToString(),
+                        CBList_Pay.Text, TBAmount_Pay.Text, DGV_Pay.Rows[r].Cells[3].Value.ToString(),
+                        CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
+                }
             }
         }
         // เพิ่มความมูลตามต้นฉบับ
+        static int Num = 1;
         private void DGV_Pay_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
-            DGV_Printbypoon.Rows.Add(DGV_Pay.Rows[e.RowIndex].Cells[0].Value.ToString(), CBList_Pay.Text, TBAmount_Pay.Text, DGV_Pay.Rows[e.RowIndex].Cells[3].Value.ToString(), CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
+            if(DGV_Printbypoon.RowCount == 0)
+            {
+                Num = 1;
+            }
+                DGV_Printbypoon.Rows.Add(Num++, DGV_Pay.Rows[e.RowIndex].Cells[0].Value.ToString(), CBList_Pay.Text, TBAmount_Pay.Text, DGV_Pay.Rows[e.RowIndex].Cells[3].Value.ToString(), CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
         }
         // ปริ้น
         private void BTPrint_Click(object sender, EventArgs e)

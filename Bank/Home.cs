@@ -216,9 +216,6 @@ namespace BankTeacher.Bank
             }
 
         }
-        private void Home_Load(object sender, EventArgs e)
-        {
-        }
         private void CByear_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (CByear.SelectedIndex != -1)
@@ -236,33 +233,34 @@ namespace BankTeacher.Bank
                     lastYear = Convert.ToInt32(Convert.ToDateTime(ds.Tables[2].Rows[0][1].ToString()).ToString("yyyy"));
                     lastMonth = Convert.ToInt32(Convert.ToDateTime(ds.Tables[2].Rows[0][1].ToString()).ToString("MM"));
                 }
-                for(int x = 0; x < 12; x++)
+                int Num = 1;
+                for (int x = 0; x < 12; x++) 
                 {
                     //เช็คดูว่าต่ำกวว่าวันที่สมัครไหม
                     int Month = x + 1;
                     DateTime Now = Convert.ToDateTime(Convert.ToDateTime(CByear.Text + '-' + Month + '-' + DateTime.DaysInMonth(Convert.ToInt32(CByear.Text), Month)).ToString("yyyy-MM-dd"));
                     if (Now >= RegisterDate)
-                    {
-                        //หุ้นสะสม
+                    { 
+                        //หุ้นสะสม 
                         if (ds.Tables[0].Rows.Count != 0)
-                        {
+                        { 
                             bool CheckSaving = false;
                             for(int y = 0;y < ds.Tables[0].Rows.Count;y++)
                             {
                                 if (Month + "/" + CByear.Text == ds.Tables[0].Rows[y][0].ToString())
                                 {
-                                    dataGridView3.Rows.Add(Month + "/" + CByear.Text, "หุ้นสะสม", ds.Tables[0].Rows[y][1], "ชำระแล้ว");
+                                    dataGridView3.Rows.Add(Num++,Month + "/" + CByear.Text, "หุ้นสะสม", ds.Tables[0].Rows[y][1], "ชำระแล้ว");
                                     CheckSaving = true;
                                 }
                             }
                             if (!(CheckSaving))
                             {
-                                dataGridView3.Rows.Add(Month + "/" + CByear.Text, "หุ้นสะสม", "500", "ค้างชำระ");
+                                dataGridView3.Rows.Add(Num++,Month + "/" + CByear.Text, "หุ้นสะสม", "500", "ค้างชำระ");
                             }
                         }
                         else
                         {
-                            dataGridView3.Rows.Add(Month + "/" + CByear.Text, "หุ้นสะสม", "500", "ค้างชำระ");
+                            dataGridView3.Rows.Add(Num++, Month + "/" + CByear.Text, "หุ้นสะสม", "500", "ค้างชำระ");
                         }
                         //Loan
                         if (ds.Tables[2].Rows.Count != 0)
@@ -287,9 +285,9 @@ namespace BankTeacher.Bank
                                             }
 
                                             if (Now != Convert.ToDateTime(Convert.ToDateTime(ds.Tables[2].Rows[0][1].ToString()).ToString("yyyy-MM-dd")))
-                                                dataGridView3.Rows.Add(Month + "/" + CByear.Text, "รายการกู้" + ds.Tables[1].Rows[0][4].ToString(), ds.Tables[1].Rows[0][2].ToString(), "ชำระแล้ว");
+                                                dataGridView3.Rows.Add(Num++, Month + "/" + CByear.Text, "รายการกู้" + ds.Tables[1].Rows[0][4].ToString(), ds.Tables[1].Rows[0][2].ToString(), "ชำระแล้ว");
                                             else
-                                                dataGridView3.Rows.Add(Month + "/" + CByear.Text, "รายการกู้" + ds.Tables[1].Rows[0][4].ToString(), Balance, "ชำระแล้ว");
+                                                dataGridView3.Rows.Add(Num++, Month + "/" + CByear.Text, "รายการกู้" + ds.Tables[1].Rows[0][4].ToString(), Balance, "ชำระแล้ว");
                                             CheckLoan = true;
                                         }
                                     }
@@ -306,9 +304,9 @@ namespace BankTeacher.Bank
                                     }
 
                                     if (Now != Convert.ToDateTime(Convert.ToDateTime(ds.Tables[2].Rows[0][1].ToString()).ToString("yyyy-MM-dd")))
-                                        dataGridView3.Rows.Add(Month + "/" + CByear.Text, "รายการกู้" + ds.Tables[2].Rows[0][4].ToString(), ds.Tables[2].Rows[0][2].ToString(), "ค้างชำระ");
+                                        dataGridView3.Rows.Add(Num++, Month + "/" + CByear.Text, "รายการกู้" + ds.Tables[2].Rows[0][4].ToString(), ds.Tables[2].Rows[0][2].ToString(), "ค้างชำระ");
                                     else
-                                        dataGridView3.Rows.Add(Month + "/" + CByear.Text, "รายการกู้" + ds.Tables[2].Rows[0][4].ToString(), Balance, "ค้างชำระ");
+                                        dataGridView3.Rows.Add(Num++, Month + "/" + CByear.Text, "รายการกู้" + ds.Tables[2].Rows[0][4].ToString(), Balance, "ค้างชำระ");
                                     CheckLoan = true;
                                 }
                                 if(!(CheckLoan))
@@ -323,9 +321,9 @@ namespace BankTeacher.Bank
                                     }
 
                                     if (Now != Convert.ToDateTime(Convert.ToDateTime(ds.Tables[2].Rows[0][1].ToString()).ToString("yyyy-MM-dd")))
-                                        dataGridView3.Rows.Add(Month + "/" + CByear.Text, "รายการกู้" + ds.Tables[2].Rows[0][4].ToString(), ds.Tables[2].Rows[0][2].ToString(), "ค้างชำระ");
+                                        dataGridView3.Rows.Add(Num++, Month + "/" + CByear.Text, "รายการกู้" + ds.Tables[2].Rows[0][4].ToString(), ds.Tables[2].Rows[0][2].ToString(), "ค้างชำระ");
                                     else
-                                        dataGridView3.Rows.Add(Month + "/" + CByear.Text, "รายการกู้" + ds.Tables[2].Rows[0][4].ToString(), Balance, "ค้างชำระ");
+                                        dataGridView3.Rows.Add(Num++, Month + "/" + CByear.Text, "รายการกู้" + ds.Tables[2].Rows[0][4].ToString(), Balance, "ค้างชำระ");
                                 }
                                 
                             }
@@ -366,7 +364,7 @@ namespace BankTeacher.Bank
             info_id = TBTeacherNo.Text;
             info_totelAmountpay = dt.Rows[0][1].ToString();
             info_Lona_AmountRemain = dt.Rows[0][2].ToString();
-            Class.Print.PrintPreviewDialog.PrintReportGrid(e, dataGridView3, "ตารางการผ่อนชำระ", this.AccessibilityObject.Name,1,"A4",1);
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e, dataGridView3, "ตารางการผ่อนชำระ", this.AccessibilityObject.Name,2,"A4",1);
         }
     }
 }
