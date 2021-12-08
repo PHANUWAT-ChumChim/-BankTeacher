@@ -868,7 +868,7 @@ namespace BankTeacher.Class.Print
                 }
                 startTableY = 2000; // ทำให้ความยาวหน้ากระดาษ เกิน 
             }
-
+            //
            
             if (startTableY <= page_length || Currentposition_Row >= G.RowCount)
             {
