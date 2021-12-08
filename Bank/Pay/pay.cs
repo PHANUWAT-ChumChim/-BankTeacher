@@ -81,7 +81,7 @@ namespace BankTeacher.Bank.Pay
           "WHERE Status = 1 "
            ,
            //[2] Check Loan and Register Date and lasted Bill INPUT: {TeacherNo} 
-           "SELECT LoanNo \r\n " +
+           "SELECT LoanNo , CAST(CAST(YearPay as nvarchar(4))+'/'+CAST(MonthPay as nvarchar(2)) as nvarchar(10))\r\n " +
           "FROM EmployeeBank.dbo.tblLoan  \r\n " +
           "WHERE TeacherNo = '{TeacherNo}' and LoanStatusNo = 2 ; \r\n " +
           " \r\n " +
@@ -364,7 +364,7 @@ namespace BankTeacher.Bank.Pay
                         {
                             for (int aa = 0; aa < cb.Length; aa++)
                             {
-                                cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment("รายการกู้ " + ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][0].ToString()));
+                                cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment("รายการกู้ " + ds.Tables[0].Rows[x][1].ToString(), ds.Tables[0].Rows[x][0].ToString()));
                                 Loan.Add(Convert.ToInt32(ds.Tables[0].Rows[x][0].ToString()));
                             }
                         }

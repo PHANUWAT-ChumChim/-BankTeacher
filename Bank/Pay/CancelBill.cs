@@ -62,7 +62,7 @@ namespace BankTeacher.Bank.Pay
          "WHERE BillNo = '{BillNo}' "
            ,
            //[3] + RemainAmount In Guarantor (CancelBill) INPUT: {LoanNo} , {LoanAmount} {BillNo} {DateTime}
-           "UPDATE EmployeeBank.dbo.tblGuarantor  \r\n " +
+          "UPDATE EmployeeBank.dbo.tblGuarantor  \r\n " +
           "SET RemainsAmount = EmployeeBank.dbo.tblGuarantor.RemainsAmount + (SELECT ((a.Amount * 100 ) / (b.LoanAmount * (b.InterestRate/100) + b.LoanAmount) * {LoanAmount} / 100) as AmountPerTeacher \r\n " +
           "FROM EmployeeBank.dbo.tblGuarantor as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblLoan as b on a.LoanNo = b.LoanNo \r\n " +
