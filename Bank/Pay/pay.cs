@@ -789,9 +789,34 @@ namespace BankTeacher.Bank.Pay
                     {
                         for (int x = 0; x < cb.Length; x++)
                         {
-                            cb[x].Items.Add(new BankTeacher.Class.ComboBoxPay(dtSaving.Rows[a][2].ToString(),
-                            dtSaving.Rows[a][1].ToString(),
-                            "500"));
+                            if (DGV_Pay.Rows.Count != 0)
+                            {
+                                //loop จำนวนใน DGV
+                                for (int Count = 0; Count < DGV_Pay.Rows.Count; Count++)
+                                {
+                                    //หากมีรายการกู้ที่ เดือน - ปี เดียวกัน และ หุ้นเดียวกันใน DGV ไม่ต้องใส่
+                                    if (CBYearSelection_Pay.Text  == DGV_Pay.Rows[Count].Cells[4].Value.ToString() && CBMonthSelection_Pay.Text == DGV_Pay.Rows[Count].Cells[5].Value.ToString() && dtSaving.Rows[a][2].ToString() == DGV_Pay.Rows[Count].Cells[1].Value.ToString())
+                                    {
+                                        break;
+                                    }
+                                    //หากหายันอันสุดท้ายแล้วไม่มี ให้เพิ่มเข้าไป
+                                    else if (Count == DGV_Pay.Rows.Count - 1)
+                                    {
+                                        cb[x].Items.Add(new BankTeacher.Class.ComboBoxPay(dtSaving.Rows[a][2].ToString(),
+                                        dtSaving.Rows[a][1].ToString(),
+                                        "500"));
+
+                                    }
+                                }
+                            }
+                            //หาก เงื่อนไขบน ไม่เป็นจริงหรือก็คือ ใน DGV  ไม่มีรายการให้เพิ่มเข้าไปได้เลย
+                            else
+                            {
+                                cb[x].Items.Add(new BankTeacher.Class.ComboBoxPay(dtSaving.Rows[a][2].ToString(),
+                                dtSaving.Rows[a][1].ToString(),
+                                "500"));
+
+                            }
 
                         }
                     }
@@ -865,7 +890,7 @@ namespace BankTeacher.Bank.Pay
                                         for (int Count = 0; Count < DGV_Pay.Rows.Count; Count++)
                                         {
                                             //หากมีรายการกู้ที่ เดือน - ปี เดียวกัน และ รายการกู้เดียวกันใน DGV ไม่ต้องใส่
-                                            if (CBYearSelection_Pay.Text + "/" + CBMonthSelection_Pay.Text == DGV_Pay.Rows[Count].Cells[0].Value.ToString() && "รายการกู้ " + getloan.Rows[CountLoan][0].ToString() == DGV_Pay.Rows[Count].Cells[1].Value.ToString())
+                                            if (CBYearSelection_Pay.Text == DGV_Pay.Rows[Count].Cells[4].Value.ToString() && CBMonthSelection_Pay.Text == DGV_Pay.Rows[Count].Cells[5].Value.ToString() && "รายการกู้ " + getloan.Rows[CountLoan][0].ToString() == DGV_Pay.Rows[Count].Cells[1].Value.ToString())
                                             {
                                                 break;
                                             }
@@ -914,7 +939,7 @@ namespace BankTeacher.Bank.Pay
                                     for (int Count = 0; Count < DGV_Pay.Rows.Count; Count++)
                                     {
                                         //ถ้ามีรายการปี - เดือน แล้วกู้อันเดียวกันอยู่ให่้หยุดแต่หากไม่มีให้เพิ่มลงไปใน Combobox list
-                                        if (CBYearSelection_Pay.Text == DGV_Pay.Rows[Count].Cells[4].Value.ToString() && CBMonthSelection_Pay.Text == DGV_Pay.Rows[Count].Cells[5].Value.ToString() && getloan.Rows[CountLoan][0].ToString() == DGV_Pay.Rows[Count].Cells[3].Value.ToString())
+                                        if (CBYearSelection_Pay.Text == DGV_Pay.Rows[Count].Cells[4].Value.ToString() && CBMonthSelection_Pay.Text == DGV_Pay.Rows[Count].Cells[5].Value.ToString() && "รายการกู้ " + getloan.Rows[CountLoan][0].ToString() == DGV_Pay.Rows[Count].Cells[1].Value.ToString())
                                         {
                                             break;
                                         }
