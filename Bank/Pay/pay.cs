@@ -368,10 +368,15 @@ namespace BankTeacher.Bank.Pay
                                 Loan.Add(Convert.ToInt32(ds.Tables[0].Rows[x][0].ToString()));
                             }
                         }
+                        CBLoanSelection_LoanInfo.Enabled = true;
                         //หาก CBLoanSelection หน้าดูข้อมูลกู้มี Items อยู่อันเดียวให้เลือก อัตโนมัติให้เลย
                         if (CBLoanSelection_LoanInfo.Items.Count == 1)
                         {
                             CBLoanSelection_LoanInfo.SelectedIndex = 0;
+                        }
+                        else
+                        {
+                            CBLoanSelection_LoanInfo.Enabled = false;
                         }
                         //ประกาศตัวแปร ปีที่สมัครและปีที่จ่ายล่าสุด
                         int YearRegister = Convert.ToInt32((Convert.ToDateTime(ds.Tables[1].Rows[0][0].ToString())).ToString("yyyy"));
