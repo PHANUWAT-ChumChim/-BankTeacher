@@ -535,8 +535,6 @@ namespace BankTeacher.Bank.Loan
                     TBLoanNo.Text = "";
                     TBLoanStatus.Text = "";
                     TBSavingAmount.Text = "";
-                    TBTeacherNo.Text = "";
-                    TBGuarantorNo.Focus();
                     DGVGuarantor.Rows.Clear();
                     // ======= Tab 2 Clear ===============
                     CBPayMonth.SelectedIndex = -1;
@@ -783,7 +781,9 @@ namespace BankTeacher.Bank.Loan
                     DGVRow.RemoveAt(Num);
                 }
             }
-            DGVGuarantorCredit.Rows.RemoveAt(e.RowIndex);
+            if(DGVGuarantorCredit.Rows.Count != 0)
+                DGVGuarantorCredit.Rows.RemoveAt(e.RowIndex);
+
         }
         private void DGVGuarantor_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {
@@ -801,7 +801,7 @@ namespace BankTeacher.Bank.Loan
             bool Check = int.TryParse(AmountLimit, out LimitAmount);
             if (DGVGuarantor.Rows.Count != 0)
             {
-                if (int.TryParse(TBLoanAmount.Text, out Amount) && (Check))
+                if (int.TryParse(TBLoanAmount.Text, out Amount) && (Check) && Amount >= 500)
                 {
                     if (Amount > LimitAmount && UserOutCreditLimit == DialogResult.No)
                     {
@@ -825,6 +825,12 @@ namespace BankTeacher.Bank.Loan
                     }
                     else if (Amount < LimitAmount && UserOutCreditLimit == DialogResult.Yes)
                         UserOutCreditLimit = DialogResult.No;
+                }
+                else if (Amount < 500 && TBLoanAmount.Text != "")
+                {
+                    MessageBox.Show("เงินกู้ขั้นต่ำต้องมากกว่าหรือเท่ากับ 500", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    TBLoanAmount.Text = "";
+                    TBLoanAmount.Focus();
                 }
                 else if (!Check)
                 {
