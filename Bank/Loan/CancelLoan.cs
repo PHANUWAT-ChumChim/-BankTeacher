@@ -49,7 +49,7 @@ namespace BankTeacher.Bank.Loan
 
           ,
          //[2] SELECT Detail Loan INPUT: {LoanNo} 
-          "SELECT CAST(ISNULL(d.PrefixName+' ','') + Fname + ' ' + Lname AS NVARCHAR) ,DateAdd,a.PayDate ,b. Amount\r\n " +
+          "SELECT CAST(ISNULL(d.PrefixName+' ','') + Fname + ' ' + Lname AS NVARCHAR) ,CAST(DateAdd as date),a.PayDate ,b. Amount\r\n " +
           "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo \r\n " +
@@ -100,11 +100,12 @@ namespace BankTeacher.Bank.Loan
                     DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text));
                     if (dt.Rows.Count != 0)
                     {
-                        textBox7.Text = dt.Rows[0][0].ToString();
-                        comboBox1.Enabled = true;
-                        comboBox1.Items.Clear();
+                        DGV.Rows.Clear();
+                        TBTeacherName.Text = dt.Rows[0][0].ToString();
+                        CBlist.Enabled = true;
+                        CBlist.Items.Clear();
                         Check = 1;
-                        ComboBox[] cb = new ComboBox[] { comboBox1 };
+                        ComboBox[] cb = new ComboBox[] { CBlist };
                         for (int x = 0; x < dt.Rows.Count; x++)
                         {
                             for (int aa = 0; aa < cb.Length; aa++)
@@ -112,9 +113,9 @@ namespace BankTeacher.Bank.Loan
                                 cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[0][3].ToString(), dt.Rows[x][3].ToString()));
                             }
                         }
-                        if(comboBox1.Items.Count != 0)
+                        if(CBlist.Items.Count != 0)
                         {
-                            comboBox1.SelectedIndex = 0;
+                            CBlist.SelectedIndex = 0;
                         }
                     }
                     else
@@ -129,92 +130,36 @@ namespace BankTeacher.Bank.Loan
             {
                 if (Check == 1)
                 {
-                    comboBox1.Items.Clear();
-                    comboBox1.SelectedIndex = -1;
+                    CBlist.Items.Clear();
+                    CBlist.SelectedIndex = -1;
                     TBTeacherName.Text = "";
-                    textBox2.Text = "";
-                    textBox3.Text = "";
-                    textBox4.Text = "";
-                    textBox5.Text = "";
-                    textBox6.Text = "";
-                    textBox7.Text = "";
-                    textBox8.Text = "";
-                    textBox9.Text = "";
-                    textBox10.Text = "";
-                    textBox11.Text = "";
-                    comboBox1.Enabled = false;
+                    DGV.Rows.Clear();
+                    CBlist.Enabled = false;
                     Check = 0;
                 }
             }
 
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void CBList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            BankTeacher.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as BankTeacher.Class.ComboBoxPayment);
+            BankTeacher.Class.ComboBoxPayment Loan = (CBlist.SelectedItem as BankTeacher.Class.ComboBoxPayment);
             DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{LoanNo}",Loan.No));
             if (dt.Rows.Count != 0)
             {
                 TBTeacherName.Text = dt.Rows[0][0].ToString();
-                textBox8.Text = dt.Rows[0][3].ToString();
-                if (dt.Rows.Count == 2)
+                DGV.Rows.Add(dt.Rows[0][1].ToString(),dt.Rows[0][0].ToString(),dt.Rows[0][3].ToString());
+                for(int x = 1; x < dt.Rows.Count; x++)
                 {
-
-                    textBox2.Text = dt.Rows[1][0].ToString();
-                    textBox3.Text = "-";
-                    textBox4.Text = "-";
-                    textBox9.Text = dt.Rows[1][3].ToString();
-                    textBox10.Text = "-";
-                    textBox11.Text = "-";
-                }
-                else if (dt.Rows.Count == 3)
-                {
-                    textBox2.Text = dt.Rows[1][0].ToString();
-                    textBox3.Text = dt.Rows[2][0].ToString();
-                    textBox4.Text = "-";
-                    textBox9.Text = dt.Rows[1][3].ToString();
-                    textBox10.Text = dt.Rows[2][3].ToString();
-                    textBox11.Text = "-";
-                }
-                else if (dt.Rows.Count == 4)
-                {
-                    textBox2.Text = dt.Rows[1][0].ToString();
-                    textBox3.Text = dt.Rows[2][0].ToString();
-                    textBox4.Text = dt.Rows[3][0].ToString();
-                    textBox9.Text = dt.Rows[1][3].ToString();
-                    textBox10.Text = dt.Rows[2][3].ToString();
-                    textBox11.Text = dt.Rows[3][3].ToString();
-                }
-                else if (dt.Rows.Count == 1)
-                {
-                    textBox2.Text = "-";
-                    textBox3.Text = "-";
-                    textBox4.Text = "-";
-                    textBox9.Text = "-";
-                    textBox10.Text = "-";
-                    textBox11.Text = "-";
-                }
-                textBox5.Text = (Convert.ToDateTime(dt.Rows[0][1].ToString())).ToString("dd/MM/yyyy");
-                if (dt.Rows[0][2].ToString() != "" || dt.Rows[0][2].ToString() != null)
-                {
-                    textBox6.Text = "ยังไม่ได้จ่าย";
-                }
-                else
-                {
-                    textBox6.Text = "จ่ายแล้ว";
+                    DGV.Rows.Add("", dt.Rows[x][0].ToString(), dt.Rows[x][3].ToString());
                 }
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //เหลือปุ่มจ้า
-        }
-
         private void BCancelSave_Click(object sender, EventArgs e)
         {
-            BankTeacher.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as BankTeacher.Class.ComboBoxPayment);
-            if (TBTeacherNo.Text != "" && TBTeacherName.Text != "" && textBox6.Text == "ยังไม่ได้จ่าย" && MessageBox.Show("ยืนยันที่จะลบการกู้นี้หรือไม่","ระบบ",MessageBoxButtons.YesNo,MessageBoxIcon.Information) == DialogResult.Yes)
+            BankTeacher.Class.ComboBoxPayment Loan = (CBlist.SelectedItem as BankTeacher.Class.ComboBoxPayment);
+            if (TBTeacherNo.Text != "" && TBTeacherName.Text != ""  && MessageBox.Show("ยืนยันที่จะลบการกู้นี้หรือไม่","ระบบ",MessageBoxButtons.YesNo,MessageBoxIcon.Information) == DialogResult.Yes)
             {
                 Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
                     .Replace("{WhereLoanNo}", Loan.No.ToString()));
@@ -224,17 +169,8 @@ namespace BankTeacher.Bank.Loan
 
                 TBTeacherNo.Text = "";
                 TBTeacherName.Text = "";
-                comboBox1.Items.Clear();
-                textBox2.Text = "";
-                textBox3.Text = "";
-                textBox4.Text = "";
-                textBox5.Text = "";
-                textBox6.Text = "";
-                textBox7.Text = "";
-                textBox8.Text = "";
-                textBox9.Text = "";
-                textBox10.Text = "";
-                textBox11.Text = "";
+                CBlist.Items.Clear();
+                DGV.Rows.Clear();
 
             }
         }
@@ -256,20 +192,11 @@ namespace BankTeacher.Bank.Loan
                 if (TBTeacherNo.Text.Length != 0)
                 {
                     TBTeacherNo.Text = "";
-                    comboBox1.Items.Clear();
-                    comboBox1.SelectedIndex = -1;
+                    CBlist.Items.Clear();
+                    CBlist.SelectedIndex = -1;
                     TBTeacherName.Text = "";
-                    textBox2.Text = "";
-                    textBox3.Text = "";
-                    textBox4.Text = "";
-                    textBox5.Text = "";
-                    textBox6.Text = "";
-                    textBox7.Text = "";
-                    textBox8.Text = "";
-                    textBox9.Text = "";
-                    textBox10.Text = "";
-                    textBox11.Text = "";
-                    comboBox1.Enabled = false;
+                    DGV.Rows.Clear();
+                    CBlist.Enabled = false;
                     Check = 0;
                 }
                 else
@@ -277,6 +204,16 @@ namespace BankTeacher.Bank.Loan
                     BExitForm_Click(new object(), new EventArgs());
                 }
             }
+        }
+
+        private void TBTeacherName_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox8_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
