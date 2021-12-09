@@ -30,12 +30,12 @@ namespace BankTeacher.Bank
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.BExitForm = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.CBYearDividend = new System.Windows.Forms.ComboBox();
             this.BSaveDividend = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.BExitForm = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,6 +53,18 @@ namespace BankTeacher.Bank
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
+            // BExitForm
+            // 
+            this.BExitForm.BackgroundImage = global::BankTeacher.Properties.Resources.logout;
+            this.BExitForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BExitForm.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.BExitForm.Location = new System.Drawing.Point(786, 535);
+            this.BExitForm.Name = "BExitForm";
+            this.BExitForm.Size = new System.Drawing.Size(73, 66);
+            this.BExitForm.TabIndex = 114;
+            this.BExitForm.UseVisualStyleBackColor = true;
+            this.BExitForm.Click += new System.EventHandler(this.BExitForm_Click);
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -64,6 +76,7 @@ namespace BankTeacher.Bank
             // 
             // CBYearDividend
             // 
+            this.CBYearDividend.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CBYearDividend.FormattingEnabled = true;
             this.CBYearDividend.Location = new System.Drawing.Point(180, 182);
             this.CBYearDividend.Name = "CBYearDividend";
@@ -100,18 +113,6 @@ namespace BankTeacher.Bank
             this.label1.Size = new System.Drawing.Size(303, 28);
             this.label1.TabIndex = 5;
             this.label1.Text = "**เมื่อปันผลแล้วจะไม่สามารถจ่ายเงินกู้ภายในปีนั้นได้";
-            // 
-            // BExitForm
-            // 
-            this.BExitForm.BackgroundImage = global::BankTeacher.Properties.Resources.logout;
-            this.BExitForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BExitForm.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.BExitForm.Location = new System.Drawing.Point(786, 535);
-            this.BExitForm.Name = "BExitForm";
-            this.BExitForm.Size = new System.Drawing.Size(73, 66);
-            this.BExitForm.TabIndex = 114;
-            this.BExitForm.UseVisualStyleBackColor = true;
-            this.BExitForm.Click += new System.EventHandler(this.BExitForm_Click);
             // 
             // Dividend
             // 

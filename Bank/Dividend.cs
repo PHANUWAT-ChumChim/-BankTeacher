@@ -39,6 +39,7 @@ namespace BankTeacher.Bank
           "SELECT @AmountShare = (SUM(b.SavingAmount ) / @PerShare ) \r\n " +
           "FROM EmployeeBank.dbo.tblMember as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo; \r\n " +
+          "WHERE a.MemberStatusNo = 1 \r\n" +
           " \r\n " +
           "--Interest \r\n " +
           "SELECT @Interest = SUM(ISNULL(CASE \r\n " +
