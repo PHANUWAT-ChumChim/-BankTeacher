@@ -24,6 +24,7 @@ namespace BankTeacher.Bank.Pay
         /// <para>[2] Update Saving (CancelBill) INPUT: {TeacherNo} {Amount} {BillNo} {DateTime}</para>
         /// <para>[3] + RemainAmount In Guarantor (CancelBill) INPUT: {LoanNo} , {LoanAmount}</para>
         /// <para>[4] Search All Bill in to day (CancelBill) INPUT: {BillNo} {today} {Text}</para>
+        /// <para>[5] Check Dividend Year INPUT: </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
         {
@@ -83,6 +84,13 @@ namespace BankTeacher.Bank.Pay
           " LEFT JOIN EmployeeBank.dbo.tblBillDetailType as f on b.TypeNo = f.TypeNo  \r\n " +
           " WHERE  a.BillNo LIKE '%{BillNo}%' and MemberStatusNo != 2 and Cancel = 1 and CAST(a.DateAdd as Date) Like '{today}%' and CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255)) LIKE '%{Text}%'\r\n"+
           " GROUP BY a.TeacherNo,CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255)),a.BillNo"
+            ,
+
+            //[5] Check Dividend Year INPUT: 
+            "SELECT Year\r\n " +
+            "FROM EmployeeBank.dbo.tblDividend\r\n" +
+            "WHERE Cancel = 1 \r\n" +
+            "GROUP BY Year;"
         };
 
 
@@ -120,22 +128,58 @@ namespace BankTeacher.Bank.Pay
                         TBTeacherNO_Cancelbill.Text = dt.Rows[0][0].ToString();
                         TBTeacherName_Cancelbill.Text = dt.Rows[0][1].ToString();
                         TBteacharnoby_billcancel.Text = dt.Rows[0][8].ToString();
-                        int Amount = 0;
-                        for (int x = 0; x < dt.Rows.Count; x++)
+                        DataTable DividendYear = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5]);
+                        if(DividendYear.Rows.Count != 0)
                         {
-                            if (dt.Rows[x][5].ToString().Contains("หุ้น"))
-                                DGV_Cancelbill.Rows.Add(dt.Rows[x][3].ToString() + '/' + dt.Rows[x][4].ToString(), "หุ้นสะสม", dt.Rows[x][7].ToString(), '-', dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
-                            else
-                                DGV_Cancelbill.Rows.Add(dt.Rows[x][3].ToString() + '/' + dt.Rows[x][4].ToString(), "รายการกู้ " + dt.Rows[x][6].ToString(), dt.Rows[x][7].ToString(), dt.Rows[x][6].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
-                            Amount = Amount + Convert.ToInt32(dt.Rows[x][7].ToString());
-                            if (x % 2 == 1)
+                            for(int xy = 0; xy < DividendYear.Rows.Count; xy++)
                             {
-                                DGV_Cancelbill.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
+                                if (DividendYear.Rows[0][0].ToString().Contains((Convert.ToDateTime(dt.Rows[xy][2].ToString())).ToString("yyyy")))
+                                {
+                                    MessageBox.Show("ไม่สามารถยกเลิกบิลล์หมายเลขนี้ได้เนื่องจากมีการปันผลไปแล้ว" ,"ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                                    Clear();
+                                    break;
+                                }
+                                else if(xy == DividendYear.Rows.Count - 1)
+                                {
+                                    int Amount = 0;
+                                    for (int x = 0; x < dt.Rows.Count; x++)
+                                    {
+                                        if (dt.Rows[x][5].ToString().Contains("หุ้น"))
+                                            DGV_Cancelbill.Rows.Add(dt.Rows[x][3].ToString() + '/' + dt.Rows[x][4].ToString(), "หุ้นสะสม", dt.Rows[x][7].ToString(), '-', dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
+                                        else
+                                            DGV_Cancelbill.Rows.Add(dt.Rows[x][3].ToString() + '/' + dt.Rows[x][4].ToString(), "รายการกู้ " + dt.Rows[x][6].ToString(), dt.Rows[x][7].ToString(), dt.Rows[x][6].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
+                                        Amount = Amount + Convert.ToInt32(dt.Rows[x][7].ToString());
+                                        if (x % 2 == 1)
+                                        {
+                                            DGV_Cancelbill.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
+                                        }
+                                    }
+                                    LSumAmount_CancelBill.Text = Amount.ToString();
+                                    BSave_Cancelbill.Enabled = true;
+                                    CheckInputBill = true;
+                                }
+
                             }
                         }
-                        LSumAmount_CancelBill.Text = Amount.ToString();
-                        BSave_Cancelbill.Enabled = true;
-                        CheckInputBill = true;
+                        else
+                        {
+                            int Amount = 0;
+                            for (int x = 0; x < dt.Rows.Count; x++)
+                            {
+                                if (dt.Rows[x][5].ToString().Contains("หุ้น"))
+                                    DGV_Cancelbill.Rows.Add(dt.Rows[x][3].ToString() + '/' + dt.Rows[x][4].ToString(), "หุ้นสะสม", dt.Rows[x][7].ToString(), '-', dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
+                                else
+                                    DGV_Cancelbill.Rows.Add(dt.Rows[x][3].ToString() + '/' + dt.Rows[x][4].ToString(), "รายการกู้ " + dt.Rows[x][6].ToString(), dt.Rows[x][7].ToString(), dt.Rows[x][6].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
+                                Amount = Amount + Convert.ToInt32(dt.Rows[x][7].ToString());
+                                if (x % 2 == 1)
+                                {
+                                    DGV_Cancelbill.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
+                                }
+                            }
+                            LSumAmount_CancelBill.Text = Amount.ToString();
+                            BSave_Cancelbill.Enabled = true;
+                            CheckInputBill = true;
+                        }
                     }
                     else
                     {
