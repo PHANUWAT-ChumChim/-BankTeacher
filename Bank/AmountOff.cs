@@ -279,15 +279,19 @@ namespace BankTeacher.Bank
                 MessageBox.Show("ยอดเงินไม่เพียงพอ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             //Form ThisAmountOff = this;
-            foreach (Form f in Application.OpenForms)
+
+            FormCollection fc = Application.OpenForms;
+            foreach (Form f in fc)
             {
-                if (f.Name == "Menu" && f.Enabled == false)
+                if (f.Name == "Menu")
                 {
                     f.Enabled = true;
-                    this.Close();
+                    f.Show();
                     break;
                 }
             }
+            if (fc.Count > 1)
+                this.Close();
         }
 
         private void TBWithDraw_KeyPress(object sender, KeyPressEventArgs e)
@@ -408,7 +412,21 @@ namespace BankTeacher.Bank
 
         private void BExitForm_Click(object sender, EventArgs e)
         {
-            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+            //Add_Member.CancelMember FCancelMember = new Add_Member.CancelMember();
+            FormCollection fc = Application.OpenForms;
+            foreach (Form f in fc)
+            {
+                if (f.Name == "Menu")
+                {
+                    f.Enabled = true;
+                    f.Show();
+                    break;
+                }
+            }
+            if (fc.Count > 1)
+                this.Close();
+            else
+                BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
         }
 
         private void AmountOff_KeyDown(object sender, KeyEventArgs e)

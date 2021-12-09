@@ -78,7 +78,9 @@ namespace BankTeacher.Bank
                 LInterestAmount.Text = dsReport.Tables[0].Rows[0][3].ToString();
                 LInterestNextYear.Text = dsReport.Tables[0].Rows[0][4].ToString();
                 LDividendPerShare.Text = dsReport.Tables[0].Rows[0][5].ToString();
-                LRemainInterest.Text = dsReport.Tables[1].Rows[0][0].ToString();
+
+                if(dsReport.Tables[1].Rows.Count != 0)
+                    LRemainInterest.Text = dsReport.Tables[1].Rows[0][0].ToString();
             }
         }
 

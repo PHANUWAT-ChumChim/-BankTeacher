@@ -166,25 +166,30 @@ namespace BankTeacher.Bank.Add_Member
                     }
                     else
                     {
-                        if ((MessageBox.Show("ยอดเงินคงเหลือของท่านยังอยู่ในระบบ", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes))
+                        if ((MessageBox.Show("ยอดเงินคงเหลือของท่านยังอยู่ในระบบ \r\n ต้องถอนเงินออกจากระบบก่อน", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes))
                         {
                             AmountOff FAmountOff = new AmountOff();
                             //Menu menu = new Menu();
                             //menu.Visible = false;
+                            Menu FMenu = new Menu();
 
                             FAmountOff.FormBorderStyle = FormBorderStyle.Sizable;
                             FAmountOff.Show();
                             FAmountOff.TBTeacherNo.Text = TBTeacherNo.Text;
                             FAmountOff.TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
 
-                            List<Form> openForms = new List<Form>();
+                            //List<Form> openForms = new List<Form>();
 
                             foreach (Form f in Application.OpenForms)
                             {
                                 if (f.Name == "Menu")
+                                {
                                     f.Enabled = false;
+                                    f.Hide();
+                                    break;
+                                }
                             }
-
+                            //FMenu.Close();
                         }
                     }
                 }
