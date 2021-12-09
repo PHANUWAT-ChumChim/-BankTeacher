@@ -171,7 +171,17 @@ namespace BankTeacher.Bank
                         TBSavingAmount.Text = ds.Tables[0].Rows[0][2].ToString();
                         TBCreditSystem.Text = Credit[0];
                         Credit = ds.Tables[0].Rows[0][4].ToString().Split('.');
-                        TBCreditWithDraw.Text = Credit[0];
+                        if(Double.TryParse(Credit[0], out double Amount))
+                        {
+                            if(Amount < 0)
+                            {
+                                TBCreditWithDraw.Text = 0.ToString();
+                            }
+                            else
+                            {
+                                TBCreditWithDraw.Text = Credit[0];
+                            }
+                        }
                         Check = 1;
                         CBTypePay.SelectedIndex = 0;
 
