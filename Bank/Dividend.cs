@@ -87,7 +87,6 @@ namespace BankTeacher.Bank
             DataSet dsStartYear = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]);
             for (int x = Convert.ToInt32(dsStartYear.Tables[0].Rows[0][0].ToString()); x <= Convert.ToInt32(dsStartYear.Tables[1].Rows[0][0].ToString()); x++)
             {
-                //adwawdad
                 CBYearDividend.Items.Add(x);
             }
         }
