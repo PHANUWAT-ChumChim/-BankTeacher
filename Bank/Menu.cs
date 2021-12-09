@@ -169,7 +169,6 @@ namespace BankTeacher.Bank
         {
             Bank.ReportEpensesAll reportEpensesall = new Bank.ReportEpensesAll();
             CloseFrom(reportEpensesall);
-            ///ljsbdkawbfjklanfljkesbflka
         }
 
 
