@@ -284,7 +284,6 @@ namespace BankTeacher.Bank.Pay
 
             var paperSize = printDocument1.PrinterSettings.PaperSizes.Cast<System.Drawing.Printing.PaperSize>().FirstOrDefault(e => e.PaperName == "A5");
             printDocument1.PrinterSettings.DefaultPageSettings.PaperSize = paperSize;
-            //
         }
 
         //ChangeSizeForm
