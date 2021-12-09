@@ -78,7 +78,7 @@ namespace BankTeacher.Bank
             // 
             this.CBYearDividend.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CBYearDividend.FormattingEnabled = true;
-            this.CBYearDividend.Location = new System.Drawing.Point(180, 182);
+            this.CBYearDividend.Location = new System.Drawing.Point(183, 182);
             this.CBYearDividend.Name = "CBYearDividend";
             this.CBYearDividend.Size = new System.Drawing.Size(121, 36);
             this.CBYearDividend.TabIndex = 7;
