@@ -291,7 +291,6 @@ namespace BankTeacher.Bank
                 MessageBox.Show("ยอดเงินไม่เพียงพอ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             //Form ThisAmountOff = this;
-
             FormCollection fc = Application.OpenForms;
             foreach (Form f in fc)
             {
