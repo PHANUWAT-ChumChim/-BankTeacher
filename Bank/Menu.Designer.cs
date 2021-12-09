@@ -30,6 +30,8 @@ namespace BankTeacher.Bank
         private void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.Menu_AddMembers = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_CancelMembers = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Home = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Pay = new System.Windows.Forms.ToolStripMenuItem();
             this.Manu_pay = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,8 +59,6 @@ namespace BankTeacher.Bank
             this.DevidendYear = new System.Windows.Forms.ToolStripMenuItem();
             this.CancelDevind = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_setring = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_AddMembers = new System.Windows.Forms.ToolStripMenuItem();
-            this.Menu_CancelMembers = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -82,6 +82,18 @@ namespace BankTeacher.Bank
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             this.menuStrip1.ItemAdded += new System.Windows.Forms.ToolStripItemEventHandler(this.menuStrip1_ItemAdded);
+            // 
+            // Menu_AddMembers
+            // 
+            this.Menu_AddMembers.Name = "Menu_AddMembers";
+            this.Menu_AddMembers.Size = new System.Drawing.Size(246, 42);
+            this.Menu_AddMembers.Text = "5.1 สมัครสมาชิก";
+            // 
+            // Menu_CancelMembers
+            // 
+            this.Menu_CancelMembers.Name = "Menu_CancelMembers";
+            this.Menu_CancelMembers.Size = new System.Drawing.Size(246, 42);
+            this.Menu_CancelMembers.Text = "5.2 ยกเลิกสมาชิก";
             // 
             // Menu_Home
             // 
@@ -211,7 +223,7 @@ namespace BankTeacher.Bank
             this.ประวตการยกเลกบลลToolStripMenuItem,
             this.ReprotDividend});
             this.Menu_RePornt.Font = new System.Drawing.Font("TH Sarabun New", 17.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Menu_RePornt.Image = global::BankTeacher.Properties.Resources.Reports1;
+            this.Menu_RePornt.Image = global::BankTeacher.Properties.Resources.Report_2;
             this.Menu_RePornt.Name = "Menu_RePornt";
             this.Menu_RePornt.Size = new System.Drawing.Size(110, 35);
             this.Menu_RePornt.Text = "6 รายงาน";
@@ -309,18 +321,6 @@ namespace BankTeacher.Bank
             this.Menu_setring.Size = new System.Drawing.Size(78, 35);
             this.Menu_setring.Text = "ตั้งค่า";
             this.Menu_setring.Click += new System.EventHandler(this.Menu_setring_Click);
-            // 
-            // Menu_AddMembers
-            // 
-            this.Menu_AddMembers.Name = "Menu_AddMembers";
-            this.Menu_AddMembers.Size = new System.Drawing.Size(246, 42);
-            this.Menu_AddMembers.Text = "5.1 สมัครสมาชิก";
-            // 
-            // Menu_CancelMembers
-            // 
-            this.Menu_CancelMembers.Name = "Menu_CancelMembers";
-            this.Menu_CancelMembers.Size = new System.Drawing.Size(246, 42);
-            this.Menu_CancelMembers.Text = "5.2 ยกเลิกสมาชิก";
             // 
             // Menu
             // 
