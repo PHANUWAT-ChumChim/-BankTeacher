@@ -19,7 +19,7 @@ namespace BankTeacher.Bank
 
         /// <summary> 
         /// SQLDefault 
-        /// <para>[0] Insert Dividend INPUT: {Year} </para> 
+        /// <para>[0] Insert Dividend INPUT: {Year} {TeacherAddbyNo} </para> 
         /// <para>[1] Table[1]Select StartYear and Table[2]Select EndYear INPUT: </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
@@ -60,8 +60,8 @@ namespace BankTeacher.Bank
           " \r\n " +
           "SET @DividendNo = SCOPE_IDENTITY(); \r\n " +
           " \r\n " +
-          "INSERT INTO EmployeeBank.dbo.tblDividendDetail (DividendNo , TeacherNo , SavingAmount , DividendAmount) \r\n " +
-          "SELECT @DividendNo,a.TeacherNo  , b.SavingAmount , ROUND(ROUND((b.SavingAmount/@PerShare), 2 ,1) * @AVGDivident ,2 , 1) as Dividend \r\n " +
+          "INSERT INTO EmployeeBank.dbo.tblDividendDetail (DividendNo , TeacherNo , SavingAmount , DividendAmount , TeacherAddby) \r\n " +
+          "SELECT @DividendNo,a.TeacherNo  , b.SavingAmount , ROUND(ROUND((b.SavingAmount/@PerShare), 2 ,1) * @AVGDivident ,2 , 1) as Dividend , {TeacherAddbyNo} \r\n " +
           "FROM EmployeeBank.dbo.tblMember as a  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo \r\n " +
           "WHERE a.MemberStatusNo = 1;"
@@ -82,15 +82,9 @@ namespace BankTeacher.Bank
 
          };
 
-        private void tabPage2_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void Dividend_Load(object sender, EventArgs e)
         {
             DataSet dsStartYear = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]);
-
             for (int x = Convert.ToInt32(dsStartYear.Tables[0].Rows[0][0].ToString()); x <= Convert.ToInt32(dsStartYear.Tables[1].Rows[0][0].ToString()); x++)
             {
                 CBYearDividend.Items.Add(x);
@@ -104,7 +98,8 @@ namespace BankTeacher.Bank
                 try
                 {
                     Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]
-                    .Replace("{Year}", CBYearDividend.Items.ToString()));
+                    .Replace("{Year}", CBYearDividend.Items.ToString())
+                    .Replace("{TeacherAddbyNo}",Class.UserInfo.TeacherNo));
                     MessageBox.Show("บันทึกสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                     CBYearDividend.Items.RemoveAt(CBYearDividend.SelectedIndex);
