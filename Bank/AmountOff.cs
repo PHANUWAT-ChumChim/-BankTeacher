@@ -102,7 +102,7 @@ namespace BankTeacher.Bank
             ,
 
             //[6] SELECT ShareWithDraw INPUT: {Date} ,{TeacherNo}
-            "SELECT CAST(c.DateAdd as date) ,a.TeacherNo , CAST(ISNULL(e.PrefixNameFull , '') + d.Fname + ' ' + d.Lname as varchar) , c.Amount  \r\n " +
+            "SELECT CAST(c.DateAdd as date) ,a.TeacherNo , CAST(ISNULL(e.PrefixNameFull , '') + d.Fname + ' ' + d.Lname as NVARCHAR) , c.Amount  \r\n " +
             "FROM EmployeeBank.dbo.tblMember as a  \r\n " +
             "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo  \r\n " +
             "LEFT JOIN EmployeeBank.dbo.tblShareWithdraw as c on b.ShareNo = c.ShareNo  \r\n " +
@@ -291,18 +291,20 @@ namespace BankTeacher.Bank
                 MessageBox.Show("ยอดเงินไม่เพียงพอ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             //Form ThisAmountOff = this;
-            FormCollection fc = Application.OpenForms;
-            foreach (Form f in fc)
-            {
-                if (f.Name == "Menu")
-                {
-                    f.Enabled = true;
-                    f.Show();
-                    break;
-                }
-            }
-            if (fc.Count > 1)
-                this.Close();
+
+            //FormCollection fc = Application.OpenForms;
+            //foreach (Form f in fc)
+            //{
+            //    if (f.Name == "Menu")
+            //    {
+            //        f.Enabled = true;
+            //        f.Show();
+            //        break;
+            //    }
+            //}
+            //if (fc.Count > 1)
+            //    this.Close();
+
         }
 
         private void TBWithDraw_KeyPress(object sender, KeyPressEventArgs e)
@@ -425,17 +427,20 @@ namespace BankTeacher.Bank
         {
             //Add_Member.CancelMember FCancelMember = new Add_Member.CancelMember();
             FormCollection fc = Application.OpenForms;
-            foreach (Form f in fc)
+            if (fc.Count > 2)
             {
-                if (f.Name == "Menu")
+                
+                foreach (Form f in fc)
                 {
-                    f.Enabled = true;
-                    f.Show();
-                    break;
+                    if (f.Name == "Menu")
+                    {
+                        f.Enabled = true;
+                        f.Show();
+                        break;
+                    }
                 }
-            }
-            if (fc.Count > 1)
                 this.Close();
+            }
             else
                 BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
         }
