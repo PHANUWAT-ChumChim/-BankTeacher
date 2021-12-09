@@ -481,7 +481,6 @@ namespace BankTeacher.Bank.Loan
                             // ======= Tab 2 Clear ===============
                             CBPayMonth.SelectedIndex = -1;
                             CBPayYear.SelectedIndex = -1;
-                            DGVGuarantorCredit.Rows.Clear();
                             // ======= Tab 3 Clear ===============
                             // ======= Tab 4 Clear ===============
                             DGVLoanDetail.Rows.Clear();
