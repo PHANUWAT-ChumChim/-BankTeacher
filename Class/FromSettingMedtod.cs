@@ -68,10 +68,6 @@ namespace BankTeacher.Class
         public static void ReturntoHome(Form FORM)
         {
             FORM.Close();
-            BankTeacher.Bank.Home F = new BankTeacher.Bank.Home();
-            F.MdiParent = BankTeacher.Bank.Menu.Parent;
-            F.WindowState = FormWindowState.Maximized;
-            F.Show();
             BankTeacher.Bank.Menu.Parent.MainMenuStrip.Visible = true;
         }
     }

@@ -88,12 +88,6 @@ namespace BankTeacher.Bank.Loan
                     cb[x].Items.Add(new BankTeacher.Class.ComboBoxPayment(dtPayment.Rows[a][0].ToString(),
                         dtPayment.Rows[a][1].ToString()));
         }
-
-        private void panel7_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
             Bank.Search IN;
@@ -107,7 +101,6 @@ namespace BankTeacher.Bank.Loan
                 {
                     TBTeacherNo.Text = Bank.Search.Return[0];
                     TBTeacherName.Text = Bank.Search.Return[1];
-                    textBox1.Text = Bank.Search.Return[1];
                     label3.Text = "0";
                     CBB4Oppay.Enabled = false;
                     button1.Enabled = false;
@@ -115,7 +108,7 @@ namespace BankTeacher.Bank.Loan
                     Check = 1;
                     TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
                 }
-                
+                //
             }
             catch (Exception x)
             {
@@ -133,7 +126,6 @@ namespace BankTeacher.Bank.Loan
                     if (dt.Rows.Count != 0)
                     {
                         TBTeacherName.Text = dt.Rows[0][1].ToString();
-                        textBox1.Text = dt.Rows[0][1].ToString();
                         comboBox1.Enabled = true;
                         comboBox1.Items.Clear();
                         Check = 1;
@@ -240,7 +232,6 @@ namespace BankTeacher.Bank.Loan
                     CBB4Oppay.SelectedIndex = -1;
                     CBB4Oppay.Enabled = false;
                     TBTeacherNo.Text = "";
-                    textBox1.Text = "";
                     button1.Enabled = false;
                     comboBox1.Enabled = false;
                     TBTeacherNo.Focus();
@@ -359,6 +350,29 @@ namespace BankTeacher.Bank.Loan
                 {
                     BExitForm_Click(new object(), new EventArgs());
                 }
+            }
+        }
+
+        private void PayLoan_Load(object sender, EventArgs e)
+        {
+            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0].Replace("{Text}", ""));
+            if (dt.Rows.Count != 0)
+            {
+                panel7.Enabled = true;
+                tabControl1.Enabled = true;
+            }
+            else
+            {
+                panel7.Enabled = false;
+                tabControl1.Enabled = false;
+            }
+        }
+
+        private void panel7_VisibleChanged(object sender, EventArgs e)
+        {
+            if (panel7.Enabled == false)
+            {
+                MessageBox.Show("ไม่พบรายการ กรูณาลงรายการใหม่อีกครั้งค่ะ");
             }
         }
     }

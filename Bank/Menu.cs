@@ -202,5 +202,16 @@ namespace BankTeacher.Bank
             Bank.CancelDividend CancelDividend = new Bank.CancelDividend();
             CloseFrom(CancelDividend);
         }
+
+        private void menuStrip1_VisibleChanged(object sender, EventArgs e)
+        {
+            if (menuStrip1.Visible == true)
+            {
+                BankTeacher.Bank.Home F = new BankTeacher.Bank.Home();
+                F.MdiParent = BankTeacher.Bank.Menu.Parent;
+                F.WindowState = FormWindowState.Maximized;
+                F.Show();
+            }
+        }
     }
 }
