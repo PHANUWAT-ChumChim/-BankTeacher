@@ -176,10 +176,12 @@ namespace BankTeacher.Bank
                             if(Amount < 0)
                             {
                                 TBCreditWithDraw.Text = 0.ToString();
+                                BMaxWithDraw_AmountOff.Enabled = false;
                             }
                             else
                             {
                                 TBCreditWithDraw.Text = Credit[0];
+                                BMaxWithDraw_AmountOff.Enabled = true;
                             }
                         }
                         Check = 1;
@@ -289,7 +291,6 @@ namespace BankTeacher.Bank
                 MessageBox.Show("ยอดเงินไม่เพียงพอ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             //Form ThisAmountOff = this;
-
             FormCollection fc = Application.OpenForms;
             foreach (Form f in fc)
             {
