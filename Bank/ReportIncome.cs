@@ -194,7 +194,6 @@ namespace BankTeacher.Bank
                 }
             }
         }
-
         private void Cleartabpage1()
         {
             TBAmount.Text = "0";
