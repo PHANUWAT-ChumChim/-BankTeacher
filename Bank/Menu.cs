@@ -115,6 +115,7 @@ namespace BankTeacher.Bank
         {
             Bank.AmountOff AmountOff = new Bank.AmountOff();
             CloseFrom(AmountOff);
+            //A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
         }
 
         private void aaToolStripMenuItem_Click(object sender, EventArgs e)
