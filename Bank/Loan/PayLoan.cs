@@ -358,19 +358,18 @@ namespace BankTeacher.Bank.Loan
             DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0].Replace("{Text}", ""));
             if (dt.Rows.Count != 0)
             {
-                panel7.Enabled = true;
+                //panel7.Enabled = true;
                 tabControl1.Enabled = true;
             }
             else
             {
-                panel7.Enabled = false;
+                //panel7.Enabled = false;
                 tabControl1.Enabled = false;
             }
         }
-
-        private void panel7_VisibleChanged(object sender, EventArgs e)
+        private void tabControl1_VisibleChanged(object sender, EventArgs e)
         {
-            if (panel7.Enabled == false)
+            if (tabControl1.Enabled == false)
             {
                 MessageBox.Show("ไม่พบรายการ กรูณาลงรายการใหม่อีกครั้งค่ะ");
             }
