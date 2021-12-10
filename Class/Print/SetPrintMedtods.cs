@@ -229,16 +229,12 @@ namespace BankTeacher.Class.Print
                     // เช็คตำเเหน่งที่เคยวาดไปเเล้ว 
                     if (RowsNo >= c)
                     {
-                        // ค่าที่ไม่เกิน กำหนดการขึ้นหน้าใหม่
-                        if (notover <= Class.Print.PrintPreviewDialog.page_length)
-                        {
-                            // นับตำเเหน่ง Rows ที่ถูกเทียบไปทั้งหมด
-                            p++;
-                            cm = CutingCharAndString(e, G.Rows[RowsNo].Cells[Loca - 1].Value.ToString()
-                         , SetCut, X, Y, out nu, out over, 2);
-                            notover += over;
-                            Values.Add(cm);
-                        }
+                        // นับตำเเหน่ง Rows ที่ถูกเทียบไปทั้งหมด
+                        p++;
+                        cm = CutingCharAndString(e, G.Rows[RowsNo].Cells[Loca - 1].Value.ToString()
+                        , SetCut, X, Y, out nu, out over, 2);
+                        notover += over;
+                        Values.Add(cm);
                     }
                 }
 
@@ -292,6 +288,27 @@ namespace BankTeacher.Class.Print
             e.Graphics.DrawString($"{Convert.ToInt32(sum).ToString("D")} บาท", Class.Print.PrintPreviewDialog.FonT(18, "TH Sarabun New", FontStyle.Bold), B, ((Sizepaper - 50) - SizeSUM.Width) / 2 + SizeSUM.Width, y);
             // เส้น
             e.Graphics.DrawRectangle(pen, SizeSUM.Width + x, y, (Sizepaper-50) - SizeSUM.Width, SizeSUM.Height);
+        }
+
+        public static void confirmation(System.Drawing.Printing.PrintPageEventArgs e,Pen Pen, Brush Brush, int Print_two,float SizeForm_Width,float move)
+        {
+            string script = "";
+            if (Print_two == 0)
+            {
+                script = "ต้นฉบับ";
+            }
+            else
+            {
+                script = "สำเนา";
+            }
+            // ต้นฉบับ  สำเนา
+            SizeF Size = e.Graphics.MeasureString(script, Class.Print.PrintPreviewDialog.FonT(30, "TH Sarabun New", FontStyle.Bold));
+            // พื้นหลัง
+            e.Graphics.FillRectangle(Brushes.White, SizeForm_Width - Size.Width - move, 50, Size.Width, Size.Height);
+            // ข้อความ
+            e.Graphics.DrawString(script, Class.Print.PrintPreviewDialog.FonT(30, "TH Sarabun New", FontStyle.Bold), Brush, SizeForm_Width - Size.Width - move, 50);
+            // กล่อง
+            e.Graphics.DrawRectangle(Pen, SizeForm_Width - Size.Width - move, 50, Size.Width, Size.Height - 10);
         }
 
         // ของปุ้น

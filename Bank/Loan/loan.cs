@@ -131,10 +131,11 @@ namespace BankTeacher.Bank.Loan
             "DELETE FROM EmployeeBank.dbo.tblGuarantor\r\n"
             ,
             //[8] Check Dividend Year INPUT: 
-            "SELECT TOP 1 MAX(Year)\r\n " +
-            "FROM EmployeeBank.dbo.tblDividend\r\n" +
-            "WHERE Cancel = 1;"
+           "SELECT TOP 1 ISNULL(MAX(a.Year) + 1 , 0) \r\n " +
+          "FROM EmployeeBank.dbo.tblDividend as a  \r\n " +
+          "WHERE a.Cancel = 1 ;"
            ,
+
 
 
         };
@@ -481,7 +482,6 @@ namespace BankTeacher.Bank.Loan
                             // ======= Tab 2 Clear ===============
                             CBPayMonth.SelectedIndex = -1;
                             CBPayYear.SelectedIndex = -1;
-                            DGVGuarantorCredit.Rows.Clear();
                             // ======= Tab 3 Clear ===============
                             // ======= Tab 4 Clear ===============
                             DGVLoanDetail.Rows.Clear();

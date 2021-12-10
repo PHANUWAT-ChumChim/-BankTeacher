@@ -76,7 +76,6 @@ namespace BankTeacher.Bank
           "UPDATE EmployeeBank.dbo.tblDividend  \r\n " +
           "SET RemainInterestLastYear = @Interest \r\n " +
           "WHERE DividendNo = @DividendNo; \r\n" +
-
           "UPDATE EmployeeBank.dbo.tblShare \r\n " +
           "SET SavingAmount = SavingAmount + (SELECT b.DividendAmount \r\n " +
           "	FROM EmployeeBank.dbo.tblDividend as a \r\n " +
@@ -88,7 +87,6 @@ namespace BankTeacher.Bank
           "	WHERE a.DividendNo = @DividendNo and a.Cancel = 1) \r\n "
 
            ,
-
 
            //[1] Table[1]Select StartYear and Table[2]Select EndYear INPUT: 
            "DECLARE @Getnull int; \r\n " +
@@ -190,6 +188,7 @@ namespace BankTeacher.Bank
           "WHERE Cancel = 1 \r\n " +
           "GROUP BY Year"
            ,
+
 
 
          };

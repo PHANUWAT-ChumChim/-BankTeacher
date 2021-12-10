@@ -26,7 +26,7 @@ namespace BankTeacher.Bank.Pay
         public static string info_datepay;
         // กู้
         public static string info_Lona_AmountRemain;
-        public static int SELECT = 1;
+        int SELECT_Print = 1;
         //------------------------- index -----------------
 
         int SelectIndexRow = -1;
@@ -272,7 +272,7 @@ namespace BankTeacher.Bank.Pay
            ,
          };
 
-
+        
         //=================================== Load Form ============================================
         //Open Form
         public pay()
@@ -336,9 +336,8 @@ namespace BankTeacher.Bank.Pay
             //หากมีการกด Enter
             if (e.KeyCode == Keys.Enter)
             {
+                CB_SelectPrint.SelectedIndex = 0;
                 tabControl1.SelectedIndex = 0;
-                BTPrint.Enabled = false;
-                BTPrint.BackColor = Color.Red;
                 List<int> Loan = new List<int>();
                 List<List<int>> RMonth = new List<List<int>>();
                 //ลองค้นหาดูว่ามี ID สมาชิกนี้ในระบบมั้ย หากมีให้ทำใน if
@@ -676,6 +675,7 @@ namespace BankTeacher.Bank.Pay
                     TBTeacherBill.Text = "";
                     TBTeacherName.Text = "";
                     //====================================================
+                    DGV_Tester.Rows.Clear();
                     tabControl1.Enabled = false;
                     ClearForm();
                     CheckInputTeacher = false;
@@ -1286,7 +1286,7 @@ namespace BankTeacher.Bank.Pay
                         info_Billpay = TBTeacherBill.Text;
                         info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
                         info_datepay = DateTime.Today.Day.ToString() +'/'+ DateTime.Today.Month.ToString() +'/'+ DateTime.Today.Year.ToString();
-                        SELECT = 1;
+                        SELECT_Print = 1;
                         printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                         printDocument1.DefaultPageSettings.Landscape = true;
                         if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
@@ -1483,6 +1483,8 @@ namespace BankTeacher.Bank.Pay
         {
             if(CBYearSelection_Pay.SelectedIndex != -1)
             {
+                DGV_Tester.Rows.Clear();
+                BTPrint.BackColor = Color.Red;
                 DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[14]
                 .Replace("{TeacherNo}", TBTeacherNo.Text)
                 .Replace("{Year}", CBYearSelection_BillInfo.Text));
@@ -1908,11 +1910,11 @@ namespace BankTeacher.Bank.Pay
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            if (SELECT == 1)
+            if (SELECT_Print == 1)
             {
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Printbypoon, "ใบเสร็จรับเงิน", this.AccessibilityObject.Name,1,"A5",0);
             }
-            else if(CB_Printback.Checked != false)
+            else if(CB_SelectPrint.SelectedIndex == 1)
             {
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Tester, "ใบเสร็จรับเงิน(ย้อนหลัง)", this.AccessibilityObject.Name,1,"A5",0);
             }
@@ -1935,43 +1937,30 @@ namespace BankTeacher.Bank.Pay
         // คลิ๊กเพื่อปริ้นข้อมูลย้อนหลัง
         private void DGV_BillInfo_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            BTPrint.BackColor = Color.White;
             if (e.RowIndex != -1)
             {
-                SELECT = 0;
+                BTPrint.Enabled = true;
+                BTPrint.BackColor = Color.White;
+                SELECT_Print = 0;
                 info_name = TBTeacherName.Text;
                 info_id = TBTeacherNo.Text;
                 info_totelAmountpay = TBToatalSaving_ShareInfo.Text;
                 info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
                 info_Billpay = DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString();
-                BTPrint.Enabled = true;
-                BTPrint.BackColor = Color.White;
+                DataTable dt_date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[16].Replace("{Bill}", DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString()));
+                info_datepay = dt_date.Rows[0][1].ToString();
                 DGV_Tester.Rows.Clear();
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[15].Replace("{bill}", DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString()));
                 for (int Row = 0; Row < dt.Rows.Count; Row++)
                 {
-                    DGV_Tester.Rows.Add(Row+1,dt.Rows[Row][3].ToString(), dt.Rows[Row][2].ToString(), dt.Rows[Row][1]);
+                    DGV_Tester.Rows.Add(Row + 1, dt.Rows[Row][3].ToString(), dt.Rows[Row][2].ToString(), dt.Rows[Row][1]);
                 }
             }
             else
+            {
                 BTPrint.BackColor = Color.Red;
-
-            if (DGV_Tester.Rows.Count != 0 && e.RowIndex != -1)
-            {
-                BTPrint.Enabled = true;
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[16].Replace("{Bill}", DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString()));
-                info_datepay = dt.Rows[0][1].ToString();
+                DGV_Tester.Rows.Clear();
             }
-            else
-            {
-                BTPrint.Enabled = false;
-            }
-        }
-        // เคลียร์ Clear เเบบปริ้น
-        private void DGV_BillInfo_RowValidated_1(object sender, DataGridViewCellEventArgs e)
-        {
-            DGV_Tester.Rows.Clear();
-            BTPrint.Enabled = false;
         }
         // เปลี่ยนรูปเเบบตามต้นฉบับ
         private void DGV_Pay_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
@@ -2001,23 +1990,31 @@ namespace BankTeacher.Bank.Pay
         // ปริ้น
         private void BTPrint_Click(object sender, EventArgs e)
         {
-            if(CB_Printback.Checked != false)
+            if(BTPrint.BackColor != Color.Red)
             {
-                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
-                printDocument1.DefaultPageSettings.Landscape = true;
-                if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                if (CB_SelectPrint.SelectedIndex == 1)
                 {
-                    printDocument1.Print();
+                    printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+                    printDocument1.DefaultPageSettings.Landscape = true;
+                    if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                    {
+                        printDocument1.Print();
+                    }
+                }
+                else
+                {
+                    printDocument1.DefaultPageSettings.PaperSize = new PaperSize("Letter", 850, 1100);
+                    printDocument1.DefaultPageSettings.Landscape = false;
+                    if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                    {
+                        printDocument1.Print();
+                    }
                 }
             }
             else
             {
-                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("Letter",850,1100);
-                printDocument1.DefaultPageSettings.Landscape = false;
-                if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    printDocument1.Print();
-                }
+                MessageBox.Show("โปรเลือกเลขบิลล์ในตาราง");
+                PB_Arrow.Visible = true;
             }
         }
 

@@ -21,12 +21,14 @@ namespace BankTeacher.Bank
         public static string info_totelAmountpay;
         public static string info_status;
         public static string info_ShareNo;
-        public static string info_datepay;
+        // กล่งอเอกสาาร
+        public static string info_BillAmounoff;
+        public static string info_datepayAmounoff;
         // ยอดที่ถอน
         public static string info_Amounoff;
         public static string info_Amounoffinsystem;
         public static string info_canbeAmounoff;
-        // ต้นฉบับ
+        int SELECT_Print = 0;
         int StatusBoxFile = 0;
         String imgeLocation = "";
         /// <summary>
@@ -38,6 +40,10 @@ namespace BankTeacher.Bank
         /// <para>[5] SELECT MEMBER INPUT: {Text}</para>
         /// <para>[6] SELECT ShareWithDraw INPUT: {Date}</para>
         /// <para>[7] SELECT Withdraw (Year) INPUT: {Year} {TeacherNo}</para>
+        /// <para>[9] SELECT for Print INPUT : {WithDrawNo} </para>
+        /// <para>[10] SELECT for Print(WithDrawNo) </para>
+        /// <para>[11] for(datagrid) INPUT : {TeacherNo} {Date} </para>
+        /// <para>[12] for year of withdraw  INPUT : {TeacherNo} </para>
         /// </summary>
         String[] SQLDefault = new String[]
         {
@@ -102,14 +108,14 @@ namespace BankTeacher.Bank
             ,
 
             //[6] SELECT ShareWithDraw INPUT: {Date} ,{TeacherNo}
-            "SELECT CAST(c.DateAdd as date) ,a.TeacherNo , CAST(ISNULL(e.PrefixNameFull , '') + d.Fname + ' ' + d.Lname as NVARCHAR) , c.Amount  \r\n " +
+            "SELECT CAST(c.DateAdd as date) ,a.TeacherNo , CAST(ISNULL(e.PrefixNameFull , '') + d.Fname + ' ' + d.Lname as NVARCHAR) , c.Amount,c.WithDrawNo    \r\n " +
             "FROM EmployeeBank.dbo.tblMember as a  \r\n " +
             "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo  \r\n " +
             "LEFT JOIN EmployeeBank.dbo.tblShareWithdraw as c on b.ShareNo = c.ShareNo  \r\n " +
             "LEFT JOIN Personal.dbo.tblTeacherHis as d on a.TeacherNo = d.TeacherNo  \r\n " +
             "LEFT JOIN BaseData.dbo.tblPrefix as e on d.PrefixNo = e.PrefixNo  \r\n " +
             "WHERE CAST(CAST(c.DateAdd as date) as varchar) LIKE '{Date}%' and a.TeacherNo LIKE '{TeacherNo}%' "
-           
+
 
 
             ,
@@ -125,6 +131,28 @@ namespace BankTeacher.Bank
           "FROM EmployeeBank.dbo.tblMember \r\n " +
           "WHERE TeacherNo = '{TeacherNo}' and MemberStatusNo != 2; "
            ,
+           //[9] SELECT for Print(SELECT) INPUT : {WithDrawNo}
+          "SELECT a.WithDrawNo,a.ShareNo,a.Amount,CAST(a.DateAdd as date) as date,a.BillDetailPayMentNo \r\n" +
+          "FROM EmployeeBank.dbo.tblShareWithdraw as a \r\n" +
+          "WHERE a.WithDrawNo = '{WithDrawNo}';"
+            ,
+           //[10] SELECT for Print(WithDrawNo) INPUT : -
+          "SELECT MAX(a.WithDrawNo) as WithDrawNo \r\n" +
+          "FROM EmployeeBank.dbo.tblShareWithdraw as a"
+            ,
+          //[11] for(datagrid) INPUT : {TeacherNo} {Date}
+          "SELECT a.ShareNo,c.TeacherNo,a.WithDrawNo,a.DateAdd,a.Amount  \r\n" +
+          "FROM EmployeeBank.dbo.tblShareWithdraw as a  \r\n" +
+          "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.ShareNo = b.ShareNo  \r\n" +
+          "LEFT JOIN EmployeeBank.dbo.tblMember as c on b.TeacherNo = c.TeacherNo  \r\n" +
+          "WHERE c.TeacherNo = '{TeacherNo}' and YEAR(a.DateAdd) = '{Date}'"
+            ,
+          //[12] for year of withdraw  INPUT : {TeacherNo}
+          "SELECT YEAR(MAX(a.DateAdd)) \r\n " +
+          "FROM EmployeeBank.dbo.tblShareWithdraw as a \r\n" +
+          "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.ShareNo = b.ShareNo \r\n" +
+          "LEFT JOIN EmployeeBank.dbo.tblMember as c on b.TeacherNo = c.TeacherNo \r\n" +
+          "WHERE c.TeacherNo = '{TeacherNo}'"
 
 
         };
@@ -153,6 +181,10 @@ namespace BankTeacher.Bank
             {
                 if (TBTeacherNo.Text.Length == 6)
                 {
+                    CBYear.Enabled = false;
+                    DGVAmountOffHistory.Enabled = false;
+                    tabControl1.SelectedIndex = 0;
+                    tabControl1.Enabled = true;
                     DGVAmountOffHistory.Rows.Clear();
                     CBYear.Items.Clear();
                     DGVLoan.Rows.Clear();
@@ -176,11 +208,14 @@ namespace BankTeacher.Bank
                             if(Amount < 0)
                             {
                                 TBCreditWithDraw.Text = 0.ToString();
+                                TBWithDraw.Enabled = false;
                                 BMaxWithDraw_AmountOff.Enabled = false;
+                                MessageBox.Show("ยอดเงินของคุณยังติดกู้อยู่");
                             }
                             else
                             {
                                 TBCreditWithDraw.Text = Credit[0];
+                                TBWithDraw.Enabled = true;
                                 BMaxWithDraw_AmountOff.Enabled = true;
                             }
                         }
@@ -192,8 +227,6 @@ namespace BankTeacher.Bank
                             Credit = ds.Tables[1].Rows[Num][1].ToString().Split('.');
                             DGVLoan.Rows.Add(ds.Tables[1].Rows[Num][0].ToString(), ds.Tables[1].Rows[Num][2].ToString(), Credit[0], ds.Tables[1].Rows[Num][3].ToString());
                         }
-                        if(CBYear.Items.Count != 0)
-                            CBYear.SelectedIndex = 0;
                         if (DGVLoan.Rows.Count != 0)
                         {
                             TBLoanStatus.Text = "ติดกู้";
@@ -206,20 +239,43 @@ namespace BankTeacher.Bank
                         MessageBox.Show("รหัสผู้ใช้ไม่ถูกต้อง", "System", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
 
-                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
-                        .Replace("{TeacherNo}" , TBTeacherNo.Text));
-                    int Year = Convert.ToInt32((Convert.ToDateTime(dt.Rows[0][0].ToString())).ToString("yyyy")) < Convert.ToInt32(Bank.Menu.Date[0]) - 2? Convert.ToInt32(Bank.Menu.Date[0]) - 2 : Convert.ToInt32((Convert.ToDateTime(dt.Rows[0][0].ToString())).ToString("yyyy"));
-                    while(Year <= Convert.ToInt32(Bank.Menu.Date[0].ToString()))
+                    //DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
+                    //    .Replace("{TeacherNo}", TBTeacherNo.Text));
+                    //if (dt.Rows.Count != 0)
+                    //{
+                    //    int Year = Convert.ToInt32((Convert.ToDateTime(dt.Rows[0][0].ToString())).ToString("yyyy")) < Convert.ToInt32(Bank.Menu.Date[0]) - 2 ? Convert.ToInt32(Bank.Menu.Date[0]) - 2 : Convert.ToInt32((Convert.ToDateTime(dt.Rows[0][0].ToString())).ToString("yyyy"));
+                    //    while (Year <= Convert.ToInt32(Bank.Menu.Date[0].ToString()))
+                    //    {
+                    //        CBYear.Items.Add(Year);
+                    //        Year++;
+                    //    }
+                    //    CBYear.Enabled = true;
+                    //}
+                    for(int Year = 0; Year < 2; Year++)
                     {
-                        CBYear.Items.Add(Year);
-                        Year++;
+                        // เอา ปี ล่าสุดที่ถอนมา
+                        DataTable ds_date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[12].Replace("{TeacherNo}", TBTeacherNo.Text));
+                        int Year_later = Convert.ToInt32(ds_date.Rows[0][0].ToString());
+                        // เอา ปีที่มีการถอนอย่างต่ำมา 2 ปี 
+                        DataTable ds_CheckYear = Class.SQLConnection.InputSQLMSSQL(SQLDefault[11].Replace("{TeacherNo}", TBTeacherNo.Text)
+                            .Replace("{Date}",Convert.ToInt32(Year_later-Year).ToString()));
+                        if(ds_CheckYear.Rows.Count != 0)
+                        {
+                            CBYear.Items.Add(Year_later-Year);
+                        }
                     }
-                    if (CBYear.Items.Count != 0)
-                        CBYear.SelectedIndex = 0;
-                    CBYear.Enabled = true;
-                 
                 }
-
+                if (CBYear.Items.Count != 0)
+                {
+                    CBYear.Enabled = true;
+                    DGVAmountOffHistory.Enabled = true;
+                    CBYear.SelectedIndex = 0;
+                }
+                else
+                {
+                    CBYear.Enabled = false;
+                    DGVAmountOffHistory.Enabled = false;
+                }  
             }
             else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
             {
@@ -232,6 +288,7 @@ namespace BankTeacher.Bank
                     TBCreditSystem.Text = "";
                     TBCreditWithDraw.Text = "";
                     TBWithDraw.Text = "";
+                    tabControl1.Enabled = false;
                     TBWithDraw.Enabled = false;
                     CBTypePay.SelectedIndex = -1;
                     CBTypePay.Enabled = false;
@@ -270,14 +327,18 @@ namespace BankTeacher.Bank
                         info_status = TBLoanStatus.Text;
                         info_Amounoffinsystem = TBCreditSystem.Text;
                         info_canbeAmounoff = TBCreditWithDraw.Text;
+                        DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[10]);
+                        info_BillAmounoff = dt.Rows[0][0].ToString();
+                        DataTable dt_date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[9].Replace("{WithDrawNo}", dt.Rows[0][0].ToString()));
+                        info_datepayAmounoff = dt_date.Rows[0][3].ToString();
                         printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                         printDocument1.DefaultPageSettings.Landscape = true;
+                        SELECT_Print++;
                         if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                         {
                             printDocument1.Print();
                         }
                         TBTeacherNo.Text = "";
-                       
                         TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Back));
                     }
                 }
@@ -285,7 +346,7 @@ namespace BankTeacher.Bank
                 {
                     Console.Write(x);
                 }
-                //
+             
             }
             else
                 MessageBox.Show("ยอดเงินไม่เพียงพอ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -366,6 +427,8 @@ namespace BankTeacher.Bank
 
         private void CBYear_SelectedIndexChanged(object sender, EventArgs e)
         {
+            List<int> SUM = new List<int>();
+            SUM.Clear();
             if(CBYear.SelectedIndex != -1)
             {
                 DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[6]
@@ -375,8 +438,11 @@ namespace BankTeacher.Bank
                 DGVAmountOffHistory.Rows.Clear();
                 for (int a = 0; a < ds.Tables[0].Rows.Count; a++)
                 {
-                    DGVAmountOffHistory.Rows.Add(ds.Tables[0].Rows[a][0], ds.Tables[0].Rows[a][1], ds.Tables[0].Rows[a][2], ds.Tables[0].Rows[a][3]);
+                    DGVAmountOffHistory.Rows.Add(a+1,ds.Tables[0].Rows[a][4], ds.Tables[0].Rows[a][0], ds.Tables[0].Rows[a][3]);
+                    SUM.Add(Convert.ToInt32(ds.Tables[0].Rows[a][3].ToString()));
                 }
+                if (SUM.Count != 0)
+                    LBalance_AmountOff.Text = SUM.Sum().ToString();
                 if (ds.Tables[0].Rows.Count == 0 && tabControl1.SelectedIndex == 1)
                 {
                     MessageBox.Show("ไม่พบรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -414,13 +480,13 @@ namespace BankTeacher.Bank
         }
         private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
         {
+            if(SELECT_Print == 1)
             Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Testter,"ถอนหุ้นสะสม", this.AccessibilityObject.Name,1,"A5",1);
-        }
-
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (CBYear.Items.Count != 0)
-                CBYear.SelectedIndex = 0;
+            else if(CB_SelectPrint.SelectedIndex == 1)
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, 1, "A5", 1);
+            else
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGVAmountOffHistory, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, 1, "A4", 1);
+            SELECT_Print = 0;
         }
 
         private void BExitForm_Click(object sender, EventArgs e)
@@ -471,6 +537,23 @@ namespace BankTeacher.Bank
                 {
                     BExitForm_Click(new object(), new EventArgs());
                 }
+            }
+        }
+
+        private void tabControl1_Click(object sender, EventArgs e)
+        {
+            if(DGVAmountOffHistory.Rows.Count == 0)
+            {
+                MessageBox.Show("ไม่พบรายการถอน กรูณาตรวจสอบใหม่อีกครั้งค่ะ");
+                tabControl1.SelectedIndex = 0;
+            }
+        }
+
+        private void BT_Print_Click(object sender, EventArgs e)
+        {
+            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+            {
+                printDocument1.Print();
             }
         }
     }

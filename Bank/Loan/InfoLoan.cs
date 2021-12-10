@@ -348,7 +348,7 @@ namespace BankTeacher.Bank.Loan
                             StatusPay = "ยังไม่จ่าย";
                         }
 
-                        DGVLoanDetail.Rows.Add(Num+1,$"{Month}/{Year}", Pay, Convert.ToInt32(Interest), StatusPay, SumInstallment);
+                        DGVLoanDetail.Rows.Add(Num+1,$"{Year}/{Month}", Pay, Convert.ToInt32(Interest), StatusPay, SumInstallment);
                         Month++;
                     }
                     // ------ ของของข้า
@@ -367,21 +367,6 @@ namespace BankTeacher.Bank.Loan
 
                     how_many_laps = DGVGuarantor.RowCount - 1;
                 }
-            }
-        }
-        
-        private void CBPapersize_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (CBPapersize.SelectedItem.ToString() == "A4")
-            {
-                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 794, 1123);
-                printDocument1.DefaultPageSettings.Landscape = false;
-            }
-            else
-            {
-                //printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A5",420,595);
-                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
-                printDocument1.DefaultPageSettings.Landscape = true;
             }
         }
 

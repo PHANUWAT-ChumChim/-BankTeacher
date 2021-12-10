@@ -45,6 +45,7 @@ namespace BankTeacher.Bank.Add_Member
         /// <para>[1] SELECT Member  INPUT:{Text} </para>
         /// <para>[2]  Select Detail Memner INPUT: {TeacherNo} </para>
         /// <para>[3] INSERT Member To Member  Bill BillDetail  INPUT: {TeacherNo} {TeacherNoAddBy} {StartAmount} {Mount} {Year}  </para>
+        /// <para>[4] Print info_Member  INPUT : {TeacherNo} </para>
         /// </summary>
         private String[] SQLDefault = new String[]
         {
@@ -97,7 +98,7 @@ namespace BankTeacher.Bank.Add_Member
           "VALUES('{TeacherNo}','{TeacherNoAddBy}', CURRENT_TIMESTAMP)  \r\n " +
           "SELECT @BillNo = SCOPE_IDENTITY();  \r\n " +
           "INSERT INTO EmployeeBank.dbo.tblBillDetail(BillNo, TypeNo, Amount, Mount, Year,BillDetailPaymentNo) \r\n " +
-          "VALUES(@BillNo,1,{StartAmount},{Month},{Year},1) \r\n " +
+          "VALUES(@BillNo,3,{StartAmount},{Month},{Year},1) \r\n " +
           " \r\n " +
           "END; \r\n " +
           " \r\n " +
@@ -112,15 +113,20 @@ namespace BankTeacher.Bank.Add_Member
           "VALUES('{TeacherNo}','{TeacherNoAddBy}', CURRENT_TIMESTAMP)  \r\n " +
           "SELECT @BillNo = SCOPE_IDENTITY();  \r\n " +
           "INSERT INTO EmployeeBank.dbo.tblBillDetail(BillNo, TypeNo, Amount, Mount, Year,BillDetailPaymentNo) \r\n " +
-          "VALUES(@BillNo,1,{StartAmount},{Month},{Year},1) \r\n " +
+          "VALUES(@BillNo,3,{StartAmount},{Month},{Year},1) \r\n " +
           " \r\n " +
           "END; \r\n " +
           " "
           ,
+          //[4] Print info_Member  INPUT : {TeacherNo}
+          "SELECT a.TeacherNo,a.TeacherAddBy,CAST(c.PrefixName+' '+b.Fname+' '+b.Lname as nvarchar),a.StartAmount,a.DateAdd  \r\n " +
+          "FROM EmployeeBank.dbo.tblMember as a  \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo  \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo  \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}';"
 
 
-
-        };
+    };
 
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
@@ -338,6 +344,23 @@ namespace BankTeacher.Bank.Add_Member
                     BExitForm_Click(new object(), new EventArgs());
                 }
             }
+        }
+
+        private void TBTeacherNo_Reg_TextChanged(object sender, EventArgs e)
+        {
+            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{TeacherNo}", TBTeacherNo_Reg.Text));
+            if (dt.Rows.Count != 0 && dt.Rows[0][0].ToString() == TBTeacherNo_Reg.Text)
+            {
+                label5.Text = "เอกสมัครสมาชิกย้อนหลัง";
+                BTPrintfShare_Reg.Enabled = true;
+            }
+            else
+            {
+                label5.Text = "เอกสารในการสมัครชิกสหกร์ครู";
+                BTPrintfShare_Reg.Enabled = false;
+            }
+              
+
         }
     }
 }
