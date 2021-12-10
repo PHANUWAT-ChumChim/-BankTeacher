@@ -71,9 +71,19 @@ namespace BankTeacher.Bank
           " \r\n " +
           "UPDATE EmployeeBank.dbo.tblDividend  \r\n " +
           "SET RemainInterestLastYear = @Interest \r\n " +
-          "WHERE DividendNo = @DividendNo;"
+          "WHERE DividendNo = @DividendNo; \r\n " +
+          " \r\n " +
+          "UPDATE EmployeeBank.dbo.tblShare \r\n " +
+          "SET SavingAmount = SavingAmount + (SELECT b.DividendAmount \r\n " +
+          "	FROM EmployeeBank.dbo.tblDividend as a \r\n " +
+          "	LEFT JOIN EmployeeBank.dbo.tblDividendDetail as b on a.DividendNo = b.DividendNo \r\n " +
+          "	WHERE a.DividendNo = @DividendNo and a.Cancel = 1 and EmployeeBank.dbo.tblShare.TeacherNo = b.TeacherNo) \r\n " +
+          "WHERE EmployeeBank.dbo.tblShare.TeacherNo IN (SELECT b.TeacherNo \r\n " +
+          "	FROM EmployeeBank.dbo.tblDividend as a \r\n " +
+          "	LEFT JOIN EmployeeBank.dbo.tblDividendDetail as b on a.DividendNo = b.DividendNo \r\n " +
+          "	WHERE a.DividendNo = @DividendNo and a.Cancel = 1) \r\n " +
+          ""
            ,
-
 
 
            //[1] Table[1]Select StartYear and Table[2]Select EndYear INPUT:

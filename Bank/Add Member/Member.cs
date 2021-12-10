@@ -98,7 +98,7 @@ namespace BankTeacher.Bank.Add_Member
           "VALUES('{TeacherNo}','{TeacherNoAddBy}', CURRENT_TIMESTAMP)  \r\n " +
           "SELECT @BillNo = SCOPE_IDENTITY();  \r\n " +
           "INSERT INTO EmployeeBank.dbo.tblBillDetail(BillNo, TypeNo, Amount, Mount, Year,BillDetailPaymentNo) \r\n " +
-          "VALUES(@BillNo,1,{StartAmount},{Month},{Year},1) \r\n " +
+          "VALUES(@BillNo,3,{StartAmount},{Month},{Year},1) \r\n " +
           " \r\n " +
           "END; \r\n " +
           " \r\n " +
@@ -113,7 +113,7 @@ namespace BankTeacher.Bank.Add_Member
           "VALUES('{TeacherNo}','{TeacherNoAddBy}', CURRENT_TIMESTAMP)  \r\n " +
           "SELECT @BillNo = SCOPE_IDENTITY();  \r\n " +
           "INSERT INTO EmployeeBank.dbo.tblBillDetail(BillNo, TypeNo, Amount, Mount, Year,BillDetailPaymentNo) \r\n " +
-          "VALUES(@BillNo,1,{StartAmount},{Month},{Year},1) \r\n " +
+          "VALUES(@BillNo,3,{StartAmount},{Month},{Year},1) \r\n " +
           " \r\n " +
           "END; \r\n " +
           " "

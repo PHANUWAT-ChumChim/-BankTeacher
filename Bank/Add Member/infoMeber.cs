@@ -108,6 +108,24 @@ namespace BankTeacher.Bank.Add_Member
             }
         }
 
+        String NameStart = "", SavingAmountStart = "";
+
+        private void TBStartAmount_Leave(object sender, EventArgs e)
+        {
+            if(SavingAmountStart != TBStartAmount.Text)
+            {
+                BSaveEdit.Enabled = true;
+            }
+        }
+
+        private void TBNameInfo_Leave(object sender, EventArgs e)
+        {
+            if(NameStart != TBNameInfo.Text)
+            {
+                BSaveEdit.Enabled = true;
+            }
+        }
+
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
         {
             if(e.KeyCode == Keys.Enter && TBTeacherNo.Text.Length == 6)
@@ -124,7 +142,8 @@ namespace BankTeacher.Bank.Add_Member
                     TBDateAdd.Text = dsInfoMember.Tables[0].Rows[0][3].ToString();
                     TBStartAmount.Text = dsInfoMember.Tables[0].Rows[0][4].ToString();
                     TBSavingAmount.Text = dsInfoMember.Tables[0].Rows[0][5].ToString();
-
+                    NameStart = dsInfoMember.Tables[0].Rows[0][0].ToString();
+                    SavingAmountStart = dsInfoMember.Tables[0].Rows[0][4].ToString();
                 }
                 catch(Exception ex)
                 {
@@ -133,7 +152,14 @@ namespace BankTeacher.Bank.Add_Member
             }
             else if(e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
             {
-
+                TBTeacherName.Text = "";
+                TBNameInfo.Text = "";
+                TBTeacherAddByName.Text = "";
+                TBMemberStatus.Text = "";
+                TBDateAdd.Text = "";
+                TBStartAmount.Text = "";
+                TBSavingAmount.Text = "";
+                BSaveEdit.Enabled = false;
             }
         }
     }
