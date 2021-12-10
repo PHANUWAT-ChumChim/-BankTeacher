@@ -32,27 +32,26 @@ namespace BankTeacher.Bank.Add_Member
             this.PL = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TP_info = new System.Windows.Forms.TabPage();
+            this.BExitForm = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label9 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.TBMemberStatus = new System.Windows.Forms.TextBox();
+            this.TBTeacherAddByName = new System.Windows.Forms.TextBox();
+            this.TBNameInfo = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.TBSavingAmount = new System.Windows.Forms.TextBox();
+            this.TBStartAmount = new System.Windows.Forms.TextBox();
+            this.TBDateAdd = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.BSearchTeacher = new System.Windows.Forms.Button();
             this.TBTeacherName = new System.Windows.Forms.TextBox();
@@ -60,7 +59,6 @@ namespace BankTeacher.Bank.Add_Member
             this.LB2Ne = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.LB1Id = new System.Windows.Forms.Label();
-            this.BExitForm = new System.Windows.Forms.Button();
             this.circularPictureBox1 = new BankTeacher.UiRemake.CircularPictureBox();
             this.PL.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -77,10 +75,11 @@ namespace BankTeacher.Bank.Add_Member
             // PL
             // 
             this.PL.BackColor = System.Drawing.Color.White;
+            this.PL.Controls.Add(this.BExitForm);
             this.PL.Controls.Add(this.tabControl1);
             this.PL.Controls.Add(this.panel7);
             this.PL.Location = new System.Drawing.Point(19, 32);
-            this.PL.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PL.Margin = new System.Windows.Forms.Padding(2);
             this.PL.Name = "PL";
             this.PL.Size = new System.Drawing.Size(876, 578);
             this.PL.TabIndex = 99;
@@ -90,36 +89,47 @@ namespace BankTeacher.Bank.Add_Member
             this.tabControl1.Controls.Add(this.TP_info);
             this.tabControl1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(6, 79);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(854, 492);
+            this.tabControl1.Size = new System.Drawing.Size(854, 420);
             this.tabControl1.TabIndex = 97;
             // 
             // TP_info
             // 
             this.TP_info.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.TP_info.Controls.Add(this.BExitForm);
             this.TP_info.Controls.Add(this.panel4);
             this.TP_info.Controls.Add(this.panel3);
             this.TP_info.Controls.Add(this.panel2);
             this.TP_info.Controls.Add(this.panel5);
             this.TP_info.Controls.Add(this.panel6);
             this.TP_info.Location = new System.Drawing.Point(4, 39);
-            this.TP_info.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TP_info.Margin = new System.Windows.Forms.Padding(2);
             this.TP_info.Name = "TP_info";
-            this.TP_info.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.TP_info.Size = new System.Drawing.Size(846, 449);
+            this.TP_info.Padding = new System.Windows.Forms.Padding(2);
+            this.TP_info.Size = new System.Drawing.Size(846, 377);
             this.TP_info.TabIndex = 0;
             this.TP_info.Text = "ข้อมูล";
+            // 
+            // BExitForm
+            // 
+            this.BExitForm.BackgroundImage = global::BankTeacher.Properties.Resources.logout;
+            this.BExitForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BExitForm.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.BExitForm.Location = new System.Drawing.Point(787, 504);
+            this.BExitForm.Name = "BExitForm";
+            this.BExitForm.Size = new System.Drawing.Size(73, 66);
+            this.BExitForm.TabIndex = 80;
+            this.BExitForm.UseVisualStyleBackColor = true;
+            this.BExitForm.Click += new System.EventHandler(this.BExitForm_Click);
             // 
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.Color.White;
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel4.Controls.Add(this.label10);
-            this.panel4.Location = new System.Drawing.Point(510, 5);
-            this.panel4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel4.Location = new System.Drawing.Point(509, 60);
+            this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(334, 43);
             this.panel4.TabIndex = 77;
@@ -142,8 +152,8 @@ namespace BankTeacher.Bank.Add_Member
             this.panel3.BackColor = System.Drawing.Color.White;
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel3.Controls.Add(this.label9);
-            this.panel3.Location = new System.Drawing.Point(158, 5);
-            this.panel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel3.Location = new System.Drawing.Point(157, 60);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(355, 43);
             this.panel3.TabIndex = 76;
@@ -166,57 +176,59 @@ namespace BankTeacher.Bank.Add_Member
             this.panel2.BackColor = System.Drawing.SystemColors.Window;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.circularPictureBox1);
-            this.panel2.Location = new System.Drawing.Point(4, 5);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Location = new System.Drawing.Point(3, 60);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(154, 367);
+            this.panel2.Size = new System.Drawing.Size(154, 271);
             this.panel2.TabIndex = 75;
             // 
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.White;
             this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel5.Controls.Add(this.textBox3);
-            this.panel5.Controls.Add(this.textBox2);
-            this.panel5.Controls.Add(this.textBox1);
+            this.panel5.Controls.Add(this.TBMemberStatus);
+            this.panel5.Controls.Add(this.TBTeacherAddByName);
+            this.panel5.Controls.Add(this.TBNameInfo);
             this.panel5.Controls.Add(this.label3);
             this.panel5.Controls.Add(this.label2);
             this.panel5.Controls.Add(this.label4);
-            this.panel5.Location = new System.Drawing.Point(157, 52);
-            this.panel5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel5.Location = new System.Drawing.Point(156, 107);
+            this.panel5.Margin = new System.Windows.Forms.Padding(2);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(355, 320);
+            this.panel5.Size = new System.Drawing.Size(355, 224);
             this.panel5.TabIndex = 78;
             // 
-            // textBox3
+            // TBMemberStatus
             // 
-            this.textBox3.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox3.Location = new System.Drawing.Point(104, 124);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.textBox3.MaxLength = 6;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(170, 36);
-            this.textBox3.TabIndex = 85;
+            this.TBMemberStatus.Enabled = false;
+            this.TBMemberStatus.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBMemberStatus.Location = new System.Drawing.Point(113, 148);
+            this.TBMemberStatus.Margin = new System.Windows.Forms.Padding(2);
+            this.TBMemberStatus.MaxLength = 6;
+            this.TBMemberStatus.Name = "TBMemberStatus";
+            this.TBMemberStatus.Size = new System.Drawing.Size(170, 36);
+            this.TBMemberStatus.TabIndex = 85;
             // 
-            // textBox2
+            // TBTeacherAddByName
             // 
-            this.textBox2.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.Location = new System.Drawing.Point(104, 67);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.textBox2.MaxLength = 6;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(170, 36);
-            this.textBox2.TabIndex = 84;
+            this.TBTeacherAddByName.Enabled = false;
+            this.TBTeacherAddByName.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBTeacherAddByName.Location = new System.Drawing.Point(113, 91);
+            this.TBTeacherAddByName.Margin = new System.Windows.Forms.Padding(2);
+            this.TBTeacherAddByName.MaxLength = 6;
+            this.TBTeacherAddByName.Name = "TBTeacherAddByName";
+            this.TBTeacherAddByName.Size = new System.Drawing.Size(170, 36);
+            this.TBTeacherAddByName.TabIndex = 84;
             // 
-            // textBox1
+            // TBNameInfo
             // 
-            this.textBox1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.Location = new System.Drawing.Point(104, 9);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.textBox1.MaxLength = 6;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(170, 36);
-            this.textBox1.TabIndex = 83;
+            this.TBNameInfo.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBNameInfo.Location = new System.Drawing.Point(113, 33);
+            this.TBNameInfo.Margin = new System.Windows.Forms.Padding(2);
+            this.TBNameInfo.MaxLength = 6;
+            this.TBNameInfo.Name = "TBNameInfo";
+            this.TBNameInfo.Size = new System.Drawing.Size(170, 36);
+            this.TBNameInfo.TabIndex = 83;
             // 
             // label3
             // 
@@ -224,7 +236,7 @@ namespace BankTeacher.Bank.Add_Member
             this.label3.BackColor = System.Drawing.Color.White;
             this.label3.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(16, 69);
+            this.label3.Location = new System.Drawing.Point(16, 94);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(87, 30);
@@ -237,12 +249,12 @@ namespace BankTeacher.Bank.Add_Member
             this.label2.BackColor = System.Drawing.Color.White;
             this.label2.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Black;
-            this.label2.Location = new System.Drawing.Point(16, 11);
+            this.label2.Location = new System.Drawing.Point(16, 36);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 30);
+            this.label2.Size = new System.Drawing.Size(100, 30);
             this.label2.TabIndex = 68;
-            this.label2.Text = "ชื่อเล่น";
+            this.label2.Text = "ชื่อ - นามสกุล";
             // 
             // label4
             // 
@@ -250,7 +262,7 @@ namespace BankTeacher.Bank.Add_Member
             this.label4.BackColor = System.Drawing.Color.White;
             this.label4.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(16, 129);
+            this.label4.Location = new System.Drawing.Point(16, 154);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(90, 30);
@@ -261,59 +273,49 @@ namespace BankTeacher.Bank.Add_Member
             // 
             this.panel6.BackColor = System.Drawing.Color.White;
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel6.Controls.Add(this.textBox7);
-            this.panel6.Controls.Add(this.textBox6);
-            this.panel6.Controls.Add(this.textBox5);
-            this.panel6.Controls.Add(this.textBox4);
+            this.panel6.Controls.Add(this.TBSavingAmount);
+            this.panel6.Controls.Add(this.TBStartAmount);
+            this.panel6.Controls.Add(this.TBDateAdd);
             this.panel6.Controls.Add(this.label6);
             this.panel6.Controls.Add(this.label8);
             this.panel6.Controls.Add(this.label5);
-            this.panel6.Controls.Add(this.label7);
-            this.panel6.Location = new System.Drawing.Point(512, 52);
-            this.panel6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel6.Location = new System.Drawing.Point(511, 107);
+            this.panel6.Margin = new System.Windows.Forms.Padding(2);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(332, 320);
+            this.panel6.Size = new System.Drawing.Size(332, 224);
             this.panel6.TabIndex = 79;
             // 
-            // textBox7
+            // TBSavingAmount
             // 
-            this.textBox7.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox7.Location = new System.Drawing.Point(130, 64);
-            this.textBox7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.textBox7.MaxLength = 6;
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(170, 36);
-            this.textBox7.TabIndex = 89;
+            this.TBSavingAmount.Enabled = false;
+            this.TBSavingAmount.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBSavingAmount.Location = new System.Drawing.Point(130, 154);
+            this.TBSavingAmount.Margin = new System.Windows.Forms.Padding(2);
+            this.TBSavingAmount.MaxLength = 6;
+            this.TBSavingAmount.Name = "TBSavingAmount";
+            this.TBSavingAmount.Size = new System.Drawing.Size(170, 36);
+            this.TBSavingAmount.TabIndex = 88;
             // 
-            // textBox6
+            // TBStartAmount
             // 
-            this.textBox6.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox6.Location = new System.Drawing.Point(130, 179);
-            this.textBox6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.textBox6.MaxLength = 6;
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(170, 36);
-            this.textBox6.TabIndex = 88;
+            this.TBStartAmount.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBStartAmount.Location = new System.Drawing.Point(130, 94);
+            this.TBStartAmount.Margin = new System.Windows.Forms.Padding(2);
+            this.TBStartAmount.MaxLength = 6;
+            this.TBStartAmount.Name = "TBStartAmount";
+            this.TBStartAmount.Size = new System.Drawing.Size(170, 36);
+            this.TBStartAmount.TabIndex = 87;
             // 
-            // textBox5
+            // TBDateAdd
             // 
-            this.textBox5.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox5.Location = new System.Drawing.Point(130, 119);
-            this.textBox5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.textBox5.MaxLength = 6;
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(170, 36);
-            this.textBox5.TabIndex = 87;
-            // 
-            // textBox4
-            // 
-            this.textBox4.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox4.Location = new System.Drawing.Point(130, 9);
-            this.textBox4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.textBox4.MaxLength = 6;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(170, 36);
-            this.textBox4.TabIndex = 86;
+            this.TBDateAdd.Enabled = false;
+            this.TBDateAdd.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBDateAdd.Location = new System.Drawing.Point(130, 34);
+            this.TBDateAdd.Margin = new System.Windows.Forms.Padding(2);
+            this.TBDateAdd.MaxLength = 6;
+            this.TBDateAdd.Name = "TBDateAdd";
+            this.TBDateAdd.Size = new System.Drawing.Size(170, 36);
+            this.TBDateAdd.TabIndex = 86;
             // 
             // label6
             // 
@@ -321,7 +323,7 @@ namespace BankTeacher.Bank.Add_Member
             this.label6.BackColor = System.Drawing.Color.White;
             this.label6.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.Black;
-            this.label6.Location = new System.Drawing.Point(4, 11);
+            this.label6.Location = new System.Drawing.Point(4, 36);
             this.label6.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(75, 30);
@@ -334,7 +336,7 @@ namespace BankTeacher.Bank.Add_Member
             this.label8.BackColor = System.Drawing.Color.White;
             this.label8.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.Black;
-            this.label8.Location = new System.Drawing.Point(8, 124);
+            this.label8.Location = new System.Drawing.Point(8, 99);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(73, 30);
@@ -347,25 +349,12 @@ namespace BankTeacher.Bank.Add_Member
             this.label5.BackColor = System.Drawing.Color.White;
             this.label5.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(8, 184);
+            this.label5.Location = new System.Drawing.Point(8, 159);
             this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(112, 30);
             this.label5.TabIndex = 71;
             this.label5.Text = "หุ้นสะสมทั้งหมด";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.BackColor = System.Drawing.Color.White;
-            this.label7.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.ForeColor = System.Drawing.Color.Black;
-            this.label7.Location = new System.Drawing.Point(8, 69);
-            this.label7.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(125, 30);
-            this.label7.TabIndex = 73;
-            this.label7.Text = "วันที่ยกเลิกสมาชิก";
             // 
             // panel7
             // 
@@ -380,7 +369,7 @@ namespace BankTeacher.Bank.Add_Member
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel7.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.panel7.Location = new System.Drawing.Point(0, 0);
-            this.panel7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel7.Margin = new System.Windows.Forms.Padding(2);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(876, 59);
             this.panel7.TabIndex = 63;
@@ -398,13 +387,14 @@ namespace BankTeacher.Bank.Add_Member
             this.BSearchTeacher.Size = new System.Drawing.Size(32, 35);
             this.BSearchTeacher.TabIndex = 85;
             this.BSearchTeacher.UseVisualStyleBackColor = false;
+            this.BSearchTeacher.Click += new System.EventHandler(this.BSearchTeacher_Click);
             // 
             // TBTeacherName
             // 
             this.TBTeacherName.Enabled = false;
             this.TBTeacherName.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBTeacherName.Location = new System.Drawing.Point(280, 11);
-            this.TBTeacherName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBTeacherName.Margin = new System.Windows.Forms.Padding(2);
             this.TBTeacherName.Name = "TBTeacherName";
             this.TBTeacherName.Size = new System.Drawing.Size(242, 36);
             this.TBTeacherName.TabIndex = 83;
@@ -413,11 +403,12 @@ namespace BankTeacher.Bank.Add_Member
             // 
             this.TBTeacherNo.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBTeacherNo.Location = new System.Drawing.Point(52, 11);
-            this.TBTeacherNo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBTeacherNo.Margin = new System.Windows.Forms.Padding(2);
             this.TBTeacherNo.MaxLength = 6;
             this.TBTeacherNo.Name = "TBTeacherNo";
             this.TBTeacherNo.Size = new System.Drawing.Size(116, 36);
             this.TBTeacherNo.TabIndex = 82;
+            this.TBTeacherNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TBTeacherNo_KeyDown);
             // 
             // LB2Ne
             // 
@@ -457,18 +448,6 @@ namespace BankTeacher.Bank.Add_Member
             this.LB1Id.TabIndex = 67;
             this.LB1Id.Text = "รหัส";
             // 
-            // BExitForm
-            // 
-            this.BExitForm.BackgroundImage = global::BankTeacher.Properties.Resources.logout;
-            this.BExitForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BExitForm.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.BExitForm.Location = new System.Drawing.Point(768, 377);
-            this.BExitForm.Name = "BExitForm";
-            this.BExitForm.Size = new System.Drawing.Size(73, 66);
-            this.BExitForm.TabIndex = 80;
-            this.BExitForm.UseVisualStyleBackColor = true;
-            this.BExitForm.Click += new System.EventHandler(this.BExitForm_Click);
-            // 
             // circularPictureBox1
             // 
             this.circularPictureBox1.Image = global::BankTeacher.Properties.Resources._64x64_TLC;
@@ -489,7 +468,7 @@ namespace BankTeacher.Bank.Add_Member
             this.Controls.Add(this.PL);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "infoMeber";
             this.Text = "infoMeber";
             this.SizeChanged += new System.EventHandler(this.infoMeber_SizeChanged);
@@ -536,16 +515,14 @@ namespace BankTeacher.Bank.Add_Member
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox TBMemberStatus;
+        private System.Windows.Forms.TextBox TBTeacherAddByName;
+        private System.Windows.Forms.TextBox TBNameInfo;
         private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox TBSavingAmount;
+        private System.Windows.Forms.TextBox TBStartAmount;
+        private System.Windows.Forms.TextBox TBDateAdd;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
         private UiRemake.CircularPictureBox circularPictureBox1;
         private System.Windows.Forms.Button BExitForm;
     }
