@@ -39,7 +39,6 @@ namespace BankTeacher.Bank
           "SELECT @AmountShare = (SUM(b.SavingAmount ) / @PerShare ) \r\n " +
           "FROM EmployeeBank.dbo.tblMember as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo; \r\n " +
-          "WHERE a.MemberStatusNo = 1 \r\n" +
           " \r\n " +
           "--Interest \r\n " +
           "SELECT @Interest = SUM(ISNULL(CASE \r\n " +
@@ -49,9 +48,9 @@ namespace BankTeacher.Bank
           "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
           "WHERE a.LoanStatusNo = 2 and a.YearPay = {Year} or a.YearPay = {Year} - 1; \r\n " +
           " \r\n " +
-          "SELECT @Interest = RemainInterestLastYear \r\n " +
+          "SELECT @Interest = @Interest + RemainInterestLastYear \r\n " +
           "FROM EmployeeBank.dbo.tblDividend \r\n " +
-          "WHERE Cancel = 1 and Year = {Year} \r\n " +
+          "WHERE Cancel = 1 and Year = {Year} - 1 \r\n " +
           " \r\n " +
           "SET @AVGDivident = @Interest/@AmountShare; \r\n " +
           " \r\n " +
@@ -64,20 +63,46 @@ namespace BankTeacher.Bank
           "SELECT @DividendNo,a.TeacherNo  , b.SavingAmount , ROUND(ROUND((b.SavingAmount/@PerShare), 2 ,1) * @AVGDivident ,2 , 1) as Dividend , {TeacherAddbyNo} \r\n " +
           "FROM EmployeeBank.dbo.tblMember as a  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo \r\n " +
-          "WHERE a.MemberStatusNo = 1;"
+          "WHERE a.MemberStatusNo = 1; \r\n " +
+          " \r\n " +
+          "SELECT @Interest = @Interest - SUM(a.DividendAmount) \r\n " +
+          "FROM EmployeeBank.dbo.tblDividendDetail as a \r\n " +
+          "WHERE a.DividendNo = @DividendNo \r\n " +
+          " \r\n " +
+          "UPDATE EmployeeBank.dbo.tblDividend  \r\n " +
+          "SET RemainInterestLastYear = @Interest \r\n " +
+          "WHERE DividendNo = @DividendNo;"
            ,
 
 
-           //[1] Table[1]Select StartYear and Table[2]Select EndYear INPUT: 
-           "SELECT TOP 1 MAX(a.Year) + 1 \r\n " +
-          "FROM EmployeeBank.dbo.tblDividend as a \r\n " +
-          "WHERE a.Cancel = 1 \r\n " +
+
+           //[1] Table[1]Select StartYear and Table[2]Select EndYear INPUT:
+           "DECLARE @Getnull int; \r\n " +
           " \r\n " +
-          "SELECT TOP 1 MAX(b.Year) \r\n " +
+          "SELECT TOP 1 @Getnull = ISNULL(MAX(a.Year) + 1 , 0) \r\n " +
+          "FROM EmployeeBank.dbo.tblDividend as a  \r\n " +
+          "WHERE a.Cancel = 1 ; \r\n " +
+          " \r\n " +
+          "IF (@Getnull = 0) \r\n " +
+          "BEGIN \r\n " +
+          "	SELECT TOP 1 MIN(b.Year)  \r\n " +
+          "	FROM EmployeeBank.dbo.tblBill as a \r\n " +
+          "	LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo \r\n " +
+          "	WHERE a.Cancel = 1 and b.TypeNo = 2; \r\n " +
+          "END \r\n " +
+          "ELSE \r\n " +
+          "BEGIN \r\n " +
+          "	SELECT TOP 1 @Getnull = ISNULL(MAX(a.Year) + 1 , 0) \r\n " +
+          "	FROM EmployeeBank.dbo.tblDividend as a  \r\n " +
+          "	WHERE a.Cancel = 1 ; \r\n " +
+          "END \r\n " +
+          " \r\n " +
+          "SELECT TOP 1 MAX(b.Year)  \r\n " +
           "FROM EmployeeBank.dbo.tblBill as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo \r\n " +
           "WHERE a.Cancel = 1 and b.TypeNo = 2;"
            ,
+
 
 
          };
