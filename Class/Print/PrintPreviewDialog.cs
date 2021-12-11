@@ -754,12 +754,21 @@ namespace BankTeacher.Class.Print
                                             }
                                         }
                                 }
-                                
                                 // เรียกใช้ โรงงาน การตัด  เเละ การวัด ขนาดสี่เหลี่ยมพื้นผ้า
                                 Class.Print.SetPrintMedtods.CutingCharAndString
                                 (e, G.Rows[Rows].Cells[Cells].Value.ToString(), setcut, 50, startTableY, out Rectangle_X, out Rectangle_Y, 0);
-                                // วาดRows
-                                e.Graphics.DrawString(G.Rows[Rows].Cells[Cells].Value.ToString(), FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Center[Cells], startTableY, Rectangle_X - 50, Rectangle_Y - 50));
+                                    if(Cells == G.Rows[Rows].Cells.Count - 1)
+                                    {
+                                        Size = e.Graphics.MeasureString(G.Rows[Rows].Cells[Cells].Value.ToString(), FonT(18, ThaiSarabun, FontStyle.Regular));
+                                        // วาดRows
+                                        e.Graphics.DrawString(G.Rows[Rows].Cells[Cells].Value.ToString(), FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Line2_x - Size.Width, startTableY, Rectangle_X - 50, Rectangle_Y - 50));
+                                    }
+                                    else
+                                    {
+                                        // วาดRows
+                                        e.Graphics.DrawString(G.Rows[Rows].Cells[Cells].Value.ToString(), FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Center[Cells], startTableY, Rectangle_X - 50, Rectangle_Y - 50));
+                                    }
+                              
                                 // =================================================== เช็คว่าขนาดข้อความใหญ่เกินกำหนดหรือไม่ เพื่อความปลอดภัย ในการทับเส้น
                                 if (G.Rows[Rows].Cells[Cells].Value.ToString().Length >= setcut + 5)
                                 {
