@@ -100,7 +100,6 @@ namespace BankTeacher.Bank.Loan
                     DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text));
                     if (dt.Rows.Count != 0)
                     {
-                        DGV.Rows.Clear();
                         TBTeacherName.Text = dt.Rows[0][0].ToString();
                         CBlist.Enabled = true;
                         CBlist.Items.Clear();
@@ -143,6 +142,7 @@ namespace BankTeacher.Bank.Loan
 
         private void CBList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            DGV.Rows.Clear();
             BankTeacher.Class.ComboBoxPayment Loan = (CBlist.SelectedItem as BankTeacher.Class.ComboBoxPayment);
             DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{LoanNo}",Loan.No));
             if (dt.Rows.Count != 0)

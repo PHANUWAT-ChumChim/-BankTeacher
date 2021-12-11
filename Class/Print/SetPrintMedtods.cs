@@ -110,7 +110,7 @@ namespace BankTeacher.Class.Print
             , int SetCut, float X, float Y, out float ReturnX, out float ReturnY, int selectresult)
         {
             // ขนาด Point ข้อความ
-            SizeF SizeText = e.Graphics.MeasureString("", Class.Print.PrintPreviewDialog.THsarabun18);
+            SizeF SizeText = e.Graphics.MeasureString("", Class.Print.PrintPreviewDialog.FonT(18, "TH Sarabun New", FontStyle.Regular));
             // สระ
             Char[] Word = { 'ำ', 'ะ', 'ั', 'ี', 'ุ', 'ึ', 'เ', '็', '้', '๋', 'ิ', 'ื', '์', '.', ' ' }; //  ,'่'
             // ตัด สระ
@@ -166,7 +166,7 @@ namespace BankTeacher.Class.Print
                     // เเทนค่าที่เเยกออกมาสู่กระบวนการผลิต
                     TextToCut = storeCut;
                     // ตรวจสอบขนาด ข้อคววาม ความยาว
-                    SizeText = e.Graphics.MeasureString(splitCut, Class.Print.PrintPreviewDialog.THsarabun18);
+                    SizeText = e.Graphics.MeasureString(splitCut, Class.Print.PrintPreviewDialog.FonT(18, "TH Sarabun New", FontStyle.Regular));
                     // ทำการเก็บขนาดข้อความที่ยาวที่สุดไว้
                     if (one == 0)
                     {
@@ -182,11 +182,11 @@ namespace BankTeacher.Class.Print
             }
             else
             {
-                SizeText = e.Graphics.MeasureString(TextToCut, Class.Print.PrintPreviewDialog.THsarabun18);
+                SizeText = e.Graphics.MeasureString(TextToCut, Class.Print.PrintPreviewDialog.FonT(18, "TH Sarabun New", FontStyle.Regular));
                 Y += SizeText.Height;
                 OverMax.Add(Y);
 
-                SizeText = e.Graphics.MeasureString(TextToCut, Class.Print.PrintPreviewDialog.THsarabun18);
+                SizeText = e.Graphics.MeasureString(TextToCut, Class.Print.PrintPreviewDialog.FonT(18, "TH Sarabun New", FontStyle.Regular));
                 X += SizeText.Width;
             }
             // ส่งกรอบกำหนด เเก X กลับไป กว้าง
@@ -304,7 +304,7 @@ namespace BankTeacher.Class.Print
             // ต้นฉบับ  สำเนา
             SizeF Size = e.Graphics.MeasureString(script, Class.Print.PrintPreviewDialog.FonT(30, "TH Sarabun New", FontStyle.Bold));
             // พื้นหลัง
-            e.Graphics.FillRectangle(Brushes.White, SizeForm_Width - Size.Width - move, 50, Size.Width, Size.Height);
+            e.Graphics.FillRectangle(Brushes.White, SizeForm_Width - Size.Width - move, 50, Size.Width, Size.Height - 10);
             // ข้อความ
             e.Graphics.DrawString(script, Class.Print.PrintPreviewDialog.FonT(30, "TH Sarabun New", FontStyle.Bold), Brush, SizeForm_Width - Size.Width - move, 50);
             // กล่อง
