@@ -317,6 +317,7 @@ namespace BankTeacher.Bank
             this.Name = "ReportDividend";
             this.Text = "ReportDividend";
             this.Load += new System.EventHandler(this.ReportDividend_Load);
+            this.SizeChanged += new System.EventHandler(this.ReportDividend_SizeChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ReportDividend_KeyDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
