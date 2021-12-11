@@ -32,7 +32,7 @@ namespace BankTeacher.Bank
         int StatusBoxFile = 0;
         String imgeLocation = "";
         /// <summary>
-        /// <para>[0] SELECT LoanNo,RemainAmount,Name,EndDate INPUT: {TeacherNo}</para>
+        /// <para>[0] DGV SELECT LoanNo,RemainAmount,Name,EndDate INPUT: {TeacherNo}</para>
         /// <para>[1] SELECT TeacherNo,Name,SumRemainAmount,AmountCredit,SavingAmount,ShareNo INPUT: {TeacherNo}</para>
         /// <para>[2] UPDATE Share WithDraw INPUT: {ShareNo} , {WithDraw}</para>
         /// <para>[3] INSERT ShareWithDraw INPUT: {TeacherNoAddBy} , {ShareNo} , {WithDraw} , {PayMent}</para>
@@ -47,7 +47,7 @@ namespace BankTeacher.Bank
         /// </summary>
         String[] SQLDefault = new String[]
         {
-            //[0] SELECT LoanNo,RemainAmount,Name,EndDate INPUT: {TeacherNo}
+            //[0] DGV SELECT LoanNo,RemainAmount,Name,EndDate INPUT: {TeacherNo}
             "SELECT a.LoanNo , a.RemainsAmount  , CAST(ISNULL(d.PrefixName+' ','') + c.Fname + ' ' + c.Lname AS NVARCHAR) AS NAME,\r\n" +
             "DATEADD(MONTH,b.PayNo,CAST(CAST(CAST(b.YearPay as nvarchar) +'/' + CAST(b.MonthPay AS nvarchar) + '/05' AS nvarchar) AS date)) as DateEnd\r\n" +
             "FROM EmployeeBank.dbo.tblGuarantor as a\r\n" +
@@ -62,17 +62,19 @@ namespace BankTeacher.Bank
             ,
 
             //[1] SELECT Name ,ShareNo ,SavingAmount ,CreditSupport , WithDrawSavingAmount INPUT: {TeacherNo}
-            "SELECT CAST(ISNULL(c.PrefixName+' ','') + b.Fname + ' ' + b.Lname AS NVARCHAR) AS NAME , d.ShareNo , d.SavingAmount,\r\n" +
-            "ISNULL(SUM(e.RemainsAmount),0) as CreditSupport , (d.SavingAmount - ISNULL(SUM(e.RemainsAmount) , 0)) as WithDrawSavingAmount\r\n" +
-            "FROM EmployeeBank.dbo.tblMember as a\r\n" +
-            "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo\r\n" +
-            "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo\r\n" +
-            "LEFT JOIN EmployeeBank.dbo.tblShare as d on a.TeacherNo = d.TeacherNo\r\n" +
-            "LEFT JOIN EmployeeBank.dbo.tblGuarantor as e on a.TeacherNo = e.TeacherNo\r\n" +
-            "WHERE a.TeacherNo LIKE '%{TeacherNo}%'\r\n" +
-            "GROUP BY a.TeacherNo , d.ShareNo , d.SavingAmount ,c.PrefixName ,  b.Fname , b.Lname;"
-
-            ,   
+           "SELECT CAST(ISNULL(c.PrefixName+' ','') + b.Fname + ' ' + b.Lname AS NVARCHAR) AS NAME , d.ShareNo , d.SavingAmount, \r\n " +
+          "ISNULL(SUM(e.RemainsAmount),0) as CreditSupport , (d.SavingAmount - ISNULL(SUM(e.RemainsAmount) , 0)) as WithDrawSavingAmount \r\n " +
+          "FROM EmployeeBank.dbo.tblMember as a \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblShare as d on a.TeacherNo = d.TeacherNo \r\n " +
+          "LEFT JOIN (SELECT b.TeacherNo , b.RemainsAmount \r\n " +
+          "	FROM EmployeeBank.dbo.tblLoan as a \r\n " +
+          "	LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo \r\n " +
+          "	WHERE a.LoanStatusNo IN (1,2) and b.TeacherNo LIKE '%{TeacherNo}%') as e on a.TeacherNo = e.TeacherNo \r\n " +
+          "WHERE a.TeacherNo LIKE '%{TeacherNo}%' \r\n " +
+          "GROUP BY a.TeacherNo , d.ShareNo , d.SavingAmount ,c.PrefixName ,  b.Fname , b.Lname;"
+           , 
 
             //[2] UPDATE Share WithDraw INPUT: {ShareNo} , {WithDraw}
             "UPDATE EmployeeBank.dbo.tblShare\r\n" +

@@ -36,16 +36,16 @@ namespace BankTeacher.Bank.Loan
           " WHERE a.TeacherNo LIKE '%{Text}%' or Fname LIKE '%{Text}%'  \r\n " +
           " ORDER BY Fname;   "
           ,
-          //[1] SELECT LOAN INPUT: {TeacherNo} : 
-          "SELECT CAST(ISNULL(d.PrefixName , '') + ' ' + Fname + ' ' + Lname AS NVARCHAR) , a.DateAdd ,a.PayDate  ,a. LoanNo  \r\n " +
-          " FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
-          " LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo  \r\n " +
-          " LEFT JOIN Personal.dbo.tblTeacherHis as c on a.TeacherNo = c.TeacherNo \r\n " +
-          " LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblMember as e on c.TeacherNo = e.TeacherNo \r\n" +
-          " WHERE a.TeacherNo = '{TeacherNo}' and LoanStatusNo = 1 and MemberStatusNo = 1 \r\n " +
-          " GROUP BY CAST(ISNULL(d.PrefixName , '') + ' ' + Fname + ' ' + Lname AS NVARCHAR) , a.DateAdd ,a.PayDate  ,a. LoanNo \r\n " +
-          " ORDER BY a.LoanNo  "
+          //[1] SELECT LOAN INPUT: {TeacherNo} 
+           "SELECT CAST(ISNULL(d.PrefixName , '') + ' ' + Fname + ' ' + Lname AS NVARCHAR) , CAST(a.YearPay as nvarchar)+ '/' + CAST(a.MonthPay as nvarchar) ,a.PayDate  ,a. LoanNo   \r\n " +
+          "  FROM EmployeeBank.dbo.tblLoan as a   \r\n " +
+          "  LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo   \r\n " +
+          "  LEFT JOIN Personal.dbo.tblTeacherHis as c on a.TeacherNo = c.TeacherNo  \r\n " +
+          "  LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo  \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblMember as e on c.TeacherNo = e.TeacherNo  \r\n " +
+          " WHERE a.TeacherNo LIKE '{TeacherNo}%' and LoanStatusNo = 1 and MemberStatusNo = 1  \r\n " +
+          "  GROUP BY CAST(ISNULL(d.PrefixName , '') + ' ' + Fname + ' ' + Lname AS NVARCHAR) , a.DateAdd ,a.PayDate  ,a. LoanNo , CAST(a.YearPay as nvarchar)+ '/' + CAST(a.MonthPay as nvarchar) \r\n " +
+          "  ORDER BY a.LoanNo  "
 
           ,
          //[2] SELECT Detail Loan INPUT: {LoanNo} 
@@ -110,7 +110,7 @@ namespace BankTeacher.Bank.Loan
                         {
                             for (int aa = 0; aa < cb.Length; aa++)
                             {
-                                cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[0][3].ToString(), dt.Rows[x][3].ToString()));
+                                cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment(dt.Rows[x][1].ToString() + " รายการกู้ " + dt.Rows[x][3].ToString(), dt.Rows[x][3].ToString()));
                             }
                         }
                         if(CBlist.Items.Count != 0)

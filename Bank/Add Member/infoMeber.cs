@@ -18,8 +18,10 @@ namespace BankTeacher.Bank.Add_Member
         }
         /// <summary> 
         /// SQLDefault 
-        /// <para>[0]Get InfoMember INPUT: {TeacherNo}  </para> 
-        /// <para>[1]Search Teacher INPUT: {TeacherNotLike}</para>
+        /// <para>[0] Get InfoMember INPUT: {TeacherNo}  </para> 
+        /// <para>[1] Search Teacher INPUT: {TeacherNotLike}</para>
+        /// <para>[2] Check Bill Teacher Have Ever Paid INPUT: {TeacherNo}</para>
+        /// <para>[3] Save Edit Bsave INPUT: {Amount}  {TeacherNo} </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -45,6 +47,32 @@ namespace BankTeacher.Bank.Add_Member
           "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo \r\n " +
           "WHERE a.TeacherNo LIKE '%' and a.MemberStatusNo = 1 {TeacherNotLike};"
+           ,
+           //[2] Check Bill Teacher Have Ever Paid INPUT: {TeacherNo}
+           "SELECT COUNT(a.BillNo)  \r\n " +
+          "FROM EmployeeBank.dbo.tblBill as a  \r\n " +
+          "LEFT JOIN (SELECT a.BillNo  \r\n " +
+          "FROM EmployeeBank.dbo.tblBillDetail as a \r\n " +
+          "WHERE a.TypeNo <> 3 \r\n " +
+          "GROUP BY a.BillNo) as b on a.BillNo = b.BillNo  \r\n " +
+          "WHERE a.Cancel = 1 and a.TeacherNo LIKE '%{TeacherNo}%' \r\n " +
+          " \r\n " +
+          "SELECT COUNT(c.WithDrawNo) \r\n " +
+          "FROM EmployeeBank.dbo.tblMember as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblShareWithdraw as c on b.ShareNo = c.ShareNo \r\n " +
+          "WHERE a.TeacherNo LIKE '%{TeacherNo}%'"
+           ,
+
+           //[3]Save Edit Bsave INPUT: {Amount}  {TeacherNo}
+           "-- BSave Edit \r\n " +
+          "UPDATE EmployeeBank.dbo.tblMember  \r\n " +
+          "SET StartAmount = {Amount} \r\n " +
+          "WHERE TeacherNo = '{TeacherNo}'; \r\n " +
+          " \r\n " +
+          "UPDATE EmployeeBank.dbo.tblShare \r\n " +
+          "SET SavingAmount = {Amount} \r\n " +
+          "WHERE TeacherNo = '{TeacherNo}';"
            ,
 
 
@@ -73,6 +101,9 @@ namespace BankTeacher.Bank.Add_Member
                     TBDateAdd.Text = "";
                     TBStartAmount.Text = "";
                     TBSavingAmount.Text = "";
+                    BSaveEdit.Enabled = false;
+                    SavingAmountStart = "";
+                    TBStartAmount.Enabled = false;
                 }
                 else
                 {
@@ -108,7 +139,7 @@ namespace BankTeacher.Bank.Add_Member
             }
         }
 
-        String NameStart = "", SavingAmountStart = "";
+        String SavingAmountStart = "";
 
         private void TBStartAmount_Leave(object sender, EventArgs e)
         {
@@ -120,9 +151,10 @@ namespace BankTeacher.Bank.Add_Member
 
         private void TBNameInfo_Leave(object sender, EventArgs e)
         {
-            if(NameStart != TBNameInfo.Text)
+            if(SavingAmountStart != TBStartAmount.Text)
             {
                 BSaveEdit.Enabled = true;
+                SavingAmountStart = Convert.ToInt32(SavingAmountStart) - Convert.ToInt32(TBStartAmount.Text) + "";
             }
         }
 
@@ -133,7 +165,9 @@ namespace BankTeacher.Bank.Add_Member
                 try
                 {
                     DataSet dsInfoMember = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0]
-                        .Replace("{TeacherNo}", TBTeacherNo.Text));
+                        .Replace("{TeacherNo}", TBTeacherNo.Text) +
+                        "\r\n" + SQLDefault[2]
+                        .Replace("{TeacherNo}" , TBTeacherNo.Text));
 
                     TBTeacherName.Text = dsInfoMember.Tables[0].Rows[0][0].ToString();
                     TBNameInfo.Text = dsInfoMember.Tables[0].Rows[0][0].ToString();
@@ -142,8 +176,10 @@ namespace BankTeacher.Bank.Add_Member
                     TBDateAdd.Text = dsInfoMember.Tables[0].Rows[0][3].ToString();
                     TBStartAmount.Text = dsInfoMember.Tables[0].Rows[0][4].ToString();
                     TBSavingAmount.Text = dsInfoMember.Tables[0].Rows[0][5].ToString();
-                    NameStart = dsInfoMember.Tables[0].Rows[0][0].ToString();
                     SavingAmountStart = dsInfoMember.Tables[0].Rows[0][4].ToString();
+
+                    if (Convert.ToInt32(dsInfoMember.Tables[1].Rows[0][0].ToString()) == 0 && Convert.ToInt32(dsInfoMember.Tables[2].Rows[0][0].ToString()) == 0)
+                        TBStartAmount.Enabled = true;
                 }
                 catch(Exception ex)
                 {
@@ -160,7 +196,28 @@ namespace BankTeacher.Bank.Add_Member
                 TBStartAmount.Text = "";
                 TBSavingAmount.Text = "";
                 BSaveEdit.Enabled = false;
+                TBStartAmount.Enabled = false;
+                SavingAmountStart = "";
             }
+        }
+
+        private void BSaveEdit_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if(MessageBox.Show("ยืนยันการเปลี่ยนแปลง","แจ้งเตือน",MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
+                .Replace("{Amount}", TBStartAmount.Text)
+                .Replace("{TeacherNo}", TBTeacherNo.Text));
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"--------------------------{ex}----------------------------");
+                MessageBox.Show("การบันทึกล้มเหลว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            
         }
     }
 }
