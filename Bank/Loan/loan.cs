@@ -105,7 +105,7 @@ namespace BankTeacher.Bank.Loan
             "VALUES ('{LoanNo}','{TeacherNo}','{Amount}','{RemainsAmount}');\r\n"
             ,
             //[5] Detail Loan Print  INPUT: TeacherNo
-            "SELECT a.TeacherNo,CAST(ISNULL(d.PrefixName+' ','')+Fname +' '+ Lname as NVARCHAR)AS Name,LoanAmount , \r\n " +
+            "SELECT TOP(1) a.TeacherNo,CAST(ISNULL(d.PrefixName+' ','')+Fname +' '+ Lname as NVARCHAR)AS Name,LoanAmount , \r\n " +
             "CAST(cNo + ' หมู่ ' + cMu + 'ซอย  ' + cSoi + ' ถนน' + cRoad + ' ตำบล' +  TumBonName + ' อำเภอ'  + AmphurName + ' จังหวัด ' + JangWatLongName + ' รหัสไปรสณี ' + ZipCode as NVARCHAR(255)) AS ADDRESS, \r\n " +
             "MonthPay , YearPay , PayNo , InterestRate \r\n " +
             "FROM EmployeeBank.dbo.tblLoan as a \r\n " +

@@ -1199,7 +1199,7 @@ namespace BankTeacher.Bank.Pay
             {
                 BUploadFile_Pay.Visible = true;
             }
-            else
+            else 
             {
                 BUploadFile_Pay.Visible = false;
             }

@@ -42,7 +42,7 @@ namespace BankTeacher.Bank.Loan
             this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.CB_LoanNo = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -66,6 +66,12 @@ namespace BankTeacher.Bank.Loan
             this.LB1Id = new System.Windows.Forms.Label();
             this.CBStatus = new System.Windows.Forms.ComboBox();
             this.BSave = new System.Windows.Forms.Button();
+            this.DGV_PayLoan = new System.Windows.Forms.DataGridView();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -74,6 +80,7 @@ namespace BankTeacher.Bank.Loan
             this.panel3.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.panel7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_PayLoan)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -132,6 +139,7 @@ namespace BankTeacher.Bank.Loan
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.DGV_PayLoan);
             this.tabPage4.Controls.Add(this.CBB4Oppay);
             this.tabPage4.Controls.Add(this.label9);
             this.tabPage4.Controls.Add(this.LB8pay);
@@ -239,7 +247,7 @@ namespace BankTeacher.Bank.Loan
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.comboBox1);
+            this.panel2.Controls.Add(this.CB_LoanNo);
             this.panel2.Controls.Add(this.label7);
             this.panel2.Controls.Add(this.label8);
             this.panel2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
@@ -249,17 +257,17 @@ namespace BankTeacher.Bank.Loan
             this.panel2.Size = new System.Drawing.Size(334, 68);
             this.panel2.TabIndex = 64;
             // 
-            // comboBox1
+            // CB_LoanNo
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.Enabled = false;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(88, 10);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(208, 44);
-            this.comboBox1.TabIndex = 65;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.CB_LoanNo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CB_LoanNo.Enabled = false;
+            this.CB_LoanNo.FormattingEnabled = true;
+            this.CB_LoanNo.Location = new System.Drawing.Point(88, 10);
+            this.CB_LoanNo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.CB_LoanNo.Name = "CB_LoanNo";
+            this.CB_LoanNo.Size = new System.Drawing.Size(208, 44);
+            this.CB_LoanNo.TabIndex = 65;
+            this.CB_LoanNo.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // label7
             // 
@@ -539,6 +547,68 @@ namespace BankTeacher.Bank.Loan
             this.BSave.Text = "บันทึก";
             this.BSave.UseVisualStyleBackColor = false;
             // 
+            // DGV_PayLoan
+            // 
+            this.DGV_PayLoan.AllowUserToAddRows = false;
+            this.DGV_PayLoan.AllowUserToDeleteRows = false;
+            this.DGV_PayLoan.BackgroundColor = System.Drawing.Color.White;
+            this.DGV_PayLoan.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV_PayLoan.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column4,
+            this.Column5,
+            this.Column1,
+            this.Column2,
+            this.Column3});
+            this.DGV_PayLoan.Location = new System.Drawing.Point(20, 284);
+            this.DGV_PayLoan.Margin = new System.Windows.Forms.Padding(4);
+            this.DGV_PayLoan.Name = "DGV_PayLoan";
+            this.DGV_PayLoan.ReadOnly = true;
+            this.DGV_PayLoan.RowHeadersVisible = false;
+            this.DGV_PayLoan.RowHeadersWidth = 51;
+            this.DGV_PayLoan.Size = new System.Drawing.Size(753, 189);
+            this.DGV_PayLoan.TabIndex = 101;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "ลำดับที่";
+            this.Column4.MinimumWidth = 6;
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.Visible = false;
+            this.Column4.Width = 125;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "เลขที่สัญญากู้";
+            this.Column5.MinimumWidth = 6;
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            this.Column5.Width = 150;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "วันที่สมัครกู้";
+            this.Column1.MinimumWidth = 6;
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 150;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "รายการกู้";
+            this.Column2.MinimumWidth = 6;
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Width = 200;
+            // 
+            // Column3
+            // 
+            this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column3.HeaderText = "ยอดเงิน";
+            this.Column3.MinimumWidth = 6;
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            // 
             // PayLoan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -568,6 +638,7 @@ namespace BankTeacher.Bank.Loan
             this.tabPage2.PerformLayout();
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_PayLoan)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -596,7 +667,7 @@ namespace BankTeacher.Bank.Loan
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox CB_LoanNo;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label2;
@@ -614,5 +685,11 @@ namespace BankTeacher.Bank.Loan
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button BExitForm;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.DataGridView DGV_PayLoan;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
     }
 }
