@@ -35,6 +35,10 @@ namespace BankTeacher.Bank.Loan
             this.TBTeacherNo = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.DGV = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel7 = new System.Windows.Forms.Panel();
             this.TBTeacherName = new System.Windows.Forms.TextBox();
             this.LB2Ne = new System.Windows.Forms.Label();
@@ -44,14 +48,10 @@ namespace BankTeacher.Bank.Loan
             this.BSave = new System.Windows.Forms.Button();
             this.panel16 = new System.Windows.Forms.Panel();
             this.BExitForm = new System.Windows.Forms.Button();
-            this.DGV = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
             this.panel7.SuspendLayout();
             this.panel16.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
             this.SuspendLayout();
             // 
             // CBlist
@@ -63,7 +63,7 @@ namespace BankTeacher.Bank.Loan
             this.CBlist.Location = new System.Drawing.Point(81, 12);
             this.CBlist.Margin = new System.Windows.Forms.Padding(2);
             this.CBlist.Name = "CBlist";
-            this.CBlist.Size = new System.Drawing.Size(152, 38);
+            this.CBlist.Size = new System.Drawing.Size(189, 38);
             this.CBlist.TabIndex = 62;
             this.CBlist.SelectedIndexChanged += new System.EventHandler(this.CBList_SelectedIndexChanged);
             // 
@@ -128,6 +128,44 @@ namespace BankTeacher.Bank.Loan
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(874, 533);
             this.panel1.TabIndex = 20;
+            // 
+            // DGV
+            // 
+            this.DGV.AllowUserToAddRows = false;
+            this.DGV.AllowUserToDeleteRows = false;
+            this.DGV.BackgroundColor = System.Drawing.Color.White;
+            this.DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2,
+            this.Column3});
+            this.DGV.Location = new System.Drawing.Point(23, 138);
+            this.DGV.Name = "DGV";
+            this.DGV.ReadOnly = true;
+            this.DGV.RowHeadersVisible = false;
+            this.DGV.Size = new System.Drawing.Size(824, 313);
+            this.DGV.TabIndex = 100;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "วันที่สมัครกู้";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 150;
+            // 
+            // Column2
+            // 
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column2.HeaderText = "ชื่อ - สกุล";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "ยอดเงินค้ำ";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.Width = 200;
             // 
             // panel7
             // 
@@ -224,7 +262,7 @@ namespace BankTeacher.Bank.Loan
             this.panel16.Location = new System.Drawing.Point(0, 62);
             this.panel16.Margin = new System.Windows.Forms.Padding(2);
             this.panel16.Name = "panel16";
-            this.panel16.Size = new System.Drawing.Size(264, 59);
+            this.panel16.Size = new System.Drawing.Size(290, 59);
             this.panel16.TabIndex = 99;
             // 
             // BExitForm
@@ -238,44 +276,6 @@ namespace BankTeacher.Bank.Loan
             this.BExitForm.TabIndex = 82;
             this.BExitForm.UseVisualStyleBackColor = true;
             this.BExitForm.Click += new System.EventHandler(this.BExitForm_Click);
-            // 
-            // DGV
-            // 
-            this.DGV.AllowUserToAddRows = false;
-            this.DGV.AllowUserToDeleteRows = false;
-            this.DGV.BackgroundColor = System.Drawing.Color.White;
-            this.DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2,
-            this.Column3});
-            this.DGV.Location = new System.Drawing.Point(23, 138);
-            this.DGV.Name = "DGV";
-            this.DGV.ReadOnly = true;
-            this.DGV.RowHeadersVisible = false;
-            this.DGV.Size = new System.Drawing.Size(824, 313);
-            this.DGV.TabIndex = 100;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "วันที่สมัครกู้";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Width = 150;
-            // 
-            // Column2
-            // 
-            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column2.HeaderText = "ชื่อ - สกุล";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "ยอดเงินค้ำ";
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            this.Column3.Width = 200;
             // 
             // CancelLoan
             // 
@@ -293,11 +293,11 @@ namespace BankTeacher.Bank.Loan
             this.SizeChanged += new System.EventHandler(this.CancelLoan_SizeChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CancelLoan_KeyDown);
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DGV)).EndInit();
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
             this.panel16.ResumeLayout(false);
             this.panel16.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DGV)).EndInit();
             this.ResumeLayout(false);
 
         }
