@@ -226,16 +226,16 @@ namespace BankTeacher.Class.Print
             {
                 for (int RowsNo = 0; RowsNo < G.RowCount; RowsNo++)
                 {
-                    // เช็คตำเเหน่งที่เคยวาดไปเเล้ว 
-                    if (RowsNo >= c)
-                    {
+                    //// เช็คตำเเหน่งที่เคยวาดไปเเล้ว 
+                    //if (RowsNo >= c)
+                    //{
                         // นับตำเเหน่ง Rows ที่ถูกเทียบไปทั้งหมด
-                        p++;
+                        //p++;
                         cm = CutingCharAndString(e, G.Rows[RowsNo].Cells[Loca - 1].Value.ToString()
                         , SetCut, X, Y, out nu, out over, 2);
-                        notover += over;
+                    
                         Values.Add(cm);
-                    }
+                    //}
                 }
 
             }
