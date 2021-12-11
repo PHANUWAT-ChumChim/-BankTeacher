@@ -145,5 +145,12 @@ namespace BankTeacher.Bank
                 CBYear.Items.Add(dtYear.Rows[x][0].ToString());
             }
         }
+
+        private void CancelDividend_SizeChanged(object sender, EventArgs e)
+        {
+            int x = this.Width / 2 - panel1.Size.Width / 2;
+            int y = this.Height / 2 - panel1.Size.Height / 2;
+            panel1.Location = new Point(x, y);
+        }
     }
 }

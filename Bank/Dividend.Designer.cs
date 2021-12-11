@@ -421,6 +421,7 @@ namespace BankTeacher.Bank
             this.Name = "Dividend";
             this.Text = "0";
             this.Load += new System.EventHandler(this.Dividend_Load);
+            this.SizeChanged += new System.EventHandler(this.Dividend_SizeChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Dividend_KeyDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
