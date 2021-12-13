@@ -226,7 +226,7 @@ namespace BankTeacher.Bank
                     }
                 }
             }
-            if (CBYearDividend.Items.Count == 0)
+            if (CBYearDividend.Items.Count < 1)
             {
                 CBYearDividend.Enabled = false;
             }
@@ -248,7 +248,10 @@ namespace BankTeacher.Bank
                     MessageBox.Show("บันทึกสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                     CBYearDividend.Items.RemoveAt(CBYearDividend.SelectedIndex);
-                    CBYearDividend.SelectedIndex = -1;
+                    if (CBYearDividend.Items.Count != 0)
+                        CBYearDividend.SelectedIndex = -1;
+                    else
+                        CBYearDividend.Enabled = false;
                     BSaveDividend.Enabled = false;
                 }
                 catch (Exception ex)

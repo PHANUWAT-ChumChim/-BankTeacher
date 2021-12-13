@@ -137,6 +137,24 @@
     <Compile Include="Bank\Loan\PayLoan.Designer.cs">
       <DependentUpon>PayLoan.cs</DependentUpon>
     </Compile>
+    <Compile Include="Bank\log\CancelBill_log.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bank\log\CancelBill_log.Designer.cs">
+      <DependentUpon>CancelBill_log.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Bank\log\Devident_log.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bank\log\Devident_log.Designer.cs">
+      <DependentUpon>Devident_log.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Bank\log\Pay_log.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bank\log\Pay_log.Designer.cs">
+      <DependentUpon>Pay_log.cs</DependentUpon>
+    </Compile>
     <Compile Include="Bank\Pay\Billcancelhistory.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -273,6 +291,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Loan\PayLoan.resx">
       <DependentUpon>PayLoan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bank\log\CancelBill_log.resx">
+      <DependentUpon>CancelBill_log.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bank\log\Pay_log.resx">
+      <DependentUpon>Pay_log.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Pay\Billcancelhistory.resx">
       <DependentUpon>Billcancelhistory.cs</DependentUpon>
@@ -411,5 +435,6 @@
   <ItemGroup>
     <None Include="Resources\Image1.bmp" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

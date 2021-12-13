@@ -140,9 +140,19 @@ namespace BankTeacher.Bank
         private void CancelDividend_Load(object sender, EventArgs e)
         {
             DataTable dtYear = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]);
-            for (int x = 0; x < dtYear.Rows.Count; x++)
+            if(dtYear.Rows.Count != 0)
+                for (int x = 0; x < dtYear.Rows.Count; x++)
+                {
+                    CBYear.Items.Add(dtYear.Rows[x][0].ToString());
+                }
+            if(CBYear.Items.Count != 0)
             {
-                CBYear.Items.Add(dtYear.Rows[x][0].ToString());
+                CBYear.SelectedIndex = 0;
+                CBYear.Enabled = true;
+            }
+            else
+            {
+                CBYear.Enabled = false;
             }
         }
 
