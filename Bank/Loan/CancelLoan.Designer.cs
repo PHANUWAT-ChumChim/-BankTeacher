@@ -35,10 +35,7 @@ namespace BankTeacher.Bank.Loan
             this.TBTeacherNo = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.DGV = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DGVCancelLoan = new System.Windows.Forms.DataGridView();
             this.panel7 = new System.Windows.Forms.Panel();
             this.TBTeacherName = new System.Windows.Forms.TextBox();
             this.LB2Ne = new System.Windows.Forms.Label();
@@ -48,8 +45,12 @@ namespace BankTeacher.Bank.Loan
             this.BSave = new System.Windows.Forms.Button();
             this.panel16 = new System.Windows.Forms.Panel();
             this.BExitForm = new System.Windows.Forms.Button();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGVCancelLoan)).BeginInit();
             this.panel7.SuspendLayout();
             this.panel16.SuspendLayout();
             this.SuspendLayout();
@@ -115,7 +116,7 @@ namespace BankTeacher.Bank.Loan
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.DGV);
+            this.panel1.Controls.Add(this.DGVCancelLoan);
             this.panel1.Controls.Add(this.panel7);
             this.panel1.Controls.Add(this.BCancelSave);
             this.panel1.Controls.Add(this.BExit);
@@ -129,43 +130,24 @@ namespace BankTeacher.Bank.Loan
             this.panel1.Size = new System.Drawing.Size(874, 533);
             this.panel1.TabIndex = 20;
             // 
-            // DGV
+            // DGVCancelLoan
             // 
-            this.DGV.AllowUserToAddRows = false;
-            this.DGV.AllowUserToDeleteRows = false;
-            this.DGV.BackgroundColor = System.Drawing.Color.White;
-            this.DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.DGVCancelLoan.AllowUserToAddRows = false;
+            this.DGVCancelLoan.AllowUserToDeleteRows = false;
+            this.DGVCancelLoan.BackgroundColor = System.Drawing.Color.White;
+            this.DGVCancelLoan.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGVCancelLoan.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column4,
             this.Column1,
             this.Column2,
             this.Column3});
-            this.DGV.Location = new System.Drawing.Point(23, 138);
-            this.DGV.Name = "DGV";
-            this.DGV.ReadOnly = true;
-            this.DGV.RowHeadersVisible = false;
-            this.DGV.Size = new System.Drawing.Size(824, 313);
-            this.DGV.TabIndex = 100;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "วันที่สมัครกู้";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Width = 150;
-            // 
-            // Column2
-            // 
-            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column2.HeaderText = "ชื่อ - สกุล";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "ยอดเงินค้ำ";
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            this.Column3.Width = 200;
+            this.DGVCancelLoan.Location = new System.Drawing.Point(23, 138);
+            this.DGVCancelLoan.Name = "DGVCancelLoan";
+            this.DGVCancelLoan.ReadOnly = true;
+            this.DGVCancelLoan.RowHeadersVisible = false;
+            this.DGVCancelLoan.Size = new System.Drawing.Size(824, 313);
+            this.DGVCancelLoan.TabIndex = 100;
+            this.DGVCancelLoan.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DGVCancelLoan_MouseClick);
             // 
             // panel7
             // 
@@ -277,6 +259,34 @@ namespace BankTeacher.Bank.Loan
             this.BExitForm.UseVisualStyleBackColor = true;
             this.BExitForm.Click += new System.EventHandler(this.BExitForm_Click);
             // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "เลขสัญญากู้";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.Width = 130;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "วันที่สมัครกู้";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 150;
+            // 
+            // Column2
+            // 
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column2.HeaderText = "ชื่อ - สกุล";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "ยอดเงินค้ำ";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.Width = 200;
+            // 
             // CancelLoan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -293,7 +303,7 @@ namespace BankTeacher.Bank.Loan
             this.SizeChanged += new System.EventHandler(this.CancelLoan_SizeChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CancelLoan_KeyDown);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.DGV)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGVCancelLoan)).EndInit();
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
             this.panel16.ResumeLayout(false);
@@ -318,7 +328,8 @@ namespace BankTeacher.Bank.Loan
         private System.Windows.Forms.TextBox TBTeacherName;
         private System.Windows.Forms.Label LB2Ne;
         private System.Windows.Forms.Button BExitForm;
-        private System.Windows.Forms.DataGridView DGV;
+        private System.Windows.Forms.DataGridView DGVCancelLoan;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
