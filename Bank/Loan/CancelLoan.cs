@@ -90,7 +90,7 @@ namespace BankTeacher.Bank.Loan
             TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
         }
 
-
+        List<String[]> ListLoan = new List<string[]> { };
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -100,6 +100,7 @@ namespace BankTeacher.Bank.Loan
                     DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text));
                     if (dt.Rows.Count != 0)
                     {
+                        DGVCancelLoan.Rows.Clear();
                         TBTeacherName.Text = dt.Rows[0][0].ToString();
                         CBlist.Enabled = true;
                         CBlist.Items.Clear();
@@ -110,7 +111,9 @@ namespace BankTeacher.Bank.Loan
                             for (int aa = 0; aa < cb.Length; aa++)
                             {
                                 cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment(dt.Rows[x][1].ToString() + " รายการกู้ " + dt.Rows[x][3].ToString(), dt.Rows[x][3].ToString()));
+                                ListLoan.Add( new string[] { dt.Rows[x][1].ToString() + " รายการกู้ " + dt.Rows[x][3].ToString(), dt.Rows[x][3].ToString() });
                             }
+                            
                         }
                         if(CBlist.Items.Count != 0)
                         {
@@ -132,7 +135,7 @@ namespace BankTeacher.Bank.Loan
                     CBlist.Items.Clear();
                     CBlist.SelectedIndex = -1;
                     TBTeacherName.Text = "";
-                    DGV.Rows.Clear();
+                    DGVCancelLoan.Rows.Clear();
                     CBlist.Enabled = false;
                     Check = 0;
                 }
@@ -148,11 +151,12 @@ namespace BankTeacher.Bank.Loan
             if (dt.Rows.Count != 0)
             {
                 TBTeacherName.Text = dt.Rows[0][0].ToString();
-                DGV.Rows.Add(dt.Rows[0][1].ToString(),dt.Rows[0][0].ToString(),dt.Rows[0][3].ToString());
+                DGVCancelLoan.Rows.Add(Loan.No,dt.Rows[0][1].ToString(),dt.Rows[0][0].ToString(),dt.Rows[0][3].ToString());
                 for(int x = 1; x < dt.Rows.Count; x++)
                 {
-                    DGV.Rows.Add("", dt.Rows[x][0].ToString(), dt.Rows[x][3].ToString());
+                    DGVCancelLoan.Rows.Add("","", dt.Rows[x][0].ToString(), dt.Rows[x][3].ToString());
                 }
+                CBlist.Items.RemoveAt(CBlist.SelectedIndex);
             }
         }
 
@@ -170,7 +174,7 @@ namespace BankTeacher.Bank.Loan
                 TBTeacherNo.Text = "";
                 TBTeacherName.Text = "";
                 CBlist.Items.Clear();
-                DGV.Rows.Clear();
+                DGVCancelLoan.Rows.Clear();
 
             }
         }
@@ -195,7 +199,7 @@ namespace BankTeacher.Bank.Loan
                     CBlist.Items.Clear();
                     CBlist.SelectedIndex = -1;
                     TBTeacherName.Text = "";
-                    DGV.Rows.Clear();
+                    DGVCancelLoan.Rows.Clear();
                     CBlist.Enabled = false;
                     Check = 0;
                 }
@@ -206,14 +210,45 @@ namespace BankTeacher.Bank.Loan
             }
         }
 
-        private void TBTeacherName_TextChanged(object sender, EventArgs e)
+        int SelectIndexRowDelete = 0;
+        private void Delete_Click(object sender, EventArgs e)
         {
+            if (SelectIndexRowDelete > -1)
+            {
+                DGVCancelLoan.Rows.RemoveAt(SelectIndexRowDelete);
+                SelectIndexRowDelete = -1;
 
+            }
         }
 
-        private void textBox8_TextChanged(object sender, EventArgs e)
+        private void DGVCancelLoan_MouseClick(object sender, MouseEventArgs e)
         {
+            if (e.Button == MouseButtons.Right)
+            {
 
+                int currentMouseOverRow = DGVCancelLoan.HitTest(e.X, e.Y).RowIndex;
+                if (currentMouseOverRow > -1)
+                {
+                    SelectIndexRowDelete = currentMouseOverRow;
+                    ContextMenu m = new ContextMenu();
+                    m.MenuItems.Add(new MenuItem("ลบออก"));
+                    m.Show(DGVCancelLoan, new Point(e.X, e.Y));
+                    m.MenuItems[0].Click += new System.EventHandler(this.Delete_Click);
+
+                    ComboBox[] cb = new ComboBox[] { CBlist };
+                    for (int x = 0; x < ListLoan.Count; x++)
+                    {
+                        if(ListLoan[x][1] == DGVCancelLoan.Rows[currentMouseOverRow].Cells[0].Value.ToString())
+                        {
+                            for (int aa = 0; aa < cb.Length; aa++)
+                            {
+                                cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment(ListLoan[x][0], ListLoan[x][1]));
+                                ListLoan.RemoveAt(x);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
