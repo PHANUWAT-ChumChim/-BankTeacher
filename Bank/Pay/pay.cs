@@ -92,7 +92,8 @@ namespace BankTeacher.Bank.Pay
           "SELECT TOP(1)EOMONTH(CAST(CAST(Year as nvarchar)+'-'+ CAST(Mount as nvarchar) +'-10' as nvarchar))as MaxDate , b.BillNo ,DATEADD(MONTH,5,CAST(CAST(CAST(Year as nvarchar) +'/' + CAST(Mount AS nvarchar) + '/05' AS nvarchar) AS date))  \r\n " +
           "FROM EmployeeBank.dbo.tblBill as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo \r\n " +
-          "WHERE TeacherNo = '{TeacherNo}' and a.Cancel = 1  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblMember as c on a.TeacherNo = c.TeacherNo\r\n"+
+          "WHERE a.TeacherNo = '{TeacherNo}' and a.Cancel = 1 and c.DateAdd <= a.DateAdd \r\n " +
           "ORDER BY Maxdate DESC; "
            ,
            //[3] Count the Bill Year INPUT: {TeacherNo} , {Year}
@@ -102,7 +103,7 @@ namespace BankTeacher.Bank.Pay
           "WHERE TeacherNo = '{TeacherNo}' and Year = {Year} and b.Cancel = 1"
            ,
            //[4] Check if you have paid ( Saving ) INPUT: {TeacherNo} , {Month} , {Year} , {Date} 
-           "SELECT a.TeacherNo, StartAmount , f.TypeName    \r\n " +
+           "SELECT a.TeacherNo, StartAmount ,CAST('หุ้นสะสม' as nvarchar(30))    \r\n " +
           "FROM EmployeeBank.dbo.tblMember as a     \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBill as b on a.TeacherNo = b.TeacherNo    \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as c on b.BillNo = c.BillNo    \r\n " +
@@ -114,8 +115,8 @@ namespace BankTeacher.Bank.Pay
           "(SELECT aa.TeacherNo  \r\n " +
           "FROM EmployeeBank.dbo.tblBill as aa     \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as bb on aa.BillNo = bb.BillNo     \r\n " +
-          "WHERE bb.Mount = '{Month}' and bb.Year = '{Year}' and bb.TypeNo = 1 and MemberStatusNo = 1 and DATEADD(YYYY,0,'{Date}') >= a.DateAdd  and aa.Cancel = 1)   \r\n " +
-          "and a.TeacherNo = '{TeacherNo}' and c.TypeNo = 1 and MemberStatusNo = 1 and b.Cancel = 1   \r\n " +
+          "WHERE bb.Mount = '{Month}' and bb.Year = '{Year}' and (bb.TypeNo = 1 or bb.TypeNo = 3) and MemberStatusNo = 1 and DATEADD(YYYY,0,'{Date}') >= a.DateAdd  and aa.Cancel = 1 and aa.DateAdd >= a.DateAdd)   \r\n " +
+          "and a.TeacherNo = '{TeacherNo}' and (c.TypeNo = 1 or c.TypeNo = 3) and MemberStatusNo = 1 and b.Cancel = 1   \r\n " +
           "GROUP BY a.TeacherNo,f.TypeName, StartAmount   ;  "
            ,
            //[5] Check if you have paid ( Loan ) INPUT: {LoanNo} , {Month} , {Year} , {Date} 
@@ -223,7 +224,7 @@ namespace BankTeacher.Bank.Pay
           "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo\r\n" +
           "LEFT JOIN EmployeeBank.dbo.tblBill as c on a.TeacherNo = c.TeacherNo\r\n" +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as d on c.BillNo = d.BillNo\r\n" +
-          "WHERE c.Cancel = 1 and d.TypeNo = 1 and d.Mount <= 12 and d.Year = {Year} and a.TeacherNo LIKE '{TeacherNo}'\r\n" +
+          "WHERE c.Cancel = 1 and (d.TypeNo = 1 or d.TypeNo = 3) and d.Mount <= 12 and d.Year = {Year} and a.TeacherNo LIKE '{TeacherNo}'\r\n" +
           "GROUP BY a.TeacherNo , d.Amount , d.Mount , d.Year , a.StartAmount , CAST(a.DateAdd AS Date) , b.SavingAmount;\r\n" +
           "\r\n" +
           "SELECT a.StartAmount , b.SavingAmount, CAST(a.DateAdd as date)\r\n" +
@@ -1199,7 +1200,7 @@ namespace BankTeacher.Bank.Pay
             {
                 BUploadFile_Pay.Visible = true;
             }
-            else
+            else 
             {
                 BUploadFile_Pay.Visible = false;
             }
@@ -1659,74 +1660,6 @@ namespace BankTeacher.Bank.Pay
                     CBYearSelection_Pay.Items.Add(YearinCB[x + YearPositionInBackupDM]);
                 }
             }
-
-
-
-
-
-            //if (DM != BackupDM)
-            //{
-            //    //DM = BackupDM | |
-            //    //             \   /
-            //    //              \ /
-            //    if(BackupDM.Count != 0)
-            //    {
-            //        DM.Clear();
-            //        for(int x = 0; x < BackupDM.Count; x++)
-            //        {
-            //            DM.Add(new List<int>());
-            //            if(BackupDM[x].Count != 0)
-            //            {
-            //                for(int y = 0; y < BackupDM[x].Count; y++)
-            //                {
-            //                    DM[x].Add(BackupDM[x][y]);
-            //                }
-            //            } 
-            //        }
-            //    }
-            //    //เอาไว้เช็คว่าลบไปเท่าไหร่จะได้เอาไป + กับตำแหน่งปี
-            //    int CountRemove = 0;
-            //    if (DGV_Pay.Rows.Count != 0)
-            //    {
-            //        for (int CountDGV = 0; CountDGV < DGV_Pay.Rows.Count; CountDGV++)
-            //        {
-            //            for (int CountDMYear = 0; CountDMYear < DM.Count; CountDMYear++)
-            //            {
-            //                for (int CountDMMonth = 0; CountDMMonth < DM[CountDMYear].Count; CountDMMonth++)
-            //                {
-            //                    if (DGV_Pay.Rows[CountDGV].Cells[4].Value.ToString() == YearinCB[CountDMYear].ToString() &&
-            //                        DGV_Pay.Rows[CountDGV].Cells[5].Value.ToString() == DM[CountDMYear][CountDMMonth].ToString())
-            //                    {
-            //                        for(int CountDGV2 = 0; CountDGV2 < DGV_Pay.Rows.Count; CountDGV2++)
-            //                        {
-            //                            if(DGV_Pay.Rows[CountDGV].Cells[0].Value.ToString() == DGV_Pay.Rows[CountDGV2].Cells[0].Value.ToString() &&
-            //                                DGV_Pay.Rows[CountDGV2].Cells[1].Value.ToString().Contains("หุ้น"))
-            //                            {
-            //                                break;
-            //                            }
-            //                            else if(CountDGV2 == DGV_Pay.Rows.Count - 1 && 
-            //                                !(DGV_Pay.Rows[CountDGV2].Cells[1].Value.ToString().Contains("หุ้น"))&&
-            //                                DGV_Pay.Rows[CountDGV].Cells[0].Value.ToString() == DGV_Pay.Rows[CountDGV2].Cells[0].Value.ToString())
-            //                            {
-            //                            DM[CountDMYear].RemoveAt(CountDMMonth);
-            //                            break;
-            //                            }
-            //                        }
-            //                    }
-            //                }
-            //                if(DM[CountDMYear].Count == 0)
-            //                {
-            //                    CountRemove++;
-            //                    DM.RemoveAt(CountDMYear);
-            //                }
-            //            }
-            //        }
-            //    }
-            //    CBYearSelection_Pay.Items.Clear();
-            //    for(int x = 0; x < DM.Count; x++)
-            //    {
-            //        CBYearSelection_Pay.Items.Add(YearinCB[x+CountRemove]);
-        //}
         }
         //คำนวนยอดทั้งหมดใน DGV ลง label
         private void Summoney()

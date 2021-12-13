@@ -14,14 +14,14 @@ namespace BankTeacher.Class.Print
     class PrintPreviewDialog
     {
 
-        private static  DataTable DT = Class.SQLConnection.InputSQLMSSQL("SELECT CAST(SchoolNameThai as nvarchar(255)), SchoolNameEng, SchoolNameEngShort, NameManager, NameTeacherBig, CAST(AddressLetter + ' ' + CAST(Tel as nvarchar(10)) + ' ' + WebSite as nvarchar (255)) \r\n " +
-        "FROM BaseData.dbo.tblSchoolInfo");
-        public static Font THsarabun30 = new Font("TH Sarabun New", 30, FontStyle.Bold);
-        public static Font THsarabun18 = new Font("TH Sarabun New", 18, FontStyle.Bold);
-        public static Font THsarabun16 = new Font("TH Sarabun New", 16, FontStyle.Bold);
-        public static Font THsarabun14 = new Font("TH Sarabun New", 14, FontStyle.Bold);
-        public static Brush BrushBlack = Brushes.Black;
-        public static String ThaiSarabun = "TH Sarabun New";
+        private static  DataTable DT = Class.SQLConnection.InputSQLMSSQL("SELECT CAST(SchoolNameThai as nvarchar(255)), SchoolNameEng, SchoolNameEngShort,CAST(NameManager as nvarchar),CAST(NameTeacherBig as nvarchar), CAST(AddressLetter + ' ' + CAST(Tel as nvarchar(10)) + ' ' + WebSite as nvarchar (255)),CAST(AddressLetter as nvarchar(255))  \r\n" +
+        "FROM BaseData.dbo.tblSchoolInfo;");
+        static Font THsarabun30 = new Font("TH Sarabun New", 30, FontStyle.Bold);
+        static Font THsarabun18 = new Font("TH Sarabun New", 18, FontStyle.Bold);
+        static Font THsarabun16 = new Font("TH Sarabun New", 16, FontStyle.Bold);
+        static Font THsarabun14 = new Font("TH Sarabun New", 14, FontStyle.Bold);
+        static Brush BrushBlack = Brushes.Black;
+        static String ThaiSarabun = "TH Sarabun New";
         // ปากกา//
         static Pen PenBlack = new Pen(Color.Black);
         static Pen PenRed = new Pen(Color.Red);
@@ -34,9 +34,9 @@ namespace BankTeacher.Class.Print
         // ปริ้น รอบ เดียว
         static int onetimestartColumns = 0;
         // ขนาดของหน้ากระดาษ
-        public static int page_length = 0;
+        static int page_length = 0;
         // รับ เเถวที่ปริ้นอยู่
-        public static int position = 0, Currentposition_Row = 0;
+        static int position = 0, Currentposition_Row = 0;
         // จุดกึ่งกลางเส้น
         static float center = 0;
         static List<float> Center = new List<float>();
@@ -46,7 +46,7 @@ namespace BankTeacher.Class.Print
         public static void PrintMember(System.Drawing.Printing.PrintPageEventArgs e, String SQLCode, String Day, String Month, String Year, String TeacherNo, String Amount)
         {
             e.HasMorePages = true;
-            int PageX = (e.PageBounds.Width);
+            int PageX = (e.PageBounds.Width - 50);
             int PageY = (e.PageBounds.Height);
             int XP = 0;
             int XD = 0;
@@ -54,6 +54,7 @@ namespace BankTeacher.Class.Print
             int Y = 50;
             int SpacePerRow = 35;
             int CurrentRows = 0;
+            SizeF SizeText;
             try
             {
                 if (TeacherNo != "")
@@ -94,10 +95,18 @@ namespace BankTeacher.Class.Print
                     string quantity = "จำนวน 1 หุ้น (ถ้ามี)";
                     string price = "เเละชำระค่าหุ้น " + dt.Rows[0][9].ToString() + " บาท ทันทีที่ได้รับเเจ้งให้เข้าเป็นสมาชิก";
 
-                    CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, $"{MemberID}\r\n" +
-                                                          $"{School}\r\n" +
-                                                          $"วันที่ {Day} เดือน {Month} พ.ศ. {Year}\r\n",
-                              THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 10, 400f, 200, false);
+                    //CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, $"{MemberID}\r\n" +
+                    //                                      $"{School}\r\n" +
+                    //                                      $"วันที่ {Day} เดือน {Month} พ.ศ. {Year}\r\n",
+                    //          THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 10, 400f, 200, false);
+
+                    SizeText = e.Graphics.MeasureString($"{MemberID}", FonT(18, ThaiSarabun, FontStyle.Regular));
+                    e.Graphics.DrawString($"{MemberID}", FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, PageX - SizeText.Width, Y + (SpacePerRow * CurrentRows++));
+                    SizeText = e.Graphics.MeasureString($"{School}", FonT(18, ThaiSarabun, FontStyle.Regular));
+                    e.Graphics.DrawString($"{School}", FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, PageX - SizeText.Width, Y + (SpacePerRow * CurrentRows++));
+                    SizeText = e.Graphics.MeasureString($"วันที่ {Day} เดือน {Month} พ.ศ. {Year}", FonT(18, ThaiSarabun, FontStyle.Regular));
+                    e.Graphics.DrawString($"วันที่ {Day} เดือน {Month} พ.ศ. {Year}", FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, PageX - SizeText.Width, Y + (SpacePerRow * CurrentRows++));
+
 
                     Class.Print.SetPrintMedtods.CenterLeft(e, $"ถึงคณะกรรมการดำเนินการกิจกรรมสหกรณ์ครู{DT.Rows[0][0].ToString()}", THsarabun18, BrushBlack, X + XD, Y + (SpacePerRow * CurrentRows++), XP, XD);
 
@@ -130,7 +139,7 @@ namespace BankTeacher.Class.Print
 
                     Class.Print.SetPrintMedtods.CenterRight(e, "ผู้สมัคร", FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 100, XP, XD + 230);
 
-                    Class.Print.SetPrintMedtods.confirmation(e, PenBlack, BrushBlack, Print_two, PageX-50,0);
+                    Class.Print.SetPrintMedtods.confirmation(e, PenBlack, BrushBlack, Print_two, PageX,0);
                     if (Print_two == 2)
                     {
                         Print_two = 0;
@@ -166,7 +175,7 @@ namespace BankTeacher.Class.Print
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLCode);
                 //string IDBorrower = dt.Rows[0][0].ToString();
                 string School = $"{DT.Rows[0][0].ToString()}";
-                String Lender = $"{dt.Rows[0][4].ToString()}";
+                String Lender = $"{DT.Rows[0][4].ToString()}";
                 String Borrower = dt.Rows[0][1].ToString();
                 String AmountLoan = dt.Rows[0][2].ToString();
                 string Borroweraddress = dt.Rows[0][3].ToString();
@@ -189,17 +198,17 @@ namespace BankTeacher.Class.Print
                 }
                 //----------------------
 
-                if (Print_two == 0)
+                if (pageNow == 0)
                 {
                     //------------------------
 
 
-                    Class.Print.SetPrintMedtods.CenterRight(e, "สมาชิกเลขที่" + LoanNo, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), XP, XD);
+                    Class.Print.SetPrintMedtods.CenterRight(e, "สมาชิกเลขที่" + TeacherNo, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), XP, XD);
                     Class.Print.SetPrintMedtods.Center(e, Y + (SpacePerRow * CurrentRows++), "สัญญากู้ยืมเงินสวัสดิการพนักงาน", THsarabun30, BrushBlack);
                     Class.Print.SetPrintMedtods.CenterRight(e, "เขียนที่ " + School, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 10, XP, XD);
                     Class.Print.SetPrintMedtods.CenterRight(e, "วันที่ " + Day + " " + Month + " " + Year, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), XP, XD);
                     CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "       สัญญาฉบับนี้ทำขึ้นมาระหว่างผู้เเทน" + School +
-                    " (" + Lender + ") อยู่ ณ เลขที่ 75/2 หมู่  10 ต.ทุ่งสุขลา อ. ศรีราชา จ. ชลบุรี ซึ่งต่อไปในสัญญานี้เรียกว่า '" + School + "' ฝ่ายหนึ่งกับ " + Borrower, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 750f, 200, false);
+                    $" ( {Lender} ) {DT.Rows[0][6].ToString()} ซึ่งต่อไปในสัญญานี้เรียกว่า '" + School + "' ฝ่ายหนึ่งกับ " + Borrower, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 750f, 200, false);
                     Class.Print.SetPrintMedtods.CenterLeft(e, Borroweraddress, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), XP, XD);
                     //  เงื่อนไข 1
                     CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "ซึ่งต่อไปในสัญญานี้เรียกว่า 'พนักงานครู / อาจารย์'อีกฝ่าย \r\n" +
@@ -209,9 +218,8 @@ namespace BankTeacher.Class.Print
                         "จำนวนดังกล่าวจาก" + School + "ไปถูกต้องครบถ้วนเเล้วในขณะทำสัญญากู้ยืมเงินฉบังนี้", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 750f, 200, false);
                     // เงื่อนไข 2
                     CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "   ข้อ 2. หนักงานครู จะชำระหนี้เงินกู้ยืมตาม ข้อ 1. ของสัญญานี้คืนให้เเก่วิทยาลัยสหกรณ์ครู \r\n" +
-                        $"{DT.Rows[0][0].ToString()} โดยผ่อนชำระเป็นรายเดือนในจำนวนไม่ต่ำกว่าเดือนละ " + PayMin + " บาท\r\n" +
-                        "( " + NumToBath(PayMin) + " )ในวันที่พนักงานครูรับเงินค่าจ้างจาก" + School + "\r\n" +
-                        "เเละส่งให้สหกรณ์ก่อนวันที่ 3 ของเดือน ติดต่อกันจนกว่าจะชำระหนี้เงินกู้ยืมครบถ้วน เเละจะต้องชำระคืน\r\n" +
+                        $"{School} โดยผ่อนชำระเป็นรายเดือนในจำนวนไม่ต่ำกว่าเดือนละ  {PayMin} บาท  ({NumToBath(PayMin)}) ในวันที่พนักงานครูรับเงินค่าจ้างจาก  {School}" +
+                        "เเละส่งให้สหกรณ์ก่อนวันที่ 3 ของเดือน ติดต่อกันจนกว่าจะชำระหนี้เงินกู้ยืมครบถ้วน เเละจะต้องชำระคืน" +
                         "ให้เสร็จสิ้นภายในเดือน " + LimitMonthPay, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 750f, 200, false);
                     // เงื่อนไข 3
                     CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "   ข้อ 3. พนักงานยืนยอมให้" + School + "หักเงินค่าตอบเเทนที่หนักงานครูมีสิทธิได้รับ" +
@@ -252,15 +260,26 @@ namespace BankTeacher.Class.Print
 
 
                 }
-                Class.Print.SetPrintMedtods.confirmation(e, PenBlack, BrushBlack, Print_two, PageX - 50, 0);
-                if (Print_two == 2)
+                if(pageNow == 0)
+                Class.Print.SetPrintMedtods.confirmation(e, PenBlack, BrushBlack, Print_two,200, 0);
+                if(pageNow == 1)
                 {
-                    Print_two = 0;
-                    e.HasMorePages = false;
+                    if (Print_two == 1)
+                    {
+                        Print_two = 0;
+                        pageNow = 0;
+                        e.HasMorePages = false;
+                    }
+                    else
+                    {
+                        Print_two++;
+                        pageNow = 0;
+                        e.HasMorePages = true;
+                    }
                 }
                 else
                 {
-                    Print_two++;
+                    pageNow++;
                     e.HasMorePages = true;
                 }
             }
@@ -277,7 +296,7 @@ namespace BankTeacher.Class.Print
         static List<int> Pay = new List<int>(); 
         static List<int> Loan = new List<int>();
         // SUM จำนวนเลขท้ายสุด เพื่อเเสดงผลยอดรวม
-        public static List<float> SUM = new List<float>();
+        static List<float> SUM = new List<float>();
         /// <summary>
         /// <para> (System.Drawing.Printing.PrintPageEventArgs e) INDAX : e</para>
         /// <para> (DataGridView G) INDAX : DataGridView</para>
@@ -754,12 +773,21 @@ namespace BankTeacher.Class.Print
                                             }
                                         }
                                 }
-                                
                                 // เรียกใช้ โรงงาน การตัด  เเละ การวัด ขนาดสี่เหลี่ยมพื้นผ้า
                                 Class.Print.SetPrintMedtods.CutingCharAndString
                                 (e, G.Rows[Rows].Cells[Cells].Value.ToString(), setcut, 50, startTableY, out Rectangle_X, out Rectangle_Y, 0);
-                                // วาดRows
-                                e.Graphics.DrawString(G.Rows[Rows].Cells[Cells].Value.ToString(), FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Center[Cells], startTableY, Rectangle_X - 50, Rectangle_Y - 50));
+                                    if(Cells == G.Rows[Rows].Cells.Count - 1)
+                                    {
+                                        Size = e.Graphics.MeasureString(G.Rows[Rows].Cells[Cells].Value.ToString(), FonT(18, ThaiSarabun, FontStyle.Regular));
+                                        // วาดRows
+                                        e.Graphics.DrawString(G.Rows[Rows].Cells[Cells].Value.ToString(), FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Line2_x - Size.Width, startTableY, Rectangle_X - 50, Rectangle_Y - 50));
+                                    }
+                                    else
+                                    {
+                                        // วาดRows
+                                        e.Graphics.DrawString(G.Rows[Rows].Cells[Cells].Value.ToString(), FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Center[Cells], startTableY, Rectangle_X - 50, Rectangle_Y - 50));
+                                    }
+                              
                                 // =================================================== เช็คว่าขนาดข้อความใหญ่เกินกำหนดหรือไม่ เพื่อความปลอดภัย ในการทับเส้น
                                 if (G.Rows[Rows].Cells[Cells].Value.ToString().Length >= setcut + 5)
                                 {

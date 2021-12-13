@@ -37,6 +37,7 @@ namespace BankTeacher.Bank.Loan
         /// <para>[0] SELECT MemberLonn  INPUT: {TeacherNo}</para>
         /// <para>[1] SELECT LOAN INPUT: {TeacherNo} </para>
         /// <para>[2] SELECT Detail Loan INPUT: {LoanID} </para>
+        /// <para>[3] for printback  INPUT : {TeacherNo} {LoanNo} </para>
         /// </summary>
         private String[] SQLDefault =
         {
@@ -99,6 +100,18 @@ namespace BankTeacher.Bank.Loan
           "WHERE a.LoanNo = '{LoanID}'  \r\n" +
           "GROUP BY b.LoanAmount,b.InterestRate,b.PayNo"
            ,
+           //[3] for printback  INPUT : {TeacherNo} {LoanNo}
+         "SELECT TOP(1) a.TeacherNo,CAST(ISNULL(d.PrefixName+' ','')+Fname +' '+ Lname as NVARCHAR)AS Name,LoanAmount , \r\n " +
+         "CAST(cNo + ' หมู่ ' + cMu + 'ซอย  ' + cSoi + ' ถนน' + cRoad + ' ตำบล' +  TumBonName + ' อำเภอ'  + AmphurName + ' จังหวัด ' + JangWatLongName + ' รหัสไปรสณี ' + ZipCode as NVARCHAR(255)) AS ADDRESS, \r\n " +
+         "MonthPay , YearPay , PayNo , InterestRate \r\n " +
+         "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
+         "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo \r\n " +
+         "LEFT JOIN Personal.dbo.tblTeacherHis as c ON b.TeacherNo = c.TeacherNo \r\n " +
+         "LEFT JOIN BaseData.dbo.tblPrefix as d ON c.PrefixNo = d.PrefixNo \r\n " +
+         "LEFT JOIN BaseData.dbo.tblTumBon as e on c.cTumBonNo = e.TumBonNo \r\n " +
+         "LEFT JOIN BaseData.dbo.tblAmphur as f on c.cAmPhurNo = f.AmphurNo \r\n " +
+         "LEFT JOIN BaseData.dbo.tblJangWat as g on c.cJangWatNo = g.JangWatNo \r\n " +
+         "WHERE a.TeacherNo = '{TeacherNo}' and a.LoanNo = {LoanNo}"
 
 
         };
@@ -164,6 +177,7 @@ namespace BankTeacher.Bank.Loan
             {
                 if (TBTeacherNo.Text.Length == 6)
                 {
+                    tabControl1.SelectedIndex = 0;
                     comboBox1.Enabled = true;
                     comboBox1.Items.Clear();
                     Check = 1;
@@ -372,7 +386,14 @@ namespace BankTeacher.Bank.Loan
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
+            if(CB_SelectPrint.SelectedIndex == 0)
             Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVLoanDetail, tabControl1.SelectedTab.Text, this.AccessibilityObject.Name,2,"A4",1);
+            else
+            {
+                Class.Print.PrintPreviewDialog.PrintLoan(e, SQLDefault[3].Replace("{TeacherNo}", TBTeacherNo.Text).Replace("{LoanNo}",TBLoanNo.Text),
+                   Bank.Menu.Date[2], Bank.Menu.Monthname, (Convert.ToInt32(Bank.Menu.Date[0]) + 543).ToString(),
+                   TBTeacherNo.Text, TBLoanNo.Text, DGVGuarantor.RowCount);
+            }
         }
 
         private void BTPrint_Click_1(object sender, EventArgs e)
@@ -394,10 +415,16 @@ namespace BankTeacher.Bank.Loan
         {
             if (tabControl1.SelectedIndex == 2)
             {
+                CB_SelectPrint.SelectedIndex = 0;
                 BTPrint.Visible = true;
+                CB_SelectPrint.Visible = true; 
             }
             else
+            {
                 BTPrint.Visible = false;
+                CB_SelectPrint.Visible = false;
+            }
+     
         }
 
         private void BExitForm_Click(object sender, EventArgs e)

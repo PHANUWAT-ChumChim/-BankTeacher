@@ -104,7 +104,7 @@ namespace BankTeacher.Bank.Loan
                     label3.Text = "0";
                     CBB4Oppay.Enabled = false;
                     button1.Enabled = false;
-                    comboBox1.Items.Clear();
+                    CB_LoanNo.Items.Clear();
                     Check = 1;
                     TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
                 }
@@ -118,7 +118,7 @@ namespace BankTeacher.Bank.Loan
 
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter) 
             {
                 if (TBTeacherNo.Text.Length == 6)
                 {
@@ -126,10 +126,10 @@ namespace BankTeacher.Bank.Loan
                     if (dt.Rows.Count != 0)
                     {
                         TBTeacherName.Text = dt.Rows[0][1].ToString();
-                        comboBox1.Enabled = true;
-                        comboBox1.Items.Clear();
+                        CB_LoanNo.Enabled = true;
+                        CB_LoanNo.Items.Clear();
                         Check = 1;
-                        ComboBox[] cb = new ComboBox[] { comboBox1 };
+                        ComboBox[] cb = new ComboBox[] { CB_LoanNo };
                         int CheckPay = 0;
                         for (int x = 0; x < dt.Rows.Count; x++)
                         {
@@ -145,17 +145,17 @@ namespace BankTeacher.Bank.Loan
                         TBLoanNo.Text = "";
                         TBLoanStatus.Text = "";
                         TBDate.Text = "";
-                        comboBox1.Enabled = true;
+                        CB_LoanNo.Enabled = true;
                         CBB4Oppay.SelectedIndex = 0;
-                        if (comboBox1.Items.Count == 1)
+                        if (CB_LoanNo.Items.Count == 1)
                         {
-                            comboBox1.SelectedIndex = 0;
+                            CB_LoanNo.SelectedIndex = 0;
                             label9.Visible = false;
                         }
-                        else if (comboBox1.Items.Count == 0)
+                        else if (CB_LoanNo.Items.Count == 0)
                         {
                             label9.Visible = true;
-                            comboBox1.Enabled = false;
+                            CB_LoanNo.Enabled = false;
                         }
 
                     }
@@ -173,8 +173,8 @@ namespace BankTeacher.Bank.Loan
             {
                 if (Check == 1)
                 {
-                    comboBox1.Items.Clear();
-                    comboBox1.SelectedIndex = -1;
+                    CB_LoanNo.Items.Clear();
+                    CB_LoanNo.SelectedIndex = -1;
                     TBTeacherName.Text = "";
                     TBLoanNo.Text = "";
                     TBLoanStatus.Text = "";
@@ -184,7 +184,7 @@ namespace BankTeacher.Bank.Loan
                         CBB4Oppay.SelectedIndex = -1;
                     CBB4Oppay.Enabled = false;
                     button1.Enabled = false;
-                    comboBox1.Enabled = false;
+                    CB_LoanNo.Enabled = false;
                     StatusBoxFile = 0;
                     imgeLocation = "";
                     Check = 0;
@@ -193,11 +193,17 @@ namespace BankTeacher.Bank.Loan
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            BankTeacher.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as BankTeacher.Class.ComboBoxPayment);
+        {   
+            BankTeacher.Class.ComboBoxPayment Loan = (CB_LoanNo.SelectedItem as BankTeacher.Class.ComboBoxPayment);
             DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{LoanNo}", Loan.No));
             if (dt.Rows.Count != 0)
             {
+                for(int Row = 0;Row < dt.Rows.Count; Row++)
+                {
+                    DGV_PayLoan.Rows.Add(Row+1,Loan.No,(Convert.ToDateTime(dt.Rows[0][1].ToString())).ToString("dd/MM/yyyy"),"จ่ายกู้", dt.Rows[0][3].ToString());
+                }
+
+                //CB_LoanNo.Items.RemoveAt()
                 TBDate.Text = (Convert.ToDateTime(dt.Rows[0][1].ToString())).ToString("dd/MM/yyyy");
                 TBLoanNo.Text = Loan.No;
                 TBLoanStatus.Text = "ดำเนินการ";
@@ -208,7 +214,7 @@ namespace BankTeacher.Bank.Loan
 
         private void CBB4Oppay_SelectedIndexChanged(object sender, EventArgs e)
         {
-            button1.Enabled = true;
+            button1.Enabled = true; 
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -222,8 +228,8 @@ namespace BankTeacher.Bank.Loan
                         .Replace("{TeacherNoPay}", Class.UserInfo.TeacherNo)
                         .Replace("{PaymentNo}", Payment.No));
                     MessageBox.Show("จ่ายสำเร็จ", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    comboBox1.Items.Clear();
-                    comboBox1.SelectedIndex = -1;
+                    CB_LoanNo.Items.Clear();
+                    CB_LoanNo.SelectedIndex = -1;
                     TBTeacherName.Text = "";
                     TBLoanNo.Text = "";
                     TBLoanStatus.Text = "";
@@ -233,7 +239,7 @@ namespace BankTeacher.Bank.Loan
                     CBB4Oppay.Enabled = false;
                     TBTeacherNo.Text = "";
                     button1.Enabled = false;
-                    comboBox1.Enabled = false;
+                    CB_LoanNo.Enabled = false;
                     TBTeacherNo.Focus();
                     Check = 0;
 
@@ -330,8 +336,8 @@ namespace BankTeacher.Bank.Loan
                 if (TBTeacherNo.Text.Length != 0)
                 {
                     TBTeacherNo.Text = "";
-                    comboBox1.Items.Clear();
-                    comboBox1.SelectedIndex = -1;
+                    CB_LoanNo.Items.Clear();
+                    CB_LoanNo.SelectedIndex = -1;
                     TBTeacherName.Text = "";
                     TBLoanNo.Text = "";
                     TBLoanStatus.Text = "";
@@ -341,7 +347,7 @@ namespace BankTeacher.Bank.Loan
                         CBB4Oppay.SelectedIndex = -1;
                     CBB4Oppay.Enabled = false;
                     button1.Enabled = false;
-                    comboBox1.Enabled = false;
+                    CB_LoanNo.Enabled = false;
                     StatusBoxFile = 0;
                     imgeLocation = "";
                     Check = 0;

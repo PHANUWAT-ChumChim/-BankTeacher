@@ -33,8 +33,8 @@ namespace BankTeacher.Bank
            ,
 
            //[1] Table[1]Get Name , a.SavingAmount , a.DividendAmount , a.Interest , a.RemainInterestLastYear , a.AverageDividend Table[2]Get InterestLastYear INPUT: {Year}
-           "SELECT CAST(ISNULL(c.PrefixNameFull , '') + b.Fname + ' ' + b.Lname as nvarchar) , a.SavingAmount  \r\n " +
-          ", a.DividendAmount , a.Interest , a.RemainInterestLastYear , a.AverageDividend \r\n " +
+           "SELECT CAST(ISNULL(c.PrefixNameFull , '') + b.Fname + ' ' + b.Lname as nvarchar) , ISNULL(a.SavingAmount,0)  \r\n " +
+          ", a.DividendAmount , a.Interest , ISNULL(a.RemainInterestLastYear,0) , ISNULL(a.AverageDividend,0) \r\n " +
           "FROM (SELECT a.TeacherNo , a.SavingAmount , a.DividendAmount , b.Interest , b.RemainInterestLastYear , b.AverageDividend \r\n " +
           "	FROM EmployeeBank.dbo.tblDividendDetail as a \r\n " +
           "	LEFT JOIN EmployeeBank.dbo.tblDividend as b on a.DividendNo = b.DividendNo WHERE b.Cancel = 1 and b.Year = {Year}) as a  \r\n " +
@@ -64,14 +64,6 @@ namespace BankTeacher.Bank
 
 
          };
-        private void ReportDividend_Load(object sender, EventArgs e)
-        {
-            DataTable dtYear = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]);
-            for (int x = 0; x < dtYear.Rows.Count; x++)
-            {
-                CBYear.Items.Add(dtYear.Rows[x][0].ToString());
-            }
-        }
 
         private void CBYear_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -81,22 +73,31 @@ namespace BankTeacher.Bank
 
                 DataSet dsReport = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
                     .Replace("{Year}", CBYear.SelectedItem.ToString()));
-
-                int SumSavingAmount = 0, SumDividendAmount = 0;
-                for (int x = 0; x < dsReport.Tables[0].Rows.Count; x++)
+                if(dsReport.Tables[0].Rows.Count != 0)
                 {
-                    DGVReportDividend.Rows.Add(dsReport.Tables[0].Rows[x][0].ToString(), dsReport.Tables[0].Rows[x][1].ToString(), dsReport.Tables[0].Rows[x][2].ToString());
-                    SumSavingAmount += Convert.ToInt32(dsReport.Tables[0].Rows[x][1].ToString());
-                    SumDividendAmount += Convert.ToInt32(dsReport.Tables[0].Rows[x][2].ToString());
-                }
-                LSavingAmount.Text = SumSavingAmount.ToString();
-                LDividendAmount.Text = SumDividendAmount.ToString();
-                LInterestAmount.Text = dsReport.Tables[0].Rows[0][3].ToString();
-                LInterestNextYear.Text = dsReport.Tables[0].Rows[0][4].ToString();
-                LDividendPerShare.Text = dsReport.Tables[0].Rows[0][5].ToString();
-                LRemainInterest.Text = dsReport.Tables[1].Rows[0][0].ToString();
+                    int SumSavingAmount = 0, SumDividendAmount = 0;
+                    for (int x = 0; x < dsReport.Tables[0].Rows.Count; x++)
+                    {
+                        DGVReportDividend.Rows.Add(dsReport.Tables[0].Rows[x][0].ToString(), dsReport.Tables[0].Rows[x][1].ToString(), dsReport.Tables[0].Rows[x][2].ToString());
+                        SumSavingAmount += Convert.ToInt32(dsReport.Tables[0].Rows[x][1].ToString());
+                        SumDividendAmount += Convert.ToInt32(dsReport.Tables[0].Rows[x][2].ToString());
+                    }
+                    LSavingAmount.Text = SumSavingAmount.ToString();
+                    LDividendAmount.Text = SumDividendAmount.ToString();
+                    LInterestAmount.Text = dsReport.Tables[0].Rows[0][3].ToString();
+                    LInterestNextYear.Text = dsReport.Tables[0].Rows[0][4].ToString();
+                    LDividendPerShare.Text = dsReport.Tables[0].Rows[0][5].ToString();
+                    if(dsReport.Tables[1].Rows.Count != 0)
+                    {
+                        LRemainInterest.Text = dsReport.Tables[1].Rows[0][0].ToString();
+                    }
+                    else
+                    {
+                        LRemainInterest.Text = 0.ToString();
+                    }
 
-                BSaveCancelDividend.Enabled = true;
+                    BSaveCancelDividend.Enabled = true;
+                }
             }
         }
 
@@ -134,6 +135,32 @@ namespace BankTeacher.Bank
                     BExitForm_Click(new object(), new EventArgs());
                 }
             }
+        }
+
+        private void CancelDividend_Load(object sender, EventArgs e)
+        {
+            DataTable dtYear = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]);
+            if(dtYear.Rows.Count != 0)
+                for (int x = 0; x < dtYear.Rows.Count; x++)
+                {
+                    CBYear.Items.Add(dtYear.Rows[x][0].ToString());
+                }
+            if(CBYear.Items.Count != 0)
+            {
+                CBYear.SelectedIndex = 0;
+                CBYear.Enabled = true;
+            }
+            else
+            {
+                CBYear.Enabled = false;
+            }
+        }
+
+        private void CancelDividend_SizeChanged(object sender, EventArgs e)
+        {
+            int x = this.Width / 2 - panel1.Size.Width / 2;
+            int y = this.Height / 2 - panel1.Size.Height / 2;
+            panel1.Location = new Point(x, y);
         }
     }
 }

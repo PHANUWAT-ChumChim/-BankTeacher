@@ -140,5 +140,12 @@ namespace BankTeacher.Bank
                 BExitForm_Click(new object(), new EventArgs());
             }
         }
+
+        private void ReportIncomeAll_SizeChanged(object sender, EventArgs e)
+        {
+            int x = this.Width / 2 - panel1.Size.Width / 2;
+            int y = this.Height / 2 - panel1.Size.Height / 2;
+            panel1.Location = new Point(x, y);
+        }
     }
 }
