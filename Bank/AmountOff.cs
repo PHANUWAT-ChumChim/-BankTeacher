@@ -87,7 +87,7 @@ namespace BankTeacher.Bank
 
             //[3] INSERT ShareWithDraw INPUT: {TeacherNoAddBy} , {ShareNo} , {WithDraw},{PayMent}
             "INSERT INTO EmployeeBank.dbo.tblShareWithdraw (TeacherNoAddBy,ShareNo,DateAdd,Amount,BillDetailPayMentNo)\r\n" +
-            "VALUES ('{TeacherNoAddBy}', '{ShareNo}',CAST(CURRENT_TIMESTAMP as Date),'{WithDraw}',{PayMent});"
+            "VALUES ('{TeacherNoAddBy}', '{ShareNo}',CURRENT_TIMESTAMP,'{WithDraw}',{PayMent});"
 
             ,
 
