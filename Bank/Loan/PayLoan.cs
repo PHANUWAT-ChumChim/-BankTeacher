@@ -16,7 +16,7 @@ namespace BankTeacher.Bank.Loan
         int Check = 0;
         int StatusBoxFile = 0;
         String imgeLocation = "";
-
+        List<string[]> ItemList = new List<string[]>();
         /// <summary>
         /// <para>[0] SELECT MemberLona  INPUT: {Text}</para>
         /// <para>[1] SELECT LOAN INPUT: {TeacherNo} </para>
@@ -115,7 +115,6 @@ namespace BankTeacher.Bank.Loan
                 Console.WriteLine(x);
             }
         }
-
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter) 
@@ -139,7 +138,8 @@ namespace BankTeacher.Bank.Loan
                                 if (CheckPay == 1)
                                 {
                                     cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[x][0], dt.Rows[x][0].ToString()));
-                                }
+                                    
+                    }
                             }
                         }
                         TBLoanNo.Text = "";
@@ -191,9 +191,8 @@ namespace BankTeacher.Bank.Loan
                 }
             }
         }
-
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {   
+        {
             BankTeacher.Class.ComboBoxPayment Loan = (CB_LoanNo.SelectedItem as BankTeacher.Class.ComboBoxPayment);
             DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{LoanNo}", Loan.No));
             if (dt.Rows.Count != 0)
@@ -202,13 +201,15 @@ namespace BankTeacher.Bank.Loan
                 {
                     DGV_PayLoan.Rows.Add(Row+1,Loan.No,(Convert.ToDateTime(dt.Rows[0][1].ToString())).ToString("dd/MM/yyyy"),"จ่ายกู้", dt.Rows[0][3].ToString());
                 }
-
                 //CB_LoanNo.Items.RemoveAt()
                 TBDate.Text = (Convert.ToDateTime(dt.Rows[0][1].ToString())).ToString("dd/MM/yyyy");
                 TBLoanNo.Text = Loan.No;
                 TBLoanStatus.Text = "ดำเนินการ";
                 CBB4Oppay.Enabled = true;
                 label3.Text = dt.Rows[0][3].ToString();
+                // ================ Clear ItemList ======================
+                CB_LoanNo.Items.RemoveAt(CB_LoanNo.SelectedIndex);
+                
             }
         }
 
@@ -379,6 +380,26 @@ namespace BankTeacher.Bank.Loan
             {
                 MessageBox.Show("ไม่พบรายการ กรูณาลงรายการใหม่อีกครั้งค่ะ");
             }
+        }
+        static int SelectIndexRow;
+        private void DGV_PayLoan_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                int currentMouseOverRow = DGV_PayLoan.HitTest(e.X, e.Y).RowIndex;
+                if (currentMouseOverRow != -1)
+                {
+                    SelectIndexRow = currentMouseOverRow;
+                    ContextMenu m = new ContextMenu();
+                    m.MenuItems.Add(new MenuItem("ลบออก"));
+                    m.Show(DGV_PayLoan, new Point(e.X, e.Y));
+                    m.MenuItems[0].Click += new System.EventHandler(this.Delete_Click);
+                }
+            }
+        }
+        private void Delete_Click(object sender, EventArgs e)
+        {
+            Class.ComboxNumberRanking.NumberRanking(SelectIndexRow, DGV_PayLoan,CB_LoanNo,"รายการกู้");
         }
     }
 }
