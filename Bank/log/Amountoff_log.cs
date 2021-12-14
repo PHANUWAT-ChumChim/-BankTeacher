@@ -232,7 +232,7 @@ namespace BankTeacher.Bank.log
                 }
             }
         }
-        
+
         private void ClearForm()
         {
             TBTeacherName.Text = "";
