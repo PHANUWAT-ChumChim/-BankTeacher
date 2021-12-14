@@ -93,7 +93,7 @@ namespace BankTeacher.Bank.Loan
             "DECLARE @LoanNo INT;\r\n" +
             "INSERT INTO EmployeeBank.dbo.tblLoan\r\n" +
             "(TeacherNoAddBy, TeacherNo, MonthPay, YearPay, LoanAmount, PayNo, InterestRate, DateAdd)\r\n" +
-            "VALUES ('{TeacherNoAdd}', '{TeacherNo}', {MonthPay}, {YearPay}, {LoanAmount}, {PayNo}, {InterestRate}, CAST(CURRENT_TIMESTAMP as DATE));\r\n" +
+            "VALUES ('{TeacherNoAdd}', '{TeacherNo}', {MonthPay}, {YearPay}, {LoanAmount}, {PayNo}, {InterestRate},CURRENT_TIMESTAMP);\r\n" +
             "SET @LoanNo = SCOPE_IDENTITY();\r\n" +
             "SELECT LoanNo\r\n" +
             "FROM EmployeeBank.dbo.tblLoan\r\n" +

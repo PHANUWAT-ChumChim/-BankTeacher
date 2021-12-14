@@ -145,7 +145,7 @@ namespace BankTeacher.Bank.Loan
 
         private void CBList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DGV.Rows.Clear();
+            DGVCancelLoan.Rows.Clear();
             BankTeacher.Class.ComboBoxPayment Loan = (CBlist.SelectedItem as BankTeacher.Class.ComboBoxPayment);
             DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{LoanNo}",Loan.No));
             if (dt.Rows.Count != 0)

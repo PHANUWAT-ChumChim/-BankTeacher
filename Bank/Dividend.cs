@@ -28,7 +28,7 @@ namespace BankTeacher.Bank
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
-           //[0] Insert Dividend INPUT: {Year}
+           //[0] Insert Dividend INPUT: {Year} {TeacherAddbyNo}
            "DECLARE @Interest int \r\n " +
           "DECLARE @AmountShare float \r\n " +
           "DECLARE @AVGDivident float \r\n " +
@@ -58,8 +58,8 @@ namespace BankTeacher.Bank
           " \r\n " +
           "SET @AVGDivident = @Interest/@AmountShare; \r\n " +
           " \r\n " +
-          "INSERT EmployeeBank.dbo.tblDividend (Interest,AverageDividend,Year,Cancel) \r\n " +
-          "VALUES (@Interest, ROUND(@AVGDivident,2,1),{Year},1); \r\n " +
+          "INSERT EmployeeBank.dbo.tblDividend (Interest,AverageDividend,Year,Cancel,CancelBy,TeacherAddby,DateAdd,DateCancel) \r\n " +
+          "VALUES (@Interest, ROUND(@AVGDivident,2,1),{Year},1,'','{TeacherAddbyNo}',CURRENT_TIMESTAMP,''); \r\n " +
           " \r\n " +
           "SET @DividendNo = SCOPE_IDENTITY(); \r\n " +
           " \r\n " +
