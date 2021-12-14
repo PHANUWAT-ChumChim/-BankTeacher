@@ -15,6 +15,7 @@ namespace BankTeacher.Bank.Loan
     {
         //------------------------- index -----------------
         Bitmap bmp;
+        //
         string name = "", id = "";
         int StatusBoxFile = 0;
         String imgeLocation = "";
