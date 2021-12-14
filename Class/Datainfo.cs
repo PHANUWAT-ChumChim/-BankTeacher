@@ -59,14 +59,15 @@ namespace BankTeacher.Class
             bool Is = true;
             string GetRemove = "";
             BankTeacher.Class.ComboBoxPayment Check_Position;
-
             if (SelectIndexRow != -1)
             {
+                // ============== เก็บค่าที่ถูกลบ ==========================
                 GetRemove = G.Rows[SelectIndexRow].Cells[1].Value.ToString();
-
                 if (CB_Item.Items.Count != 0)
                 {
+                    //  ตำเเหน่ง 
                     int position = 0;
+                    // ============== หาตำเเหน่งที่ค่่าควรจะอยู่ ==========================
                     for (int loop = 0; loop < CB_Item.Items.Count; loop++)
                     {
                         Check_Position = (CB_Item.Items[loop] as BankTeacher.Class.ComboBoxPayment);
@@ -82,6 +83,7 @@ namespace BankTeacher.Class
                     Check_Position = (CB_Item.Items[position] as BankTeacher.Class.ComboBoxPayment);
                     if (Convert.ToInt32(GetRemove) < Convert.ToInt32(Check_Position.No))
                     {
+                        // ============== เอาข้อมูลที่อยู่ใน combobox ออกมาทั้งหมด เเล้ว บวกด้วยค่าที่โดน ลบ ==========================
                         for (int loop = 0; loop < CB_Item.Items.Count + 1; loop++)
                         {
                             if (loop < CB_Item.Items.Count)
@@ -94,8 +96,7 @@ namespace BankTeacher.Class
                                 Box_List.Add(GetRemove);
                             }
                         }
-
-
+                        // ============== จัดลำดับใหม่ ==========================
                         do
                         {
                             if (Box_List.Count() != 1)
@@ -135,6 +136,7 @@ namespace BankTeacher.Class
                                 double around = get.Count / 1.5;
                                 around = Math.Round(around);
                                 Is = true;
+                                // ============== เช็คว่าจัดลำดับถูกมั้ย ==========================
                                 for (int Chcek = 0; Chcek < around; Chcek++)
                                 {
                                     if (get[Chcek] > get[Chcek + 1])
@@ -151,6 +153,7 @@ namespace BankTeacher.Class
                                         break;
                                     }
                                 }
+                                // ============== ถ้าไม่ถูกทำการเช็คใหม่ เเล้ว เรียงใหม่อีกรอบ ==========================
                                 if (Is == false)
                                 {
                                     for (int loop = 0; loop < Box_List.Count(); loop++)
