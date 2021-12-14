@@ -64,25 +64,25 @@ namespace BankTeacher.Bank.Loan
             , 
 
             //[1] SELECT CreditLimit Data INPUT:{Text} , {TeacherNoNotLike}
-            "SELECT TOP(20)TeacherNo, Name, RemainAmount, ISNULL(a.LoanStatusNo , 0) as LoanS \r\n " +
-            "FROM (SELECT a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS Name,  \r\n " +
-            "ROUND(ISNULL(e.SavingAmount,0) - ISNULL(SUM(d.RemainsAmount),0),0,1) as RemainAmount, Fname , f.LoanStatusNo \r\n " +
-            "FROM EmployeeBank.dbo.tblMember as a   \r\n " +
-            "LEFT JOIN ( \r\n " +
-            "SELECT TeacherNo , Fname , Lname , PrefixNo \r\n " +
-            "FROM Personal.dbo.tblTeacherHis  \r\n " +
-            ") as b ON a.TeacherNo = b.TeacherNo   \r\n " +
-            "LEFT JOIN BaseData.dbo.tblPrefix as c ON b.PrefixNo = c.PrefixNo   \r\n " +
-            "LEFT JOIN EmployeeBank.dbo.tblGuarantor as d on a.TeacherNo = d.TeacherNo  \r\n " +
-            "LEFT JOIN EmployeeBank.dbo.tblShare as e ON e.TeacherNo = a.TeacherNo  \r\n " +
-            "LEFT JOIN (SELECT * \r\n " +
-            "FROM EmployeeBank.dbo.tblLoan \r\n " +
-            "WHERE LoanStatusNo = 1 or LoanStatusNo = 2 ) as f on a.TeacherNo = f.TeacherNo \r\n " +
-            "WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1 \r\n " +
-            "GROUP BY a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname, f.LoanStatusNo) as a  \r\n " +
-            "WHERE RemainAmount >= 500 {TeacherNoNotLike}\r\n " +
-            "ORDER BY a.Fname; "
-           
+           "SELECT TOP(20)TeacherNo, Name, RemainAmount, ISNULL(a.LoanStatusNo , 0) as LoanS  \r\n " + 
+          " FROM (SELECT a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS Name,   \r\n " + 
+          " ROUND(ISNULL(e.SavingAmount,0) - ISNULL(SUM(d.RemainsAmount),0),0,1) as RemainAmount, Fname , f.LoanStatusNo  \r\n " + 
+          " FROM EmployeeBank.dbo.tblMember as a    \r\n " + 
+          " LEFT JOIN (  \r\n " + 
+          " SELECT TeacherNo , Fname , Lname , PrefixNo  \r\n " + 
+          " FROM Personal.dbo.tblTeacherHis   \r\n " + 
+          " ) as b ON a.TeacherNo = b.TeacherNo    \r\n " + 
+          " LEFT JOIN BaseData.dbo.tblPrefix as c ON b.PrefixNo = c.PrefixNo    \r\n " + 
+          " LEFT JOIN EmployeeBank.dbo.tblGuarantor as d on a.TeacherNo = d.TeacherNo   \r\n " + 
+          " LEFT JOIN EmployeeBank.dbo.tblShare as e ON e.TeacherNo = a.TeacherNo   \r\n " + 
+          " LEFT JOIN (SELECT TeacherNo , LoanStatusNo \r\n " + 
+          " FROM EmployeeBank.dbo.tblLoan  \r\n " + 
+          " WHERE LoanStatusNo = 1 or LoanStatusNo = 2 GROUP BY TeacherNo , LoanStatusNo) as f on a.TeacherNo = f.TeacherNo  \r\n " +
+          " WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1  \r\n " + 
+          " GROUP BY a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname, f.LoanStatusNo) as a   \r\n " +
+          " WHERE RemainAmount >= 500  {TeacherNoNotLike}\r\n " + 
+          " ORDER BY a.Fname; "
+
             , 
 
             //[2] SELECT Date Data
