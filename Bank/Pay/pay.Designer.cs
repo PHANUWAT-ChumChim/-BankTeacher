@@ -384,7 +384,7 @@ namespace BankTeacher.Bank.Pay
             this.CBList_Pay.Location = new System.Drawing.Point(99, 15);
             this.CBList_Pay.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.CBList_Pay.Name = "CBList_Pay";
-            this.CBList_Pay.Size = new System.Drawing.Size(103, 39);
+            this.CBList_Pay.Size = new System.Drawing.Size(253, 39);
             this.CBList_Pay.TabIndex = 88;
             this.CBList_Pay.SelectedIndexChanged += new System.EventHandler(this.CBList_Pay_SelectedIndexChanged);
             // 
@@ -393,7 +393,7 @@ namespace BankTeacher.Bank.Pay
             this.BListAdd_Pay.BackColor = System.Drawing.Color.White;
             this.BListAdd_Pay.Enabled = false;
             this.BListAdd_Pay.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BListAdd_Pay.Location = new System.Drawing.Point(560, 10);
+            this.BListAdd_Pay.Location = new System.Drawing.Point(641, 10);
             this.BListAdd_Pay.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BListAdd_Pay.Name = "BListAdd_Pay";
             this.BListAdd_Pay.Size = new System.Drawing.Size(339, 50);
@@ -422,7 +422,7 @@ namespace BankTeacher.Bank.Pay
             // 
             this.TBAmount_Pay.Enabled = false;
             this.TBAmount_Pay.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBAmount_Pay.Location = new System.Drawing.Point(333, 14);
+            this.TBAmount_Pay.Location = new System.Drawing.Point(435, 14);
             this.TBAmount_Pay.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TBAmount_Pay.MaxLength = 8;
             this.TBAmount_Pay.Name = "TBAmount_Pay";
@@ -436,7 +436,7 @@ namespace BankTeacher.Bank.Pay
             this.LB7Qty.BackColor = System.Drawing.Color.White;
             this.LB7Qty.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LB7Qty.ForeColor = System.Drawing.Color.Black;
-            this.LB7Qty.Location = new System.Drawing.Point(243, 15);
+            this.LB7Qty.Location = new System.Drawing.Point(358, 15);
             this.LB7Qty.Name = "LB7Qty";
             this.LB7Qty.Size = new System.Drawing.Size(73, 37);
             this.LB7Qty.TabIndex = 97;

@@ -58,7 +58,7 @@ namespace BankTeacher.Bank
           "WHERE b.Cancel = 1 and b.Year = {Year}) \r\n " +
           " \r\n " +
           "UPDATE EmployeeBank.dbo.tblDividend \r\n " +
-          "SET Cancel = 2 , CancelBy = '{TeacherNo}'\r\n " +
+          "SET Cancel = 2 , CancelBy = '{TeacherNo}' , DateCancel = CURRENT_TIMESTAMP \r\n " +
           "WHERE Year = {Year} and Cancel = 1"
            ,
 
