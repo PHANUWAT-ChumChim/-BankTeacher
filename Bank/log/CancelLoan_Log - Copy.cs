@@ -27,31 +27,32 @@ namespace BankTeacher.Bank.log
         private String[] SQLDefault = new String[]
          { 
            //[0]Get All TeacherNoCancel or Get TeacherNoCancel individual INPUT: {CancelByTeacherNo}  {DateYearMonthDay}
-           "SELECT d.Name as CancelByTeacher , a.LoanNo , CAST(ISNULL(c.PrefixNameFull , '') + b.Fname + ' ' + b.Lname as NVARCHAR) as Name  \r\n " +
-          ", CAST(a.MonthPay as varchar) + '/' + CAST(a.YearPay as varchar) as DateStartPayLoan ,  \r\n " +
-          "FORMAT(EOMONTH(CAST('01/' + CAST(a.MonthPay as varchar) + '/' + CAST(a.YearPay as varchar) as date), a.PayNo), 'MM/yyyy') as DateEndPayLoan \r\n " +
-          ", a.InterestRate , a.LoanAmount \r\n " +
-          "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
-          "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo \r\n " +
+           "SELECT d.Name as CancelByTeacher , a.LoanNo , CAST(ISNULL(c.PrefixNameFull , '') + b.Fname + ' ' + b.Lname as NVARCHAR) as Name   \r\n " +
+          ", CAST(a.MonthPay as varchar) + '/' + CAST(a.YearPay as varchar) as DateStartPayLoan ,   \r\n " +
+          "FORMAT(EOMONTH(CAST('01/' + CAST(a.MonthPay as varchar) + '/' + CAST(a.YearPay as varchar) as date), a.PayNo), 'MM/yyyy') as DateEndPayLoan  \r\n " +
+          ", a.InterestRate , a.LoanAmount  \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo  \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo \r\n " +
           "LEFT JOIN  \r\n " +
           "(SELECT a.CancelByTeacherNo , CAST(ISNULL(c.PrefixNameFull , '') + b.Fname + ' ' + b.Lname as NVARCHAR) as Name \r\n " +
-          "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
-          "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.CancelByTeacherNo = b.TeacherNo \r\n " +
-          "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo \r\n " +
-          "WHERE a.CancelByTeacherNo IS NOT NULL) as d on a.CancelByTeacherNo = d.CancelByTeacherNo \r\n " +
-          "WHERE a.CancelByTeacherNo IS NOT NULL and a.CancelByTeacherNo LIKE '%%' and a.CancelDate = CAST('{DateYearMonthDay}' as date) \r\n " +
-          ""
+          "FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.CancelByTeacherNo = b.TeacherNo  \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo ) as d on a.CancelByTeacherNo = d.CancelByTeacherNo  \r\n " +
+          "WHERE a.CancelByTeacherNo LIKE '%{CancelByTeacherNo}%' and a.CancelDate = CAST('{DateYearMonthDay}' as date)\r\n " +
+          "GROUP BY a.LoanNo , d.Name, c.PrefixNameFull ,b.Fname , b.Lname ,a.MonthPay , a.YearPay , a.InterestRate , a.LoanAmount , a.PayNo \r\n " 
 
            ,
 
+
            //[1]Search CancelByTeacher BSearchTeacher Just the person who used to CancelLoan INPUT: {Text}
-           "SELECT a.CancelByTeacherNo , CAST(ISNULL(c.PrefixNameFull , '') + b.Fname + ' ' + b.Lname as NVARCHAR) \r\n " +
+           "SELECT a.CancelByTeacherNo , CAST(ISNULL(c.PrefixNameFull , '') + b.Fname + ' ' + b.Lname as NVARCHAR) , b.Fname\r\n " +
           "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.CancelByTeacherNo = b.TeacherNo \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo \r\n " +
           "WHERE a.CancelByTeacherNo LIKE '%{Text}%' or b.Fname LIKE '%{Text}%' \r\n " +
-          "GROUP BY a.CancelByTeacherNo , CAST(ISNULL(c.PrefixNameFull , '') + b.Fname + ' ' + b.Lname as NVARCHAR)"
+          "GROUP BY a.CancelByTeacherNo , CAST(ISNULL(c.PrefixNameFull , '') + b.Fname + ' ' + b.Lname as NVARCHAR), b.Fname\r\n" +
+          "ORDER BY b.Fname;"
 
            ,
 
@@ -70,13 +71,14 @@ namespace BankTeacher.Bank.log
         {
             if (RBday.Checked == false)
             {
+                //
                 if (e.KeyCode == Keys.Enter && TBTeacherNo.Text.Length >= 6 && DTPSelectDate.Value.ToString() != "")
                 {
                     DGVSelectTeacherAdd.Rows.Clear();
                     String Date = DTPSelectDate.Value.ToString("yyyy:MM:dd");
-                    Date.Replace(":", "/");
+                    Date = Date.Replace(":", "/");
 
-                    DataTable dtTeacherNoCancel = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
+                    DataTable dtTeacherNoCancel = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]
                         .Replace("{CancelByTeacherNo}", TBTeacherNo.Text)
                         .Replace("{DateYearMonthDay}", Date));
 
@@ -92,7 +94,7 @@ namespace BankTeacher.Bank.log
                     }
                     else
                     {
-                        MessageBox.Show("ไม่พบรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("ไม่พบรายการ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
 
 
@@ -121,17 +123,21 @@ namespace BankTeacher.Bank.log
         {
             if (RBday.Checked)
             {
+                TBTeacherName.Text = "";
+                TBTeacherNo.Text = "";
                 DGVSelectTeacherAdd.Rows.Clear();
                 DGVSelectTeacherAdd.Visible = false;
-                panel1.Enabled = false;
+                DGVCancelLoan.Visible = true;
+                panel2.Enabled = false;
                 if (DTPSelectDate.Value.ToString() != "")
                     DTPSelectDate_ValueChanged(sender, new EventArgs());
             }
             else if (RBday.Checked == false)
             {
                 DGVCancelLoan.Rows.Clear();
-                panel1.Enabled = true;
+                panel2.Enabled = true;
                 DGVCancelLoan.Visible = false;
+                DGVSelectTeacherAdd.Visible = true;
                 if (DTPSelectDate.Value.ToString() != "")
                     DTPSelectDate_ValueChanged(sender, new EventArgs());
             }
@@ -159,7 +165,7 @@ namespace BankTeacher.Bank.log
         private void DTPSelectDate_ValueChanged(object sender, EventArgs e)
         {
             String DTPDate = DTPSelectDate.Value.ToString("yyyy:MM:dd");
-            DTPDate.Replace(":", "/");
+            DTPDate = DTPDate.Replace(":", "/");
             if (RBday.Checked == true && DTPDate != "")
             {
                 DGVCancelLoan.Rows.Clear();
