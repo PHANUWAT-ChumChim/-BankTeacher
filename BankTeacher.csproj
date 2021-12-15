@@ -161,6 +161,7 @@
     <Compile Include="Bank\log\Loan_Log.Designer.cs">
       <DependentUpon>Loan_Log.cs</DependentUpon>
     </Compile>
+
     <Compile Include="Bank\log\Pay_log.cs">
       <SubType>Form</SubType>
     </Compile>

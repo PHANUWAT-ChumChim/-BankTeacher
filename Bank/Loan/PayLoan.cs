@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,7 @@ namespace BankTeacher.Bank.Loan
         /// <para>[3] Select Payment Name INPUT: - </para>
         /// <para>[4] UPDATE Payment Loan INPUT: {LoanID} {TeacherNoPay} {PaymentNo}</para>
         /// <para>[5] Chcek Lonapay INPUT : {TeacherNo} </para>
+        /// <para>[6] BackPrint payLoan INPUT : {TeacherNo} {Year} </para>
         /// </summary>
         private String[] SQLDefault =
 
@@ -81,7 +83,12 @@ namespace BankTeacher.Bank.Loan
           "SELECT a.LoanNo,a.TeacherNo,a.LoanStatusNo \r\n " +
           "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
           "WHERE a.TeacherNo = '{TeacherNo}' and a.LoanStatusNo = 2 "
-
+          ,
+          //[6] BackPrint payLoan INPUT : {TeacherNo} {Year}
+          "SELECT a.LoanNo,CAST(a.PayDate as date),a.LoanAmount,b.LoanStatusName \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblLoanStatus b ON a.LoanStatusNo = b.LoanStatusNo \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}' AND YEAR(a.PayDate) = {Year} AND a.LoanStatusNo = 2"
         };
         public PayLoan()
         {
@@ -109,6 +116,7 @@ namespace BankTeacher.Bank.Loan
                     label3.Text = "0";
                     CBB4Oppay.Enabled = false;
                     CB_LoanNo.Items.Clear();
+                    DGV_PayLoan.Rows.Clear();
                     Check = 1;
                     TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
                 }
@@ -122,6 +130,7 @@ namespace BankTeacher.Bank.Loan
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
         {
             tabControl1.Enabled = false;
+            tabControl1.SelectedIndex = 0;
             if (e.KeyCode == Keys.Enter) 
             {
                 if (TBTeacherNo.Text.Length == 6)
@@ -147,6 +156,10 @@ namespace BankTeacher.Bank.Loan
                                 }
                             }
                         }
+                        CBYearSelection_Loanpay.Items.Clear();
+                        // =========================== เขตก่อสร้าง =====================
+                         Class.ComboxAdd_item.Search_datetime(SQLDefault[6].Replace("{TeacherNo}",TBTeacherNo.Text),Convert.ToInt32(Bank.Menu.Date_Time_SQL_Now.Rows[0][1]),4, CBYearSelection_Loanpay,true,false);
+                        // ==========================================================
                         tabControl1.Enabled = true;
                         DGV_PayLoan.Rows.Clear();
                         CB_LoanNo.Enabled = true;
@@ -197,7 +210,6 @@ namespace BankTeacher.Bank.Loan
             DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{LoanNo}", Loan.No));
             if (DGV_PayLoan.RowCount < 1)
             {
-             
                 if (dt.Rows.Count != 0)
                 {
                     for (int Row = 0; Row < dt.Rows.Count; Row++)
@@ -218,8 +230,9 @@ namespace BankTeacher.Bank.Loan
                 DialogResult dialogResult = MessageBox.Show("ไม่สามารถ ทำรายการจ่ายมากกว่า 2 รายการขึ้นไป\r\n คุณต้องการเเทนที่รายการใหม่ หรือ ไม่", "เจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if(dialogResult == DialogResult.Yes)
                 {
+                    label3.Text = dt.Rows[0][3].ToString();
                     CB_LoanNo.Items.RemoveAt(CB_LoanNo.SelectedIndex); // ลบรายการใน cb
-                    Class.ComboxNumberRanking.NumberRanking(0, DGV_PayLoan, CB_LoanNo, "รายการกู้"); // เช็ครายการใหม่
+                    Class.ComboxAdd_item.NumberRanking(0, DGV_PayLoan, CB_LoanNo, "รายการกู้"); // เช็ครายการใหม่
                     DGV_PayLoan.Rows.Add(1, Loan.No, (Convert.ToDateTime(dt.Rows[0][1].ToString())).ToString("dd/MM/yyyy"), "จ่ายกู้", dt.Rows[0][3].ToString());
                 }
             }
@@ -239,9 +252,15 @@ namespace BankTeacher.Bank.Loan
                         Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{LoanID}", DGV_PayLoan.Rows[0].Cells[1].Value.ToString())
                             .Replace("{TeacherNoPay}", Class.UserInfo.TeacherNo)
                             .Replace("{PaymentNo}", Payment.No));
-                        DGV_PayLoan.Rows.RemoveAt(0);
 
                         MessageBox.Show("จ่ายสำเร็จ", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+                        printDocument1.DefaultPageSettings.Landscape = true;
+                        if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                        {
+                            printDocument1.Print();
+                        }
+                        DGV_PayLoan.Rows.RemoveAt(0);
                         CB_LoanNo.Items.Clear();
                         CB_LoanNo.SelectedIndex = -1;
                         TBTeacherName.Text = "";
@@ -375,22 +394,22 @@ namespace BankTeacher.Bank.Loan
             DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0].Replace("{Text}", ""));
             if (dt.Rows.Count != 0)
             {
-                //panel7.Enabled = true;
-                tabControl1.Enabled = true;
+                panel7.Enabled = true;
             }
             else
             {
-                //panel7.Enabled = false;
+                panel7.Enabled = false;
                 tabControl1.Enabled = false;
             }
         }
-        private void tabControl1_VisibleChanged(object sender, EventArgs e)
+        private void panel7_VisibleChanged(object sender, EventArgs e)
         {
-            if (tabControl1.Enabled == false)
+            if (panel7.Enabled == false)
             {
                 MessageBox.Show("ไม่พบรายการ กรูณาลงรายการใหม่อีกครั้งค่ะ");
             }
         }
+
         static int SelectIndexRow;
         private void DGV_PayLoan_MouseClick(object sender, MouseEventArgs e)
         {
@@ -406,11 +425,10 @@ namespace BankTeacher.Bank.Loan
                     m.MenuItems[0].Click += new System.EventHandler(this.Delete_Click);
                 }
             }
-
         }
         private void Delete_Click(object sender, EventArgs e)
         {
-            Class.ComboxNumberRanking.NumberRanking(SelectIndexRow, DGV_PayLoan,CB_LoanNo,"รายการกู้");
+            Class.ComboxAdd_item.NumberRanking(SelectIndexRow, DGV_PayLoan,CB_LoanNo,"รายการกู้");
             if(CB_LoanNo.Items.Count != 0)
             {
                 CB_LoanNo.Enabled = true;
@@ -419,6 +437,50 @@ namespace BankTeacher.Bank.Loan
             {
                 BT_Loanpay.Enabled = false;
                 label3.Text = "0";
+            }
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_PayLoan, "จ่ายกู้", this.AccessibilityObject.Name, 1, "A5", 0);
+        }
+
+        private void CBYearSelection_Loanpay_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DGV_Historyloanpay.Rows.Clear();
+            BTPrint.BackColor = Color.White;
+           DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("{TeacherNo}", TBTeacherNo.Text)
+                .Replace("{Year}", CBYearSelection_Loanpay.SelectedItem.ToString()));
+            for(int loop = 0; loop < dt.Rows.Count; loop++)
+            {
+                DGV_Historyloanpay.Rows.Add(loop + 1,dt.Rows[0][0].ToString(),dt.Rows[0][1].ToString(),"จ่ายกู้", dt.Rows[0][2].ToString());
+            }
+         
+        }
+
+        private void tabControl1_Click(object sender, EventArgs e)
+        {
+            if(CBYearSelection_Loanpay.Items.Count == 0)
+            {
+                MessageBox.Show("คุณไม่มีรายการ กู้ในระบบ กรูณาทำรายการใหม่อีกครั้งค่ะ");
+                tabControl1.SelectedIndex = 0;
+            }
+        }
+
+        private void BTPrint_Click(object sender, EventArgs e)
+        {
+            if(BTPrint.BackColor != Color.Red)
+            {
+                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+                printDocument1.DefaultPageSettings.Landscape = true;
+                if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    printDocument1.Print();
+                }
+            }
+            else
+            {
+                MessageBox.Show("โปรดเพิ่ม รายการในตาราง");
             }
         }
     }
