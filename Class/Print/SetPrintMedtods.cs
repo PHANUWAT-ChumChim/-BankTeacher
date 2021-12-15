@@ -310,6 +310,36 @@ namespace BankTeacher.Class.Print
             // กล่อง
             e.Graphics.DrawRectangle(Pen, SizeForm_Width - Size.Width - move, 50, Size.Width, Size.Height - 10);
         }
+        public static float Box(System.Drawing.Printing.PrintPageEventArgs e,string string_Text1,string string_Text2, string Textinfo1, string Textinfo2, float Box_SizeX ,float Box_SizeY, float location_Box,float Line2_x)
+        {
+            SizeF Size,Size1;
+            Brush BrushBlack = Brushes.Black;
+            Pen PenBlack = new Pen(Color.Black);
+            string Text;
+            string Textinfo;
+            for (int loopbox = 0; loopbox < 2; loopbox++)
+            {
+                if (loopbox == 0)
+                {
+                    Text = string_Text1;
+                    Textinfo = Textinfo1;
+                }
+                else
+                {
+                    Text = string_Text2;
+                    Textinfo = Textinfo2;
+                }
+                Size = e.Graphics.MeasureString(Textinfo,Class.Print.PrintPreviewDialog.FonT(18, "TH Sarabun New", FontStyle.Bold));
+                Size1 = e.Graphics.MeasureString(Text,Class.Print.PrintPreviewDialog.FonT(16, "TH Sarabun New", FontStyle.Regular));
+                e.Graphics.DrawString(Text,Class.Print.PrintPreviewDialog.FonT(16, "TH Sarabun New", FontStyle.Regular), BrushBlack, (Line2_x - Box_SizeX) - Size1.Width, location_Box + 5);
+                // ข้อความ
+                e.Graphics.DrawString(Textinfo,Class.Print.PrintPreviewDialog.FonT(18, "TH Sarabun New", FontStyle.Bold), BrushBlack, Line2_x - (Box_SizeX / 2) - Size.Width / 2, location_Box);
+                // กล่อง
+                e.Graphics.DrawRectangle(PenBlack, Line2_x - Box_SizeX, location_Box, Box_SizeX, Box_SizeY);
+                location_Box += Box_SizeY;
+            }
+            return location_Box;
+        }
 
         // ของปุ้น
         public static void Center(System.Drawing.Printing.PrintPageEventArgs e, float LocY, String Text, Font fontText, Brush brush)
@@ -349,205 +379,6 @@ namespace BankTeacher.Class.Print
             }
             e.Graphics.DrawString(Text, fontText, brush, new RectangleF(startingpoint, Y, Rfwidth, height));
             return ExtraRow;
-        }
-        // ของปุ้น
-
-
-
-
-
-        // พี่ตังค์
-        //----------------------- MedtodPrint -------------------- ////////
-        //public static int CurrentRows = 0;
-        //public static void Header(System.Drawing.Printing.PrintPageEventArgs e, Brush brush)
-        //{
-        //    int Y = 50;
-        //    int SpacePerRow = 25;
-        //    //int CurrentRows = 0;
-        //    Font Header01 = new Font("TH Sarabun New", 20, FontStyle.Bold);
-        //    //Font Normal01 = new Font("TH Sarabun New", 18, FontStyle.Regular);
-        //    String[] Head = new String[] { "APPLICATION FOR EMPLOYMENT", "ใบสมัครงาน", "กรอกข้อมูลด้วยตัวท่านเอง", "(To be completed in own handwriting)" };
-
-        //    for (int Num = 0; Num < 4; Num++)
-        //    {
-        //        if (Num == 2)
-        //            Header01 = new Font("TH Sarabun New", 18, FontStyle.Regular);
-        //        SizeF SizeString = e.Graphics.MeasureString(Head[Num], Header01);
-        //        float StartLoc = e.PageBounds.Width / 2 - SizeString.Width / 2;
-        //        e.Graphics.DrawString(Head[Num],
-        //        Header01, brush, new PointF(StartLoc, Y + (SpacePerRow * CurrentRows++)));
-        //    }
-        //}
-        //// Comment!
-        //public static void StartCenter(System.Drawing.Printing.PrintPageEventArgs e, float LocY, String Text, Font fontText, Brush brush)
-        //{
-        //    SizeF SizeString = e.Graphics.MeasureString(Text, fontText);
-        //    float StartLoc = e.PageBounds.Width / 2;
-        //    e.Graphics.DrawString(Text,
-        //        fontText, brush, new PointF(StartLoc, LocY));
-        //}
-        //// Comment!
-        //public static void CenterT(System.Drawing.Printing.PrintPageEventArgs e, float LocY, String Text, Font fontText, Brush brush)
-        //{
-        //    SizeF SizeString = e.Graphics.MeasureString(Text, fontText);
-        //    float StartLoc = e.PageBounds.Width / 2 - SizeString.Width / 2;
-        //    e.Graphics.DrawString(Text,
-        //        fontText, brush, new PointF(StartLoc, LocY));
-        //}
-        //// Comment!
-        //public static void KeepRight(System.Drawing.Printing.PrintPageEventArgs e, float LocY, String Text, Font fontText, Brush brush)
-        //{
-        //    SizeF SizeString = e.Graphics.MeasureString(Text, fontText);
-        //    float StartLoc = (e.PageBounds.Width - 50) - SizeString.Width;
-        //    e.Graphics.DrawString(Text,
-        //        fontText, brush, new PointF(StartLoc, LocY));
-        //}
-        //// Comment!
-        //public static void KeepLeft(System.Drawing.Printing.PrintPageEventArgs e, float LocY, String Text, Font fontText, Brush brush)
-        //{
-        //    SizeF SizeString = e.Graphics.MeasureString(Text, fontText);
-        //    float StartLoc = 50;
-        //    e.Graphics.DrawString(Text,
-        //        fontText, brush, new PointF(StartLoc, LocY));
-        //}
-        //// Comment!
-        //public static void CenterKeepRight(System.Drawing.Printing.PrintPageEventArgs e, float LocY, String Text, Font fontText, Brush brush)
-        //{
-        //    SizeF SizeString = e.Graphics.MeasureString(Text, fontText);
-        //    float StartLoc = ((e.PageBounds.Width / 2) + (e.PageBounds.Width / 2) / 2) - SizeString.Width;
-        //    e.Graphics.DrawString(Text,
-        //        fontText, brush, new PointF(StartLoc, LocY));
-        //}
-
-        //// Comment!
-        //public static void Rect(System.Drawing.Printing.PrintPageEventArgs e, Pen ColorRect, int WidthSize, int HeightSize, float LocY, float LocX)
-        //{
-        //    //float x = e.PageBounds.Width - 50 - 125;
-        //    e.Graphics.DrawRectangle(ColorRect, LocX, LocY, WidthSize, HeightSize);
-        //}
-        //// Comment!
-        //public static void PrintBody(System.Drawing.Printing.PrintPageEventArgs e, float LocY, String Text, Font font, Brush brush)
-        //{
-        //    float LocX = 96;
-        //    e.Graphics.DrawString(Text, font, brush, LocX, LocY);
-        //}
-        //// Comment!
-        //public static void PrintCheckBoxList(System.Drawing.Printing.PrintPageEventArgs e, float LocX, float LocY, Font font, Brush brush, List<String> AllCheckBox, float SpaceCheckList)
-        //{
-        //    Pen ColorRect = new Pen(Color.Black);
-
-        //    for (int Num = 0; Num < AllCheckBox.Count; Num++)
-        //    {
-        //        SizeF SizeText = e.Graphics.MeasureString(AllCheckBox[Num], font);
-        //        e.Graphics.DrawString(AllCheckBox[Num], font, brush, LocX + (SpaceCheckList * (Num + 1)), LocY);
-        //        Rect(e, ColorRect, 15, 15, LocY + 20, LocX + (SpaceCheckList * (Num + 1)) - 17);
-        //        LocX += SizeText.Width;
-        //    }
-
-        //}
-
-        //----------------------- End code -------------------- ////////
-        // Comment!
-        //public void Rect(System.Drawing.Printing.PrintPageEventArgs e, Pen ColorRect, int WidthSize, int HeightSize, float LocY, float LocX)
-        //{
-        //    //float x = e.PageBounds.Width - 50 - 125;
-        //    e.Graphics.DrawRectangle(ColorRect, LocX, LocY, WidthSize, HeightSize);
-        //}
-        //// Comment!
-        //public void PrintBody(System.Drawing.Printing.PrintPageEventArgs e, float LocY, String Text, Font font, Brush brush)
-        //{
-        //    float LocX = 96;
-        //    e.Graphics.DrawString(Text, font, brush, LocX, LocY);
-        //}
-        //// Comment!
-        //public void PrintCheckBoxList(System.Drawing.Printing.PrintPageEventArgs e, float LocX, float LocY, Font font, Brush brush, List<String> AllCheckBox, float SpaceCheckList)
-        //{
-        //    Pen ColorRect = new Pen(Color.Black);
-
-        //    for (int Num = 0; Num < AllCheckBox.Count; Num++)
-        //    {
-        //        SizeF SizeText = e.Graphics.MeasureString(AllCheckBox[Num], font);
-        //        e.Graphics.DrawString(AllCheckBox[Num], font, brush, LocX + (SpaceCheckList * (Num + 1)), LocY);
-        //        Rect(e, ColorRect, 15, 15, LocY + 20, LocX + (SpaceCheckList * (Num + 1)) - 17);
-        //        LocX += SizeText.Width;
-        //    }
-
-        //}
-        //----------------------- End Medtod -------------------- ////////
-        //----------------------- End Medtod -------------------- ////////
-        // พี่ตังค์
-
-
-
-
-
-
-
-
-        public void ExpPrint()
-        {
-            //int ExtraRow = (Convert.ToInt32(SizeString.Height) / Convert.ToInt32(Rfwidth) + 1);
-            // loop text //
-            //for (int x = 0; x < 20; x++)
-            //    e.Graphics.DrawString("Test",
-            //        Normal01, Normal, new PointF(X, Y + (SpacePerRow * CurrentRows++)));
-
-            //กำหนด จุดสิ้นสุด * วาดตาราง //
-            //e.Graphics.DrawString("Testtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            //    Normal01, Normal, new RectangleF(X, Y + (SpacePerRow * CurrentRows++), 200f, 200f));
-
-            //print normal //
-            //e.Graphics.DrawString("Testtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
-            //    Normal01, Normal, new PointF(X, Y + (SpacePerRow * CurrentRows++)-50));
-
-            //e.Graphics.DrawString(DTPStartDate.Text, new Font("TH Sarabun New",18, FontStyle.Regular), Brushes.Black, new PointF(0, 60));
-
-            //SizeF SizeString = e.Graphics.MeasureString(Text, Header01);
-            //float StartLoc = PageX / 2 - SizeString.Width / 2;
-            //e.Graphics.DrawString(Text,
-            //    Header01, Normal, new PointF(StartLoc, Y + (SpacePerRow * CurrentRows++)-10));
-
-            //----------------------- MetodPrintf -------------------- ////////
-            // Comment!
-            //public void Center(System.Drawing.Printing.PrintPageEventArgs e, float LocY, String Text, Font fontText, Brush brush)
-            //{
-            //    SizeF SizeString = e.Graphics.MeasureString(Text, fontText);
-            //    float StartLoc = e.PageBounds.Width / 2 - SizeString.Width / 2; e.Graphics.DrawString(Text, fontText, brush, new PointF(StartLoc, LocY));
-            //}
-            //// Comment!
-            //public void CenterRight(System.Drawing.Printing.PrintPageEventArgs e, string Text, Font fontText, Brush brush, float X, float Y, float Pointplus, float Pointdelete)
-            //{
-            //    SizeF SizeString = e.Graphics.MeasureString(Text, fontText);
-            //    X = X - SizeString.Width; e.Graphics.DrawString(Text, fontText, brush, new PointF(Pointplus + X - Pointdelete, Y));
-            //}
-            //// Comment!
-            //public void CenterLeft(System.Drawing.Printing.PrintPageEventArgs e, string Text, Font fontText, Brush brush, float X, float Y, float Pointplus, float Pointdelete)
-            //{
-            //    e.Graphics.DrawString(Text, fontText, brush, new PointF(Pointplus + X - Pointdelete, Y));
-            //}
-            //// Comment!
-            //public int Centerset(System.Drawing.Printing.PrintPageEventArgs e, string Text, Font fontText, Brush brush, float X, float Y, float Rfwidth, float height, Boolean Debug = false)
-            //{
-            //    SizeF SizeString = e.Graphics.MeasureString(Text, fontText, (int)Rfwidth);
-            //    float startingpoint = X + 750 - Rfwidth;
-            //    if (Debug)
-            //    {
-            //        e.Graphics.DrawRectangle(Pens.Black, startingpoint, Y, Rfwidth, height);
-            //    }
-            //    float upheight = 40; int ExtraRow;
-            //    if (SizeString.Height < height)
-            //    {
-            //        ExtraRow = (Convert.ToInt32(SizeString.Height) / Convert.ToInt32(upheight) + 1);
-            //    }
-            //    else
-            //    {
-            //        SizeString.Height = height;
-            //        ExtraRow = (Convert.ToInt32(SizeString.Height) / Convert.ToInt32(upheight) + 1);
-            //    }
-            //    e.Graphics.DrawString(Text, fontText, brush, new RectangleF(startingpoint, Y, Rfwidth, height));
-            //    return ExtraRow;
-            //}
-            //----------------------- End code -------------------- ////////
         }
     }
 }
