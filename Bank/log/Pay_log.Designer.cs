@@ -32,24 +32,25 @@ namespace BankTeacher.Bank.log
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.DTP = new System.Windows.Forms.DateTimePicker();
-            this.TBTeacherName = new System.Windows.Forms.TextBox();
-            this.TBTeacherNo = new System.Windows.Forms.TextBox();
-            this.LB2Ne = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.LB1Id = new System.Windows.Forms.Label();
-            this.RBday = new System.Windows.Forms.RadioButton();
-            this.RBSelectTeacherAdd = new System.Windows.Forms.RadioButton();
-            this.panel2 = new System.Windows.Forms.Panel();
             this.DGV = new System.Windows.Forms.DataGridView();
+            this.RBday = new System.Windows.Forms.RadioButton();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.LB1Id = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.LB2Ne = new System.Windows.Forms.Label();
+            this.BSearchTeacher = new System.Windows.Forms.Button();
+            this.TBTeacherNo = new System.Windows.Forms.TextBox();
+            this.TBTeacherName = new System.Windows.Forms.TextBox();
+            this.RBSelectTeacherAdd = new System.Windows.Forms.RadioButton();
+            this.DTP = new System.Windows.Forms.DateTimePicker();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BSearchTeacher = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -64,111 +65,6 @@ namespace BankTeacher.Bank.log
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(899, 569);
             this.panel1.TabIndex = 0;
-            // 
-            // DTP
-            // 
-            this.DTP.Location = new System.Drawing.Point(22, 15);
-            this.DTP.Name = "DTP";
-            this.DTP.Size = new System.Drawing.Size(200, 35);
-            this.DTP.TabIndex = 0;
-            this.DTP.ValueChanged += new System.EventHandler(this.DTP_ValueChanged);
-            // 
-            // TBTeacherName
-            // 
-            this.TBTeacherName.Enabled = false;
-            this.TBTeacherName.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBTeacherName.Location = new System.Drawing.Point(290, 10);
-            this.TBTeacherName.Margin = new System.Windows.Forms.Padding(2);
-            this.TBTeacherName.Name = "TBTeacherName";
-            this.TBTeacherName.Size = new System.Drawing.Size(242, 36);
-            this.TBTeacherName.TabIndex = 90;
-            // 
-            // TBTeacherNo
-            // 
-            this.TBTeacherNo.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBTeacherNo.Location = new System.Drawing.Point(57, 11);
-            this.TBTeacherNo.Margin = new System.Windows.Forms.Padding(2);
-            this.TBTeacherNo.MaxLength = 6;
-            this.TBTeacherNo.Name = "TBTeacherNo";
-            this.TBTeacherNo.Size = new System.Drawing.Size(116, 36);
-            this.TBTeacherNo.TabIndex = 89;
-            this.TBTeacherNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TBTeacherNo_KeyDown);
-            // 
-            // LB2Ne
-            // 
-            this.LB2Ne.AutoSize = true;
-            this.LB2Ne.BackColor = System.Drawing.Color.White;
-            this.LB2Ne.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LB2Ne.ForeColor = System.Drawing.Color.Black;
-            this.LB2Ne.Location = new System.Drawing.Point(223, 14);
-            this.LB2Ne.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.LB2Ne.Name = "LB2Ne";
-            this.LB2Ne.Size = new System.Drawing.Size(63, 30);
-            this.LB2Ne.TabIndex = 87;
-            this.LB2Ne.Text = "ชื่อ-สกุล";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(187, 14);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(0, 26);
-            this.label1.TabIndex = 88;
-            // 
-            // LB1Id
-            // 
-            this.LB1Id.AutoSize = true;
-            this.LB1Id.BackColor = System.Drawing.Color.White;
-            this.LB1Id.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LB1Id.ForeColor = System.Drawing.Color.Black;
-            this.LB1Id.Location = new System.Drawing.Point(17, 14);
-            this.LB1Id.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.LB1Id.Name = "LB1Id";
-            this.LB1Id.Size = new System.Drawing.Size(39, 30);
-            this.LB1Id.TabIndex = 86;
-            this.LB1Id.Text = "รหัส";
-            // 
-            // RBday
-            // 
-            this.RBday.AutoSize = true;
-            this.RBday.Checked = true;
-            this.RBday.Location = new System.Drawing.Point(228, 18);
-            this.RBday.Name = "RBday";
-            this.RBday.Size = new System.Drawing.Size(108, 32);
-            this.RBday.TabIndex = 92;
-            this.RBday.TabStop = true;
-            this.RBday.Text = "ดูข้อมูลรายวัน";
-            this.RBday.UseVisualStyleBackColor = true;
-            this.RBday.CheckedChanged += new System.EventHandler(this.RBday_CheckedChanged);
-            // 
-            // RBSelectTeacherAdd
-            // 
-            this.RBSelectTeacherAdd.AutoSize = true;
-            this.RBSelectTeacherAdd.Location = new System.Drawing.Point(354, 18);
-            this.RBSelectTeacherAdd.Name = "RBSelectTeacherAdd";
-            this.RBSelectTeacherAdd.Size = new System.Drawing.Size(109, 32);
-            this.RBSelectTeacherAdd.TabIndex = 92;
-            this.RBSelectTeacherAdd.Text = "ดูข้อมูลรายคน";
-            this.RBSelectTeacherAdd.UseVisualStyleBackColor = true;
-            this.RBSelectTeacherAdd.CheckedChanged += new System.EventHandler(this.RBSelectTeacherAdd_CheckedChanged);
-            // 
-            // panel2
-            // 
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.LB1Id);
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Controls.Add(this.LB2Ne);
-            this.panel2.Controls.Add(this.BSearchTeacher);
-            this.panel2.Controls.Add(this.TBTeacherNo);
-            this.panel2.Controls.Add(this.TBTeacherName);
-            this.panel2.Location = new System.Drawing.Point(22, 55);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(551, 60);
-            this.panel2.TabIndex = 93;
             // 
             // DGV
             // 
@@ -187,6 +83,7 @@ namespace BankTeacher.Bank.log
             this.DGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column5,
             this.Column1,
             this.Column2,
             this.Column3,
@@ -198,33 +95,70 @@ namespace BankTeacher.Bank.log
             this.DGV.Size = new System.Drawing.Size(851, 415);
             this.DGV.TabIndex = 94;
             // 
-            // Column1
+            // RBday
             // 
-            this.Column1.HeaderText = "เลขบิลล์";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Width = 120;
+            this.RBday.AutoSize = true;
+            this.RBday.Checked = true;
+            this.RBday.Location = new System.Drawing.Point(228, 18);
+            this.RBday.Name = "RBday";
+            this.RBday.Size = new System.Drawing.Size(108, 32);
+            this.RBday.TabIndex = 92;
+            this.RBday.TabStop = true;
+            this.RBday.Text = "ดูข้อมูลรายวัน";
+            this.RBday.UseVisualStyleBackColor = true;
+            this.RBday.CheckedChanged += new System.EventHandler(this.RBday_CheckedChanged);
             // 
-            // Column2
+            // panel2
             // 
-            this.Column2.HeaderText = "รายการ";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.Width = 150;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.LB1Id);
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Controls.Add(this.LB2Ne);
+            this.panel2.Controls.Add(this.BSearchTeacher);
+            this.panel2.Controls.Add(this.TBTeacherNo);
+            this.panel2.Controls.Add(this.TBTeacherName);
+            this.panel2.Location = new System.Drawing.Point(22, 55);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(551, 60);
+            this.panel2.TabIndex = 93;
             // 
-            // Column3
+            // LB1Id
             // 
-            this.Column3.HeaderText = "รูปแบบ";
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            this.Column3.Width = 120;
+            this.LB1Id.AutoSize = true;
+            this.LB1Id.BackColor = System.Drawing.Color.White;
+            this.LB1Id.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LB1Id.ForeColor = System.Drawing.Color.Black;
+            this.LB1Id.Location = new System.Drawing.Point(17, 14);
+            this.LB1Id.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LB1Id.Name = "LB1Id";
+            this.LB1Id.Size = new System.Drawing.Size(39, 30);
+            this.LB1Id.TabIndex = 86;
+            this.LB1Id.Text = "รหัส";
             // 
-            // Column4
+            // label1
             // 
-            this.Column4.HeaderText = "จำนวนเงิน";
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            this.Column4.Width = 120;
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Black;
+            this.label1.Location = new System.Drawing.Point(187, 14);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(0, 26);
+            this.label1.TabIndex = 88;
+            // 
+            // LB2Ne
+            // 
+            this.LB2Ne.AutoSize = true;
+            this.LB2Ne.BackColor = System.Drawing.Color.White;
+            this.LB2Ne.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LB2Ne.ForeColor = System.Drawing.Color.Black;
+            this.LB2Ne.Location = new System.Drawing.Point(223, 14);
+            this.LB2Ne.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.LB2Ne.Name = "LB2Ne";
+            this.LB2Ne.Size = new System.Drawing.Size(63, 30);
+            this.LB2Ne.TabIndex = 87;
+            this.LB2Ne.Text = "ชื่อ-สกุล";
             // 
             // BSearchTeacher
             // 
@@ -241,6 +175,81 @@ namespace BankTeacher.Bank.log
             this.BSearchTeacher.UseVisualStyleBackColor = false;
             this.BSearchTeacher.Click += new System.EventHandler(this.BSearchTeacher_Click);
             // 
+            // TBTeacherNo
+            // 
+            this.TBTeacherNo.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBTeacherNo.Location = new System.Drawing.Point(57, 11);
+            this.TBTeacherNo.Margin = new System.Windows.Forms.Padding(2);
+            this.TBTeacherNo.MaxLength = 6;
+            this.TBTeacherNo.Name = "TBTeacherNo";
+            this.TBTeacherNo.Size = new System.Drawing.Size(116, 36);
+            this.TBTeacherNo.TabIndex = 89;
+            this.TBTeacherNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TBTeacherNo_KeyDown);
+            // 
+            // TBTeacherName
+            // 
+            this.TBTeacherName.Enabled = false;
+            this.TBTeacherName.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBTeacherName.Location = new System.Drawing.Point(290, 10);
+            this.TBTeacherName.Margin = new System.Windows.Forms.Padding(2);
+            this.TBTeacherName.Name = "TBTeacherName";
+            this.TBTeacherName.Size = new System.Drawing.Size(242, 36);
+            this.TBTeacherName.TabIndex = 90;
+            // 
+            // RBSelectTeacherAdd
+            // 
+            this.RBSelectTeacherAdd.AutoSize = true;
+            this.RBSelectTeacherAdd.Location = new System.Drawing.Point(354, 18);
+            this.RBSelectTeacherAdd.Name = "RBSelectTeacherAdd";
+            this.RBSelectTeacherAdd.Size = new System.Drawing.Size(109, 32);
+            this.RBSelectTeacherAdd.TabIndex = 92;
+            this.RBSelectTeacherAdd.Text = "ดูข้อมูลรายคน";
+            this.RBSelectTeacherAdd.UseVisualStyleBackColor = true;
+            this.RBSelectTeacherAdd.CheckedChanged += new System.EventHandler(this.RBSelectTeacherAdd_CheckedChanged);
+            // 
+            // DTP
+            // 
+            this.DTP.Location = new System.Drawing.Point(22, 15);
+            this.DTP.Name = "DTP";
+            this.DTP.Size = new System.Drawing.Size(200, 35);
+            this.DTP.TabIndex = 0;
+            this.DTP.ValueChanged += new System.EventHandler(this.DTP_ValueChanged);
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "ชื่อ - สกุล";
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            this.Column5.Width = 175;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "เลขบิลล์";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 120;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "รายการ";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Width = 140;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "รูปแบบ";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.Width = 110;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "จำนวนเงิน";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.Width = 110;
+            // 
             // Pay_log
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 28F);
@@ -254,9 +263,9 @@ namespace BankTeacher.Bank.log
             this.Text = "Pay_log";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DGV)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -275,6 +284,7 @@ namespace BankTeacher.Bank.log
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label LB1Id;
         private System.Windows.Forms.DataGridView DGV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;

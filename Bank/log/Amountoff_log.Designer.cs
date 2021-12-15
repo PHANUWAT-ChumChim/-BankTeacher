@@ -43,6 +43,7 @@ namespace BankTeacher.Bank.log
             this.TBTeacherName = new System.Windows.Forms.TextBox();
             this.RBSelectTeacherAdd = new System.Windows.Forms.RadioButton();
             this.DTP = new System.Windows.Forms.DateTimePicker();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -81,6 +82,7 @@ namespace BankTeacher.Bank.log
             this.DGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column2,
             this.Column1,
             this.Column3,
             this.Column4});
@@ -211,26 +213,33 @@ namespace BankTeacher.Bank.log
             this.DTP.TabIndex = 0;
             this.DTP.ValueChanged += new System.EventHandler(this.DTP_ValueChanged);
             // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "ชื่อ - สกุล";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Width = 175;
+            // 
             // Column1
             // 
             this.Column1.HeaderText = "เลขบิลล์";
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
-            this.Column1.Width = 150;
+            this.Column1.Width = 140;
             // 
             // Column3
             // 
             this.Column3.HeaderText = "รูปแบบ";
             this.Column3.Name = "Column3";
             this.Column3.ReadOnly = true;
-            this.Column3.Width = 150;
+            this.Column3.Width = 140;
             // 
             // Column4
             // 
             this.Column4.HeaderText = "จำนวนเงิน";
             this.Column4.Name = "Column4";
             this.Column4.ReadOnly = true;
-            this.Column4.Width = 150;
+            this.Column4.Width = 140;
             // 
             // Amountoff_log
             // 
@@ -266,6 +275,7 @@ namespace BankTeacher.Bank.log
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label LB1Id;
         private System.Windows.Forms.DataGridView DGV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
