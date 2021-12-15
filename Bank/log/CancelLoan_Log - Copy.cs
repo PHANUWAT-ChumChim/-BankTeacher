@@ -72,6 +72,7 @@ namespace BankTeacher.Bank.log
             if (RBday.Checked == false)
             {
                 //
+
                 if (e.KeyCode == Keys.Enter && TBTeacherNo.Text.Length >= 6 && DTPSelectDate.Value.ToString() != "")
                 {
                     DGVSelectTeacherAdd.Rows.Clear();
