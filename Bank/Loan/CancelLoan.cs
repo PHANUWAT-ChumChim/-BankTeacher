@@ -18,7 +18,7 @@ namespace BankTeacher.Bank.Loan
         /// <para>[0] SELECT MemberLona  INPUT: {TeacherNo}</para>
         /// <para>[1] SELECT LOAN INPUT: {TeacherNo} </para>
         /// <para>[2] SELECT Detail Loan INPUT: {LoanNo}</para>
-        /// <para>[3] UPDATE Cancel Loan INPUT: {WhereLoanNo}</para>
+        /// <para>[3] UPDATE Cancel Loan INPUT: {WhereLoanNo} {TeacherNoUser} </para>
         /// <para>[4] UPDATE Cancel Guarantor INPUT: {WhereLoanNo}</para>
         /// </summary>
         private String[] SQLDefault =
@@ -57,9 +57,9 @@ namespace BankTeacher.Bank.Loan
           "WHERE a.LoanNo = '{LoanNo} ' and LoanStatusNo = 1 \r\n " +
           " "
           ,
-          //[3] UPDATE Cancel Loan INPUT: {WhereLoanNo}
+          //[3] UPDATE Cancel Loan INPUT: {WhereLoanNo}  {TeacherNoUser}
           "UPDATE EmployeeBank.dbo.tblLoan\r\n" +
-          "SET LoanStatusNo = 4\r\n" +
+          "SET LoanStatusNo = 4 , CancelByTeacherNo = '{TeacherNoUser}' , CancelDate = CAST(GETDATE() as date)\r\n" +
           "WHERE LoanNo = {WhereLoanNo}"
           
           ,
@@ -85,9 +85,9 @@ namespace BankTeacher.Bank.Loan
             {
                 TBTeacherNo.Text = Bank.Search.Return[0];
                 TBTeacherName.Text = Bank.Search.Return[1];
+                TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
             }
             Check = 1;
-            TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
         }
 
         List<String[]> ListLoan = new List<string[]> { };
@@ -145,7 +145,8 @@ namespace BankTeacher.Bank.Loan
 
         private void CBList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            DGVCancelLoan.Rows.Clear();
+            //DGV.Rows.Clear();
+
             BankTeacher.Class.ComboBoxPayment Loan = (CBlist.SelectedItem as BankTeacher.Class.ComboBoxPayment);
             DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{LoanNo}",Loan.No));
             if (dt.Rows.Count != 0)
@@ -162,20 +163,31 @@ namespace BankTeacher.Bank.Loan
 
         private void BCancelSave_Click(object sender, EventArgs e)
         {
-            BankTeacher.Class.ComboBoxPayment Loan = (CBlist.SelectedItem as BankTeacher.Class.ComboBoxPayment);
             if (TBTeacherNo.Text != "" && TBTeacherName.Text != ""  && MessageBox.Show("ยืนยันที่จะลบการกู้นี้หรือไม่","ระบบ",MessageBoxButtons.YesNo,MessageBoxIcon.Information) == DialogResult.Yes)
             {
-                Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
-                    .Replace("{WhereLoanNo}", Loan.No.ToString()));
+                try
+                {
+                    for (int x = 0; x < DGVCancelLoan.Rows.Count; x++)
+                    {
+                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
+                        .Replace("{WhereLoanNo}", DGVCancelLoan.Rows[x].Cells[0].Value.ToString())
+                        .Replace("{TeacherNoUser}", Class.UserInfo.TeacherNo));
 
-                Class.SQLConnection.InputSQLMSSQL(SQLDefault[4]
-                    .Replace("{WhereLoanNo}", Loan.No.ToString()));
+                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[4]
+                            .Replace("{WhereLoanNo}", DGVCancelLoan.Rows[x].Cells[0].Value.ToString()));
+                    }
 
-                TBTeacherNo.Text = "";
-                TBTeacherName.Text = "";
-                CBlist.Items.Clear();
-                DGVCancelLoan.Rows.Clear();
-
+                    MessageBox.Show("บันทึกสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    TBTeacherNo.Text = "";
+                    TBTeacherName.Text = "";
+                    CBlist.Items.Clear();
+                    DGVCancelLoan.Rows.Clear();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("บันทึกล้มเหลว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    Console.WriteLine($"-------------------------{ex}---------------------------");
+                }
             }
         }
 

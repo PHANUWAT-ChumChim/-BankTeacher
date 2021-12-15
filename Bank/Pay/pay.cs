@@ -227,7 +227,11 @@ namespace BankTeacher.Bank.Pay
           "WHERE c.Cancel = 1 and (d.TypeNo = 1 or d.TypeNo = 3) and d.Mount <= 12 and d.Year = {Year} and a.TeacherNo LIKE '{TeacherNo}'\r\n" +
           "GROUP BY a.TeacherNo , d.Amount , d.Mount , d.Year , a.StartAmount , CAST(a.DateAdd AS Date) , b.SavingAmount;\r\n" +
           "\r\n" +
-          "SELECT a.StartAmount , b.SavingAmount, CAST(a.DateAdd as date)\r\n" +
+             "DECLARE @Loan int = 0 \r\n" +
+             "set @Loan = (select IIF(Sum(a.RemainsAmount) != 0,Sum(a.RemainsAmount),0) From EmployeeBank.dbo.tblGuarantor as a \r\n" +
+             "where a.TeacherNo = '{TeacherNo}') \r\n" +
+
+          "SELECT a.StartAmount , b.SavingAmount-@Loan, CAST(a.DateAdd as date)\r\n" +
           "FROM EmployeeBank.dbo.tblMember as a\r\n" +
           "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo\r\n" +
           "WHERE a.TeacherNo LIKE '{TeacherNo}'\r\n"
@@ -1976,6 +1980,7 @@ namespace BankTeacher.Bank.Pay
                     BExitForm_Click(new object(), new EventArgs());
                 }
             }
+
         }
         //===============================================================================================
     }
