@@ -116,7 +116,7 @@ namespace BankTeacher.Bank.Pay
           "FROM EmployeeBank.dbo.tblBill as aa     \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as bb on aa.BillNo = bb.BillNo     \r\n " +
           "WHERE bb.Mount = '{Month}' and bb.Year = '{Year}' and (bb.TypeNo = 1 or bb.TypeNo = 3) and MemberStatusNo = 1 and DATEADD(YYYY,0,'{Date}') >= a.DateAdd  and aa.Cancel = 1 and aa.DateAdd >= a.DateAdd)   \r\n " +
-          "and a.TeacherNo = '{TeacherNo}' and (c.TypeNo = 1 or c.TypeNo = 3) and MemberStatusNo = 1 and b.Cancel = 1   \r\n " +
+          "and a.TeacherNo = '{TeacherNo}' and (c.TypeNo = 1 or c.TypeNo = 3) and MemberStatusNo = 1 and b.Cancel = 1   and DATEADD(YYYY,0,'{Date}') >=  a.DateAdd \r\n " +
           "GROUP BY a.TeacherNo,f.TypeName, StartAmount   ;  "
            ,
            //[5] Check if you have paid ( Loan ) INPUT: {LoanNo} , {Month} , {Year} , {Date} 
@@ -148,7 +148,7 @@ namespace BankTeacher.Bank.Pay
           "  SELECT LoanNo ,MonthPay , YearPay , PayNo,  \r\n " +
           "   ROUND(Convert(float, ( (InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float ,  LoanAmount / PayNo),0) AS PayLoan , \r\n " +
           "	(LoanAmount  + Convert(float , (InterestRate / 100) * LoanAmount)) - (ROUND(Convert(float, ( (InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0)) * (PayNo -1) AS LastPay,  \r\n " +
-          "    EOMONTH(DATEADD(MONTH,PayNo,CAST(CAST(CAST(YearPay as nvarchar) +'/' + CAST(MonthPay AS nvarchar) + '/05' AS nvarchar) AS date))) AS EndLoan \r\n " +
+          "    EOMONTH(DATEADD(MONTH,PayNo-1,CAST(CAST(CAST(YearPay as nvarchar) +'/' + CAST(MonthPay AS nvarchar) + '/05' AS nvarchar) AS date))) AS EndLoan \r\n " +
           "   FROM EmployeeBank.dbo.tblLoan \r\n " +
           "   WHERE LoanNo = {LoanNo} and LoanStatusNo = 2 ;  \r\n " +
           " \r\n " +
@@ -876,16 +876,10 @@ namespace BankTeacher.Bank.Pay
                                     //หากเป็นจ่ายกู้เดือนสุดท้าย 
                                     if (DateLoan == Convert.ToDateTime(CBYearSelection_Pay.Text + '-' + CBMonthSelection_Pay.Text + '-' + DateTime.DaysInMonth(Convert.ToInt32(CBYearSelection_Pay.Text), Convert.ToInt32(CBMonthSelection_Pay.Text)).ToString()))
                                     {
-                                        //กัน Error จ่่ายตอนท้ายติด เศษ ให้ +1 ไปเลย
-                                        try
-                                        {
-                                            Balance = Convert.ToInt32(dsLoan.Tables[0].Rows[0][2].ToString());
-                                        }
-                                        catch
-                                        {
+                                        if (Int32.TryParse(dsLoan.Tables[0].Rows[0][2].ToString(), out int Bal))
+                                            Balance = Bal;
+                                        else
                                             Balance = Convert.ToInt32(Decimal.Truncate(Convert.ToDecimal(Convert.ToDouble(dsLoan.Tables[0].Rows[0][2].ToString()))) + 1);
-                                        }
-
                                     }
                                     //หากเงื่อนไขบนไม่เป็นจริง หรือก็คือ เป็นเดือนปกติ ที่ไม่ใช่เดือนสุดท้ายของการกู้
                                     else
@@ -932,17 +926,11 @@ namespace BankTeacher.Bank.Pay
                                 //หากเดือนนี้เป็นเดือนสุดท้ายให้เปลี่ยนราคา
                                 if (Now == EndDatePayLoan)
                                 {
-                                    try
-                                    {
-                                        AmountPay = Convert.ToInt32(dsLoan.Tables[1].Rows[0][5].ToString());
-                                    }
-                                    catch
-                                    {
+                                    if (Int32.TryParse(dsLoan.Tables[1].Rows[0][5].ToString(), out int Values))
+                                        AmountPay = Values;
+                                    else
                                         if (Decimal.TryParse(dsLoan.Tables[1].Rows[0][5].ToString(), out decimal value))
-                                        {
                                             AmountPay = Convert.ToInt32(value) + 1;
-                                        }
-                                    }
                                 }
                                 if (DGV_Pay.Rows.Count != 0)
                                 {
@@ -1014,14 +1002,8 @@ namespace BankTeacher.Bank.Pay
                     CBMonthSelection_Pay.Items.RemoveAt(CBMonthSelection_Pay.SelectedIndex);
                     ReadonlyDGVPay();
                     CBList_Pay.Items.Clear();
-                    try
-                    {
+                    if(CBList_Pay.Items.Count != 0)
                         CBList_Pay.SelectedIndex = 0;
-                    }
-                    catch
-                    {
-                        Console.WriteLine("===== Don't have Index in Combobox. =====");
-                    }
                     CBPayment_Pay.Enabled = true;
                     CBPayment_Pay.SelectedIndex = 0;
 
@@ -1051,7 +1033,7 @@ namespace BankTeacher.Bank.Pay
                             {
                                 CBYearSelection_Pay.Enabled = false;
                                 CBMonthSelection_Pay.Enabled = false;
-                                MessageBox.Show("ไม่พบรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                //MessageBox.Show("ไม่พบรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
                         }
                     }
@@ -1597,48 +1579,59 @@ namespace BankTeacher.Bank.Pay
                 }
             }
 
-            for(int Count = 0; Count < CBYearSelection_Pay.Items.Count; Count++)
+            for (int Count = 0; Count < CBYearSelection_Pay.Items.Count; Count++)
             {
-                //ถ้าปีที่ลบ มีใน CBYear 
+                //ถ้าปี DGV ที่ลบ มีใน CBYear 
                 if (Year == CBYearSelection_Pay.Items[Count].ToString())
                 {
-                    for (int CountMonth = 0; CountMonth < DM[Count].Count; CountMonth++)
-                    {
-                        //ถ้าเดือนที่ลบ มีใน DM[ปีที่ลบ]
-                        if (Month == DM[Count][CountMonth].ToString())
+                    if (DM[Count].Count != 0)
+                        for (int CountMonth = 0; CountMonth < DM[Count].Count; CountMonth++)
                         {
-                            CheckSometing = true;
-                            break;
+                            //ถ้าเดือนที่ลบ มีใน DM[ปีที่ลบ]
+                            if (Month == DM[Count][CountMonth].ToString())
+                            {
+                                CheckSometing = true;
+                                break;
+                            }
+                            //หากหายันอันสุดท้ายของ CBMonth แล้วยังไม่เจอ ให้เพิ่มเข้าไป
+                            else if (CountMonth == DM[Count].Count - 1 &&
+                                Month != DM[Count][CountMonth].ToString())
+                            {
+                                //เพิ่มเดือนเข้าไปแล้วเรียงเดือน
+                                DM[Count].Add(Convert.ToInt32(Month));
+                                DM[Count].Sort();
+                                CheckSometing = true;
+                                break;
+                            }
                         }
-                        //หากหายันอันสุดท้ายของ CBMonth แล้วยังไม่เจอ ให้เพิ่มเข้าไป
-                        else if (CountMonth == DM[Count].Count - 1 &&
-                            Month != DM[Count][CountMonth].ToString())
-                        {
-                            //เพิ่มเดือนเข้าไปแล้วเรียง
-                            DM[Count].Add(Convert.ToInt32(Month));
-                            DM[Count].Sort();
-                            CheckSometing = true;
-                            break;
-                        }
-                    }
                 }
             }
-            if(!CheckSometing)
+            if (!CheckSometing)
             {
                 if (DM.Count != 0)
                 {
                     for (int Count = 0; Count < DM.Count; Count++)
                     {
-                        if (Year == DM[Count].ToString())
+                        if (Year == CBYearSelection_Pay.Items[Count].ToString())
                         {
                             break;
                         }
-                        else if (Count == DM.Count - 1 && Year != YearinCB[Count].ToString())
+                        else if (Count == DM.Count - 1)
                         {
-                            DM.Insert(YearPositionInBackupDM, new List<int>());
-                            DM[YearPositionInBackupDM].Add(Convert.ToInt32(Month));
-                            DM[YearPositionInBackupDM].Sort();
-                            break;
+                            if (YearPositionInBackupDM >= DM.Count)
+                            {
+                                DM.Add(new List<int>());
+                                DM[DM.Count - 1].Add(Convert.ToInt32(Month));
+                                DM[DM.Count - 1].Sort();
+                                break;
+                            }
+                            else
+                            {
+                                DM.Insert(YearPositionInBackupDM, new List<int>());
+                                DM[YearPositionInBackupDM].Add(Convert.ToInt32(Month));
+                                DM[YearPositionInBackupDM].Sort();
+                                break;
+                            }
                         }
                     }
                 }
@@ -1652,17 +1645,30 @@ namespace BankTeacher.Bank.Pay
                     }
                     catch
                     {
-                        //อีกนิด
                         DM.Add(new List<int>());
                         DM[0].Add(Convert.ToInt32(Month));
                     }
-                    
+
                 }
-                CBYearSelection_Pay.Items.Clear();
-                for(int x = 0; x < DM.Count; x++)
+                List<List<int>> PosMonth = new List<List<int>>();
+                if (DM.Count != 0)
                 {
-                    CBYearSelection_Pay.Items.Add(YearinCB[x + YearPositionInBackupDM]);
+                    for (int x = 0; x < DM.Count; x++)
+                    {
+                        PosMonth.Add(new List<int>());
+                        if (DM[x].Count != 0)
+                        {
+                            for (int y = 0; y < DM[x].Count; y++)
+                            {
+                                PosMonth[x].Add(DM[x][y]);
+                            }
+                        }
+                    }
                 }
+                //CBYearSelection_Pay.Sorted = true; //ปัญหาคือเรียงแล้ว เดือน ของ ปีนั้นๆ จะไม่ตรงตำแหน่ง 
+                //CBYearSelection_Pay.Items.Clear();
+                int xy = YearinCB[0];
+                CBYearSelection_Pay.Items.Add(Year);
             }
         }
         //คำนวนยอดทั้งหมดใน DGV ลง label
