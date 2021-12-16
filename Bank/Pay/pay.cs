@@ -1195,7 +1195,6 @@ namespace BankTeacher.Bank.Pay
         //Cleartabpage 1 Button
         private void BClearTab_Pay_Click(object sender, EventArgs e)
         {
-            Cleartabpage1();
             TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
         }
 
@@ -1280,8 +1279,18 @@ namespace BankTeacher.Bank.Pay
                         {
                             printDocument1.Print();
                         }
-                        ClearForm();
-                        TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
+                        TBTeacherNo.Enabled = false;
+                        BSearchTeacher.Enabled = false;
+                        CBList_Pay.Enabled = false;
+                        CBPayment_Pay.Enabled = false;
+                        CBYearSelection_Pay.Enabled = false;
+                        CBMonthSelection_Pay.Enabled = false;
+                        BListAdd_Pay.Enabled = false;
+                        BSave_Pay.Enabled = false;
+                        TBAmount_Pay.Enabled = false;
+                        BAutoSelection.Enabled = false;
+                        //ClearForm();
+                        //TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
                     }
                     else if (!(BankTeacher.Bank.Pay.Calculator.Return))
                     {
@@ -1974,6 +1983,10 @@ namespace BankTeacher.Bank.Pay
                 {
                     ClearForm();
                     TBTeacherNo.Text = "";
+                    TBTeacherName.Text = "";
+                    TBTeacherBill.Text = "";
+                    BSearchTeacher.Enabled = true;
+                    TBTeacherNo.Enabled = true;
                 }
                 else
                 {
