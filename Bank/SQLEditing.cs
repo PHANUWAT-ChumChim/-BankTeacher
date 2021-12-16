@@ -35,7 +35,10 @@ namespace BankTeacher.Bank
           "FROM EmployeeBank.dbo.tblShareWithdraw; \r\n " +
           "DELETE  \r\n " +
           "FROM EmployeeBank.dbo.tblMemberResignation; \r\n " +
-          " "
+          "DELETE \r\n"+
+          "FROM EmployeeBank.dbo.tblDividend; \r\n"+
+          "DELETE \r\n"+
+          "FROM EmployeeBank.dbo.tblBillDetail; "
           ,
 
          };
