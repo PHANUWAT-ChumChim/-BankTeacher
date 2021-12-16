@@ -252,7 +252,7 @@ namespace BankTeacher.Bank.Pay
           "FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.LoanNo = b.LoanNo \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBill as c on b.BillNo = c.BillNo \r\n " +
-          "WHERE a.LoanNo = '{LoanID}' and TypeNo = '2' and Cancel != 0; "
+          "WHERE a.LoanNo = '{LoanID}' and TypeNo = '2' and Cancel = 1; "
 
           ,
           //[14] Select Billinfomation INPUT: {TeacherNo , {Year}

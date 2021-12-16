@@ -14,6 +14,17 @@ namespace BankTeacher.Bank.Loan
 {
     public partial class PayLoan : Form
     {
+        // ======================= ข้อมูลเเบบปริ้น ====================
+        //ข้อมูลส่วนตัว
+        public static string info_name;
+        public static string info_id;
+        // จ่าย
+        public static string info_totelAmountpay;
+        public static string info_BillLoan;
+        public static string info_datepay;
+        // กู้
+        public static string info_Lona_AmountRemain;
+
         int Check = 0;
         int StatusBoxFile = 0;
         String imgeLocation = "";

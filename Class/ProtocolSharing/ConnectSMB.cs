@@ -22,8 +22,8 @@ namespace BankTeacher.Class.ProtocolSharing
 
             public SmbFileContainer(String Location)
             {
-                PathFile = this.networkPath = @"\\192.168.1.2\Test" /*+ Location */+ @"\";
-                var userName = "mon";
+                PathFile = this.networkPath = @"\\166.166.4.189\ShareFileTestSBM\" /*+ Location */+ @"\";
+                var userName = "tang1811";
                 var password = "123456789";
                 var domain = "";
                 networkCredential = new NetworkCredential(userName, password, domain);
