@@ -20,7 +20,7 @@ namespace BankTeacher.Bank
         private String[] SQLDefault = new String[]
          { 
            //[0] Report Epenses Info (Loan and ShareWithdraw) INPUT: {TeacherNo} , {Date} 
-           "SELECT CAST(ISNULL(f.PrefixName, '') +e.Fname + ' ' + e.LName as nvarchar)as TeacherAddName , CAST(ISNULL(c.PrefixName, '') +b.Fname + ' ' + b.LName as nvarchar) as TeacherName , a.LoanNo , Name as BillDetailPaymentName , a.LoanAmount  \r\n " +
+           "SELECT CAST(ISNULL(f.PrefixName, '') +e.Fname + ' ' + e.LName as nvarchar)as TeacherAddName , CAST(ISNULL(c.PrefixName, '') +b.Fname + ' ' + b.LName as nvarchar) as TeacherName , a.LoanNo , CAST(Name as nvarchar(255)) as BillDetailPaymentName , a.LoanAmount  \r\n " +
           "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo \r\n " +
@@ -29,7 +29,7 @@ namespace BankTeacher.Bank
           "LEFT JOIN BaseData.dbo.tblPrefix as f on e.PrefixNo = f.PrefixNo \r\n " +
           "WHERE ( LoanStatusNo = 2 or LoanStatusNo = 3 ) and CAST(PayDate as date) LIKE '{Date}%' and e.TeacherNo LIKE '%{TeacherNo}%' and e.IsUse = 1; \r\n " +
           " \r\n " +
-          "SELECT CAST(ISNULL(g.PrefixName, '') +f.Fname + ' ' + f.LName as nvarchar)as TeacherAddName , CAST(ISNULL(d.PrefixName, '') +c.Fname + ' ' +c.LName as nvarchar) as TeacherName , Name as BillDetailPaymentName , a.Amount \r\n " +
+          "SELECT CAST(ISNULL(g.PrefixName, '') +f.Fname + ' ' + f.LName as nvarchar)as TeacherAddName , CAST(ISNULL(d.PrefixName, '') +c.Fname + ' ' +c.LName as nvarchar) as TeacherName , CAST(Name as nvarchar(255)) as BillDetailPaymentName , a.Amount \r\n " +
           "FROM EmployeeBank.dbo.tblShareWithdraw as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.ShareNo = b.ShareNo \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo \r\n " +

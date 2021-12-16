@@ -1104,6 +1104,11 @@ namespace BankTeacher.Bank.Pay
             }
         }
 
+        private void TBAmount_Pay_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                BListAdd_Pay_Click(new object(), new EventArgs());
+        }
         //Add list to datagridview
         private void BListAdd_Pay_Click(object sender, EventArgs e)
         {

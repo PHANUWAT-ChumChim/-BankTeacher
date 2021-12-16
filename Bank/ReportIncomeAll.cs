@@ -32,7 +32,7 @@ namespace BankTeacher.Bank
           "GROUP BY a.BillNo ,  CAST(ISNULL(d.PrefixName ,'') + c.Fname + ' ' +c.Lname  as nvarchar ) ,  CAST(ISNULL(f.PrefixName ,'') + e.Fname + ' ' +e.Lname  as nvarchar ) "
            ,
            //[1] Select Bill Detail INPUT: {BillNo} 
-           "SELECT BillNo , CAST(TypeName + ' '+ISNULL(CAST(LoanNo as nvarchar),'') as nvarchar) as list , c.Name as PaymentName , Amount \r\n " +
+           "SELECT BillNo , CAST(TypeName + ' '+ISNULL(CAST(LoanNo as nvarchar),'') as nvarchar) as list , CAST(c.Name as nvarchar(255)) as PaymentName , Amount \r\n " +
           "FROM EmployeeBank.dbo.tblBillDetail as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as b on a.TypeNo = b.TypeNo \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailPayment as c on a.BillDetailPaymentNo = c.BillDetailPaymentNo \r\n " +
