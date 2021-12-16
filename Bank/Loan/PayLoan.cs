@@ -417,7 +417,8 @@ namespace BankTeacher.Bank.Loan
         {
             if (panel7.Enabled == false)
             {
-                MessageBox.Show("ไม่พบรายการ กรูณาลงรายการใหม่อีกครั้งค่ะ");
+                MessageBox.Show("ไม่พบรายการ กรุณาลงรายการใหม่อีกครั้งค่ะ");
+                BExitForm_Click(new object(), new EventArgs());
             }
         }
 
@@ -473,7 +474,7 @@ namespace BankTeacher.Bank.Loan
         {
             if(CBYearSelection_Loanpay.Items.Count == 0)
             {
-                MessageBox.Show("คุณไม่มีรายการ กู้ในระบบ กรูณาทำรายการใหม่อีกครั้งค่ะ");
+                MessageBox.Show("คุณไม่มีรายการ กู้ในระบบ กรูณาทำรายการใหม่อีกครั้งครับ");
                 tabControl1.SelectedIndex = 0;
             }
         }
