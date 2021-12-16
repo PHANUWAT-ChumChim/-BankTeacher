@@ -237,7 +237,7 @@ namespace BankTeacher.Bank.Loan
         {
             if (e.Button == MouseButtons.Right)
             {
-
+                //
                 int currentMouseOverRow = DGVCancelLoan.HitTest(e.X, e.Y).RowIndex;
                 if (currentMouseOverRow > -1)
                 {
@@ -255,7 +255,6 @@ namespace BankTeacher.Bank.Loan
                             for (int aa = 0; aa < cb.Length; aa++)
                             {
                                 cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment(ListLoan[x][0], ListLoan[x][1]));
-                                ListLoan.RemoveAt(x);
                             }
                         }
                     }

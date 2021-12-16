@@ -34,7 +34,9 @@ namespace BankTeacher.Bank.log
           "WHERE (b.CancelBy LIKE '%{Text}%' or CAST(ISNULL(d.PrefixName,'') + a.Fname + ' ' + a.Lname as nvarchar(255)) LIKE '%{Text}%') and CAST(b.CancelDate as Date) LIKE '%{Date}%' and b.Cancel = 2\r\n " +
           "GROUP BY a.TeacherNo , CAST(ISNULL(d.PrefixName,'') + a.Fname + ' ' + a.Lname as nvarchar(255)) , a.Fname \r\n " +
           "ORDER By a.Fname"
+
            ,
+
            //[1] Select Bill INPUT: {TeacherAddbyNo} {Date} 
            "SELECT a.TeacherNo , CAST(ISNULL(b.PrefixName,'') + a.Fname  +' '+ a.Lname as nvarchar(255)) as TeacherAddbyname , c.BillNo , CAST(f.TypeName + ' ' + ISNULL(CAST(d.LoanNo as nvarchar(255)),'')  as nvarchar(255)) \r\n " +
           ", e.Name as Payment , d.Amount ,a.Fname , ISNULL(c.CancelNote , '-') \r\n " +
@@ -46,6 +48,7 @@ namespace BankTeacher.Bank.log
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as f on d.TypeNo = f.TypeNo  \r\n " +
           "WHERE c.TeacherNoAddBy LIKE '%%' and CAST(c.CancelDate as Date) Like '%%' and f.TypeNo != 3 and Cancel = 2 \r\n " +
           "ORDER BY a.Fname;"
+
            ,
 
 
