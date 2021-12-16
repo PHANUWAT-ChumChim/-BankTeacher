@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using static BankTeacher.Class.ProtocolSharing.ConnectSMB;
 namespace BankTeacher.Bank.Add_Member
 {
     public partial class infoMeber : Form
@@ -22,6 +22,7 @@ namespace BankTeacher.Bank.Add_Member
         /// <para>[1] Search Teacher INPUT: {TeacherNotLike}</para>
         /// <para>[2] Check Bill Teacher Have Ever Paid INPUT: {TeacherNo}</para>
         /// <para>[3] Save Edit Bsave INPUT: {Amount}  {TeacherNo} </para>
+        /// <para>[4] Select Detail Memner INPUT: {TeacherNo} </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -74,8 +75,16 @@ namespace BankTeacher.Bank.Add_Member
           "SET SavingAmount = {Amount} \r\n " +
           "WHERE TeacherNo = '{TeacherNo}';"
            ,
-
-
+           //[4]  Select Detail Memner INPUT: {TeacherNo} 
+         "SELECT a.TeacherNo ,CAST(ISNULL(b.PrefixName+' ','')+a.Fname +' '+ a.Lname as NVARCHAR)AS Name,f.TeacherAddBy,CAST(ISNULL(b.PrefixName+' ','')+h.Fname +' '+ h.Lname as NVARCHAR) as NameTadd,a.IdNo, IIF(a.cNo != null,a.cNo,'-'),IIF(CAST(a.cMu as nvarchar) != null,a.cMu,'-'),IIF(CAST(c.TumBonName as nvarchar) != null,c.TumBonName,'-'),IIF(CAST(d.AmPhurName as nvarchar) != null,d.AmPhurName,'-'),IIF(CAST(e.JangWatLongName as nvarchar) != null,e.JangWatLongName,'-'),a.TelMobile,f.StartAmount  \r\n " +
+          "FROM Personal.dbo.tblTeacherHis as a \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as b ON a.PrefixNo = b.PrefixNo  \r\n " +
+          "LEFT JOIN BaseData.dbo.tblTumBon as c on a.cTumBonNo = c.TumBonNo \r\n " +
+          "LEFT JOIN BaseData.dbo.tblAmphur as d on a.cAmPhurNo = d.AmphurNo \r\n " +
+          "LEFT JOIN BaseData.dbo.tblJangWat as e on a.cJangWatNo = e.JangWatNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblMember as f on a.TeacherNo = f.TeacherNo  \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as h on f.TeacherAddBy = h.TeacherNo  \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}'; "
          };
         private void infoMeber_SizeChanged(object sender, EventArgs e)
         {
@@ -218,6 +227,131 @@ namespace BankTeacher.Bank.Add_Member
                 MessageBox.Show("การบันทึกล้มเหลว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            BankTeacher.Class.Print.PrintPreviewDialog.PrintMember(e, SQLDefault[4], BankTeacher.Bank.Menu.Date[2], BankTeacher.Bank.Menu.Monthname, (Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + 543).ToString(),TBTeacherNo.Text,TBTeacherName.Text);
+        }
+
+        private void BTPrint_Click(object sender, EventArgs e)
+        {
+            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+            {
+                printDocument1.Print();
+
+            }
+        }
+        int StatusBoxFile = 0;
+        String imgeLocation = "";
+        private void BTOpenfile_Reg_Click(object sender, EventArgs e)
+        {
+            if (TBTeacherNo.Text.Length == 6)
+            {
+                if (StatusBoxFile == 0)
+                {
+
+                    try
+                    {
+                        OpenFileDialog dialog = new OpenFileDialog();
+                        dialog.Filter = "pdf files(*.pdf)|*.pdf";
+                        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                        {
+                            imgeLocation = dialog.FileName;
+                        }
+                        if (imgeLocation != "")
+                        {
+                            //BTOpenfile_Reg.Text = "ส่งไฟล์";
+                            StatusBoxFile = 1;
+
+                            var smb = new SmbFileContainer("Member");
+                            if (smb.IsValidConnection())
+                            {
+                                String Return = smb.SendFile(imgeLocation, "Member" + TBTeacherNo.Text + ".pdf");
+                                MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                if (Return.Contains("อัพโหลดสำเร็จ"))
+                                {
+                                    //BTdeletefile_Reg.Enabled = true;
+                                    //LScan_Reg.Text = "อัพโหลดไฟล์สำเร็จ";
+                                    //LScan_Reg.ForeColor = Color.Green;
+                                    imgeLocation = "";
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else if (StatusBoxFile == 1)
+                {
+                    MessageBox.Show("ทำการส่งไฟล์แล้ว ไม่สามารถดำเนินการส่งไฟล์ซ้ำได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("กรุณากรอก รหัสผู้ใช้ก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+        String imgeLocation1 = @"\\192.168.1.3\ShareFileTestSBM";
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (TBTeacherNo.Text.Length == 6)
+            {
+                if (StatusBoxFile == 0)
+                {
+
+                    try
+                    {
+                        OpenFileDialog dialog = new OpenFileDialog();
+                        dialog.Filter = "pdf files(*.pdf)|*.pdf";
+                        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                        {
+                            imgeLocation1 = dialog.FileName;
+                        }
+                        if (imgeLocation1 != "")
+                        {
+                            //BTOpenfile_Reg.Text = "ส่งไฟล์";
+                            StatusBoxFile = 1;
+
+                            var smb = new SmbFileContainer("Member");
+                            if (smb.IsValidConnection())
+                            {
+                                String Return = smb.SendFile(imgeLocation1, "Member" + TBTeacherNo.Text + ".pdf");
+                                MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                if (Return.Contains("อัพโหลดสำเร็จ"))
+                                {
+                                    //BTdeletefile_Reg.Enabled = true;
+                                    //LScan_Reg.Text = "อัพโหลดไฟล์สำเร็จ";
+                                    //LScan_Reg.ForeColor = Color.Green;
+                                    imgeLocation1 = "";
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                else if (StatusBoxFile == 1)
+                {
+                    MessageBox.Show("ทำการส่งไฟล์แล้ว ไม่สามารถดำเนินการส่งไฟล์ซ้ำได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("กรุณากรอก รหัสผู้ใช้ก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }
