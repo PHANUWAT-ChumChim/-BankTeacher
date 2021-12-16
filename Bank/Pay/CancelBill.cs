@@ -20,7 +20,7 @@ namespace BankTeacher.Bank.Pay
         /// <summary> 
         /// SQLDafault 
         /// <para>[0] Select Bill (CancelBill) INPUT: {BillNo}</para>
-        /// <para>[1] Update Cancel Bill INPUT: {BillNo} {CancelBy}  </para>
+        /// <para>[1] Update Cancel Bill INPUT: {BillNo} {CancelBy} {Note}</para>
         /// <para>[2] Update Saving (CancelBill) INPUT: {TeacherNo} {Amount} {BillNo} {DateTime}</para>
         /// <para>[3] + RemainAmount In Guarantor (CancelBill) INPUT: {LoanNo} , {LoanAmount}</para>
         /// <para>[4] Search All Bill in to day (CancelBill) INPUT: {BillNo} {today} {Text}</para>
@@ -41,9 +41,9 @@ namespace BankTeacher.Bank.Pay
           " WHERE  a.BillNo = '{BillNo}' and MemberStatusNo != 2 and Cancel = 1 and b.TypeNo != 3 "
 
             ,
-            //[1] Update Cancel Bill INPUT: {BillNo} {CancelBy}
+            //[1] Update Cancel Bill INPUT: {BillNo} {CancelBy} {Note}
            "Update EmployeeBank.dbo.tblBill   \r\n " +
-          "SET Cancel = 2 , CancelBy = '{CancelBy}' , CancelDate = CURRENT_TIMESTAMP  \r\n " +
+          "SET Cancel = 2 , CancelBy = '{CancelBy}' , CancelDate = CURRENT_TIMESTAMP , CancelNote = '{Note}'\r\n " +
           "WHERE BillNo = '{BillNo}' \r\n "
 
             ,
@@ -209,9 +209,13 @@ namespace BankTeacher.Bank.Pay
                         {
                             try
                             {
+                                String Note = TBNote.Text;
+                                if (Note == "")
+                                    Note = "-";
                                 Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
                                     .Replace("{BillNo}", TBBillNo_Cancelbill.Text)
-                                    .Replace("{CancelBy}" , BankTeacher.Class.UserInfo.TeacherNo));
+                                    .Replace("{CancelBy}" , BankTeacher.Class.UserInfo.TeacherNo)
+                                    .Replace("{Note}", Note) );
                                 for (int x = 0; x < DGV_Cancelbill.Rows.Count; x++)
                                 {
                                     if (DGV_Cancelbill.Rows[x].Cells[1].Value.ToString().Contains("หุ้น"))
