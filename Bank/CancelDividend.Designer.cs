@@ -54,12 +54,14 @@ namespace BankTeacher.Bank
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVReportDividend)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.BExitForm);
             this.panel1.Controls.Add(this.BSaveCancelDividend);
             this.panel1.Controls.Add(this.CBYear);
@@ -316,6 +318,17 @@ namespace BankTeacher.Bank
             this.Column1.ReadOnly = true;
             this.Column1.Visible = false;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.Red;
+            this.label1.Location = new System.Drawing.Point(275, 32);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(145, 28);
+            this.label1.TabIndex = 115;
+            this.label1.Text = "ไม่มีปีที่สามารถยกเลิกได้";
+            this.label1.Visible = false;
+            // 
             // CancelDividend
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 28F);
@@ -362,5 +375,6 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.Label label1;
     }
 }
