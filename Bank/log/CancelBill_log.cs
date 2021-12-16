@@ -35,17 +35,16 @@ namespace BankTeacher.Bank.log
           "GROUP BY a.TeacherNo , CAST(ISNULL(d.PrefixName,'') + a.Fname + ' ' + a.Lname as nvarchar(255)) , a.Fname \r\n " +
           "ORDER By a.Fname"
            ,
-           //[1] Select Bill INPUT: {TeacherAddbyNo} {Date}
-           " SELECT CAST(ISNULL(b.PrefixName,'') + a.Fname  +' '+ a.Lname as nvarchar(255)) as TeacherAddbyname , CAST(ISNULL(h.PrefixName,'') + g.Fname  +' '+ g.Lname as nvarchar(255)) as TeacherAddbyname, c.BillNo , CAST(f.TypeName + ' ' + ISNULL(CAST(d.LoanNo as nvarchar(255)),'')  as nvarchar(255)), e.Name as Payment , d.Amount ,a.Fname   \r\n " +
-          "FROM Personal.dbo.tblTeacherHis as a \r\n " +
-          "LEFT JOIN BaseData.dbo.tblPrefix as b on a.PrefixNo = b.PrefixNo \r\n " +
-          "INNER JOIN EmployeeBank.dbo.tblBill as c on a.TeacherNo = c.CancelBy \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as d on c.BillNo = d.BillNo \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblBillDetailPayment as e on d.BillDetailPaymentNo = e.BillDetailPaymentNo \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as f on d.TypeNo = f.TypeNo \r\n " +
-          "LEFT JOIN Personal.dbo.tblTeacherHis as g on c.TeacherNo = g.TeacherNo \r\n " +
-          "LEFT JOIN BaseData.dbo.tblPrefix as h on g.PrefixNo = h.PrefixNo \r\n " +
-          "WHERE c.TeacherNoAddBy LIKE '%{TeacherAddbyNo}%' and CAST(c.CancelDate as Date) Like '%{Date}%' and f.TypeNo != 3 and Cancel = 2 \r\n " +
+           //[1] Select Bill INPUT: {TeacherAddbyNo} {Date} 
+           "SELECT a.TeacherNo , CAST(ISNULL(b.PrefixName,'') + a.Fname  +' '+ a.Lname as nvarchar(255)) as TeacherAddbyname , c.BillNo , CAST(f.TypeName + ' ' + ISNULL(CAST(d.LoanNo as nvarchar(255)),'')  as nvarchar(255)) \r\n " +
+          ", e.Name as Payment , d.Amount ,a.Fname , ISNULL(c.CancelNote , '-') \r\n " +
+          "FROM Personal.dbo.tblTeacherHis as a  \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as b on a.PrefixNo = b.PrefixNo  \r\n " +
+          "INNER JOIN EmployeeBank.dbo.tblBill as c on a.TeacherNo = c.CancelBy  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as d on c.BillNo = d.BillNo  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetailPayment as e on d.BillDetailPaymentNo = e.BillDetailPaymentNo  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as f on d.TypeNo = f.TypeNo  \r\n " +
+          "WHERE c.TeacherNoAddBy LIKE '%%' and CAST(c.CancelDate as Date) Like '%%' and f.TypeNo != 3 and Cancel = 2 \r\n " +
           "ORDER BY a.Fname;"
            ,
 
@@ -101,7 +100,7 @@ namespace BankTeacher.Bank.log
                                         DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                                         Amount += AmountBill;
                                         AmountBill = 0;
-                                        DGV.Rows.Add(dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][5].ToString());
+                                        DGV.Rows.Add(dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][5].ToString() , dt.Rows[x][7].ToString());
                                         PositionHeader = DGV.Rows.Count -1;
                                         AmountBill += Convert.ToInt32(dt.Rows[x][5].ToString());
                                     }
@@ -185,7 +184,7 @@ namespace BankTeacher.Bank.log
                     {
                         if (DGV.Rows.Count == 0)
                         {
-                            DGV.Rows.Add(dt.Rows[x][0].ToString(), dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][5].ToString());
+                            DGV.Rows.Add(dt.Rows[x][0].ToString(), dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][5].ToString() , dt.Rows[x][7]);
                             PositionHeader = x;
 
                             AmountBill += Convert.ToInt32(dt.Rows[x][5].ToString());

@@ -266,13 +266,16 @@ namespace BankTeacher.Bank
                     {
                         // เอา ปี ล่าสุดที่ถอนมา
                         DataTable ds_date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[12].Replace("{TeacherNo}", TBTeacherNo.Text));
-                        int Year_later = Convert.ToInt32(ds_date.Rows[0][0].ToString());
-                        // เอา ปีที่มีการถอนอย่างต่ำมา 2 ปี 
-                        DataTable ds_CheckYear = Class.SQLConnection.InputSQLMSSQL(SQLDefault[11].Replace("{TeacherNo}", TBTeacherNo.Text)
-                            .Replace("{Date}",Convert.ToInt32(Year_later-Year).ToString()));
-                        if(ds_CheckYear.Rows.Count != 0)
+                        if(ds_date.Rows.Count != 0 && ds_date.Rows[0][0].ToString() != "")
                         {
-                            CBYear.Items.Add(Year_later-Year);
+                            int Year_later = Convert.ToInt32(ds_date.Rows[0][0].ToString());
+                            // เอา ปีที่มีการถอนอย่างต่ำมา 2 ปี 
+                            DataTable ds_CheckYear = Class.SQLConnection.InputSQLMSSQL(SQLDefault[11].Replace("{TeacherNo}", TBTeacherNo.Text)
+                                .Replace("{Date}", Convert.ToInt32(Year_later - Year).ToString()));
+                            if (ds_CheckYear.Rows.Count != 0)
+                            {
+                                CBYear.Items.Add(Year_later - Year);
+                            }
                         }
                     }
                 }

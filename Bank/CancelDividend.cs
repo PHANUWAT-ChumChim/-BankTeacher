@@ -72,7 +72,7 @@ namespace BankTeacher.Bank
                 DGVReportDividend.Rows.Clear();
 
                 DataSet dsReport = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
-                    .Replace("{Year}", CBYear.SelectedItem.ToString()));
+                    .Replace("{Year}", CBYear.Text));
                 if(dsReport.Tables[0].Rows.Count != 0)
                 {
                     int SumSavingAmount = 0, SumDividendAmount = 0;
@@ -140,15 +140,22 @@ namespace BankTeacher.Bank
         private void CancelDividend_Load(object sender, EventArgs e)
         {
             DataTable dtYear = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]);
-            if(dtYear.Rows.Count != 0)
+            if(dtYear.Rows.Count != 0 && dtYear.Rows[0][0].ToString() != "")
                 for (int x = 0; x < dtYear.Rows.Count; x++)
                 {
                     CBYear.Items.Add(dtYear.Rows[x][0].ToString());
                 }
+
             if(CBYear.Items.Count != 0)
             {
-                CBYear.SelectedIndex = 0;
                 CBYear.Enabled = true;
+                CBYear.SelectedIndex = 0;
+            }
+            else if(dtYear.Rows[0][0].ToString() == "")
+            {
+                label1.Visible = true;
+                CBYear.Enabled = false;
+                BSaveCancelDividend.Enabled = false;
             }
             else
             {
