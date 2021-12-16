@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data;
 
 
 namespace BankTeacher.Class
@@ -47,9 +48,9 @@ namespace BankTeacher.Class
             return Name;
         }
     }
-
-    class ComboxNumberRanking
+    class ComboxAdd_item
     {
+        // =============================================== เรียงลำดับข้อมูลตัวเลข =================================
         public static void NumberRanking(int SelectIndexRow,DataGridView G,ComboBox CB_Item,string Text)
         {
             // ============== ไม่ต้องยุ่ง ==========================
@@ -202,6 +203,31 @@ namespace BankTeacher.Class
                 G.Rows.RemoveAt(SelectIndexRow);
             }
         }
-        
+        // =============================================== ค้นหารายการ ปี / เดือน ใน ข้อมูล Sql
+        public static void Search_datetime(string SQL_Code,int Sqldate_Now,int Backdate,ComboBox CB,bool Year = true,bool Mounth = true)
+        {
+            DataTable dt;
+            for (int Y = 0; Y < Backdate; Y++)
+            {
+                SQL_Code = SQL_Code.Replace("{Year}", $"{Sqldate_Now-Y}");
+                dt = Class.SQLConnection.InputSQLMSSQL(SQL_Code);
+                if(Mounth)
+                for (int M = 1; M <= 12; M++)
+                {
+                    SQL_Code = SQL_Code.Replace("{Mounth}", $"{M}");
+                    dt = Class.SQLConnection.InputSQLMSSQL(SQL_Code);
+                    if(dt.Rows.Count != 0)
+                        if (Mounth)  CB.Items.Add(M); 
+                }
+                if (Year)
+                    if (dt.Rows.Count != 0)
+                        if (Year) { CB.Items.Add(Sqldate_Now - Y); }
+                SQL_Code = SQL_Code.Replace($"{Sqldate_Now - Y}", "{Year}");
+                if (Mounth)
+                    break;
+            }
+          
+        }
+
     }
 }

@@ -35,15 +35,19 @@ namespace BankTeacher.Bank.log
           "ORDER BY Fname"
            ,
            //[1] Select Bill INPUT: {TeacherAddbyNo} {Date}
-           "SELECT a.TeacherNo , CAST(ISNULL(c.Prefixname,'') + a.Fname + ' ' + a.Lname  as nvarchar(255)) ,b.WithDrawNo , d.Name , Amount, Fname \r\n " +
+           " SELECT  CAST(ISNULL(c.Prefixname,'') + a.Fname + ' ' + a.Lname  as nvarchar(255)) , CAST(ISNULL(g.Prefixname,'') + f.Fname + ' ' + f.Lname  as nvarchar(255)) ,b.WithDrawNo , d.Name , Amount, a.Fname \r\n " +
           "FROM Personal.dbo.tblTeacherHis as a \r\n " +
           "INNER JOIN EmployeeBank.dbo.tblShareWithdraw as b on a.TeacherNo = b.TeacherNoAddBy \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as c on a.PrefixNo = c.PrefixNo  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailPayment as d on b.BillDetailPayMentNo = d.BillDetailPaymentNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblShare as e on b.ShareNo = e.ShareNo \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as f on e.TeacherNo = f.TeacherNo \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as g on f.PrefixNo = g.PrefixNo \r\n " +
           "WHERE  a.TeacherNo LIKE '%{TeacherAddbyNo}%' and CAST(b.DateAdd as Date) LIKE '%{Date}%'   \r\n " +
-          "GROUP BY a.TeacherNo , CAST(ISNULL(c.Prefixname,'') + a.Fname + ' ' + a.Lname  as nvarchar(255)) ,b.WithDrawNo , d.Name , Amount, Fname \r\n " +
-          "ORDER BY Fname"
+          "GROUP BY CAST(ISNULL(c.Prefixname,'') + a.Fname + ' ' + a.Lname  as nvarchar(255)) , CAST(ISNULL(g.Prefixname,'') + f.Fname + ' ' + f.Lname  as nvarchar(255)) ,b.WithDrawNo , d.Name , Amount, a.Fname \r\n " +
+          "ORDER BY a.Fname"
            ,
+
 
          };
         public Amountoff_log()
@@ -153,15 +157,13 @@ namespace BankTeacher.Bank.log
                 DGV.Rows.Clear();
                 panel2.Enabled = false;
                 DGV.Columns.Clear();
-                DGV.Columns.Add("TeacherAddByID", "รหัส");
-                DGV.Columns[0].Width = 100;
-                DGV.Columns.Add("TeacherAddByName", "ชื่อ-สกุล");
-                DGV.Columns[1].Width = 175;
-                DGV.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                DGV.Columns.Add("TeacherAddByName", "ชื่อ-สกุล ผู้ทำรายการ");
+                DGV.Columns[0].Width = 175;
+                DGV.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 for(int x = 0; x < ColumsDGV.Count; x++)
                 {
                     DGV.Columns.Add(ColumsDGV[x], ColumsDGV[x]);
-                    DGV.Columns[x + 2].Width = SizeColumsDGV[x];
+                    DGV.Columns[x + 1].Width = SizeColumsDGV[x];
                     //DGV.Columns[x + 2].AutoSizeMode = AutoSizeDGV[x];
                 }
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
@@ -174,17 +176,18 @@ namespace BankTeacher.Bank.log
                     int Amount = 0;
                     for (int x = 0; x < dt.Rows.Count; x++) 
                     {
-                        AmountTeacher += Convert.ToInt32(dt.Rows[x][4].ToString());
                         if (DGV.Rows.Count == 0)
                         {
                             DGV.Rows.Add(dt.Rows[x][0].ToString(), dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString(), dt.Rows[x][4].ToString());
                             PositionHeader = x;
+                            AmountTeacher += Convert.ToInt32(dt.Rows[x][4].ToString());
                         }
                         else
                         {
-                            if (DGV.Rows[PositionHeader].Cells[1].Value.ToString() == dt.Rows[x][1].ToString())
+                            if (DGV.Rows[PositionHeader].Cells[0].Value.ToString() == dt.Rows[x][0].ToString())
                             {
                                 DGV.Rows.Add("", "", dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString(), dt.Rows[x][4].ToString());
+                                AmountTeacher += Convert.ToInt32(dt.Rows[x][4].ToString());
                             }
                             else
                             {
@@ -194,6 +197,7 @@ namespace BankTeacher.Bank.log
                                 AmountTeacher = 0;
                                 DGV.Rows.Add(dt.Rows[x][0].ToString() ,dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString(), dt.Rows[x][4].ToString());
                                 PositionHeader = DGV.Rows.Count - 1;
+                                AmountTeacher += Convert.ToInt32(dt.Rows[x][4].ToString());
                             }
 
                         }
@@ -227,12 +231,12 @@ namespace BankTeacher.Bank.log
                     DGV.Columns.Add(ColumsDGV[x], ColumsDGV[x]);
                     DGV.Columns[x].Width = SizeColumsDGV[x];
                     DGV.Columns[x].AutoSizeMode = AutoSizeDGV[x];
-                    if (DGV.Columns[x].HeaderText == "รูปแบบ")
+                    if (DGV.Columns[x].HeaderText == "ชื่อ - สกุล")
                         DGV.Columns[x].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 }
             }
         }
-        //
+
         private void ClearForm()
         {
             TBTeacherName.Text = "";
