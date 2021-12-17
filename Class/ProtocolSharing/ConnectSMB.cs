@@ -13,6 +13,8 @@ namespace BankTeacher.Class.ProtocolSharing
 {
     class ConnectSMB
     {
+        public static List<BankTeacher.Class.linkedFile> file = new List<BankTeacher.Class.linkedFile>();
+        public static String StatusRetrun = "";
         public class SmbFileContainer
         {
             private readonly NetworkCredential networkCredential;
@@ -22,11 +24,12 @@ namespace BankTeacher.Class.ProtocolSharing
 
             public SmbFileContainer(String Location)
             {
-                PathFile = this.networkPath = @"\\166.166.4.189\ShareFileTestSBM\" /*+ Location */+ @"\";
+                PathFile = this.networkPath = @"\\192.168.1.3\ShareFileTestSBM\" + Location + @"\";
                 var userName = "tang1811";
                 var password = "123456789";
                 var domain = "";
                 networkCredential = new NetworkCredential(userName, password, domain);
+                StatusRetrun = "";
                 //NetworkCredential a = new NetworkCredential();
             }
 
@@ -39,7 +42,56 @@ namespace BankTeacher.Class.ProtocolSharing
                     return result != 0;
                 }
             }
+            public void GetFile(string ContainsName = "")
+            {
+                using (var network = new NetworkConnection(networkPath, networkCredential))
+                {
+                    try
+                    {
+                        network.Connect();
+                        List<String> GetFileName = new List<string>();
+                        List<DateTime> DateaddFile = new List<DateTime>();
+                        GetFileName.Clear();
+                        DateaddFile.Clear();
+                        file.Clear();
+                        String path = PathFile;
+                        System.IO.DirectoryInfo par = new System.IO.DirectoryInfo(path);
+                        foreach (System.IO.FileInfo f in par.GetFiles())
+                        {
+                            if (f.Name.Contains(ContainsName))
+                            {
+                                FileInfo fi = new FileInfo(f.FullName);
+                                DateTime created = Convert.ToDateTime(fi.CreationTime);
+                                DateTime lastmodified = fi.LastWriteTime;
+                                GetFileName.Add(f.Name);
+                                DateaddFile.Add(created);
+                            }
+                        }
+                        if (GetFileName.Count != 0 && path != "")
+                        {
+                            for (int x = 0; x < GetFileName.Count; x++)
+                            {
+                                file.Add(new BankTeacher.Class.linkedFile(GetFileName[x].ToString(), DateaddFile[x]));
+                            }
+                            BankTeacher.Bank.SelectFile SF = new BankTeacher.Bank.SelectFile(path);
+                            SF.ShowDialog();
+                            network.Dispose();
+                        }
+                        else
+                        {
+                            network.Dispose();
+                            StatusRetrun = "ไม่พบไฟล์";
+                            return;
+                        }
 
+                    }
+                    catch
+                    {
+                        StatusRetrun = "ไม่พบไฟล์";
+                        return;
+                    }
+                }
+            }
             public void CreateFile(string targetFile, string content)
             {
                 using (var network = new NetworkConnection(networkPath, networkCredential))

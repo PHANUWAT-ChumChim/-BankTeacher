@@ -31,6 +31,37 @@ namespace BankTeacher.Class
         }
     }
 
+    class linkedFile
+    {
+        public String Name { get; set; }
+        public DateTime DateAdd { get; set; }
+        public linkedFile(string name , DateTime dateadd)
+        {
+            Name = name;
+            DateAdd = dateadd;
+        }
+        public override string ToString()
+        {
+            return Name;
+        }
+    }
+    class ComboboxSelectFile
+    {
+        public String DateAdd { get; set; }
+        public string FullDateAdd { get; set; }
+        public String Name { get; set; }
+        public ComboboxSelectFile(string dateadd  , string fulldateadd, string name)
+        {
+            DateAdd = dateadd;
+            FullDateAdd = fulldateadd;
+            Name = name;
+        }
+        public override string ToString()
+        {
+            return DateAdd;
+        }
+    }
+
     class ComboBoxPayment
     {
         public String Name { get; set; }
