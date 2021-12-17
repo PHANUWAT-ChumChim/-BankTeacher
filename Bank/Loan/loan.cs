@@ -755,6 +755,7 @@ namespace BankTeacher.Bank.Loan
             {
                 try
                 {
+                    //
                     Bank.Search IN;
                     String NotLike = "";
                     if (DGVGuarantor.Rows.Count != 0)
