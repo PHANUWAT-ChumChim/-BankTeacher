@@ -310,7 +310,7 @@ namespace BankTeacher.Bank.Add_Member
                 //Input Location Folder
                 var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
                 //Input Contain words แนะนำ เป็นรหัสอาจารย์ ในหน้าทั่วไปส่วนหน้าไหนถ้ามีการทำรายการเยอะๆให้เอาเป็นเลขบิลล์ของหน้านั้นๆเช่นหน้าดูเอกสารกู้ จะใส่เป็นเลขกู้ หน้าดูเอกสาร สมัครสมาชิกจะใส่เป็นชื่ออาจารย์
-                smb.GetFile(TBTeacherNo.Text);
+                smb.ThreadOpenFile(TBTeacherNo.Text);
                 if(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun != "")
                 {
                     MessageBox.Show(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun, "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
