@@ -262,7 +262,7 @@ namespace BankTeacher.Bank.Pay
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as c on b.TypeNo = c.TypeNo \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailPayment as d on b.BillDetailPaymentNo = d.BillDetailPaymentNo \r\n " +
           "WHERE TeacherNo = '{TeacherNo}' and Year = {Year} and Cancel = 1 \r\n " +
-          "ORDER BY b.Mount "
+          "ORDER BY a.BillNo DESC"
           ,
            //[15] print backwards IN: {billl}
            "SELECT  a.BillNo,a.Amount,b.TypeName,CAST(a.Mount as nvarchar)+'/'+CAST(a.Year as nvarchar)  as  Mountandyear \r\n" +
@@ -1475,22 +1475,46 @@ namespace BankTeacher.Bank.Pay
                 DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[14]
                 .Replace("{TeacherNo}", TBTeacherNo.Text)
                 .Replace("{Year}", CBYearSelection_BillInfo.Text));
+                
                 if(dt.Rows.Count != 0)
                 {
+                    String BillNo = "";
                     DGV_BillInfo.Rows.Clear();
                     int Sum = 0;
+                    int Balance = 0;
                     for(int x = 0; x < dt.Rows.Count; x++)
                     {
-                        DGV_BillInfo.Rows.Add(x+1,dt.Rows[x][0].ToString(), Convert.ToDateTime(dt.Rows[x][5].ToString()).ToString("dd-MM-yyyy"), dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
-
-                        Sum = Sum + Convert.ToInt32(dt.Rows[x][3].ToString());
-                        LBalance_BillInfo.Text = Sum.ToString();
-
                         if (x % 2 == 1)
                         {
                             DGV_BillInfo.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
                         }
+
+                        if ( x == 0)
+                        {
+                            DGV_BillInfo.Rows.Add(x + 1, dt.Rows[x][0].ToString(), Convert.ToDateTime(dt.Rows[x][5].ToString()).ToString("dd-MM-yyyy"), dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
+                            BillNo = dt.Rows[x][0].ToString();
+                        }
+                        else if (BillNo == dt.Rows[x][0].ToString())
+                        {
+                            DGV_BillInfo.Rows.Add(x + 1, "","", dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), "", dt.Rows[x][3].ToString());
+                        }
+                        else if(BillNo != dt.Rows[x][0].ToString())
+                        {
+                            DGV_BillInfo.Rows.Add("", "", "", "", "รวม", "", Sum);
+                            DGV_BillInfo.Rows[DGV_BillInfo.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Yellow;
+                            DGV_BillInfo.Rows.Add(x + 1, dt.Rows[x][0].ToString(), Convert.ToDateTime(dt.Rows[x][5].ToString()).ToString("dd-MM-yyyy"), dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
+                        }
+
+                        Sum = Sum + Convert.ToInt32(dt.Rows[x][3].ToString());
+                        Balance += Convert.ToInt32(dt.Rows[x][3].ToString());
+                        if(x == dt.Rows.Count - 1)
+                        {
+                            DGV_BillInfo.Rows.Add("", "", "", "", "รวม", "", Sum);
+                            DGV_BillInfo.Rows[DGV_BillInfo.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Yellow;
+                        }
+
                     }
+                    LBalance_BillInfo.Text = Balance.ToString();
                 }
                 else
                 {

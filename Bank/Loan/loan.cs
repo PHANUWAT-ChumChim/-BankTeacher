@@ -51,6 +51,7 @@ namespace BankTeacher.Bank.Loan
         /// <para>[6] SELECT MemberLona  INPUT: {TeacherNo} </para>
         /// <para>[7] Delete Loan INPUT: NO </para>
         /// <para>[8] Check Dividend Year INPUT: </para>
+        /// <para>[9] BSearch Teacher INPUT: {Text}  {TeacherNoNotLike}</para>
         /// </summary>
         private String[] SQLDefault = new String[]
         {
@@ -138,6 +139,27 @@ namespace BankTeacher.Bank.Loan
           "WHERE a.Cancel = 1 ;"
            ,
 
+           //[9] BSearch Teacher INPUT: {Text}  {TeacherNoNotLike}
+           "SELECT TOP(20)TeacherNo, Name, RemainAmount \r\n " +
+          "  FROM (SELECT a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS Name,    \r\n " +
+          "  ROUND(ISNULL(e.SavingAmount,0) - ISNULL(SUM(d.RemainsAmount),0),0,1) as RemainAmount, Fname   \r\n " +
+          "  FROM EmployeeBank.dbo.tblMember as a     \r\n " +
+          "  LEFT JOIN (   \r\n " +
+          "  SELECT TeacherNo , Fname , Lname , PrefixNo   \r\n " +
+          "  FROM Personal.dbo.tblTeacherHis    \r\n " +
+          "  ) as b ON a.TeacherNo = b.TeacherNo     \r\n " +
+          "  LEFT JOIN BaseData.dbo.tblPrefix as c ON b.PrefixNo = c.PrefixNo     \r\n " +
+          "  LEFT JOIN EmployeeBank.dbo.tblGuarantor as d on a.TeacherNo = d.TeacherNo    \r\n " +
+          "  LEFT JOIN EmployeeBank.dbo.tblShare as e ON e.TeacherNo = a.TeacherNo    \r\n " +
+          "  LEFT JOIN (SELECT TeacherNo  \r\n " +
+          "  FROM EmployeeBank.dbo.tblLoan   \r\n " +
+          "  WHERE LoanStatusNo = 1 or LoanStatusNo = 2 GROUP BY TeacherNo) as f on a.TeacherNo = f.TeacherNo   \r\n " +
+          "  WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1   \r\n " +
+          "  GROUP BY a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname ) as a    \r\n " +
+          "  WHERE RemainAmount IS NOT NULL {TeacherNoNotLike} \r\n " +
+          "  GROUP BY TeacherNo, Name, RemainAmount ,a.Fname \r\n " +
+          "  ORDER BY a.Fname; "
+           ,
 
 
         };
@@ -435,8 +457,7 @@ namespace BankTeacher.Bank.Loan
                         NotLike += " and a.TeacherNo NOT LIKE " + $"'{DGVGuarantor.Rows[Num].Cells[0].Value.ToString()}'";
                     }
                 }
-                IN = new Bank.Search(SQLDefault[1]
-                        .Replace("{RemainAmount}" , "RemainAmount IS NOT NULL")
+                IN = new Bank.Search(SQLDefault[9]
                         .Replace("{TeacherNoNotLike}", NotLike), "หุ้นสะสม");
 
                 IN.ShowDialog();
@@ -734,6 +755,7 @@ namespace BankTeacher.Bank.Loan
             {
                 try
                 {
+                    //
                     Bank.Search IN;
                     String NotLike = "";
                     if (DGVGuarantor.Rows.Count != 0)
@@ -745,7 +767,6 @@ namespace BankTeacher.Bank.Loan
                         NotLike = NotLike.Remove(NotLike.Length - 1);
                     }
                     IN = new Bank.Search(SQLDefault[1]
-                           .Replace("{RemainAmount}" , "a.RemainAmount IS NOT NULL")
                            .Replace("{TeacherNoNotLike}", NotLike), "หุ้นสะสม");
 
                     IN.ShowDialog();
