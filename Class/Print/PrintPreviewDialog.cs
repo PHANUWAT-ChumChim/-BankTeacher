@@ -246,7 +246,7 @@ namespace BankTeacher.Class.Print
                         }
                         else
                         {
-                            CurrentRows += Class.Print.SetPrintMedtods.Centerset(e,$"ลงชื่อ ................................................ ผู้ค้ำประกัน {round+1}\r\n" +
+                            CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, $"ลงชื่อ ................................................ ผู้ค้ำประกัน {round + 1}\r\n" +
                                             "      ( " + dt.Rows[round++][1].ToString() + " )", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 350f, 70, false);
                         }
                     }
