@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static BankTeacher.Class.ProtocolSharing.ConnectSMB;
 namespace BankTeacher.Bank.Add_Member
 {
     public partial class infoMeber : Form
@@ -47,7 +46,7 @@ namespace BankTeacher.Bank.Add_Member
           "FROM EmployeeBank.dbo.tblMember as a \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo \r\n " +
-          "WHERE a.TeacherNo LIKE '%' and a.MemberStatusNo = 1 {TeacherNotLike};"
+          "WHERE (a.TeacherNo LIKE '%{Text}%'  or CAST(ISNULL(c.PrefixNameFull , '') + b.Fname + ' ' + Lname as NVARCHAR) LIKE '%{Text}%')and a.MemberStatusNo = 1 {TeacherNotLike};"
            ,
            //[2] Check Bill Teacher Have Ever Paid INPUT: {TeacherNo}
            "SELECT COUNT(a.BillNo)  \r\n " +
@@ -113,6 +112,7 @@ namespace BankTeacher.Bank.Add_Member
                     BSaveEdit.Enabled = false;
                     SavingAmountStart = "";
                     TBStartAmount.Enabled = false;
+                    button3.Enabled = false;
                 }
                 else
                 {
@@ -177,18 +177,22 @@ namespace BankTeacher.Bank.Add_Member
                         .Replace("{TeacherNo}", TBTeacherNo.Text) +
                         "\r\n" + SQLDefault[2]
                         .Replace("{TeacherNo}" , TBTeacherNo.Text));
+                    if(dsInfoMember.Tables[0].Rows.Count != 0 || dsInfoMember.Tables[1].Rows.Count != 0)
+                    {
+                        TBTeacherName.Text = dsInfoMember.Tables[0].Rows[0][0].ToString();
+                        TBNameInfo.Text = dsInfoMember.Tables[0].Rows[0][0].ToString();
+                        TBTeacherAddByName.Text = dsInfoMember.Tables[0].Rows[0][1].ToString();
+                        TBMemberStatus.Text = dsInfoMember.Tables[0].Rows[0][2].ToString();
+                        TBDateAdd.Text = dsInfoMember.Tables[0].Rows[0][3].ToString();
+                        TBStartAmount.Text = dsInfoMember.Tables[0].Rows[0][4].ToString();
+                        TBSavingAmount.Text = dsInfoMember.Tables[0].Rows[0][5].ToString();
+                        SavingAmountStart = dsInfoMember.Tables[0].Rows[0][4].ToString();
 
-                    TBTeacherName.Text = dsInfoMember.Tables[0].Rows[0][0].ToString();
-                    TBNameInfo.Text = dsInfoMember.Tables[0].Rows[0][0].ToString();
-                    TBTeacherAddByName.Text = dsInfoMember.Tables[0].Rows[0][1].ToString();
-                    TBMemberStatus.Text = dsInfoMember.Tables[0].Rows[0][2].ToString();
-                    TBDateAdd.Text = dsInfoMember.Tables[0].Rows[0][3].ToString();
-                    TBStartAmount.Text = dsInfoMember.Tables[0].Rows[0][4].ToString();
-                    TBSavingAmount.Text = dsInfoMember.Tables[0].Rows[0][5].ToString();
-                    SavingAmountStart = dsInfoMember.Tables[0].Rows[0][4].ToString();
+                        if (Convert.ToInt32(dsInfoMember.Tables[1].Rows[0][0].ToString()) == 0 && Convert.ToInt32(dsInfoMember.Tables[2].Rows[0][0].ToString()) == 0)
+                            TBStartAmount.Enabled = true;
+                        button3.Enabled = true;
 
-                    if (Convert.ToInt32(dsInfoMember.Tables[1].Rows[0][0].ToString()) == 0 && Convert.ToInt32(dsInfoMember.Tables[2].Rows[0][0].ToString()) == 0)
-                        TBStartAmount.Enabled = true;
+                    }
                 }
                 catch(Exception ex)
                 {
@@ -206,6 +210,7 @@ namespace BankTeacher.Bank.Add_Member
                 TBSavingAmount.Text = "";
                 BSaveEdit.Enabled = false;
                 TBStartAmount.Enabled = false;
+                button3.Enabled = false;
                 SavingAmountStart = "";
             }
         }
@@ -264,10 +269,10 @@ namespace BankTeacher.Bank.Add_Member
                             //BTOpenfile_Reg.Text = "ส่งไฟล์";
                             StatusBoxFile = 1;
 
-                            var smb = new SmbFileContainer("Member");
+                            var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
                             if (smb.IsValidConnection())
                             {
-                                String Return = smb.SendFile(imgeLocation, "Member" + TBTeacherNo.Text + ".pdf");
+                                String Return = smb.SendFile(imgeLocation, "Regmember" + TBTeacherNo.Text + ".pdf");
                                 MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 if (Return.Contains("อัพโหลดสำเร็จ"))
                                 {
@@ -298,60 +303,24 @@ namespace BankTeacher.Bank.Add_Member
                 MessageBox.Show("กรุณากรอก รหัสผู้ใช้ก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-        String imgeLocation1 = @"\\192.168.1.3\ShareFileTestSBM";
         private void button3_Click(object sender, EventArgs e)
         {
-            if (TBTeacherNo.Text.Length == 6)
+            if(TBTeacherNo.Text != "")
             {
-                if (StatusBoxFile == 0)
+                //Input Location Folder
+                var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
+                //Input Contain words แนะนำ เป็นรหัสอาจารย์ ในหน้าทั่วไปส่วนหน้าไหนถ้ามีการทำรายการเยอะๆให้เอาเป็นเลขบิลล์ของหน้านั้นๆเช่นหน้าดูเอกสารกู้ จะใส่เป็นเลขกู้ หน้าดูเอกสาร สมัครสมาชิกจะใส่เป็นชื่ออาจารย์
+                smb.GetFile(TBTeacherNo.Text);
+                if(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun != "")
                 {
-
-                    try
-                    {
-                        OpenFileDialog dialog = new OpenFileDialog();
-                        dialog.Filter = "pdf files(*.pdf)|*.pdf";
-                        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                        {
-                            imgeLocation1 = dialog.FileName;
-                        }
-                        if (imgeLocation1 != "")
-                        {
-                            //BTOpenfile_Reg.Text = "ส่งไฟล์";
-                            StatusBoxFile = 1;
-
-                            var smb = new SmbFileContainer("Member");
-                            if (smb.IsValidConnection())
-                            {
-                                String Return = smb.SendFile(imgeLocation1, "Member" + TBTeacherNo.Text + ".pdf");
-                                MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                if (Return.Contains("อัพโหลดสำเร็จ"))
-                                {
-                                    //BTdeletefile_Reg.Enabled = true;
-                                    //LScan_Reg.Text = "อัพโหลดไฟล์สำเร็จ";
-                                    //LScan_Reg.ForeColor = Color.Green;
-                                    imgeLocation1 = "";
-                                }
-                            }
-                            else
-                            {
-                                MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            }
-                        }
-                    }
-                    catch
-                    {
-                        MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                else if (StatusBoxFile == 1)
-                {
-                    MessageBox.Show("ทำการส่งไฟล์แล้ว ไม่สามารถดำเนินการส่งไฟล์ซ้ำได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun, "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-            else
-            {
-                MessageBox.Show("กรุณากรอก รหัสผู้ใช้ก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
