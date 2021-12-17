@@ -38,9 +38,29 @@ namespace BankTeacher.Class.ProtocolSharing
                 using (var network = new NetworkConnection($"{networkPath}", networkCredential))
                 {
                     var result = network.Connect();
-
                     return result != 0;
                 }
+            }
+            Thread ThreadOPFile;
+            public String ThreadOpenFile(string ContainsName = "")
+            {
+                Stopwatch time = new Stopwatch();
+                ThreadOPFile = new Thread(() => GetFile(ContainsName));
+                ThreadOPFile.Start();
+                time.Start();
+
+                while (ThreadOPFile.ThreadState == System.Threading.ThreadState.Running)
+                {
+                    if (time.ElapsedMilliseconds >= 5000 && ThreadOPFile.IsAlive)
+                    {
+                        ThreadOPFile.Abort();
+                        StatusRetrun = "หมดเวลาการเชื่อมต่อ";
+                        break;
+                    }
+                }
+                time.Stop();
+
+                return StatusRetrun;
             }
             public void GetFile(string ContainsName = "")
             {
@@ -85,9 +105,9 @@ namespace BankTeacher.Class.ProtocolSharing
                         }
 
                     }
-                    catch
+                    catch(Exception e)
                     {
-                        StatusRetrun = "ไม่พบไฟล์";
+                        Console.WriteLine("Error This :=> " + e);
                         return;
                     }
                 }
