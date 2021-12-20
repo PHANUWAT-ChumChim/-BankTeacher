@@ -378,7 +378,10 @@ namespace BankTeacher.Bank
         {
             if ((!Char.IsNumber(e.KeyChar)) && (!Char.IsControl(e.KeyChar)))
             {
-                e.Handled = true;
+                if ((e.KeyChar < '0' || e.KeyChar > '9') && (e.KeyChar != '\b'))
+                {
+                    e.Handled = true;
+                }
             }
         }
         private void TBCreditWithDraw_KeyPress(object sender, KeyPressEventArgs e)

@@ -1107,7 +1107,10 @@ namespace BankTeacher.Bank.Pay
         {
             if ((!Char.IsNumber(e.KeyChar)) && (!Char.IsControl(e.KeyChar)))
             {
-                e.Handled = true;
+                if ((e.KeyChar < '0' || e.KeyChar > '9') && (e.KeyChar != '\b'))
+                {
+                    e.Handled = true;
+                }
             }
         }
 
@@ -1268,24 +1271,22 @@ namespace BankTeacher.Bank.Pay
                         Class.Print.PrintPreviewDialog.info_Payment = CBPayment_Pay.Items[CBPayment_Pay.SelectedIndex].ToString();
                         for (int a = 0; a < DGV_Pay.Rows.Count; a++)
                         {
-                            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                            if (DGV_Pay.Rows[a].Cells[1].Value.ToString().Contains("หุ้น"))
                             {
-                                printDocument1.Print();
-
-                                if (DGV_Pay.Rows[a].Cells[1].Value.ToString().Contains("หุ้น"))
-                                {
-                                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[10]
-                                        .Replace("{TeacherNo}", TBTeacherNo.Text)
-                                        .Replace("{SavingAmount}", DGV_Pay.Rows[a].Cells[2].Value.ToString()));
-                                }
-                                else if (DGV_Pay.Rows[a].Cells[1].Value.ToString().Contains("กู้"))
-                                {
-                                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[9]
-                                        .Replace("{LoanNo}", DGV_Pay.Rows[a].Cells[3].Value.ToString())
-                                        .Replace("{LoanAmount}", DGV_Pay.Rows[a].Cells[2].Value.ToString()));
-                                }
-
+                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[10]
+                                    .Replace("{TeacherNo}", TBTeacherNo.Text)
+                                    .Replace("{SavingAmount}", DGV_Pay.Rows[a].Cells[2].Value.ToString()));
                             }
+                            else if (DGV_Pay.Rows[a].Cells[1].Value.ToString().Contains("กู้"))
+                            {
+                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[9]
+                                    .Replace("{LoanNo}", DGV_Pay.Rows[a].Cells[3].Value.ToString())
+                                    .Replace("{LoanAmount}", DGV_Pay.Rows[a].Cells[2].Value.ToString()));
+                            }
+                        }
+                        if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                        {
+                            printDocument1.Print();
                         }
                     }
                     catch (Exception ex)
