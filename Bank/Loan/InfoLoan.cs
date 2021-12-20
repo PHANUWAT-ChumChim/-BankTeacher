@@ -224,7 +224,13 @@ namespace BankTeacher.Bank.Loan
                     CB_LoanNo.SelectedIndex = -1;
                     TBTeacherName.Text = "";
                     DGVGuarantor.Rows.Clear();
+
                     CB_LoanNo.Enabled = false;
+
+                    comboBox1.Enabled = false;
+                    button3.Enabled = false;
+                    BTOpenfile_Reg.Enabled = false;
+
                     Check = 0;
                     TBLoanNo.Text = "";
                     TBYearPay_Detail.Text = "";
@@ -304,6 +310,8 @@ namespace BankTeacher.Bank.Loan
                         DGVGuarantor.Rows.Add(ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][1].ToString(), Percent[x], ds.Tables[0].Rows[x][9].ToString());
                     }
                     TBLoanNo.Text = Loan.No;
+                    button3.Enabled = true;
+                    BTOpenfile_Reg.Enabled = true;
                     TBYearPay_Detail.Text = ds.Tables[0].Rows[0][5].ToString();
                     TBMonthPay_Detail.Text = ds.Tables[0].Rows[0][4].ToString();
                     TBTotalAmount_Detail.Text = ds.Tables[0].Rows[0][15].ToString();
@@ -428,7 +436,13 @@ namespace BankTeacher.Bank.Loan
                     CB_LoanNo.SelectedIndex = -1;
                     TBTeacherName.Text = "";
                     DGVGuarantor.Rows.Clear();
+
                     CB_LoanNo.Enabled = false;
+
+                    comboBox1.Enabled = false;
+                    button3.Enabled = false;
+                    BTOpenfile_Reg.Enabled = false;
+
                     Check = 0;
                     TBLoanNo.Text = "";
                     TBYearPay_Detail.Text = "";
@@ -453,6 +467,70 @@ namespace BankTeacher.Bank.Loan
                     BExitForm_Click(new object(), new EventArgs());
                 }
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedIndex != -1)
+            {
+                BankTeacher.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as BankTeacher.Class.ComboBoxPayment);
+                //Input Location Folder
+                var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("Loan");
+                //Input Contain words แนะนำ เป็นรหัสอาจารย์ ในหน้าทั่วไปส่วนหน้าไหนถ้ามีการทำรายการเยอะๆให้เอาเป็นเลขบิลล์ของหน้านั้นๆเช่นหน้าดูเอกสารกู้ จะใส่เป็นเลขกู้ หน้าดูเอกสาร สมัครสมาชิกจะใส่เป็นชื่ออาจารย์
+                smb.ThreadOpenFile(Loan.No);
+                if (BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun != "")
+                {
+                    MessageBox.Show(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun, "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
+        String imgeLocation = "";
+        private void BTOpenfile_Reg_Click(object sender, EventArgs e)
+        {
+            if (comboBox1.SelectedIndex != -1)
+            {
+                BankTeacher.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as BankTeacher.Class.ComboBoxPayment);
+                try
+                {
+                    OpenFileDialog dialog = new OpenFileDialog();
+                    dialog.Filter = "pdf files(*.pdf)|*.pdf";
+                    if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        imgeLocation = dialog.FileName;
+                    }
+                    if (imgeLocation != "")
+                    {
+
+                        var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("Loan");
+                        if (smb.IsValidConnection())
+                        {
+                            String Return = smb.SendFile(imgeLocation, "Loan" + Loan.No + ".pdf");
+                            MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            if (Return.Contains("อัพโหลดสำเร็จ"))
+                            {
+                                imgeLocation = "";
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("กรุณาเลือกรายการกู้ก่อนอัพโหลดเอกสาร", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

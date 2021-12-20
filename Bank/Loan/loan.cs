@@ -23,6 +23,7 @@ namespace BankTeacher.Bank.Loan
         int DefaultEdit = 0;
         public static int SelectIndexRowDelete;
         DialogResult CheckLimitLoan = DialogResult.No;
+        bool CheckBReset = false;
 
         //----------------------- index code -------------------- ////////
         public loan()
@@ -42,7 +43,7 @@ namespace BankTeacher.Bank.Loan
         /// <summary> 
         /// SQLDafault
         /// <para>[0] SELECT TeacherName Data INPUT:{TeacherNo} , {TeacherNoNotLike} </para>
-        /// <para>[1] SELECT Guarantor Credit Limit INPUT:T{TeacherNo} , {TeacherNoNotLike} </para>
+        /// <para>[1] SELECT Guarantor Credit Limit INPUT:{Text} , {TeacherNoNotLike} , {RemainAmount}</para>
         /// <para>[2] SELECT Date Data </para>
         /// <para>[3] INSERT Loan and Get LoanNo INPUT: {TeacherNoAdd}, {TeacherNo}, {MonthPay}, {YearPay}, {LoanAmount}, {PayNo}, {InterestRate}</para>
         /// <para>[4] INSERT Guarantor INPUT: {LoanNo},{TeacherNo},{Amount},{RemainsAmount}</para>
@@ -50,6 +51,7 @@ namespace BankTeacher.Bank.Loan
         /// <para>[6] SELECT MemberLona  INPUT: {TeacherNo} </para>
         /// <para>[7] Delete Loan INPUT: NO </para>
         /// <para>[8] Check Dividend Year INPUT: </para>
+        /// <para>[9] BSearch Teacher INPUT: {Text}  {TeacherNoNotLike}</para>
         /// </summary>
         private String[] SQLDefault = new String[]
         {
@@ -64,7 +66,7 @@ namespace BankTeacher.Bank.Loan
 
             , 
 
-            //[1] SELECT CreditLimit Data INPUT:{Text} , {TeacherNoNotLike}
+            //[1] SELECT CreditLimit Data INPUT:{Text} , {TeacherNoNotLike} , {RemainAmount}
            "SELECT TOP(20)TeacherNo, Name, RemainAmount, ISNULL(a.LoanStatusNo , 0) as LoanS  \r\n " + 
           " FROM (SELECT a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS Name,   \r\n " + 
           " ROUND(ISNULL(e.SavingAmount,0) - ISNULL(SUM(d.RemainsAmount),0),0,1) as RemainAmount, Fname , f.LoanStatusNo  \r\n " + 
@@ -81,7 +83,7 @@ namespace BankTeacher.Bank.Loan
           " WHERE LoanStatusNo = 1 or LoanStatusNo = 2 GROUP BY TeacherNo , LoanStatusNo) as f on a.TeacherNo = f.TeacherNo  \r\n " +
           " WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1  \r\n " + 
           " GROUP BY a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname, f.LoanStatusNo) as a   \r\n " +
-          " WHERE RemainAmount >= 500  {TeacherNoNotLike}\r\n " + 
+          " WHERE {RemainAmount}  {TeacherNoNotLike}\r\n " + 
           " ORDER BY a.Fname; "
 
             , 
@@ -106,7 +108,7 @@ namespace BankTeacher.Bank.Loan
             "VALUES ('{LoanNo}','{TeacherNo}','{Amount}','{RemainsAmount}');\r\n"
             ,
             //[5] Detail Loan Print  INPUT: TeacherNo
-            "SELECT TOP(1) a.TeacherNo,CAST(ISNULL(d.PrefixName+' ','')+Fname +' '+ Lname as NVARCHAR)AS Name,LoanAmount , \r\n " +
+            "SELECT a.TeacherNo,CAST(ISNULL(d.PrefixName+' ','')+Fname +' '+ Lname as NVARCHAR)AS Name,LoanAmount , \r\n " +
             "CAST(cNo + ' หมู่ ' + cMu + 'ซอย  ' + cSoi + ' ถนน' + cRoad + ' ตำบล' +  TumBonName + ' อำเภอ'  + AmphurName + ' จังหวัด ' + JangWatLongName + ' รหัสไปรสณี ' + ZipCode as NVARCHAR(255)) AS ADDRESS, \r\n " +
             "MonthPay , YearPay , PayNo , InterestRate \r\n " +
             "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
@@ -137,6 +139,27 @@ namespace BankTeacher.Bank.Loan
           "WHERE a.Cancel = 1 ;"
            ,
 
+           //[9] BSearch Teacher INPUT: {Text}  {TeacherNoNotLike}
+           "SELECT TOP(20)TeacherNo, Name, RemainAmount \r\n " +
+          "  FROM (SELECT a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS Name,    \r\n " +
+          "  ROUND(ISNULL(e.SavingAmount,0) - ISNULL(SUM(d.RemainsAmount),0),0,1) as RemainAmount, Fname   \r\n " +
+          "  FROM EmployeeBank.dbo.tblMember as a     \r\n " +
+          "  LEFT JOIN (   \r\n " +
+          "  SELECT TeacherNo , Fname , Lname , PrefixNo   \r\n " +
+          "  FROM Personal.dbo.tblTeacherHis    \r\n " +
+          "  ) as b ON a.TeacherNo = b.TeacherNo     \r\n " +
+          "  LEFT JOIN BaseData.dbo.tblPrefix as c ON b.PrefixNo = c.PrefixNo     \r\n " +
+          "  LEFT JOIN EmployeeBank.dbo.tblGuarantor as d on a.TeacherNo = d.TeacherNo    \r\n " +
+          "  LEFT JOIN EmployeeBank.dbo.tblShare as e ON e.TeacherNo = a.TeacherNo    \r\n " +
+          "  LEFT JOIN (SELECT TeacherNo  \r\n " +
+          "  FROM EmployeeBank.dbo.tblLoan   \r\n " +
+          "  WHERE LoanStatusNo = 1 or LoanStatusNo = 2 GROUP BY TeacherNo) as f on a.TeacherNo = f.TeacherNo   \r\n " +
+          "  WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1   \r\n " +
+          "  GROUP BY a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname ) as a    \r\n " +
+          "  WHERE RemainAmount IS NOT NULL {TeacherNoNotLike} \r\n " +
+          "  GROUP BY TeacherNo, Name, RemainAmount ,a.Fname \r\n " +
+          "  ORDER BY a.Fname; "
+           ,
 
 
         };
@@ -230,7 +253,7 @@ namespace BankTeacher.Bank.Loan
                 UserOutCreditLimit = DialogResult.No;
                 TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Back));
             }
-            else if(LLackAmount.Text == "0" || LOutCredit.Text == "0")
+            else if(LLackAmount.Text != "0" || LOutCredit.Text != "0")
             {
                 MessageBox.Show("กรอกจำนวนเงินค้ำไม่ถูกต้อง", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl1.SelectedIndex = 2;
@@ -246,7 +269,7 @@ namespace BankTeacher.Bank.Loan
                 tabControl1.SelectedIndex = 1;
                 TBLoanAmount.Focus();
             }
-            else if(TBInterestRate.Text == "" || Double.TryParse(TBInterestRate.Text , out Double Interest))
+            else if(TBInterestRate.Text == "" || Double.TryParse(TBInterestRate.Text , out Double Interest) == false)
             {
                 MessageBox.Show("กรอกข้อมูลเปอเซนต์ดอกเบี้ยไม่ถูกต้อง", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl1.SelectedIndex = 1;
@@ -434,8 +457,8 @@ namespace BankTeacher.Bank.Loan
                         NotLike += " and a.TeacherNo NOT LIKE " + $"'{DGVGuarantor.Rows[Num].Cells[0].Value.ToString()}'";
                     }
                 }
-                IN = new Bank.Search(SQLDefault[1]
-                       .Replace("{TeacherNoNotLike}", NotLike), "หุ้นสะสม");
+                IN = new Bank.Search(SQLDefault[9]
+                        .Replace("{TeacherNoNotLike}", NotLike), "หุ้นสะสม");
 
                 IN.ShowDialog();
                 if (Bank.Search.Return[0] != "" /*&& CheckLimitLoan == DialogResult.No*/)
@@ -458,10 +481,16 @@ namespace BankTeacher.Bank.Loan
             if (e.KeyCode == Keys.Enter && TBTeacherNo.Text.Length == 6)
             {
                  DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{Text}", TBTeacherNo.Text)
-                    .Replace("{TeacherNoNotLike}", ""));
+                    .Replace("{TeacherNoNotLike}", "")
+                    .Replace("{RemainAmount}" , "RemainAmount IS NOT NULL"));
                 if (dt.Rows.Count != 0)
                 {
-                    if (int.Parse(dt.Rows[0][3].ToString()) == 2 || int.Parse(dt.Rows[0][3].ToString()) == 1)
+                    DialogResult RemainAmount = DialogResult.Yes;
+                    if(Convert.ToInt32(dt.Rows[0][2].ToString()) < 500)
+                    {
+                        RemainAmount = MessageBox.Show("สมาชิกนี้มีเงินหุ้นสะสมลบกับเงินค้ำต่ำกว่าเกณท์การกู้ ต้องการจะกู้ต่อหรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    }
+                    if ((int.Parse(dt.Rows[0][3].ToString()) == 2 || int.Parse(dt.Rows[0][3].ToString()) == 1) && RemainAmount == DialogResult.Yes)
                     {
                         CheckLimitLoan = MessageBox.Show("ผู้ใช้นี้มียอดกู้อยู่ในระบบ ต้องการจะกู้ต่อหรือไม่\r\n", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                         if (CheckLimitLoan == DialogResult.Yes)
@@ -493,7 +522,7 @@ namespace BankTeacher.Bank.Loan
                             TBTeacherNo.Text = "";
                         }
                     }
-                    else
+                    else if (RemainAmount == DialogResult.Yes)
                     {
                         TBTeacherName.Text = dt.Rows[0][1].ToString();
                         TBLoanNo.Text = "-";
@@ -516,6 +545,8 @@ namespace BankTeacher.Bank.Loan
                         Check = 1;
 
                     }
+                    else if (RemainAmount == DialogResult.No)
+                        TBTeacherNo.Text = "";
                 }
                 else
                 {
@@ -531,6 +562,7 @@ namespace BankTeacher.Bank.Loan
                 if (Check == 1)
                 {
                     // ======= Tab 1 Clear ===============
+                    CheckBReset = false;
                     TBLoanAmount.Text = "";
                     TBTeacherName.Text = "";
                     TBLoanNo.Text = "";
@@ -572,7 +604,8 @@ namespace BankTeacher.Bank.Loan
                     DataTable dtRemainAmount = Class.SQLConnection.InputSQLMSSQL(
                         SQLDefault[1]
                         .Replace("{Text}", TBGuarantorNo.Text)
-                        .Replace("{TeacherNoNotLike}", NotLike));
+                        .Replace("{TeacherNoNotLike}", NotLike)
+                        .Replace("{RemainAmount}" , "RemainAmount >= 500"));
                     if (dtRemainAmount.Rows.Count != 0)
                     {
                         String[] Num = new string[] { };
@@ -722,6 +755,7 @@ namespace BankTeacher.Bank.Loan
             {
                 try
                 {
+                    //
                     Bank.Search IN;
                     String NotLike = "";
                     if (DGVGuarantor.Rows.Count != 0)
@@ -762,6 +796,7 @@ namespace BankTeacher.Bank.Loan
         Double CreditLoanAmount;
         private void DGVGuarantor_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
         {
+            CheckBReset = false;
             CreditLoanAmount = 0;
             LGuarantorAmount.Text = DGVGuarantor.Rows.Count + "/4";
 
@@ -795,6 +830,7 @@ namespace BankTeacher.Bank.Loan
         private void TBLoanAmount_Leave(object sender, EventArgs e)
         {
             //BankTeacher.Bank.Menu.
+            UserOutCreditLimit = DialogResult.No;
             int LimitAmount = 0;
             int Amount;
             String AmountLimit = LLoanAmount.Text.Remove(0, 1);
@@ -804,7 +840,7 @@ namespace BankTeacher.Bank.Loan
             {
                 if (int.TryParse(TBLoanAmount.Text, out Amount) && (Check) && Amount >= 500)
                 {
-                    if (Amount > LimitAmount && UserOutCreditLimit == DialogResult.No)
+                    if (Amount > LimitAmount && UserOutCreditLimit == DialogResult.No && CheckBReset == false)
                     {
                         //Class.FromSettingMedtod.Eb(Bank.Menu.)
                         UserOutCreditLimit = MessageBox.Show("จำนวนเงินกู้ เกินกำหนดเงินค้ำ\r\n ต้องการทำต่อหรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -847,7 +883,7 @@ namespace BankTeacher.Bank.Loan
             bool CheckNum = Double.TryParse(TBLoanAmount.Text, out Double LoanAmount);
             LoanAmount = LoanAmount * Convert.ToDouble((Convert.ToDouble(TBInterestRate.Text) / 100)) + LoanAmount;
             LTotal.Text = LoanAmount.ToString();
-            if (Int32.TryParse(TBLoanAmount.Text, out int x) && x >= BankTeacher.Bank.Menu.MinLoan && ((UserOutCreditLimit != DialogResult.No) || Convert.ToInt32(TBLoanAmount.Text) <= LimitAmount))
+            if (Int32.TryParse(TBLoanAmount.Text, out int x) && x >= BankTeacher.Bank.Menu.MinLoan && ((UserOutCreditLimit != DialogResult.No) || Convert.ToInt32(TBLoanAmount.Text) <= LimitAmount) || CheckBReset == true)
             {
                 if (CheckNum == true && DGVGuarantor.Rows.Count > 0)
                 {
@@ -1121,6 +1157,8 @@ namespace BankTeacher.Bank.Loan
                 tabControl1.SelectedIndex = 0;
                 TBTeacherNo.Focus();
             }
+            else
+                CheckBReset = false;
         }
 
         private void TBInterestRate_Leave(object sender, EventArgs e)
@@ -1185,6 +1223,7 @@ namespace BankTeacher.Bank.Loan
 
         private void BReset_Click(object sender, EventArgs e)
         {
+            CheckBReset = true;
             TBLoanAmount_Leave(sender, new EventArgs());
         }
 
@@ -1328,13 +1367,13 @@ namespace BankTeacher.Bank.Loan
                 if (TBTeacherNo.Text.Length != 0)
                 {
                     // ======= Tab 1 Clear ===============
+                    CheckBReset = false;
                     TBLoanAmount.Text = "";
                     TBTeacherName.Text = "";
                     TBLoanNo.Text = "";
                     TBLoanStatus.Text = "";
                     TBSavingAmount.Text = "";
                     TBTeacherNo.Text = "";
-                    TBGuarantorNo.Focus();
                     DGVGuarantor.Rows.Clear();
                     // ======= Tab 2 Clear ===============
                     CBPayMonth.SelectedIndex = -1;
@@ -1345,6 +1384,8 @@ namespace BankTeacher.Bank.Loan
                     // ======= Tab 4 Clear ===============
                     DGVLoanDetail.Rows.Clear();
                     Check = 0;
+                    tabControl1.SelectedIndex = 0;
+                    TBTeacherNo.Focus();
                 }
                 else
                 {

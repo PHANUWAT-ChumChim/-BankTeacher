@@ -161,7 +161,6 @@
     <Compile Include="Bank\log\Loan_Log.Designer.cs">
       <DependentUpon>Loan_Log.cs</DependentUpon>
     </Compile>
-
     <Compile Include="Bank\log\Pay_log.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -245,6 +244,12 @@
     </Compile>
     <Compile Include="Bank\Home.Designer.cs">
       <DependentUpon>Home.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Bank\SelectFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bank\SelectFile.Designer.cs">
+      <DependentUpon>SelectFile.cs</DependentUpon>
     </Compile>
     <Compile Include="Bank\Setting.cs">
       <SubType>Form</SubType>
@@ -361,6 +366,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Pay\pay.resx">
       <DependentUpon>pay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bank\SelectFile.resx">
+      <DependentUpon>SelectFile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\SQLEditing.resx">
       <DependentUpon>SQLEditing.cs</DependentUpon>

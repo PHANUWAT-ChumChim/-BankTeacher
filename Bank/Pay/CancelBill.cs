@@ -20,7 +20,7 @@ namespace BankTeacher.Bank.Pay
         /// <summary> 
         /// SQLDafault 
         /// <para>[0] Select Bill (CancelBill) INPUT: {BillNo}</para>
-        /// <para>[1] Update Cancel Bill INPUT: {BillNo} {CancelBy} </para>
+        /// <para>[1] Update Cancel Bill INPUT: {BillNo} {CancelBy} {Note}</para>
         /// <para>[2] Update Saving (CancelBill) INPUT: {TeacherNo} {Amount} {BillNo} {DateTime}</para>
         /// <para>[3] + RemainAmount In Guarantor (CancelBill) INPUT: {LoanNo} , {LoanAmount}</para>
         /// <para>[4] Search All Bill in to day (CancelBill) INPUT: {BillNo} {today} {Text}</para>
@@ -38,18 +38,13 @@ namespace BankTeacher.Bank.Pay
           " LEFT JOIN EmployeeBank.dbo.tblBillDetailType as f on b.TypeNo = f.TypeNo  \r\n " +
           " LEFT JOIN Personal.dbo.tblTeacherHis as g on a.TeacherNoAddBy = g.TeacherNo \r\n " +
           " LEFT JOIN BaseData.dbo.tblPrefix as h on g.PrefixNo = h.PrefixNo \r\n " +
-          " WHERE  a.BillNo = '{BillNo}' and MemberStatusNo != 2 and Cancel = 1 "
+          " WHERE  a.BillNo = '{BillNo}' and MemberStatusNo != 2 and Cancel = 1 and b.TypeNo != 3 "
 
             ,
-            //[1] Update Cancel Bill INPUT: {BillNo} {CancelBy}
+            //[1] Update Cancel Bill INPUT: {BillNo} {CancelBy} {Note}
            "Update EmployeeBank.dbo.tblBill   \r\n " +
-          "SET Cancel = 2   \r\n " +
-          "FROM EmployeeBank.dbo.tblBill \r\n " +
-          "WHERE BillNo = '{BillNo}' \r\n " + 
-
-           "UPDATE EmployeeBank.dbo.tblBill \r\n " +
-          "SET CancelBy = '{CancelBy}' \r\n " +
-          "WHERE BillNo = '{BillNo}'"
+          "SET Cancel = 2 , CancelBy = '{CancelBy}' , CancelDate = CURRENT_TIMESTAMP , CancelNote = '{Note}'\r\n " +
+          "WHERE BillNo = '{BillNo}' \r\n "
 
             ,
            //[2] Update Saving (CancelBill) INPUT: {TeacherNo} {Amount} {BillNo} {DateTime}
@@ -78,21 +73,21 @@ namespace BankTeacher.Bank.Pay
           "SET CancelDate = '{DateTime}' \r\n " +
           "WHERE BillNo = '{BillNo}' "
             ,
-           //[4] Search All Bill in to day (CancelBill) INPUT: {BillNo} {today} {Text}
-           "SELECT a.TeacherNo,CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255))as Name ,a.BillNo" +
-          " FROM EmployeeBank.dbo.tblBill as a  \r\n " +
-          " LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo  \r\n " +
-          " LEFT JOIN EmployeeBank.dbo.tblMember as c on a.TeacherNo = c.TeacherNo  \r\n " +
-          " LEFT JOIN Personal.dbo.tblTeacherHis as d on a.TeacherNo = d.TeacherNo  \r\n " +
-          " LEFT JOIN BaseData.dbo.tblPrefix as e on d.PrefixNo = e.PrefixNo  \r\n " +
-          " LEFT JOIN EmployeeBank.dbo.tblBillDetailType as f on b.TypeNo = f.TypeNo  \r\n " +
-          " WHERE  a.BillNo LIKE '%{BillNo}%' and MemberStatusNo != 2 and Cancel = 1 and CAST(a.DateAdd as Date) Like '{today}%' and CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255)) LIKE '%{Text}%'\r\n"+
+           //[4] Search All Bill in to day (CancelBill) INPUT: {today} {Text}
+           "SELECT a.TeacherNo,CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255))as Name ,a.BillNo FROM EmployeeBank.dbo.tblBill as a   \r\n " +
+          "  LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo   \r\n " +
+          "  LEFT JOIN EmployeeBank.dbo.tblMember as c on a.TeacherNo = c.TeacherNo   \r\n " +
+          "  LEFT JOIN Personal.dbo.tblTeacherHis as d on a.TeacherNo = d.TeacherNo   \r\n " +
+          "  LEFT JOIN BaseData.dbo.tblPrefix as e on d.PrefixNo = e.PrefixNo   \r\n " +
+          "  LEFT JOIN EmployeeBank.dbo.tblBillDetailType as f on b.TypeNo = f.TypeNo   \r\n " +
+          "  WHERE  (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255)) LIKE '%{Text}%' )and MemberStatusNo != 2 and Cancel = 1 and CAST(a.DateAdd as Date) Like '{today}%' and b.TypeNo != 3 \r\n " +
           " GROUP BY a.TeacherNo,CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255)),a.BillNo"
+
             ,
 
             //[5] Check Dividend Year INPUT: 
             "SELECT Year\r\n " +
-            "FROM EmployeeBank.dbo.tblDividend\r\n" +
+            "FROM EmployeeBank.dbo.tblDividend \r\n" +
             "WHERE Cancel = 1 \r\n" +
             "GROUP BY Year;"
         };
@@ -187,7 +182,7 @@ namespace BankTeacher.Bank.Pay
                     }
                     else
                     {
-                        MessageBox.Show("ไม่มีหมายเลขบิลล์นี้ \r\n หรือ รายการบิลล์ถูกยกเลิก", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("ไม่พบหมายเลขบิลล์นี้ \r\n หรือ รายการบิลล์ถูกยกเลิกไปแล้ว", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
             }
@@ -214,9 +209,13 @@ namespace BankTeacher.Bank.Pay
                         {
                             try
                             {
+                                String Note = TBNote.Text;
+                                if (Note == "")
+                                    Note = "-";
                                 Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
                                     .Replace("{BillNo}", TBBillNo_Cancelbill.Text)
-                                    .Replace("{CancelBy}" , BankTeacher.Class.UserInfo.TeacherNo));
+                                    .Replace("{CancelBy}" , BankTeacher.Class.UserInfo.TeacherNo)
+                                    .Replace("{Note}", Note) );
                                 for (int x = 0; x < DGV_Cancelbill.Rows.Count; x++)
                                 {
                                     if (DGV_Cancelbill.Rows[x].Cells[1].Value.ToString().Contains("หุ้น"))
@@ -236,15 +235,14 @@ namespace BankTeacher.Bank.Pay
                                         .Replace("{DateTime}", DateTime.Now.ToString()));
                                     }
                                 }
-                                MessageBox.Show("ยกเลิกบิลล์สำเร็จ");
+                                MessageBox.Show("ยกเลิกบิลล์สำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Information);
                             }
                             catch
                             {
-                                MessageBox.Show("ยกเลิกบิลล์ล้มเหลว");
+                                MessageBox.Show("ยกเลิกบิลล์ล้มเหลว","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                             }
-                            TBBillNo_Cancelbill_KeyDown(sender, new KeyEventArgs(Keys.Delete));
-                            TBTeacherNO_Cancelbill.Text = "";
-                            TBTeacherName_Cancelbill.Focus();
+                            ClearForm();
+                            TBTeacherNO_Cancelbill.Focus();
                         }
                     }
                     else
@@ -252,7 +250,7 @@ namespace BankTeacher.Bank.Pay
                         DialogResult MSB = MessageBox.Show("ไม่สามารถยกเลิกได้เนื่องจาก\r\nบิลล์หมายเลขนี้คือบิลล์ที่เริ่มสมัคร\r\nคุณต้องการดำเนินการต่อหรือไม่", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                         if (MSB == DialogResult.Yes)
                         {
-                            //ก็อบวางอันบน ใส่ Permision
+                            //ก็อบวางอันบนเช็คสิทธ์ ใส่ Permision
                             MessageBox.Show("ขึ้นอยู่กับสิทธ์ของผู้ทำรายการ ");
                         }
                     }
@@ -297,7 +295,6 @@ namespace BankTeacher.Bank.Pay
             String todaySQLSelect = (Convert.ToDateTime((Year + '-' + Month + '-' + Day).ToString())).ToString("yyyy-MM-dd");
 
             Bank.Search IN = new Bank.Search(SQLDefault[4]
-                .Replace("{BillNo}","")
                 .Replace("{today}",todaySQLSelect),"เลขบิลล์");
             IN.ShowDialog();
             //ถ้า ID สมาชิกที่เลือกไม่เป็นว่างเปล่า ให้ ใส่ลงใน TBTeacherNo และ ไปทำ event Keydown ของ TBTeacherNo
@@ -306,6 +303,17 @@ namespace BankTeacher.Bank.Pay
                 TBBillNo_Cancelbill.Text = Bank.Search.Return[2];
                 TBBillNo_Cancelbill_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
             }
+        }
+        private void ClearForm()
+        {
+            TBTeacherNO_Cancelbill.Text = "";
+            TBTeacherName_Cancelbill.Text = "";
+            TBteacharnoby_billcancel.Text = "";
+            TBBillNo_Cancelbill.Text = "";
+            TBBIllDate_Cancelbill.Text = "";
+            LSumAmount_CancelBill.Text = "0";
+            BSave_Cancelbill.Enabled = false;
+            DGV_Cancelbill.Rows.Clear();
         }
     }
 }

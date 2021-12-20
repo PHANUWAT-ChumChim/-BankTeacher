@@ -255,7 +255,7 @@ namespace BankTeacher.Bank.Pay
           "FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.LoanNo = b.LoanNo \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBill as c on b.BillNo = c.BillNo \r\n " +
-          "WHERE a.LoanNo = '{LoanID}' and TypeNo = '2' and Cancel != 0; "
+          "WHERE a.LoanNo = '{LoanID}' and TypeNo = '2' and Cancel = 1; "
 
           ,
           //[14] Select Billinfomation INPUT: {TeacherNo , {Year}
@@ -1111,6 +1111,11 @@ namespace BankTeacher.Bank.Pay
             }
         }
 
+        private void TBAmount_Pay_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                BListAdd_Pay_Click(new object(), new EventArgs());
+        }
         //Add list to datagridview
         private void BListAdd_Pay_Click(object sender, EventArgs e)
         {
@@ -1202,7 +1207,6 @@ namespace BankTeacher.Bank.Pay
         //Cleartabpage 1 Button
         private void BClearTab_Pay_Click(object sender, EventArgs e)
         {
-            Cleartabpage1();
             TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
         }
 
@@ -1212,64 +1216,46 @@ namespace BankTeacher.Bank.Pay
             BankTeacher.Class.ComboBoxPayment Payment = (CBPayment_Pay.SelectedItem as BankTeacher.Class.ComboBoxPayment);
             if (DGV_Pay.Rows.Count != 0)
             {
-                DialogResult dialogResult = MessageBox.Show("ยืนยันการชำระ", "การเเจ้งเตือนการชำระ", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                if (dialogResult == DialogResult.Yes)
+                TBTeacherBill.Text = Class.SQLConnection.InputSQLMSSQL(SQLDefault[11]).Rows[0][0].ToString();
+                int Balance = Convert.ToInt32(LBalance_Pay.Text);
+                BankTeacher.Bank.Pay.Calculator calculator = new BankTeacher.Bank.Pay.Calculator(Balance);
+                calculator.ShowDialog();
+                if (BankTeacher.Bank.Pay.Calculator.Return)
                 {
-                    TBTeacherBill.Text = Class.SQLConnection.InputSQLMSSQL(SQLDefault[11]).Rows[0][0].ToString();
-                    int Balance = Convert.ToInt32(LBalance_Pay.Text);
-                    BankTeacher.Bank.Pay.Calculator calculator = new BankTeacher.Bank.Pay.Calculator(Balance);
-                    calculator.ShowDialog();
-                    if (BankTeacher.Bank.Pay.Calculator.Return)
+                    try
                     {
-                        try
+                        DataSet dtBillNo = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[7]
+                            .Replace("{TeacherNo}", TBTeacherNo.Text)
+                            .Replace("{TeacherNoaddby}", Class.UserInfo.TeacherNo));
+                        String BillNo = dtBillNo.Tables[0].Rows[0][0].ToString();
+                        for (int x = 0; x < DGV_Pay.Rows.Count; x++)
                         {
-                            DataSet dtBillNo = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[7]
-                                .Replace("{TeacherNo}", TBTeacherNo.Text)
-                                .Replace("{TeacherNoaddby}", Class.UserInfo.TeacherNo));
-                            String BillNo = dtBillNo.Tables[0].Rows[0][0].ToString();
-                            for (int x = 0; x < DGV_Pay.Rows.Count; x++)
+                            if (DGV_Pay.Rows[x].Cells[1].Value.ToString().Contains("หุ้น"))
                             {
-                                if (DGV_Pay.Rows[x].Cells[1].Value.ToString().Contains("หุ้น"))
-                                {
-                                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
-                                    .Replace("{BillNo}", BillNo)
-                                    .Replace("{TypeNo}", "1")
-                                    .Replace("{LoanNo}", "null")
-                                    .Replace("{Amount}", DGV_Pay.Rows[x].Cells[2].Value.ToString())
-                                    .Replace("{Month}", DGV_Pay.Rows[x].Cells[5].Value.ToString())
-                                    .Replace("{Year}", DGV_Pay.Rows[x].Cells[4].Value.ToString())
-                                    .Replace("{BillDetailPaymentNo}", (CBPayment_Pay.SelectedIndex + 1).ToString()));
-                                }
-                                else if (DGV_Pay.Rows[x].Cells[1].Value.ToString().Contains("กู้"))
-                                {
-                                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
-                                    .Replace("{BillNo}", BillNo)
-                                    .Replace("{TypeNo}", "2")
-                                    .Replace("{LoanNo}", DGV_Pay.Rows[x].Cells[3].Value.ToString())
-                                    .Replace("{Amount}", DGV_Pay.Rows[x].Cells[2].Value.ToString())
-                                    .Replace("{Month}", DGV_Pay.Rows[x].Cells[5].Value.ToString())
-                                    .Replace("{Year}", DGV_Pay.Rows[x].Cells[4].Value.ToString())
-                                    .Replace("{BillDetailPaymentNo}", (CBPayment_Pay.SelectedIndex + 1).ToString()));
-                                }
+                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
+                                .Replace("{BillNo}", BillNo)
+                                .Replace("{TypeNo}", "1")
+                                .Replace("{LoanNo}", "null")
+                                .Replace("{Amount}", DGV_Pay.Rows[x].Cells[2].Value.ToString())
+                                .Replace("{Month}", DGV_Pay.Rows[x].Cells[5].Value.ToString())
+                                .Replace("{Year}", DGV_Pay.Rows[x].Cells[4].Value.ToString())
+                                .Replace("{BillDetailPaymentNo}", (CBPayment_Pay.SelectedIndex + 1).ToString()));
                             }
-                            for (int a = 0; a < DGV_Pay.Rows.Count; a++)
+                            else if (DGV_Pay.Rows[x].Cells[1].Value.ToString().Contains("กู้"))
                             {
-                                if (DGV_Pay.Rows[a].Cells[1].Value.ToString().Contains("หุ้น"))
-                                {
-                                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[10]
-                                        .Replace("{TeacherNo}", TBTeacherNo.Text)
-                                        .Replace("{SavingAmount}", DGV_Pay.Rows[a].Cells[2].Value.ToString()));
-                                }
-                                else if (DGV_Pay.Rows[a].Cells[1].Value.ToString().Contains("กู้"))
-                                {
-                                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[9]
-                                        .Replace("{LoanNo}", DGV_Pay.Rows[a].Cells[3].Value.ToString())
-                                        .Replace("{LoanAmount}", DGV_Pay.Rows[a].Cells[2].Value.ToString()));
-                                }
+                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
+                                .Replace("{BillNo}", BillNo)
+                                .Replace("{TypeNo}", "2")
+                                .Replace("{LoanNo}", DGV_Pay.Rows[x].Cells[3].Value.ToString())
+                                .Replace("{Amount}", DGV_Pay.Rows[x].Cells[2].Value.ToString())
+                                .Replace("{Month}", DGV_Pay.Rows[x].Cells[5].Value.ToString())
+                                .Replace("{Year}", DGV_Pay.Rows[x].Cells[4].Value.ToString())
+                                .Replace("{BillDetailPaymentNo}", (CBPayment_Pay.SelectedIndex + 1).ToString()));
                             }
                         }
-                        catch (Exception ex)
+                        for (int a = 0; a < DGV_Pay.Rows.Count; a++)
                         {
+
                             Console.WriteLine($"---------------------{ex}----------------------");
                         }
 
@@ -1288,24 +1274,57 @@ namespace BankTeacher.Bank.Pay
                         if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                         {
                             printDocument1.Print();
+
+                            if (DGV_Pay.Rows[a].Cells[1].Value.ToString().Contains("หุ้น"))
+                            {
+                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[10]
+                                    .Replace("{TeacherNo}", TBTeacherNo.Text)
+                                    .Replace("{SavingAmount}", DGV_Pay.Rows[a].Cells[2].Value.ToString()));
+                            }
+                            else if (DGV_Pay.Rows[a].Cells[1].Value.ToString().Contains("กู้"))
+                            {
+                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[9]
+                                    .Replace("{LoanNo}", DGV_Pay.Rows[a].Cells[3].Value.ToString())
+                                    .Replace("{LoanAmount}", DGV_Pay.Rows[a].Cells[2].Value.ToString()));
+                            }
+
                         }
-                        ClearForm();
-                        TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
                     }
-                    else if (!(BankTeacher.Bank.Pay.Calculator.Return))
+                    catch (Exception ex)
                     {
-                        MessageBox.Show("การชำระล้มเหลว", "การเเจ้งเตือนการชำระ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        Console.WriteLine($"---------------------{ex}----------------------");
                     }
 
-
+                    MessageBox.Show("ชำระสำเร็จ", "แจ้งเตือนการขำระ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    info_name = TBTeacherName.Text;
+                    info_id = TBTeacherNo.Text;
+                    info_totelAmountpay = TBToatalSaving_ShareInfo.Text;
+                    info_Billpay = TBTeacherBill.Text;
+                    info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
+                    info_datepay = DateTime.Today.Day.ToString() +'/'+ DateTime.Today.Month.ToString() +'/'+ DateTime.Today.Year.ToString();
+                    SELECT_Print = 1;
+                    printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+                    printDocument1.DefaultPageSettings.Landscape = true;
+                    if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                    {
+                        printDocument1.Print();
+                    }
+                    TBTeacherNo.Enabled = false;
+                    BSearchTeacher.Enabled = false;
+                    CBList_Pay.Enabled = false;
+                    CBPayment_Pay.Enabled = false;
+                    CBYearSelection_Pay.Enabled = false;
+                    CBMonthSelection_Pay.Enabled = false;
+                    BListAdd_Pay.Enabled = false;
+                    BSave_Pay.Enabled = false;
+                    TBAmount_Pay.Enabled = false;
+                    BAutoSelection.Enabled = false;
+                    //ClearForm();
+                    //TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
                 }
-                else if (dialogResult == DialogResult.No)
+                else if (!(BankTeacher.Bank.Pay.Calculator.Return))
                 {
                     MessageBox.Show("การชำระล้มเหลว", "การเเจ้งเตือนการชำระ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                else
-                {
-                    MessageBox.Show("รายการชำระไม่ถูกต้อง", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
         }
@@ -2001,6 +2020,10 @@ namespace BankTeacher.Bank.Pay
                 {
                     ClearForm();
                     TBTeacherNo.Text = "";
+                    TBTeacherName.Text = "";
+                    TBTeacherBill.Text = "";
+                    BSearchTeacher.Enabled = true;
+                    TBTeacherNo.Enabled = true;
                 }
                 else
                 {

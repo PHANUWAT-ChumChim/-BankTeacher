@@ -13,6 +13,8 @@ namespace BankTeacher.Class.ProtocolSharing
 {
     class ConnectSMB
     {
+        public static List<BankTeacher.Class.linkedFile> file = new List<BankTeacher.Class.linkedFile>();
+        public static String StatusRetrun = "";
         public class SmbFileContainer
         {
             private readonly NetworkCredential networkCredential;
@@ -22,11 +24,12 @@ namespace BankTeacher.Class.ProtocolSharing
 
             public SmbFileContainer(String Location)
             {
-                PathFile = this.networkPath = @"\\192.168.1.2\Test" /*+ Location */+ @"\";
-                var userName = "mon";
+                PathFile = this.networkPath = @"\\192.168.1.3\ShareFileTestSBM\" + Location + @"\";
+                var userName = "tang1811";
                 var password = "123456789";
                 var domain = "";
                 networkCredential = new NetworkCredential(userName, password, domain);
+                StatusRetrun = "";
                 //NetworkCredential a = new NetworkCredential();
             }
 
@@ -35,11 +38,80 @@ namespace BankTeacher.Class.ProtocolSharing
                 using (var network = new NetworkConnection($"{networkPath}", networkCredential))
                 {
                     var result = network.Connect();
-
                     return result != 0;
                 }
             }
+            Thread ThreadOPFile;
+            public String ThreadOpenFile(string ContainsName = "")
+            {
+                Stopwatch time = new Stopwatch();
+                ThreadOPFile = new Thread(() => GetFile(ContainsName));
+                ThreadOPFile.Start();
+                time.Start();
 
+                while (ThreadOPFile.ThreadState == System.Threading.ThreadState.Running)
+                {
+                    if (time.ElapsedMilliseconds >= 5000 && ThreadOPFile.IsAlive)
+                    {
+                        ThreadOPFile.Abort();
+                        StatusRetrun = "หมดเวลาการเชื่อมต่อ";
+                        break;
+                    }
+                }
+                time.Stop();
+
+                return StatusRetrun;
+            }
+            public void GetFile(string ContainsName = "")
+            {
+                using (var network = new NetworkConnection(networkPath, networkCredential))
+                {
+                    try
+                    {
+                        network.Connect();
+                        List<String> GetFileName = new List<string>();
+                        List<DateTime> DateaddFile = new List<DateTime>();
+                        GetFileName.Clear();
+                        DateaddFile.Clear();
+                        file.Clear();
+                        String path = PathFile;
+                        System.IO.DirectoryInfo par = new System.IO.DirectoryInfo(path);
+                        foreach (System.IO.FileInfo f in par.GetFiles())
+                        {
+                            if (f.Name.Contains(ContainsName))
+                            {
+                                FileInfo fi = new FileInfo(f.FullName);
+                                DateTime created = Convert.ToDateTime(fi.CreationTime);
+                                DateTime lastmodified = fi.LastWriteTime;
+                                GetFileName.Add(f.Name);
+                                DateaddFile.Add(created);
+                            }
+                        }
+                        if (GetFileName.Count != 0 && path != "")
+                        {
+                            for (int x = 0; x < GetFileName.Count; x++)
+                            {
+                                file.Add(new BankTeacher.Class.linkedFile(GetFileName[x].ToString(), DateaddFile[x]));
+                            }
+                            BankTeacher.Bank.SelectFile SF = new BankTeacher.Bank.SelectFile(path);
+                            SF.ShowDialog();
+                            network.Dispose();
+                        }
+                        else
+                        {
+                            network.Dispose();
+                            StatusRetrun = "ไม่พบไฟล์";
+                            return;
+                        }
+
+                    }
+                    catch(Exception e)
+                    {
+                        Console.WriteLine("Error This :=> " + e);
+                        return;
+                    }
+                }
+            }
             public void CreateFile(string targetFile, string content)
             {
                 using (var network = new NetworkConnection(networkPath, networkCredential))
