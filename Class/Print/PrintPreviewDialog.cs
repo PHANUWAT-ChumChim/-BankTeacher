@@ -576,7 +576,7 @@ namespace BankTeacher.Class.Print
                     }
                     else if(TextForm == "payLoan")
                     {
-                        string infoAmountoff = $"ชื่อ-นามสกุล : {Bank.AmountOff.info_name}            รหัสประจำตัว : {Bank.AmountOff.info_id}";
+                        string infoAmountoff = $"ชื่อ-นามสกุล : {info_name}            รหัสประจำตัว : {info_id}";
                                            
 
                     }

@@ -1253,11 +1253,6 @@ namespace BankTeacher.Bank.Pay
                                 .Replace("{BillDetailPaymentNo}", (CBPayment_Pay.SelectedIndex + 1).ToString()));
                             }
                         }
-                        for (int a = 0; a < DGV_Pay.Rows.Count; a++)
-                        {
-
-                            Console.WriteLine($"---------------------{ex}----------------------");
-                        }
 
                         MessageBox.Show("ชำระสำเร็จ", "แจ้งเตือนการขำระ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
@@ -1270,24 +1265,27 @@ namespace BankTeacher.Bank.Pay
                         SELECT_Print = 1;
                         printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                         printDocument1.DefaultPageSettings.Landscape = true;
-                        Class.Print.PrintPreviewDialog.info_Payment = CBPayment_Pay.Items[CBPayment_Pay.SelectedIndex].ToString(); 
-                        if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                        Class.Print.PrintPreviewDialog.info_Payment = CBPayment_Pay.Items[CBPayment_Pay.SelectedIndex].ToString();
+                        for (int a = 0; a < DGV_Pay.Rows.Count; a++)
                         {
-                            printDocument1.Print();
-
-                            if (DGV_Pay.Rows[a].Cells[1].Value.ToString().Contains("หุ้น"))
+                            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                             {
-                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[10]
-                                    .Replace("{TeacherNo}", TBTeacherNo.Text)
-                                    .Replace("{SavingAmount}", DGV_Pay.Rows[a].Cells[2].Value.ToString()));
-                            }
-                            else if (DGV_Pay.Rows[a].Cells[1].Value.ToString().Contains("กู้"))
-                            {
-                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[9]
-                                    .Replace("{LoanNo}", DGV_Pay.Rows[a].Cells[3].Value.ToString())
-                                    .Replace("{LoanAmount}", DGV_Pay.Rows[a].Cells[2].Value.ToString()));
-                            }
+                                printDocument1.Print();
 
+                                if (DGV_Pay.Rows[a].Cells[1].Value.ToString().Contains("หุ้น"))
+                                {
+                                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[10]
+                                        .Replace("{TeacherNo}", TBTeacherNo.Text)
+                                        .Replace("{SavingAmount}", DGV_Pay.Rows[a].Cells[2].Value.ToString()));
+                                }
+                                else if (DGV_Pay.Rows[a].Cells[1].Value.ToString().Contains("กู้"))
+                                {
+                                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[9]
+                                        .Replace("{LoanNo}", DGV_Pay.Rows[a].Cells[3].Value.ToString())
+                                        .Replace("{LoanAmount}", DGV_Pay.Rows[a].Cells[2].Value.ToString()));
+                                }
+
+                            }
                         }
                     }
                     catch (Exception ex)
@@ -1296,12 +1294,12 @@ namespace BankTeacher.Bank.Pay
                     }
 
                     MessageBox.Show("ชำระสำเร็จ", "แจ้งเตือนการขำระ", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    info_name = TBTeacherName.Text;
-                    info_id = TBTeacherNo.Text;
-                    info_totelAmountpay = TBToatalSaving_ShareInfo.Text;
-                    info_Billpay = TBTeacherBill.Text;
-                    info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
-                    info_datepay = DateTime.Today.Day.ToString() +'/'+ DateTime.Today.Month.ToString() +'/'+ DateTime.Today.Year.ToString();
+                    //info_name = TBTeacherName.Text;
+                    //info_id = TBTeacherNo.Text;
+                    //info_totelAmountpay = TBToatalSaving_ShareInfo.Text;
+                    //info_Billpay = TBTeacherBill.Text;
+                    //info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
+                    //info_datepay = DateTime.Today.Day.ToString() +'/'+ DateTime.Today.Month.ToString() +'/'+ DateTime.Today.Year.ToString();
                     SELECT_Print = 1;
                     printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                     printDocument1.DefaultPageSettings.Landscape = true;

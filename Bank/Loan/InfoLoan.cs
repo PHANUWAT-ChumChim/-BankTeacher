@@ -227,7 +227,7 @@ namespace BankTeacher.Bank.Loan
 
                     CB_LoanNo.Enabled = false;
 
-                    comboBox1.Enabled = false;
+                    //comboBox1.Enabled = false;
                     button3.Enabled = false;
                     BTOpenfile_Reg.Enabled = false;
 
@@ -439,8 +439,8 @@ namespace BankTeacher.Bank.Loan
 
                     CB_LoanNo.Enabled = false;
 
-                    comboBox1.Enabled = false;
-                    button3.Enabled = false;
+                    //comboBox1.Enabled = false;
+                    //button3.Enabled = false;
                     BTOpenfile_Reg.Enabled = false;
 
                     Check = 0;
@@ -471,9 +471,9 @@ namespace BankTeacher.Bank.Loan
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (comboBox1.SelectedIndex != -1)
+            if (CB_LoanNo.SelectedIndex != -1)
             {
-                BankTeacher.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as BankTeacher.Class.ComboBoxPayment);
+                BankTeacher.Class.ComboBoxPayment Loan = (CB_LoanNo.SelectedItem as BankTeacher.Class.ComboBoxPayment);
                 //Input Location Folder
                 var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("Loan");
                 //Input Contain words แนะนำ เป็นรหัสอาจารย์ ในหน้าทั่วไปส่วนหน้าไหนถ้ามีการทำรายการเยอะๆให้เอาเป็นเลขบิลล์ของหน้านั้นๆเช่นหน้าดูเอกสารกู้ จะใส่เป็นเลขกู้ หน้าดูเอกสาร สมัครสมาชิกจะใส่เป็นชื่ออาจารย์
@@ -487,9 +487,9 @@ namespace BankTeacher.Bank.Loan
         String imgeLocation = "";
         private void BTOpenfile_Reg_Click(object sender, EventArgs e)
         {
-            if (comboBox1.SelectedIndex != -1)
+            if (CB_LoanNo.SelectedIndex != -1)
             {
-                BankTeacher.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as BankTeacher.Class.ComboBoxPayment);
+                BankTeacher.Class.ComboBoxPayment Loan = (CB_LoanNo.SelectedItem as BankTeacher.Class.ComboBoxPayment);
                 try
                 {
                     OpenFileDialog dialog = new OpenFileDialog();
