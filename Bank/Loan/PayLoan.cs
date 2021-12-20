@@ -96,9 +96,11 @@ namespace BankTeacher.Bank.Loan
           "WHERE a.TeacherNo = '{TeacherNo}' and a.LoanStatusNo = 2 "
           ,
           //[6] BackPrint payLoan INPUT : {TeacherNo} {Year}
-          "SELECT a.LoanNo,CAST(a.PayDate as date),a.LoanAmount,b.LoanStatusName \r\n " +
+          "SELECT a.LoanNo,CAST(a.PayDate as date),a.LoanAmount,b.LoanStatusName,CAST(d.PrefixName+' '+c.Fname+' '+c.Lname as nvarchar)  \r\n " +
           "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblLoanStatus b ON a.LoanStatusNo = b.LoanStatusNo \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis c ON a.TeacherNoAddBy = c.TeacherNo \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix d ON c.PrefixNo = d.PrefixNo \r\n " +
           "WHERE a.TeacherNo = '{TeacherNo}' AND YEAR(a.PayDate) = {Year} AND a.LoanStatusNo = 2"
         };
         public PayLoan()
@@ -454,7 +456,7 @@ namespace BankTeacher.Bank.Loan
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_PayLoan, "จ่ายกู้", this.AccessibilityObject.Name, 1, "A5", 0);
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Historyloanpay, "จ่ายกู้", this.AccessibilityObject.Name, 1, "A5", 0);
         }
 
         private void CBYearSelection_Loanpay_SelectedIndexChanged(object sender, EventArgs e)
@@ -478,6 +480,7 @@ namespace BankTeacher.Bank.Loan
                 tabControl1.SelectedIndex = 0;
             }
         }
+
 
         private void BTPrint_Click(object sender, EventArgs e)
         {

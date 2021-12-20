@@ -138,11 +138,11 @@ namespace BankTeacher.Bank.Loan
                 IN.ShowDialog();
                 TBTeacherNo.Text = Bank.Search.Return[0];
                 TBTeacherName.Text = Bank.Search.Return[1];
-                comboBox1.Enabled = true;
-                comboBox1.Items.Clear();
+                CB_LoanNo.Enabled = true;
+                CB_LoanNo.Items.Clear();
                 Check = 1;
-                comboBox1.Items.Clear();
-                comboBox1.SelectedIndex = -1;
+                CB_LoanNo.Items.Clear();
+                CB_LoanNo.SelectedIndex = -1;
                 TBTeacherName.Text = "";
                 TBYearPay_Detail.Text = "";
                 TBMonthPay_Detail.Text = "";
@@ -153,7 +153,7 @@ namespace BankTeacher.Bank.Loan
                 TBSavingAmount.Text = "";
                 DGVGuarantor.Rows.Clear();
                 DGVLoanDetail.Rows.Clear();
-                ComboBox[] cb = new ComboBox[] { comboBox1 };
+                ComboBox[] cb = new ComboBox[] { CB_LoanNo };
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
                     .Replace("{TeacherNo}", TBTeacherNo.Text));
                 for (int x = 0; x < dt.Rows.Count; x++)
@@ -178,11 +178,11 @@ namespace BankTeacher.Bank.Loan
                 if (TBTeacherNo.Text.Length == 6)
                 {
                     tabControl1.SelectedIndex = 0;
-                    comboBox1.Enabled = true;
-                    comboBox1.Items.Clear();
+                    CB_LoanNo.Enabled = true;
+                    CB_LoanNo.Items.Clear();
                     Check = 1;
-                    comboBox1.Items.Clear();
-                    comboBox1.SelectedIndex = -1;
+                    CB_LoanNo.Items.Clear();
+                    CB_LoanNo.SelectedIndex = -1;
                     TBTeacherName.Text = "";
                     TBLoanStatus.Text = "";
                     TBLoanNo.Text = "";
@@ -193,10 +193,10 @@ namespace BankTeacher.Bank.Loan
                     if (dt.Rows.Count != 0)
                     {
                         TBTeacherName.Text = dt.Rows[0][1].ToString();
-                        comboBox1.Enabled = true;
-                        comboBox1.Items.Clear();
+                        CB_LoanNo.Enabled = true;
+                        CB_LoanNo.Items.Clear();
                         Check = 1;
-                        ComboBox[] cb = new ComboBox[] { comboBox1 };
+                        ComboBox[] cb = new ComboBox[] { CB_LoanNo };
                         for (int x = 0; x < dt.Rows.Count; x++)
                         {
                             for (int aa = 0; aa < cb.Length; aa++)
@@ -204,8 +204,9 @@ namespace BankTeacher.Bank.Loan
                                 cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[x][0].ToString(), dt.Rows[x][0].ToString()));
                             }
                         }
-                        if (comboBox1.Items.Count == 1)
-                            comboBox1.SelectedIndex = 0;
+                        CB_LoanNo.SelectedIndex = 0;
+                        if (CB_LoanNo.Items.Count == 1)
+                            CB_LoanNo.SelectedIndex = 0;
                     }
                     else
                     {
@@ -219,13 +220,17 @@ namespace BankTeacher.Bank.Loan
             {
                 if (Check == 1)
                 {
-                    comboBox1.Items.Clear();
-                    comboBox1.SelectedIndex = -1;
+                    CB_LoanNo.Items.Clear();
+                    CB_LoanNo.SelectedIndex = -1;
                     TBTeacherName.Text = "";
                     DGVGuarantor.Rows.Clear();
+
+                    CB_LoanNo.Enabled = false;
+
                     comboBox1.Enabled = false;
                     button3.Enabled = false;
                     BTOpenfile_Reg.Enabled = false;
+
                     Check = 0;
                     TBLoanNo.Text = "";
                     TBYearPay_Detail.Text = "";
@@ -251,9 +256,9 @@ namespace BankTeacher.Bank.Loan
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(comboBox1.SelectedIndex != -1)
+            if(CB_LoanNo.SelectedIndex != -1)
             {
-                BankTeacher.Class.ComboBoxPayment Loan = (comboBox1.SelectedItem as BankTeacher.Class.ComboBoxPayment);
+                BankTeacher.Class.ComboBoxPayment Loan = (CB_LoanNo.SelectedItem as BankTeacher.Class.ComboBoxPayment);
                 DataSet ds = BankTeacher.Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2].Replace("{LoanID}", Loan.No));
                 DGVGuarantor.Rows.Clear();
                 if (ds.Tables[0].Rows.Count != 0)
@@ -415,22 +420,6 @@ namespace BankTeacher.Bank.Loan
             }
         }
 
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (tabControl1.SelectedIndex == 2)
-            {
-                CB_SelectPrint.SelectedIndex = 0;
-                BTPrint.Visible = true;
-                CB_SelectPrint.Visible = true; 
-            }
-            else
-            {
-                BTPrint.Visible = false;
-                CB_SelectPrint.Visible = false;
-            }
-     
-        }
-
         private void BExitForm_Click(object sender, EventArgs e)
         {
             BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
@@ -443,13 +432,17 @@ namespace BankTeacher.Bank.Loan
                 if (TBTeacherNo.Text.Length != 0)
                 {
                     TBTeacherNo.Text = "";
-                    comboBox1.Items.Clear();
-                    comboBox1.SelectedIndex = -1;
+                    CB_LoanNo.Items.Clear();
+                    CB_LoanNo.SelectedIndex = -1;
                     TBTeacherName.Text = "";
                     DGVGuarantor.Rows.Clear();
+
+                    CB_LoanNo.Enabled = false;
+
                     comboBox1.Enabled = false;
                     button3.Enabled = false;
                     BTOpenfile_Reg.Enabled = false;
+
                     Check = 0;
                     TBLoanNo.Text = "";
                     TBYearPay_Detail.Text = "";

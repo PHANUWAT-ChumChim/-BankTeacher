@@ -18,15 +18,18 @@ namespace BankTeacher.Bank.Pay
     {
         // ======================= ข้อมูลเเบบปริ้น ====================
         //ข้อมูลส่วนตัว
-        public static string info_name;
-        public static string info_id;
+        //public static string info_name;
+        //public static string info_id;
+        // ข้อมูลส่วนใจ
+        //public static string info_TeacherAdd;
         // จ่าย
-        public static string info_totelAmountpay;
-        public static string info_Billpay;
-        public static string info_datepay;
+        //public static string info_totelAmountpay;
+        //public static string info_Billpay;
+        //public static string info_datepay;
+        //public static string info_Payment;
         // กู้
-        public static string info_Lona_AmountRemain;
-        int SELECT_Print = 1;
+        //public static string info_Lona_AmountRemain;
+        int SELECT_Print = 0;
         //------------------------- index -----------------
 
         int SelectIndexRow = -1;
@@ -262,12 +265,16 @@ namespace BankTeacher.Bank.Pay
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as c on b.TypeNo = c.TypeNo \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailPayment as d on b.BillDetailPaymentNo = d.BillDetailPaymentNo \r\n " +
           "WHERE TeacherNo = '{TeacherNo}' and Year = {Year} and Cancel = 1 \r\n " +
-          "ORDER BY b.Mount "
+          "ORDER BY a.BillNo"
           ,
            //[15] print backwards IN: {billl}
-           "SELECT  a.BillNo,a.Amount,b.TypeName,CAST(a.Mount as nvarchar)+'/'+CAST(a.Year as nvarchar)  as  Mountandyear \r\n" +
-           "FROM EmployeeBank.dbo.tblBillDetail as a \r\n" +
-           "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as b ON a.TypeNo = b.TypeNo \r\n" +
+          "SELECT  a.BillNo,d.TeacherNo,CAST(e.PrefixName+' '+d.Fname+' '+d.Lname as nvarchar),a.Amount,b.TypeName,CAST(a.Mount as nvarchar)+'/'+CAST(a.Year as nvarchar)  as  Mountandyear,CAST(f.Name as nvarchar) \r\n " +
+          "FROM EmployeeBank.dbo.tblBillDetail as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as b ON a.TypeNo = b.TypeNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBill  as c ON a.BillNo = c.BillNo \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as d ON c.TeacherNoAddBy = d.TeacherNo \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as e ON d.PrefixNo = e.PrefixNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetailPayment f ON a.BillDetailPaymentNo = f.BillDetailPaymentNo \r\n " +
            "WHERE a.BillNo = {bill}"
            ,
            //[16] print data IN: {BillNo}
@@ -1248,6 +1255,26 @@ namespace BankTeacher.Bank.Pay
                         }
                         for (int a = 0; a < DGV_Pay.Rows.Count; a++)
                         {
+
+                            Console.WriteLine($"---------------------{ex}----------------------");
+                        }
+
+                        MessageBox.Show("ชำระสำเร็จ", "แจ้งเตือนการขำระ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
+                        Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
+                        Class.Print.PrintPreviewDialog.info_TeacherAdd = Class.UserInfo.TeacherName;
+                        Class.Print.PrintPreviewDialog.info_Savingtotel = TBToatalSaving_ShareInfo.Text;
+                        Class.Print.PrintPreviewDialog.info_Billpay = TBTeacherBill.Text;
+                        Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
+                        Class.Print.PrintPreviewDialog.info_datepayShare = DateTime.Today.Day.ToString() +'/'+ DateTime.Today.Month.ToString() +'/'+ DateTime.Today.Year.ToString();
+                        SELECT_Print = 1;
+                        printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+                        printDocument1.DefaultPageSettings.Landscape = true;
+                        Class.Print.PrintPreviewDialog.info_Payment = CBPayment_Pay.Items[CBPayment_Pay.SelectedIndex].ToString(); 
+                        if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                        {
+                            printDocument1.Print();
+
                             if (DGV_Pay.Rows[a].Cells[1].Value.ToString().Contains("หุ้น"))
                             {
                                 Class.SQLConnection.InputSQLMSSQL(SQLDefault[10]
@@ -1260,6 +1287,7 @@ namespace BankTeacher.Bank.Pay
                                     .Replace("{LoanNo}", DGV_Pay.Rows[a].Cells[3].Value.ToString())
                                     .Replace("{LoanAmount}", DGV_Pay.Rows[a].Cells[2].Value.ToString()));
                             }
+
                         }
                     }
                     catch (Exception ex)
@@ -1466,12 +1494,13 @@ namespace BankTeacher.Bank.Pay
 
         //============================== tabpage 4 (Billinfo) ============================================
         //Select Year
+        int LINE = 0;
         private void CBYearSelect_BillInfo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(CBYearSelection_Pay.SelectedIndex != -1)
+            LINE = 0; timer1.Stop(); P1_X.Visible = false; P2_X.Visible = false; P2_Y.Visible = false; P1_Y.Visible = false;
+            if (CBYearSelection_Pay.SelectedIndex != -1)
             {
                 DGV_Tester.Rows.Clear();
-                BTPrint.BackColor = Color.Red;
                 DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[14]
                 .Replace("{TeacherNo}", TBTeacherNo.Text)
                 .Replace("{Year}", CBYearSelection_BillInfo.Text));
@@ -1479,8 +1508,10 @@ namespace BankTeacher.Bank.Pay
                 {
                     DGV_BillInfo.Rows.Clear();
                     int Sum = 0;
+                    string Bill = "";
                     for(int x = 0; x < dt.Rows.Count; x++)
                     {
+                       
                         DGV_BillInfo.Rows.Add(x+1,dt.Rows[x][0].ToString(), Convert.ToDateTime(dt.Rows[x][5].ToString()).ToString("dd-MM-yyyy"), dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
 
                         Sum = Sum + Convert.ToInt32(dt.Rows[x][3].ToString());
@@ -1490,6 +1521,8 @@ namespace BankTeacher.Bank.Pay
                         {
                             DGV_BillInfo.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
                         }
+                        if (x < 10) { LINE = 25 * (x + 1); }
+                            else { LINE = 257; }
                     }
                 }
                 else
@@ -1859,12 +1892,13 @@ namespace BankTeacher.Bank.Pay
             }
             else if(CB_SelectPrint.SelectedIndex == 1)
             {
-                Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Tester, "ใบเสร็จรับเงิน(ย้อนหลัง)", this.AccessibilityObject.Name,1,"A5",0);
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Tester, "ใบเสร็จรับเงิน(ย้อนหลัง)", this.AccessibilityObject.Name,SandCRonot,"A5",0);
             }
             else
             {
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_BillInfo, "บิลล์การจ่าย", this.AccessibilityObject.Name,2,"A4",1);
             }
+            SELECT_Print = 0;
         }
         private static void NumericCheck(object sender, KeyPressEventArgs e)
         {
@@ -1880,23 +1914,26 @@ namespace BankTeacher.Bank.Pay
         // คลิ๊กเพื่อปริ้นข้อมูลย้อนหลัง
         private void DGV_BillInfo_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
+            timer1.Stop(); P1_X.Visible = false; P2_X.Visible = false; P2_Y.Visible = false; P1_Y.Visible = false;
             if (e.RowIndex != -1)
             {
                 BTPrint.Enabled = true;
                 BTPrint.BackColor = Color.White;
                 SELECT_Print = 0;
-                info_name = TBTeacherName.Text;
-                info_id = TBTeacherNo.Text;
-                info_totelAmountpay = TBToatalSaving_ShareInfo.Text;
-                info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
-                info_Billpay = DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString();
+                Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
+                Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
+                Class.Print.PrintPreviewDialog.info_Savingtotel = TBToatalSaving_ShareInfo.Text;
+                Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
+                Class.Print.PrintPreviewDialog.info_Billpay = DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString();
                 DataTable dt_date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[16].Replace("{Bill}", DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString()));
-                info_datepay = dt_date.Rows[0][1].ToString();
+                Class.Print.PrintPreviewDialog.info_datepayShare = dt_date.Rows[0][1].ToString();
                 DGV_Tester.Rows.Clear();
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[15].Replace("{bill}", DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString()));
+                Class.Print.PrintPreviewDialog.info_TeacherAdd = dt.Rows[0][2].ToString();
+                Class.Print.PrintPreviewDialog.info_Payment = dt.Rows[0][6].ToString(); ;
                 for (int Row = 0; Row < dt.Rows.Count; Row++)
                 {
-                    DGV_Tester.Rows.Add(Row + 1, dt.Rows[Row][3].ToString(), dt.Rows[Row][2].ToString(), dt.Rows[Row][1]);
+                    DGV_Tester.Rows.Add(Row + 1, dt.Rows[Row][5].ToString(), dt.Rows[Row][4].ToString(), dt.Rows[Row][3]);
                 }
             }
             else
@@ -1931,11 +1968,27 @@ namespace BankTeacher.Bank.Pay
                 DGV_Printbypoon.Rows.Add(Num++, DGV_Pay.Rows[e.RowIndex].Cells[0].Value.ToString(), CBList_Pay.Text, TBAmount_Pay.Text, DGV_Pay.Rows[e.RowIndex].Cells[3].Value.ToString(), CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
         }
         // ปริ้น
+        int SandCRonot = 0;
         private void BTPrint_Click(object sender, EventArgs e)
         {
-            if(BTPrint.BackColor != Color.Red)
+            // เลือก ต้น ฉบับ หรือ สำเนา หรือ ไม่
+            if (checkBox_scrip.Checked == true) { SandCRonot = 3; }
+            if (checkBox_copy.Checked == true) { SandCRonot = 4; }
+            if (checkBox_scrip.Checked == true && checkBox_copy.Checked == true) { SandCRonot = 1; }
+            if(checkBox_scrip.Checked == false && checkBox_copy.Checked == false) { SandCRonot = 0; }
+
+            if (CB_SelectPrint.SelectedIndex == 0)
             {
-                if (CB_SelectPrint.SelectedIndex == 1)
+                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("Letter", 850, 1100);
+                printDocument1.DefaultPageSettings.Landscape = false;
+                if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    printDocument1.Print();
+                }
+            }
+            else 
+            {
+                if (DGV_Tester.Rows.Count != 0)
                 {
                     printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                     printDocument1.DefaultPageSettings.Landscape = true;
@@ -1944,20 +1997,13 @@ namespace BankTeacher.Bank.Pay
                         printDocument1.Print();
                     }
                 }
-                else
-                {
-                    printDocument1.DefaultPageSettings.PaperSize = new PaperSize("Letter", 850, 1100);
-                    printDocument1.DefaultPageSettings.Landscape = false;
-                    if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
-                    {
-                        printDocument1.Print();
-                    }
+                else { 
+                    P1_Y.Size = new Size(5,LINE); 
+                    P2_Y.Size = new Size(5,LINE);
+                    P2_X.Location = new Point(2, 105 + LINE);
+                    P1_X.Visible = true; P2_X.Visible = true; P2_Y.Visible = true; P1_Y.Visible = true;
+                    timer1.Start(); MessageBox.Show("โปรดเลือกรายการในตาราง สำหรับ การปริ้นเออกสารย้อนหลัง", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-            }
-            else
-            {
-                MessageBox.Show("โปรเลือกเลขบิลล์ในตาราง");
-                PB_Arrow.Visible = true;
             }
         }
 
@@ -1985,6 +2031,82 @@ namespace BankTeacher.Bank.Pay
                 }
             }
 
+        }
+        int pus = 0;
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            pus++;
+            if(pus%2 == 1)
+            {
+                System.Threading.Thread.Sleep(200);
+                P1_X.Visible = false; P2_X.Visible = false; P2_Y.Visible = false; P1_Y.Visible = false;
+            }
+            else
+            {
+                System.Threading.Thread.Sleep(200);
+                P1_X.Visible = true; P2_X.Visible = true; P2_Y.Visible = true; P1_Y.Visible = true;
+            }
+            if (pus == 30)
+            {
+                System.Threading.Thread.Sleep(200);
+                P1_X.Visible = false; P2_X.Visible = false; P2_Y.Visible = false; P1_Y.Visible = false;
+                pus = 0;
+                timer1.Stop();
+            }
+           
+        }
+
+        private void button1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if(button1.Text != "ปิด")
+            if(e.X >= 1 && e.Y >= 1 && e.Y <= 29)
+            {
+                flowLayoutPanel1.Visible = true;
+            }
+            else
+            {
+                flowLayoutPanel1.Visible = false;
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (button1.Text == "เปิด")
+            {
+                button1.Text = "ปิด";
+                flowLayoutPanel1.Visible = false;
+            }
+            else
+            {
+                button1.Text = "เปิด";
+            }
+          
+        }
+        private Point MouseD;
+        private void flowLayoutPanel1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (flowLayoutPanel1.Location.Y >= 1 && flowLayoutPanel1.Location.X >= 1 && flowLayoutPanel1.Location.Y <= 330 && flowLayoutPanel1.Location.X <= 530)
+            {
+                if (e.Button == System.Windows.Forms.MouseButtons.Left)
+                {
+                    flowLayoutPanel1.Left = e.X + flowLayoutPanel1.Left - MouseD.X;
+                    flowLayoutPanel1.Top = e.Y + flowLayoutPanel1.Top - MouseD.Y;
+                }
+            }
+            else if (flowLayoutPanel1.Location.Y <= 0) { flowLayoutPanel1.Location = new Point(flowLayoutPanel1.Left, 2); }
+            else if (flowLayoutPanel1.Location.Y >= 330) { flowLayoutPanel1.Location = new Point(flowLayoutPanel1.Left, 328); }
+            else if (flowLayoutPanel1.Location.X <= 0) { flowLayoutPanel1.Location = new Point(2,flowLayoutPanel1.Top); }
+            else if (flowLayoutPanel1.Location.X >= 530) { flowLayoutPanel1.Location = new Point(528, flowLayoutPanel1.Top); }
+        }
+        private void flowLayoutPanel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (flowLayoutPanel1.Location.Y >= 1)
+            {
+                if (e.Button == System.Windows.Forms.MouseButtons.Left)
+                {
+                    MouseD = e.Location;
+                }
+            }
         }
         //===============================================================================================
     }
