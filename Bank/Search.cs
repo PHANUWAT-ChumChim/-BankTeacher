@@ -21,7 +21,7 @@ namespace BankTeacher.Bank
         /// <para>SQL ที่ใส่มาต้องสามารถ ค้นหาได้ด้วย แทนที่ด้วย {Text}</para>
         /// <para>หากไม่ต้องการ Collumn 3 ที่เพิ้มขึ้นมาให้ใส่ค่าเป็น ""</para>
         /// </summary>
-        public Search(String SQLCode , String Collumn3Text)
+        public Search(String SQLCode , String Collumn3Text = "")
         {
             InitializeComponent();
             Return = new string[] { "", "", "" };

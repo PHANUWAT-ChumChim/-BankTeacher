@@ -133,7 +133,7 @@ namespace BankTeacher.Bank.Add_Member
         {
             try
             {
-                Search IN = new Search(SQLDefault[1], "");
+                Search IN = new Search(SQLDefault[1]);
                 IN.ShowDialog();
                 if (Search.Return[0] != "")
                 {

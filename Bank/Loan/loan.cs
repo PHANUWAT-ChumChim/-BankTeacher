@@ -68,7 +68,7 @@ namespace BankTeacher.Bank.Loan
 
             //[1] SELECT CreditLimit Data INPUT:{Text} , {TeacherNoNotLike} , {RemainAmount}
            "SELECT TOP(20)TeacherNo, Name, RemainAmount, ISNULL(a.LoanStatusNo , 0) as LoanS  \r\n " + 
-          " FROM (SELECT a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS Name,   \r\n " + 
+          " FROM (SELECT a.TeacherNo , CAST(ISNULL(c.PrefixName,'')+' '+Fname +' '+ Lname as NVARCHAR)AS Name,   \r\n " + 
           " ROUND(ISNULL(e.SavingAmount,0) - ISNULL(SUM(d.RemainsAmount),0),0,1) as RemainAmount, Fname , f.LoanStatusNo  \r\n " + 
           " FROM EmployeeBank.dbo.tblMember as a    \r\n " + 
           " LEFT JOIN (  \r\n " + 
@@ -81,8 +81,8 @@ namespace BankTeacher.Bank.Loan
           " LEFT JOIN (SELECT TeacherNo , LoanStatusNo \r\n " + 
           " FROM EmployeeBank.dbo.tblLoan  \r\n " + 
           " WHERE LoanStatusNo = 1 or LoanStatusNo = 2 GROUP BY TeacherNo , LoanStatusNo) as f on a.TeacherNo = f.TeacherNo  \r\n " +
-          " WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1  \r\n " + 
-          " GROUP BY a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname, f.LoanStatusNo) as a   \r\n " +
+          " WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(c.PrefixName,'')+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1  \r\n " + 
+          " GROUP BY a.TeacherNo , CAST(ISNULL(c.PrefixName,'')+' '+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname, f.LoanStatusNo) as a   \r\n " +
           " WHERE {RemainAmount}  {TeacherNoNotLike}\r\n " + 
           " ORDER BY a.Fname; "
 
@@ -141,7 +141,7 @@ namespace BankTeacher.Bank.Loan
 
            //[9] BSearch Teacher INPUT: {Text}  {TeacherNoNotLike}
            "SELECT TOP(20)TeacherNo, Name, RemainAmount \r\n " +
-          "  FROM (SELECT a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR)AS Name,    \r\n " +
+          "  FROM (SELECT a.TeacherNo , CAST(ISNULL(c.PrefixName,'')+' '+Fname +' '+ Lname as NVARCHAR)AS Name,    \r\n " +
           "  ROUND(ISNULL(e.SavingAmount,0) - ISNULL(SUM(d.RemainsAmount),0),0,1) as RemainAmount, Fname   \r\n " +
           "  FROM EmployeeBank.dbo.tblMember as a     \r\n " +
           "  LEFT JOIN (   \r\n " +
@@ -154,8 +154,8 @@ namespace BankTeacher.Bank.Loan
           "  LEFT JOIN (SELECT TeacherNo  \r\n " +
           "  FROM EmployeeBank.dbo.tblLoan   \r\n " +
           "  WHERE LoanStatusNo = 1 or LoanStatusNo = 2 GROUP BY TeacherNo) as f on a.TeacherNo = f.TeacherNo   \r\n " +
-          "  WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(c.PrefixName+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1   \r\n " +
-          "  GROUP BY a.TeacherNo , CAST(c.PrefixName+' '+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname ) as a    \r\n " +
+          "  WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(c.PrefixName,'')+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1   \r\n " +
+          "  GROUP BY a.TeacherNo , CAST(ISNULL(c.PrefixName,'')+' '+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname ) as a    \r\n " +
           "  WHERE RemainAmount IS NOT NULL {TeacherNoNotLike} \r\n " +
           "  GROUP BY TeacherNo, Name, RemainAmount ,a.Fname \r\n " +
           "  ORDER BY a.Fname; "
@@ -557,7 +557,7 @@ namespace BankTeacher.Bank.Loan
                 }
 
             }
-            else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
+            else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back) 
             {
                 if (Check == 1)
                 {
@@ -767,7 +767,8 @@ namespace BankTeacher.Bank.Loan
                         NotLike = NotLike.Remove(NotLike.Length - 1);
                     }
                     IN = new Bank.Search(SQLDefault[1]
-                           .Replace("{TeacherNoNotLike}", NotLike), "หุ้นสะสม");
+                           .Replace("{TeacherNoNotLike}", NotLike)
+                           .Replace("{RemainAmount}", "RemainAmount > 500"), "หุ้นสะสม");
 
                     IN.ShowDialog();
                     if (Bank.Search.Return[0] != "")
