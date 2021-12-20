@@ -24,7 +24,7 @@ namespace BankTeacher.Class.Print
         public static string info_Billpay;
         public static string info_Savingtotel;
         public static string info_datepayShare;
-        // กู้
+        // กู้/
         public static string info_LoanNo;
         public static string info_Lona_AmountRemain;
         // ถอนหุ้นสะสม
