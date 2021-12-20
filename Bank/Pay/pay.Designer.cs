@@ -42,9 +42,9 @@ namespace BankTeacher.Bank.Pay
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(pay));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(pay));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -130,16 +130,23 @@ namespace BankTeacher.Bank.Pay
             this.label23 = new System.Windows.Forms.Label();
             this.CBLoanSelection_LoanInfo = new System.Windows.Forms.ComboBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.PB_Arrow = new System.Windows.Forms.PictureBox();
+            this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.CB_SelectPrint = new System.Windows.Forms.ComboBox();
             this.BTPrint = new System.Windows.Forms.Button();
+            this.checkBox_scrip = new System.Windows.Forms.CheckBox();
+            this.checkBox_copy = new System.Windows.Forms.CheckBox();
             this.DGV_Tester = new System.Windows.Forms.DataGridView();
             this.Column15 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column23 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column24 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column25 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.P1_Y = new System.Windows.Forms.Panel();
+            this.P2_Y = new System.Windows.Forms.Panel();
+            this.P2_X = new System.Windows.Forms.Panel();
+            this.P1_X = new System.Windows.Forms.Panel();
             this.CBPapersize = new System.Windows.Forms.ComboBox();
             this.panel9 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
             this.CBYearSelection_BillInfo = new System.Windows.Forms.ComboBox();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -178,6 +185,7 @@ namespace BankTeacher.Bank.Pay
             this.LSumAmount_CancelBill = new System.Windows.Forms.Label();
             this.label27 = new System.Windows.Forms.Label();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel7.SuspendLayout();
             this.panel8.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -197,7 +205,7 @@ namespace BankTeacher.Bank.Pay
             ((System.ComponentModel.ISupportInitialize)(this.DGV_LoanInfo)).BeginInit();
             this.panel3.SuspendLayout();
             this.tabPage4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.PB_Arrow)).BeginInit();
+            this.flowLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Tester)).BeginInit();
             this.panel9.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -1235,10 +1243,12 @@ namespace BankTeacher.Bank.Pay
             // tabPage4
             // 
             this.tabPage4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tabPage4.Controls.Add(this.PB_Arrow);
-            this.tabPage4.Controls.Add(this.CB_SelectPrint);
-            this.tabPage4.Controls.Add(this.BTPrint);
+            this.tabPage4.Controls.Add(this.flowLayoutPanel1);
             this.tabPage4.Controls.Add(this.DGV_Tester);
+            this.tabPage4.Controls.Add(this.P1_Y);
+            this.tabPage4.Controls.Add(this.P2_Y);
+            this.tabPage4.Controls.Add(this.P2_X);
+            this.tabPage4.Controls.Add(this.P1_X);
             this.tabPage4.Controls.Add(this.CBPapersize);
             this.tabPage4.Controls.Add(this.panel9);
             this.tabPage4.Controls.Add(this.panel4);
@@ -1253,16 +1263,20 @@ namespace BankTeacher.Bank.Pay
             this.tabPage4.Text = "บิลล์การจ่าย";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // PB_Arrow
+            // flowLayoutPanel1
             // 
-            this.PB_Arrow.Image = ((System.Drawing.Image)(resources.GetObject("PB_Arrow.Image")));
-            this.PB_Arrow.Location = new System.Drawing.Point(595, 7);
-            this.PB_Arrow.Name = "PB_Arrow";
-            this.PB_Arrow.Size = new System.Drawing.Size(52, 74);
-            this.PB_Arrow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.PB_Arrow.TabIndex = 112;
-            this.PB_Arrow.TabStop = false;
-            this.PB_Arrow.Visible = false;
+            this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.flowLayoutPanel1.Controls.Add(this.CB_SelectPrint);
+            this.flowLayoutPanel1.Controls.Add(this.BTPrint);
+            this.flowLayoutPanel1.Controls.Add(this.checkBox_scrip);
+            this.flowLayoutPanel1.Controls.Add(this.checkBox_copy);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(409, 5);
+            this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(408, 105);
+            this.flowLayoutPanel1.TabIndex = 120;
+            this.flowLayoutPanel1.Visible = false;
+            this.flowLayoutPanel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.flowLayoutPanel1_MouseDown);
+            this.flowLayoutPanel1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.flowLayoutPanel1_MouseMove);
             // 
             // CB_SelectPrint
             // 
@@ -1271,26 +1285,48 @@ namespace BankTeacher.Bank.Pay
             this.CB_SelectPrint.Items.AddRange(new object[] {
             "ปริ้นรายละเอียดบิลล์",
             "ปริ้นบิลล์ย้อนหลัง"});
-            this.CB_SelectPrint.Location = new System.Drawing.Point(794, 33);
+            this.CB_SelectPrint.Location = new System.Drawing.Point(3, 3);
             this.CB_SelectPrint.Name = "CB_SelectPrint";
             this.CB_SelectPrint.Size = new System.Drawing.Size(212, 44);
             this.CB_SelectPrint.TabIndex = 111;
             // 
             // BTPrint
             // 
-            this.BTPrint.BackColor = System.Drawing.Color.Red;
+            this.BTPrint.BackColor = System.Drawing.Color.White;
             this.BTPrint.BackgroundImage = global::BankTeacher.Properties.Resources._10x10_Print;
             this.BTPrint.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BTPrint.CausesValidation = false;
             this.BTPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTPrint.Location = new System.Drawing.Point(1012, 33);
+            this.BTPrint.Location = new System.Drawing.Point(221, 2);
             this.BTPrint.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BTPrint.Name = "BTPrint";
-            this.BTPrint.Size = new System.Drawing.Size(109, 53);
+            this.BTPrint.Size = new System.Drawing.Size(177, 53);
             this.BTPrint.TabIndex = 109;
             this.toolTip1.SetToolTip(this.BTPrint, "โปรดเลือกรายการในตาราง");
             this.BTPrint.UseVisualStyleBackColor = false;
             this.BTPrint.Click += new System.EventHandler(this.BTPrint_Click);
+            // 
+            // checkBox_scrip
+            // 
+            this.checkBox_scrip.AutoSize = true;
+            this.checkBox_scrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.checkBox_scrip.Location = new System.Drawing.Point(3, 60);
+            this.checkBox_scrip.Name = "checkBox_scrip";
+            this.checkBox_scrip.Size = new System.Drawing.Size(171, 41);
+            this.checkBox_scrip.TabIndex = 118;
+            this.checkBox_scrip.Text = "เฉพราะ(ต้นฉบับ)";
+            this.checkBox_scrip.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_copy
+            // 
+            this.checkBox_copy.AutoSize = true;
+            this.checkBox_copy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.checkBox_copy.Location = new System.Drawing.Point(180, 60);
+            this.checkBox_copy.Name = "checkBox_copy";
+            this.checkBox_copy.Size = new System.Drawing.Size(162, 41);
+            this.checkBox_copy.TabIndex = 119;
+            this.checkBox_copy.Text = "เฉพราะ(สำเนา)";
+            this.checkBox_copy.UseVisualStyleBackColor = true;
             // 
             // DGV_Tester
             // 
@@ -1303,14 +1339,14 @@ namespace BankTeacher.Bank.Pay
             this.Column23,
             this.Column24,
             this.Column25});
-            this.DGV_Tester.Location = new System.Drawing.Point(334, 9);
+            this.DGV_Tester.Location = new System.Drawing.Point(1030, 1);
             this.DGV_Tester.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DGV_Tester.Name = "DGV_Tester";
             this.DGV_Tester.ReadOnly = true;
             this.DGV_Tester.RowHeadersVisible = false;
             this.DGV_Tester.RowHeadersWidth = 51;
             this.DGV_Tester.RowTemplate.Height = 24;
-            this.DGV_Tester.Size = new System.Drawing.Size(231, 53);
+            this.DGV_Tester.Size = new System.Drawing.Size(91, 53);
             this.DGV_Tester.TabIndex = 108;
             this.DGV_Tester.Visible = false;
             // 
@@ -1346,6 +1382,46 @@ namespace BankTeacher.Bank.Pay
             this.Column25.ReadOnly = true;
             this.Column25.Width = 125;
             // 
+            // P1_Y
+            // 
+            this.P1_Y.BackColor = System.Drawing.Color.Red;
+            this.P1_Y.ForeColor = System.Drawing.Color.Red;
+            this.P1_Y.Location = new System.Drawing.Point(2, 134);
+            this.P1_Y.Name = "P1_Y";
+            this.P1_Y.Size = new System.Drawing.Size(5, 318);
+            this.P1_Y.TabIndex = 114;
+            this.P1_Y.Visible = false;
+            // 
+            // P2_Y
+            // 
+            this.P2_Y.BackColor = System.Drawing.Color.Red;
+            this.P2_Y.ForeColor = System.Drawing.Color.Red;
+            this.P2_Y.Location = new System.Drawing.Point(157, 134);
+            this.P2_Y.Name = "P2_Y";
+            this.P2_Y.Size = new System.Drawing.Size(5, 318);
+            this.P2_Y.TabIndex = 116;
+            this.P2_Y.Visible = false;
+            // 
+            // P2_X
+            // 
+            this.P2_X.BackColor = System.Drawing.Color.Red;
+            this.P2_X.ForeColor = System.Drawing.Color.Red;
+            this.P2_X.Location = new System.Drawing.Point(2, 447);
+            this.P2_X.Name = "P2_X";
+            this.P2_X.Size = new System.Drawing.Size(158, 5);
+            this.P2_X.TabIndex = 117;
+            this.P2_X.Visible = false;
+            // 
+            // P1_X
+            // 
+            this.P1_X.BackColor = System.Drawing.Color.Red;
+            this.P1_X.ForeColor = System.Drawing.Color.Red;
+            this.P1_X.Location = new System.Drawing.Point(2, 132);
+            this.P1_X.Name = "P1_X";
+            this.P1_X.Size = new System.Drawing.Size(160, 5);
+            this.P1_X.TabIndex = 115;
+            this.P1_X.Visible = false;
+            // 
             // CBPapersize
             // 
             this.CBPapersize.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -1365,13 +1441,29 @@ namespace BankTeacher.Bank.Pay
             // 
             this.panel9.BackColor = System.Drawing.Color.White;
             this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel9.Controls.Add(this.button1);
             this.panel9.Controls.Add(this.label12);
             this.panel9.Controls.Add(this.CBYearSelection_BillInfo);
             this.panel9.Location = new System.Drawing.Point(3, 4);
             this.panel9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(325, 72);
+            this.panel9.Size = new System.Drawing.Size(400, 72);
             this.panel9.TabIndex = 103;
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.Transparent;
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.button1.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button1.Location = new System.Drawing.Point(326, 15);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(69, 40);
+            this.button1.TabIndex = 121;
+            this.button1.Text = "เปิด";
+            this.toolTip1.SetToolTip(this.button1, "ปรับเเต่งเอกสาร");
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.button1_MouseMove);
             // 
             // label12
             // 
@@ -1602,8 +1694,8 @@ namespace BankTeacher.Bank.Pay
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Controls.Add(this.BExitForm);
-            this.panel1.Controls.Add(this.tabControl1);
             this.panel1.Controls.Add(this.panel7);
+            this.panel1.Controls.Add(this.tabControl1);
             this.panel1.Location = new System.Drawing.Point(27, 42);
             this.panel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel1.Name = "panel1";
@@ -1769,6 +1861,10 @@ namespace BankTeacher.Bank.Pay
             this.label27.Size = new System.Drawing.Size(51, 37);
             this.label27.TabIndex = 5;
             // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // pay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1815,7 +1911,8 @@ namespace BankTeacher.Bank.Pay
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.PB_Arrow)).EndInit();
+            this.flowLayoutPanel1.ResumeLayout(false);
+            this.flowLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Tester)).EndInit();
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
@@ -1959,6 +2056,14 @@ namespace BankTeacher.Bank.Pay
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
         private System.Windows.Forms.ComboBox CB_SelectPrint;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.PictureBox PB_Arrow;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Panel P1_X;
+        private System.Windows.Forms.Panel P1_Y;
+        private System.Windows.Forms.Panel P2_Y;
+        private System.Windows.Forms.Panel P2_X;
+        private System.Windows.Forms.CheckBox checkBox_scrip;
+        private System.Windows.Forms.CheckBox checkBox_copy;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
+        private System.Windows.Forms.Button button1;
     }
 }

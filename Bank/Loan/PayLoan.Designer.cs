@@ -145,7 +145,6 @@ namespace BankTeacher.Bank.Loan
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(1159, 529);
             this.tabControl1.TabIndex = 97;
-            this.tabControl1.Click += new System.EventHandler(this.tabControl1_Click);
             // 
             // tabPage4
             // 
