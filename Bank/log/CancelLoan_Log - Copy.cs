@@ -111,7 +111,7 @@ namespace BankTeacher.Bank.log
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
             Bank.Search IN;
-            IN = new Bank.Search(SQLDefault[1], "");
+            IN = new Bank.Search(SQLDefault[1]);
             IN.ShowDialog();
             if (Bank.Search.Return[0].ToString() != "")
             {

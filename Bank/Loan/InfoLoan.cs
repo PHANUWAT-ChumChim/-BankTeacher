@@ -134,7 +134,7 @@ namespace BankTeacher.Bank.Loan
             try
             {
 
-                IN = new Bank.Search(SQLDefault[0],"");
+                IN = new Bank.Search(SQLDefault[0]);
                 IN.ShowDialog();
                 TBTeacherNo.Text = Bank.Search.Return[0];
                 TBTeacherName.Text = Bank.Search.Return[1];

@@ -120,7 +120,7 @@ namespace BankTeacher.Bank.Loan
             try
             {
                 StatusBoxFile = 0;
-                IN = new Bank.Search(SQLDefault[0],"");
+                IN = new Bank.Search(SQLDefault[0]);
                 IN.ShowDialog();
                 
                 if(Bank.Search.Return.Length != 1)

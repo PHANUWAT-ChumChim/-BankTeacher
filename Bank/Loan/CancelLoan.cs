@@ -79,7 +79,7 @@ namespace BankTeacher.Bank.Loan
         {
             TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Escape));
             Bank.Search IN;
-            IN = new Bank.Search(SQLDefault[0], "");
+            IN = new Bank.Search(SQLDefault[0]);
             IN.ShowDialog();
             if (Bank.Search.Return[0].ToString() != "")
             {

@@ -132,7 +132,7 @@ namespace BankTeacher.Bank.Add_Member
                     NotLike += " and a.TeacherNo NOT LIKE " + $"'{TBTeacherNo.Text}'";
                 }
                 IN = new Bank.Search(SQLDefault[1]
-                       .Replace("{TeacherNotLike}" , NotLike) , "");
+                       .Replace("{TeacherNotLike}" , NotLike));
 
                 IN.ShowDialog();
                 if (Bank.Search.Return[0] != "" )
