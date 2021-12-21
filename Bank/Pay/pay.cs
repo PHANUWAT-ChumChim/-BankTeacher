@@ -679,7 +679,7 @@ namespace BankTeacher.Bank.Pay
                     }
 
             }
-            else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back || e.KeyCode == Keys.Escape)
+            else if (/*e.KeyCode == Keys.Delete ||*//* e.KeyCode == Keys.Back ||*/ e.KeyCode == Keys.Escape)
             {
                 if (CheckInputTeacher == true)
                 {
@@ -1116,8 +1116,7 @@ namespace BankTeacher.Bank.Pay
 
         private void TBAmount_Pay_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-                BListAdd_Pay_Click(new object(), new EventArgs());
+
         }
         //Add list to datagridview
         private void BListAdd_Pay_Click(object sender, EventArgs e)
@@ -1269,6 +1268,10 @@ namespace BankTeacher.Bank.Pay
                         printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                         printDocument1.DefaultPageSettings.Landscape = true;
                         Class.Print.PrintPreviewDialog.info_Payment = CBPayment_Pay.Items[CBPayment_Pay.SelectedIndex].ToString();
+                        if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                        {
+                            printDocument1.Print();
+                        }
                         for (int a = 0; a < DGV_Pay.Rows.Count; a++)
                         {
                             if (DGV_Pay.Rows[a].Cells[1].Value.ToString().Contains("หุ้น"))
@@ -1288,6 +1291,7 @@ namespace BankTeacher.Bank.Pay
                         {
                             printDocument1.Print();
                         }
+
                     }
                     catch (Exception ex)
                     {
@@ -1301,13 +1305,6 @@ namespace BankTeacher.Bank.Pay
                     //info_Billpay = TBTeacherBill.Text;
                     //info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
                     //info_datepay = DateTime.Today.Day.ToString() +'/'+ DateTime.Today.Month.ToString() +'/'+ DateTime.Today.Year.ToString();
-                    SELECT_Print = 1;
-                    printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
-                    printDocument1.DefaultPageSettings.Landscape = true;
-                    if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
-                    {
-                        printDocument1.Print();
-                    }
                     TBTeacherNo.Enabled = false;
                     BSearchTeacher.Enabled = false;
                     CBList_Pay.Enabled = false;
@@ -1905,7 +1902,6 @@ namespace BankTeacher.Bank.Pay
                 }
             }
         }
-
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             if (SELECT_Print == 1)
@@ -1918,8 +1914,10 @@ namespace BankTeacher.Bank.Pay
             }
             else
             {
+                Class.Print.PrintPreviewDialog.details = 1;
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_BillInfo, "บิลล์การจ่าย", this.AccessibilityObject.Name,2,"A4",1);
             }
+            Class.Print.PrintPreviewDialog.details = 0;
             SELECT_Print = 0;
         }
         private static void NumericCheck(object sender, KeyPressEventArgs e)
@@ -1939,6 +1937,7 @@ namespace BankTeacher.Bank.Pay
             timer1.Stop(); P1_X.Visible = false; P2_X.Visible = false; P2_Y.Visible = false; P1_Y.Visible = false;
             if (e.RowIndex != -1)
             {
+                TB_Bill.Text = DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString();
                 BTPrint.Enabled = true;
                 BTPrint.BackColor = Color.White;
                 SELECT_Print = 0;
@@ -2022,9 +2021,9 @@ namespace BankTeacher.Bank.Pay
                 else { 
                     P1_Y.Size = new Size(5,LINE); 
                     P2_Y.Size = new Size(5,LINE);
-                    P2_X.Location = new Point(2, 105 + LINE);
+                    P2_X.Location = new Point(2, 106 + LINE);
                     P1_X.Visible = true; P2_X.Visible = true; P2_Y.Visible = true; P1_Y.Visible = true;
-                    timer1.Start(); MessageBox.Show("โปรดเลือกรายการในตาราง สำหรับ การปริ้นเออกสารย้อนหลัง", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    timer1.Start(); MessageBox.Show("โปรดเลือกรายการในตาราง สำหรับ การปริ้นเออกสารย้อนหลัง \r\n หรือ กรอกเลขบิลล์ในช่อง เลขบิลล์", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -2081,7 +2080,7 @@ namespace BankTeacher.Bank.Pay
         private void button1_MouseMove(object sender, MouseEventArgs e)
         {
             if(button1.Text != "ปิด")
-            if(e.X >= 1 && e.Y >= 1 && e.Y <= 29)
+            if(e.X >= 1)
             {
                 flowLayoutPanel1.Visible = true;
             }
@@ -2107,7 +2106,7 @@ namespace BankTeacher.Bank.Pay
         private Point MouseD;
         private void flowLayoutPanel1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (flowLayoutPanel1.Location.Y >= 1 && flowLayoutPanel1.Location.X >= 1 && flowLayoutPanel1.Location.Y <= 330 && flowLayoutPanel1.Location.X <= 530)
+            if (flowLayoutPanel1.Location.Y >= 1 && flowLayoutPanel1.Location.X >= 1 && flowLayoutPanel1.Location.Y <= 330 && flowLayoutPanel1.Location.X <= 520)
             {
                 if (e.Button == System.Windows.Forms.MouseButtons.Left)
                 {
@@ -2118,7 +2117,7 @@ namespace BankTeacher.Bank.Pay
             else if (flowLayoutPanel1.Location.Y <= 0) { flowLayoutPanel1.Location = new Point(flowLayoutPanel1.Left, 2); }
             else if (flowLayoutPanel1.Location.Y >= 330) { flowLayoutPanel1.Location = new Point(flowLayoutPanel1.Left, 328); }
             else if (flowLayoutPanel1.Location.X <= 0) { flowLayoutPanel1.Location = new Point(2,flowLayoutPanel1.Top); }
-            else if (flowLayoutPanel1.Location.X >= 530) { flowLayoutPanel1.Location = new Point(528, flowLayoutPanel1.Top); }
+            else if (flowLayoutPanel1.Location.X >= 520) { flowLayoutPanel1.Location = new Point(518, flowLayoutPanel1.Top); }
         }
         private void flowLayoutPanel1_MouseDown(object sender, MouseEventArgs e)
         {
@@ -2128,6 +2127,44 @@ namespace BankTeacher.Bank.Pay
                 {
                     MouseD = e.Location;
                 }
+            }
+        }
+
+        private void TB_Bill_TextChanged(object sender, EventArgs e)
+        {
+            DGV_Tester.Rows.Clear();
+            try
+            {
+                Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
+                Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
+                Class.Print.PrintPreviewDialog.info_Savingtotel = TBToatalSaving_ShareInfo.Text;
+                Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
+                Class.Print.PrintPreviewDialog.info_Billpay = TB_Bill.Text;
+                DataTable dt_date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[16].Replace("{Bill}", TB_Bill.Text));
+                Class.Print.PrintPreviewDialog.info_datepayShare = dt_date.Rows[0][1].ToString();
+                DGV_Tester.Rows.Clear();
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[15].Replace("{bill}", TB_Bill.Text));
+                Class.Print.PrintPreviewDialog.info_TeacherAdd = dt.Rows[0][2].ToString();
+                Class.Print.PrintPreviewDialog.info_Payment = dt.Rows[0][6].ToString(); ;
+                for (int Row = 0; Row < dt.Rows.Count; Row++)
+                {
+                    DGV_Tester.Rows.Add(Row + 1, dt.Rows[Row][5].ToString(), dt.Rows[Row][4].ToString(), dt.Rows[Row][3]);
+                }
+            }
+            catch { }
+        }
+
+        private void TB_Bill_Click(object sender, EventArgs e)
+        {
+            if(TB_Bill.Text == "เลขบิลล์")
+            TB_Bill.Text = "";
+        }
+
+        private void TB_Bill_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((!Char.IsNumber(e.KeyChar)) && (!Char.IsControl(e.KeyChar)))
+            {
+                e.Handled = true;
             }
         }
         //===============================================================================================

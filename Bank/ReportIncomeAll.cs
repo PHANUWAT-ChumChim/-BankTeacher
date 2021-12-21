@@ -80,8 +80,8 @@ namespace BankTeacher.Bank
                 for (int x = 0; x < dtCheckBillInDay.Rows.Count; x++) 
                 {
                     int AmountBill = 0;
-                    DGV_All.Rows.Add(dtCheckBillInDay.Rows[x][0].ToString(), dtCheckBillInDay.Rows[x][2].ToString(), dtCheckBillInDay.Rows[x][1].ToString());
-                    DGVPosition = DGV_All.Rows.Count - 1;
+                    DGV_All.Rows.Add(x+1,dtCheckBillInDay.Rows[x][0].ToString(), dtCheckBillInDay.Rows[x][2].ToString(), dtCheckBillInDay.Rows[x][1].ToString());
+                    DGVPosition = DGV_All.Rows.Count - 1 ;
 
                     DataTable dtCheckBillDetail = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
                         .Replace("{BillNo}", dtCheckBillInDay.Rows[x][0].ToString()));
@@ -100,22 +100,22 @@ namespace BankTeacher.Bank
 
                             if (y == 0)
                             {
-                                DGV_All.Rows[DGVPosition].Cells[3].Value = dtCheckBillDetail.Rows[y][1].ToString();
-                                DGV_All.Rows[DGVPosition].Cells[4].Value = dtCheckBillDetail.Rows[y][2].ToString();
-                                DGV_All.Rows[DGVPosition].Cells[5].Value = dtCheckBillDetail.Rows[y][3].ToString();
+                                DGV_All.Rows[DGVPosition].Cells[4].Value = dtCheckBillDetail.Rows[y][1].ToString();
+                                DGV_All.Rows[DGVPosition].Cells[5].Value = dtCheckBillDetail.Rows[y][2].ToString();
+                                DGV_All.Rows[DGVPosition].Cells[6].Value = dtCheckBillDetail.Rows[y][3].ToString();
 
                                 if (y == dtCheckBillDetail.Rows.Count - 1)
                                 {
-                                    DGV_All.Rows.Add("", "", "", "สรุปยอดบิลล์","", AmountBill);
+                                    DGV_All.Rows.Add("", "", "", "สรุปยอดบิลล์","", AmountBill,"");
                                     DGV_All.Rows[DGV_All.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                                 }
 
                                 continue;
                             }
-                            DGV_All.Rows.Add("", "", "", dtCheckBillDetail.Rows[y][1].ToString(), dtCheckBillDetail.Rows[y][2].ToString(), dtCheckBillDetail.Rows[y][3].ToString());
+                            DGV_All.Rows.Add("", "", "", dtCheckBillDetail.Rows[y][1].ToString(), dtCheckBillDetail.Rows[y][2].ToString(), dtCheckBillDetail.Rows[y][3].ToString(),"");
                             if(y == dtCheckBillDetail.Rows.Count - 1)
                             {
-                                DGV_All.Rows.Add("","","","สรุปยอดบิลล์","", AmountBill);
+                                DGV_All.Rows.Add("","","","สรุปยอดบิลล์","", AmountBill,"");
                                 DGV_All.Rows[DGV_All.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                             }
                         }
@@ -127,7 +127,6 @@ namespace BankTeacher.Bank
                 TBAmountCradit_All.Text = AmountCradit.ToString();
             }
         }
-
         private void BExitForm_Click(object sender, EventArgs e)
         {
             BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
@@ -143,9 +142,25 @@ namespace BankTeacher.Bank
 
         private void ReportIncomeAll_SizeChanged(object sender, EventArgs e)
         {
-            int x = this.Width / 2 - panel1.Size.Width / 2;
-            int y = this.Height / 2 - panel1.Size.Height / 2;
-            panel1.Location = new Point(x, y);
+            Class.FromSettingMedtod.ChangeSizePanal(this, panel1);
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_All, "รายการบิลล์", AccessibilityObject.Name, 2, "A4",1);
+        }
+
+        private void BTPrint_Click(object sender, EventArgs e)
+        {
+            if(DGV_All.Rows.Count != 0)
+            {
+                if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    printDocument1.Print();
+                }
+            }
+            else
+                 MessageBox.Show("ไม่พบรายการบิลล์ ในตาราง", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
     }
 }
