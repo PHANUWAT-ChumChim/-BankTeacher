@@ -16,19 +16,19 @@ namespace BankTeacher.Bank
     {
         // ======================= ข้อมูลเเบบปริ้น ====================
         //ข้อมูลส่วนตัว
-        public static string info_name;
-        public static string info_id;
+        //public static string info_name;
+        //public static string info_id;
         // จ่าย
-        public static string info_totelAmountpay;
-        public static string info_status;
-        public static string info_ShareNo;
+        //public static string info_totelAmountpay;
+        //public static string info_status;
+        //public static string info_ShareNo;
         // กล่งอเอกสาาร
-        public static string info_BillAmounoff;
-        public static string info_datepayAmounoff;
-        // ยอดที่ถอน
-        public static string info_Amounoff;
-        public static string info_Amounoffinsystem;
-        public static string info_canbeAmounoff;
+        //public static string info_BillAmounoff;
+        //public static string info_datepayAmounoff;
+        //// ยอดที่ถอน
+        //public static string info_Amounoff;
+        //public static string info_Amounoffinsystem;
+        //public static string info_canbeAmounoff;
         int SELECT_Print = 0;
         int StatusBoxFile = 0;
         String imgeLocation = "";
@@ -159,13 +159,14 @@ namespace BankTeacher.Bank
           "WHERE c.TeacherNo = '{TeacherNo}'"
             ,
           //[13] (print)for search bill WithDrawNo INPUT : {WithDrawNo}
-          "SELECT a.ShareNo,c.TeacherNo,a.WithDrawNo,CAST(a.DateAdd as date),a.Amount \r\n" +
+          "SELECT a.ShareNo,c.TeacherNo,a.WithDrawNo,CAST(a.DateAdd as date),a.Amount,CAST(d.Name as nvarchar),CAST(g.PrefixName+' '+f.Fname+' '+f.Lname as nvarchar)   \r\n" +
           "FROM EmployeeBank.dbo.tblShareWithdraw as a \r\n" +
           "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.ShareNo = b.ShareNo \r\n" +
           "LEFT JOIN EmployeeBank.dbo.tblMember as c on b.TeacherNo = c.TeacherNo \r\n" +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetailPayment d on a.BillDetailPayMentNo = d.BillDetailPaymentNo  \r\n" +
+          "LEFT JOIN Personal.dbo.tblTeacherHis f on a.TeacherNoAddBy = f.TeacherNo \r\n" +
+          "LEFT JOIN BaseData.dbo.tblPrefix g on f.PrefixNo = g.PrefixNo \r\n" +
           "WHERE a.WithDrawNo = {WithDrawNo}"
-
-
         };
 
         int Check;
@@ -236,7 +237,7 @@ namespace BankTeacher.Bank
                         for (int Num = 0; Num < ds.Tables[1].Rows.Count; Num++)
                         {
                             Credit = ds.Tables[1].Rows[Num][1].ToString().Split('.');
-                            DGVLoan.Rows.Add(ds.Tables[1].Rows[Num][0].ToString(), ds.Tables[1].Rows[Num][2].ToString(), Credit[0], ds.Tables[1].Rows[Num][3].ToString());
+                            DGVLoan.Rows.Add(Num+1,ds.Tables[1].Rows[Num][0].ToString(), ds.Tables[1].Rows[Num][2].ToString(), Credit[0], ds.Tables[1].Rows[Num][3].ToString());
                         }
                         if (DGVLoan.Rows.Count != 0)
                         {
@@ -333,6 +334,9 @@ namespace BankTeacher.Bank
                     .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
                     .Replace("{PayMent}", Payment.No));
                         MessageBox.Show("บันทึกสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Class.Print.PrintPreviewDialog.info_Amounoff = TBWithDraw.Text;
+                        Class.Print.PrintPreviewDialog.info_Payment = CBTypePay.Items[CBTypePay.SelectedIndex].ToString();
+                        Class.Print.PrintPreviewDialog.info_TeacherAdd = Class.UserInfo.TeacherName;
                         printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                         printDocument1.DefaultPageSettings.Landscape = true;
                         SELECT_Print++;
@@ -374,7 +378,10 @@ namespace BankTeacher.Bank
         {
             if ((!Char.IsNumber(e.KeyChar)) && (!Char.IsControl(e.KeyChar)))
             {
-                e.Handled = true;
+                if ((e.KeyChar < '0' || e.KeyChar > '9') && (e.KeyChar != '\b'))
+                {
+                    e.Handled = true;
+                }
             }
         }
         private void TBCreditWithDraw_KeyPress(object sender, KeyPressEventArgs e)
@@ -486,24 +493,23 @@ namespace BankTeacher.Bank
             //======== INFO =================
             DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[10]);
             DataTable dt_date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[9].Replace("{WithDrawNo}", dt.Rows[0][0].ToString()));
-            info_name = TBTeacherName.Text;
-            info_id = TBTeacherNo.Text;
-            info_totelAmountpay = TBSavingAmount.Text;
-            info_Amounoff = TBWithDraw.Text;
-            info_ShareNo = TBShareNo.Text;
-            info_status = TBLoanStatus.Text;
-            info_Amounoffinsystem = TBCreditSystem.Text;
-            info_canbeAmounoff = TBCreditWithDraw.Text;
+            Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
+            Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
+            Class.Print.PrintPreviewDialog.info_Savingtotel = TBSavingAmount.Text;
+            Class.Print.PrintPreviewDialog.info_ShareNo = TBShareNo.Text;
+            Class.Print.PrintPreviewDialog.info_Loanstatus = TBLoanStatus.Text;
+            Class.Print.PrintPreviewDialog.info_Amounoffinsystem = TBCreditSystem.Text;
+            Class.Print.PrintPreviewDialog.info_canbeAmounoff = TBCreditWithDraw.Text;
             if (SELECT_Print == 1)
             {
                 // ========================= info =====================================
-                info_BillAmounoff = dt.Rows[0][0].ToString();
-                info_datepayAmounoff = dt_date.Rows[0][3].ToString();
-                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, 1, "A5", 1);
+                Class.Print.PrintPreviewDialog.info_BillAmounoff = dt.Rows[0][0].ToString();
+                Class.Print.PrintPreviewDialog.info_datepayAmounoff = dt_date.Rows[0][3].ToString();
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, 1, "A5", 0);
             }            
             else if(CB_SelectPrint.SelectedIndex == 1)
             {
-                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, 1, "A5", 1);
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, 1, "A5", 0);
             }
             else
             {
@@ -608,8 +614,11 @@ namespace BankTeacher.Bank
             {
                 BT_Print.BackColor = Color.White;
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[13].Replace("{WithDrawNo}", DGVAmountOffHistory.Rows[e.RowIndex].Cells[1].Value.ToString()));
-                info_BillAmounoff = dt.Rows[0][2].ToString();
-                info_datepayAmounoff = dt.Rows[0][3].ToString();
+                Class.Print.PrintPreviewDialog.info_BillAmounoff = dt.Rows[0][2].ToString();
+                Class.Print.PrintPreviewDialog.info_datepayAmounoff = dt.Rows[0][3].ToString();
+                Class.Print.PrintPreviewDialog.info_Amounoff = dt.Rows[0][4].ToString();
+                Class.Print.PrintPreviewDialog.info_Payment = dt.Rows[0][5].ToString();
+                Class.Print.PrintPreviewDialog.info_TeacherAdd = dt.Rows[0][6].ToString();
                 if (dt.Rows.Count != 0)
                 {
                     DGV_Testter.Rows.Clear();

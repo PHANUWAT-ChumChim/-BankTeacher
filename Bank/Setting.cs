@@ -28,7 +28,7 @@ namespace BankTeacher.Bank
         { 
              //[0]Edit Setting INPUT: {DateAmountChange} {StartAmountMin} {StartAmountMax} {PerShare}
              "UPDATE EmployeeBank.dbo.tblSettingAmount \r\n" +
-             "SET DateAmountChange = {DateAmountChange}, StartAmountMin = {StartAmountMin} , StartAmountMax = {StartAmountMax} , PerShare = {PerShare}\r\n" +
+             "SET DateAmountChange = {DateAmountChange}, StartAmountMin = {StartAmountMin} , StartAmountMax = {StartAmountMax} , PerShare = {PerShare} , MinLoan = {MinLoan}\r\n" +
              "WHERE SettingNo = 1 ;"
             ,
         };
@@ -41,6 +41,7 @@ namespace BankTeacher.Bank
             TB_Min.Text = BankTeacher.Bank.Menu.startAmountMin.ToString();
             TB_Max.Text = BankTeacher.Bank.Menu.startAmountMax.ToString();
             TBPerShare.Text = BankTeacher.Bank.Menu.perShare.ToString();
+            TBMinLoan.Text = BankTeacher.Bank.Menu.MinLoan.ToString();
             if (BankTeacher.Bank.Menu.DateAmountChange == 1)
             {
                 CHB_edittime.Checked = true;
@@ -74,9 +75,11 @@ namespace BankTeacher.Bank
 
                     Class.SQLConnection.InputSQLMSSQL(SQLDefault[0].Replace("{DateAmountChange}", TranChbToInt.ToString())
                         .Replace("{StartAmountMin}", TB_Min.Text)
-                        .Replace("{StartAmountMax}", TB_Max.Text));
+                        .Replace("{StartAmountMax}", TB_Max.Text)
+                        .Replace("{MinLoan}",TBMinLoan.Text));
                     BankTeacher.Bank.Menu.startAmountMin = Convert.ToInt32(TB_Min.Text);
                     BankTeacher.Bank.Menu.startAmountMax = Convert.ToInt32(TB_Max.Text);
+                    BankTeacher.Bank.Menu.MinLoan = Convert.ToInt32(TBMinLoan.Text);
                     this.Hide();
                 }
                 else
@@ -159,6 +162,14 @@ namespace BankTeacher.Bank
         {
             if(e.KeyCode == Keys.Escape)
                 this.Close();
+        }
+
+        private void TBMinLoan_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((e.KeyChar < '0' || e.KeyChar > '9') && (e.KeyChar != '\b'))
+            {
+                e.Handled = true;
+            }
         }
     }
 }

@@ -10,9 +10,33 @@ using System.Windows.Forms;
 
 namespace BankTeacher.Class.Print
 {
-
     class PrintPreviewDialog
     {
+        // ======================= ข้อมูลเเบบปริ้น ====================
+        //ข้อมูลส่วนตัว
+        public static string info_name;
+        public static string info_id;
+        // ข้อมูลผู้รายการ
+        public static string info_TeacherAdd;
+        // สถานะ
+        public static string info_Payment;
+        // หุ้นสะสม
+        public static string info_Billpay;
+        public static string info_Savingtotel;
+        public static string info_datepayShare;
+        // กู้/
+        public static string info_LoanNo;
+        public static string info_Lona_AmountRemain;
+        // ถอนหุ้นสะสม
+        public static string info_Loanstatus;
+        public static string info_ShareNo;
+        // กล่งอเอกสาาร
+        public static string info_BillAmounoff;
+        public static string info_datepayAmounoff;
+        // ยอดที่ถอน
+        public static string info_Amounoff;
+        public static string info_Amounoffinsystem;
+        public static string info_canbeAmounoff;
         // ================================================================= info SQL =======================================================================
         // ข้อมูลโรงเรียน
         private static  DataTable DT = Class.SQLConnection.InputSQLMSSQL("SELECT CAST(SchoolNameThai as nvarchar(255)), SchoolNameEng, SchoolNameEngShort,CAST(NameManager as nvarchar),CAST(NameTeacherBig as nvarchar), CAST(AddressLetter + ' ' + CAST(Tel as nvarchar(10)) + ' ' + WebSite as nvarchar (255)),CAST(AddressLetter as nvarchar(255))  \r\n" +
@@ -195,8 +219,6 @@ namespace BankTeacher.Class.Print
                 if (pageNow == 0)
                 {
                     //------------------------
-
-
                     Class.Print.SetPrintMedtods.CenterRight(e, "สมาชิกเลขที่ " + TeacherNo, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), XP, XD);
                     Class.Print.SetPrintMedtods.Center(e, Y + (SpacePerRow * CurrentRows++), "สัญญากู้ยืมเงินสวัสดิการพนักงาน", THsarabun30, BrushBlack);
                     Class.Print.SetPrintMedtods.CenterRight(e, "เขียนที่ " + School, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 10, XP, XD);
@@ -296,7 +318,7 @@ namespace BankTeacher.Class.Print
         /// <para> (DataGridView G) INDAX : DataGridView</para>
         /// <para> (string header) INDAX : Name_header</para>
         /// <para> (string TextForm) INDAX : Name_From</para>
-        /// <para> (int confirmation) INDAX : 1 ues / 2 Not</para>
+        /// <para> (int confirmation) INDAX : 1 ues / 2 Not / 3 scrip / 4  copy</para>
         /// <para> (string Sizepaper) INDAX : A4 / A5</para>
         /// <para> (int summarize) INDAX : 0 ues / > 0 not</para>
         /// </summary>
@@ -363,6 +385,10 @@ namespace BankTeacher.Class.Print
             {
                 SizeRows = 4;
             }
+            if (confirmation == 1) { }
+            else if (confirmation == 2) { }
+            else if (confirmation == 3) { }
+            else { }
             // ========================== กล่อง =========================
             float Box_SizeX = 200;
             float Box_SizeY = 30;
@@ -386,8 +412,8 @@ namespace BankTeacher.Class.Print
                 //e.Graphics.DrawString($"วันที่ออกใบ {DateTime.Now.Day}/{DateTime.Now.Month}/{DateTime.Now.Year}", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - Size.Width, 50);
                 // ================================================================ เวลาที่เอกสารถูกปริ้น ===================================================================
                 // เลขหน้า
-                Size = e.Graphics.MeasureString($"หน้า 1/{pagepaper} ", FonT(16, ThaiSarabun, FontStyle.Bold));
-                e.Graphics.DrawString($"หน้า 1/{pagepaper} ",FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack,Line2_x-Size.Width,30);
+                Size = e.Graphics.MeasureString($"หน้า {pagepaper}/{pagepaper} ", FonT(16, ThaiSarabun, FontStyle.Bold));
+                e.Graphics.DrawString($"หน้า {pagepaper}/{pagepaper} ",FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack,Line2_x-Size.Width,30);
                 // เเบบพิมพ์ชื่อ วิทยาลัยเทคโนโลยีเเหลมฉบัง Thai
                 TextX += imageX;
                 e.Graphics.DrawString(TLC, FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, new RectangleF(TextX+10, TextY, 700, 100));
@@ -409,8 +435,16 @@ namespace BankTeacher.Class.Print
                     TextY += Size.Height;
                 }
                 // ================================================= ปริ้นข้อความต้นฉบับ ==================================
-                if (confirmation == 1)
-                    Class.Print.SetPrintMedtods.confirmation(e, PenBlack, BrushBlack, Print_two,Line2_x,260);
+                int c = 0;
+                if (confirmation != 0)
+                {
+                    if (confirmation == 1)
+                        c = Print_two;
+                    else if (confirmation == 4)
+                        c = 2;
+                    if (confirmation != 2)
+                        Class.Print.SetPrintMedtods.confirmation(e, PenBlack, BrushBlack, c, Line2_x, 260);
+                }
                 // =========================================================== ตารางบอก หลายการข้อมูล (กล่อง) ============================================
                 if (TextForm == "InfoLoan")
                 {
@@ -418,17 +452,16 @@ namespace BankTeacher.Class.Print
                 }
                 else if (TextForm == "pay")
                 {
-                    Class.Print.SetPrintMedtods.Box(e, "เลขบิลล์", "จ่ายวันที่", Bank.Pay.pay.info_Billpay, Bank.Pay.pay.info_datepay, Box_SizeX, Box_SizeY, location_Box, Line2_x);
+                    Class.Print.SetPrintMedtods.Box(e, "เลขบิลล์", "จ่ายวันที่",info_Billpay,info_datepayShare, Box_SizeX, Box_SizeY, location_Box, Line2_x);
                 }
                 else if(TextForm == "AmountOff")
                 {
-                    Class.Print.SetPrintMedtods.Box(e, "เลขบิลล์", "จ่ายวันที่", Bank.AmountOff.info_BillAmounoff, Bank.AmountOff.info_datepayAmounoff, Box_SizeX, Box_SizeY, location_Box, Line2_x);       
+                    Class.Print.SetPrintMedtods.Box(e, "เลขบิลล์", "จ่ายวันที่",info_BillAmounoff,info_datepayAmounoff, Box_SizeX, Box_SizeY, location_Box, Line2_x);       
                 }
                 else if(TextForm == "PayLoan")
                 {
                     Class.Print.SetPrintMedtods.Box(e, "เลขบิลล์", "จ่ายวันที่","พ.น จะรีบไปเเก้","พ.น จะรีบไปเเก้", Box_SizeX, Box_SizeY, location_Box, Line2_x);
                 }
-              
                 // ======================== เปิดการวาด Columns รอบเดียว ======================
                 if (onetimestartColumns == 0)
                 {
@@ -487,16 +520,16 @@ namespace BankTeacher.Class.Print
                     else if (TextForm == "pay")
                     {
                         string Remain;
-                        if (Bank.Pay.pay.info_Lona_AmountRemain != "")
+                        if (info_Lona_AmountRemain != "")
                         {
-                            Remain = $"ยอดกู้คงเหลือ : {Bank.Pay.pay.info_Lona_AmountRemain}";
+                            Remain = $"ยอดกู้คงเหลือ : {info_Lona_AmountRemain}";
                         }
                         else
                         {
                             Remain = "";
                         }
-                        string infopay = $"ชื่อ-นามสกุล : {Bank.Pay.pay.info_name}            รหัสประจำตัว : {Bank.Pay.pay.info_id}           \r\n" +
-                                         $"หุ้นสะสมทั้งหมด : {Bank.Pay.pay.info_totelAmountpay}            {Remain}        ";
+                        string infopay = $"ชื่อ-นามสกุล : {info_name}            รหัสประจำตัว : {info_id}           \r\n" +
+                                         $"หุ้นสะสมทั้งหมด : {info_Savingtotel}            {Remain}        ";
                         // กรอบ อร่อยต้อง Rectangle
                         Size = e.Graphics.MeasureString(infopay, FonT(18, ThaiSarabun, FontStyle.Regular));
                         //// กรอบ
@@ -530,9 +563,9 @@ namespace BankTeacher.Class.Print
                     }
                     else if (TextForm == "AmountOff")
                     {
-                        string infoAmountoff = $"ชื่อ-นามสกุล : {Bank.AmountOff.info_name}            รหัสประจำตัว : {Bank.AmountOff.info_id}            เลขที่หุ้นสะสม : {Bank.AmountOff.info_ShareNo}\r\n" +
-                                           $"ยอดเงินสะสมทั้งหมด : {Bank.AmountOff.info_totelAmountpay} บาท          ยอดเงินที่ถอนออกได้ : {Bank.AmountOff.info_canbeAmounoff}            สถานะ : {Bank.AmountOff.info_status}\r\n" +
-                                           $"ยอดที่ถอนออก : {Bank.AmountOff.info_Amounoff} บาท                      ยอดเงินค้ำในระบบ : {Bank.AmountOff.info_Amounoffinsystem}";
+                        string infoAmountoff = $"ชื่อ-นามสกุล : {info_name}            รหัสประจำตัว : {info_id}            เลขที่หุ้นสะสม : {info_ShareNo}\r\n" +
+                                           $"ยอดเงินสะสมทั้งหมด : {info_Savingtotel} บาท          ยอดเงินที่ถอนออกได้ : {info_canbeAmounoff}            สถานะ : {info_Loanstatus}\r\n" +
+                                           $"ยอดที่ถอนออก : {info_Amounoff} บาท                      ยอดเงินค้ำในระบบ : {info_Amounoffinsystem}";
                         Size = e.Graphics.MeasureString(infoAmountoff, FonT(18, ThaiSarabun, FontStyle.Regular));
                         //// กรอบ
                         //e.Graphics.DrawRectangle(PenBlack, 50, TextY, x2 - 50, Size.Height - 20 + 5);
@@ -543,7 +576,7 @@ namespace BankTeacher.Class.Print
                     }
                     else if(TextForm == "payLoan")
                     {
-                        string infoAmountoff = $"ชื่อ-นามสกุล : {Bank.AmountOff.info_name}            รหัสประจำตัว : {Bank.AmountOff.info_id}";
+                        string infoAmountoff = $"ชื่อ-นามสกุล : {info_name}            รหัสประจำตัว : {info_id}";
                                            
 
                     }
@@ -683,23 +716,23 @@ namespace BankTeacher.Class.Print
                                                     }
                                                 }
                                             }
-                                            else if (G.Rows[Rows].Cells[List].Value.ToString() == DT_ListType.Rows[1][1].ToString())
-                                            {
-                                                for (int returcells = G.Rows[Rows].Cells.Count - 1; returcells > 0; returcells--)
+                                                else
                                                 {
-                                                    try
+                                                    for (int returcells = G.Rows[Rows].Cells.Count - 1; returcells > 0; returcells--)
                                                     {
-                                                        Loan.Add(Convert.ToInt32(G.Rows[Rows].Cells[returcells].Value));
-                                                        SUM.Add(Convert.ToInt32(G.Rows[Rows].Cells[returcells].Value));
-                                                        break;
-                                                    }
-                                                    catch
-                                                    {
-                                                        // ทิ้งค่า
+                                                        try
+                                                        {
+                                                            Loan.Add(Convert.ToInt32(G.Rows[Rows].Cells[returcells].Value));
+                                                            SUM.Add(Convert.ToInt32(G.Rows[Rows].Cells[returcells].Value));
+                                                            break;
+                                                        }
+                                                        catch
+                                                        {
+                                                            // ทิ้งค่า
+                                                        }
                                                     }
                                                 }
                                             }
-                                        }
                                     }
                                     else
                                     {
@@ -776,8 +809,18 @@ namespace BankTeacher.Class.Print
             if(summarize == 0)
             if (Currentposition_Row == G.Rows.Count) // ตำเเหน่งปัจุบันเกินขนาด ความยาวที่กำหนด หรือ ไม่
             {
-                if(TextForm == "pay" || TextForm == "AmountOff" || TextForm == "PayLoan")
-                {
+                    e.Graphics.DrawString("รูปเเบบการจ่าย ", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, 50, startTableY + 10);
+                    TextSize = e.Graphics.MeasureString("รูปเเบบการจ่าย ", FonT(16, ThaiSarabun, FontStyle.Bold));
+                    
+                    e.Graphics.DrawString($" : {info_Payment}", FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack,50 + TextSize.Width, startTableY+10);
+                    
+                    e.Graphics.DrawString("หมายเหตุ", FonT(18, ThaiSarabun, FontStyle.Bold), BrushBlack, 50, startTableY + 40);
+                    TextSize = e.Graphics.MeasureString("หมายเหตุ", FonT(18, ThaiSarabun, FontStyle.Regular));
+
+                    e.Graphics.DrawString("ใบเสร็จรับเงินฉบับนี้จะสมบูรณ์เมื่อผู้รับเงินลงลายมือชื่อเป็นอันเสร็จสิ้น \r\n" +
+                                        "ชำระเเล้วไม่สามารถรับคืนหรือเปลี่ยนตัวไม่ว่ากรณีใดๆ", FonT(12, ThaiSarabun, FontStyle.Bold), BrushBlack, 50 + TextSize.Width, startTableY + 40);
+                    if (TextForm == "pay" || TextForm == "AmountOff" || TextForm == "PayLoan")
+                    {
                     Amountotel_SUM += Convert.ToInt32(SUM.Sum());
                     Amountotel_Pay += Convert.ToInt32(Pay.Sum());
                     Amountotel_Loan += Convert.ToInt32(Loan.Sum());
@@ -812,20 +855,14 @@ namespace BankTeacher.Class.Print
                         // กรอบๆ
                         e.Graphics.DrawRectangle(PenBlack, Line2_x - (TextSize1.Width + TextSize.Width + 200), startTableY, Line2_x - (Line2_x - (TextSize1.Width + TextSize.Width + 200)), TextSize1.Height);
                     }
-                        e.Graphics.DrawString("หมายเหตุ", FonT(18, ThaiSarabun, FontStyle.Bold), BrushBlack, 50, startTableY + 20);
-                        TextSize = e.Graphics.MeasureString("หมายเหตุ", FonT(18, ThaiSarabun, FontStyle.Regular));
-
-                        e.Graphics.DrawString("ใบเสร็จรับเงินฉบับนี้จะสมบูรณ์เมื่อผู้รับเงินลงลายมือชื่อเป็นอันเสร็จสิ้น \r\n" +
-                                            "ชำระเเล้วไม่สามารถรับคืนหรือเปลี่ยนตัวไม่ว่ากรณีใดๆ", FonT(12, ThaiSarabun, FontStyle.Bold), BrushBlack, 50 + TextSize.Width, startTableY + 20);
-
                         TextSize = e.Graphics.MeasureString("_____________________________", FonT(13, ThaiSarabun, FontStyle.Regular));
-                    e.Graphics.DrawString("_____________________________", FonT(13, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - TextSize.Width, startTableY + 60);
-                    TextSize1 = e.Graphics.MeasureString("ลงนาม", FonT(18, ThaiSarabun, FontStyle.Bold));
-                    e.Graphics.DrawString("ลงนาม", FonT(18, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - (TextSize.Width + TextSize1.Width), startTableY + 50);
-                    // คนทำรายการ
-                    TextSize1 = e.Graphics.MeasureString("ผู้ทำรายการ", FonT(18, ThaiSarabun, FontStyle.Regular));
-                    e.Graphics.DrawString("ผู้ทำรายการ", FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, (Line2_x - TextSize1.Width) - ((TextSize.Width - TextSize1.Width) / 2), startTableY + 90);
-                }
+                        e.Graphics.DrawString("_____________________________", FonT(13, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - TextSize.Width, startTableY + 70);
+                        TextSize1 = e.Graphics.MeasureString("ลงนาม", FonT(18, ThaiSarabun, FontStyle.Bold));
+                        e.Graphics.DrawString("ลงนาม", FonT(18, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - (TextSize.Width + TextSize1.Width), startTableY + 60);
+                        // คนทำรายการ
+                        TextSize1 = e.Graphics.MeasureString(info_TeacherAdd, FonT(18, ThaiSarabun, FontStyle.Regular));
+                        e.Graphics.DrawString(info_TeacherAdd, FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, (Line2_x - TextSize1.Width) - ((TextSize.Width - TextSize1.Width) / 2), startTableY + 100);
+                    }
             }
             else
             {
@@ -836,15 +873,6 @@ namespace BankTeacher.Class.Print
 
                     e.Graphics.DrawString("ใบเสร็จรับเงินฉบับนี้จะสมบูรณ์เมื่อผู้รับเงินลงลายมือชื่อเป็นอันเสร็จสิ้น \r\n" +
                                         "ชำระเเล้วไม่สามารถรับคืนหรือเปลี่ยนตัวไม่ว่ากรณีใดๆ", FonT(12, ThaiSarabun, FontStyle.Bold), BrushBlack, 50 + TextSize.Width, startTableY + 20);
-                       
-                        TextSize = e.Graphics.MeasureString("_____________________________", FonT(13, ThaiSarabun, FontStyle.Regular));
-                        e.Graphics.DrawString("_____________________________", FonT(13, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - TextSize.Width, startTableY + 60);
-                        TextSize1 = e.Graphics.MeasureString("ลงนาม", FonT(18, ThaiSarabun, FontStyle.Bold));
-                        e.Graphics.DrawString("ลงนาม", FonT(18, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - (TextSize.Width + TextSize1.Width), startTableY + 50);
-                        // คนทำรายการ
-                        TextSize1 = e.Graphics.MeasureString("ผู้ทำรายการ", FonT(18, ThaiSarabun, FontStyle.Regular));
-                        e.Graphics.DrawString("ผู้ทำรายการ", FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, (Line2_x - TextSize1.Width) - ((TextSize.Width - TextSize1.Width) / 2), startTableY + 90);
-
                     }
                 startTableY = 2000; // ทำให้ความยาวหน้ากระดาษ เกิน 
             }
@@ -868,7 +896,7 @@ namespace BankTeacher.Class.Print
                 // เลขหน้า
                 pagepaper = 1;
                 Print_two++;
-                if(confirmation == 1)
+                if (confirmation == 1)
                 {
                     if (Print_two == 2)
                     {
@@ -878,12 +906,11 @@ namespace BankTeacher.Class.Print
                     else
                         e.HasMorePages = true;
                 }
-                else
+                else if (confirmation == 2 || confirmation == 3)
                 {
                     Print_two = 0;
                     e.HasMorePages = false;  // ปิด
                 }
-                  
             }
             else
             {
