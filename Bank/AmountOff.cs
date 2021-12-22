@@ -438,7 +438,6 @@ namespace BankTeacher.Bank
         {
             List<int> SUM = new List<int>();
             SUM.Clear();
-            BT_Print.BackColor = Color.Red;
             if (CBYear.SelectedIndex != -1)
             {
                 DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[6]
@@ -488,7 +487,7 @@ namespace BankTeacher.Bank
            else
                 BSaveAmountOff.Enabled = false;
         }
-        private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
+        private void printDocument1_PrintPage_1(object sender, PrintPageEventArgs e)
         {
             //======== INFO =================
             DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[10]);
@@ -506,16 +505,19 @@ namespace BankTeacher.Bank
                 Class.Print.PrintPreviewDialog.info_BillAmounoff = dt.Rows[0][0].ToString();
                 Class.Print.PrintPreviewDialog.info_datepayAmounoff = dt_date.Rows[0][3].ToString();
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, 1, "A5", 0);
-            }            
-            else if(CB_SelectPrint.SelectedIndex == 1)
+            }
+            else if (CB_SelectPrint.SelectedIndex == 1)
             {
-                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, 1, "A5", 0);
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, SandCRonot, "A5", 0);
+                DGV_Testter.Rows.Clear();
+                TB_Bill.Text = "";
             }
             else
             {
-                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVAmountOffHistory, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, 1, "A4", 1);
+                Class.Print.PrintPreviewDialog.details = 1;
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVAmountOffHistory, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, 2, "A4", 1);
             }
-              
+            Class.Print.PrintPreviewDialog.details = 0;
             SELECT_Print = 0;
         }
 
@@ -574,16 +576,22 @@ namespace BankTeacher.Bank
         {
             if(DGVAmountOffHistory.Rows.Count == 0)
             {
-                MessageBox.Show("ไม่พบรายการถอน กรูณาตรวจสอบใหม่อีกครั้งค่ะ");
+                MessageBox.Show("ไม่พบรายการถอน กรูณาตรวจสอบใหม่อีกครั้ง", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 tabControl1.SelectedIndex = 0;
             }
         }
-
+        int SandCRonot = 0;
         private void BT_Print_Click(object sender, EventArgs e)
         {
-            if (BT_Print.BackColor != Color.Red)
+            // เลือก ต้น ฉบับ หรือ สำเนา หรือ ไม่
+            if (checkBox_scrip.Checked == true) { SandCRonot = 3; }
+            if (checkBox_copy.Checked == true) { SandCRonot = 4; }
+            if (checkBox_scrip.Checked == true && checkBox_copy.Checked == true) { SandCRonot = 1; }
+            if (checkBox_scrip.Checked == false && checkBox_copy.Checked == false) { SandCRonot = 0; }
+
+            if (DGVAmountOffHistory.Rows.Count != 0)
             {
-                if (CB_SelectPrint.SelectedIndex == 1)
+                if (CB_SelectPrint.SelectedIndex == 1 && DGV_Testter.Rows.Count != 0)
                 {
                     printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                     printDocument1.DefaultPageSettings.Landscape = true;
@@ -592,7 +600,7 @@ namespace BankTeacher.Bank
                         printDocument1.Print();
                     }
                 }
-                else
+                else if(CB_SelectPrint.SelectedIndex == 0)
                 {
                     printDocument1.DefaultPageSettings.PaperSize = new PaperSize("Letter", 850, 1100);
                     printDocument1.DefaultPageSettings.Landscape = false;
@@ -601,10 +609,11 @@ namespace BankTeacher.Bank
                         printDocument1.Print();
                     }
                 }
+                else MessageBox.Show("โปรเลือกเลขบิลล์ในตาราง หรือ กรอกเลขบิลล์ล์", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information); 
             }
             else
             {
-                MessageBox.Show("โปรเลือกเลขบิลล์ในตาราง หรือ เลือกตารางที่ปริ้น");
+                MessageBox.Show("โปรเลือกเลขบิลล์ในตาราง หรือ กรอกเลขบิลล์ล์", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -612,8 +621,36 @@ namespace BankTeacher.Bank
         {
             if(e.RowIndex != -1)
             {
-                BT_Print.BackColor = Color.White;
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[13].Replace("{WithDrawNo}", DGVAmountOffHistory.Rows[e.RowIndex].Cells[1].Value.ToString()));
+                Class.Print.PrintPreviewDialog.info_BillAmounoff = dt.Rows[0][2].ToString();
+                Class.Print.PrintPreviewDialog.info_datepayAmounoff = dt.Rows[0][3].ToString();
+                Class.Print.PrintPreviewDialog.info_Amounoff = dt.Rows[0][4].ToString();
+                Class.Print.PrintPreviewDialog.info_Payment = dt.Rows[0][5].ToString();
+                Class.Print.PrintPreviewDialog.info_TeacherAdd = dt.Rows[0][6].ToString();
+                TB_Bill.Text = DGVAmountOffHistory.Rows[e.RowIndex].Cells[1].Value.ToString();
+                if (dt.Rows.Count != 0)
+                {
+                    DGV_Testter.Rows.Clear();
+                    for (int loop = 0; loop < dt.Rows.Count; loop++)
+                    {
+                        DGV_Testter.Rows.Add(loop + 1, dt.Rows[0][3].ToString(), "ถอนเงิน", dt.Rows[0][4].ToString());
+                    }
+                }
+            }
+        }
+
+        private void TB_Bill_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((!Char.IsNumber(e.KeyChar)) && (!Char.IsControl(e.KeyChar)))
+            {
+                e.Handled = true;
+            }
+        }
+        private void TB_Bill_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[13].Replace("{WithDrawNo}", TB_Bill.Text));
                 Class.Print.PrintPreviewDialog.info_BillAmounoff = dt.Rows[0][2].ToString();
                 Class.Print.PrintPreviewDialog.info_datepayAmounoff = dt.Rows[0][3].ToString();
                 Class.Print.PrintPreviewDialog.info_Amounoff = dt.Rows[0][4].ToString();
@@ -628,10 +665,7 @@ namespace BankTeacher.Bank
                     }
                 }
             }
-            else
-            {
-                BT_Print.BackColor = Color.Red;
-            }
+            catch { }
         }
     }
 }

@@ -130,7 +130,7 @@ namespace BankTeacher.Bank
                                 for (int x = 0; x < dtCheckBillInDay.Rows.Count; x++)
                                 {
                                     int AmountBill = 0;
-                                    DGV_one.Rows.Add(dtCheckBillInDay.Rows[x][0].ToString(), dtCheckBillInDay.Rows[x][1].ToString());
+                                    DGV_one.Rows.Add(x+1,dtCheckBillInDay.Rows[x][0].ToString(), dtCheckBillInDay.Rows[x][1].ToString());
                                     DGVPosition = DGV_one.Rows.Count - 1;
 
                                     DataTable dtCheckBillDetail = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
@@ -150,22 +150,22 @@ namespace BankTeacher.Bank
 
                                             if (y == 0)
                                             {
-                                                DGV_one.Rows[DGVPosition].Cells[2].Value = dtCheckBillDetail.Rows[y][1].ToString();
-                                                DGV_one.Rows[DGVPosition].Cells[3].Value = dtCheckBillDetail.Rows[y][2].ToString();
-                                                DGV_one.Rows[DGVPosition].Cells[4].Value = dtCheckBillDetail.Rows[y][3].ToString();
+                                                DGV_one.Rows[DGVPosition].Cells[3].Value = dtCheckBillDetail.Rows[y][1].ToString();
+                                                DGV_one.Rows[DGVPosition].Cells[4].Value = dtCheckBillDetail.Rows[y][2].ToString();
+                                                DGV_one.Rows[DGVPosition].Cells[5].Value = dtCheckBillDetail.Rows[y][3].ToString();
 
                                                 if (y == dtCheckBillDetail.Rows.Count - 1)
                                                 {
-                                                    DGV_one.Rows.Add("", "", "สรุปยอดบิลล์", "", AmountBill);
+                                                    DGV_one.Rows.Add("", "", "สรุปยอดบิลล์", "", AmountBill,"");
                                                     DGV_one.Rows[DGV_one.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                                                 }
 
                                                 continue;
                                             }
-                                            DGV_one.Rows.Add("", "", dtCheckBillDetail.Rows[y][1].ToString(), dtCheckBillDetail.Rows[y][2].ToString(), dtCheckBillDetail.Rows[y][3].ToString());
+                                            DGV_one.Rows.Add("", "", dtCheckBillDetail.Rows[y][1].ToString(), dtCheckBillDetail.Rows[y][2].ToString(), dtCheckBillDetail.Rows[y][3].ToString(),"");
                                             if (y == dtCheckBillDetail.Rows.Count - 1)
                                             {
-                                                DGV_one.Rows.Add("", "", "สรุปยอดบิลล์", "", AmountBill);
+                                                DGV_one.Rows.Add("", "", "สรุปยอดบิลล์", "", AmountBill,"");
                                                 DGV_one.Rows[DGV_one.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                                             }
                                         }
@@ -230,6 +230,26 @@ namespace BankTeacher.Bank
             int x = this.Width / 2 - panel1.Size.Width / 2;
             int y = this.Height / 2 - panel1.Size.Height / 2;
             panel1.Location = new Point(x, y);
+        }
+
+        private void BTPrint_Click(object sender, EventArgs e)
+        {
+            if(DGV_one.Rows.Count != 0)
+            {
+                if(printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    printDocument1.Print();
+                }
+            }
+            else
+            {
+                MessageBox.Show("ไม่พบรายการบิลล์ ในตาราง", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_one, "รายการบิลล์", AccessibilityObject.Name, 2, "A4", 1);
         }
     }
 }
