@@ -124,22 +124,9 @@ namespace BankTeacher.Bank
                         int AmountLoan = 0;
                         for(int x = 0; x < EpensesInfo.Tables[0].Rows.Count; x++)
                         {
-//<<<<<<< Bob
-                            int AmountLoan = 0;
-                            for(int x = 0; x < EpensesInfo.Tables[0].Rows.Count; x++)
-                            {
-                                DGV.Rows.Add(x+1,EpensesInfo.Tables[0].Rows[x][1].ToString(),"รายการกู้ "+ EpensesInfo.Tables[0].Rows[x][2].ToString() , EpensesInfo.Tables[0].Rows[x][3], EpensesInfo.Tables[0].Rows[x][4]) ;
-                                AmountLoan += Convert.ToInt32(EpensesInfo.Tables[0].Rows[x][4]);
-                                SumAmount += Convert.ToInt32(EpensesInfo.Tables[0].Rows[x][4]);
-                            }
-                            DGV.Rows.Add("", "", "สรุปรายการกู้", "", AmountLoan.ToString());
-                            DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
-                            TBAmountLoan.Text = AmountLoan.ToString();
-//=======
                             DGV.Rows.Add(EpensesInfo.Tables[0].Rows[x][1].ToString(),"รายการกู้ "+ EpensesInfo.Tables[0].Rows[x][2].ToString() , EpensesInfo.Tables[0].Rows[x][3], EpensesInfo.Tables[0].Rows[x][4]) ;
                             AmountLoan += Convert.ToInt32(EpensesInfo.Tables[0].Rows[x][4]);
                             SumAmount += Convert.ToInt32(EpensesInfo.Tables[0].Rows[x][4]);
-//>>>>>>> master
                         }
                         DGV.Rows.Add("", "สรุปรายการกู้", "", AmountLoan.ToString());
                         DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
@@ -150,22 +137,6 @@ namespace BankTeacher.Bank
                         int AmountSaving = 0;
                         for (int x = 0; x < EpensesInfo.Tables[1].Rows.Count; x++)
                         {
-//<<<<<<< Bob
-                            int AmountSaving = 0;
-                            for (int x = 0; x < EpensesInfo.Tables[1].Rows.Count; x++)
-                            {
-                                DGV.Rows.Add("", EpensesInfo.Tables[1].Rows[x][1].ToString(), "รายการถอนหุ้นสะสม", EpensesInfo.Tables[1].Rows[x][2], EpensesInfo.Tables[1].Rows[x][3]);
-                                AmountSaving += Convert.ToInt32(EpensesInfo.Tables[1].Rows[x][3]);
-                                SumAmount += Convert.ToInt32(EpensesInfo.Tables[1].Rows[x][3]);
-                            }
-                            DGV.Rows.Add("", "", "สรุปรายการถอนหุ้นสะสม", "", AmountSaving.ToString());
-                            DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
-                            TBAmountWithDraw.Text = AmountSaving.ToString();
-                        }
-                        TBAmount.Text = SumAmount.ToString();
-                        DGV.Rows.Add("", "", "สรุปรายการทั้งหมด", "", SumAmount.ToString());
-                        DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.CornflowerBlue;
-//=======
                             DGV.Rows.Add(EpensesInfo.Tables[1].Rows[x][1].ToString(), "รายการถอนหุ้นสะสม", EpensesInfo.Tables[1].Rows[x][2], EpensesInfo.Tables[1].Rows[x][3]);
                             AmountSaving += Convert.ToInt32(EpensesInfo.Tables[1].Rows[x][3]);
                             SumAmount += Convert.ToInt32(EpensesInfo.Tables[1].Rows[x][3]);
@@ -173,7 +144,6 @@ namespace BankTeacher.Bank
                         DGV.Rows.Add("", "สรุปรายการถอนหุ้นสะสม", "", AmountSaving.ToString());
                         DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                         TBAmountWithDraw.Text = AmountSaving.ToString();
-//>>>>>>> master
                     }
                     TBAmount.Text = SumAmount.ToString();
                     DGV.Rows.Add("", "สรุปรายการทั้งหมด", "", SumAmount.ToString());
@@ -228,8 +198,6 @@ namespace BankTeacher.Bank
             int y = this.Height / 2 - panel1.Size.Height / 2;
             panel1.Location = new Point(x, y);
         }
-
-//<<<<<<< Bob
         private void BTPrint_Click(object sender, EventArgs e)
         {
             if(DGV.Rows.Count != 0)
@@ -253,13 +221,11 @@ namespace BankTeacher.Bank
 
         private void label1_Click(object sender, EventArgs e)
         {
-
-//=======
+        }
         private void Checkmember(bool tf)
         {
             TBTeacherNo.Enabled = tf;
             BSearchTeacher.Enabled = tf;
-//>>>>>>> master
         }
     }
 }

@@ -152,27 +152,6 @@ namespace BankTeacher.Bank
                                             AmountTranfer += Convert.ToInt32(dtCheckBillDetail.Rows[y][3]);
                                         else if (dtCheckBillDetail.Rows[y][2].ToString().Contains("เครดิต"))
                                             AmountCradit += Convert.ToInt32(dtCheckBillDetail.Rows[y][3]);
-
-//<<<<<<< Bob
-                                            if (y == 0)
-                                            {
-                                                DGV_one.Rows[DGVPosition].Cells[3].Value = dtCheckBillDetail.Rows[y][1].ToString();
-                                                DGV_one.Rows[DGVPosition].Cells[4].Value = dtCheckBillDetail.Rows[y][2].ToString();
-                                                DGV_one.Rows[DGVPosition].Cells[5].Value = dtCheckBillDetail.Rows[y][3].ToString();
-
-                                                if (y == dtCheckBillDetail.Rows.Count - 1)
-                                                {
-                                                    DGV_one.Rows.Add("", "", "", "สรุปยอดบิลล์", "", AmountBill,"");
-                                                    DGV_one.Rows[DGV_one.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
-                                                }
-
-                                                continue;
-                                            }
-                                            DGV_one.Rows.Add("", "", "", dtCheckBillDetail.Rows[y][1].ToString(), dtCheckBillDetail.Rows[y][2].ToString(), dtCheckBillDetail.Rows[y][3].ToString(),"");
-                                            if (y == dtCheckBillDetail.Rows.Count - 1)
-                                            {
-                                                DGV_one.Rows.Add("", "", "", "สรุปยอดบิลล์", "", AmountBill,"");
-//=======
                                         if (y == 0)
                                         {
                                             DGV_one.Rows[DGVPosition].Cells[3].Value = dtCheckBillDetail.Rows[y][1].ToString();
@@ -182,7 +161,6 @@ namespace BankTeacher.Bank
                                             if (y == dtCheckBillDetail.Rows.Count - 1)
                                             {
                                                 DGV_one.Rows.Add("", "", "สรุปยอดบิลล์", "", AmountBill, "");
-//>>>>>>> master
                                                 DGV_one.Rows[DGV_one.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                                             }
 
