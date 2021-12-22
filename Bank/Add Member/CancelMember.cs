@@ -13,7 +13,7 @@ namespace BankTeacher.Bank.Add_Member
 {
     public partial class CancelMember : Form
     {
-        int Check = 0;
+        bool Check = false;
         int StatusBoxFile = 0;
         String imgeLocation = "";
         bool CheckBRegister = false;
@@ -76,6 +76,18 @@ namespace BankTeacher.Bank.Add_Member
           "FROM EmployeeBank.dbo.tblMemberResignation \r\n " +
           "GROUP BY  YEAR(Date) "
            ,
+           //[5] SELECT MEMBER (Enter) INPUT: {Text}
+            "SELECT TOP(20) a.TeacherNo , CAST(ISNULL(c.PrefixName+' ','')+[Fname] +' '+ [Lname] as NVARCHAR)AS Name, e.SavingAmount,    \r\n " +
+            "b.TeacherLicenseNo,b.IdNo AS IDNo,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar) AS UserStatususing    \r\n " +
+            "FROM EmployeeBank.dbo.tblMember as a    \r\n " +
+            "LEFT JOIN Personal.dbo.tblTeacherHis as b ON a.TeacherNo = b.TeacherNo    \r\n " +
+            "LEFT JOIN BaseData.dbo.tblPrefix as c ON c.PrefixNo = b.PrefixNo   \r\n " +
+            "INNER JOIN EmployeeBank.dbo.tblMemberStatus as d on a.MemberStatusNo = d.MemberStatusNo  \r\n " +
+            "LEFT JOIN EmployeeBank.dbo.tblShare as e on a.TeacherNo = e.TeacherNo \r\n " +
+            "WHERE a.MemberStatusNo = 1 and a.TeacherNo = '{Text}' and a.MemberStatusNo = 1         \r\n " +
+            "GROUP BY a.TeacherNo , CAST(ISNULL(c.PrefixName+' ','')+[Fname] +' '+ [Lname] as NVARCHAR), e.SavingAmount,    \r\n " +
+            "b.TeacherLicenseNo,b.IdNo ,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar)   \r\n " +
+            "ORDER BY a.TeacherNo; "
 
         };
         public CancelMember()
@@ -117,29 +129,27 @@ namespace BankTeacher.Bank.Add_Member
 
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter && TBTeacherNo.Text.Length == 6)
+            if (e.KeyCode == Keys.Enter)
             {
-                if (TBTeacherNo.Text.Length == 6)
+                DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0].Replace("{Text}", TBTeacherNo.Text));
+                if(ds.Tables[0].Rows.Count != 0)
                 {
-                    try
-                    {
-                        DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0].Replace("{Text}", TBTeacherNo.Text));
-                        TBTeacherName.Text = ds.Tables[0].Rows[0][1].ToString();
-                        Saving = Convert.ToDouble(ds.Tables[0].Rows[0][2].ToString());
-                        Check = 1;
-
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
+                    TBTeacherName.Text = ds.Tables[0].Rows[0][1].ToString();
+                    Saving = Convert.ToDouble(ds.Tables[0].Rows[0][2].ToString());
+                    Check = true;
+                    Checkmember(false);
+                }
+                else
+                {
+                    MessageBox.Show("ไม่พยรายชื่อ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                 }
             }
-            else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back && Check == 1)
+            else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back && Check)
             {
                 TBTeacherName.Text = "";
                 CheckBCancel = false;
-                Check = 0;
+                Check = false;
+                Checkmember(true);
             }
         }
 
@@ -162,6 +172,7 @@ namespace BankTeacher.Bank.Add_Member
                         .Replace("{Status}", "2"));
                         MessageBox.Show("ยกเลิกผู้ใช้เรียบร้อย", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         CheckBCancel = true;
+                        Checkmember(true);
                         imgeLocation = "";
                     }
                     else
@@ -202,7 +213,7 @@ namespace BankTeacher.Bank.Add_Member
 
         private void BOpenFile_Click(object sender, EventArgs e)
         {
-            if (TBTeacherNO_Cancel.Text.Length == 6)
+            if (Check)
             {
                 if (StatusBoxFile == 0)
                 {
@@ -321,18 +332,25 @@ namespace BankTeacher.Bank.Add_Member
                     TBTeacherNo.Text = "";
                     TBTeacherName.Text = "";
                     TBNote.Text = "";
-                    Check = 0;
+                    Check = false;
                     StatusBoxFile = 0;
                     imgeLocation = "";
                     CheckBRegister = false;
                     CheckBCancel = false;
                     Saving = 0;
+                    Checkmember(true);
                 }
                 else
                 {
                     BExitForm_Click(new object(), new EventArgs());
                 }
             }
+        }
+        
+        private void Checkmember(bool tf)
+        {
+            TBTeacherNo.Enabled = tf;
+            BSearch.Enabled = tf;
         }
     }
 }

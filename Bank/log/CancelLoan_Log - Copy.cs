@@ -71,8 +71,6 @@ namespace BankTeacher.Bank.log
         {
             if (RBday.Checked == false)
             {
-                //
-
                 if (e.KeyCode == Keys.Enter && TBTeacherNo.Text.Length >= 6 && DTPSelectDate.Value.ToString() != "")
                 {
                     DGVSelectTeacherAdd.Rows.Clear();
@@ -88,10 +86,11 @@ namespace BankTeacher.Bank.log
                         TBTeacherName.Text = dtTeacherNoCancel.Rows[0][0].ToString();
                         for (int x = 0; x < dtTeacherNoCancel.Rows.Count; x++)
                         {
-                            DGVSelectTeacherAdd.Rows.Add(dtTeacherNoCancel.Rows[x][0].ToString(), dtTeacherNoCancel.Rows[x][1].ToString(), dtTeacherNoCancel.Rows[x][2].ToString(), dtTeacherNoCancel.Rows[x][3].ToString()
-                                , dtTeacherNoCancel.Rows[x][4].ToString(), dtTeacherNoCancel.Rows[x][5].ToString(), dtTeacherNoCancel.Rows[x][6].ToString());
+                            DGVSelectTeacherAdd.Rows.Add(dtTeacherNoCancel.Rows[x][0].ToString(), dtTeacherNoCancel.Rows[x][1].ToString(), dtTeacherNoCancel.Rows[x][2].ToString() , dtTeacherNoCancel.Rows[x][3].ToString(), dtTeacherNoCancel.Rows[x][4].ToString()
+                                , dtTeacherNoCancel.Rows[x][5].ToString(), dtTeacherNoCancel.Rows[x][6].ToString());
 
                         }
+                        Checkmember(false);
                     }
                     else
                     {
@@ -104,10 +103,15 @@ namespace BankTeacher.Bank.log
                 {
                     TBTeacherName.Text = "";
                     DGVSelectTeacherAdd.Rows.Clear();
+                    Checkmember(true);
                 }
             }
         }
-
+        private void Checkmember(bool tf)
+        {
+            TBTeacherNo.Enabled = tf;
+            BSearchTeacher.Enabled = tf;
+        }
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
             Bank.Search IN;
@@ -133,28 +137,7 @@ namespace BankTeacher.Bank.log
                 if (DTPSelectDate.Value.ToString() != "")
                     DTPSelectDate_ValueChanged(sender, new EventArgs());
             }
-            else if (RBday.Checked == false)
-            {
-                DGVCancelLoan.Rows.Clear();
-                panel2.Enabled = true;
-                DGVCancelLoan.Visible = false;
-                DGVSelectTeacherAdd.Visible = true;
-                if (DTPSelectDate.Value.ToString() != "")
-                    DTPSelectDate_ValueChanged(sender, new EventArgs());
-            }
         }
-
-        private void RBSelectTeacherAdd_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        //private void ClearForm()
-        //{
-        //    TBTeacherName.Text = "";
-        //    TBTeacherNo.Text = "";
-        //    DGVCancelLoan.Rows.Clear();
-        //}
 
         private void CancelLoan_Log_Load(object sender, EventArgs e)
         {
@@ -182,6 +165,55 @@ namespace BankTeacher.Bank.log
             else if (RBday.Checked == false && TBTeacherNo.Text.Length == 6)
             {
                 TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+            }
+        }
+
+        private void RBSelectTeacherAdd_CheckedChanged_1(object sender, EventArgs e)
+        {
+            if (RBSelectTeacherAdd.Checked == true)
+            {
+                DGVCancelLoan.Rows.Clear();
+                BSearchTeacher.Enabled = true;
+                TBTeacherName.Enabled = true;
+                panel2.Enabled = true;
+                TBTeacherName.Enabled = false;
+                DGVCancelLoan.Visible = false;
+                DGVSelectTeacherAdd.Visible = true;
+                if (DTPSelectDate.Value.ToString() != "")
+                    DTPSelectDate_ValueChanged(sender, new EventArgs());
+            }
+        }
+        private void ClearForm() 
+        {
+            DGVSelectTeacherAdd.Rows.Clear();
+            TBTeacherName.Text = "";
+            TBTeacherNo.Text = "";
+            TBTeacherNo.Enabled = true;
+            TBTeacherName.Enabled = true;
+        }
+
+        private void CancelLoan_Log_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (RBSelectTeacherAdd.Enabled == true)
+                {
+                    if (DGVSelectTeacherAdd.Rows.Count != 0)
+                    {
+                        DGVSelectTeacherAdd.Rows.Clear();
+                        Checkmember(true);
+                        TBTeacherName.Text = "";
+                        TBTeacherNo.Text = "";
+                    }
+                    else
+                    {
+                        BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+                    }
+                }
+                else
+                {
+                    BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+                }
             }
         }
     }

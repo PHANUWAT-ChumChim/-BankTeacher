@@ -29,16 +29,16 @@ namespace BankTeacher.Bank.log
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.DGVLoanDay = new System.Windows.Forms.DataGridView();
+            this.DGVSelectTeacherAdd = new System.Windows.Forms.DataGridView();
             this.panel3 = new System.Windows.Forms.Panel();
             this.RBday = new System.Windows.Forms.RadioButton();
             this.RBSelectTeacherAdd = new System.Windows.Forms.RadioButton();
-            this.DGVSelectTeacherAdd = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
             this.LB1Id = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -64,8 +64,8 @@ namespace BankTeacher.Bank.log
             this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVLoanDay)).BeginInit();
-            this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVSelectTeacherAdd)).BeginInit();
+            this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,7 +79,7 @@ namespace BankTeacher.Bank.log
             this.panel1.Controls.Add(this.DTPSelectDate);
             this.panel1.Location = new System.Drawing.Point(12, 11);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(899, 569);
+            this.panel1.Size = new System.Drawing.Size(920, 569);
             this.panel1.TabIndex = 2;
             // 
             // DGVLoanDay
@@ -87,16 +87,16 @@ namespace BankTeacher.Bank.log
             this.DGVLoanDay.AllowUserToAddRows = false;
             this.DGVLoanDay.AllowUserToDeleteRows = false;
             this.DGVLoanDay.AllowUserToResizeRows = false;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.DGVLoanDay.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVLoanDay.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.DGVLoanDay.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVLoanDay.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.DGVLoanDay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVLoanDay.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column7,
@@ -111,8 +111,40 @@ namespace BankTeacher.Bank.log
             this.DGVLoanDay.Name = "DGVLoanDay";
             this.DGVLoanDay.ReadOnly = true;
             this.DGVLoanDay.RowHeadersVisible = false;
-            this.DGVLoanDay.Size = new System.Drawing.Size(893, 417);
+            this.DGVLoanDay.Size = new System.Drawing.Size(914, 417);
             this.DGVLoanDay.TabIndex = 96;
+            // 
+            // DGVSelectTeacherAdd
+            // 
+            this.DGVSelectTeacherAdd.AllowUserToAddRows = false;
+            this.DGVSelectTeacherAdd.AllowUserToDeleteRows = false;
+            this.DGVSelectTeacherAdd.AllowUserToResizeRows = false;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.DGVSelectTeacherAdd.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVSelectTeacherAdd.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            this.DGVSelectTeacherAdd.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGVSelectTeacherAdd.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2,
+            this.Column3,
+            this.Column4,
+            this.Column5,
+            this.Column6,
+            this.Column9});
+            this.DGVSelectTeacherAdd.Location = new System.Drawing.Point(3, 130);
+            this.DGVSelectTeacherAdd.Name = "DGVSelectTeacherAdd";
+            this.DGVSelectTeacherAdd.ReadOnly = true;
+            this.DGVSelectTeacherAdd.RowHeadersVisible = false;
+            this.DGVSelectTeacherAdd.Size = new System.Drawing.Size(893, 417);
+            this.DGVSelectTeacherAdd.TabIndex = 94;
+            this.DGVSelectTeacherAdd.Visible = false;
             // 
             // panel3
             // 
@@ -145,38 +177,6 @@ namespace BankTeacher.Bank.log
             this.RBSelectTeacherAdd.TabIndex = 92;
             this.RBSelectTeacherAdd.Text = "ดูข้อมูลรายคน";
             this.RBSelectTeacherAdd.UseVisualStyleBackColor = true;
-            // 
-            // DGVSelectTeacherAdd
-            // 
-            this.DGVSelectTeacherAdd.AllowUserToAddRows = false;
-            this.DGVSelectTeacherAdd.AllowUserToDeleteRows = false;
-            this.DGVSelectTeacherAdd.AllowUserToResizeRows = false;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.DGVSelectTeacherAdd.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVSelectTeacherAdd.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
-            this.DGVSelectTeacherAdd.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGVSelectTeacherAdd.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2,
-            this.Column3,
-            this.Column4,
-            this.Column5,
-            this.Column6,
-            this.Column9});
-            this.DGVSelectTeacherAdd.Location = new System.Drawing.Point(3, 130);
-            this.DGVSelectTeacherAdd.Name = "DGVSelectTeacherAdd";
-            this.DGVSelectTeacherAdd.ReadOnly = true;
-            this.DGVSelectTeacherAdd.RowHeadersVisible = false;
-            this.DGVSelectTeacherAdd.Size = new System.Drawing.Size(893, 417);
-            this.DGVSelectTeacherAdd.TabIndex = 94;
-            this.DGVSelectTeacherAdd.Visible = false;
             // 
             // panel2
             // 
@@ -277,10 +277,10 @@ namespace BankTeacher.Bank.log
             // 
             // Column7
             // 
+            this.Column7.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Column7.HeaderText = "ชื่อผู้ทำรายการ";
             this.Column7.Name = "Column7";
             this.Column7.ReadOnly = true;
-            this.Column7.Width = 130;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -338,10 +338,10 @@ namespace BankTeacher.Bank.log
             // 
             // Column2
             // 
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Column2.HeaderText = "ชื่อผู้กู้";
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
-            this.Column2.Width = 140;
             // 
             // Column3
             // 
@@ -382,18 +382,19 @@ namespace BankTeacher.Bank.log
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(923, 591);
+            this.ClientSize = new System.Drawing.Size(944, 592);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Name = "Loan_Log";
             this.Text = "Loan_Log";
             this.Load += new System.EventHandler(this.Loan_Log_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Loan_Log_KeyDown);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGVLoanDay)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DGVSelectTeacherAdd)).EndInit();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.DGVSelectTeacherAdd)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
@@ -416,13 +417,6 @@ namespace BankTeacher.Bank.log
         private System.Windows.Forms.TextBox TBTeacherNo;
         private System.Windows.Forms.TextBox TBTeacherName;
         private System.Windows.Forms.DateTimePicker DTPSelectDate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
@@ -431,5 +425,12 @@ namespace BankTeacher.Bank.log
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
     }
 }

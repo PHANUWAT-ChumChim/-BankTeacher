@@ -178,6 +178,7 @@ namespace BankTeacher.Bank.Pay
                             LSumAmount_CancelBill.Text = Amount.ToString();
                             BSave_Cancelbill.Enabled = true;
                             CheckInputBill = true;
+                            Checkmember(false);
                         }
                     }
                     else
@@ -191,6 +192,7 @@ namespace BankTeacher.Bank.Pay
                 CheckInputBill = false;
                 BSave_Cancelbill.Enabled = false;
                 Clear();
+                Checkmember(false);
             }
         }
 
@@ -236,6 +238,7 @@ namespace BankTeacher.Bank.Pay
                                     }
                                 }
                                 MessageBox.Show("ยกเลิกบิลล์สำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                                Checkmember(true);
                             }
                             catch
                             {
@@ -271,6 +274,7 @@ namespace BankTeacher.Bank.Pay
                 {
                     Clear();
                     TBBillNo_Cancelbill.Text = "";
+                    Checkmember(true);
                 }
                 else
                 {
@@ -314,6 +318,11 @@ namespace BankTeacher.Bank.Pay
             LSumAmount_CancelBill.Text = "0";
             BSave_Cancelbill.Enabled = false;
             DGV_Cancelbill.Rows.Clear();
+        }
+        private void Checkmember(bool tf)
+        {
+            TBTeacherNO_Cancelbill.Enabled = tf;
+            BSearchTeacher.Enabled = tf;
         }
     }
 }

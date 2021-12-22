@@ -81,7 +81,7 @@ namespace BankTeacher.Bank.Loan
           " LEFT JOIN (SELECT TeacherNo , LoanStatusNo \r\n " + 
           " FROM EmployeeBank.dbo.tblLoan  \r\n " + 
           " WHERE LoanStatusNo = 1 or LoanStatusNo = 2 GROUP BY TeacherNo , LoanStatusNo) as f on a.TeacherNo = f.TeacherNo  \r\n " +
-          " WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(c.PrefixName,'')+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1  \r\n " + 
+          " WHERE (a.TeacherNo = '{Text}') and a.MemberStatusNo = 1  \r\n " + 
           " GROUP BY a.TeacherNo , CAST(ISNULL(c.PrefixName,'')+' '+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname, f.LoanStatusNo) as a   \r\n " +
           " WHERE {RemainAmount}  {TeacherNoNotLike}\r\n " + 
           " ORDER BY a.Fname; "
@@ -160,6 +160,25 @@ namespace BankTeacher.Bank.Loan
           "  GROUP BY TeacherNo, Name, RemainAmount ,a.Fname \r\n " +
           "  ORDER BY a.Fname; "
            ,
+           //[10] SELECT CreditLimit Data (DGV) INPUT:{Text} , {TeacherNoNotLike} , {RemainAmount}
+           "SELECT TOP(20)TeacherNo, Name, RemainAmount, ISNULL(a.LoanStatusNo , 0) as LoanS  \r\n " +
+          " FROM (SELECT a.TeacherNo , CAST(ISNULL(c.PrefixName,'')+' '+Fname +' '+ Lname as NVARCHAR)AS Name,   \r\n " +
+          " ROUND(ISNULL(e.SavingAmount,0) - ISNULL(SUM(d.RemainsAmount),0),0,1) as RemainAmount, Fname , f.LoanStatusNo  \r\n " +
+          " FROM EmployeeBank.dbo.tblMember as a    \r\n " +
+          " LEFT JOIN (  \r\n " +
+          " SELECT TeacherNo , Fname , Lname , PrefixNo  \r\n " +
+          " FROM Personal.dbo.tblTeacherHis   \r\n " +
+          " ) as b ON a.TeacherNo = b.TeacherNo    \r\n " +
+          " LEFT JOIN BaseData.dbo.tblPrefix as c ON b.PrefixNo = c.PrefixNo    \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblGuarantor as d on a.TeacherNo = d.TeacherNo   \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblShare as e ON e.TeacherNo = a.TeacherNo   \r\n " +
+          " LEFT JOIN (SELECT TeacherNo , LoanStatusNo \r\n " +
+          " FROM EmployeeBank.dbo.tblLoan  \r\n " +
+          " WHERE LoanStatusNo = 1 or LoanStatusNo = 2 GROUP BY TeacherNo , LoanStatusNo) as f on a.TeacherNo = f.TeacherNo  \r\n " +
+          " WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(c.PrefixName,'')+' '+Fname +' '+ Lname as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1  \r\n " +
+          " GROUP BY a.TeacherNo , CAST(ISNULL(c.PrefixName,'')+' '+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname, f.LoanStatusNo) as a   \r\n " +
+          " WHERE {RemainAmount}  {TeacherNoNotLike}\r\n " +
+          " ORDER BY a.Fname; "
 
 
         };
@@ -478,7 +497,7 @@ namespace BankTeacher.Bank.Loan
         {
             if (BSave.Enabled == false)
                 BSave.Enabled = true;
-            if (e.KeyCode == Keys.Enter && TBTeacherNo.Text.Length == 6)
+            if (e.KeyCode == Keys.Enter)
             {
                  DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{Text}", TBTeacherNo.Text)
                     .Replace("{TeacherNoNotLike}", "")
@@ -516,6 +535,7 @@ namespace BankTeacher.Bank.Loan
                             // ======= Tab 4 Clear ===============
                             DGVLoanDetail.Rows.Clear();
                             Check = 1;
+                            Checkmember(false);
                         }
                         else
                         {
@@ -561,6 +581,7 @@ namespace BankTeacher.Bank.Loan
             {
                 if (Check == 1)
                 {
+                    Checkmember(true);
                     // ======= Tab 1 Clear ===============
                     CheckBReset = false;
                     TBLoanAmount.Text = "";
@@ -766,7 +787,7 @@ namespace BankTeacher.Bank.Loan
                         }
                         NotLike = NotLike.Remove(NotLike.Length - 1);
                     }
-                    IN = new Bank.Search(SQLDefault[1]
+                    IN = new Bank.Search(SQLDefault[10]
                            .Replace("{TeacherNoNotLike}", NotLike)
                            .Replace("{RemainAmount}", "RemainAmount > 500"), "หุ้นสะสม");
 
@@ -808,6 +829,11 @@ namespace BankTeacher.Bank.Loan
             int LoanAmount = Convert.ToInt32(CreditLoanAmount - CreditLoanAmount * (Convert.ToDouble(TBInterestRate.Text) / 100));
             LLoanAmount.Text = "(" + LoanAmount.ToString() + ")";
 
+        }
+        private void Checkmember(bool tf)
+        {
+            TBTeacherNo.Enabled = tf;
+            BSearchTeacher.Enabled = tf;
         }
         private void DGVGuarantor_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {
@@ -1367,6 +1393,7 @@ namespace BankTeacher.Bank.Loan
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
+                    Checkmember(true);
                     // ======= Tab 1 Clear ===============
                     CheckBReset = false;
                     TBLoanAmount.Text = "";

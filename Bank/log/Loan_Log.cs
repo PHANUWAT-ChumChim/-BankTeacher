@@ -116,7 +116,7 @@ namespace BankTeacher.Bank.log
                                     , dtDGVTeacherNo.Rows[x][4].ToString(), dtDGVTeacherNo.Rows[x][5].ToString(), dtDGVTeacherNo.Rows[x][6].ToString(), dtDGVTeacherNo.Rows[x][7].ToString());
                             }
                         }
-
+                        Checkmember(false);
                     }
                     catch (Exception ex)
                     {
@@ -128,6 +128,7 @@ namespace BankTeacher.Bank.log
                 {
                     DGVSelectTeacherAdd.Rows.Clear();
                     TBTeacherName.Text = "";
+                    Checkmember(true);
                 }
             }
         }
@@ -158,18 +159,26 @@ namespace BankTeacher.Bank.log
         {
             if (e.KeyCode == Keys.Escape)
             {
-                if (DGVLoanDay.Rows.Count != 0 || DGVSelectTeacherAdd.Rows.Count != 0 || TBTeacherNo.Text != "")
+                if (RBSelectTeacherAdd.Enabled == true)
                 {
-                    DGVSelectTeacherAdd.Rows.Clear();
-                    DGVLoanDay.Rows.Clear();
-                    TBTeacherNo.Text = "";
-                    TBTeacherName.Text = "";
-                }
-                else
-                {
-
+                    if (DGVSelectTeacherAdd.Rows.Count != 0)
+                    {
+                        DGVSelectTeacherAdd.Rows.Clear();
+                        Checkmember(true);
+                        TBTeacherName.Text = "";
+                        TBTeacherNo.Text = "";
+                    }
+                    else
+                    {
+                        BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+                    }
                 }
             }
+        }
+        private void Checkmember(bool tf)
+        {
+            TBTeacherNo.Enabled = tf;
+            BSearchTeacher.Enabled = tf;
         }
 
         private void BSearchTeacher_Click(object sender, EventArgs e)
