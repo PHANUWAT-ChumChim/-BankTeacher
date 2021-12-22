@@ -1539,8 +1539,14 @@ namespace BankTeacher.Bank.Pay
                             DGV_BillInfo.Rows[DGV_BillInfo.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Yellow;
                         }
 
-                        if (x < 10) { LINE = 25 * (x + 1); }
-                            else { LINE = 257; }
+                        if (x < 10) 
+                        { 
+                            LINE = 25 * (x + 1); 
+                        }
+                        else 
+                        { 
+                            LINE = 257; 
+                        }
                     }
                     LBalance_BillInfo.Text = Balance.ToString();
                 }
