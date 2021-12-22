@@ -507,7 +507,6 @@ namespace BankTeacher.Bank
             else if (CB_SelectPrint.SelectedIndex == 1)
             {
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, SandCRonot, "A5", 0);
-                DGV_Testter.Rows.Clear();
                 TB_Bill.Text = "";
             }
             else
