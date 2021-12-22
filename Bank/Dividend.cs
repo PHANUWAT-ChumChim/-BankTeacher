@@ -246,6 +246,13 @@ namespace BankTeacher.Bank
                     .Replace("{Year}", CBYearDividend.Items[CBYearDividend.SelectedIndex].ToString())
                     .Replace("{TeacherAddbyNo}",Class.UserInfo.TeacherNo));
                     MessageBox.Show("บันทึกสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (DGV.Rows.Count != 0)
+                    {
+                        if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                        {
+                            printDocument1.Print();
+                        }
+                    }
 
                     CBYearDividend.Items.RemoveAt(CBYearDividend.SelectedIndex);
                     if (CBYearDividend.Items.Count != 0)
@@ -290,7 +297,7 @@ namespace BankTeacher.Bank
                 {
                     for (int x = 0; x < ds.Tables[1].Rows.Count; x++)
                     {
-                        DGV.Rows.Add(ds.Tables[1].Rows[x][0], ds.Tables[1].Rows[x][1], ds.Tables[1].Rows[x][2], ds.Tables[1].Rows[x][3]);
+                        DGV.Rows.Add(x+1,ds.Tables[1].Rows[x][0], ds.Tables[1].Rows[x][1], ds.Tables[1].Rows[x][2], ds.Tables[1].Rows[x][3]);
                     } 
                 }
                 if(ds.Tables[2].Rows.Count != 0)
@@ -329,6 +336,10 @@ namespace BankTeacher.Bank
             int x = this.Width / 2 - panel1.Size.Width / 2;
             int y = this.Height / 2 - panel1.Size.Height / 2;
             panel1.Location = new Point(x, y);
+        }
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV, "ปันผล", AccessibilityObject.Name, 2, "A4", 1); ;
         }
     }
 }

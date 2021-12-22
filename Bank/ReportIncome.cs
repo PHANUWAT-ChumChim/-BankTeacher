@@ -156,16 +156,16 @@ namespace BankTeacher.Bank
 
                                                 if (y == dtCheckBillDetail.Rows.Count - 1)
                                                 {
-                                                    DGV_one.Rows.Add("", "", "สรุปยอดบิลล์", "", AmountBill,"");
+                                                    DGV_one.Rows.Add("", "", "", "สรุปยอดบิลล์", "", AmountBill,"");
                                                     DGV_one.Rows[DGV_one.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                                                 }
 
                                                 continue;
                                             }
-                                            DGV_one.Rows.Add("", "", dtCheckBillDetail.Rows[y][1].ToString(), dtCheckBillDetail.Rows[y][2].ToString(), dtCheckBillDetail.Rows[y][3].ToString(),"");
+                                            DGV_one.Rows.Add("", "", "", dtCheckBillDetail.Rows[y][1].ToString(), dtCheckBillDetail.Rows[y][2].ToString(), dtCheckBillDetail.Rows[y][3].ToString(),"");
                                             if (y == dtCheckBillDetail.Rows.Count - 1)
                                             {
-                                                DGV_one.Rows.Add("", "", "สรุปยอดบิลล์", "", AmountBill,"");
+                                                DGV_one.Rows.Add("", "", "", "สรุปยอดบิลล์", "", AmountBill,"");
                                                 DGV_one.Rows[DGV_one.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                                             }
                                         }

@@ -555,7 +555,6 @@ namespace BankTeacher.Bank
             dataGridViewCellStyle1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.DGVAmountOffHistory.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DGVAmountOffHistory.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
             dataGridViewCellStyle2.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
@@ -574,7 +573,6 @@ namespace BankTeacher.Bank
             this.DGVAmountOffHistory.Location = new System.Drawing.Point(6, 80);
             this.DGVAmountOffHistory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DGVAmountOffHistory.Name = "DGVAmountOffHistory";
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle6.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
@@ -662,15 +660,14 @@ namespace BankTeacher.Bank
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3});
-            this.DGV_Testter.Location = new System.Drawing.Point(895, 17);
+            this.DGV_Testter.Location = new System.Drawing.Point(333, 17);
             this.DGV_Testter.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DGV_Testter.Name = "DGV_Testter";
             this.DGV_Testter.RowHeadersVisible = false;
             this.DGV_Testter.RowHeadersWidth = 51;
             this.DGV_Testter.RowTemplate.Height = 24;
-            this.DGV_Testter.Size = new System.Drawing.Size(220, 41);
+            this.DGV_Testter.Size = new System.Drawing.Size(782, 159);
             this.DGV_Testter.TabIndex = 4;
-            this.DGV_Testter.Visible = false;
             // 
             // Column7
             // 

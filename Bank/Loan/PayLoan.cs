@@ -270,6 +270,10 @@ namespace BankTeacher.Bank.Loan
                         Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
                         Class.Print.PrintPreviewDialog.info_TeacherAdd = Class.UserInfo.TeacherName;
                         Class.Print.PrintPreviewDialog.info_Payment = CBB4Oppay.SelectedItem.ToString();
+                        Class.Print.PrintPreviewDialog.info_PayLoanBill = DGV_PayLoan.Rows[0].Cells[1].Value.ToString();
+                        Class.Print.PrintPreviewDialog.info_PayLoandate = Bank.Menu.Date_Time_SQL_Now.Rows[0][0].ToString();
+
+
                         if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                         {
                             printDocument1.Print();
@@ -420,8 +424,8 @@ namespace BankTeacher.Bank.Loan
         {
             if (panel7.Enabled == false)
             {
-                MessageBox.Show("ไม่พบรายการ กรุณาลงรายการใหม่อีกครั้งค่ะ");
-                BExitForm_Click(new object(), new EventArgs());
+                MessageBox.Show("ไม่พบรายการ กรุณาลงรายการใหม่อีกครั้ง");
+                //BExitForm_Click(new object(), new EventArgs());
             }
         }
 
@@ -471,7 +475,7 @@ namespace BankTeacher.Bank.Loan
            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("{TeacherNo}", TBTeacherNo.Text)
                 .Replace("{Year}", CBYearSelection_Loanpay.SelectedItem.ToString()));
             Class.Print.PrintPreviewDialog.info_PayLoanBill = dt.Rows[0][0].ToString();
-            Class.Print.PrintPreviewDialog.info_Loanpaydate = dt.Rows[0][1].ToString();
+            Class.Print.PrintPreviewDialog.info_PayLoandate = dt.Rows[0][1].ToString();
             Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
             Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
             Class.Print.PrintPreviewDialog.info_TeacherAdd = dt.Rows[0][4].ToString();

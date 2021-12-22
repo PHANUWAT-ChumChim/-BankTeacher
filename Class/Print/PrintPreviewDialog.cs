@@ -29,7 +29,7 @@ namespace BankTeacher.Class.Print
         public static string info_Lona_AmountRemain;
         // จ่ายกู้
         public static string info_PayLoanBill;
-        public static string info_Loanpaydate;
+        public static string info_PayLoandate;
         // ถอนหุ้นสะสม
         public static string info_Loanstatus;
         public static string info_ShareNo;
@@ -482,7 +482,7 @@ namespace BankTeacher.Class.Print
                 }
                 else if(TextForm == "PayLoan")
                 {
-                    Class.Print.SetPrintMedtods.Box(e, "เลขบิลล์", "จ่ายวันที่",info_PayLoanBill,info_Loanpaydate, Box_SizeX, Box_SizeY, location_Box, Line2_x);
+                    Class.Print.SetPrintMedtods.Box(e, "เลขบิลล์", "จ่ายวันที่",info_PayLoanBill,info_PayLoandate, Box_SizeX, Box_SizeY, location_Box, Line2_x);
                 }
                 // ======================== เปิดการวาด Columns รอบเดียว ======================
                 if (onetimestartColumns == 0)
@@ -630,7 +630,7 @@ namespace BankTeacher.Class.Print
                                     Getwidth += 100 + Class.Print.SetPrintMedtods.Chcekspan(e, G, startTableX, startTableY, G.Columns[Columns - 1].HeaderText
                                     , setcut, Columns, FonT(18, ThaiSarabun, FontStyle.Regular), 0, 0);
                                 }
-                                else if (TextForm == "ReportIncome")
+                                else
                                 {
                                     Getwidth +=Class.Print.SetPrintMedtods.Chcekspan(e, G, startTableX, startTableY, G.Columns[Columns - 1].HeaderText
                                   , setcut, Columns, FonT(18, ThaiSarabun, FontStyle.Regular), 0, 0);
@@ -731,8 +731,10 @@ namespace BankTeacher.Class.Print
                                 {
                                         if (TextForm == "pay")
                                         {
+                                            bool L = false;
                                             for (int List = 0; List < G.Rows[Rows].Cells.Count; List++) // เช็ครายการที่มียอด
                                             {
+                                               L = G.Rows[Rows].Cells[List].Value.ToString().Contains("รายการกู้");
                                                 if (G.Rows[Rows].Cells[List].Value.ToString() == DT_ListType.Rows[0][1].ToString() || G.Rows[Rows].Cells[List].Value.ToString() == DT_ListType.Rows[2][1].ToString()) // ราย การหู้นสะสม
                                                 {
                                                     for (int returcells = G.Rows[Rows].Cells.Count - 1; returcells > 0; returcells--) // ลูปจากหลังไปหน้า
@@ -742,7 +744,7 @@ namespace BankTeacher.Class.Print
                                                         break;
                                                     }
                                                 }
-                                                else if (G.Rows[Rows].Cells[List].Value.ToString() == DT_ListType.Rows[1][1].ToString())
+                                                else if (G.Rows[Rows].Cells[List].Value.ToString() == DT_ListType.Rows[1][1].ToString() || L == true)
                                                 {
                                                     for (int returcells = G.Rows[Rows].Cells.Count - 1; returcells > 0; returcells--)
                                                     {
@@ -774,6 +776,10 @@ namespace BankTeacher.Class.Print
                                         }
                                         else
                                         {
+                                            var a = G.Rows[Rows].Cells[Cells].Value.ToString();
+                                            int b = 0;
+                                            int.TryParse(a, out b);
+                                            if(b != 0)
                                             for (int returcells = G.Rows[Rows].Cells.Count - 1; returcells > 0; returcells--)
                                             {
                                                 SUM.Add(Convert.ToInt32(G.Rows[Rows].Cells[returcells].Value));
