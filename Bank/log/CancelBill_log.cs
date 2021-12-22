@@ -38,15 +38,15 @@ namespace BankTeacher.Bank.log
            ,
 
            //[1] Select Bill INPUT: {TeacherAddbyNo} {Date} 
-           "SELECT a.TeacherNo , CAST(ISNULL(b.PrefixName,'') + a.Fname  +' '+ a.Lname as nvarchar(255)) as TeacherAddbyname , c.BillNo , CAST(f.TypeName + ' ' + ISNULL(CAST(d.LoanNo as nvarchar(255)),'')  as nvarchar(255)) \r\n " +
-          ", e.Name as Payment , d.Amount ,a.Fname , ISNULL(c.CancelNote , '-') \r\n " +
+           "SELECT CAST(ISNULL(b.PrefixName,'') + a.Fname  +' '+ a.Lname as nvarchar(255)) as TeacherAddbyname , c.BillNo , CAST(f.TypeName + ' ' + ISNULL(CAST(d.LoanNo as nvarchar(255)),'')  as nvarchar(255)) \r\n " +
+          ", e.Name as Payment , d.Amount ,a.Fname , CAST(CancelNote as nvarchar(1000)) \r\n " +
           "FROM Personal.dbo.tblTeacherHis as a  \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as b on a.PrefixNo = b.PrefixNo  \r\n " +
           "INNER JOIN EmployeeBank.dbo.tblBill as c on a.TeacherNo = c.CancelBy  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as d on c.BillNo = d.BillNo  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailPayment as e on d.BillDetailPaymentNo = e.BillDetailPaymentNo  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as f on d.TypeNo = f.TypeNo  \r\n " +
-          "WHERE c.TeacherNoAddBy LIKE '%%' and CAST(c.CancelDate as Date) Like '%%' and f.TypeNo != 3 and Cancel = 2 \r\n " +
+          "WHERE c.TeacherNoAddBy LIKE '%{TeacherAddbyNo}%' and CAST(c.CancelDate as Date) Like '%{Date}%' and f.TypeNo != 3 and Cancel = 2 \r\n " +
           "ORDER BY a.Fname;"
 
            ,
@@ -72,61 +72,59 @@ namespace BankTeacher.Bank.log
             {
                 if (e.KeyCode == Keys.Enter)
                 {
-                    if(TBTeacherNo.Text.Length >= 6)
+                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
+                        .Replace("{TeacherAddbyNo}", TBTeacherNo.Text)
+                        .Replace("{Date}",DateSelected));
+                    if (dt.Rows.Count != 0)
                     {
-                        DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
-                            .Replace("{TeacherAddbyNo}", TBTeacherNo.Text)
-                            .Replace("{Date}",DateSelected));
-                        if (dt.Rows.Count != 0)
+                        int PositionHeader = 0;
+                        int AmountBill = 0;
+                        int Amount = 0;
+                        for (int x = 0; x < dt.Rows.Count; x++)
                         {
-                            int PositionHeader = 0;
-                            int AmountBill = 0;
-                            int Amount = 0;
-                            for (int x = 0; x < dt.Rows.Count; x++)
+                            if (DGV.Rows.Count == 0)
                             {
-                                if (DGV.Rows.Count == 0)
+                                DGV.Rows.Add(dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][6].ToString());
+                                PositionHeader = x;
+                                AmountBill += Convert.ToInt32(dt.Rows[x][4].ToString());
+                            }
+                            else
+                            {
+                                if (DGV.Rows[PositionHeader].Cells[1].Value.ToString() == dt.Rows[x][2].ToString())
                                 {
-                                    DGV.Rows.Add(dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][5].ToString());
-                                    PositionHeader = x;
-                                    AmountBill += Convert.ToInt32(dt.Rows[x][5].ToString());
+                                    DGV.Rows.Add("", dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString(), dt.Rows[x][4].ToString());
+                                    AmountBill += Convert.ToInt32(dt.Rows[x][4].ToString());
                                 }
                                 else
                                 {
-                                    if (DGV.Rows[PositionHeader].Cells[1].Value.ToString() == dt.Rows[x][2].ToString())
-                                    {
-                                        DGV.Rows.Add("","", dt.Rows[x][3].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][5].ToString());
-                                        AmountBill += Convert.ToInt32(dt.Rows[x][5].ToString());
-                                    }
-                                    else
-                                    {
-                                        DGV.Rows.Add("", "", "สรุปยอดบิลล์", "", AmountBill);
-                                        DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
-                                        Amount += AmountBill;
-                                        AmountBill = 0;
-                                        DGV.Rows.Add(dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][5].ToString() , dt.Rows[x][7].ToString());
-                                        PositionHeader = DGV.Rows.Count -1;
-                                        AmountBill += Convert.ToInt32(dt.Rows[x][5].ToString());
-                                    }
-
-                                }
-                                if(x == dt.Rows.Count - 1)
-                                {
-                                    if(Amount == 0)
-                                    {
-                                        Amount = AmountBill;
-                                    }
-                                    DGV.Rows.Add("", "", "สรุปยอดบิลล์", "", AmountBill);
+                                    DGV.Rows.Add("", "", "สรุปยอดบิลล์", AmountBill);
                                     DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
-                                    DGV.Rows.Add("", "", "สรุปยอดทั้งหมด", "", Amount);
-                                    DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Yellow;
+                                    Amount += AmountBill;
+                                    AmountBill = 0;
+                                    DGV.Rows.Add(dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][6].ToString());
+                                    PositionHeader = DGV.Rows.Count -1;
+                                    AmountBill += Convert.ToInt32(dt.Rows[x][4].ToString());
                                 }
+
                             }
-                            CheckMember = true;
+                            if(x == dt.Rows.Count - 1)
+                            {
+                                if(Amount == 0)
+                                {
+                                    Amount = AmountBill;
+                                }
+                                DGV.Rows.Add("", "", "สรุปยอดบิลล์", AmountBill);
+                                DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
+                                DGV.Rows.Add("", "", "สรุปยอดทั้งหมด", Amount);
+                                DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Yellow;
+                            }
                         }
-                        else
-                        {
-                            MessageBox.Show("ไม่พบรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        }
+                        CheckMember = true;
+                        Checkmember(false);
+                    }
+                    else
+                    {
+                        MessageBox.Show("ไม่พบรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
                 else if (e.KeyCode == Keys.Back || e.KeyCode == Keys.Delete)
@@ -135,11 +133,16 @@ namespace BankTeacher.Bank.log
                     {
                         DGV.Rows.Clear();
                         CheckMember = false;
+                        Checkmember(true);
                     }
                 }
             }
         }
-
+        private void Checkmember(bool tf)
+        {
+            TBTeacherNo.Enabled = tf;
+            BSearchTeacher.Enabled = tf;
+        }
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
             if(BSearchTeacher.Enabled == true)
@@ -187,25 +190,25 @@ namespace BankTeacher.Bank.log
                     {
                         if (DGV.Rows.Count == 0)
                         {
-                            DGV.Rows.Add(dt.Rows[x][0].ToString(), dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][5].ToString() , dt.Rows[x][7]);
+                            DGV.Rows.Add(dt.Rows[x][0].ToString(), dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString(), dt.Rows[x][4].ToString() , dt.Rows[x][6]);
                             PositionHeader = x;
 
-                            AmountBill += Convert.ToInt32(dt.Rows[x][5].ToString());
+                            AmountBill += Convert.ToInt32(dt.Rows[x][4].ToString());
                         }
                         else
                         {
                             if (DGV.Rows[PositionHeader].Cells[2].Value.ToString() == dt.Rows[x][2].ToString())
                             {
-                                DGV.Rows.Add("", "", "", dt.Rows[x][3].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][5].ToString());
-                                AmountBill += Convert.ToInt32(dt.Rows[x][5].ToString());
+                                DGV.Rows.Add("", "", dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString() , dt.Rows[x][4].ToString());
+                                AmountBill += Convert.ToInt32(dt.Rows[x][4].ToString());
                             }
                             else
                             {
-                                DGV.Rows.Add("","","", "สรุปยอดบิลล์", "", AmountBill);
+                                DGV.Rows.Add("","", "สรุปยอดบิลล์", "", AmountBill);
                                 DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                                 Amount += AmountBill;
                                 AmountBill = 0;
-                                DGV.Rows.Add(dt.Rows[x][0].ToString() ,dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][5].ToString());
+                                DGV.Rows.Add(dt.Rows[x][0].ToString() ,dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][6].ToString());
                                 PositionHeader = DGV.Rows.Count - 1;
                                 AmountBill += Convert.ToInt32(dt.Rows[x][5].ToString());
                             }
@@ -217,9 +220,9 @@ namespace BankTeacher.Bank.log
                             {
                                 Amount = AmountBill;
                             }
-                            DGV.Rows.Add("", "", "", "สรุปยอดบิลล์", "", AmountBill);
+                            DGV.Rows.Add("", "", "สรุปยอดบิลล์", "", AmountBill);
                             DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
-                            DGV.Rows.Add("", "", "", "สรุปยอดทั้งหมด", "", Amount);
+                            DGV.Rows.Add("", "", "สรุปยอดทั้งหมด", "", Amount);
                             DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Yellow;
                         }
                     }
@@ -235,13 +238,15 @@ namespace BankTeacher.Bank.log
                 TBTeacherNo.Text = "";
                 DGV.Rows.Clear();
                 panel2.Enabled = true;
+                TBTeacherNo.Enabled = true;
+                BSearchTeacher.Enabled = true;
                 DGV.Columns.Clear();
                 for(int x = 0; x < ColumsDGV.Count; x++)
                 {
                     DGV.Columns.Add(ColumsDGV[x], ColumsDGV[x]);
                     DGV.Columns[x].Width = SizeColumsDGV[x];
                     DGV.Columns[x].AutoSizeMode = AutoSizeDGV[x];
-                    if (DGV.Columns[x].HeaderText == "ชื่อ - สกุล")
+                    if (DGV.Columns[x].HeaderText == "หมายเหตุ")
                         DGV.Columns[x].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
                 }
             }
@@ -273,6 +278,27 @@ namespace BankTeacher.Bank.log
                 RBday_CheckedChanged(new object(), new EventArgs());
             else if (RBSelectTeacherAdd.Checked)
                 RBday_CheckedChanged(new object(), new EventArgs());
+        }
+
+        private void CancelBill_log_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (RBSelectTeacherAdd.Enabled == true)
+                {
+                    if (DGV.Rows.Count != 0)
+                    {
+                        DGV.Rows.Clear();
+                        Checkmember(true);
+                        TBTeacherName.Text = "";
+                        TBTeacherNo.Text = "";
+                    }
+                    else
+                    {
+                        BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+                    }
+                }
+            }
         }
     }
 }
