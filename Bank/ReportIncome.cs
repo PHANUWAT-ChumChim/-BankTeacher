@@ -100,7 +100,7 @@ namespace BankTeacher.Bank
 
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
                 if (CheckMember == false)
                 {
@@ -132,23 +132,12 @@ namespace BankTeacher.Bank
                             int Amountcash = 0;
                             int AmountTranfer = 0;
                             int AmountCradit = 0;
+                            DGV_one.Rows.Clear();
                             for (int x = 0; x < dtCheckBillInDay.Rows.Count; x++)
                             {
                                 int AmountBill = 0;
                                 DGV_one.Rows.Add(dtCheckBillInDay.Rows[x][0].ToString(), dtCheckBillInDay.Rows[x][1].ToString());
                                 DGVPosition = DGV_one.Rows.Count - 1;
-                                DGV_one.Rows.Clear();
-                                int DGVPosition = -1;
-                                int SumAmount = 0;
-                                int Amountcash = 0;
-                                int AmountTranfer = 0;
-                                int AmountCradit = 0;
-                                for (int x = 0; x < dtCheckBillInDay.Rows.Count; x++)
-                                {
-                                    int AmountBill = 0;
-                                    DGV_one.Rows.Add(x+1,dtCheckBillInDay.Rows[x][0].ToString(), dtCheckBillInDay.Rows[x][1].ToString());
-                                    DGVPosition = DGV_one.Rows.Count - 1;
-
                                 DataTable dtCheckBillDetail = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
                                     .Replace("{BillNo}", dtCheckBillInDay.Rows[x][0].ToString()));
                                 if (dtCheckBillDetail.Rows.Count != 0)
@@ -164,36 +153,35 @@ namespace BankTeacher.Bank
                                         else if (dtCheckBillDetail.Rows[y][2].ToString().Contains("เครดิต"))
                                             AmountCradit += Convert.ToInt32(dtCheckBillDetail.Rows[y][3]);
 
-                                            if (y == 0)
-                                            {
-                                                DGV_one.Rows[DGVPosition].Cells[3].Value = dtCheckBillDetail.Rows[y][1].ToString();
-                                                DGV_one.Rows[DGVPosition].Cells[4].Value = dtCheckBillDetail.Rows[y][2].ToString();
-                                                DGV_one.Rows[DGVPosition].Cells[5].Value = dtCheckBillDetail.Rows[y][3].ToString();
+                                        if (y == 0)
+                                        {
+                                            DGV_one.Rows[DGVPosition].Cells[3].Value = dtCheckBillDetail.Rows[y][1].ToString();
+                                            DGV_one.Rows[DGVPosition].Cells[4].Value = dtCheckBillDetail.Rows[y][2].ToString();
+                                            DGV_one.Rows[DGVPosition].Cells[5].Value = dtCheckBillDetail.Rows[y][3].ToString();
 
-                                                if (y == dtCheckBillDetail.Rows.Count - 1)
-                                                {
-                                                    DGV_one.Rows.Add("", "", "สรุปยอดบิลล์", "", AmountBill,"");
-                                                    DGV_one.Rows[DGV_one.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
-                                                }
-
-                                                continue;
-                                            }
-                                            DGV_one.Rows.Add("", "", dtCheckBillDetail.Rows[y][1].ToString(), dtCheckBillDetail.Rows[y][2].ToString(), dtCheckBillDetail.Rows[y][3].ToString(),"");
                                             if (y == dtCheckBillDetail.Rows.Count - 1)
                                             {
-                                                DGV_one.Rows.Add("", "", "สรุปยอดบิลล์", "", AmountBill,"");
+                                                DGV_one.Rows.Add("", "", "สรุปยอดบิลล์", "", AmountBill, "");
                                                 DGV_one.Rows[DGV_one.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                                             }
 
                                             continue;
                                         }
-                                        DGV_one.Rows.Add("", "", dtCheckBillDetail.Rows[y][1].ToString(), dtCheckBillDetail.Rows[y][2].ToString(), dtCheckBillDetail.Rows[y][3].ToString());
+                                        DGV_one.Rows.Add("", "", dtCheckBillDetail.Rows[y][1].ToString(), dtCheckBillDetail.Rows[y][2].ToString(), dtCheckBillDetail.Rows[y][3].ToString(), "");
                                         if (y == dtCheckBillDetail.Rows.Count - 1)
                                         {
-                                            DGV_one.Rows.Add("", "", "สรุปยอดบิลล์", "", AmountBill);
+                                            DGV_one.Rows.Add("", "", "สรุปยอดบิลล์", "", AmountBill, "");
                                             DGV_one.Rows[DGV_one.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                                         }
+
+                                        continue;
                                     }
+                                    //DGV_one.Rows.Add("", "", dtCheckBillDetail.Rows[y][1].ToString(), dtCheckBillDetail.Rows[y][2].ToString(), dtCheckBillDetail.Rows[y][3].ToString());
+                                    //if (y == dtCheckBillDetail.Rows.Count - 1)
+                                    //{
+                                    //    DGV_one.Rows.Add("", "", "สรุปยอดบิลล์", "", AmountBill);
+                                    //    DGV_one.Rows[DGV_one.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
+                                    //}
                                 }
                             }
                             TBAmount.Text = SumAmount.ToString();
@@ -201,14 +189,14 @@ namespace BankTeacher.Bank
                             TBPaymentTranfer.Text = AmountTranfer.ToString();
                             TBPaymentCradit.Text = AmountCradit.ToString();
                         }
-                        else
-                        {
-                            MessageBox.Show("ไม่พบรายชื่อนี้ในประวัติการจัดทำรายการให้", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        }
-                        CheckMember = true;
-                        Checkmember(false);
                     }
                 }
+                else
+                {
+                    MessageBox.Show("ไม่พบรายชื่อนี้ในประวัติการจัดทำรายการให้", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                CheckMember = true;
+                Checkmember(false);
             }
             else if(e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
             {
@@ -266,6 +254,7 @@ namespace BankTeacher.Bank
         {
             TBTeacherNo.Enabled = tf;
             BSearchTeacher.Enabled = tf;
+        }
         private void BTPrint_Click(object sender, EventArgs e)
         {
             if(DGV_one.Rows.Count != 0)

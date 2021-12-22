@@ -598,15 +598,15 @@ namespace BankTeacher.Bank.Pay
                                     }
                                     else if (CountDetail == RMonth[Count].Count - 1)
                                     {
-                                        if(RemovePosistion.Count != 0)
+                                        if (RemovePosistion.Count != 0)
                                         {
-                                            for(int y = 0; y < RemovePosistion.Count; y++)
+                                            for (int y = 0; y < RemovePosistion.Count; y++)
                                             {
-                                                if(RemovePosistion[y] == x)
+                                                if (RemovePosistion[y] == x)
                                                 {
                                                     break;
                                                 }
-                                                else if(y == RemovePosistion.Count - 1 && RemovePosistion[y] != x && RMonth[x][CountDetail] == 0)
+                                                else if (y == RemovePosistion.Count - 1 && RemovePosistion[y] != x && RMonth[x][CountDetail] == 0)
                                                 {
                                                     RemovePosistion.Add(x);
                                                     break;
@@ -624,8 +624,8 @@ namespace BankTeacher.Bank.Pay
                         //loop ลบเดือนของ DM ตามที่เช็คมาก่อนหน้า
                         for (int x = 0; x < RemovePosistion.Count; x++)
                         {
-                            if(RemovePosistion[x] >= 0)
-                            DM[Yearloop].RemoveAt(RemovePosistion[x]);
+                            if (RemovePosistion[x] >= 0)
+                                DM[Yearloop].RemoveAt(RemovePosistion[x]);
                             for (int y = 0; y < RemovePosistion.Count; y++)
                             {
                                 RemovePosistion[y] = RemovePosistion[y] - 1;
@@ -690,22 +690,6 @@ namespace BankTeacher.Bank.Pay
                     }
                     Checkmember(false);
                 }
-
-            }
-            else if (/*e.KeyCode == Keys.Delete ||*//* e.KeyCode == Keys.Back ||*/ e.KeyCode == Keys.Escape)
-            {
-                if (CheckInputTeacher == true)
-                {
-                    //Header =============================================
-                    TBTeacherBill.Text = "";
-                    TBTeacherName.Text = "";
-                    Checkmember(true);
-                    //====================================================
-                    DGV_Tester.Rows.Clear();
-                    tabControl1.Enabled = false;
-                    ClearForm();
-                    CheckInputTeacher = false;
-                }
             }
         }
 
@@ -724,15 +708,6 @@ namespace BankTeacher.Bank.Pay
         //KeyDown in alltab
         private void tabControl1_KeyDown(object sender, KeyEventArgs e)
         {
-
-            if (e.KeyCode == Keys.Escape)
-            {
-                TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Delete));
-                CBMonthSelection_Pay.SelectedIndex = -1;
-                CBYearSelection_Pay.Enabled = true;
-                CBYearSelection_ShareInfo.Enabled = true;
-                CBLoanSelection_LoanInfo.Enabled = true;
-            }
         }
 
 
@@ -2065,6 +2040,9 @@ namespace BankTeacher.Bank.Pay
                     TBTeacherBill.Text = "";
                     BSearchTeacher.Enabled = true;
                     TBTeacherNo.Enabled = true;
+                    CBLoanSelection_LoanInfo.Enabled = false;
+                    CBMonthSelection_Pay.Enabled = false;
+                    CBList_Pay.Enabled = false;
                     CBPayment_Pay.SelectedIndex = -1;
                     Checkmember(true);
                 }
@@ -2155,7 +2133,7 @@ namespace BankTeacher.Bank.Pay
         {
             TBTeacherNo.Enabled = tf;
             BSearchTeacher.Enabled = tf;
-
+        }
         private void TB_Bill_TextChanged(object sender, EventArgs e)
         {
             DGV_Tester.Rows.Clear();
