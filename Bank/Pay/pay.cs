@@ -1512,11 +1512,11 @@ namespace BankTeacher.Bank.Pay
                     int Balance = 0;
                     for(int x = 0; x < dt.Rows.Count; x++)
                     {
-                    string Bill = "";
-                        if (x % 2 == 1)
-                        {
-                            DGV_BillInfo.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
-                        }
+                        ////string Bill = "";
+                        //if (x % 2 == 1)
+                        //{
+                        //    DGV_BillInfo.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
+                        //}
 
                         if ( x == 0)
                         {
@@ -1542,8 +1542,14 @@ namespace BankTeacher.Bank.Pay
                             DGV_BillInfo.Rows[DGV_BillInfo.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Yellow;
                         }
 
-                        if (x < 10) { LINE = 25 * (x + 1); }
-                            else { LINE = 257; }
+                        if (x < 10) 
+                        { 
+                            LINE = 25 * (x + 1); 
+                        }
+                        else 
+                        { 
+                            LINE = 257; 
+                        }
                     }
                     LBalance_BillInfo.Text = Balance.ToString();
                 }
