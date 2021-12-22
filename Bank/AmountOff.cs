@@ -318,12 +318,12 @@ namespace BankTeacher.Bank
 
             if (Int32.TryParse(TBCreditWithDraw.Text, out int CraditwithDraw)&& CraditwithDraw >= 1 && CBTypePay.SelectedIndex != -1)
             {
+                DGV_Testter.Rows.Clear();
                 try
                 {
                     if (MessageBox.Show("ยืนยันการจ่าย", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                     {
-                        DGV_Testter.Rows.Clear();
-                        DGV_Testter.Rows.Add(1,DateTime.Today.Day.ToString() +'/'+ DateTime.Today.Month.ToString() +'/'+ DateTime.Today.Year.ToString(), "ถอนหุ้นสะสม",TBWithDraw.Text);
+                        DGV_Testter.Rows.Add(1,Bank.Menu.Date_Time_SQL_Now.Rows[0][0].ToString(), "ถอนหุ้นสะสม",TBWithDraw.Text);
                         Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[2] +
                     "\r\n" +
                     SQLDefault[3])
@@ -607,11 +607,11 @@ namespace BankTeacher.Bank
                         printDocument1.Print();
                     }
                 }
-                else MessageBox.Show("โปรเลือกเลขบิลล์ในตาราง หรือ กรอกเลขบิลล์ล์", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information); 
+                else MessageBox.Show("โปรเลือกเลขบิลล์ในตาราง หรือ กรอกเลขบิลล์ให้ถูกต้อง", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information); 
             }
             else
             {
-                MessageBox.Show("โปรเลือกเลขบิลล์ในตาราง หรือ กรอกเลขบิลล์ล์", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("โปรเลือกเลขบิลล์ในตาราง หรือ กรอกเลขบิลล์ให้ถูกต้อง", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

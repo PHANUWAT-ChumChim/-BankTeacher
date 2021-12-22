@@ -82,18 +82,18 @@ namespace BankTeacher.Bank
                         SumSavingAmount += Convert.ToInt32(dsReport.Tables[0].Rows[x][1].ToString());
                         SumDividendAmount += Convert.ToInt32(dsReport.Tables[0].Rows[x][2].ToString());
                     }
-                    LSavingAmount.Text = SumSavingAmount.ToString();
-                    LDividendAmount.Text = SumDividendAmount.ToString();
-                    LInterestAmount.Text = dsReport.Tables[0].Rows[0][3].ToString();
-                    LInterestNextYear.Text = dsReport.Tables[0].Rows[0][4].ToString();
-                    LDividendPerShare.Text = dsReport.Tables[0].Rows[0][5].ToString();
+                    TB_SavingAmount.Text = SumSavingAmount.ToString();
+                    TB_DividendAmount.Text = SumDividendAmount.ToString();
+                    TB_InterestAmount.Text = dsReport.Tables[0].Rows[0][3].ToString();
+                    TB_InterestNextYear.Text = dsReport.Tables[0].Rows[0][4].ToString();
+                    TB_DividendPerShare.Text = dsReport.Tables[0].Rows[0][5].ToString();
                     if(dsReport.Tables[1].Rows.Count != 0)
                     {
-                        LRemainInterest.Text = dsReport.Tables[1].Rows[0][0].ToString();
+                        TB_RemainInterest.Text = dsReport.Tables[1].Rows[0][0].ToString();
                     }
                     else
                     {
-                        LRemainInterest.Text = 0.ToString();
+                        TB_RemainInterest.Text = 0.ToString();
                     }
 
                     BSaveCancelDividend.Enabled = true;

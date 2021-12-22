@@ -29,17 +29,16 @@ namespace BankTeacher.Bank.Loan
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InfoLoan));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.CB_SelectPrint = new System.Windows.Forms.ComboBox();
             this.BExitForm = new System.Windows.Forms.Button();
-            this.BTPrint = new System.Windows.Forms.Button();
             this.panel16 = new System.Windows.Forms.Panel();
             this.CB_LoanNo = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -94,6 +93,13 @@ namespace BankTeacher.Bank.Loan
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.panel9 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label24 = new System.Windows.Forms.Label();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.checkBox_scrip = new System.Windows.Forms.CheckBox();
+            this.checkBox_copy = new System.Windows.Forms.CheckBox();
+            this.CB_SelectPrint = new System.Windows.Forms.ComboBox();
+            this.BTPrint = new System.Windows.Forms.Button();
             this.panel10 = new System.Windows.Forms.Panel();
             this.label22 = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
@@ -118,11 +124,6 @@ namespace BankTeacher.Bank.Loan
             this.LB1Id = new System.Windows.Forms.Label();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.label24 = new System.Windows.Forms.Label();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.checkBox_scrip = new System.Windows.Forms.CheckBox();
-            this.checkBox_copy = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.panel16.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -135,13 +136,13 @@ namespace BankTeacher.Bank.Loan
             this.tabPage4.SuspendLayout();
             this.panel9.SuspendLayout();
             this.panel4.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel6.SuspendLayout();
             this.panel10.SuspendLayout();
             this.panel11.SuspendLayout();
             this.panel8.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel7.SuspendLayout();
-            this.panel3.SuspendLayout();
-            this.panel6.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -157,20 +158,6 @@ namespace BankTeacher.Bank.Loan
             this.panel1.Size = new System.Drawing.Size(1165, 724);
             this.panel1.TabIndex = 100;
             // 
-            // CB_SelectPrint
-            // 
-            this.CB_SelectPrint.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CB_SelectPrint.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CB_SelectPrint.FormattingEnabled = true;
-            this.CB_SelectPrint.Items.AddRange(new object[] {
-            "ปริ้นรายการกู้",
-            "ปริ้นเอกสารกู้ย้อนหลัง"});
-            this.CB_SelectPrint.Location = new System.Drawing.Point(10, 101);
-            this.CB_SelectPrint.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
-            this.CB_SelectPrint.Name = "CB_SelectPrint";
-            this.CB_SelectPrint.Size = new System.Drawing.Size(266, 39);
-            this.CB_SelectPrint.TabIndex = 108;
-            // 
             // BExitForm
             // 
             this.BExitForm.BackgroundImage = global::BankTeacher.Properties.Resources.logout;
@@ -183,20 +170,6 @@ namespace BankTeacher.Bank.Loan
             this.BExitForm.TabIndex = 109;
             this.BExitForm.UseVisualStyleBackColor = true;
             this.BExitForm.Click += new System.EventHandler(this.BExitForm_Click);
-            // 
-            // BTPrint
-            // 
-            this.BTPrint.BackgroundImage = global::BankTeacher.Properties.Resources._10x10_Print;
-            this.BTPrint.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BTPrint.CausesValidation = false;
-            this.BTPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTPrint.Location = new System.Drawing.Point(10, 10);
-            this.BTPrint.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
-            this.BTPrint.Name = "BTPrint";
-            this.BTPrint.Size = new System.Drawing.Size(266, 87);
-            this.BTPrint.TabIndex = 105;
-            this.BTPrint.UseVisualStyleBackColor = true;
-            this.BTPrint.Click += new System.EventHandler(this.BTPrint_Click_1);
             // 
             // panel16
             // 
@@ -278,10 +251,18 @@ namespace BankTeacher.Bank.Loan
             // 
             this.DGVGuarantor.AllowUserToAddRows = false;
             this.DGVGuarantor.AllowUserToResizeRows = false;
-            dataGridViewCellStyle19.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DGVGuarantor.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DGVGuarantor.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DGVGuarantor.BackgroundColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVGuarantor.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.DGVGuarantor.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVGuarantor.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
@@ -299,8 +280,8 @@ namespace BankTeacher.Bank.Loan
             // 
             // Column1
             // 
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle3;
             this.Column1.HeaderText = "รหัส";
             this.Column1.MinimumWidth = 6;
             this.Column1.Name = "Column1";
@@ -310,8 +291,8 @@ namespace BankTeacher.Bank.Loan
             // 
             // Column2
             // 
-            dataGridViewCellStyle21.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle4;
             this.Column2.HeaderText = "ชื่อ";
             this.Column2.MinimumWidth = 6;
             this.Column2.Name = "Column2";
@@ -322,8 +303,8 @@ namespace BankTeacher.Bank.Loan
             // Column3
             // 
             this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column3.DefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column3.DefaultCellStyle = dataGridViewCellStyle5;
             this.Column3.HeaderText = "ยอดเงินค้ำ";
             this.Column3.MinimumWidth = 6;
             this.Column3.Name = "Column3";
@@ -736,17 +717,17 @@ namespace BankTeacher.Bank.Loan
             this.DGVLoanDetail.AllowUserToAddRows = false;
             this.DGVLoanDetail.AllowUserToDeleteRows = false;
             this.DGVLoanDetail.AllowUserToResizeRows = false;
-            dataGridViewCellStyle23.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.DGVLoanDetail.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.DGVLoanDetail.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             this.DGVLoanDetail.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle24.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle24.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGVLoanDetail.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGVLoanDetail.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.DGVLoanDetail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVLoanDetail.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column8,
@@ -856,6 +837,95 @@ namespace BankTeacher.Bank.Loan
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(1095, 325);
             this.panel4.TabIndex = 122;
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.White;
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.label24);
+            this.panel3.Location = new System.Drawing.Point(797, 12);
+            this.panel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(282, 45);
+            this.panel3.TabIndex = 88;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.BackColor = System.Drawing.Color.Transparent;
+            this.label24.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.ForeColor = System.Drawing.SystemColors.ButtonShadow;
+            this.label24.Location = new System.Drawing.Point(3, -2);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(220, 37);
+            this.label24.TabIndex = 79;
+            this.label24.Text = "เอกสารสมัครกู้ เเละ ข้อมูล";
+            // 
+            // panel6
+            // 
+            this.panel6.BackColor = System.Drawing.Color.White;
+            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel6.Controls.Add(this.checkBox_scrip);
+            this.panel6.Controls.Add(this.checkBox_copy);
+            this.panel6.Controls.Add(this.CB_SelectPrint);
+            this.panel6.Controls.Add(this.BTPrint);
+            this.panel6.Location = new System.Drawing.Point(797, 63);
+            this.panel6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(282, 241);
+            this.panel6.TabIndex = 89;
+            // 
+            // checkBox_scrip
+            // 
+            this.checkBox_scrip.AutoSize = true;
+            this.checkBox_scrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.checkBox_scrip.Location = new System.Drawing.Point(10, 145);
+            this.checkBox_scrip.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBox_scrip.Name = "checkBox_scrip";
+            this.checkBox_scrip.Size = new System.Drawing.Size(171, 41);
+            this.checkBox_scrip.TabIndex = 120;
+            this.checkBox_scrip.Text = "เฉพราะ(ต้นฉบับ)";
+            this.checkBox_scrip.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_copy
+            // 
+            this.checkBox_copy.AutoSize = true;
+            this.checkBox_copy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.checkBox_copy.Location = new System.Drawing.Point(10, 183);
+            this.checkBox_copy.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBox_copy.Name = "checkBox_copy";
+            this.checkBox_copy.Size = new System.Drawing.Size(162, 41);
+            this.checkBox_copy.TabIndex = 121;
+            this.checkBox_copy.Text = "เฉพราะ(สำเนา)";
+            this.checkBox_copy.UseVisualStyleBackColor = true;
+            // 
+            // CB_SelectPrint
+            // 
+            this.CB_SelectPrint.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CB_SelectPrint.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CB_SelectPrint.FormattingEnabled = true;
+            this.CB_SelectPrint.Items.AddRange(new object[] {
+            "ปริ้นรายการกู้",
+            "ปริ้นเอกสารกู้ย้อนหลัง"});
+            this.CB_SelectPrint.Location = new System.Drawing.Point(10, 101);
+            this.CB_SelectPrint.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.CB_SelectPrint.Name = "CB_SelectPrint";
+            this.CB_SelectPrint.Size = new System.Drawing.Size(266, 39);
+            this.CB_SelectPrint.TabIndex = 108;
+            // 
+            // BTPrint
+            // 
+            this.BTPrint.BackgroundImage = global::BankTeacher.Properties.Resources._10x10_Print;
+            this.BTPrint.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BTPrint.CausesValidation = false;
+            this.BTPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTPrint.Location = new System.Drawing.Point(10, 10);
+            this.BTPrint.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.BTPrint.Name = "BTPrint";
+            this.BTPrint.Size = new System.Drawing.Size(266, 87);
+            this.BTPrint.TabIndex = 105;
+            this.BTPrint.UseVisualStyleBackColor = true;
+            this.BTPrint.Click += new System.EventHandler(this.BTPrint_Click_1);
             // 
             // panel10
             // 
@@ -1146,67 +1216,6 @@ namespace BankTeacher.Bank.Loan
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
             // 
-            // panel3
-            // 
-            this.panel3.BackColor = System.Drawing.Color.White;
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Controls.Add(this.label24);
-            this.panel3.Location = new System.Drawing.Point(797, 12);
-            this.panel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(282, 45);
-            this.panel3.TabIndex = 88;
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.BackColor = System.Drawing.Color.Transparent;
-            this.label24.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.ForeColor = System.Drawing.SystemColors.ButtonShadow;
-            this.label24.Location = new System.Drawing.Point(3, -2);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(220, 37);
-            this.label24.TabIndex = 79;
-            this.label24.Text = "เอกสารสมัครกู้ เเละ ข้อมูล";
-            // 
-            // panel6
-            // 
-            this.panel6.BackColor = System.Drawing.Color.White;
-            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel6.Controls.Add(this.checkBox_scrip);
-            this.panel6.Controls.Add(this.checkBox_copy);
-            this.panel6.Controls.Add(this.CB_SelectPrint);
-            this.panel6.Controls.Add(this.BTPrint);
-            this.panel6.Location = new System.Drawing.Point(797, 63);
-            this.panel6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(282, 241);
-            this.panel6.TabIndex = 89;
-            // 
-            // checkBox_scrip
-            // 
-            this.checkBox_scrip.AutoSize = true;
-            this.checkBox_scrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.checkBox_scrip.Location = new System.Drawing.Point(10, 145);
-            this.checkBox_scrip.Margin = new System.Windows.Forms.Padding(4);
-            this.checkBox_scrip.Name = "checkBox_scrip";
-            this.checkBox_scrip.Size = new System.Drawing.Size(171, 41);
-            this.checkBox_scrip.TabIndex = 120;
-            this.checkBox_scrip.Text = "เฉพราะ(ต้นฉบับ)";
-            this.checkBox_scrip.UseVisualStyleBackColor = true;
-            // 
-            // checkBox_copy
-            // 
-            this.checkBox_copy.AutoSize = true;
-            this.checkBox_copy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.checkBox_copy.Location = new System.Drawing.Point(10, 183);
-            this.checkBox_copy.Margin = new System.Windows.Forms.Padding(4);
-            this.checkBox_copy.Name = "checkBox_copy";
-            this.checkBox_copy.Size = new System.Drawing.Size(162, 41);
-            this.checkBox_copy.TabIndex = 121;
-            this.checkBox_copy.Text = "เฉพราะ(สำเนา)";
-            this.checkBox_copy.UseVisualStyleBackColor = true;
-            // 
             // InfoLoan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1235,6 +1244,10 @@ namespace BankTeacher.Bank.Loan
             this.tabPage4.ResumeLayout(false);
             this.panel9.ResumeLayout(false);
             this.panel4.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
             this.panel10.ResumeLayout(false);
             this.panel10.PerformLayout();
             this.panel11.ResumeLayout(false);
@@ -1243,10 +1256,6 @@ namespace BankTeacher.Bank.Loan
             this.panel2.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
-            this.panel6.ResumeLayout(false);
-            this.panel6.PerformLayout();
             this.ResumeLayout(false);
 
         }

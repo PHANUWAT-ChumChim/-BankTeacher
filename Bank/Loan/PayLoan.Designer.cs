@@ -29,6 +29,8 @@ namespace BankTeacher.Bank.Loan
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PayLoan));
             this.panel1 = new System.Windows.Forms.Panel();
             this.BExitForm = new System.Windows.Forms.Button();
@@ -54,6 +56,12 @@ namespace BankTeacher.Bank.Loan
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.checkBox_scrip = new System.Windows.Forms.CheckBox();
+            this.checkBox_copy = new System.Windows.Forms.CheckBox();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.BTdeletefile = new System.Windows.Forms.Button();
+            this.BTOpenfile = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
             this.DGV_Historyloanpay = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -61,10 +69,8 @@ namespace BankTeacher.Bank.Loan
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel9 = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
-            this.BTPrint_T = new System.Windows.Forms.Button();
             this.CBYearSelection_Loanpay = new System.Windows.Forms.ComboBox();
-            this.BTOpenfile = new System.Windows.Forms.Button();
-            this.BTdeletefile = new System.Windows.Forms.Button();
+            this.BTPrint_T = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
             this.DGV_info = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -80,10 +86,6 @@ namespace BankTeacher.Bank.Loan
             this.BSave = new System.Windows.Forms.Button();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.checkBox_scrip = new System.Windows.Forms.CheckBox();
-            this.checkBox_copy = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -91,11 +93,11 @@ namespace BankTeacher.Bank.Loan
             this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Historyloanpay)).BeginInit();
             this.panel9.SuspendLayout();
             this.panel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_info)).BeginInit();
-            this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -188,6 +190,14 @@ namespace BankTeacher.Bank.Loan
             this.DGV_PayLoan.AllowUserToAddRows = false;
             this.DGV_PayLoan.AllowUserToDeleteRows = false;
             this.DGV_PayLoan.BackgroundColor = System.Drawing.Color.White;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGV_PayLoan.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.DGV_PayLoan.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_PayLoan.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column4,
@@ -397,11 +407,94 @@ namespace BankTeacher.Bank.Loan
             this.tabPage2.Text = "เอกสาร";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // checkBox_scrip
+            // 
+            this.checkBox_scrip.AutoSize = true;
+            this.checkBox_scrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.checkBox_scrip.Location = new System.Drawing.Point(510, 6);
+            this.checkBox_scrip.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBox_scrip.Name = "checkBox_scrip";
+            this.checkBox_scrip.Size = new System.Drawing.Size(171, 41);
+            this.checkBox_scrip.TabIndex = 124;
+            this.checkBox_scrip.Text = "เฉพราะ(ต้นฉบับ)";
+            this.checkBox_scrip.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_copy
+            // 
+            this.checkBox_copy.AutoSize = true;
+            this.checkBox_copy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.checkBox_copy.Location = new System.Drawing.Point(510, 53);
+            this.checkBox_copy.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBox_copy.Name = "checkBox_copy";
+            this.checkBox_copy.Size = new System.Drawing.Size(162, 41);
+            this.checkBox_copy.TabIndex = 125;
+            this.checkBox_copy.Text = "เฉพราะ(สำเนา)";
+            this.checkBox_copy.UseVisualStyleBackColor = true;
+            // 
+            // panel5
+            // 
+            this.panel5.BackColor = System.Drawing.Color.White;
+            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel5.Controls.Add(this.BTdeletefile);
+            this.panel5.Controls.Add(this.BTOpenfile);
+            this.panel5.Location = new System.Drawing.Point(766, 42);
+            this.panel5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(378, 141);
+            this.panel5.TabIndex = 123;
+            // 
+            // BTdeletefile
+            // 
+            this.BTdeletefile.BackColor = System.Drawing.Color.White;
+            this.BTdeletefile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BTdeletefile.Cursor = System.Windows.Forms.Cursors.Default;
+            this.BTdeletefile.Enabled = false;
+            this.BTdeletefile.Location = new System.Drawing.Point(267, 93);
+            this.BTdeletefile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BTdeletefile.Name = "BTdeletefile";
+            this.BTdeletefile.Size = new System.Drawing.Size(106, 44);
+            this.BTdeletefile.TabIndex = 75;
+            this.BTdeletefile.Text = "ลบไฟล์";
+            this.BTdeletefile.UseVisualStyleBackColor = false;
+            this.BTdeletefile.Click += new System.EventHandler(this.BTdeletefile_Click);
+            // 
+            // BTOpenfile
+            // 
+            this.BTOpenfile.BackColor = System.Drawing.Color.White;
+            this.BTOpenfile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BTOpenfile.Cursor = System.Windows.Forms.Cursors.Default;
+            this.BTOpenfile.Location = new System.Drawing.Point(6, 7);
+            this.BTOpenfile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BTOpenfile.Name = "BTOpenfile";
+            this.BTOpenfile.Size = new System.Drawing.Size(367, 82);
+            this.BTOpenfile.TabIndex = 74;
+            this.BTOpenfile.Text = "อัพโหลด";
+            this.BTOpenfile.UseVisualStyleBackColor = false;
+            this.BTOpenfile.Click += new System.EventHandler(this.BTOpenfile_Click);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label5.Location = new System.Drawing.Point(759, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(371, 40);
+            this.label5.TabIndex = 73;
+            this.label5.Text = "อัพโหลดเอกสารสัญญากู้ที่มีลายเซ็นครบถ้วน";
+            // 
             // DGV_Historyloanpay
             // 
             this.DGV_Historyloanpay.AllowUserToAddRows = false;
             this.DGV_Historyloanpay.AllowUserToDeleteRows = false;
             this.DGV_Historyloanpay.BackgroundColor = System.Drawing.Color.White;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGV_Historyloanpay.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.DGV_Historyloanpay.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_Historyloanpay.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn2,
@@ -474,6 +567,18 @@ namespace BankTeacher.Bank.Loan
             this.label12.TabIndex = 99;
             this.label12.Text = "ปี";
             // 
+            // CBYearSelection_Loanpay
+            // 
+            this.CBYearSelection_Loanpay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CBYearSelection_Loanpay.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CBYearSelection_Loanpay.FormattingEnabled = true;
+            this.CBYearSelection_Loanpay.Location = new System.Drawing.Point(75, 18);
+            this.CBYearSelection_Loanpay.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.CBYearSelection_Loanpay.Name = "CBYearSelection_Loanpay";
+            this.CBYearSelection_Loanpay.Size = new System.Drawing.Size(192, 39);
+            this.CBYearSelection_Loanpay.TabIndex = 84;
+            this.CBYearSelection_Loanpay.SelectedIndexChanged += new System.EventHandler(this.CBYearSelection_Loanpay_SelectedIndexChanged);
+            // 
             // BTPrint_T
             // 
             this.BTPrint_T.BackColor = System.Drawing.Color.Red;
@@ -488,47 +593,6 @@ namespace BankTeacher.Bank.Loan
             this.BTPrint_T.TabIndex = 112;
             this.BTPrint_T.UseVisualStyleBackColor = false;
             this.BTPrint_T.Click += new System.EventHandler(this.BTPrint_Click);
-            // 
-            // CBYearSelection_Loanpay
-            // 
-            this.CBYearSelection_Loanpay.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CBYearSelection_Loanpay.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CBYearSelection_Loanpay.FormattingEnabled = true;
-            this.CBYearSelection_Loanpay.Location = new System.Drawing.Point(75, 18);
-            this.CBYearSelection_Loanpay.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.CBYearSelection_Loanpay.Name = "CBYearSelection_Loanpay";
-            this.CBYearSelection_Loanpay.Size = new System.Drawing.Size(192, 39);
-            this.CBYearSelection_Loanpay.TabIndex = 84;
-            this.CBYearSelection_Loanpay.SelectedIndexChanged += new System.EventHandler(this.CBYearSelection_Loanpay_SelectedIndexChanged);
-            // 
-            // BTOpenfile
-            // 
-            this.BTOpenfile.BackColor = System.Drawing.Color.White;
-            this.BTOpenfile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BTOpenfile.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BTOpenfile.Location = new System.Drawing.Point(6, 7);
-            this.BTOpenfile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.BTOpenfile.Name = "BTOpenfile";
-            this.BTOpenfile.Size = new System.Drawing.Size(367, 82);
-            this.BTOpenfile.TabIndex = 74;
-            this.BTOpenfile.Text = "อัพโหลด";
-            this.BTOpenfile.UseVisualStyleBackColor = false;
-            this.BTOpenfile.Click += new System.EventHandler(this.BTOpenfile_Click);
-            // 
-            // BTdeletefile
-            // 
-            this.BTdeletefile.BackColor = System.Drawing.Color.White;
-            this.BTdeletefile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BTdeletefile.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BTdeletefile.Enabled = false;
-            this.BTdeletefile.Location = new System.Drawing.Point(267, 93);
-            this.BTdeletefile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.BTdeletefile.Name = "BTdeletefile";
-            this.BTdeletefile.Size = new System.Drawing.Size(106, 44);
-            this.BTdeletefile.TabIndex = 75;
-            this.BTdeletefile.Text = "ลบไฟล์";
-            this.BTdeletefile.UseVisualStyleBackColor = false;
-            this.BTdeletefile.Click += new System.EventHandler(this.BTdeletefile_Click);
             // 
             // panel7
             // 
@@ -700,52 +764,6 @@ namespace BankTeacher.Bank.Loan
             // 
             this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
             // 
-            // panel5
-            // 
-            this.panel5.BackColor = System.Drawing.Color.White;
-            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel5.Controls.Add(this.BTdeletefile);
-            this.panel5.Controls.Add(this.BTOpenfile);
-            this.panel5.Location = new System.Drawing.Point(766, 42);
-            this.panel5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(378, 141);
-            this.panel5.TabIndex = 123;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label5.Location = new System.Drawing.Point(759, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(371, 40);
-            this.label5.TabIndex = 73;
-            this.label5.Text = "อัพโหลดเอกสารสัญญากู้ที่มีลายเซ็นครบถ้วน";
-            // 
-            // checkBox_scrip
-            // 
-            this.checkBox_scrip.AutoSize = true;
-            this.checkBox_scrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.checkBox_scrip.Location = new System.Drawing.Point(510, 6);
-            this.checkBox_scrip.Margin = new System.Windows.Forms.Padding(4);
-            this.checkBox_scrip.Name = "checkBox_scrip";
-            this.checkBox_scrip.Size = new System.Drawing.Size(171, 41);
-            this.checkBox_scrip.TabIndex = 124;
-            this.checkBox_scrip.Text = "เฉพราะ(ต้นฉบับ)";
-            this.checkBox_scrip.UseVisualStyleBackColor = true;
-            // 
-            // checkBox_copy
-            // 
-            this.checkBox_copy.AutoSize = true;
-            this.checkBox_copy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.checkBox_copy.Location = new System.Drawing.Point(510, 53);
-            this.checkBox_copy.Margin = new System.Windows.Forms.Padding(4);
-            this.checkBox_copy.Name = "checkBox_copy";
-            this.checkBox_copy.Size = new System.Drawing.Size(162, 41);
-            this.checkBox_copy.TabIndex = 125;
-            this.checkBox_copy.Text = "เฉพราะ(สำเนา)";
-            this.checkBox_copy.UseVisualStyleBackColor = true;
-            // 
             // PayLoan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -772,13 +790,13 @@ namespace BankTeacher.Bank.Loan
             this.panel2.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
+            this.panel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Historyloanpay)).EndInit();
             this.panel9.ResumeLayout(false);
             this.panel9.PerformLayout();
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_info)).EndInit();
-            this.panel5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
