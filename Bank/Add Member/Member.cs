@@ -164,6 +164,8 @@ namespace BankTeacher.Bank.Add_Member
         {
             if (CheckBRegister == false && TBTeacherName_Reg.Text != "")
             {
+                if (TBStartAmountShare_Reg.Text == "")
+                    TBStartAmountShare_Reg.Text = "0";
                 int AmountShare = Convert.ToInt32(TBStartAmountShare_Reg.Text);
                 if (AmountShare.ToString() == "" || AmountShare == 0)
                 {
@@ -192,7 +194,7 @@ namespace BankTeacher.Bank.Add_Member
                             }
                             else
                             {
-                                MessageBox.Show("ยกเลิกการสมัคร", "สมัครสมาชิก", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show("ยกเลิกการสมัคร", "สมัครสมาชิก", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
 
                         }
@@ -380,6 +382,18 @@ namespace BankTeacher.Bank.Add_Member
             }
               
 
+        }
+
+        private void TBTeacherNo_Reg_EnabledChanged(object sender, EventArgs e)
+        {
+            if (TBTeacherNo_Reg.Enabled == true)
+            {
+                BSave_Reg.Enabled = false;
+            }
+            else
+            {
+                BSave_Reg.Enabled = true;
+            }
         }
     }
 }

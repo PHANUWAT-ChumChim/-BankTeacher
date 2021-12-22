@@ -161,6 +161,12 @@
     <Compile Include="Bank\log\CancelLoan_Log - Copy.Designer.cs">
       <DependentUpon>CancelLoan_Log - Copy.cs</DependentUpon>
     </Compile>
+    <Compile Include="Bank\log\PayLoan_log.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bank\log\PayLoan_log.Designer.cs">
+      <DependentUpon>PayLoan_log.cs</DependentUpon>
+    </Compile>
     <Compile Include="Bank\log\Loan_Log.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -327,6 +333,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\log\CancelLoan_Log - Copy.resx">
       <DependentUpon>CancelLoan_Log - Copy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bank\log\PayLoan_log.resx">
+      <DependentUpon>PayLoan_log.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\log\Loan_Log.resx">
       <DependentUpon>Loan_Log.cs</DependentUpon>
