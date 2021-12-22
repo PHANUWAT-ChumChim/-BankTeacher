@@ -1509,11 +1509,11 @@ namespace BankTeacher.Bank.Pay
                     int Balance = 0;
                     for(int x = 0; x < dt.Rows.Count; x++)
                     {
-                    string Bill = "";
-                        if (x % 2 == 1)
-                        {
-                            DGV_BillInfo.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
-                        }
+                        //string Bill = "";
+                        //if (x % 2 == 1)
+                        //{
+                        //    DGV_BillInfo.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
+                        //}
 
                         if ( x == 0)
                         {
