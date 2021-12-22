@@ -403,13 +403,19 @@ namespace BankTeacher.Bank.Loan
             {
                 Class.Print.PrintPreviewDialog.PrintLoan(e, SQLDefault[3].Replace("{TeacherNo}", TBTeacherNo.Text).Replace("{LoanNo}",TBLoanNo.Text),
                    Bank.Menu.Date[2], Bank.Menu.Monthname, (Convert.ToInt32(Bank.Menu.Date[0]) + 543).ToString(),
-                   TBTeacherNo.Text, TBLoanNo.Text, DGVGuarantor.RowCount);
+                   TBTeacherNo.Text, TBLoanNo.Text, DGVGuarantor.RowCount,SandCRonot);
             }
         }
-
+        int SandCRonot = 0;
         private void BTPrint_Click_1(object sender, EventArgs e)
         {
-            if(DGVLoanDetail.RowCount != 0)
+            // เลือก ต้น ฉบับ หรือ สำเนา หรือ ไม่
+            if (checkBox_scrip.Checked == true) { SandCRonot = 3; }
+            if (checkBox_copy.Checked == true) { SandCRonot = 4; }
+            if (checkBox_scrip.Checked == true && checkBox_copy.Checked == true) { SandCRonot = 1; }
+            if (checkBox_scrip.Checked == false && checkBox_copy.Checked == false) { SandCRonot = 0; }
+
+            if (DGVLoanDetail.RowCount != 0)
             {
                 if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                 {

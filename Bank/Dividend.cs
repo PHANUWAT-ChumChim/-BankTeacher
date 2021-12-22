@@ -280,6 +280,11 @@ namespace BankTeacher.Bank
                         TBDividendPerShare.Text = (Math.Round(Convert.ToDouble(ds.Tables[0].Rows[0][4].ToString()),1)).ToString();
                         TBInterestNextYear.Text = ds.Tables[0].Rows[0][2].ToString();
                         TBRemainInterest.Text = ds.Tables[0].Rows[0][1].ToString();
+                    BSaveDividend.Enabled = true;
+                }
+                else
+                {
+
                 }
                 if(ds.Tables[1].Rows.Count != 0)
                 {

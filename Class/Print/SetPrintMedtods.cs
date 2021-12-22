@@ -124,7 +124,7 @@ namespace BankTeacher.Class.Print
             // (ตัวทำงาน โดย มีหน้าที่ตัด string and Char ทั้ง2เเบบ) โดย การเอา TextG มา ตัดเพื่อวัดขนาดที่ต้องตัด
             // โดย สิ่่งที่ได้จะส่วน นี้ คือ ระยะ ความยาว ของ Rows การเว้นบรรดทัด เมื่อ ข้อความเกิน ขนาด
             // ถ้าขนาดของข้อความมีขนาดมากกว่ากำหนดการตัด เข้าเงื่อนไขได้
-            if (TextToCut.Length > SetCut)
+            if (TextToCut.Length > SetCut )
             {
                 // ถ้าขนาดข้อความมากกว่ากำหนด เข้าเงื่อไขได้ เพื่อ loop ตัดไปเรื่อยเพื่อเช็คมากขนาดยังเกินกำหนดหรือยัง
                 while (TextToCut.Length >= SetCut)
@@ -229,8 +229,8 @@ namespace BankTeacher.Class.Print
                     //// เช็คตำเเหน่งที่เคยวาดไปเเล้ว 
                     //if (RowsNo >= c)
                     //{
-                        // นับตำเเหน่ง Rows ที่ถูกเทียบไปทั้งหมด
-                        //p++;
+                    // นับตำเเหน่ง Rows ที่ถูกเทียบไปทั้งหมด
+                    //p++;
                         cm = CutingCharAndString(e, G.Rows[RowsNo].Cells[Loca - 1].Value.ToString()
                         , SetCut, X, Y, out nu, out over, 2);
                     
@@ -274,9 +274,9 @@ namespace BankTeacher.Class.Print
         /// <para> วิธีการใช้งาน  </para>>
         /// ประกาศคำสั่ง System ตาม Metod เลย / Pen คือ ปากกา ที่ใช้ว่าโดยกำหนดค่าเองได้เลย / array  ที่เอาไว้เเทน ค่าตัวเลขที่เราต้องการ รวม (ต้องเก็บค่าไว้ให้ด้วย) / แปรง สี B / ขนาดตัวหนังสือ Fontsize / x = ขนาดเริ่มวาดครั้งเเรก / y ขนาดที่เริ่มวาดไปทั้งหมดเเล้ว
         /// </summary>
-        public static void Tabletotal(System.Drawing.Printing.PrintPageEventArgs e, Pen pen, List<float> array, Brush B, float Fontsize, float x, float y,float Sizepaper)
+        public static void Tabletotal(System.Drawing.Printing.PrintPageEventArgs e, Pen pen, List<int> array, Brush B, float Fontsize, float x, float y,float Sizepaper)
         {
-            float sum;
+            int sum;
             // ยอดที่รวมได้ทั้งหมด 
             sum = Convert.ToInt32(array.Sum());
             SizeF SizeSUM = e.Graphics.MeasureString(Class.Print.PrintPreviewDialog.NumToBath(sum.ToString()), Class.Print.PrintPreviewDialog.FonT(Fontsize, "TH Sarabun New", FontStyle.Bold));
@@ -285,7 +285,7 @@ namespace BankTeacher.Class.Print
             // เส้น
             e.Graphics.DrawRectangle(pen, x, y, SizeSUM.Width, SizeSUM.Height);
             // ตัวเลข
-            e.Graphics.DrawString($"{Convert.ToInt32(sum).ToString("D")} บาท", Class.Print.PrintPreviewDialog.FonT(18, "TH Sarabun New", FontStyle.Bold), B, ((Sizepaper - 50) - SizeSUM.Width) / 2 + SizeSUM.Width, y);
+            e.Graphics.DrawString($"{comma(sum).ToString()} บาท", Class.Print.PrintPreviewDialog.FonT(18, "TH Sarabun New", FontStyle.Bold), B, ((Sizepaper - 50) - SizeSUM.Width) / 2 + SizeSUM.Width, y);
             // เส้น
             e.Graphics.DrawRectangle(pen, SizeSUM.Width + x, y, (Sizepaper-50) - SizeSUM.Width, SizeSUM.Height);
         }
@@ -340,8 +340,42 @@ namespace BankTeacher.Class.Print
             }
             return location_Box;
         }
+        public static string comma(int GetNumber)
+        {
+            List<string> Sort = new List<string>();
+            string Number = "";
+            int up = 1;
+            string getRemove = GetNumber.ToString();
+            string getNum = "";
+         
+            for (int loop = 0; loop < GetNumber.ToString().Length; loop++)
+            {
+                getNum = getRemove.Remove(0, 1);
+                getRemove = getRemove.Remove(1, getRemove.Length - 1);
+                Sort.Add(getRemove);
+                getRemove = getNum;
+            }
+            for (int loop = 0; loop < Sort.Count; loop++)
+            {
+                if (loop == 3 * up)
+                {
+                    Number += ",";
+                    loop--;
+                    up++;
+                }
+                else
+                    Number += Sort[Sort.Count() - (loop + 1)];
+            }
+            char[] charArray = Number.ToCharArray();
+            Array.Reverse(charArray);
+            for (int loop = 0; loop < charArray.Count(); loop++)
+            {
+                getNum += charArray[loop];
+            }
+            return getNum;
+        }
 
-        // ของปุ้น
+       
         public static void Center(System.Drawing.Printing.PrintPageEventArgs e, float LocY, String Text, Font fontText, Brush brush)
         {
             SizeF SizeString = e.Graphics.MeasureString(Text, fontText);

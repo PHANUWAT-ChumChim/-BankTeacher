@@ -14,16 +14,16 @@ namespace BankTeacher.Bank.Loan
 {
     public partial class PayLoan : Form
     {
-        // ======================= ข้อมูลเเบบปริ้น ====================
-        //ข้อมูลส่วนตัว
-        public static string info_name;
-        public static string info_id;
-        // จ่าย
-        public static string info_totelAmountpay;
-        public static string info_BillLoan;
-        public static string info_datepay;
-        // กู้
-        public static string info_Lona_AmountRemain;
+        //// ======================= ข้อมูลเเบบปริ้น ====================
+        ////ข้อมูลส่วนตัว
+        //public static string info_name;
+        //public static string info_id;
+        //// จ่าย
+        //public static string info_totelAmountpay;
+        //public static string info_BillLoan;
+        //public static string info_datepay;
+        //// กู้
+        //public static string info_Lona_AmountRemain;
 
         int Check = 0;
         int StatusBoxFile = 0;
@@ -96,11 +96,12 @@ namespace BankTeacher.Bank.Loan
           "WHERE a.TeacherNo = '{TeacherNo}' and a.LoanStatusNo = 2 "
           ,
           //[6] BackPrint payLoan INPUT : {TeacherNo} {Year}
-          "SELECT a.LoanNo,CAST(a.PayDate as date),a.LoanAmount,b.LoanStatusName,CAST(d.PrefixName+' '+c.Fname+' '+c.Lname as nvarchar)  \r\n " +
+          "SELECT a.LoanNo,CAST(a.PayDate as date),a.LoanAmount,b.LoanStatusName,CAST(d.PrefixName+' '+c.Fname+' '+c.Lname as nvarchar),CAST(f.Name as nvarchar)  \r\n " +
           "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblLoanStatus b ON a.LoanStatusNo = b.LoanStatusNo \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis c ON a.TeacherNoAddBy = c.TeacherNo \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix d ON c.PrefixNo = d.PrefixNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetailPayment f ON a.BillDetailPaymentNo = f.BillDetailPaymentNo \r\n " +
           "WHERE a.TeacherNo = '{TeacherNo}' AND YEAR(a.PayDate) = {Year} AND a.LoanStatusNo = 2"
         };
         public PayLoan()
@@ -228,11 +229,7 @@ namespace BankTeacher.Bank.Loan
             {
                 if (dt.Rows.Count != 0)
                 {
-                    for (int Row = 0; Row < dt.Rows.Count; Row++)
-                    {
-                        DGV_PayLoan.Rows.Add(Row + 1, Loan.No, (Convert.ToDateTime(dt.Rows[0][1].ToString())).ToString("dd/MM/yyyy"), "จ่ายกู้", dt.Rows[0][3].ToString());
-                    }
-                    //CB_LoanNo.Items.RemoveAt()
+                    DGV_PayLoan.Rows.Add(1, Loan.No, (Convert.ToDateTime(dt.Rows[0][1].ToString())).ToString("dd/MM/yyyy"), "จ่ายกู้", dt.Rows[0][3].ToString());
                     CBB4Oppay.Enabled = true;
                     label3.Text = dt.Rows[0][3].ToString();
                     // ================ Clear ItemList ======================
@@ -272,6 +269,10 @@ namespace BankTeacher.Bank.Loan
                         MessageBox.Show("จ่ายสำเร็จ", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                         printDocument1.DefaultPageSettings.Landscape = true;
+                        Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
+                        Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
+                        Class.Print.PrintPreviewDialog.info_TeacherAdd = Class.UserInfo.TeacherName;
+                        Class.Print.PrintPreviewDialog.info_Payment = CBB4Oppay.SelectedItem.ToString();
                         if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                         {
                             printDocument1.Print();
@@ -454,18 +455,29 @@ namespace BankTeacher.Bank.Loan
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Historyloanpay, "จ่ายกู้", this.AccessibilityObject.Name, 1, "A5", 0);
+            if(tabControl1.SelectedIndex == 0)
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_PayLoan, "จ่ายกู้", this.AccessibilityObject.Name, 1, "A5", 0);
+            else
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_info, "จ่ายกู้", this.AccessibilityObject.Name,SandCRonot, "A5", 0);
+
         }
 
         private void CBYearSelection_Loanpay_SelectedIndexChanged(object sender, EventArgs e)
         {
             DGV_Historyloanpay.Rows.Clear();
-            BTPrint.BackColor = Color.White;
+            BTPrint_T.BackColor = Color.White;
            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("{TeacherNo}", TBTeacherNo.Text)
                 .Replace("{Year}", CBYearSelection_Loanpay.SelectedItem.ToString()));
-            for(int loop = 0; loop < dt.Rows.Count; loop++)
+            Class.Print.PrintPreviewDialog.info_PayLoanBill = dt.Rows[0][0].ToString();
+            Class.Print.PrintPreviewDialog.info_Loanpaydate = dt.Rows[0][1].ToString();
+            Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
+            Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
+            Class.Print.PrintPreviewDialog.info_TeacherAdd = dt.Rows[0][4].ToString();
+            Class.Print.PrintPreviewDialog.info_Payment = dt.Rows[0][5].ToString();
+            for (int loop = 0; loop < dt.Rows.Count; loop++)
             {
-                DGV_Historyloanpay.Rows.Add(loop + 1,dt.Rows[0][0].ToString(),dt.Rows[0][1].ToString(),"จ่ายกู้", dt.Rows[0][2].ToString());
+                DGV_Historyloanpay.Rows.Add(dt.Rows[0][0].ToString(),dt.Rows[0][1].ToString(),"จ่ายกู้", dt.Rows[0][2].ToString());
+                DGV_info.Rows.Add(loop + 1,"จ่ายกู้",dt.Rows[0][2].ToString());
             }
          
         }
@@ -478,11 +490,16 @@ namespace BankTeacher.Bank.Loan
                 tabControl1.SelectedIndex = 0;
             }
         }
-
-
+        int SandCRonot = 0;
         private void BTPrint_Click(object sender, EventArgs e)
         {
-            if(BTPrint.BackColor != Color.Red)
+            // เลือก ต้น ฉบับ หรือ สำเนา หรือ ไม่
+            if (checkBox_scrip.Checked == true) { SandCRonot = 3; }
+            if (checkBox_copy.Checked == true) { SandCRonot = 4; }
+            if (checkBox_scrip.Checked == true && checkBox_copy.Checked == true) { SandCRonot = 1; }
+            if (checkBox_scrip.Checked == false && checkBox_copy.Checked == false) { SandCRonot = 0; }
+
+            if (BTPrint_T.BackColor != Color.Red)
             {
                 printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                 printDocument1.DefaultPageSettings.Landscape = true;

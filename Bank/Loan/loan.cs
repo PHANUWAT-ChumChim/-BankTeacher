@@ -720,7 +720,7 @@ namespace BankTeacher.Bank.Loan
         {
                 Class.Print.PrintPreviewDialog.PrintLoan(e, SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text), 
                     Bank.Menu.Date[2],Bank.Menu.Monthname, (Convert.ToInt32(Bank.Menu.Date[0]) + 543).ToString(), 
-                    TBTeacherNo.Text, TBLoanNo.Text,DGVGuarantor.RowCount);
+                    TBTeacherNo.Text, TBLoanNo.Text,DGVGuarantor.RowCount,1);
         }
         private void button2_Click(object sender, EventArgs e)
         {
