@@ -1356,7 +1356,7 @@ namespace BankTeacher.Bank.Pay
             this.checkBox_scrip.Location = new System.Drawing.Point(4, 73);
             this.checkBox_scrip.Margin = new System.Windows.Forms.Padding(4);
             this.checkBox_scrip.Name = "checkBox_scrip";
-            this.checkBox_scrip.Size = new System.Drawing.Size(171, 41);
+            this.checkBox_scrip.Size = new System.Drawing.Size(137, 34);
             this.checkBox_scrip.TabIndex = 118;
             this.checkBox_scrip.Text = "เฉพราะ(ต้นฉบับ)";
             this.checkBox_scrip.UseVisualStyleBackColor = true;
@@ -1368,7 +1368,7 @@ namespace BankTeacher.Bank.Pay
             this.checkBox_copy.Location = new System.Drawing.Point(183, 73);
             this.checkBox_copy.Margin = new System.Windows.Forms.Padding(4);
             this.checkBox_copy.Name = "checkBox_copy";
-            this.checkBox_copy.Size = new System.Drawing.Size(162, 41);
+            this.checkBox_copy.Size = new System.Drawing.Size(129, 34);
             this.checkBox_copy.TabIndex = 119;
             this.checkBox_copy.Text = "เฉพราะ(สำเนา)";
             this.checkBox_copy.UseVisualStyleBackColor = true;

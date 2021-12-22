@@ -1,7 +1,7 @@
 ﻿
 namespace BankTeacher.Bank.log
 {
-    partial class Loan_Log
+    partial class Payloan_log
     {
         /// <summary>
         /// Required designer variable.
@@ -107,7 +107,7 @@ namespace BankTeacher.Bank.log
             this.dataGridViewTextBoxColumn5,
             this.dataGridViewTextBoxColumn6,
             this.Column8});
-            this.DGVLoanDay.Location = new System.Drawing.Point(1, 130);
+            this.DGVLoanDay.Location = new System.Drawing.Point(3, 130);
             this.DGVLoanDay.Name = "DGVLoanDay";
             this.DGVLoanDay.ReadOnly = true;
             this.DGVLoanDay.RowHeadersVisible = false;
@@ -378,7 +378,7 @@ namespace BankTeacher.Bank.log
             this.DTPSelectDate.TabIndex = 0;
             this.DTPSelectDate.ValueChanged += new System.EventHandler(this.DTPSelectDate_ValueChanged);
             // 
-            // Loan_Log
+            // Payloan_log
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -386,10 +386,10 @@ namespace BankTeacher.Bank.log
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
-            this.Name = "Loan_Log";
+            this.Name = "Payloan_log";
             this.Text = "Loan_Log";
-            this.Load += new System.EventHandler(this.Loan_Log_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Loan_Log_KeyDown);
+            this.Load += new System.EventHandler(this.PayLoan_Log_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PayLoan_Log_KeyDown);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGVLoanDay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGVSelectTeacherAdd)).EndInit();

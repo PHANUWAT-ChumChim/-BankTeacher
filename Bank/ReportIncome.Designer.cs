@@ -295,6 +295,7 @@ namespace BankTeacher.Bank
             this.TBTeacherNo.Size = new System.Drawing.Size(174, 43);
             this.TBTeacherNo.TabIndex = 89;
             this.TBTeacherNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TBTeacherNo_KeyDown);
+            this.TBTeacherNo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBTeacherNo_KeyPress);
             // 
             // LB2Ne
             // 

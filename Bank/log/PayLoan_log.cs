@@ -10,21 +10,20 @@ using System.Windows.Forms;
 
 namespace BankTeacher.Bank.log
 {
-    public partial class Loan_Log : Form
+    public partial class Payloan_log : Form
     {
-        public Loan_Log()
+        public Payloan_log()
         {
             InitializeComponent();
         }
         /// <summary> 
         /// SQLDefault 
-        /// <para>[0] Get All DGV  INPUT: {TeacherNo}  {DateAddYearMonthDay} </para> 
-        /// <para>[1] BSearch TeacherAddBy Just the person who used to AddLoan INPUT: {Text} </para>
-        /// <para>[2] Get Date From Database INPUT: - </para>
+        /// <para>[0] Pull all  INPUT: {TeacherNo}  {DateAddYearMonthDay} </para> 
+        /// <para>[1] Search Teacher INPUT: {Text} </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
-           //[0] Get All DGV  INPUT: {TeacherNo}  {DateAddYearMonthDay}
+           //[0] Pull all INPUT: {TeacherNo}  {DateAddYearMonthDay}
            "SELECT d.Name as TeacherAddByName , a.LoanNo , CAST(ISNULL(c.PrefixNameFull , '') + b.Fname + ' ' + b.Lname as NVARCHAR) as Name   \r\n " +
           ", CAST(a.MonthPay as varchar) + '/' + CAST(a.YearPay as varchar) as DateStartPayLoan ,   \r\n " +
           "FORMAT(EOMONTH(CAST('01/' + CAST(a.MonthPay as varchar) + '/' + CAST(a.YearPay as varchar) as date), a.PayNo), 'MM/yyyy') as DateEndPayLoan  \r\n " +
@@ -38,12 +37,12 @@ namespace BankTeacher.Bank.log
           "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNoAddBy = b.TeacherNo  \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo ) as d on a.TeacherNoAddBy = d.TeacherNoAddBy \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblLoanStatus as e on a.LoanStatusNo = e.LoanStatusNo \r\n " +
-          "WHERE a.TeacherNoAddBy LIKE '%{TeacherNo}%' and CAST(a.DateAdd as date) = CAST('{DateAddYearMonthDay}' as date) \r\n " +
+          "WHERE a.TeacherNoAddBy LIKE '%{TeacherNo}%' and CAST(a.PayDate as date) = CAST('{DateAddYearMonthDay}' as date) \r\n " +
           "GROUP BY a.LoanNo , d.Name, c.PrefixNameFull ,b.Fname , b.Lname ,a.MonthPay , a.YearPay , a.InterestRate , a.LoanAmount , a.PayNo, e.LoanStatusName"
 
            ,
 
-           //[1] BSearch TeacherAddBy Just the person who used to AddLoan INPUT: {Text}
+           //[1] Search Teacher  INPUT: {Text}
            "SELECT a.TeacherNoAddBy , CAST(ISNULL(c.PrefixNameFull , '') + b.Fname + ' ' + b.Lname as NVARCHAR(255)) , Fname \r\n " +
           "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNoAddBy = b.TeacherNo \r\n " +
@@ -53,16 +52,12 @@ namespace BankTeacher.Bank.log
           "ORDER BY Fname"
            ,
 
-           //[2] Get Date From Database INPUT: -
-           "SELECT CAST(GETDATE() as date)"
-           ,
-
          };
 
-        private void Loan_Log_Load(object sender, EventArgs e)
+        private void PayLoan_Log_Load(object sender, EventArgs e)
         {
             RBday.Checked = true;
-            DTPSelectDate.Value = Convert.ToDateTime(Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]).Rows[0][0].ToString());
+            DTPSelectDate.Value = Convert.ToDateTime(BankTeacher.Bank.Menu.Date[0]+'-'+BankTeacher.Bank.Menu.Date[1]+'-'+BankTeacher.Bank.Menu.Date[2]);
         }
 
         private void DTPSelectDate_ValueChanged(object sender, EventArgs e)
@@ -154,27 +149,6 @@ namespace BankTeacher.Bank.log
                 panel2.Enabled = true;
             }
         }
-
-        private void Loan_Log_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Escape)
-            {
-                if (RBSelectTeacherAdd.Enabled == true)
-                {
-                    if (DGVSelectTeacherAdd.Rows.Count != 0)
-                    {
-                        DGVSelectTeacherAdd.Rows.Clear();
-                        Checkmember(true);
-                        TBTeacherName.Text = "";
-                        TBTeacherNo.Text = "";
-                    }
-                    else
-                    {
-                        BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
-                    }
-                }
-            }
-        }
         private void Checkmember(bool tf)
         {
             TBTeacherNo.Enabled = tf;
@@ -190,6 +164,27 @@ namespace BankTeacher.Bank.log
             {
                 TBTeacherNo.Text = Bank.Search.Return[0];
                 TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+            }
+        }
+
+        private void PayLoan_Log_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Escape)
+            {
+                if(RBSelectTeacherAdd.Checked == true)
+                {
+                    if(TBTeacherNo.Text != "")
+                    {
+                        DGVSelectTeacherAdd.Rows.Clear();
+                        TBTeacherNo.Text = "";
+                        TBTeacherName.Text = "";
+                        Checkmember(true);
+                    }
+                    else
+                    {
+                        BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+                    }
+                }
             }
         }
     }

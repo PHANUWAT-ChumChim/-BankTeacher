@@ -60,7 +60,7 @@ namespace BankTeacher.Bank.Add_Member
           "FROM Personal.dbo.tblTeacherHis as a  \r\n " +
           "FULL OUTER JOIN EmployeeBank.dbo.tblMember as b on a.TeacherNo = b.TeacherNo  \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as c ON a.PrefixNo = c.PrefixNo   \r\n " +
-          "WHERE (a.TeacherNo LIKE '{Text}%' or CAST(Fname +' '+ Lname as NVARCHAR) LIKE '{Text}%') and a.IsUse = 1 ) as a  \r\n " +
+          "WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(Fname +' '+ Lname as NVARCHAR) LIKE '%{Text}%') and a.IsUse = 1 ) as a  \r\n " +
           "WHERE a.MemberStatusNo = 2 or a.MemberStatusNo IS NULL  \r\n " +
           "ORDER BY a.Fname; "
            ,
@@ -125,7 +125,17 @@ namespace BankTeacher.Bank.Add_Member
           "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo  \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo  \r\n " +
           "WHERE a.TeacherNo = '{TeacherNo}';"
-
+            ,
+          //[5] SELECT Member (Enter) INPUT:{Text}
+           "SELECT TeacherNo,Name,null,Fname  \r\n " +
+          "FROM(SELECT ISNULL(b.TeacherNo , a.TeacherNo) as TeacherNo ,  CAST(ISNULL(c.PrefixName+' ','') + Fname +' '+ Lname as NVARCHAR)AS NAME, Fname , b.MemberStatusNo  \r\n " +
+          "FROM Personal.dbo.tblTeacherHis as a  \r\n " +
+          "FULL OUTER JOIN EmployeeBank.dbo.tblMember as b on a.TeacherNo = b.TeacherNo  \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as c ON a.PrefixNo = c.PrefixNo   \r\n " +
+          "WHERE (a.TeacherNo = '{Text}') and a.IsUse = 1 ) as a  \r\n " +
+          "WHERE a.MemberStatusNo = 2 or a.MemberStatusNo IS NULL  \r\n " +
+          "ORDER BY a.Fname; "
+           ,
 
     };
 
@@ -154,6 +164,8 @@ namespace BankTeacher.Bank.Add_Member
         {
             if (CheckBRegister == false && TBTeacherName_Reg.Text != "")
             {
+                if (TBStartAmountShare_Reg.Text == "")
+                    TBStartAmountShare_Reg.Text = "0";
                 int AmountShare = Convert.ToInt32(TBStartAmountShare_Reg.Text);
                 if (AmountShare.ToString() == "" || AmountShare == 0)
                 {
@@ -178,10 +190,11 @@ namespace BankTeacher.Bank.Add_Member
                                 .Replace("{Year}", BankTeacher.Bank.Menu.Date[0]));
                                 MessageBox.Show("สมัครเสร็จสิ้น", "สมัครสมาชิก", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 CheckBRegister = true;
+                                Checkmember(true);
                             }
                             else
                             {
-                                MessageBox.Show("ยกเลิกการสมัคร", "สมัครสมาชิก", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show("ยกเลิกการสมัคร", "สมัครสมาชิก", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
 
                         }
@@ -230,7 +243,7 @@ namespace BankTeacher.Bank.Add_Member
 
         private void BTOpenfile_Click(object sender, EventArgs e)
         {
-            if(TBTeacherNo_Reg.Text.Length == 6)
+            if(TBTeacherNo_Reg.Text.Length != 0)
             {
                 if (StatusBoxFile == 0)
                 {
@@ -294,31 +307,37 @@ namespace BankTeacher.Bank.Add_Member
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if(TBTeacherNo_Reg.Text.Length == 6)
+                try
                 {
-                    try
+                        DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[5].Replace("{Text}", TBTeacherNo_Reg.Text));
+                    if(ds.Tables[0].Rows.Count != 0)
                     {
-                         DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1].Replace("{Text}", TBTeacherNo_Reg.Text));
                         TBTeacherName_Reg.Text = ds.Tables[0].Rows[0][1].ToString();
                         Check = 1;
                         CheckBRegister = false;
                         BTPrintfShare_Reg.Enabled = true;
+                        Checkmember(false);
                     }
-                    catch (Exception ex)
-                    {
-                        BTPrintfShare_Reg.Enabled = false;
-                        Console.WriteLine(ex);
-                    }
+                }
+                catch (Exception ex)
+                {
+                    BTPrintfShare_Reg.Enabled = false;
+                    Console.WriteLine(ex);
                 }
             }
             else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back && Check == 1)
             {
                 TBTeacherName_Reg.Text = "";
                 CheckBRegister = false;
+                Checkmember(true);
                 Check = 0;
             }
         }
-
+        private void Checkmember(bool tf)
+        {
+            TBTeacherNo_Reg.Enabled = tf;
+            BSearchTeacher_Reg.Enabled = tf;
+        }
         private void BExitForm_Click(object sender, EventArgs e)
         {
             BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
@@ -339,6 +358,7 @@ namespace BankTeacher.Bank.Add_Member
                     CheckBRegister = false;
                     CheckBCancel = false;
                     Saving = 0;
+                    Checkmember(true);
                 }
                 else
                 {
@@ -362,6 +382,18 @@ namespace BankTeacher.Bank.Add_Member
             }
               
 
+        }
+
+        private void TBTeacherNo_Reg_EnabledChanged(object sender, EventArgs e)
+        {
+            if (TBTeacherNo_Reg.Enabled == true)
+            {
+                BSave_Reg.Enabled = false;
+            }
+            else
+            {
+                BSave_Reg.Enabled = true;
+            }
         }
     }
 }

@@ -282,6 +282,19 @@ namespace BankTeacher.Bank.Pay
            "FROM EmployeeBank.dbo.tblBill as a \r\n" +
            "WHERE a.BillNo = {Bill}"
            ,
+           
+          //[17] SELECT MEMBER (Enter) INPUT: {Text} 
+          "SELECT TOP(20) a.TeacherNo , CAST(ISNULL(c.PrefixName+' ','')+[Fname] +' '+ [Lname] as NVARCHAR)AS Name, e.SavingAmount,    \r\n " +
+          "b.TeacherLicenseNo,b.IdNo AS IDNo,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar) AS UserStatususing    \r\n " +
+          "FROM EmployeeBank.dbo.tblMember as a    \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as b ON a.TeacherNo = b.TeacherNo    \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as c ON c.PrefixNo = b.PrefixNo   \r\n " +
+          "INNER JOIN EmployeeBank.dbo.tblMemberStatus as d on a.MemberStatusNo = d.MemberStatusNo  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblShare as e on a.TeacherNo = e.TeacherNo \r\n " +
+          "WHERE a.MemberStatusNo = 1 and a.TeacherNo = '{Text}'\r\n " +
+          "GROUP BY a.TeacherNo , CAST(ISNULL(c.PrefixName+' ','')+[Fname] +' '+ [Lname] as NVARCHAR), e.SavingAmount,    \r\n " +
+          "b.TeacherLicenseNo,b.IdNo ,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar)   \r\n " +
+          "ORDER BY a.TeacherNo; "
          };
 
         
@@ -353,344 +366,329 @@ namespace BankTeacher.Bank.Pay
                 List<int> Loan = new List<int>();
                 List<List<int>> RMonth = new List<List<int>>();
                 //ลองค้นหาดูว่ามี ID สมาชิกนี้ในระบบมั้ย หากมีให้ทำใน if
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0].Replace("{Text}", TBTeacherNo.Text));
-                if (TBTeacherNo.Text.Length == 6)
-                    if (dt.Rows.Count != 0)
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[17].Replace("{Text}", TBTeacherNo.Text));
+                if (dt.Rows.Count != 0)
+                {
+                    tabControl1.Enabled = true;
+                    Cleartabpage1();
+                    TBTeacherBill.Text = "";
+                    DM.Clear();
+                    BackupDM.Clear();
+                    ClearForm();
+                    YearinCB.Clear();
+                    TBTeacherName.Text = dt.Rows[0][1].ToString();
+                    CheckInputTeacher = true;
+                    ComboBox[] cb = new ComboBox[] { CBLoanSelection_LoanInfo };
+                    //หารายการกู้ที่มีอยู๋ เวลาที่สมัครสมาชิก และ บิลล์ที่จ่ายล่าสุด
+                    DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2].Replace("{TeacherNo}", TBTeacherNo.Text));
+                    //loop จากจำนวนรายการกู้ที่มีอยู่ในระบบ ใส่ลงใน CBLoanSelection หน้าข้อมูลกู้
+                    for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
                     {
-                        tabControl1.Enabled = true;
-                        Cleartabpage1();
-                        TBTeacherBill.Text = "";
-                        DM.Clear();
-                        BackupDM.Clear();
-                        ClearForm();
-                        YearinCB.Clear();
-                        TBTeacherName.Text = dt.Rows[0][1].ToString();
-                        CheckInputTeacher = true;
-                        ComboBox[] cb = new ComboBox[] { CBLoanSelection_LoanInfo };
-                        //หารายการกู้ที่มีอยู๋ เวลาที่สมัครสมาชิก และ บิลล์ที่จ่ายล่าสุด
-                        DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2].Replace("{TeacherNo}", TBTeacherNo.Text));
-                        //loop จากจำนวนรายการกู้ที่มีอยู่ในระบบ ใส่ลงใน CBLoanSelection หน้าข้อมูลกู้
-                        for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
+                        for (int aa = 0; aa < cb.Length; aa++)
                         {
-                            for (int aa = 0; aa < cb.Length; aa++)
+                            cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment("รายการกู้ " + ds.Tables[0].Rows[x][1].ToString(), ds.Tables[0].Rows[x][0].ToString()));
+                            Loan.Add(Convert.ToInt32(ds.Tables[0].Rows[x][0].ToString()));
+                        }
+                    }
+                    CBLoanSelection_LoanInfo.Enabled = true;
+                    //หาก CBLoanSelection หน้าดูข้อมูลกู้มี Items อยู่อันเดียวให้เลือก อัตโนมัติให้เลย
+                    if (CBLoanSelection_LoanInfo.Items.Count == 1)
+                    {
+                        CBLoanSelection_LoanInfo.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        CBLoanSelection_LoanInfo.Enabled = false;
+                    }
+                    //ประกาศตัวแปร ปีที่สมัครและปีที่จ่ายล่าสุด
+                    int YearRegister = Convert.ToInt32((Convert.ToDateTime(ds.Tables[1].Rows[0][0].ToString())).ToString("yyyy"));
+                    int Yearlastofpay = Convert.ToInt32((Convert.ToDateTime(ds.Tables[2].Rows[0][2].ToString())).ToString("yyyy"));
+                    Yearlastofpay = Yearlastofpay - Convert.ToInt32(Bank.Menu.Date[0]);
+                    //ถ้าปีที่สมัคร น้อยกว่าปีนี้ -2 ปีให้ทำ
+                    if (YearRegister < Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) - 5)
+                    {
+                        //ประกาศให้ตัวแปร thisyeardiscount2year = ปีนี้ - 2 ปี
+                        int thisyeardiscount2year = Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) - 5;
+                        //หาก thisyeardiscount2year น้อยกว่าหรือเท่ากับ ปีนี้ + จำนวนปีที่จ่ายล่าสุด ให้ loop
+                        while (thisyeardiscount2year <= Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + Yearlastofpay)
+                        {
+                            //เพิ่ม thisyeardiscount2year ลงไปใน Combobox ปี หน้า จ่าย ข้อมูลหุ้น และ ข้อมูลบิลล์
+                            CBYearSelection_Pay.Items.Add(thisyeardiscount2year);
+                            CBYearSelection_ShareInfo.Items.Add(thisyeardiscount2year);
+                            CBYearSelection_BillInfo.Items.Add(thisyeardiscount2year);
+                            //ถ้า thisyeardiscount2year เท่ากับ ปีนี้ + จำนวนปีที่จ่ายล่าสุด
+                            if (thisyeardiscount2year == Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + Yearlastofpay)
                             {
-                                cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment("รายการกู้ " + ds.Tables[0].Rows[x][1].ToString(), ds.Tables[0].Rows[x][0].ToString()));
-                                Loan.Add(Convert.ToInt32(ds.Tables[0].Rows[x][0].ToString()));
+                                //หาบิลล์ในปีนั้นๆหากไม่มีให้ลบปี ใน Combobox ปี หน้า ข้อมูลบิลล์
+                                DataTable dtCheckMonthinlastyear = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
+                                    .Replace("{TeacherNo}", TBTeacherNo.Text)
+                                    .Replace("{Year}", CBYearSelection_BillInfo.Items[CBYearSelection_BillInfo.Items.Count - 1].ToString()));
+                                if (dtCheckMonthinlastyear.Rows.Count == 0)
+                                {
+                                    CBYearSelection_BillInfo.Items.RemoveAt(CBYearSelection_BillInfo.Items.Count - 1);
+                                    CBYearSelection_ShareInfo.Items.RemoveAt(CBYearSelection_ShareInfo.Items.Count - 1);
+                                }
+                            }
+                            //thisyeardiscount2year +1 หลังจบ loop ทุกรอบ
+                            thisyeardiscount2year++;
+                        }
+                    }
+                    //หาก if บนไม่เป็นจริง ให้มาดูเงื่อนไขนี้ต่อ หาก วันที่สมัคร มากกว่า หรือ เท่ากับ ปีนี้ -5 ปี
+                    else if (YearRegister >= Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) - 5)
+                    {
+                        //หาก วันที่สมัคร น้อยกว่า หรือเท่ากับ ปีนี้ + จำนวนปีที่จ่ายล่าสุด ให้ loop
+                        while (YearRegister <= Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + Yearlastofpay)
+                        {
+                            //เพิ่ม thisyeardiscount2year ลงไปใน Combobox ปี หน้า จ่าย ข้อมูลหุ้น และ ข้อมูลบิลล์
+                            CBYearSelection_Pay.Items.Add(YearRegister);
+                            CBYearSelection_ShareInfo.Items.Add(YearRegister);
+                            CBYearSelection_BillInfo.Items.Add(YearRegister);
+                            //หาก ปีที่สมัคร = ปีนี้ + จำนวนปีที่จ่ายล่าสุด
+                            if (YearRegister == Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + Yearlastofpay)
+                            {
+                                //หาบิลล์ในปีนั้นๆหากไม่มีให้ลบปี ใน Combobox ปี หน้า ข้อมูลบิลล์
+                                DataTable dtCheckMonthinlastyear = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
+                                    .Replace("{TeacherNo}", TBTeacherNo.Text)
+                                    .Replace("{Year}", CBYearSelection_BillInfo.Items[CBYearSelection_BillInfo.Items.Count - 1].ToString()));
+                                if (dtCheckMonthinlastyear.Rows.Count == 0)
+                                {
+                                    CBYearSelection_BillInfo.Items.RemoveAt(CBYearSelection_BillInfo.Items.Count - 1);
+                                    CBYearSelection_ShareInfo.Items.RemoveAt(CBYearSelection_ShareInfo.Items.Count - 1);
+                                }
+                            }
+                            //YearRegister + 1 หลังจบ loop ทุกรอบ
+                            YearRegister++;
+
+                        }
+                    }
+                    //---------------------------------------------------------------Year-------------------------------------------------
+                    //loop จาก จำนวนปีใน Combobox ปี หน้าจ่าย
+                    for (int Yearloop = 0; Yearloop < CBYearSelection_Pay.Items.Count; Yearloop++)
+                    {
+                        //DM เพิ่ม list หลัก ตามปี และประกาษตัวแปร เดือนปี ที่สมัคร และ เดือนปีที่ จ่ายล่าสุด
+                        DM.Add(new List<int>());
+                        int Month = Convert.ToInt32((Convert.ToDateTime(ds.Tables[1].Rows[0][0].ToString())).ToString("MM"));
+                        int Year = Convert.ToInt32((Convert.ToDateTime(ds.Tables[1].Rows[0][0].ToString())).ToString("yyyy"));
+                        int lastMonthofpay = Convert.ToInt32((Convert.ToDateTime(ds.Tables[2].Rows[0][2].ToString())).ToString("MM"));
+                        int lastYearofpay = Convert.ToInt32((Convert.ToDateTime(ds.Tables[2].Rows[0][2].ToString())).ToString("yyyy"));
+                        DateTime lastDateofPay = Convert.ToDateTime((Convert.ToDateTime((lastYearofpay + "-" + lastMonthofpay + "-" + DateTime.DaysInMonth(lastYearofpay, lastMonthofpay)).ToString())).ToString("yyyy-MM-dd"));
+                        DateTime Dateinloop;
+
+                        //หาก Combobox ปีหน้าจ่ายตำแหน่งที่ Yearloop ตรงกับปีที่สมัคร
+                        if (CBYearSelection_Pay.Items[Yearloop].ToString() == Year.ToString())
+                        {
+                            //หากเดือนที่สมัคร น้อยกว่า หรือ เท่ากับเดือนที่ 12 ให้ loop
+                            while (Month <= 12)
+                            {
+                                //Dateinloop = Combobox ปีที่ loop + เดือนที่ loop + วันที่มากที่สุดในเดือน
+                                Dateinloop = Convert.ToDateTime((Convert.ToDateTime((Convert.ToInt32(CBYearSelection_Pay.Items[Yearloop].ToString()) + "-" + Month + "-" + DateTime.DaysInMonth(Convert.ToInt32(CBYearSelection_Pay.Items[Yearloop].ToString()), Month)).ToString())).ToString("yyyy-MM-dd"));
+                                //หาก Dateinloop น้อยกว่า ปี เดือนที่จ่าย ล่าสุด ให้ หยุด loop
+                                if (Dateinloop > lastDateofPay)
+                                {
+                                    break;
+                                }
+                                //เพิ่มเดือน ใน DM ปีที่ loop และให้ Month + 1 หลังจบ loop
+                                DM[Yearloop].Add(Month);
+                                Month++;
                             }
                         }
-                        CBLoanSelection_LoanInfo.Enabled = true;
-                        //หาก CBLoanSelection หน้าดูข้อมูลกู้มี Items อยู่อันเดียวให้เลือก อัตโนมัติให้เลย
-                        if (CBLoanSelection_LoanInfo.Items.Count == 1)
-                        {
-                            CBLoanSelection_LoanInfo.SelectedIndex = 0;
-                        }
+                        //หาก เงื่อนไขบนไม่เป็นจริงให้มาดูเงื่อนไขนี้
                         else
                         {
-                            CBLoanSelection_LoanInfo.Enabled = false;
-                        }
-                        //ประกาศตัวแปร ปีที่สมัครและปีที่จ่ายล่าสุด
-                        int YearRegister = Convert.ToInt32((Convert.ToDateTime(ds.Tables[1].Rows[0][0].ToString())).ToString("yyyy"));
-                        int Yearlastofpay = Convert.ToInt32((Convert.ToDateTime(ds.Tables[2].Rows[0][2].ToString())).ToString("yyyy"));
-                        Yearlastofpay = Yearlastofpay - Convert.ToInt32(Bank.Menu.Date[0]);
-                        //ถ้าปีที่สมัคร น้อยกว่าปีนี้ -2 ปีให้ทำ
-                        if (YearRegister < Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) - 5)
-                        {
-                            //ประกาศให้ตัวแปร thisyeardiscount2year = ปีนี้ - 2 ปี
-                            int thisyeardiscount2year = Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) - 5;
-                            //หาก thisyeardiscount2year น้อยกว่าหรือเท่ากับ ปีนี้ + จำนวนปีที่จ่ายล่าสุด ให้ loop
-                            while (thisyeardiscount2year <= Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + Yearlastofpay)
+                            //ประกาศให้ Months = 1 และ loop 12 ครั้ง และให้ Months +1 ทุกครั้งหลัง จบ loop
+                            for (int Months = 1; Months <= 12; Months++)
                             {
-                                //เพิ่ม thisyeardiscount2year ลงไปใน Combobox ปี หน้า จ่าย ข้อมูลหุ้น และ ข้อมูลบิลล์
-                                CBYearSelection_Pay.Items.Add(thisyeardiscount2year);
-                                CBYearSelection_ShareInfo.Items.Add(thisyeardiscount2year);
-                                CBYearSelection_BillInfo.Items.Add(thisyeardiscount2year);
-                                //ถ้า thisyeardiscount2year เท่ากับ ปีนี้ + จำนวนปีที่จ่ายล่าสุด
-                                if (thisyeardiscount2year == Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + Yearlastofpay)
+                                //Dateinloop = ปีที่ loop + เดือนที่ loop + วันที่มากที่สุดในเดือน
+                                Dateinloop = Convert.ToDateTime((Convert.ToDateTime((Convert.ToInt32(CBYearSelection_Pay.Items[Yearloop].ToString()) + "-" + Months + "-" + DateTime.DaysInMonth(Convert.ToInt32(CBYearSelection_Pay.Items[Yearloop].ToString()), Months)).ToString())).ToString("yyyy-MM-dd"));
+                                //หาก Dateinloop น้อยกว่า วันที่จ่ายล่าสุดให้หยุด loop
+                                if (Dateinloop > lastDateofPay)
                                 {
-                                    //หาบิลล์ในปีนั้นๆหากไม่มีให้ลบปี ใน Combobox ปี หน้า ข้อมูลบิลล์
-                                    DataTable dtCheckMonthinlastyear = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
+                                    break;
+                                }
+                                //เพิ่มเดือน ใน DM ปีที่ loop และให้ Month + 1 หลังจบ loop
+                                DM[Yearloop].Add(Months);
+                            }
+                        }
+                        //ประกาศตัวแปร ตำแหน่งที่ บย Monthloop วันที่เริ่มจ่ายกู้  สิ้นสุดกู้ และ วันเดือนปี ปัจจุบัน(ในloop)
+                        List<int> RemovePosistion = new List<int>();
+                        RemovePosistion.Clear();
+                        int Monthloop = 0;
+                        DateTime startDatePayLoan = Convert.ToDateTime(Convert.ToDateTime("1999-01-1").ToString("yyyy-MM-dd"));
+                        DateTime EndDatePayLoan = Convert.ToDateTime(Convert.ToDateTime("1999-01-1").ToString("yyyy-MM-dd"));
+                        DateTime Now = Convert.ToDateTime(Convert.ToDateTime("1999-01-1").ToString("yyyy-MM-dd"));
+                        //ล้าง RMonth และ Add เข้าไปใหม่ 0-11 แทน เดือน
+                        //RMonth ใช้เก็บจำนวนเดือนนั้นๆว่ามีบิลล์อยู่เท่าไหร่ หากมี เดือนนั้น จะเป็น 1 เช่น
+                        //EX: loop RMonth[2].[x] == 1 จะเป็น RMonth เดือนที่ 3 ,มีรายการ ก็จะข้ามการลบเดือนนี้ออกไป
+                        //แต่หาก ไม่เท่ากับ 1 จนหมดเดือนนั้นก็จะเอาไป ทำการ ลบ เดือนนั้นออก
+                        RMonth.Clear();
+                        for (int Count = 0; Count < 12; Count++)
+                        {
+                            RMonth.Add(new List<int>());
+                        }
+                        //loop เดือนจาก DM[ปีที่ loop] และจบ loop x+1
+                        for (int x = 0; x < DM[Yearloop].Count; x++)
+                        {
+                            Monthloop = Convert.ToInt32(DM[Yearloop][x]);
+                            Now = Convert.ToDateTime((Convert.ToDateTime((CBYearSelection_Pay.Items[Yearloop].ToString() + '-' + Monthloop.ToString() + '-' +
+                                    DateTime.DaysInMonth(Convert.ToInt32(CBYearSelection_Pay.Items[Yearloop].ToString()), Monthloop))
+                                    .ToString())).ToString("yyyy-MM-dd"));
+                            //เช็คว่าจ่าย สะสมเดือนนี้ไปรึยัง
+                            DataTable PaySavingCheck = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4]
+                                        .Replace("{Month}", (Monthloop).ToString())
+                                        .Replace("{Year}", CBYearSelection_Pay.Items[Yearloop].ToString())
                                         .Replace("{TeacherNo}", TBTeacherNo.Text)
-                                        .Replace("{Year}", CBYearSelection_BillInfo.Items[CBYearSelection_BillInfo.Items.Count - 1].ToString()));
-                                    if (dtCheckMonthinlastyear.Rows.Count == 0)
-                                    {
-                                        CBYearSelection_BillInfo.Items.RemoveAt(CBYearSelection_BillInfo.Items.Count - 1);
-                                        CBYearSelection_ShareInfo.Items.RemoveAt(CBYearSelection_ShareInfo.Items.Count - 1);
-                                    }
-                                }
-                                //thisyeardiscount2year +1 หลังจบ loop ทุกรอบ
-                                thisyeardiscount2year++;
-                            }
-                        }
-                        //หาก if บนไม่เป็นจริง ให้มาดูเงื่อนไขนี้ต่อ หาก วันที่สมัคร มากกว่า หรือ เท่ากับ ปีนี้ -5 ปี
-                        else if (YearRegister >= Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) - 5)
-                        {
-                            //หาก วันที่สมัคร น้อยกว่า หรือเท่ากับ ปีนี้ + จำนวนปีที่จ่ายล่าสุด ให้ loop
-                            while (YearRegister <= Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + Yearlastofpay)
+                                        .Replace("{Date}", (Convert.ToDateTime(CBYearSelection_Pay.Items[Yearloop].ToString() + "-" + Monthloop.ToString() + "-" + DateTime.DaysInMonth(Convert.ToInt32(CBYearSelection_Pay.Items[Yearloop].ToString()), Convert.ToInt32(Monthloop)))).ToString("yyyy-MM-dd")));
+                            //จ่ายหุ้นสะสมเดือนนี้ไปแล้ว
+                            if (PaySavingCheck.Rows.Count == 0)
                             {
-                                //เพิ่ม thisyeardiscount2year ลงไปใน Combobox ปี หน้า จ่าย ข้อมูลหุ้น และ ข้อมูลบิลล์
-                                CBYearSelection_Pay.Items.Add(YearRegister);
-                                CBYearSelection_ShareInfo.Items.Add(YearRegister);
-                                CBYearSelection_BillInfo.Items.Add(YearRegister);
-                                //หาก ปีที่สมัคร = ปีนี้ + จำนวนปีที่จ่ายล่าสุด
-                                if (YearRegister == Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + Yearlastofpay)
-                                {
-                                    //หาบิลล์ในปีนั้นๆหากไม่มีให้ลบปี ใน Combobox ปี หน้า ข้อมูลบิลล์
-                                    DataTable dtCheckMonthinlastyear = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
-                                        .Replace("{TeacherNo}", TBTeacherNo.Text)
-                                        .Replace("{Year}", CBYearSelection_BillInfo.Items[CBYearSelection_BillInfo.Items.Count - 1].ToString()));
-                                    if (dtCheckMonthinlastyear.Rows.Count == 0)
-                                    {
-                                        CBYearSelection_BillInfo.Items.RemoveAt(CBYearSelection_BillInfo.Items.Count - 1);
-                                        CBYearSelection_ShareInfo.Items.RemoveAt(CBYearSelection_ShareInfo.Items.Count - 1);
-                                    }
-                                }
-                                //YearRegister + 1 หลังจบ loop ทุกรอบ
-                                YearRegister++;
-
+                                RMonth[x].Add(0);
                             }
-                        }
-                        //---------------------------------------------------------------Year-------------------------------------------------
-                        //loop จาก จำนวนปีใน Combobox ปี หน้าจ่าย
-                        for (int Yearloop = 0; Yearloop < CBYearSelection_Pay.Items.Count; Yearloop++)
-                        {
-                            //DM เพิ่ม list หลัก ตามปี และประกาษตัวแปร เดือนปี ที่สมัคร และ เดือนปีที่ จ่ายล่าสุด
-                            DM.Add(new List<int>());
-                            int Month = Convert.ToInt32((Convert.ToDateTime(ds.Tables[1].Rows[0][0].ToString())).ToString("MM"));
-                            int Year = Convert.ToInt32((Convert.ToDateTime(ds.Tables[1].Rows[0][0].ToString())).ToString("yyyy"));
-                            int lastMonthofpay = Convert.ToInt32((Convert.ToDateTime(ds.Tables[2].Rows[0][2].ToString())).ToString("MM"));
-                            int lastYearofpay = Convert.ToInt32((Convert.ToDateTime(ds.Tables[2].Rows[0][2].ToString())).ToString("yyyy"));
-                            DateTime lastDateofPay = Convert.ToDateTime((Convert.ToDateTime((lastYearofpay + "-" + lastMonthofpay + "-" + DateTime.DaysInMonth(lastYearofpay, lastMonthofpay)).ToString())).ToString("yyyy-MM-dd"));
-                            DateTime Dateinloop;
-
-                            //หาก Combobox ปีหน้าจ่ายตำแหน่งที่ Yearloop ตรงกับปีที่สมัคร
-                            if (CBYearSelection_Pay.Items[Yearloop].ToString() == Year.ToString())
-                            {
-                                //หากเดือนที่สมัคร น้อยกว่า หรือ เท่ากับเดือนที่ 12 ให้ loop
-                                while (Month <= 12)
-                                {
-                                    //Dateinloop = Combobox ปีที่ loop + เดือนที่ loop + วันที่มากที่สุดในเดือน
-                                    Dateinloop = Convert.ToDateTime((Convert.ToDateTime((Convert.ToInt32(CBYearSelection_Pay.Items[Yearloop].ToString()) + "-" + Month + "-" + DateTime.DaysInMonth(Convert.ToInt32(CBYearSelection_Pay.Items[Yearloop].ToString()), Month)).ToString())).ToString("yyyy-MM-dd"));
-                                    //หาก Dateinloop น้อยกว่า ปี เดือนที่จ่าย ล่าสุด ให้ หยุด loop
-                                    if (Dateinloop > lastDateofPay)
-                                    {
-                                        break;
-                                    }
-                                    //เพิ่มเดือน ใน DM ปีที่ loop และให้ Month + 1 หลังจบ loop
-                                    DM[Yearloop].Add(Month);
-                                    Month++;
-                                }
-                            }
-                            //หาก เงื่อนไขบนไม่เป็นจริงให้มาดูเงื่อนไขนี้
+                            //มีหุ้นยังไม่จ่ายในเดือนนนั้น
                             else
                             {
-                                //ประกาศให้ Months = 1 และ loop 12 ครั้ง และให้ Months +1 ทุกครั้งหลัง จบ loop
-                                for (int Months = 1; Months <= 12; Months++)
+                                RMonth[x].Add(1);
+                            }
+
+                            //loop จำนวนกู้
+                            if (Loan.Count != 0)
+                                for (int y = 0; y < Loan.Count; y++)
                                 {
-                                    //Dateinloop = ปีที่ loop + เดือนที่ loop + วันที่มากที่สุดในเดือน
-                                    Dateinloop = Convert.ToDateTime((Convert.ToDateTime((Convert.ToInt32(CBYearSelection_Pay.Items[Yearloop].ToString()) + "-" + Months + "-" + DateTime.DaysInMonth(Convert.ToInt32(CBYearSelection_Pay.Items[Yearloop].ToString()), Months)).ToString())).ToString("yyyy-MM-dd"));
-                                    //หาก Dateinloop น้อยกว่า วันที่จ่ายล่าสุดให้หยุด loop
-                                    if (Dateinloop > lastDateofPay)
+                                    //เช็คว่าเดือนนี้จ่ายกู้รึยัง 
+                                    DataSet PayLoanCheck = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[5]
+                                            .Replace("{Month}", (Monthloop).ToString())
+                                            .Replace("{Year}", CBYearSelection_Pay.Items[Yearloop].ToString())
+                                            .Replace("{LoanNo}", Loan[y].ToString())
+                                            .Replace("{Date}", (Convert.ToDateTime(CBYearSelection_Pay.Items[Yearloop].ToString() + "-" + Monthloop.ToString() + "-" + DateTime.DaysInMonth(Convert.ToInt32(CBYearSelection_Pay.Items[Yearloop].ToString()), Convert.ToInt32(Monthloop)))).ToString("yyyy-MM-dd")));
+                                    //เช็คว่ามีกู้นี้ในระบบมั้ย
+                                    if (PayLoanCheck.Tables[1].Rows.Count != 0)
+                                    {
+                                        startDatePayLoan = Convert.ToDateTime((Convert.ToDateTime((PayLoanCheck.Tables[1].Rows[0][2].ToString()
+                                            + '-' + PayLoanCheck.Tables[1].Rows[0][1].ToString()
+                                            + '-' + DateTime.DaysInMonth(Convert.ToInt32(PayLoanCheck.Tables[1].Rows[0][2].ToString())
+                                            , Convert.ToInt32(PayLoanCheck.Tables[1].Rows[0][1].ToString()))).ToString())).ToString("yyyy-MM-dd"));
+                                        EndDatePayLoan = Convert.ToDateTime((Convert.ToDateTime(PayLoanCheck.Tables[1].Rows[0][6].ToString())).ToString("yyyy-MM-dd"));
+                                    }
+                                    //หากมีกู้ที่ยังจ่ายอยู่ (เอาตรงๆเอาไว้นับเดือนแรกเฉยๆ) ต้องมีการกู้ แต่ยังไม่ได้จ่ายเดือนแรก และต้อง เดือนปีต้องมากกว่า วันที่เริ่มแจ่าย แต่ ห้ามเยอะกว่าวันที่สิ้นสุด
+                                    if (PayLoanCheck.Tables[1].Rows.Count != 0 && PayLoanCheck.Tables[0].Rows.Count == 0 &&
+                                        Now >= startDatePayLoan &&
+                                        Now <= EndDatePayLoan && PayLoanCheck.Tables[2].Rows.Count == 0)
+                                    {
+                                        RMonth[x].Add(1);
+                                    }
+                                    //หาก เดือนนั้นยังไม่ได้จ่าย แต่เปิดบิลล์แรกแล้ว
+                                    else if (PayLoanCheck.Tables[0].Rows.Count >= 1)
+                                    {
+                                        RMonth[x].Add(1);
+                                    }
+                                    //หากไม่ตรงกับเงื่อนไขอะไรเลย แปลว่าเดือนนั้นกู้จ่ายไปหมดแล้ว
+                                    else
+                                    {
+                                        RMonth[x].Add(0);
+                                    }
+                                }
+                            //loop เอาเดือนจาก RMonth แล้ว loop จาก RMonth[เดือน] ออกมา
+                            //หาว่ามีรายการอยู่ในนั้นมั้ย หาก มี ให้ข้าม หาก ไม่จน loop หมดทั้งเดือน ให้ ลบ
+                            for (int Count = 0; Count < RMonth.Count; Count++)
+                            {
+                                for (int CountDetail = 0; CountDetail < RMonth[Count].Count; CountDetail++)
+                                {
+                                    if (RMonth[Count][CountDetail] == 1)
                                     {
                                         break;
                                     }
-                                    //เพิ่มเดือน ใน DM ปีที่ loop และให้ Month + 1 หลังจบ loop
-                                    DM[Yearloop].Add(Months);
-                                }
-                            }
-                            //ประกาศตัวแปร ตำแหน่งที่ บย Monthloop วันที่เริ่มจ่ายกู้  สิ้นสุดกู้ และ วันเดือนปี ปัจจุบัน(ในloop)
-                            List<int> RemovePosistion = new List<int>();
-                            RemovePosistion.Clear();
-                            int Monthloop = 0;
-                            DateTime startDatePayLoan = Convert.ToDateTime(Convert.ToDateTime("1999-01-1").ToString("yyyy-MM-dd"));
-                            DateTime EndDatePayLoan = Convert.ToDateTime(Convert.ToDateTime("1999-01-1").ToString("yyyy-MM-dd"));
-                            DateTime Now = Convert.ToDateTime(Convert.ToDateTime("1999-01-1").ToString("yyyy-MM-dd"));
-                            //ล้าง RMonth และ Add เข้าไปใหม่ 0-11 แทน เดือน
-                            //RMonth ใช้เก็บจำนวนเดือนนั้นๆว่ามีบิลล์อยู่เท่าไหร่ หากมี เดือนนั้น จะเป็น 1 เช่น
-                            //EX: loop RMonth[2].[x] == 1 จะเป็น RMonth เดือนที่ 3 ,มีรายการ ก็จะข้ามการลบเดือนนี้ออกไป
-                            //แต่หาก ไม่เท่ากับ 1 จนหมดเดือนนั้นก็จะเอาไป ทำการ ลบ เดือนนั้นออก
-                            RMonth.Clear();
-                            for (int Count = 0; Count < 12; Count++)
-                            {
-                                RMonth.Add(new List<int>());
-                            }
-                            //loop เดือนจาก DM[ปีที่ loop] และจบ loop x+1
-                            for (int x = 0; x < DM[Yearloop].Count; x++)
-                            {
-                                Monthloop = Convert.ToInt32(DM[Yearloop][x]);
-                                Now = Convert.ToDateTime((Convert.ToDateTime((CBYearSelection_Pay.Items[Yearloop].ToString() + '-' + Monthloop.ToString() + '-' +
-                                        DateTime.DaysInMonth(Convert.ToInt32(CBYearSelection_Pay.Items[Yearloop].ToString()), Monthloop))
-                                        .ToString())).ToString("yyyy-MM-dd"));
-                                //เช็คว่าจ่าย สะสมเดือนนี้ไปรึยัง
-                                DataTable PaySavingCheck = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4]
-                                            .Replace("{Month}", (Monthloop).ToString())
-                                            .Replace("{Year}", CBYearSelection_Pay.Items[Yearloop].ToString())
-                                            .Replace("{TeacherNo}", TBTeacherNo.Text)
-                                            .Replace("{Date}", (Convert.ToDateTime(CBYearSelection_Pay.Items[Yearloop].ToString() + "-" + Monthloop.ToString() + "-" + DateTime.DaysInMonth(Convert.ToInt32(CBYearSelection_Pay.Items[Yearloop].ToString()), Convert.ToInt32(Monthloop)))).ToString("yyyy-MM-dd")));
-                                //จ่ายหุ้นสะสมเดือนนี้ไปแล้ว
-                                if (PaySavingCheck.Rows.Count == 0)
-                                {
-                                    RMonth[x].Add(0);
-                                }
-                                //มีหุ้นยังไม่จ่ายในเดือนนนั้น
-                                else
-                                {
-                                    RMonth[x].Add(1);
-                                }
-
-                                //loop จำนวนกู้
-                                if (Loan.Count != 0)
-                                    for (int y = 0; y < Loan.Count; y++)
+                                    else if (CountDetail == RMonth[Count].Count - 1)
                                     {
-                                        //เช็คว่าเดือนนี้จ่ายกู้รึยัง 
-                                        DataSet PayLoanCheck = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[5]
-                                                .Replace("{Month}", (Monthloop).ToString())
-                                                .Replace("{Year}", CBYearSelection_Pay.Items[Yearloop].ToString())
-                                                .Replace("{LoanNo}", Loan[y].ToString())
-                                                .Replace("{Date}", (Convert.ToDateTime(CBYearSelection_Pay.Items[Yearloop].ToString() + "-" + Monthloop.ToString() + "-" + DateTime.DaysInMonth(Convert.ToInt32(CBYearSelection_Pay.Items[Yearloop].ToString()), Convert.ToInt32(Monthloop)))).ToString("yyyy-MM-dd")));
-                                        //เช็คว่ามีกู้นี้ในระบบมั้ย
-                                        if (PayLoanCheck.Tables[1].Rows.Count != 0)
+                                        if (RemovePosistion.Count != 0)
                                         {
-                                            startDatePayLoan = Convert.ToDateTime((Convert.ToDateTime((PayLoanCheck.Tables[1].Rows[0][2].ToString()
-                                                + '-' + PayLoanCheck.Tables[1].Rows[0][1].ToString()
-                                                + '-' + DateTime.DaysInMonth(Convert.ToInt32(PayLoanCheck.Tables[1].Rows[0][2].ToString())
-                                                , Convert.ToInt32(PayLoanCheck.Tables[1].Rows[0][1].ToString()))).ToString())).ToString("yyyy-MM-dd"));
-                                            EndDatePayLoan = Convert.ToDateTime((Convert.ToDateTime(PayLoanCheck.Tables[1].Rows[0][6].ToString())).ToString("yyyy-MM-dd"));
-                                        }
-                                        //หากมีกู้ที่ยังจ่ายอยู่ (เอาตรงๆเอาไว้นับเดือนแรกเฉยๆ) ต้องมีการกู้ แต่ยังไม่ได้จ่ายเดือนแรก และต้อง เดือนปีต้องมากกว่า วันที่เริ่มแจ่าย แต่ ห้ามเยอะกว่าวันที่สิ้นสุด
-                                        if (PayLoanCheck.Tables[1].Rows.Count != 0 && PayLoanCheck.Tables[0].Rows.Count == 0 &&
-                                            Now >= startDatePayLoan &&
-                                            Now <= EndDatePayLoan && PayLoanCheck.Tables[2].Rows.Count == 0)
-                                        {
-                                            RMonth[x].Add(1);
-                                        }
-                                        //หาก เดือนนั้นยังไม่ได้จ่าย แต่เปิดบิลล์แรกแล้ว
-                                        else if (PayLoanCheck.Tables[0].Rows.Count >= 1)
-                                        {
-                                            RMonth[x].Add(1);
-                                        }
-                                        //หากไม่ตรงกับเงื่อนไขอะไรเลย แปลว่าเดือนนั้นกู้จ่ายไปหมดแล้ว
-                                        else
-                                        {
-                                            RMonth[x].Add(0);
-                                        }
-                                    }
-                                //loop เอาเดือนจาก RMonth แล้ว loop จาก RMonth[เดือน] ออกมา
-                                //หาว่ามีรายการอยู่ในนั้นมั้ย หาก มี ให้ข้าม หาก ไม่จน loop หมดทั้งเดือน ให้ ลบ
-                                for (int Count = 0; Count < RMonth.Count; Count++)
-                                {
-                                    for (int CountDetail = 0; CountDetail < RMonth[Count].Count; CountDetail++)
-                                    {
-                                        if (RMonth[Count][CountDetail] == 1)
-                                        {
-                                            break;
-                                        }
-                                        else if (CountDetail == RMonth[Count].Count - 1)
-                                        {
-                                            if(RemovePosistion.Count != 0)
+                                            for (int y = 0; y < RemovePosistion.Count; y++)
                                             {
-                                                for(int y = 0; y < RemovePosistion.Count; y++)
+                                                if (RemovePosistion[y] == x)
                                                 {
-                                                    if(RemovePosistion[y] == x)
-                                                    {
-                                                        break;
-                                                    }
-                                                    else if(y == RemovePosistion.Count - 1 && RemovePosistion[y] != x && RMonth[x][CountDetail] == 0)
-                                                    {
-                                                        RemovePosistion.Add(x);
-                                                        break;
-                                                    }
+                                                    break;
+                                                }
+                                                else if (y == RemovePosistion.Count - 1 && RemovePosistion[y] != x && RMonth[x][CountDetail] == 0)
+                                                {
+                                                    RemovePosistion.Add(x);
+                                                    break;
                                                 }
                                             }
-                                            else
-                                            {
-                                                RemovePosistion.Add(x);
-                                            }
+                                        }
+                                        else
+                                        {
+                                            RemovePosistion.Add(x);
                                         }
                                     }
                                 }
                             }
-                            //loop ลบเดือนของ DM ตามที่เช็คมาก่อนหน้า
-                            for (int x = 0; x < RemovePosistion.Count; x++)
-                            {
-                                if(RemovePosistion[x] >= 0)
+                        }
+                        //loop ลบเดือนของ DM ตามที่เช็คมาก่อนหน้า
+                        for (int x = 0; x < RemovePosistion.Count; x++)
+                        {
+                            if (RemovePosistion[x] >= 0)
                                 DM[Yearloop].RemoveAt(RemovePosistion[x]);
-                                for (int y = 0; y < RemovePosistion.Count; y++)
-                                {
-                                    RemovePosistion[y] = RemovePosistion[y] - 1;
-                                }
+                            for (int y = 0; y < RemovePosistion.Count; y++)
+                            {
+                                RemovePosistion[y] = RemovePosistion[y] - 1;
                             }
                         }
-                        List<int> RemovePosition = new List<int>();
-                        for (int Count = 0; Count < DM.Count; Count++)
+                    }
+                    List<int> RemovePosition = new List<int>();
+                    for (int Count = 0; Count < DM.Count; Count++)
+                    {
+                        if (DM[Count].Count == 0)
                         {
-                            if (DM[Count].Count == 0)
+                            RemovePosition.Add(Count);
+                        }
+                    }
+                    for (int Count = 0; Count < RemovePosition.Count; Count++)
+                    {
+                        DM.RemoveAt(RemovePosition[Count]);
+                        CBYearSelection_Pay.Items.RemoveAt(RemovePosition[Count]);
+                        for (int y = 0; y < RemovePosition.Count; y++)
+                        {
+                            RemovePosition[y] = RemovePosition[y] - 1;
+                        }
+                    }
+                    //ทำให้่เลือกอัตโนมัติตอนกด
+                    if (CBYearSelection_Pay.Items.Count != 0)
+                    {
+                        for (int x = 0; x < CBYearSelection_Pay.Items.Count; x++)
+                        {
+                            if (CBYearSelection_Pay.Items[x].ToString() == BankTeacher.Bank.Menu.Date[0])
                             {
-                                RemovePosition.Add(Count);
+                                CBYearSelection_Pay.SelectedIndex = x;
+                            }
+                            else if (x == CBYearSelection_Pay.Items.Count - 1)
+                            {
+                                CBYearSelection_Pay.SelectedIndex = 0;
                             }
                         }
-                        for (int Count = 0; Count < RemovePosition.Count; Count++)
+                        CBYearSelection_ShareInfo.Text = BankTeacher.Bank.Menu.Date[0];
+                        CBYearSelection_BillInfo.Text = BankTeacher.Bank.Menu.Date[0];
+                        CBYearSelection_Pay.Enabled = true;
+                        CBYearSelection_ShareInfo.Enabled = true;
+                        for (int x = 0; x < CBYearSelection_Pay.Items.Count; x++)
+                            YearinCB.Add(Convert.ToInt32(CBYearSelection_Pay.Items[x].ToString()));
+                    }
+                    // BackupDM = DM
+                    if (BackupDM.Count == 0)
+                    {
+                        if (DM.Count != 0)
                         {
-                            DM.RemoveAt(RemovePosition[Count]);
-                            CBYearSelection_Pay.Items.RemoveAt(RemovePosition[Count]);
-                            for (int y = 0; y < RemovePosition.Count; y++)
+                            for (int x = 0; x < DM.Count; x++)
                             {
-                                RemovePosition[y] = RemovePosition[y] - 1;
-                            }
-                        }
-                        //ทำให้่เลือกอัตโนมัติตอนกด
-                        if (CBYearSelection_Pay.Items.Count != 0)
-                        {
-                            for (int x = 0; x < CBYearSelection_Pay.Items.Count; x++)
-                            {
-                                if (CBYearSelection_Pay.Items[x].ToString() == BankTeacher.Bank.Menu.Date[0])
+                                BackupDM.Add(new List<int>());
+                                if (DM[x].Count != 0)
                                 {
-                                    CBYearSelection_Pay.SelectedIndex = x;
-                                }
-                                else if (x == CBYearSelection_Pay.Items.Count - 1)
-                                {
-                                    CBYearSelection_Pay.SelectedIndex = 0;
-                                }
-                            }
-                            CBYearSelection_ShareInfo.Text = BankTeacher.Bank.Menu.Date[0];
-                            CBYearSelection_BillInfo.Text = BankTeacher.Bank.Menu.Date[0];
-                            CBYearSelection_Pay.Enabled = true;
-                            CBYearSelection_ShareInfo.Enabled = true;
-                            for (int x = 0; x < CBYearSelection_Pay.Items.Count; x++)
-                                YearinCB.Add(Convert.ToInt32(CBYearSelection_Pay.Items[x].ToString()));
-                        }
-                        // BackupDM = DM
-                        if (BackupDM.Count == 0)
-                        {
-                            if (DM.Count != 0)
-                            {
-                                for (int x = 0; x < DM.Count; x++)
-                                {
-                                    BackupDM.Add(new List<int>());
-                                    if (DM[x].Count != 0)
+                                    for (int y = 0; y < DM[x].Count; y++)
                                     {
-                                        for (int y = 0; y < DM[x].Count; y++)
-                                        {
-                                            BackupDM[x].Add(DM[x][y]);
-                                        }
+                                        BackupDM[x].Add(DM[x][y]);
                                     }
                                 }
                             }
                         }
                     }
-
-            }
-            else if (/*e.KeyCode == Keys.Delete ||*//* e.KeyCode == Keys.Back ||*/ e.KeyCode == Keys.Escape)
-            {
-                if (CheckInputTeacher == true)
-                {
-                    //Header =============================================
-                    TBTeacherBill.Text = "";
-                    TBTeacherName.Text = "";
-                    //====================================================
-                    DGV_Tester.Rows.Clear();
-                    tabControl1.Enabled = false;
-                    ClearForm();
-                    CheckInputTeacher = false;
+                    Checkmember(false);
                 }
             }
         }
@@ -710,15 +708,6 @@ namespace BankTeacher.Bank.Pay
         //KeyDown in alltab
         private void tabControl1_KeyDown(object sender, KeyEventArgs e)
         {
-
-            if (e.KeyCode == Keys.Escape)
-            {
-                TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Delete));
-                CBMonthSelection_Pay.SelectedIndex = -1;
-                CBYearSelection_Pay.Enabled = true;
-                CBYearSelection_ShareInfo.Enabled = true;
-                CBLoanSelection_LoanInfo.Enabled = true;
-            }
         }
 
 
@@ -1534,10 +1523,14 @@ namespace BankTeacher.Bank.Pay
                             DGV_BillInfo.Rows.Add("", "", "", "", "รวม", "", Sum);
                             DGV_BillInfo.Rows[DGV_BillInfo.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Yellow;
                         }
-
-                     
-                        if (x < 10) { LINE = 25 * (x + 1); }
-                            else { LINE = 257; }
+                        if (x < 10) 
+                        { 
+                            LINE = 25 * (x + 1); 
+                        }
+                        else 
+                        { 
+                            LINE = 257; 
+                        }
                     }
                     LBalance_BillInfo.Text = Balance.ToString();
                 }
@@ -2042,6 +2035,11 @@ namespace BankTeacher.Bank.Pay
                     TBTeacherBill.Text = "";
                     BSearchTeacher.Enabled = true;
                     TBTeacherNo.Enabled = true;
+                    CBLoanSelection_LoanInfo.Enabled = false;
+                    CBMonthSelection_Pay.Enabled = false;
+                    CBList_Pay.Enabled = false;
+                    CBPayment_Pay.SelectedIndex = -1;
+                    Checkmember(true);
                 }
                 else
                 {
@@ -2126,7 +2124,11 @@ namespace BankTeacher.Bank.Pay
                 }
             }
         }
-
+        private void Checkmember(bool tf)
+        {
+            TBTeacherNo.Enabled = tf;
+            BSearchTeacher.Enabled = tf;
+        }
         private void TB_Bill_TextChanged(object sender, EventArgs e)
         {
             DGV_Tester.Rows.Clear();

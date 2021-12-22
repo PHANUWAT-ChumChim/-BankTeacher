@@ -1,7 +1,7 @@
 ﻿
 namespace BankTeacher.Bank.log
 {
-    partial class CancelBill_log
+    partial class AddMember_Logg
     {
         /// <summary>
         /// Required designer variable.
@@ -33,11 +33,12 @@ namespace BankTeacher.Bank.log
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.DGV = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RBday = new System.Windows.Forms.RadioButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.LB1Id = new System.Windows.Forms.Label();
@@ -64,7 +65,7 @@ namespace BankTeacher.Bank.log
             this.panel1.Location = new System.Drawing.Point(12, 11);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(899, 569);
-            this.panel1.TabIndex = 0;
+            this.panel1.TabIndex = 1;
             // 
             // DGV
             // 
@@ -83,52 +84,59 @@ namespace BankTeacher.Bank.log
             this.DGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
+            this.Column6,
             this.Column2,
-            this.Column3,
+            this.Column5,
+            this.Column1,
             this.Column4,
-            this.Column5});
-            this.DGV.Location = new System.Drawing.Point(22, 132);
+            this.Column3});
+            this.DGV.Location = new System.Drawing.Point(22, 133);
             this.DGV.Name = "DGV";
             this.DGV.ReadOnly = true;
             this.DGV.RowHeadersVisible = false;
             this.DGV.Size = new System.Drawing.Size(851, 415);
             this.DGV.TabIndex = 94;
             // 
-            // Column1
+            // Column6
             // 
-            this.Column1.HeaderText = "เลขบิลล์";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Width = 120;
+            this.Column6.HeaderText = "ชื่อ - สกุล ผู้ทำรายการ";
+            this.Column6.Name = "Column6";
+            this.Column6.ReadOnly = true;
+            this.Column6.Width = 165;
             // 
             // Column2
             // 
-            this.Column2.HeaderText = "รายการ";
+            this.Column2.HeaderText = "รหัส";
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
-            this.Column2.Width = 140;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "รูปแบบ";
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            this.Column3.Width = 110;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "จำนวนเงิน";
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            this.Column4.Width = 120;
+            this.Column2.Width = 130;
             // 
             // Column5
             // 
-            this.Column5.HeaderText = "หมายเหตุ";
+            this.Column5.HeaderText = "ชื่อ - สกุล";
             this.Column5.Name = "Column5";
             this.Column5.ReadOnly = true;
-            this.Column5.Width = 170;
+            this.Column5.Width = 175;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "วันที่";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "จำนวนเงินเริ่มต้น";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.Width = 130;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "สถานะ";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.Width = 110;
             // 
             // RBday
             // 
@@ -208,7 +216,6 @@ namespace BankTeacher.Bank.log
             this.BSearchTeacher.Size = new System.Drawing.Size(32, 32);
             this.BSearchTeacher.TabIndex = 91;
             this.BSearchTeacher.UseVisualStyleBackColor = false;
-            this.BSearchTeacher.Click += new System.EventHandler(this.BSearchTeacher_Click);
             // 
             // TBTeacherNo
             // 
@@ -219,7 +226,6 @@ namespace BankTeacher.Bank.log
             this.TBTeacherNo.Name = "TBTeacherNo";
             this.TBTeacherNo.Size = new System.Drawing.Size(116, 36);
             this.TBTeacherNo.TabIndex = 89;
-            this.TBTeacherNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TBTeacherNo_KeyDown);
             // 
             // TBTeacherName
             // 
@@ -240,7 +246,6 @@ namespace BankTeacher.Bank.log
             this.RBSelectTeacherAdd.TabIndex = 92;
             this.RBSelectTeacherAdd.Text = "ดูข้อมูลรายคน";
             this.RBSelectTeacherAdd.UseVisualStyleBackColor = true;
-            this.RBSelectTeacherAdd.CheckedChanged += new System.EventHandler(this.RBSelectTeacherAdd_CheckedChanged);
             // 
             // DTP
             // 
@@ -248,9 +253,8 @@ namespace BankTeacher.Bank.log
             this.DTP.Name = "DTP";
             this.DTP.Size = new System.Drawing.Size(200, 35);
             this.DTP.TabIndex = 0;
-            this.DTP.ValueChanged += new System.EventHandler(this.DTP_ValueChanged);
             // 
-            // CancelBill_log
+            // AddMember_Log
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 28F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -258,11 +262,10 @@ namespace BankTeacher.Bank.log
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.Name = "CancelBill_log";
-            this.Text = "CancelBill_log";
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CancelBill_log_KeyDown);
+            this.Name = "AddMember_Log";
+            this.Text = "AddMember_Log";
+            this.Load += new System.EventHandler(this.AddMember_Log_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).EndInit();
@@ -275,21 +278,22 @@ namespace BankTeacher.Bank.log
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.DateTimePicker DTP;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.RadioButton RBday;
-        private System.Windows.Forms.RadioButton RBSelectTeacherAdd;
-        private System.Windows.Forms.Button BSearchTeacher;
-        private System.Windows.Forms.TextBox TBTeacherName;
-        private System.Windows.Forms.TextBox TBTeacherNo;
-        private System.Windows.Forms.Label LB2Ne;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label LB1Id;
         private System.Windows.Forms.DataGridView DGV;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.RadioButton RBday;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label LB1Id;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label LB2Ne;
+        private System.Windows.Forms.Button BSearchTeacher;
+        private System.Windows.Forms.TextBox TBTeacherNo;
+        private System.Windows.Forms.TextBox TBTeacherName;
+        private System.Windows.Forms.RadioButton RBSelectTeacherAdd;
+        private System.Windows.Forms.DateTimePicker DTP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
     }
 }

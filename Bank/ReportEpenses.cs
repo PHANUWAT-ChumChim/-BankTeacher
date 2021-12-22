@@ -27,7 +27,7 @@ namespace BankTeacher.Bank
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailPayment as d on a.BillDetailPaymentNo = d.BillDetailPaymentNo \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as e on a.TeacherNoAddBy = e.TeacherNo \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as f on e.PrefixNo = f.PrefixNo \r\n " +
-          "WHERE ( LoanStatusNo = 2 or LoanStatusNo = 3 ) and CAST(PayDate as date) LIKE '{Date}%' and e.TeacherNo LIKE '%{TeacherNo}%' and e.IsUse = 1; \r\n " +
+          "WHERE ( LoanStatusNo = 2 or LoanStatusNo = 3 ) and CAST(PayDate as date) LIKE '{Date}%' and e.TeacherNo = '{TeacherNo}' and e.IsUse = 1; \r\n " +
           " \r\n " +
           "SELECT CAST(ISNULL(g.PrefixName, '') +f.Fname + ' ' + f.LName as nvarchar)as TeacherAddName , CAST(ISNULL(d.PrefixName, '') +c.Fname + ' ' +c.LName as nvarchar) as TeacherName , CAST(Name as nvarchar(255)) as BillDetailPaymentName , a.Amount \r\n " +
           "FROM EmployeeBank.dbo.tblShareWithdraw as a \r\n " +
@@ -37,7 +37,7 @@ namespace BankTeacher.Bank
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailPayment as e on a.BillDetailPayMentNo = e.BillDetailPaymentNo \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as f on a.TeacherNoAddBy = f.TeacherNo \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as g on f.PrefixNo = g.PrefixNo \r\n " +
-          "WHERE CAST(DateAdd  as date) LIKE '{Date}%' and f.TeacherNo LIKE '%{TeacherNo}%' and f.IsUse = 1"
+          "WHERE CAST(DateAdd  as date) LIKE '{Date}%' and f.TeacherNo = '{TeacherNo}' and f.IsUse = 1"
            ,
            //[1] Select TeacherAdd INPUT: {Text} {Date}
            "SELECT a.TeacherNo, CAST(ISNULL(b.PrefixName , '') + ' ' + a.Fname + ' ' + a.LName as nvarchar) \r\n " +
@@ -93,36 +93,38 @@ namespace BankTeacher.Bank
         {
             if(e.KeyCode == Keys.Enter)
             {
-                if(TBTeacherNo.Text.Length == 6)
+                DGV.Rows.Clear();
+                String Year = DTP.Value.ToString("yyyy");
+                String Month = DTP.Value.ToString("MM");
+                String Day = DTP.Value.ToString("dd");
+                if (Convert.ToInt32(Month) < 10)
                 {
-                    DGV.Rows.Clear();
-                    String Year = DTP.Value.ToString("yyyy");
-                    String Month = DTP.Value.ToString("MM");
-                    String Day = DTP.Value.ToString("dd");
-                    if (Convert.ToInt32(Month) < 10)
+                    Month = "0" + Convert.ToInt32(Month);
+                }
+                if (Convert.ToInt32(Day) < 10)
+                {
+                    Day = "0" + Convert.ToInt32(Day);
+                }
+                DataSet EpensesInfo = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0]
+                    .Replace("{TeacherNo}",TBTeacherNo.Text)
+                    .Replace("{Date}",(Convert.ToDateTime(Year+'-'+Month+'-'+Day)).ToString("yyyy-MM-dd")));
+                if(EpensesInfo.Tables[0].Rows.Count != 0 || EpensesInfo.Tables[1].Rows.Count != 0)
+                {
+                    try
                     {
-                        Month = "0" + Convert.ToInt32(Month);
+                        TBTeacherName.Text = EpensesInfo.Tables[0].Rows[0][0].ToString();
                     }
-                    if (Convert.ToInt32(Day) < 10)
+                    catch
                     {
-                        Day = "0" + Convert.ToInt32(Day);
+                        TBTeacherName.Text = EpensesInfo.Tables[1].Rows[0][0].ToString();
                     }
-                    DataSet EpensesInfo = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0]
-                        .Replace("{TeacherNo}",TBTeacherNo.Text)
-                        .Replace("{Date}",(Convert.ToDateTime(Year+'-'+Month+'-'+Day)).ToString("yyyy-MM-dd")));
-                    if(EpensesInfo.Tables[0].Rows.Count != 0 || EpensesInfo.Tables[1].Rows.Count != 0)
+                    int SumAmount = 0;
+                    if (EpensesInfo.Tables[0].Rows.Count != 0)
                     {
-                        try
+                        int AmountLoan = 0;
+                        for(int x = 0; x < EpensesInfo.Tables[0].Rows.Count; x++)
                         {
-                            TBTeacherName.Text = EpensesInfo.Tables[0].Rows[0][0].ToString();
-                        }
-                        catch
-                        {
-                            TBTeacherName.Text = EpensesInfo.Tables[1].Rows[0][0].ToString();
-                        }
-                        int SumAmount = 0;
-                        if (EpensesInfo.Tables[0].Rows.Count != 0)
-                        {
+//<<<<<<< Bob
                             int AmountLoan = 0;
                             for(int x = 0; x < EpensesInfo.Tables[0].Rows.Count; x++)
                             {
@@ -133,9 +135,22 @@ namespace BankTeacher.Bank
                             DGV.Rows.Add("", "", "สรุปรายการกู้", "", AmountLoan.ToString());
                             DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                             TBAmountLoan.Text = AmountLoan.ToString();
+//=======
+                            DGV.Rows.Add(EpensesInfo.Tables[0].Rows[x][1].ToString(),"รายการกู้ "+ EpensesInfo.Tables[0].Rows[x][2].ToString() , EpensesInfo.Tables[0].Rows[x][3], EpensesInfo.Tables[0].Rows[x][4]) ;
+                            AmountLoan += Convert.ToInt32(EpensesInfo.Tables[0].Rows[x][4]);
+                            SumAmount += Convert.ToInt32(EpensesInfo.Tables[0].Rows[x][4]);
+//>>>>>>> master
                         }
-                        if(EpensesInfo.Tables[1].Rows.Count != 0)
+                        DGV.Rows.Add("", "สรุปรายการกู้", "", AmountLoan.ToString());
+                        DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
+                        TBAmountLoan.Text = AmountLoan.ToString();
+                    }
+                    if(EpensesInfo.Tables[1].Rows.Count != 0)
+                    {
+                        int AmountSaving = 0;
+                        for (int x = 0; x < EpensesInfo.Tables[1].Rows.Count; x++)
                         {
+//<<<<<<< Bob
                             int AmountSaving = 0;
                             for (int x = 0; x < EpensesInfo.Tables[1].Rows.Count; x++)
                             {
@@ -150,8 +165,21 @@ namespace BankTeacher.Bank
                         TBAmount.Text = SumAmount.ToString();
                         DGV.Rows.Add("", "", "สรุปรายการทั้งหมด", "", SumAmount.ToString());
                         DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.CornflowerBlue;
+//=======
+                            DGV.Rows.Add(EpensesInfo.Tables[1].Rows[x][1].ToString(), "รายการถอนหุ้นสะสม", EpensesInfo.Tables[1].Rows[x][2], EpensesInfo.Tables[1].Rows[x][3]);
+                            AmountSaving += Convert.ToInt32(EpensesInfo.Tables[1].Rows[x][3]);
+                            SumAmount += Convert.ToInt32(EpensesInfo.Tables[1].Rows[x][3]);
+                        }
+                        DGV.Rows.Add("", "สรุปรายการถอนหุ้นสะสม", "", AmountSaving.ToString());
+                        DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
+                        TBAmountWithDraw.Text = AmountSaving.ToString();
+//>>>>>>> master
                     }
-                 }
+                    TBAmount.Text = SumAmount.ToString();
+                    DGV.Rows.Add("", "สรุปรายการทั้งหมด", "", SumAmount.ToString());
+                    DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.CornflowerBlue;
+                    Checkmember(false);
+                }
             }
             else if(e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
             {
@@ -159,6 +187,7 @@ namespace BankTeacher.Bank
                 {
                     ClearForm();
                     CheckMember = false;
+                    Checkmember(true);
                 }
             }
         }
@@ -184,6 +213,7 @@ namespace BankTeacher.Bank
                 {
                     TBTeacherNo.Text = "";
                     ClearForm();
+                    Checkmember(true);
                 }
                 else
                 {
@@ -199,6 +229,7 @@ namespace BankTeacher.Bank
             panel1.Location = new Point(x, y);
         }
 
+//<<<<<<< Bob
         private void BTPrint_Click(object sender, EventArgs e)
         {
             if(DGV.Rows.Count != 0)
@@ -223,6 +254,12 @@ namespace BankTeacher.Bank
         private void label1_Click(object sender, EventArgs e)
         {
 
+//=======
+        private void Checkmember(bool tf)
+        {
+            TBTeacherNo.Enabled = tf;
+            BSearchTeacher.Enabled = tf;
+//>>>>>>> master
         }
     }
 }

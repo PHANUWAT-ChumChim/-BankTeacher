@@ -52,7 +52,7 @@ namespace BankTeacher.Bank.Loan
           "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo   \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblShare as d on a.TeacherNo = d.TeacherNo   \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblMember as e on b.TeacherNo = e.TeacherNo  \r\n " +
-          "WHERE MemberStatusNo = 1 \r\n " +
+          "WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(c.PrefixName+' ','') + Fname + ' ' + Lname AS nvarchar) LIKE '%{Text}%') and MemberStatusNo = 1 \r\n " +
           "GROUP BY a.TeacherNo,CAST(ISNULL(c.PrefixName+' ','')+Fname+' '+Lname as NVARCHAR),d.SavingAmount ,Fname ) AS A    \r\n " +
           "WHERE a.TeacherNo LIKE '%%' or Fname LIKE '%%'   \r\n " +
           "ORDER BY Fname;   "
@@ -141,6 +141,7 @@ namespace BankTeacher.Bank.Loan
                 CB_LoanNo.Enabled = true;
                 CB_LoanNo.Items.Clear();
                 Check = 1;
+                Checkmember(false);
                 CB_LoanNo.Items.Clear();
                 CB_LoanNo.SelectedIndex = -1;
                 TBTeacherName.Text = "";
@@ -175,44 +176,41 @@ namespace BankTeacher.Bank.Loan
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (TBTeacherNo.Text.Length == 6)
+                tabControl1.SelectedIndex = 0;
+                CB_LoanNo.Enabled = true;
+                CB_LoanNo.Items.Clear();
+                Check = 1;
+                CB_LoanNo.Items.Clear();
+                CB_LoanNo.SelectedIndex = -1;
+                TBTeacherName.Text = "";
+                TBLoanStatus.Text = "";
+                TBLoanNo.Text = "";
+                TBSavingAmount.Text = "";
+                DGVGuarantor.Rows.Clear();
+                DGVLoanDetail.Rows.Clear();
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text));
+                if (dt.Rows.Count != 0)
                 {
-                    tabControl1.SelectedIndex = 0;
+                    TBTeacherName.Text = dt.Rows[0][1].ToString();
                     CB_LoanNo.Enabled = true;
                     CB_LoanNo.Items.Clear();
                     Check = 1;
-                    CB_LoanNo.Items.Clear();
-                    CB_LoanNo.SelectedIndex = -1;
-                    TBTeacherName.Text = "";
-                    TBLoanStatus.Text = "";
-                    TBLoanNo.Text = "";
-                    TBSavingAmount.Text = "";
-                    DGVGuarantor.Rows.Clear();
-                    DGVLoanDetail.Rows.Clear();
-                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text));
-                    if (dt.Rows.Count != 0)
+                    ComboBox[] cb = new ComboBox[] { CB_LoanNo };
+                    for (int x = 0; x < dt.Rows.Count; x++)
                     {
-                        TBTeacherName.Text = dt.Rows[0][1].ToString();
-                        CB_LoanNo.Enabled = true;
-                        CB_LoanNo.Items.Clear();
-                        Check = 1;
-                        ComboBox[] cb = new ComboBox[] { CB_LoanNo };
-                        for (int x = 0; x < dt.Rows.Count; x++)
+                        for (int aa = 0; aa < cb.Length; aa++)
                         {
-                            for (int aa = 0; aa < cb.Length; aa++)
-                            {
-                                cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[x][0].ToString(), dt.Rows[x][0].ToString()));
-                            }
+                            cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[x][0].ToString(), dt.Rows[x][0].ToString()));
                         }
+                    }
+                    CB_LoanNo.SelectedIndex = 0;
+                    Checkmember(false);
+                    if (CB_LoanNo.Items.Count == 1)
                         CB_LoanNo.SelectedIndex = 0;
-                        if (CB_LoanNo.Items.Count == 1)
-                            CB_LoanNo.SelectedIndex = 0;
-                    }
-                    else
-                    {
-                        MessageBox.Show("รหัสผู้ใช้ไม่ถูกต้อง", "System", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-
+                }
+                else
+                {
+                    MessageBox.Show("รหัสผู้ใช้ไม่ถูกต้อง", "System", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
             }
@@ -230,7 +228,7 @@ namespace BankTeacher.Bank.Loan
                     //comboBox1.Enabled = false;
                     button3.Enabled = false;
                     BTOpenfile_Reg.Enabled = false;
-
+                    Checkmember(true);
                     Check = 0;
                     TBLoanNo.Text = "";
                     TBYearPay_Detail.Text = "";
@@ -253,7 +251,11 @@ namespace BankTeacher.Bank.Loan
                 }
             }
         }
-
+        private void Checkmember(bool tf)
+        {
+            TBTeacherNo.Enabled = tf;
+            BSearchTeacher.Enabled = tf;
+        }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(CB_LoanNo.SelectedIndex != -1)
@@ -437,6 +439,7 @@ namespace BankTeacher.Bank.Loan
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
+                    Checkmember(true);
                     TBTeacherNo.Text = "";
                     CB_LoanNo.Items.Clear();
                     CB_LoanNo.SelectedIndex = -1;
