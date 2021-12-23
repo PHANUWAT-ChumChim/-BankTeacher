@@ -206,8 +206,7 @@ namespace BankTeacher.Bank.Pay
                DialogResult dr = MessageBox.Show("ยืนยันการยกเลิกบิลล์", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if(dr == DialogResult.Yes)
                 {
-                    // Format yyyy-mm-dd
-                    //  EX: 2020-1-16
+                    // Format yyyy-mm-dd EX: 2020-1-16
                     String today = (Convert.ToDateTime((Bank.Menu.Date[0] + '-' + Bank.Menu.Date[1] + '-' + Bank.Menu.Date[2]).ToString())).ToString("yyyy-MM-dd");
                     if (today == TBBIllDate_Cancelbill.Text)
                     {
