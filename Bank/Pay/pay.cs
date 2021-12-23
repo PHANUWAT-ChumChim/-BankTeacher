@@ -16,19 +16,6 @@ namespace BankTeacher.Bank.Pay
     
     public partial class pay : Form
     {
-        // ======================= ข้อมูลเเบบปริ้น ====================
-        //ข้อมูลส่วนตัว
-        //public static string info_name;
-        //public static string info_id;
-        // ข้อมูลส่วนใจ
-        //public static string info_TeacherAdd;
-        // จ่าย
-        //public static string info_totelAmountpay;
-        //public static string info_Billpay;
-        //public static string info_datepay;
-        //public static string info_Payment;
-        // กู้
-        //public static string info_Lona_AmountRemain;
         int SELECT_Print = 0;
         //------------------------- index -----------------
         bool CheckPay = false;
