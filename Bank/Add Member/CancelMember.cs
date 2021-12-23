@@ -100,6 +100,10 @@ namespace BankTeacher.Bank.Add_Member
                 {
                     CBYear_HistoryCancel.Items.Add(dt.Rows[x][0].ToString());
                 }
+                if (CBYear_HistoryCancel.Items.Count != 0)
+                    CBYear_HistoryCancel.SelectedIndex = 0;
+                else
+                    CBYear_HistoryCancel.Enabled = false;
             }
             Relaodcancelmember();
         }
