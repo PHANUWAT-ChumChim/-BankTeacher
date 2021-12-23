@@ -361,6 +361,7 @@ namespace BankTeacher.Bank.Pay
             //หากมีการกด Enter
             if (e.KeyCode == Keys.Enter)
             {
+                TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
                 CB_SelectPrint.SelectedIndex = 0;
                 tabControl1.SelectedIndex = 0;
                 List<int> Loan = new List<int>();

@@ -226,6 +226,7 @@ namespace BankTeacher.Bank.log
             this.TBTeacherNo.Name = "TBTeacherNo";
             this.TBTeacherNo.Size = new System.Drawing.Size(116, 36);
             this.TBTeacherNo.TabIndex = 89;
+            this.TBTeacherNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TBTeacherNo_KeyDown);
             // 
             // TBTeacherName
             // 
@@ -254,7 +255,7 @@ namespace BankTeacher.Bank.log
             this.DTP.Size = new System.Drawing.Size(200, 35);
             this.DTP.TabIndex = 0;
             // 
-            // AddMember_Log
+            // AddMember_Logg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 28F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -263,7 +264,7 @@ namespace BankTeacher.Bank.log
             this.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
-            this.Name = "AddMember_Log";
+            this.Name = "AddMember_Logg";
             this.Text = "AddMember_Log";
             this.Load += new System.EventHandler(this.AddMember_Log_Load);
             this.panel1.ResumeLayout(false);

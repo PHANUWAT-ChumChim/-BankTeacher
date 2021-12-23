@@ -115,6 +115,7 @@ namespace BankTeacher.Bank.Pay
         {
             if (e.KeyCode == Keys.Enter)
             {
+                TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
                 if (Int32.TryParse(TBBillNo_Cancelbill.Text, out int BillNo))
                 {
                     DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]

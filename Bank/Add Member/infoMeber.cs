@@ -178,6 +178,7 @@ namespace BankTeacher.Bank.Add_Member
             {
                 try
                 {
+                    TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
                     DataSet dsInfoMember = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0]
                         .Replace("{TeacherNo}", TBTeacherNo.Text) +
                         "\r\n" + SQLDefault[2]

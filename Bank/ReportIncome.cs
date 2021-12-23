@@ -104,6 +104,7 @@ namespace BankTeacher.Bank
             {
                 if (CheckMember == false)
                 {
+                    TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
                     String Year = DTP.Value.ToString("yyyy");
                     String Month = DTP.Value.ToString("MM");
                     String Day = DTP.Value.ToString("dd");
