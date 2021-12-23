@@ -513,7 +513,7 @@ namespace BankTeacher.Bank.Loan
                         var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("Loan");
                         if (smb.IsValidConnection())
                         {
-                            String Return = smb.SendFile(imgeLocation, "Loan" + Loan.No + ".pdf");
+                            String Return = smb.SendFile(imgeLocation, "Loan" + Loan.No + ".pdf" , TBTeacherNo.Text, 3, BankTeacher.Class.UserInfo.TeacherNo , Loan.No);
                             MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             if (Return.Contains("อัพโหลดสำเร็จ"))
                             {
