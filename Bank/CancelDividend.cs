@@ -110,6 +110,7 @@ namespace BankTeacher.Bank
                     Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
                     .Replace("{Year}", CBYear.SelectedItem.ToString())
                     .Replace("{TeacherNo}" , Class.UserInfo.TeacherNo));
+                     CBYear.Items.RemoveAt(CBYear.SelectedIndex);
                     MessageBox.Show("ยกเลิกปันผลเรียบร้อยแล้ว","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 }
                 else
@@ -121,6 +122,14 @@ namespace BankTeacher.Bank
             {
                 Console.WriteLine($"-------------------{ex}---------------------");
                 MessageBox.Show("การบันทึกล้มเหลว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            if (CBYear.Items.Count == 0)
+            {
+                CBYear.Enabled = false;
+            }
+            else
+            {
+                CBYear.Enabled = true;
             }
         }
 
