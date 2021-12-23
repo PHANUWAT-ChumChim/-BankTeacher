@@ -13,6 +13,18 @@ namespace BankTeacher.Class.ProtocolSharing
 {
     class ConnectSMB
     {
+        /// <summary> 
+        /// SQLDefault 
+        /// <para>[0] INSert UploadFile log INPUT: {TeacherNo} {FileTypeNo} {PathFile} {TeacherAddBy} {LoanID} </para> 
+        /// </summary> 
+        private static String[] SQLDefault = new String[]
+         { 
+           //[0] INSert UploadFile log INPUT: {TeacherNo} {FileTypeNo} {PathFile} {TeacherAddBy}  {LoanID}
+           "INSERT INTO EmployeeBank.dbo.tblFile (TeacherNo,FiletypeNo,pathFile,TeacherAddBy, LoanID ,DateAddFile) \r\n " +
+          "VALUES ('{TeacherNo}','{FileTypeNo}','{PathFile}','{TeacherAddBy}',{LoanID},CURRENT_TIMESTAMP)"
+           ,
+
+         };
         public static List<BankTeacher.Class.linkedFile> file = new List<BankTeacher.Class.linkedFile>();
         public static String StatusRetrun = "";
         public class SmbFileContainer
@@ -112,6 +124,81 @@ namespace BankTeacher.Class.ProtocolSharing
                     }
                 }
             }
+            Thread ThreadCheckFile;
+            public String ThreadCheckFiles(string ID = "" , String LocalReplace = "")
+            {
+                Stopwatch time = new Stopwatch();
+                ThreadCheckFile = new Thread(() => CheckFile(ID,LocalReplace));
+                ThreadCheckFile.Start();
+                time.Start();
+
+                while (ThreadCheckFile.ThreadState == System.Threading.ThreadState.Running)
+                {
+                    if (time.ElapsedMilliseconds >= 5000 && ThreadCheckFile.IsAlive)
+                    {
+                        ThreadCheckFile.Abort();
+                        StatusRetrun = "หมดเวลาการเชื่อมต่อ";
+                        break;
+                    }
+                }
+                time.Stop();
+
+                return StatusRetrun;
+            }
+            public void CheckFile(string ID = "", String LocalReplace = "")
+            {
+                using (var network = new NetworkConnection(networkPath, networkCredential))
+                {
+                    network.Connect();
+                    int CountFile = 0;
+                    String path = PathFile;
+                    int Count = 0;
+                    System.IO.DirectoryInfo par = new System.IO.DirectoryInfo(path);
+                    foreach (System.IO.FileInfo f in par.GetFiles())
+                    {
+                        if (f.Name.Contains(ID))
+                            Count++;
+                    }
+                    foreach(System.IO.FileInfo f in par.GetFiles())
+                    {
+                        if (f.Name.Contains(ID))
+                        {
+                            if(Count > 1)
+                                for(int x = 0; x < Count; x++)
+                                {
+                                    if(f.Name
+                                        .Replace(LocalReplace+"_","")
+                                        .Replace(".pdf","")
+                                        .Replace("_"+x,"") == ID)
+                                    {
+                                        CountFile++;
+                                        break;
+                                    }
+                                }
+                        }
+                        else if (f.Name
+                            .Replace(LocalReplace + "_", "")
+                            .Replace(".pdf", "") == ID)
+                        {
+                            CountFile++;
+                            break;
+                        }
+                    }
+                    if (CountFile != 0 && path != "")
+                    {
+                        network.Dispose();
+                        StatusRetrun = "มีเอกสารแล้ว";
+                        return;
+                    }
+                    else
+                    {
+                        network.Dispose();
+                        StatusRetrun = "ไม่พบเอกสารโปรดอัพโหลด เอกสารก่อนทำรายการ";
+                        return;
+                    }
+                }
+            }
+
             public void CreateFile(string targetFile, string content)
             {
                 using (var network = new NetworkConnection(networkPath, networkCredential))
@@ -129,13 +216,13 @@ namespace BankTeacher.Class.ProtocolSharing
                 }
             }
             Thread SendFileThread;
-            public String SendFile(String LocationFile, String TargetFile)
+            public String SendFile(String LocationFile, String TargetFile , String TeacherNo , int FileTypeNo , String TeacherAddBy , String LoanID = "NULL")
             {
                 Locationfile_TargetFile SetFile = new Locationfile_TargetFile();
                 SetFile.LocationFile = LocationFile;
                 SetFile.TargetFile = TargetFile;
                 Stopwatch time = new Stopwatch();
-                SendFileThread = new Thread(() => FileSendThread(SetFile));
+                SendFileThread = new Thread(() => FileSendThread(SetFile , TeacherNo , FileTypeNo , TeacherAddBy , LoanID));
                 SendFileThread.Start();
                 time.Start();
 
@@ -151,7 +238,7 @@ namespace BankTeacher.Class.ProtocolSharing
 
                 return SetFile.Return;
             }
-            public void FileSendThread(Locationfile_TargetFile SetFile)
+            public void FileSendThread(Locationfile_TargetFile SetFile, String TeacherNo, int FileTypeNo, String TeacherAddBy, String LoanID = "NULL")
             {
                 try
                 {
@@ -169,19 +256,27 @@ namespace BankTeacher.Class.ProtocolSharing
                             {
                                 if (!File.Exists(path.Replace(".pdf", "_" + (x + 1) + ".pdf")))
                                 {
-                                    File.Copy(SetFile.LocationFile, path
-                                        .Replace(".pdf", "_" + (x + 1) + ".pdf"), true);
+                                    path = path.Replace(".pdf", "_" + (x + 1) + ".pdf");
+                                    File.Copy(SetFile.LocationFile, path);
                                     break;
                                 }
                             }
 
                         }
+                        BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]
+                            .Replace("{TeacherNo}",TeacherNo)
+                            .Replace("{FileTypeNo}",FileTypeNo.ToString())
+                            .Replace("{PathFile}", path)
+                            .Replace("{TeacherAddBy}",TeacherAddBy)
+                            .Replace("{LoanID}",LoanID));
                     }
-                    SetFile.Return = "อัพโหลดสำเร็จ";
+                    SetFile.Return = "อัพโหลดเอกสารสำเร็จ";
+                    return;
                 }
                 catch
                 {
-                    SetFile.Return = "ไม่สามารถอัพโหลดได้";
+                    SetFile.Return = "ไม่สามารถอัพโหลดเอกสารได้";
+                    return;
                 }
             }
         }

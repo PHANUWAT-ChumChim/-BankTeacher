@@ -197,7 +197,7 @@ namespace BankTeacher.Bank
             int x = this.Width / 2 - panel1.Size.Width / 2;
             int y = this.Height / 2 - panel1.Size.Height / 2;
             panel1.Location = new Point(x, y);
-        }
+        }                           
         private void BTPrint_Click(object sender, EventArgs e)
         {
             if(DGV.Rows.Count != 0)

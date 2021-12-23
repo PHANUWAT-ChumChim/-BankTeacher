@@ -164,53 +164,64 @@ namespace BankTeacher.Bank.Add_Member
         {
             if (CheckBRegister == false && TBTeacherName_Reg.Text != "")
             {
-                if (TBStartAmountShare_Reg.Text == "")
-                    TBStartAmountShare_Reg.Text = "0";
-                int AmountShare = Convert.ToInt32(TBStartAmountShare_Reg.Text);
-                if (AmountShare.ToString() == "" || AmountShare == 0)
+                //Input Location Folder
+                var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
+                //Input Contain words แนะนำ เป็นรหัสอาจารย์ ในหน้าทั่วไปส่วนหน้าไหนถ้ามีการทำรายการเยอะๆให้เอาเป็นเลขบิลล์ของหน้านั้นๆเช่นหน้าดูเอกสารกู้ จะใส่เป็นเลขกู้ หน้าดูเอกสาร สมัครสมาชิกจะใส่เป็นชื่ออาจารย์
+                smb.ThreadCheckFiles(TBTeacherNo_Reg.Text, "RegMember");
+                if (BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun.Contains("ไม่พบ"))
                 {
-
-                    AmountShare = BankTeacher.Bank.Menu.startAmountMin;
+                    MessageBox.Show(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun, "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo_Reg.Text));
-                if (TBTeacherName_Reg.Text != "")
+                else if (BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun != "")
                 {
-                    if (AmountShare >= BankTeacher.Bank.Menu.startAmountMin && AmountShare <= BankTeacher.Bank.Menu.startAmountMax)
-                    {
-                        if (dt.Rows.Count == 0)
-                        {
 
-                            DialogResult dialogResult = MessageBox.Show("ยืนยันการสมัคร", "สมัครสมาชิก", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                            if (dialogResult == DialogResult.Yes)
+                    if (TBStartAmountShare_Reg.Text == "")
+                        TBStartAmountShare_Reg.Text = "0";
+                    int AmountShare = Convert.ToInt32(TBStartAmountShare_Reg.Text);
+                    if (AmountShare.ToString() == "" || AmountShare == 0)
+                    {
+                        AmountShare = BankTeacher.Bank.Menu.startAmountMin;
+                    }
+                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo_Reg.Text));
+                    if (TBTeacherName_Reg.Text != "")
+                    {
+                        if (AmountShare >= BankTeacher.Bank.Menu.startAmountMin && AmountShare <= BankTeacher.Bank.Menu.startAmountMax)
+                        {
+                            if (dt.Rows.Count == 0)
                             {
-                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[3].Replace("{TeacherNo}", TBTeacherNo_Reg.Text)
-                                .Replace("{TeacherNoAddBy}", BankTeacher.Class.UserInfo.TeacherNo)
-                                .Replace("{StartAmount}", AmountShare.ToString())
-                                .Replace("{Month}", BankTeacher.Bank.Menu.Date[1])
-                                .Replace("{Year}", BankTeacher.Bank.Menu.Date[0]));
-                                MessageBox.Show("สมัครเสร็จสิ้น", "สมัครสมาชิก", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                CheckBRegister = true;
-                                Checkmember(true);
+
+                                DialogResult dialogResult = MessageBox.Show("ยืนยันการสมัคร", "สมัครสมาชิก", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                                if (dialogResult == DialogResult.Yes)
+                                {
+                                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[3].Replace("{TeacherNo}", TBTeacherNo_Reg.Text)
+                                    .Replace("{TeacherNoAddBy}", BankTeacher.Class.UserInfo.TeacherNo)
+                                    .Replace("{StartAmount}", AmountShare.ToString())
+                                    .Replace("{Month}", BankTeacher.Bank.Menu.Date[1])
+                                    .Replace("{Year}", BankTeacher.Bank.Menu.Date[0]));
+                                    MessageBox.Show("สมัครเสร็จสิ้น", "สมัครสมาชิก", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    CheckBRegister = true;
+                                    Checkmember(true);
+                                }
+                                else
+                                {
+                                    MessageBox.Show("ยกเลิกการสมัคร", "สมัครสมาชิก", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                }
+
                             }
                             else
                             {
-                                MessageBox.Show("ยกเลิกการสมัคร", "สมัครสมาชิก", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBox.Show("รายชื่อซ้ำ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
-
                         }
                         else
                         {
-                            MessageBox.Show("รายชื่อซ้ำ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("ไม่สามารถสมัครสมาชิกได้เนื่องจาก \r\n ราคาหุ้นเริ่มต้นต่ำหรือสูงเกินไป \r\n โปรดแก้ไข ราคาหุ้นขั้นต่ำ หรือ สูงสุด ที่หน้าตั้งค่า", "System Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
                     else
                     {
-                        MessageBox.Show("ไม่สามารถสมัครสมาชิกได้เนื่องจาก \r\n ราคาหุ้นเริ่มต้นต่ำหรือสูงเกินไป \r\n โปรดแก้ไข ราคาหุ้นขั้นต่ำ หรือ สูงสุด ที่หน้าตั้งค่า", "System Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("โปรดเลือกสมาชิกในการสมัคร", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
-                }
-                else
-                {
-                    MessageBox.Show("โปรดเลือกสมาชิกในการสมัคร", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
         }
@@ -264,7 +275,7 @@ namespace BankTeacher.Bank.Add_Member
                             var smb = new SmbFileContainer("Member");
                             if (smb.IsValidConnection())
                             {
-                                String Return = smb.SendFile(imgeLocation, "Member" + TBTeacherNo_Reg.Text + ".pdf");
+                                String Return = smb.SendFile(imgeLocation, "Member" + TBTeacherNo_Reg.Text + ".pdf" , TBTeacherNo_Reg.Text, 1, BankTeacher.Class.UserInfo.TeacherNo);
                                 MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 if (Return.Contains("อัพโหลดสำเร็จ"))
                                 {
@@ -309,6 +320,7 @@ namespace BankTeacher.Bank.Add_Member
             {
                 try
                 {
+                    TBTeacherNo_Reg.Text = TBTeacherNo_Reg.Text.Replace("t", "T");
                         DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[5].Replace("{Text}", TBTeacherNo_Reg.Text));
                     if(ds.Tables[0].Rows.Count != 0)
                     {
