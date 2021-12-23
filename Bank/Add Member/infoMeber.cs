@@ -197,6 +197,8 @@ namespace BankTeacher.Bank.Add_Member
                         if (Convert.ToInt32(dsInfoMember.Tables[1].Rows[0][0].ToString()) == 0 && Convert.ToInt32(dsInfoMember.Tables[2].Rows[0][0].ToString()) == 0)
                             TBStartAmount.Enabled = true;
                         button3.Enabled = true;
+                        button1.Enabled = true;
+                        tabControl1.Enabled = true;
                         Checkmember(false);
 
                     }
@@ -336,6 +338,18 @@ namespace BankTeacher.Bank.Add_Member
         private void button2_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if(TBStartAmount.Enabled == true)
+            {
+                TBStartAmount.Enabled = false;
+            }
+            else
+            {
+                TBStartAmount.Enabled = true;
+            }
         }
     }
 }

@@ -49,6 +49,8 @@ namespace BankTeacher.Bank.Add_Member
             this.label2 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.checkBox_scrip = new System.Windows.Forms.CheckBox();
+            this.checkBox_copy = new System.Windows.Forms.CheckBox();
             this.BTPrint = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.TBSavingAmount = new System.Windows.Forms.TextBox();
@@ -79,8 +81,7 @@ namespace BankTeacher.Bank.Add_Member
             this.LB1Id = new System.Windows.Forms.Label();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-            this.checkBox_scrip = new System.Windows.Forms.CheckBox();
-            this.checkBox_copy = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.PL.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.TP_info.SuspendLayout();
@@ -117,7 +118,7 @@ namespace BankTeacher.Bank.Add_Member
             this.BExitForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BExitForm.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
             this.BExitForm.Location = new System.Drawing.Point(1053, 624);
-            this.BExitForm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BExitForm.Margin = new System.Windows.Forms.Padding(4);
             this.BExitForm.Name = "BExitForm";
             this.BExitForm.Size = new System.Drawing.Size(97, 81);
             this.BExitForm.TabIndex = 80;
@@ -128,6 +129,7 @@ namespace BankTeacher.Bank.Add_Member
             // 
             this.tabControl1.Controls.Add(this.TP_info);
             this.tabControl1.Controls.Add(this.TB_Print);
+            this.tabControl1.Enabled = false;
             this.tabControl1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(15, 78);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -139,6 +141,7 @@ namespace BankTeacher.Bank.Add_Member
             // TP_info
             // 
             this.TP_info.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.TP_info.Controls.Add(this.button1);
             this.TP_info.Controls.Add(this.BSaveEdit);
             this.TP_info.Controls.Add(this.panel1);
             this.TP_info.Controls.Add(this.panel4);
@@ -156,14 +159,15 @@ namespace BankTeacher.Bank.Add_Member
             // 
             // BSaveEdit
             // 
+            this.BSaveEdit.BackColor = System.Drawing.Color.White;
             this.BSaveEdit.Enabled = false;
             this.BSaveEdit.Location = new System.Drawing.Point(875, 383);
-            this.BSaveEdit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BSaveEdit.Margin = new System.Windows.Forms.Padding(4);
             this.BSaveEdit.Name = "BSaveEdit";
             this.BSaveEdit.Size = new System.Drawing.Size(223, 74);
             this.BSaveEdit.TabIndex = 80;
             this.BSaveEdit.Text = "บันทึก";
-            this.BSaveEdit.UseVisualStyleBackColor = true;
+            this.BSaveEdit.UseVisualStyleBackColor = false;
             this.BSaveEdit.Click += new System.EventHandler(this.BSaveEdit_Click);
             // 
             // panel1
@@ -333,6 +337,30 @@ namespace BankTeacher.Bank.Add_Member
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(282, 275);
             this.panel2.TabIndex = 79;
+            // 
+            // checkBox_scrip
+            // 
+            this.checkBox_scrip.AutoSize = true;
+            this.checkBox_scrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.checkBox_scrip.Location = new System.Drawing.Point(15, 163);
+            this.checkBox_scrip.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBox_scrip.Name = "checkBox_scrip";
+            this.checkBox_scrip.Size = new System.Drawing.Size(171, 41);
+            this.checkBox_scrip.TabIndex = 120;
+            this.checkBox_scrip.Text = "เฉพราะ(ต้นฉบับ)";
+            this.checkBox_scrip.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_copy
+            // 
+            this.checkBox_copy.AutoSize = true;
+            this.checkBox_copy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.checkBox_copy.Location = new System.Drawing.Point(15, 212);
+            this.checkBox_copy.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBox_copy.Name = "checkBox_copy";
+            this.checkBox_copy.Size = new System.Drawing.Size(162, 41);
+            this.checkBox_copy.TabIndex = 121;
+            this.checkBox_copy.Text = "เฉพราะ(สำเนา)";
+            this.checkBox_copy.UseVisualStyleBackColor = true;
             // 
             // BTPrint
             // 
@@ -703,29 +731,18 @@ namespace BankTeacher.Bank.Add_Member
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
             // 
-            // checkBox_scrip
+            // button1
             // 
-            this.checkBox_scrip.AutoSize = true;
-            this.checkBox_scrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.checkBox_scrip.Location = new System.Drawing.Point(15, 163);
-            this.checkBox_scrip.Margin = new System.Windows.Forms.Padding(4);
-            this.checkBox_scrip.Name = "checkBox_scrip";
-            this.checkBox_scrip.Size = new System.Drawing.Size(171, 41);
-            this.checkBox_scrip.TabIndex = 120;
-            this.checkBox_scrip.Text = "เฉพราะ(ต้นฉบับ)";
-            this.checkBox_scrip.UseVisualStyleBackColor = true;
-            // 
-            // checkBox_copy
-            // 
-            this.checkBox_copy.AutoSize = true;
-            this.checkBox_copy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.checkBox_copy.Location = new System.Drawing.Point(15, 212);
-            this.checkBox_copy.Margin = new System.Windows.Forms.Padding(4);
-            this.checkBox_copy.Name = "checkBox_copy";
-            this.checkBox_copy.Size = new System.Drawing.Size(162, 41);
-            this.checkBox_copy.TabIndex = 121;
-            this.checkBox_copy.Text = "เฉพราะ(สำเนา)";
-            this.checkBox_copy.UseVisualStyleBackColor = true;
+            this.button1.BackColor = System.Drawing.Color.White;
+            this.button1.Enabled = false;
+            this.button1.Location = new System.Drawing.Point(708, 406);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(159, 51);
+            this.button1.TabIndex = 81;
+            this.button1.Text = "เเก้ไข";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // infoMeber
             // 
@@ -824,5 +841,6 @@ namespace BankTeacher.Bank.Add_Member
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Windows.Forms.CheckBox checkBox_scrip;
         private System.Windows.Forms.CheckBox checkBox_copy;
+        private System.Windows.Forms.Button button1;
     }
 }

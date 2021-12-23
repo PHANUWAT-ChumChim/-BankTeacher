@@ -159,7 +159,7 @@ namespace BankTeacher.Bank.Add_Member
             }
         }
         // Comment!
-        // Available values|  SQLDefault[1] / TB /
+        // Available values|  SQLDefault[1] / TB //
         private void BSave_Click_1(object sender, EventArgs e)
         {
             if (CheckBRegister == false && TBTeacherName_Reg.Text != "")
