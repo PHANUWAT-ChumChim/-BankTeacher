@@ -38,6 +38,7 @@ namespace BankTeacher.Bank.Loan
         /// <para>[1] SELECT LOAN INPUT: {TeacherNo} </para>
         /// <para>[2] SELECT Detail Loan INPUT: {LoanID} </para>
         /// <para>[3] for printback  INPUT : {TeacherNo} {LoanNo} </para>
+        ///   //[4] BackPrint payLoan INPUT : {TeacherNo} {LoanNo}
         /// </summary>
         private String[] SQLDefault =
         {
@@ -112,6 +113,15 @@ namespace BankTeacher.Bank.Loan
          "LEFT JOIN BaseData.dbo.tblAmphur as f on c.cAmPhurNo = f.AmphurNo \r\n " +
          "LEFT JOIN BaseData.dbo.tblJangWat as g on c.cJangWatNo = g.JangWatNo \r\n " +
          "WHERE a.TeacherNo = '{TeacherNo}' and a.LoanNo = {LoanNo}"
+          ,
+           //[4] BackPrint payLoan INPUT : {TeacherNo} {LoanNo}
+          "SELECT a.LoanNo,CAST(a.PayDate as date),a.LoanAmount,b.LoanStatusName,CAST(d.PrefixName+' '+c.Fname+' '+c.Lname as nvarchar),CAST(f.Name as nvarchar)  \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblLoanStatus b ON a.LoanStatusNo = b.LoanStatusNo \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis c ON a.TeacherNoAddBy = c.TeacherNo \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix d ON c.PrefixNo = d.PrefixNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetailPayment f ON a.BillDetailPaymentNo = f.BillDetailPaymentNo \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}'AND LoanNo = '{LoanNo}'"
 
 
         };
@@ -390,6 +400,22 @@ namespace BankTeacher.Bank.Loan
                     //TB_TotalLoan.Text = ds.Tables[2].Rows[0][1].ToString();
                     //TB_PayLoanAmount.Text = ds.Tables[2].Rows[0][2].ToString();
 
+                    DGV_Historyloanpay.Rows.Clear();
+                    //BTPrint_T.BackColor = Color.White;
+                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{TeacherNo}", TBTeacherNo.Text)
+                         .Replace("{LoanNo}", TBLoanNo.Text));
+                    Class.Print.PrintPreviewDialog.info_PayLoanBill = dt.Rows[0][0].ToString();
+                    Class.Print.PrintPreviewDialog.info_PayLoandate = dt.Rows[0][1].ToString();
+                    Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
+                    Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
+                    Class.Print.PrintPreviewDialog.info_TeacherAdd = dt.Rows[0][4].ToString();
+                    Class.Print.PrintPreviewDialog.info_Payment = dt.Rows[0][5].ToString();
+                    for (int loop = 0; loop < dt.Rows.Count; loop++)
+                    {
+                        DGV_Historyloanpay.Rows.Add(dt.Rows[0][0].ToString(), dt.Rows[0][1].ToString(), "จ่ายกู้", dt.Rows[0][2].ToString());
+                        //DGV_info.Rows.Add(loop + 1, "จ่ายกู้", dt.Rows[0][2].ToString());
+                    }
+
                     how_many_laps = DGVGuarantor.RowCount - 1;
                 }
             }
@@ -399,11 +425,15 @@ namespace BankTeacher.Bank.Loan
         {
             if(CB_SelectPrint.SelectedIndex == 0)
             Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVLoanDetail, tabControl1.SelectedTab.Text, this.AccessibilityObject.Name,2,"A4",1);
-            else
+            else if(CB_SelectPrint.SelectedIndex == 1)
             {
                 Class.Print.PrintPreviewDialog.PrintLoan(e, SQLDefault[3].Replace("{TeacherNo}", TBTeacherNo.Text).Replace("{LoanNo}",TBLoanNo.Text),
                    Bank.Menu.Date[2], Bank.Menu.Monthname, (Convert.ToInt32(Bank.Menu.Date[0]) + 543).ToString(),
                    TBTeacherNo.Text, TBLoanNo.Text, DGVGuarantor.RowCount,SandCRonot);
+            }
+            else
+            {
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Historyloanpay, tabControl1.SelectedTab.Text, this.AccessibilityObject.Name, SandCRonot, "A4", 1);
             }
         }
         int SandCRonot = 0;
@@ -414,7 +444,11 @@ namespace BankTeacher.Bank.Loan
             if (checkBox_copy.Checked == true) { SandCRonot = 4; }
             if (checkBox_scrip.Checked == true && checkBox_copy.Checked == true) { SandCRonot = 1; }
             if (checkBox_scrip.Checked == false && checkBox_copy.Checked == false) { SandCRonot = 0; }
-
+            if(CB_SelectPrint.SelectedIndex == 2)
+            {
+                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+                printDocument1.DefaultPageSettings.Landscape = true;
+            }
             if (DGVLoanDetail.RowCount != 0)
             {
                 if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
@@ -535,11 +569,6 @@ namespace BankTeacher.Bank.Loan
             {
                 MessageBox.Show("กรุณาเลือกรายการกู้ก่อนอัพโหลดเอกสาร", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

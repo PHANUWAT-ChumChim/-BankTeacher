@@ -168,10 +168,6 @@ namespace BankTeacher.Bank.Loan
                             }
                         }
                     }
-                    CBYearSelection_Loanpay.Items.Clear();
-                    // =========================== เขตก่อสร้าง =====================
-                        Class.ComboxAdd_item.Search_datetime(SQLDefault[6].Replace("{TeacherNo}",TBTeacherNo.Text),Convert.ToInt32(Bank.Menu.Date_Time_SQL_Now.Rows[0][1]),4, CBYearSelection_Loanpay,true,false);
-                    // ==========================================================
                     tabControl1.Enabled = true;
                     DGV_PayLoan.Rows.Clear();
                     CB_LoanNo.Enabled = true;
@@ -459,63 +455,7 @@ namespace BankTeacher.Bank.Loan
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            if(tabControl1.SelectedIndex == 0)
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_PayLoan, "จ่ายกู้", this.AccessibilityObject.Name, 1, "A5", 0);
-            else
-            Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_info, "จ่ายกู้", this.AccessibilityObject.Name,SandCRonot, "A5", 0);
-
-        }
-
-        private void CBYearSelection_Loanpay_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            DGV_Historyloanpay.Rows.Clear();
-            BTPrint_T.BackColor = Color.White;
-           DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("{TeacherNo}", TBTeacherNo.Text)
-                .Replace("{Year}", CBYearSelection_Loanpay.SelectedItem.ToString()));
-            Class.Print.PrintPreviewDialog.info_PayLoanBill = dt.Rows[0][0].ToString();
-            Class.Print.PrintPreviewDialog.info_PayLoandate = dt.Rows[0][1].ToString();
-            Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
-            Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
-            Class.Print.PrintPreviewDialog.info_TeacherAdd = dt.Rows[0][4].ToString();
-            Class.Print.PrintPreviewDialog.info_Payment = dt.Rows[0][5].ToString();
-            for (int loop = 0; loop < dt.Rows.Count; loop++)
-            {
-                DGV_Historyloanpay.Rows.Add(dt.Rows[0][0].ToString(),dt.Rows[0][1].ToString(),"จ่ายกู้", dt.Rows[0][2].ToString());
-                DGV_info.Rows.Add(loop + 1,"จ่ายกู้",dt.Rows[0][2].ToString());
-            }
-         
-        }
-
-        private void tabControl1_Click(object sender, EventArgs e)
-        {
-            if(CBYearSelection_Loanpay.Items.Count == 0)
-            {
-                MessageBox.Show("คุณไม่มีรายการ กู้ในระบบ กรูณาทำรายการใหม่อีกครั้งครับ");
-                tabControl1.SelectedIndex = 0;
-            }
-        }
-        int SandCRonot = 0;
-        private void BTPrint_Click(object sender, EventArgs e)
-        {
-            // เลือก ต้น ฉบับ หรือ สำเนา หรือ ไม่
-            if (checkBox_scrip.Checked == true) { SandCRonot = 3; }
-            if (checkBox_copy.Checked == true) { SandCRonot = 4; }
-            if (checkBox_scrip.Checked == true && checkBox_copy.Checked == true) { SandCRonot = 1; }
-            if (checkBox_scrip.Checked == false && checkBox_copy.Checked == false) { SandCRonot = 0; }
-
-            if (BTPrint_T.BackColor != Color.Red)
-            {
-                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
-                printDocument1.DefaultPageSettings.Landscape = true;
-                if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    printDocument1.Print();
-                }
-            }
-            else
-            {
-                MessageBox.Show("โปรดเพิ่ม รายการในตาราง");
-            }
         }
     }
 }

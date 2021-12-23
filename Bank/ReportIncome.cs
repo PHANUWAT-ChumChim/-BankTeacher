@@ -136,7 +136,7 @@ namespace BankTeacher.Bank
                             for (int x = 0; x < dtCheckBillInDay.Rows.Count; x++)
                             {
                                 int AmountBill = 0;
-                                DGV_one.Rows.Add(dtCheckBillInDay.Rows[x][0].ToString(), dtCheckBillInDay.Rows[x][1].ToString());
+                                DGV_one.Rows.Add(x+1,dtCheckBillInDay.Rows[x][0].ToString(), dtCheckBillInDay.Rows[x][1].ToString());
                                 DGVPosition = DGV_one.Rows.Count - 1;
                                 DataTable dtCheckBillDetail = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
                                     .Replace("{BillNo}", dtCheckBillInDay.Rows[x][0].ToString()));
@@ -160,16 +160,15 @@ namespace BankTeacher.Bank
 
                                             if (y == dtCheckBillDetail.Rows.Count - 1)
                                             {
-                                                DGV_one.Rows.Add("", "", "สรุปยอดบิลล์", "", AmountBill, "");
+                                                DGV_one.Rows.Add("","", "", "สรุปยอดบิลล์", "", AmountBill, "");
                                                 DGV_one.Rows[DGV_one.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                                             }
-
                                             continue;
                                         }
-                                        DGV_one.Rows.Add("", "", dtCheckBillDetail.Rows[y][1].ToString(), dtCheckBillDetail.Rows[y][2].ToString(), dtCheckBillDetail.Rows[y][3].ToString(), "");
+                                        DGV_one.Rows.Add("","", "", dtCheckBillDetail.Rows[y][1].ToString(), dtCheckBillDetail.Rows[y][2].ToString(), dtCheckBillDetail.Rows[y][3].ToString(),"");
                                         if (y == dtCheckBillDetail.Rows.Count - 1)
                                         {
-                                            DGV_one.Rows.Add("", "", "สรุปยอดบิลล์", "", AmountBill, "");
+                                            DGV_one.Rows.Add("","", "", "สรุปยอดบิลล์", "", AmountBill, "");
                                             DGV_one.Rows[DGV_one.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                                         }
 

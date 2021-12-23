@@ -335,9 +335,10 @@ namespace BankTeacher.Bank
                         Class.Print.PrintPreviewDialog.info_Amounoff = TBWithDraw.Text;
                         Class.Print.PrintPreviewDialog.info_Payment = CBTypePay.Items[CBTypePay.SelectedIndex].ToString();
                         Class.Print.PrintPreviewDialog.info_TeacherAdd = Class.UserInfo.TeacherName;
+                        Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(Convert.ToInt32(TBSavingAmount.Text) - Convert.ToInt32(TBWithDraw.Text)).ToString();
                         printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                         printDocument1.DefaultPageSettings.Landscape = true;
-                        SELECT_Print++;
+                        SELECT_Print = 3;
                         if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                         {
                             printDocument1.Print();
@@ -497,17 +498,17 @@ namespace BankTeacher.Bank
             Class.Print.PrintPreviewDialog.info_Loanstatus = TBLoanStatus.Text;
             Class.Print.PrintPreviewDialog.info_Amounoffinsystem = TBCreditSystem.Text;
             Class.Print.PrintPreviewDialog.info_canbeAmounoff = TBCreditWithDraw.Text;
-            if (SELECT_Print == 1)
+            if (SELECT_Print > 0)
             {
                 // ========================= info =====================================
                 Class.Print.PrintPreviewDialog.info_BillAmounoff = dt.Rows[0][0].ToString();
                 Class.Print.PrintPreviewDialog.info_datepayAmounoff = dt_date.Rows[0][3].ToString();
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, 1, "A5", 0);
+                SELECT_Print--;
             }
             else if (CB_SelectPrint.SelectedIndex == 1)
             {
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, SandCRonot, "A5", 0);
-                TB_Bill.Text = "";
             }
             else
             {
@@ -515,7 +516,11 @@ namespace BankTeacher.Bank
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVAmountOffHistory, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, 2, "A4", 1);
             }
             Class.Print.PrintPreviewDialog.details = 0;
-            SELECT_Print = 0;
+            if(Class.Print.PrintPreviewDialog.start_and_stop == 1 || Class.Print.PrintPreviewDialog.start_and_stop == 2)
+            {
+                TB_Bill.Text = "";
+                Class.Print.PrintPreviewDialog.start_and_stop = 0;
+            }
         }
 
         private void BExitForm_Click(object sender, EventArgs e)
@@ -586,7 +591,7 @@ namespace BankTeacher.Bank
             if (checkBox_copy.Checked == true) { SandCRonot = 4; }
             if (checkBox_scrip.Checked == true && checkBox_copy.Checked == true) { SandCRonot = 1; }
             if (checkBox_scrip.Checked == false && checkBox_copy.Checked == false) { SandCRonot = 0; }
-
+            if (TB_Bill.Text == "") { DGV_Testter.Rows.Clear(); }
             if (DGVAmountOffHistory.Rows.Count != 0)
             {
                 if (CB_SelectPrint.SelectedIndex == 1 && DGV_Testter.Rows.Count != 0)
