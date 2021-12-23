@@ -105,9 +105,17 @@ namespace BankTeacher.Bank
         {
             try
             {
-                Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
-                .Replace("{Year}", CBYear.SelectedItem.ToString())
-                .Replace("{TeacherNo}" , Class.UserInfo.TeacherNo));
+                if(MessageBox.Show("ต้องการยกเลิกการปันผลใช่หรือไม่","ระบบ",MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
+                    .Replace("{Year}", CBYear.SelectedItem.ToString())
+                    .Replace("{TeacherNo}" , Class.UserInfo.TeacherNo));
+                    MessageBox.Show("ยกเลิกปันผลเรียบร้อยแล้ว","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("การบันทึกล้มเหลว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
             catch (Exception ex)
             {
