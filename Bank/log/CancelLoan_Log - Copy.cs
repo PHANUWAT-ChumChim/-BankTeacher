@@ -73,6 +73,7 @@ namespace BankTeacher.Bank.log
             {
                 if (e.KeyCode == Keys.Enter && TBTeacherNo.Text.Length >= 6 && DTPSelectDate.Value.ToString() != "")
                 {
+                    TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
                     DGVSelectTeacherAdd.Rows.Clear();
                     String Date = DTPSelectDate.Value.ToString("yyyy:MM:dd");
                     Date = Date.Replace(":", "/");

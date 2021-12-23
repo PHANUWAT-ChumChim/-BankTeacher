@@ -93,6 +93,7 @@ namespace BankTeacher.Bank
         {
             if(e.KeyCode == Keys.Enter)
             {
+                TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
                 DGV.Rows.Clear();
                 String Year = DTP.Value.ToString("yyyy");
                 String Month = DTP.Value.ToString("MM");

@@ -495,6 +495,7 @@ namespace BankTeacher.Bank.Loan
         //TB ใส่ ID คนกู้ มี event การกด
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
         {
+            TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
             if (BSave.Enabled == false)
                 BSave.Enabled = true;
             if (e.KeyCode == Keys.Enter)

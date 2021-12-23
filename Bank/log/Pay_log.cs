@@ -72,6 +72,7 @@ namespace BankTeacher.Bank.log
                 {
                     if(TBTeacherNo.Text.Length >= 6)
                     {
+                        TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
                         DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
                             .Replace("{TeacherAddbyNo}", TBTeacherNo.Text)
                             .Replace("{Date}",DateSelected));

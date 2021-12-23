@@ -155,8 +155,9 @@ namespace BankTeacher.Bank
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (TBTeacherNo.Text.Length == 6)
+                if (TBTeacherNo.Text.Length >= 6)
                 {
+                    TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
                     dataGridView3.Rows.Clear();
                     CByear.SelectedIndex = -1;
                     DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[3].Replace("{Text}", TBTeacherNo.Text));

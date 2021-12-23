@@ -94,6 +94,7 @@ namespace BankTeacher.Bank.Loan
         {
             if (e.KeyCode == Keys.Enter)
             {
+                TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text));
                 if (dt.Rows.Count != 0)
                 {

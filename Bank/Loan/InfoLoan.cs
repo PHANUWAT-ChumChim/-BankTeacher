@@ -176,6 +176,7 @@ namespace BankTeacher.Bank.Loan
         {
             if (e.KeyCode == Keys.Enter)
             {
+                TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
                 tabControl1.SelectedIndex = 0;
                 CB_LoanNo.Enabled = true;
                 CB_LoanNo.Items.Clear();
