@@ -190,6 +190,7 @@ namespace BankTeacher.Bank
         {
             if (e.KeyCode == Keys.Enter)
             {
+                TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
                 CBYear.Enabled = false;
                 DGVAmountOffHistory.Enabled = false;
                 tabControl1.SelectedIndex = 0;

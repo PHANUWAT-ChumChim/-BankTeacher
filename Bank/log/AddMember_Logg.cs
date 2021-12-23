@@ -49,5 +49,10 @@ namespace BankTeacher.Bank.log
                 ColumnDGVHeaderSize.Add(new string[] { DGV.Columns[x].HeaderText, DGV.Columns[x].Width.ToString() });
             }
         }
+
+        private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
+        {
+            TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
+        }
     }
 }

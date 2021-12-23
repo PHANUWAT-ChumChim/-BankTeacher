@@ -245,7 +245,7 @@ namespace BankTeacher.Bank
                     Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]
                     .Replace("{Year}", CBYearDividend.Items[CBYearDividend.SelectedIndex].ToString())
                     .Replace("{TeacherAddbyNo}",Class.UserInfo.TeacherNo));
-                    MessageBox.Show("บันทึกสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("บันทึกสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     if (DGV.Rows.Count != 0)
                     {
                         if (printPreviewDialog1.ShowDialog() == DialogResult.OK)

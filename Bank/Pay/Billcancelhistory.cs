@@ -23,139 +23,178 @@ namespace BankTeacher.Bank.Pay
         }
         /// <summary> 
         /// SQLDafault 
-        /// <para>[4] datagrind  Select billType INPUT: {Mount} {Year} {Type} {--}  </para>
+        /// <para>[0] DGV  Select billType INPUT: {Year} {Month} {CancelNo} </para>
+        /// <para>[1] Select Year INPUT: </para>
+        /// <para>[2] Select Month INPUT: {Year}</para>
         /// </summary> 
         private String[] SQLDefault = new String[]
         {
-           //[0] datagrind  Select billType INPUT: {Mount} {Year} {Type} {--}
-          "SELECT CAST(e.PrefixName+''+d.Fname+''+d.Lname as nvarchar) as TeacherAddby,a.BillNo,CAST(a.DateAdd as date),c.TypeName,b.Amount,a.Cancel,CAST(Year(a.DateAdd) as nvarchar),CAST(MONTH(a.DateAdd) as nvarchar)  \r\n" +
-          "FROM EmployeeBank.dbo.tblBill as a \r\n" +
-          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b ON a.BillNo = b.BillNo \r\n" +
-          "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as c ON b.TypeNo = c.TypeNo \r\n" +
-          "LEFT JOIN Personal.dbo.tblTeacherHis as d on a.TeacherNoAddBy = d.TeacherNo \r\n" +
-          "LEFT JOIN BaseData.dbo.tblPrefix as e on d.PrefixNo = e.PrefixNo \r\n" +
-          "WHERE CAST(Year(a.DateAdd) as nvarchar) = {Year}  \r\n" +
-          "{--}AND CAST(MONTH(a.DateAdd) as nvarchar) = {Mount}  AND a.Cancel != {Type}"
+           //[0] DGV  Select billType INPUT: {Year} {Month} {CancelNo}
+           "SELECT CAST(ISNULL(e.PrefixName,'')+''+d.Fname+' '+d.Lname as nvarchar(255)) as TeacherAddby,a.BillNo,CAST(a.DateAdd as date) as dateadd,c.TypeName,b.Amount,a.Cancel,YEAR(a.DateAdd) as Year,MONTH(a.DateAdd) as Month \r\n " +
+          "FROM EmployeeBank.dbo.tblBill as a  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b ON a.BillNo = b.BillNo  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as c ON b.TypeNo = c.TypeNo  \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as d on a.TeacherNoAddBy = d.TeacherNo  \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as e on d.PrefixNo = e.PrefixNo  \r\n " +
+          "WHERE YEAR(a.DateAdd) = {Year} and MONTH(a.DateAdd) = {Month} and Cancel != {CancelNo}\r\n"+
+          "ORDER BY a.DateAdd"
+            ,
+          //[1] Select Year INPUT: 
+           "SELECT YEAR(DateAdd) \r\n " +
+          "FROM EmployeeBank.dbo.tblBill as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo \r\n " +
+          "WHERE Year(DateAdd) > Year(CURRENT_TIMESTAMP) - 5 \r\n"+
+          "GROUP BY YEAR(DateAdd) \r\n " +
+          "ORDER BY YEAR(DateAdd)"
+           ,
+           //[2] Select Month INPUT: {Year}
+           "SELECT MONTH(DateAdd) \r\n " +
+          "FROM EmployeeBank.dbo.tblBill as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo \r\n " +
+          "WHERE Year(DateAdd) = {Year} \r\n " +
+          "GROUP BY MONTH(DateAdd) \r\n " +
+          "ORDER BY MONTH(DateAdd)"
+           ,
+
         };
         // ประเภทบิลล์
         public static string TypeBill = "";
         public static int Mont = 0, Year = 0;
         private void Billcancelhistory_Load(object sender, EventArgs e)
         {
-            Mont = 0; Year = 0;
-        x:
-            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0].Replace("{Mount}", Convert.ToInt32(DateTime.Today.Month - Mont).ToString())
-                .Replace("{Year}", Convert.ToInt32(DateTime.Today.Year - Year).ToString()).Replace("{Type}", "0")
-                .Replace("{--}", "--"));
-            if (dt.Rows.Count != 0)
+            DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]);
+            if(dt.Rows.Count != 0)
+                for (int x = 0; x < dt.Rows.Count; x++)
+                    CBYearSelection_Bill.Items.Add(dt.Rows[x][0].ToString());
+            if (CBYearSelection_Bill.Items.Count != 0)
             {
-                for (int Row = 0; Row < dt.Rows.Count; Row++)
-                {
-
-                    if (dt.Rows[Row][5].ToString() == "1")
-                    {
-                        TypeBill = "บิลล์";
-                    }
-                    else if (dt.Rows[Row][5].ToString() == "2")
-                    {
-                        TypeBill = "ยกเลิกบิลล์";
-                    }
-                    DGV_Bill.Rows.Add(dt.Rows[Row][0].ToString(), dt.Rows[Row][1].ToString(), dt.Rows[Row][2].ToString(), dt.Rows[Row][3].ToString(), TypeBill, dt.Rows[Row][4].ToString());
-                }
+                for (int x = 0; x < CBYearSelection_Bill.Items.Count; x++)
+                    if (CBYearSelection_Bill.Items[x].ToString() == BankTeacher.Bank.Menu.Date[0].ToString())
+                        CBYearSelection_Bill.SelectedIndex = x;
+                if (CBYearSelection_Bill.SelectedIndex == -1)
+                    CBYearSelection_Bill.SelectedIndex = 0;
+                CBMonthSelection_Bill.Enabled = true;
             }
             else
             {
-                if (Mont < Convert.ToInt32(DateTime.Today.Month))
-                {
-                    Mont++;
-                }
-                else
-                {
-                    Mont = 0;
-                    Year++;
-                }
-                goto x;
+                CBMonthSelection_Bill.Enabled = false;
+                CB_Typebill.Enabled = false;
             }
-            Year = Convert.ToInt32(DateTime.Today.Year - Year);
-            Mont = Convert.ToInt32(DateTime.Today.Month - Mont);
-            for (int Y = 0; Y < 2; Y++)
-            {
-                dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]
-                    .Replace("{Mount}", Convert.ToInt32(Mont).ToString())
-                    .Replace("{Year}", Convert.ToInt32(Year - Y).ToString())
-                    .Replace("{Type}", "0")
-                    .Replace("{--}", "--"));
-                if (dt.Rows.Count != 0)
-                {
-                    CBYearSelection_Bill.Items.Add(Convert.ToInt32(Year - Y));
-                }
-                else
-                {
-                    break;
-                }
-            }
-            CBYearSelection_Bill.SelectedIndex = 0;
-            CBMonthSelection_Bill.SelectedIndex = 0;
-            CB_Typebill.SelectedIndex = 0;
+                         
         }
-        // ค้นหารายการบิลล์
-        private void BListAdd_Pay_Click_1(object sender, EventArgs e)
-        {
-            DGV_Bill.Rows.Clear();
-            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0].Replace("{Mount}", CBMonthSelection_Bill.Text)
-               .Replace("{Year}", CBYearSelection_Bill.Text).Replace("{Type}", CB_Typebill.SelectedIndex.ToString())
-               .Replace("{--}", ""));
-            if (dt.Rows.Count != 0)
-            {
-                for (int Row = 0; Row < dt.Rows.Count; Row++)
-                {
-                    if (dt.Rows[Row][5].ToString() == "1")
-                    {
-                        TypeBill = "บิลล์";
-                    }
-                    else if (dt.Rows[Row][5].ToString() == "2")
-                    {
-                        TypeBill = "ยกเลิกบิลล์";
-                    }
-
-                    DGV_Bill.Rows.Add(dt.Rows[Row][0].ToString(), dt.Rows[Row][1].ToString(), dt.Rows[0][2].ToString(), dt.Rows[Row][3].ToString(), TypeBill, dt.Rows[Row][4].ToString());
-                }
-            }
-        }
-
-
-
-        // เลือกปี เเล้ว บอกข้อมูลรายการ เดือนที่มีบิลล์ย้อนหลัง ไม่เกิน 2 ปี
+        // เลือกปี เเล้ว บอกข้อมูลรายการ เดือนที่มีบิลล์ย้อนหลัง ไม่เกิน 5 ปี
         private void CBYearSelection_Bill_SelectedIndexChanged_1(object sender, EventArgs e)
         {
-            CBMonthSelection_Bill.Items.Clear();
-
-            for (int M = 1; M <= 12; M++)
+            if(CBYearSelection_Bill.SelectedIndex != -1)
             {
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]
-                  .Replace("{Mount}", Mont.ToString())
-                  .Replace("{Year}", CBYearSelection_Bill.Text)
-                  .Replace("{Type}", "0")
-                  .Replace("{--}", ""));
-                if (dt.Rows.Count != 0)
+                CBMonthSelection_Bill.Items.Clear();
+                DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{Year}", CBYearSelection_Bill.Text));
+                if(dt.Rows.Count != 0)
+                    for(int x = 0; x < dt.Rows.Count; x++ )
+                        CBMonthSelection_Bill.Items.Add(dt.Rows[x][0].ToString());
+                else
+                    CBMonthSelection_Bill.Enabled = false;
+
+                if (CBMonthSelection_Bill.Items.Count != 0)
                 {
-                    CBMonthSelection_Bill.Items.Add(Mont);
-                    Mont--;
-                    if (Mont == 0)
-                    {
-                        Mont = 12;
-                    }
+                    for (int x = 0; x < CBMonthSelection_Bill.Items.Count; x++)
+                        if (CBMonthSelection_Bill.Items[x].ToString() == BankTeacher.Bank.Menu.Date[1].ToString())
+                        {
+                            CBMonthSelection_Bill.SelectedIndex = x;
+                            break;
+                        }
+                    if (CBMonthSelection_Bill.SelectedIndex == -1)
+                        CBMonthSelection_Bill.SelectedIndex = 0;
+
+                    CBMonthSelection_Bill.Enabled = true;
                 }
                 else
                 {
-                    Mont--;
-                    if (Mont == 0)
-                    {
-                        Mont = 12;
-                    }
+                    CBMonthSelection_Bill.Enabled = true;
+                    CB_Typebill.Enabled = false;
                 }
             }
-            CBMonthSelection_Bill.SelectedIndex = 0;
+        }
+
+        private void CBMonthSelection_Bill_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(CBMonthSelection_Bill.SelectedIndex != -1)
+            {
+                CB_Typebill.Enabled = true;
+                CB_Typebill.SelectedIndex = 0;
+            }
+            else
+            {
+                CB_Typebill.Enabled = false;
+                CB_Typebill.SelectedIndex = -1;
+            }
+        }
+        private void CB_Typebill_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(CB_Typebill.SelectedIndex != -1)
+            {
+                int PosHeader = 0;
+                int CancelNo = 0;
+                int AmountBill = 0;
+                int Amountall = 0;
+                if (CB_Typebill.SelectedItem.ToString().Contains("ทั้งหมด"))
+                    CancelNo = 0;
+                else if (CB_Typebill.SelectedItem.ToString().Contains("ยกเลิก"))
+                    CancelNo = 1;
+                else
+                    CancelNo = 2;
+
+                DGV_Bill.Rows.Clear();
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]
+                    .Replace("{Month}", CBMonthSelection_Bill.Text)
+                   .Replace("{Year}", CBYearSelection_Bill.Text)
+                   .Replace("{CancelNo}", CancelNo.ToString()));
+                if (dt.Rows.Count != 0)
+                {
+                    if (dt.Rows[0][5].ToString() == "1")
+                    {
+                        TypeBill = "ใช้งาน";
+                    }
+                    else if (dt.Rows[0][5].ToString() == "2")
+                    {
+                        TypeBill = "ยกเลิก";
+                    }
+                    DGV_Bill.Rows.Add(dt.Rows[0][0].ToString(), dt.Rows[0][1].ToString(), dt.Rows[0][2].ToString(), dt.Rows[0][3].ToString(), dt.Rows[0][4].ToString(), TypeBill);
+                    AmountBill += Convert.ToInt32(DGV_Bill.Rows[0].Cells[4].Value.ToString());
+                    PosHeader = DGV_Bill.Rows.Count - 1;
+                    for (int Row = 1; Row < dt.Rows.Count; Row++)
+                    {
+                        if (dt.Rows[Row][5].ToString() == "1")
+                        {
+                            TypeBill = "ใช้งาน";
+                        }
+                        else if (dt.Rows[Row][5].ToString() == "2")
+                        {
+                            TypeBill = "ยกเลิก";
+                        }
+                        if(dt.Rows[Row][1].ToString() == DGV_Bill.Rows[PosHeader].Cells[1].Value.ToString())
+                        {
+                            DGV_Bill.Rows.Add("","","", dt.Rows[Row][3].ToString(), dt.Rows[Row][4].ToString(), "");
+                            AmountBill += Convert.ToInt32(DGV_Bill.Rows[DGV_Bill.Rows.Count - 1].Cells[4].Value.ToString());
+                        }
+                        else
+                        {
+                            DGV_Bill.Rows.Add("", "", "", "สรุปรายการบิลล์", AmountBill, "");
+                            DGV_Bill.Rows[DGV_Bill.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
+                            Amountall += AmountBill;
+                            AmountBill = 0;
+                            DGV_Bill.Rows.Add(dt.Rows[Row][0].ToString(), dt.Rows[Row][1].ToString(), dt.Rows[0][2].ToString(), dt.Rows[Row][3].ToString(), dt.Rows[Row][4].ToString(), TypeBill);
+                            PosHeader = DGV_Bill.Rows.Count - 1;
+                            AmountBill += Convert.ToInt32(DGV_Bill.Rows[DGV_Bill.Rows.Count - 1].Cells[4].Value.ToString());
+                        }
+                    }
+                    Amountall += AmountBill;
+                    DGV_Bill.Rows.Add("", "", "", "สรุปรายการบิลล์", AmountBill, "");
+                    DGV_Bill.Rows[DGV_Bill.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
+                    DGV_Bill.Rows.Add("", "", "", "สรุปรายการบิลล์ทั้งเดือน", Amountall, "");
+                    DGV_Bill.Rows[DGV_Bill.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Yellow;
+                }
+            }
         }
 
         private void Billcancelhistory_KeyDown(object sender, KeyEventArgs e)
@@ -165,6 +204,7 @@ namespace BankTeacher.Bank.Pay
                 BExitForm_Click(new object(), new EventArgs());
             }
         }
+
 
         private void BExitForm_Click(object sender, EventArgs e)
         {

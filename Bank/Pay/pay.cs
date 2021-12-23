@@ -31,7 +31,7 @@ namespace BankTeacher.Bank.Pay
         //public static string info_Lona_AmountRemain;
         int SELECT_Print = 0;
         //------------------------- index -----------------
-
+        bool CheckPay = false;
         int SelectIndexRow = -1;
         bool CheckInputTeacher = false;
         bool CheckInputBill = false;
@@ -361,6 +361,7 @@ namespace BankTeacher.Bank.Pay
             //หากมีการกด Enter
             if (e.KeyCode == Keys.Enter)
             {
+                TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
                 CB_SelectPrint.SelectedIndex = 0;
                 tabControl1.SelectedIndex = 0;
                 List<int> Loan = new List<int>();
@@ -369,6 +370,7 @@ namespace BankTeacher.Bank.Pay
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[17].Replace("{Text}", TBTeacherNo.Text));
                 if (dt.Rows.Count != 0)
                 {
+                    CheckPay = false;
                     tabControl1.Enabled = true;
                     Cleartabpage1();
                     TBTeacherBill.Text = "";
@@ -710,6 +712,15 @@ namespace BankTeacher.Bank.Pay
         {
         }
 
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedIndex == 0)
+                if (CheckPay == true)
+                {
+                    BSave_Pay.Enabled = false;
+                }
+        }
 
         //============================== tabpage 1 (Pay) ============================================
         //SelectYear
@@ -1301,6 +1312,7 @@ namespace BankTeacher.Bank.Pay
                     BSave_Pay.Enabled = false;
                     TBAmount_Pay.Enabled = false;
                     BAutoSelection.Enabled = false;
+                    CheckPay = true;
                     //ClearForm();
                     //TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
                 }
@@ -1330,7 +1342,7 @@ namespace BankTeacher.Bank.Pay
         //Enable Buttion Save
         private void DGV_Pay_RowStateChanged(object sender, DataGridViewRowStateChangedEventArgs e)
         {
-            if (DGV_Pay.Rows.Count == 1 && CBPayment_Pay.Items.Count != 0)
+            if (DGV_Pay.Rows.Count >= 1 && CBPayment_Pay.Items.Count != 0)
                 BSave_Pay.Enabled = true;
             else if (DGV_Pay.Rows.Count == 0)
                 BSave_Pay.Enabled = false;

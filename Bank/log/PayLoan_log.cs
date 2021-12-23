@@ -91,10 +91,11 @@ namespace BankTeacher.Bank.log
         {
             if(RBday.Checked == false)
             {
-                if (TBTeacherNo.Text.Length == 6 && e.KeyCode == Keys.Enter)
+                if (TBTeacherNo.Text.Length >= 6 && e.KeyCode == Keys.Enter)
                 {
                     try
                     {
+                        TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
                         DGVSelectTeacherAdd.Rows.Clear();
                         String Date = DTPSelectDate.Value.ToString("yyyy:MM:dd");
                         Date = Date.Replace(":", "/");
