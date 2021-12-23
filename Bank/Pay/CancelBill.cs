@@ -102,6 +102,7 @@ namespace BankTeacher.Bank.Pay
         private void Clear()
         {
             //tabpage 5 (Cancel Bill) ==============================================
+            TBNote.Enabled = false;
             DGV_Cancelbill.Rows.Clear();
             LSumAmount_CancelBill.Text = "0";
             TBBIllDate_Cancelbill.Text = "";
@@ -124,6 +125,7 @@ namespace BankTeacher.Bank.Pay
                     if (dt.Rows.Count != 0)
                     {
                         Clear();
+                        TBNote.Enabled = true;
                         TBBIllDate_Cancelbill.Text = (Convert.ToDateTime(dt.Rows[0][2].ToString())).ToString("yyyy-MM-dd");
                         TBTeacherNO_Cancelbill.Text = dt.Rows[0][0].ToString();
                         TBTeacherName_Cancelbill.Text = dt.Rows[0][1].ToString();
