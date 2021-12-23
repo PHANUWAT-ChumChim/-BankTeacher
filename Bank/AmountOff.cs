@@ -350,6 +350,7 @@ namespace BankTeacher.Bank
                 }
                 catch (Exception x)
                 {
+                    MessageBox.Show("ถอนเงินล้มเหลวกรุณาลองใหม่อีกครัง","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                     Console.Write(x);
                 }
              
