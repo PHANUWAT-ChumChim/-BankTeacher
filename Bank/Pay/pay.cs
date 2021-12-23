@@ -1260,11 +1260,13 @@ namespace BankTeacher.Bank.Pay
                         Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
                         Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
                         Class.Print.PrintPreviewDialog.info_TeacherAdd = Class.UserInfo.TeacherName;
-                        Class.Print.PrintPreviewDialog.info_Savingtotel = TBToatalSaving_ShareInfo.Text;
+                        if (Convert.ToInt32(TBToatalSaving_ShareInfo.Text) > 0) { Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(Convert.ToInt32(TBToatalSaving_ShareInfo.Text) + Convert.ToInt32(LBalance_Pay.Text)).ToString(); }
+                        else { Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(Convert.ToInt32(TBToatalSaving_ShareInfo.Text) + Convert.ToInt32(LBalance_Pay.Text)).ToString(); }
+                       
                         Class.Print.PrintPreviewDialog.info_Billpay = TBTeacherBill.Text;
                         Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
                         Class.Print.PrintPreviewDialog.info_datepayShare = DateTime.Today.Day.ToString() +'/'+ DateTime.Today.Month.ToString() +'/'+ DateTime.Today.Year.ToString();
-                        SELECT_Print = 2;
+                        SELECT_Print = 3;
                         printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                         printDocument1.DefaultPageSettings.Landscape = true;
                         Class.Print.PrintPreviewDialog.info_Payment = CBPayment_Pay.Items[CBPayment_Pay.SelectedIndex].ToString();
@@ -1509,8 +1511,6 @@ namespace BankTeacher.Bank.Pay
                         if ( firstBill == 0)
                         {
                             DGV_BillInfo.Rows.Add(x + 1, dt.Rows[x][0].ToString(), Convert.ToDateTime(dt.Rows[x][5].ToString()).ToString("dd-MM-yyyy"), dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
-                            if (DGV_BillInfo.Rows[x].Cells[1].Value.ToString() == dt.Rows[x][0].ToString())
-                                DGV_BillInfo.Rows[x].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
                             BillNo = dt.Rows[x][0].ToString();
                             firstBill++;
                         }
@@ -1527,7 +1527,6 @@ namespace BankTeacher.Bank.Pay
                             //DGV_BillInfo.Rows[x].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
                             firstBill--;
                         }
-
                         Sum = Sum + Convert.ToInt32(dt.Rows[x][3].ToString());
                         Balance += Convert.ToInt32(dt.Rows[x][3].ToString());
                         if(x == dt.Rows.Count - 1)
@@ -1542,6 +1541,17 @@ namespace BankTeacher.Bank.Pay
                         else 
                         { 
                             LINE = 257; 
+                        }
+                    }
+                    for(int loop = 0; loop < DGV_BillInfo.Rows.Count; loop++)
+                    {
+                        if(DGV_BillInfo.Rows[loop].Cells[1].Value.ToString() != "")
+                        {
+                            DGV_BillInfo.Rows[loop].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
+                        }
+                        else if(DGV_BillInfo.Rows[loop].Cells[4].Value.ToString() != "รวม")
+                        {
+                            DGV_BillInfo.Rows[loop].DefaultCellStyle.BackColor = Color.LightYellow;
                         }
                     }
                     LBalance_BillInfo.Text = Balance.ToString();
@@ -1908,7 +1918,8 @@ namespace BankTeacher.Bank.Pay
         {
             if (SELECT_Print > 0)
             {
-                Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Printbypoon, "ใบเสร็จรับเงิน", this.AccessibilityObject.Name,1,"A5",1);
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Printbypoon, "ใบเสร็จรับเงิน", this.AccessibilityObject.Name,0,"A5",1);
+                SELECT_Print--;
             }
             else if(CB_SelectPrint.SelectedIndex == 1)
             {
@@ -1920,7 +1931,6 @@ namespace BankTeacher.Bank.Pay
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_BillInfo, "บิลล์การจ่าย", this.AccessibilityObject.Name,2,"A4",1);
             }
             Class.Print.PrintPreviewDialog.details = 0;
-            SELECT_Print--;
         }
         private static void NumericCheck(object sender, KeyPressEventArgs e)
         {
@@ -1999,7 +2009,7 @@ namespace BankTeacher.Bank.Pay
             if (checkBox_copy.Checked == true) { SandCRonot = 4; }
             if (checkBox_scrip.Checked == true && checkBox_copy.Checked == true) { SandCRonot = 1; }
             if(checkBox_scrip.Checked == false && checkBox_copy.Checked == false) { SandCRonot = 0; }
-
+           
             if (CB_SelectPrint.SelectedIndex == 0)
             {
                 printDocument1.DefaultPageSettings.PaperSize = new PaperSize("Letter", 850, 1100);

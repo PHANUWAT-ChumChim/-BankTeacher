@@ -169,6 +169,7 @@ namespace BankTeacher.Bank
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.DGV_Testter);
             this.tabPage4.Controls.Add(this.LB8pay);
             this.tabPage4.Controls.Add(this.CBTypePay);
             this.tabPage4.Controls.Add(this.BMaxWithDraw_AmountOff);
@@ -630,7 +631,6 @@ namespace BankTeacher.Bank
             // 
             this.panel7.BackColor = System.Drawing.Color.White;
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel7.Controls.Add(this.DGV_Testter);
             this.panel7.Controls.Add(this.TBSavingAmount);
             this.panel7.Controls.Add(this.label4);
             this.panel7.Controls.Add(this.TBLoanStatus);
@@ -660,7 +660,7 @@ namespace BankTeacher.Bank
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3});
-            this.DGV_Testter.Location = new System.Drawing.Point(333, 17);
+            this.DGV_Testter.Location = new System.Drawing.Point(44, 76);
             this.DGV_Testter.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DGV_Testter.Name = "DGV_Testter";
             this.DGV_Testter.RowHeadersVisible = false;
@@ -668,6 +668,7 @@ namespace BankTeacher.Bank
             this.DGV_Testter.RowTemplate.Height = 24;
             this.DGV_Testter.Size = new System.Drawing.Size(782, 159);
             this.DGV_Testter.TabIndex = 4;
+            this.DGV_Testter.Visible = false;
             // 
             // Column7
             // 
