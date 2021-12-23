@@ -713,6 +713,15 @@ namespace BankTeacher.Bank.Pay
         }
 
 
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedIndex == 0)
+                if (CheckPay == true)
+                {
+                    BSave_Pay.Enabled = false;
+                }
+        }
+
         //============================== tabpage 1 (Pay) ============================================
         //SelectYear
         private void CBYearSelection_Pay_SelectedIndexChanged(object sender, EventArgs e)
@@ -2168,15 +2177,6 @@ namespace BankTeacher.Bank.Pay
             {
                 e.Handled = true;
             }
-        }
-
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if(tabControl1.SelectedIndex == 0)
-                if(CheckPay == true)
-                {
-                    BSave_Pay.Enabled = false;
-                }
         }
         //===============================================================================================
     }
