@@ -142,7 +142,7 @@ namespace BankTeacher.Class.ProtocolSharing
                 LocalReplace = localreplace;
                 
                 Stopwatch time = new Stopwatch();
-                ThreadCheckFile = new Thread(() => CancelToken());
+                ThreadCheckFile = new Thread(() => CheckFile(id , localreplace));
                 ThreadCheckFile.Start();
                 time.Start();
 
@@ -167,14 +167,16 @@ namespace BankTeacher.Class.ProtocolSharing
                     using (var network = new NetworkConnection(networkPath, networkCredential))
                     {
                         network.Connect();
-                        int CountFile = 0;
                         String path = PathFile;
                         int Count = 0;
                         System.IO.DirectoryInfo par = new System.IO.DirectoryInfo(path);
                         foreach (System.IO.FileInfo f in par.GetFiles())
                         {
                             if (f.Name.Contains(ID))
-                                CountFile++;
+                            {
+                                Count++;
+                                break;
+                            }
                         }
                         foreach(System.IO.FileInfo f in par.GetFiles())
                         {
@@ -188,7 +190,7 @@ namespace BankTeacher.Class.ProtocolSharing
                                             .Replace(".pdf","")
                                             .Replace("_"+x,"") == ID)
                                         {
-                                            CountFile++;
+                                            Count++;
                                             break;
                                         }
                                     }
@@ -197,11 +199,11 @@ namespace BankTeacher.Class.ProtocolSharing
                                 .Replace(LocalReplace + "_", "")
                                 .Replace(".pdf", "") == ID)
                             {
-                                CountFile++;
+                                Count++;
                                 break;
                             }
                         }
-                        if (CountFile != 0 && path != "")
+                        if (Count != 0 && path != "")
                         {
                             network.Dispose();
                             StatusRetrun = "มีเอกสารแล้ว";

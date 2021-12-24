@@ -1909,7 +1909,7 @@ namespace BankTeacher.Bank.Pay
         {
             if (SELECT_Print > 0)
             {
-                Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Printbypoon, "ใบเสร็จรับเงิน", this.AccessibilityObject.Name,0,"A5",1);
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_Printbypoon, "ใบเสร็จรับเงิน", this.AccessibilityObject.Name,1,"A5",1);
                 SELECT_Print--;
             }
             else if(CB_SelectPrint.SelectedIndex == 1)
