@@ -263,7 +263,7 @@ namespace BankTeacher.Bank.Loan
                     {
                         MessageBox.Show(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun, "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
-                    else if (BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun != "")
+                    else if (BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun != "" && !(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun.Contains("หมดเวลา")))
                     {
                         DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text));
                         if (dt.Rows.Count == 0)
@@ -306,6 +306,10 @@ namespace BankTeacher.Bank.Loan
                         {
                             MessageBox.Show("มีรายการ กู้ อยู่ในระบบ\r\nโปรดชำระรายการกู้ให้เรียบร้อย", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
+                    }
+                    else
+                    {
+                        MessageBox.Show(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun, "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
                 catch

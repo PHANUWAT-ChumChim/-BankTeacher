@@ -172,7 +172,7 @@ namespace BankTeacher.Bank.Add_Member
                 {
                     MessageBox.Show(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun, "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-                else if (BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun != "")
+                else if (BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun != "" && !(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun.Contains("หมดเวลา")))
                 {
 
                     if (TBStartAmountShare_Reg.Text == "")
