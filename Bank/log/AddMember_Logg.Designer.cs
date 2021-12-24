@@ -32,6 +32,9 @@ namespace BankTeacher.Bank.log
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.RBSelectTeacherAdd = new System.Windows.Forms.RadioButton();
+            this.RBday = new System.Windows.Forms.RadioButton();
             this.DGV = new System.Windows.Forms.DataGridView();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -39,21 +42,18 @@ namespace BankTeacher.Bank.log
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RBday = new System.Windows.Forms.RadioButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.LB1Id = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.LB2Ne = new System.Windows.Forms.Label();
+            this.BSearchTeacher = new System.Windows.Forms.Button();
             this.TBTeacherNo = new System.Windows.Forms.TextBox();
             this.TBTeacherName = new System.Windows.Forms.TextBox();
-            this.RBSelectTeacherAdd = new System.Windows.Forms.RadioButton();
             this.DTP = new System.Windows.Forms.DateTimePicker();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.BSearchTeacher = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
+            this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
             this.panel2.SuspendLayout();
-            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -67,6 +67,37 @@ namespace BankTeacher.Bank.log
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(899, 569);
             this.panel1.TabIndex = 1;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.RBSelectTeacherAdd);
+            this.panel3.Controls.Add(this.RBday);
+            this.panel3.Location = new System.Drawing.Point(235, 15);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(265, 35);
+            this.panel3.TabIndex = 95;
+            // 
+            // RBSelectTeacherAdd
+            // 
+            this.RBSelectTeacherAdd.AutoSize = true;
+            this.RBSelectTeacherAdd.Location = new System.Drawing.Point(143, 1);
+            this.RBSelectTeacherAdd.Name = "RBSelectTeacherAdd";
+            this.RBSelectTeacherAdd.Size = new System.Drawing.Size(109, 32);
+            this.RBSelectTeacherAdd.TabIndex = 92;
+            this.RBSelectTeacherAdd.Text = "ดูข้อมูลรายคน";
+            this.RBSelectTeacherAdd.UseVisualStyleBackColor = true;
+            this.RBSelectTeacherAdd.CheckedChanged += new System.EventHandler(this.RBSelectTeacherAdd_CheckedChanged);
+            // 
+            // RBday
+            // 
+            this.RBday.AutoSize = true;
+            this.RBday.Location = new System.Drawing.Point(18, 1);
+            this.RBday.Name = "RBday";
+            this.RBday.Size = new System.Drawing.Size(108, 32);
+            this.RBday.TabIndex = 92;
+            this.RBday.Text = "ดูข้อมูลรายวัน";
+            this.RBday.UseVisualStyleBackColor = true;
+            this.RBday.CheckedChanged += new System.EventHandler(this.RBday_CheckedChanged);
             // 
             // DGV
             // 
@@ -139,17 +170,6 @@ namespace BankTeacher.Bank.log
             this.Column3.ReadOnly = true;
             this.Column3.Width = 110;
             // 
-            // RBday
-            // 
-            this.RBday.AutoSize = true;
-            this.RBday.Location = new System.Drawing.Point(18, 1);
-            this.RBday.Name = "RBday";
-            this.RBday.Size = new System.Drawing.Size(108, 32);
-            this.RBday.TabIndex = 92;
-            this.RBday.Text = "ดูข้อมูลรายวัน";
-            this.RBday.UseVisualStyleBackColor = true;
-            this.RBday.CheckedChanged += new System.EventHandler(this.RBday_CheckedChanged);
-            // 
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -202,6 +222,22 @@ namespace BankTeacher.Bank.log
             this.LB2Ne.TabIndex = 87;
             this.LB2Ne.Text = "ชื่อ-สกุล";
             // 
+            // BSearchTeacher
+            // 
+            this.BSearchTeacher.BackColor = System.Drawing.Color.White;
+            this.BSearchTeacher.BackgroundImage = global::BankTeacher.Properties.Resources._64x64_magnifying_glass;
+            this.BSearchTeacher.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BSearchTeacher.Enabled = false;
+            this.BSearchTeacher.Font = new System.Drawing.Font("TH Sarabun New", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BSearchTeacher.ImageKey = "(none)";
+            this.BSearchTeacher.Location = new System.Drawing.Point(180, 13);
+            this.BSearchTeacher.Margin = new System.Windows.Forms.Padding(2, 5, 2, 5);
+            this.BSearchTeacher.Name = "BSearchTeacher";
+            this.BSearchTeacher.Size = new System.Drawing.Size(32, 32);
+            this.BSearchTeacher.TabIndex = 91;
+            this.BSearchTeacher.UseVisualStyleBackColor = false;
+            this.BSearchTeacher.Click += new System.EventHandler(this.BSearchTeacher_Click);
+            // 
             // TBTeacherNo
             // 
             this.TBTeacherNo.Enabled = false;
@@ -224,17 +260,6 @@ namespace BankTeacher.Bank.log
             this.TBTeacherName.Size = new System.Drawing.Size(242, 36);
             this.TBTeacherName.TabIndex = 90;
             // 
-            // RBSelectTeacherAdd
-            // 
-            this.RBSelectTeacherAdd.AutoSize = true;
-            this.RBSelectTeacherAdd.Location = new System.Drawing.Point(143, 1);
-            this.RBSelectTeacherAdd.Name = "RBSelectTeacherAdd";
-            this.RBSelectTeacherAdd.Size = new System.Drawing.Size(109, 32);
-            this.RBSelectTeacherAdd.TabIndex = 92;
-            this.RBSelectTeacherAdd.Text = "ดูข้อมูลรายคน";
-            this.RBSelectTeacherAdd.UseVisualStyleBackColor = true;
-            this.RBSelectTeacherAdd.CheckedChanged += new System.EventHandler(this.RBSelectTeacherAdd_CheckedChanged);
-            // 
             // DTP
             // 
             this.DTP.Location = new System.Drawing.Point(22, 15);
@@ -242,31 +267,6 @@ namespace BankTeacher.Bank.log
             this.DTP.Size = new System.Drawing.Size(200, 35);
             this.DTP.TabIndex = 0;
             this.DTP.ValueChanged += new System.EventHandler(this.DTP_ValueChanged);
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.RBSelectTeacherAdd);
-            this.panel3.Controls.Add(this.RBday);
-            this.panel3.Location = new System.Drawing.Point(235, 15);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(265, 35);
-            this.panel3.TabIndex = 95;
-            // 
-            // BSearchTeacher
-            // 
-            this.BSearchTeacher.BackColor = System.Drawing.Color.White;
-            this.BSearchTeacher.BackgroundImage = global::BankTeacher.Properties.Resources._64x64_magnifying_glass;
-            this.BSearchTeacher.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BSearchTeacher.Enabled = false;
-            this.BSearchTeacher.Font = new System.Drawing.Font("TH Sarabun New", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BSearchTeacher.ImageKey = "(none)";
-            this.BSearchTeacher.Location = new System.Drawing.Point(180, 13);
-            this.BSearchTeacher.Margin = new System.Windows.Forms.Padding(2, 5, 2, 5);
-            this.BSearchTeacher.Name = "BSearchTeacher";
-            this.BSearchTeacher.Size = new System.Drawing.Size(32, 32);
-            this.BSearchTeacher.TabIndex = 91;
-            this.BSearchTeacher.UseVisualStyleBackColor = false;
-            this.BSearchTeacher.Click += new System.EventHandler(this.BSearchTeacher_Click);
             // 
             // AddMember_Logg
             // 
@@ -282,11 +282,11 @@ namespace BankTeacher.Bank.log
             this.Load += new System.EventHandler(this.AddMember_Log_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.AddMember_Logg_KeyDown);
             this.panel1.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.panel3.ResumeLayout(false);
-            this.panel3.PerformLayout();
             this.ResumeLayout(false);
 
         }
