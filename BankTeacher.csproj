@@ -173,6 +173,12 @@
     <Compile Include="Bank\log\Pay_log.Designer.cs">
       <DependentUpon>Pay_log.cs</DependentUpon>
     </Compile>
+    <Compile Include="Bank\log\UploadFile_Log.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bank\log\UploadFile_Log.Designer.cs">
+      <DependentUpon>UploadFile_Log.cs</DependentUpon>
+    </Compile>
     <Compile Include="Bank\Pay\Billcancelhistory.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -333,6 +339,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\log\Pay_log.resx">
       <DependentUpon>Pay_log.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bank\log\UploadFile_Log.resx">
+      <DependentUpon>UploadFile_Log.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Pay\Billcancelhistory.resx">
       <DependentUpon>Billcancelhistory.cs</DependentUpon>

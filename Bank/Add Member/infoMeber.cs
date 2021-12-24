@@ -85,6 +85,8 @@ namespace BankTeacher.Bank.Add_Member
           "LEFT JOIN Personal.dbo.tblTeacherHis as h on f.TeacherAddBy = h.TeacherNo  \r\n " +
           "WHERE a.TeacherNo = '{TeacherNo}'; "
          };
+
+        int StartAmount = 0;
         private void infoMeber_SizeChanged(object sender, EventArgs e)
         {
             Class.FromSettingMedtod.ChangeSizePanal(this, PL);
@@ -187,6 +189,7 @@ namespace BankTeacher.Bank.Add_Member
                         TBStartAmount.Text = dsInfoMember.Tables[0].Rows[0][4].ToString();
                         TBSavingAmount.Text = dsInfoMember.Tables[0].Rows[0][5].ToString();
                         SavingAmountStart = dsInfoMember.Tables[0].Rows[0][4].ToString();
+                        StartAmount = Convert.ToInt32(dsInfoMember.Tables[0].Rows[0][4].ToString());
 
                         if (Convert.ToInt32(dsInfoMember.Tables[1].Rows[0][0].ToString()) == 0 && Convert.ToInt32(dsInfoMember.Tables[2].Rows[0][0].ToString()) == 0)
                             TBStartAmount.Enabled = true;
@@ -221,9 +224,11 @@ namespace BankTeacher.Bank.Add_Member
             {
                 if(MessageBox.Show("ยืนยันการเปลี่ยนแปลง","แจ้งเตือน",MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
+                    int DifferenceAmount = StartAmount - Convert.ToInt32(TBStartAmount.Text);
+                    StartAmount = StartAmount - DifferenceAmount;
                     Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
-                .Replace("{Amount}", TBStartAmount.Text)
-                .Replace("{TeacherNo}", TBTeacherNo.Text));
+                    .Replace("{Amount}", StartAmount.ToString())
+                    .Replace("{TeacherNo}", TBTeacherNo.Text));
                 }
             }
             catch(Exception ex)
