@@ -238,16 +238,16 @@ namespace BankTeacher.Bank.Add_Member
                         }
                         if (imgeLocation != "")
                         {
-                            LScan_Cancel.Text = "Scan( พบไฟล์ )";
-                            BOpenFile_Cancel.Text = "ส่งไฟล์";
+                            //LScan_Cancel.Text = "Scan( พบไฟล์ )";
+                            //BOpenFile_Cancel.Text = "ส่งไฟล์";
                             StatusBoxFile = 1;
                             var smb = new SmbFileContainer("CancelMember");
                             if (smb.IsValidConnection())
                             {
-                                String Return = smb.SendFile(imgeLocation, "CancelMember" + TBTeacherNO_Cancel.Text + ".pdf" , TBTeacherNo.Text , 2 , BankTeacher.Class.UserInfo.TeacherNo);
-                                MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                String Return = smb.SendFile(imgeLocation, "CancelMember_" + TBTeacherNo.Text + ".pdf" , TBTeacherNo.Text , 2 , BankTeacher.Class.UserInfo.TeacherNo);
                                 if (Return.Contains("อัพโหลดสำเร็จ"))
                                 {
+                                    MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     //BOpenFile_Cancel.Text = "เปิดไฟล์";
                                     LScan_Cancel.Text = Return;
                                     LScan_Cancel.ForeColor = Color.Green;

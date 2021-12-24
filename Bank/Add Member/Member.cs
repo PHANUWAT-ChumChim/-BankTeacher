@@ -272,10 +272,10 @@ namespace BankTeacher.Bank.Add_Member
                             //BTOpenfile_Reg.Text = "ส่งไฟล์";
                             StatusBoxFile = 1;
                             
-                            var smb = new SmbFileContainer("Member");
+                            var smb = new SmbFileContainer("RegMember");
                             if (smb.IsValidConnection())
                             {
-                                String Return = smb.SendFile(imgeLocation, "Member" + TBTeacherNo_Reg.Text + ".pdf" , TBTeacherNo_Reg.Text, 1, BankTeacher.Class.UserInfo.TeacherNo);
+                                String Return = smb.SendFile(imgeLocation, "Member_" + TBTeacherNo_Reg.Text + ".pdf" , TBTeacherNo_Reg.Text, 1, BankTeacher.Class.UserInfo.TeacherNo);
                                 MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 if (Return.Contains("อัพโหลดสำเร็จ"))
                                 {
