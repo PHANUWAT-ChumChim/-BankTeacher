@@ -56,7 +56,7 @@ namespace BankTeacher.Bank
             "LEFT JOIN EmployeeBank.dbo.tblLoan as b on a.LoanNo = b.LoanNo\r\n" +
             "LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo\r\n" +
             "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo\r\n" +
-            "WHERE a.TeacherNo LIKE '%{TeacherNo}%' and a.RemainsAmount > 0\r\n" +
+            "WHERE a.TeacherNo = '{TeacherNo}' and a.RemainsAmount > 0\r\n" +
             "GROUP BY a.LoanNo , a.RemainsAmount, CAST(ISNULL(d.PrefixName+' ','') + c.Fname + ' ' + c.Lname AS NVARCHAR),\r\n" +
             "DATEADD(MONTH,b.PayNo,CAST(CAST(CAST(b.YearPay as nvarchar) +'/' + CAST(b.MonthPay AS nvarchar) + '/05' AS nvarchar) AS date));"
 
@@ -74,7 +74,7 @@ namespace BankTeacher.Bank
           "	FROM EmployeeBank.dbo.tblLoan as a \r\n " +
           "	LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo \r\n " +
           "	WHERE a.LoanStatusNo IN (1,2) and b.TeacherNo LIKE '%{TeacherNo}%') as e on a.TeacherNo = e.TeacherNo \r\n " +
-          "WHERE a.TeacherNo LIKE '%{TeacherNo}%' \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}' \r\n " +
           "GROUP BY a.TeacherNo , d.ShareNo , d.SavingAmount ,c.PrefixName ,  b.Fname , b.Lname;"
            , 
 
@@ -184,99 +184,97 @@ namespace BankTeacher.Bank
                     cb[x].Items.Add(new BankTeacher.Class.ComboBoxPayment(dtPayment.Rows[a][0].ToString(),
                         dtPayment.Rows[a][1].ToString()));
             CBYear.Enabled = false;
-                TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
         }
 
         public void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (TBTeacherNo.Text.Length == 6)
+                TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
+                CBYear.Enabled = false;
+                DGVAmountOffHistory.Enabled = false;
+                tabControl1.SelectedIndex = 0;
+                tabControl1.Enabled = true;
+                DGVAmountOffHistory.Rows.Clear();
+                CBYear.Items.Clear();
+                DGVLoan.Rows.Clear();
+                DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(
+                    SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text) +
+                    "\r\n" +
+                    SQLDefault[0].Replace("{TeacherNo}", TBTeacherNo.Text));
+                String[] Credit = new string[] { };
+                if (ds.Tables[0].Rows.Count != 0)
                 {
-                    CBYear.Enabled = false;
-                    DGVAmountOffHistory.Enabled = false;
-                    tabControl1.SelectedIndex = 0;
-                    tabControl1.Enabled = true;
-                    DGVAmountOffHistory.Rows.Clear();
-                    CBYear.Items.Clear();
-                    DGVLoan.Rows.Clear();
-                    DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(
-                        SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text) +
-                        "\r\n" +
-                        SQLDefault[0].Replace("{TeacherNo}", TBTeacherNo.Text));
-                    String[] Credit = new string[] { };
-                    if (ds.Tables[0].Rows.Count != 0)
+                    Credit = ds.Tables[0].Rows[0][3].ToString().Split('.');
+                    TBWithDraw.Enabled = true;
+                    CBTypePay.Enabled = true;
+                    TBTeacherName.Text = ds.Tables[0].Rows[0][0].ToString();
+                    TBShareNo.Text = ds.Tables[0].Rows[0][1].ToString();
+                    TBSavingAmount.Text = ds.Tables[0].Rows[0][2].ToString();
+                    TBCreditSystem.Text = Credit[0];
+                    Credit = ds.Tables[0].Rows[0][4].ToString().Split('.');
+                    if(Double.TryParse(Credit[0], out double Amount))
                     {
-                        Credit = ds.Tables[0].Rows[0][3].ToString().Split('.');
-                        TBWithDraw.Enabled = true;
-                        CBTypePay.Enabled = true;
-                        TBTeacherName.Text = ds.Tables[0].Rows[0][0].ToString();
-                        TBShareNo.Text = ds.Tables[0].Rows[0][1].ToString();
-                        TBSavingAmount.Text = ds.Tables[0].Rows[0][2].ToString();
-                        TBCreditSystem.Text = Credit[0];
-                        Credit = ds.Tables[0].Rows[0][4].ToString().Split('.');
-                        if(Double.TryParse(Credit[0], out double Amount))
+                        if(Amount < 0)
                         {
-                            if(Amount < 0)
-                            {
-                                TBCreditWithDraw.Text = 0.ToString();
-                                TBWithDraw.Enabled = false;
-                                BMaxWithDraw_AmountOff.Enabled = false;
-                                MessageBox.Show("ยอดเงินของคุณยังติดกู้อยู่");
-                            }
-                            else
-                            {
-                                TBCreditWithDraw.Text = Credit[0];
-                                TBWithDraw.Enabled = true;
-                                BMaxWithDraw_AmountOff.Enabled = true;
-                            }
-                        }
-                        Check = 1;
-                        CBTypePay.SelectedIndex = 0;
-
-                        for (int Num = 0; Num < ds.Tables[1].Rows.Count; Num++)
-                        {
-                            Credit = ds.Tables[1].Rows[Num][1].ToString().Split('.');
-                            DGVLoan.Rows.Add(Num+1,ds.Tables[1].Rows[Num][0].ToString(), ds.Tables[1].Rows[Num][2].ToString(), Credit[0], ds.Tables[1].Rows[Num][3].ToString());
-                        }
-                        if (DGVLoan.Rows.Count != 0)
-                        {
-                            TBLoanStatus.Text = "ติดกู้";
+                            TBCreditWithDraw.Text = 0.ToString();
+                            TBWithDraw.Enabled = false;
+                            BMaxWithDraw_AmountOff.Enabled = false;
+                            MessageBox.Show("ยอดเงินของคุณยังติดกู้อยู่");
                         }
                         else
-                            TBLoanStatus.Text = "ปกติ";
+                        {
+                            TBCreditWithDraw.Text = Credit[0];
+                            TBWithDraw.Enabled = true;
+                            BMaxWithDraw_AmountOff.Enabled = true;
+                        }
+                    }
+                    Check = 1;
+                    Checkmember(false);
+                    CBTypePay.SelectedIndex = 0;
+
+                    for (int Num = 0; Num < ds.Tables[1].Rows.Count; Num++)
+                    {
+                        Credit = ds.Tables[1].Rows[Num][1].ToString().Split('.');
+                        DGVLoan.Rows.Add(Num+1,ds.Tables[1].Rows[Num][0].ToString(), ds.Tables[1].Rows[Num][2].ToString(), Credit[0], ds.Tables[1].Rows[Num][3].ToString());
+                    }
+                    if (DGVLoan.Rows.Count != 0)
+                    {
+                        TBLoanStatus.Text = "ติดกู้";
                     }
                     else
-                    {
-                        MessageBox.Show("รหัสผู้ใช้ไม่ถูกต้อง", "System", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
+                        TBLoanStatus.Text = "ปกติ";
+                }
+                else
+                {
+                    MessageBox.Show("รหัสผู้ใช้ไม่ถูกต้อง", "System", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
 
-                    //DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
-                    //    .Replace("{TeacherNo}", TBTeacherNo.Text));
-                    //if (dt.Rows.Count != 0)
-                    //{
-                    //    int Year = Convert.ToInt32((Convert.ToDateTime(dt.Rows[0][0].ToString())).ToString("yyyy")) < Convert.ToInt32(Bank.Menu.Date[0]) - 2 ? Convert.ToInt32(Bank.Menu.Date[0]) - 2 : Convert.ToInt32((Convert.ToDateTime(dt.Rows[0][0].ToString())).ToString("yyyy"));
-                    //    while (Year <= Convert.ToInt32(Bank.Menu.Date[0].ToString()))
-                    //    {
-                    //        CBYear.Items.Add(Year);
-                    //        Year++;
-                    //    }
-                    //    CBYear.Enabled = true;
-                    //}
-                    for(int Year = 0; Year < 2; Year++)
+                //DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
+                //    .Replace("{TeacherNo}", TBTeacherNo.Text));
+                //if (dt.Rows.Count != 0)
+                //{
+                //    int Year = Convert.ToInt32((Convert.ToDateTime(dt.Rows[0][0].ToString())).ToString("yyyy")) < Convert.ToInt32(Bank.Menu.Date[0]) - 2 ? Convert.ToInt32(Bank.Menu.Date[0]) - 2 : Convert.ToInt32((Convert.ToDateTime(dt.Rows[0][0].ToString())).ToString("yyyy"));
+                //    while (Year <= Convert.ToInt32(Bank.Menu.Date[0].ToString()))
+                //    {
+                //        CBYear.Items.Add(Year);
+                //        Year++;
+                //    }
+                //    CBYear.Enabled = true;
+                //}
+                for(int Year = 0; Year < 2; Year++)
+                {
+                    // เอา ปี ล่าสุดที่ถอนมา
+                    DataTable ds_date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[12].Replace("{TeacherNo}", TBTeacherNo.Text));
+                    if(ds_date.Rows.Count != 0 && ds_date.Rows[0][0].ToString() != "")
                     {
-                        // เอา ปี ล่าสุดที่ถอนมา
-                        DataTable ds_date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[12].Replace("{TeacherNo}", TBTeacherNo.Text));
-                        if(ds_date.Rows.Count != 0 && ds_date.Rows[0][0].ToString() != "")
+                        int Year_later = Convert.ToInt32(ds_date.Rows[0][0].ToString());
+                        // เอา ปีที่มีการถอนอย่างต่ำมา 2 ปี 
+                        DataTable ds_CheckYear = Class.SQLConnection.InputSQLMSSQL(SQLDefault[11].Replace("{TeacherNo}", TBTeacherNo.Text)
+                            .Replace("{Date}", Convert.ToInt32(Year_later - Year).ToString()));
+                        if (ds_CheckYear.Rows.Count != 0)
                         {
-                            int Year_later = Convert.ToInt32(ds_date.Rows[0][0].ToString());
-                            // เอา ปีที่มีการถอนอย่างต่ำมา 2 ปี 
-                            DataTable ds_CheckYear = Class.SQLConnection.InputSQLMSSQL(SQLDefault[11].Replace("{TeacherNo}", TBTeacherNo.Text)
-                                .Replace("{Date}", Convert.ToInt32(Year_later - Year).ToString()));
-                            if (ds_CheckYear.Rows.Count != 0)
-                            {
-                                CBYear.Items.Add(Year_later - Year);
-                            }
+                            CBYear.Items.Add(Year_later - Year);
                         }
                     }
                 }
@@ -310,6 +308,7 @@ namespace BankTeacher.Bank
                     CBTypePay.Enabled = false;
                     BSaveAmountOff.Enabled = false;
                     Check = 0;
+                    Checkmember(true);
                 }
             }
         }
@@ -320,12 +319,12 @@ namespace BankTeacher.Bank
 
             if (Int32.TryParse(TBCreditWithDraw.Text, out int CraditwithDraw)&& CraditwithDraw >= 1 && CBTypePay.SelectedIndex != -1)
             {
+                DGV_Testter.Rows.Clear();
                 try
                 {
                     if (MessageBox.Show("ยืนยันการจ่าย", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                     {
-                        DGV_Testter.Rows.Clear();
-                        DGV_Testter.Rows.Add(1,DateTime.Today.Day.ToString() +'/'+ DateTime.Today.Month.ToString() +'/'+ DateTime.Today.Year.ToString(), "ถอนหุ้นสะสม",TBWithDraw.Text);
+                        DGV_Testter.Rows.Add(1,Bank.Menu.Date_Time_SQL_Now.Rows[0][0].ToString(), "ถอนหุ้นสะสม",TBWithDraw.Text);
                         Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[2] +
                     "\r\n" +
                     SQLDefault[3])
@@ -337,9 +336,10 @@ namespace BankTeacher.Bank
                         Class.Print.PrintPreviewDialog.info_Amounoff = TBWithDraw.Text;
                         Class.Print.PrintPreviewDialog.info_Payment = CBTypePay.Items[CBTypePay.SelectedIndex].ToString();
                         Class.Print.PrintPreviewDialog.info_TeacherAdd = Class.UserInfo.TeacherName;
+                        Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(Convert.ToInt32(TBSavingAmount.Text) - Convert.ToInt32(TBWithDraw.Text)).ToString();
                         printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                         printDocument1.DefaultPageSettings.Landscape = true;
-                        SELECT_Print++;
+                        SELECT_Print = 3;
                         if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                         {
                             printDocument1.Print();
@@ -350,6 +350,7 @@ namespace BankTeacher.Bank
                 }
                 catch (Exception x)
                 {
+                    MessageBox.Show("ถอนเงินล้มเหลวกรุณาลองใหม่อีกครัง","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                     Console.Write(x);
                 }
              
@@ -499,18 +500,17 @@ namespace BankTeacher.Bank
             Class.Print.PrintPreviewDialog.info_Loanstatus = TBLoanStatus.Text;
             Class.Print.PrintPreviewDialog.info_Amounoffinsystem = TBCreditSystem.Text;
             Class.Print.PrintPreviewDialog.info_canbeAmounoff = TBCreditWithDraw.Text;
-            if (SELECT_Print == 1)
+            if (SELECT_Print > 0)
             {
                 // ========================= info =====================================
                 Class.Print.PrintPreviewDialog.info_BillAmounoff = dt.Rows[0][0].ToString();
                 Class.Print.PrintPreviewDialog.info_datepayAmounoff = dt_date.Rows[0][3].ToString();
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, 1, "A5", 0);
+                SELECT_Print--;
             }
             else if (CB_SelectPrint.SelectedIndex == 1)
             {
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, SandCRonot, "A5", 0);
-                DGV_Testter.Rows.Clear();
-                TB_Bill.Text = "";
             }
             else
             {
@@ -518,7 +518,11 @@ namespace BankTeacher.Bank
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVAmountOffHistory, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, 2, "A4", 1);
             }
             Class.Print.PrintPreviewDialog.details = 0;
-            SELECT_Print = 0;
+            if(Class.Print.PrintPreviewDialog.start_and_stop == 1 || Class.Print.PrintPreviewDialog.start_and_stop == 2)
+            {
+                TB_Bill.Text = "";
+                Class.Print.PrintPreviewDialog.start_and_stop = 0;
+            }
         }
 
         private void BExitForm_Click(object sender, EventArgs e)
@@ -564,6 +568,7 @@ namespace BankTeacher.Bank
                     Check = 0;
                     StatusBoxFile = 0;
                     imgeLocation = "";
+                    Checkmember(true);
     }
                 else
                 {
@@ -588,7 +593,7 @@ namespace BankTeacher.Bank
             if (checkBox_copy.Checked == true) { SandCRonot = 4; }
             if (checkBox_scrip.Checked == true && checkBox_copy.Checked == true) { SandCRonot = 1; }
             if (checkBox_scrip.Checked == false && checkBox_copy.Checked == false) { SandCRonot = 0; }
-
+            if (TB_Bill.Text == "") { DGV_Testter.Rows.Clear(); }
             if (DGVAmountOffHistory.Rows.Count != 0)
             {
                 if (CB_SelectPrint.SelectedIndex == 1 && DGV_Testter.Rows.Count != 0)
@@ -609,11 +614,11 @@ namespace BankTeacher.Bank
                         printDocument1.Print();
                     }
                 }
-                else MessageBox.Show("โปรเลือกเลขบิลล์ในตาราง หรือ กรอกเลขบิลล์ล์", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information); 
+                else MessageBox.Show("โปรเลือกเลขบิลล์ในตาราง หรือ กรอกเลขบิลล์ให้ถูกต้อง", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information); 
             }
             else
             {
-                MessageBox.Show("โปรเลือกเลขบิลล์ในตาราง หรือ กรอกเลขบิลล์ล์", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("โปรเลือกเลขบิลล์ในตาราง หรือ กรอกเลขบิลล์ให้ถูกต้อง", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -666,6 +671,11 @@ namespace BankTeacher.Bank
                 }
             }
             catch { }
+        }
+        private void Checkmember(bool tf)
+        {
+            TBTeacherNo.Enabled = tf;
+            BSearchTeacher.Enabled = tf;
         }
     }
 }

@@ -72,6 +72,7 @@ namespace BankTeacher.Bank.log
                 {
                     if(TBTeacherNo.Text.Length >= 6)
                     {
+                        TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
                         DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
                             .Replace("{TeacherAddbyNo}", TBTeacherNo.Text)
                             .Replace("{Date}",DateSelected));
@@ -120,6 +121,8 @@ namespace BankTeacher.Bank.log
                                 }
                             }
                             CheckMember = true;
+                            Checkmember(false);
+
                         }
                         else
                         {
@@ -134,11 +137,16 @@ namespace BankTeacher.Bank.log
                         DGV.Rows.Clear();
                         TBTeacherName.Text = "";
                         CheckMember = false;
+                        Checkmember(true);
                     }
                 }
             }
         }
-
+        private void Checkmember(bool tf)
+        {
+            TBTeacherNo.Enabled = tf;
+            BSearchTeacher.Enabled = tf;
+        }
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
             if(BSearchTeacher.Enabled == true)
@@ -172,7 +180,6 @@ namespace BankTeacher.Bank.log
                 {
                     DGV.Columns.Add(ColumsDGV[x], ColumsDGV[x]);
                     DGV.Columns[x + 1].Width = SizeColumsDGV[x];
-                    //DGV.Columns[x + 2].AutoSizeMode = AutoSizeDGV[x];
                 }
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
                             .Replace("{TeacherAddbyNo}", "")
@@ -271,6 +278,27 @@ namespace BankTeacher.Bank.log
                 RBday_CheckedChanged(new object(), new EventArgs());
             else if (RBSelectTeacherAdd.Checked)
                 RBday_CheckedChanged(new object(), new EventArgs());
+        }
+
+        private void Pay_log_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (RBSelectTeacherAdd.Enabled == true)
+                {
+                    if (DGV.Rows.Count != 0)
+                    {
+                        DGV.Rows.Clear();
+                        Checkmember(true);
+                        TBTeacherName.Text = "";
+                        TBTeacherNo.Text = "";
+                    }
+                    else
+                    {
+                        BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+                    }
+                }
+            }
         }
     }
 }

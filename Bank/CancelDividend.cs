@@ -82,18 +82,18 @@ namespace BankTeacher.Bank
                         SumSavingAmount += Convert.ToInt32(dsReport.Tables[0].Rows[x][1].ToString());
                         SumDividendAmount += Convert.ToInt32(dsReport.Tables[0].Rows[x][2].ToString());
                     }
-                    LSavingAmount.Text = SumSavingAmount.ToString();
-                    LDividendAmount.Text = SumDividendAmount.ToString();
-                    LInterestAmount.Text = dsReport.Tables[0].Rows[0][3].ToString();
-                    LInterestNextYear.Text = dsReport.Tables[0].Rows[0][4].ToString();
-                    LDividendPerShare.Text = dsReport.Tables[0].Rows[0][5].ToString();
+                    TB_SavingAmount.Text = SumSavingAmount.ToString();
+                    TB_DividendAmount.Text = SumDividendAmount.ToString();
+                    TB_InterestAmount.Text = dsReport.Tables[0].Rows[0][3].ToString();
+                    TB_InterestNextYear.Text = dsReport.Tables[0].Rows[0][4].ToString();
+                    TB_DividendPerShare.Text = dsReport.Tables[0].Rows[0][5].ToString();
                     if(dsReport.Tables[1].Rows.Count != 0)
                     {
-                        LRemainInterest.Text = dsReport.Tables[1].Rows[0][0].ToString();
+                        TB_RemainInterest.Text = dsReport.Tables[1].Rows[0][0].ToString();
                     }
                     else
                     {
-                        LRemainInterest.Text = 0.ToString();
+                        TB_RemainInterest.Text = 0.ToString();
                     }
 
                     BSaveCancelDividend.Enabled = true;
@@ -105,14 +105,31 @@ namespace BankTeacher.Bank
         {
             try
             {
-                Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
-                .Replace("{Year}", CBYear.SelectedItem.ToString())
-                .Replace("{TeacherNo}" , Class.UserInfo.TeacherNo));
+                if(MessageBox.Show("ต้องการยกเลิกการปันผลใช่หรือไม่","ระบบ",MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
+                    .Replace("{Year}", CBYear.SelectedItem.ToString())
+                    .Replace("{TeacherNo}" , Class.UserInfo.TeacherNo));
+                     CBYear.Items.RemoveAt(CBYear.SelectedIndex);
+                    MessageBox.Show("ยกเลิกปันผลเรียบร้อยแล้ว","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("การบันทึกล้มเหลว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"-------------------{ex}---------------------");
                 MessageBox.Show("การบันทึกล้มเหลว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            if (CBYear.Items.Count == 0)
+            {
+                CBYear.Enabled = false;
+            }
+            else
+            {
+                CBYear.Enabled = true;
             }
         }
 

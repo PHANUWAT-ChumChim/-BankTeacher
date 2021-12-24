@@ -69,18 +69,19 @@ namespace BankTeacher.Bank
                 int SumSavingAmount = 0, SumDividendAmount = 0;
                 for(int x = 0; x < dsReport.Tables[0].Rows.Count; x++)
                 {
-                    DGVReportDividend.Rows.Add(dsReport.Tables[0].Rows[x][0].ToString(), dsReport.Tables[0].Rows[x][1].ToString(), dsReport.Tables[0].Rows[x][2].ToString());
+                    DGVReportDividend.Rows.Add(x+1,dsReport.Tables[0].Rows[x][0].ToString(), dsReport.Tables[0].Rows[x][1].ToString(), dsReport.Tables[0].Rows[x][2].ToString(),"                         ");
                     SumSavingAmount += Convert.ToInt32(dsReport.Tables[0].Rows[x][1].ToString());
                     SumDividendAmount += Convert.ToInt32(dsReport.Tables[0].Rows[x][2].ToString());
                 }
-                LSavingAmount.Text = SumSavingAmount.ToString();
-                LDividendAmount.Text = SumDividendAmount.ToString();
-                LInterestAmount.Text = dsReport.Tables[0].Rows[0][3].ToString();
-                LInterestNextYear.Text = dsReport.Tables[0].Rows[0][4].ToString();
-                LDividendPerShare.Text = dsReport.Tables[0].Rows[0][5].ToString();
+                TB_SavingAmount.Text = SumSavingAmount.ToString();
+                TB_DividendAmount.Text = SumDividendAmount.ToString();
+                TB_InterestAmount.Text = dsReport.Tables[0].Rows[0][3].ToString();
+                TB_InterestNextYear.Text = dsReport.Tables[0].Rows[0][4].ToString();
+                TB_DividendPerShare.Text = dsReport.Tables[0].Rows[0][5].ToString();
 
-                if(dsReport.Tables[1].Rows.Count != 0)
-                    LRemainInterest.Text = dsReport.Tables[1].Rows[0][0].ToString();
+                if (dsReport.Tables[1].Rows.Count != 0)
+                    TB_RemainInterest.Text = dsReport.Tables[1].Rows[0][0].ToString();
+                else { TB_RemainInterest.Text = "0"; }
             }
         }
 
@@ -107,6 +108,23 @@ namespace BankTeacher.Bank
             int x = this.Width / 2 - panel1.Size.Width / 2;
             int y = this.Height / 2 - panel1.Size.Height / 2;
             panel1.Location = new Point(x, y);
+        }
+
+        private void BTPrint_Click(object sender, EventArgs e)
+        {
+            if(DGVReportDividend.Rows.Count != 0)
+            {
+                if(printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    printDocument1.Print();
+                }
+            }
+            else { MessageBox.Show("ไม่พบรายการปันผลในตาราง ในตาราง", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGVReportDividend, "รายงานการปันผล", AccessibilityObject.Name, 2, "A4", 1);
         }
     }
 }

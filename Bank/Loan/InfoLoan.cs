@@ -38,6 +38,7 @@ namespace BankTeacher.Bank.Loan
         /// <para>[1] SELECT LOAN INPUT: {TeacherNo} </para>
         /// <para>[2] SELECT Detail Loan INPUT: {LoanID} </para>
         /// <para>[3] for printback  INPUT : {TeacherNo} {LoanNo} </para>
+        ///   //[4] BackPrint payLoan INPUT : {TeacherNo} {LoanNo}
         /// </summary>
         private String[] SQLDefault =
         {
@@ -52,7 +53,7 @@ namespace BankTeacher.Bank.Loan
           "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo   \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblShare as d on a.TeacherNo = d.TeacherNo   \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblMember as e on b.TeacherNo = e.TeacherNo  \r\n " +
-          "WHERE MemberStatusNo = 1 \r\n " +
+          "WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(c.PrefixName+' ','') + Fname + ' ' + Lname AS nvarchar) LIKE '%{Text}%') and MemberStatusNo = 1 \r\n " +
           "GROUP BY a.TeacherNo,CAST(ISNULL(c.PrefixName+' ','')+Fname+' '+Lname as NVARCHAR),d.SavingAmount ,Fname ) AS A    \r\n " +
           "WHERE a.TeacherNo LIKE '%%' or Fname LIKE '%%'   \r\n " +
           "ORDER BY Fname;   "
@@ -112,6 +113,15 @@ namespace BankTeacher.Bank.Loan
          "LEFT JOIN BaseData.dbo.tblAmphur as f on c.cAmPhurNo = f.AmphurNo \r\n " +
          "LEFT JOIN BaseData.dbo.tblJangWat as g on c.cJangWatNo = g.JangWatNo \r\n " +
          "WHERE a.TeacherNo = '{TeacherNo}' and a.LoanNo = {LoanNo}"
+          ,
+           //[4] BackPrint payLoan INPUT : {TeacherNo} {LoanNo}
+          "SELECT a.LoanNo,CAST(a.PayDate as date),a.LoanAmount,b.LoanStatusName,CAST(d.PrefixName+' '+c.Fname+' '+c.Lname as nvarchar),CAST(f.Name as nvarchar)  \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblLoanStatus b ON a.LoanStatusNo = b.LoanStatusNo \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis c ON a.TeacherNoAddBy = c.TeacherNo \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix d ON c.PrefixNo = d.PrefixNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetailPayment f ON a.BillDetailPaymentNo = f.BillDetailPaymentNo \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}'AND LoanNo = '{LoanNo}'"
 
 
         };
@@ -141,6 +151,7 @@ namespace BankTeacher.Bank.Loan
                 CB_LoanNo.Enabled = true;
                 CB_LoanNo.Items.Clear();
                 Check = 1;
+                Checkmember(false);
                 CB_LoanNo.Items.Clear();
                 CB_LoanNo.SelectedIndex = -1;
                 TBTeacherName.Text = "";
@@ -175,44 +186,42 @@ namespace BankTeacher.Bank.Loan
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (TBTeacherNo.Text.Length == 6)
+                TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
+                tabControl1.SelectedIndex = 0;
+                CB_LoanNo.Enabled = true;
+                CB_LoanNo.Items.Clear();
+                Check = 1;
+                CB_LoanNo.Items.Clear();
+                CB_LoanNo.SelectedIndex = -1;
+                TBTeacherName.Text = "";
+                TBLoanStatus.Text = "";
+                TBLoanNo.Text = "";
+                TBSavingAmount.Text = "";
+                DGVGuarantor.Rows.Clear();
+                DGVLoanDetail.Rows.Clear();
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text));
+                if (dt.Rows.Count != 0)
                 {
-                    tabControl1.SelectedIndex = 0;
+                    TBTeacherName.Text = dt.Rows[0][1].ToString();
                     CB_LoanNo.Enabled = true;
                     CB_LoanNo.Items.Clear();
                     Check = 1;
-                    CB_LoanNo.Items.Clear();
-                    CB_LoanNo.SelectedIndex = -1;
-                    TBTeacherName.Text = "";
-                    TBLoanStatus.Text = "";
-                    TBLoanNo.Text = "";
-                    TBSavingAmount.Text = "";
-                    DGVGuarantor.Rows.Clear();
-                    DGVLoanDetail.Rows.Clear();
-                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text));
-                    if (dt.Rows.Count != 0)
+                    ComboBox[] cb = new ComboBox[] { CB_LoanNo };
+                    for (int x = 0; x < dt.Rows.Count; x++)
                     {
-                        TBTeacherName.Text = dt.Rows[0][1].ToString();
-                        CB_LoanNo.Enabled = true;
-                        CB_LoanNo.Items.Clear();
-                        Check = 1;
-                        ComboBox[] cb = new ComboBox[] { CB_LoanNo };
-                        for (int x = 0; x < dt.Rows.Count; x++)
+                        for (int aa = 0; aa < cb.Length; aa++)
                         {
-                            for (int aa = 0; aa < cb.Length; aa++)
-                            {
-                                cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[x][0].ToString(), dt.Rows[x][0].ToString()));
-                            }
+                            cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[x][0].ToString(), dt.Rows[x][0].ToString()));
                         }
+                    }
+                    CB_LoanNo.SelectedIndex = 0;
+                    Checkmember(false);
+                    if (CB_LoanNo.Items.Count == 1)
                         CB_LoanNo.SelectedIndex = 0;
-                        if (CB_LoanNo.Items.Count == 1)
-                            CB_LoanNo.SelectedIndex = 0;
-                    }
-                    else
-                    {
-                        MessageBox.Show("รหัสผู้ใช้ไม่ถูกต้อง", "System", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-
+                }
+                else
+                {
+                    MessageBox.Show("รหัสผู้ใช้ไม่ถูกต้อง", "System", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
             }
@@ -230,7 +239,7 @@ namespace BankTeacher.Bank.Loan
                     //comboBox1.Enabled = false;
                     button3.Enabled = false;
                     BTOpenfile_Reg.Enabled = false;
-
+                    Checkmember(true);
                     Check = 0;
                     TBLoanNo.Text = "";
                     TBYearPay_Detail.Text = "";
@@ -253,7 +262,11 @@ namespace BankTeacher.Bank.Loan
                 }
             }
         }
-
+        private void Checkmember(bool tf)
+        {
+            TBTeacherNo.Enabled = tf;
+            BSearchTeacher.Enabled = tf;
+        }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if(CB_LoanNo.SelectedIndex != -1)
@@ -388,6 +401,22 @@ namespace BankTeacher.Bank.Loan
                     //TB_TotalLoan.Text = ds.Tables[2].Rows[0][1].ToString();
                     //TB_PayLoanAmount.Text = ds.Tables[2].Rows[0][2].ToString();
 
+                    DGV_Historyloanpay.Rows.Clear();
+                    //BTPrint_T.BackColor = Color.White;
+                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{TeacherNo}", TBTeacherNo.Text)
+                         .Replace("{LoanNo}", TBLoanNo.Text));
+                    Class.Print.PrintPreviewDialog.info_PayLoanBill = dt.Rows[0][0].ToString();
+                    Class.Print.PrintPreviewDialog.info_PayLoandate = dt.Rows[0][1].ToString();
+                    Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
+                    Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
+                    Class.Print.PrintPreviewDialog.info_TeacherAdd = dt.Rows[0][4].ToString();
+                    Class.Print.PrintPreviewDialog.info_Payment = dt.Rows[0][5].ToString();
+                    for (int loop = 0; loop < dt.Rows.Count; loop++)
+                    {
+                        DGV_Historyloanpay.Rows.Add(dt.Rows[0][0].ToString(), dt.Rows[0][1].ToString(), "จ่ายกู้", dt.Rows[0][2].ToString());
+                        //DGV_info.Rows.Add(loop + 1, "จ่ายกู้", dt.Rows[0][2].ToString());
+                    }
+
                     how_many_laps = DGVGuarantor.RowCount - 1;
                 }
             }
@@ -397,11 +426,15 @@ namespace BankTeacher.Bank.Loan
         {
             if(CB_SelectPrint.SelectedIndex == 0)
             Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVLoanDetail, tabControl1.SelectedTab.Text, this.AccessibilityObject.Name,2,"A4",1);
-            else
+            else if(CB_SelectPrint.SelectedIndex == 1)
             {
                 Class.Print.PrintPreviewDialog.PrintLoan(e, SQLDefault[3].Replace("{TeacherNo}", TBTeacherNo.Text).Replace("{LoanNo}",TBLoanNo.Text),
                    Bank.Menu.Date[2], Bank.Menu.Monthname, (Convert.ToInt32(Bank.Menu.Date[0]) + 543).ToString(),
                    TBTeacherNo.Text, TBLoanNo.Text, DGVGuarantor.RowCount,SandCRonot);
+            }
+            else
+            {
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Historyloanpay, tabControl1.SelectedTab.Text, this.AccessibilityObject.Name, SandCRonot, "A4", 1);
             }
         }
         int SandCRonot = 0;
@@ -412,7 +445,11 @@ namespace BankTeacher.Bank.Loan
             if (checkBox_copy.Checked == true) { SandCRonot = 4; }
             if (checkBox_scrip.Checked == true && checkBox_copy.Checked == true) { SandCRonot = 1; }
             if (checkBox_scrip.Checked == false && checkBox_copy.Checked == false) { SandCRonot = 0; }
-
+            if(CB_SelectPrint.SelectedIndex == 2)
+            {
+                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+                printDocument1.DefaultPageSettings.Landscape = true;
+            }
             if (DGVLoanDetail.RowCount != 0)
             {
                 if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
@@ -437,6 +474,7 @@ namespace BankTeacher.Bank.Loan
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
+                    Checkmember(true);
                     TBTeacherNo.Text = "";
                     CB_LoanNo.Items.Clear();
                     CB_LoanNo.SelectedIndex = -1;
@@ -510,7 +548,7 @@ namespace BankTeacher.Bank.Loan
                         var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("Loan");
                         if (smb.IsValidConnection())
                         {
-                            String Return = smb.SendFile(imgeLocation, "Loan" + Loan.No + ".pdf");
+                            String Return = smb.SendFile(imgeLocation, "Loan" + Loan.No + ".pdf" , TBTeacherNo.Text, 3, BankTeacher.Class.UserInfo.TeacherNo , Loan.No);
                             MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             if (Return.Contains("อัพโหลดสำเร็จ"))
                             {
@@ -532,11 +570,6 @@ namespace BankTeacher.Bank.Loan
             {
                 MessageBox.Show("กรุณาเลือกรายการกู้ก่อนอัพโหลดเอกสาร", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

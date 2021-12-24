@@ -38,7 +38,7 @@ namespace BankTeacher.Bank.Add_Member
           "	LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherAddBy = b.TeacherNo \r\n " +
           "	LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo \r\n " +
           "	GROUP BY a.TeacherAddBy, CAST(ISNULL(c.PrefixNameFull , '') + b.Fname + ' ' + b.Lname as NVARCHAR)) as f on a.TeacherAddBy = f.TeacherAddBy \r\n " +
-          "WHERE a.TeacherNo LIKE '%{TeacherNo}%' and a.MemberStatusNo = 1 "
+          "WHERE a.TeacherNo = '{TeacherNo}' and a.MemberStatusNo = 1 "
            ,
 
            //[1]Search Teacher INPUT: {TeacherNotLike}
@@ -115,6 +115,7 @@ namespace BankTeacher.Bank.Add_Member
                     SavingAmountStart = "";
                     TBStartAmount.Enabled = false;
                     button3.Enabled = false;
+                    Checkmember(true);
                 }
                 else
                 {
@@ -122,7 +123,11 @@ namespace BankTeacher.Bank.Add_Member
                 }
             }
         }
-
+        private void Checkmember(bool tf)
+        {
+            TBTeacherNo.Enabled = tf;
+            BSearchTeacher.Enabled = tf;
+        }
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
             try
@@ -171,10 +176,11 @@ namespace BankTeacher.Bank.Add_Member
 
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Enter && TBTeacherNo.Text.Length == 6)
+            if(e.KeyCode == Keys.Enter)
             {
                 try
                 {
+                    TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
                     DataSet dsInfoMember = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0]
                         .Replace("{TeacherNo}", TBTeacherNo.Text) +
                         "\r\n" + SQLDefault[2]
@@ -194,6 +200,9 @@ namespace BankTeacher.Bank.Add_Member
                         if (Convert.ToInt32(dsInfoMember.Tables[1].Rows[0][0].ToString()) == 0 && Convert.ToInt32(dsInfoMember.Tables[2].Rows[0][0].ToString()) == 0)
                             TBStartAmount.Enabled = true;
                         button3.Enabled = true;
+                        button1.Enabled = true;
+                        tabControl1.Enabled = true;
+                        Checkmember(false);
 
                     }
                 }
@@ -215,6 +224,7 @@ namespace BankTeacher.Bank.Add_Member
                 TBStartAmount.Enabled = false;
                 button3.Enabled = false;
                 SavingAmountStart = "";
+                Checkmember(true);
             }
         }
 
@@ -229,6 +239,7 @@ namespace BankTeacher.Bank.Add_Member
                     Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
                     .Replace("{Amount}", StartAmount.ToString())
                     .Replace("{TeacherNo}", TBTeacherNo.Text));
+                    Checkmember(true);
                 }
             }
             catch(Exception ex)
@@ -283,7 +294,7 @@ namespace BankTeacher.Bank.Add_Member
                             var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
                             if (smb.IsValidConnection())
                             {
-                                String Return = smb.SendFile(imgeLocation, "Regmember" + TBTeacherNo.Text + ".pdf");
+                                String Return = smb.SendFile(imgeLocation, "Regmember" + TBTeacherNo.Text + ".pdf" ,TBTeacherNo.Text, 1, BankTeacher.Class.UserInfo.TeacherNo);
                                 MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 if (Return.Contains("อัพโหลดสำเร็จ"))
                                 {
@@ -332,6 +343,18 @@ namespace BankTeacher.Bank.Add_Member
         private void button2_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if(TBStartAmount.Enabled == true)
+            {
+                TBStartAmount.Enabled = false;
+            }
+            else
+            {
+                TBStartAmount.Enabled = true;
+            }
         }
     }
 }

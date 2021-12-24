@@ -102,6 +102,7 @@ namespace BankTeacher.Bank.Pay
         private void Clear()
         {
             //tabpage 5 (Cancel Bill) ==============================================
+            TBNote.Enabled = false;
             DGV_Cancelbill.Rows.Clear();
             LSumAmount_CancelBill.Text = "0";
             TBBIllDate_Cancelbill.Text = "";
@@ -115,6 +116,7 @@ namespace BankTeacher.Bank.Pay
         {
             if (e.KeyCode == Keys.Enter)
             {
+                TBTeacherNO_Cancelbill.Text = TBTeacherNO_Cancelbill.Text.Replace("t", "T");
                 if (Int32.TryParse(TBBillNo_Cancelbill.Text, out int BillNo))
                 {
                     DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]
@@ -123,6 +125,7 @@ namespace BankTeacher.Bank.Pay
                     if (dt.Rows.Count != 0)
                     {
                         Clear();
+                        TBNote.Enabled = true;
                         TBBIllDate_Cancelbill.Text = (Convert.ToDateTime(dt.Rows[0][2].ToString())).ToString("yyyy-MM-dd");
                         TBTeacherNO_Cancelbill.Text = dt.Rows[0][0].ToString();
                         TBTeacherName_Cancelbill.Text = dt.Rows[0][1].ToString();
@@ -178,6 +181,7 @@ namespace BankTeacher.Bank.Pay
                             LSumAmount_CancelBill.Text = Amount.ToString();
                             BSave_Cancelbill.Enabled = true;
                             CheckInputBill = true;
+                            Checkmember(false);
                         }
                     }
                     else
@@ -191,6 +195,7 @@ namespace BankTeacher.Bank.Pay
                 CheckInputBill = false;
                 BSave_Cancelbill.Enabled = false;
                 Clear();
+                Checkmember(false);
             }
         }
 
@@ -236,6 +241,7 @@ namespace BankTeacher.Bank.Pay
                                     }
                                 }
                                 MessageBox.Show("ยกเลิกบิลล์สำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                                Checkmember(true);
                             }
                             catch
                             {
@@ -271,6 +277,7 @@ namespace BankTeacher.Bank.Pay
                 {
                     Clear();
                     TBBillNo_Cancelbill.Text = "";
+                    Checkmember(true);
                 }
                 else
                 {
@@ -314,6 +321,11 @@ namespace BankTeacher.Bank.Pay
             LSumAmount_CancelBill.Text = "0";
             BSave_Cancelbill.Enabled = false;
             DGV_Cancelbill.Rows.Clear();
+        }
+        private void Checkmember(bool tf)
+        {
+            TBTeacherNO_Cancelbill.Enabled = tf;
+            BSearchTeacher.Enabled = tf;
         }
     }
 }

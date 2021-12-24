@@ -43,7 +43,7 @@ namespace BankTeacher.Bank.Loan
           "  LEFT JOIN Personal.dbo.tblTeacherHis as c on a.TeacherNo = c.TeacherNo  \r\n " +
           "  LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo  \r\n " +
           " LEFT JOIN EmployeeBank.dbo.tblMember as e on c.TeacherNo = e.TeacherNo  \r\n " +
-          " WHERE a.TeacherNo LIKE '{TeacherNo}%' and LoanStatusNo = 1 and MemberStatusNo = 1  \r\n " +
+          " WHERE a.TeacherNo = '{TeacherNo}' and LoanStatusNo = 1 and MemberStatusNo = 1  \r\n " +
           "  GROUP BY CAST(ISNULL(d.PrefixName , '') + ' ' + Fname + ' ' + Lname AS NVARCHAR) , a.DateAdd ,a.PayDate  ,a. LoanNo , CAST(a.YearPay as nvarchar)+ '/' + CAST(a.MonthPay as nvarchar) \r\n " +
           "  ORDER BY a.LoanNo  "
 
@@ -87,7 +87,6 @@ namespace BankTeacher.Bank.Loan
                 TBTeacherName.Text = Bank.Search.Return[1];
                 TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
             }
-            Check = 1;
         }
 
         List<String[]> ListLoan = new List<string[]> { };
@@ -95,38 +94,35 @@ namespace BankTeacher.Bank.Loan
         {
             if (e.KeyCode == Keys.Enter)
             {
-                if (TBTeacherNo.Text.Length == 6)
+                TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text));
+                if (dt.Rows.Count != 0)
                 {
-                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text));
-                    if (dt.Rows.Count != 0)
+                    DGVCancelLoan.Rows.Clear();
+                    TBTeacherName.Text = dt.Rows[0][0].ToString();
+                    CBlist.Enabled = true;
+                    CBlist.Items.Clear();
+                    Check = 1;
+                    ComboBox[] cb = new ComboBox[] { CBlist };
+                    for (int x = 0; x < dt.Rows.Count; x++)
                     {
-                        DGVCancelLoan.Rows.Clear();
-                        TBTeacherName.Text = dt.Rows[0][0].ToString();
-                        CBlist.Enabled = true;
-                        CBlist.Items.Clear();
-                        Check = 1;
-                        ComboBox[] cb = new ComboBox[] { CBlist };
-                        for (int x = 0; x < dt.Rows.Count; x++)
+                        for (int aa = 0; aa < cb.Length; aa++)
                         {
-                            for (int aa = 0; aa < cb.Length; aa++)
-                            {
-                                cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment(dt.Rows[x][1].ToString() + " รายการกู้ " + dt.Rows[x][3].ToString(), dt.Rows[x][3].ToString()));
-                                ListLoan.Add( new string[] { dt.Rows[x][1].ToString() + " รายการกู้ " + dt.Rows[x][3].ToString(), dt.Rows[x][3].ToString() });
-                            }
+                            cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment(dt.Rows[x][1].ToString() + " รายการกู้ " + dt.Rows[x][3].ToString(), dt.Rows[x][3].ToString()));
+                            ListLoan.Add( new string[] { dt.Rows[x][1].ToString() + " รายการกู้ " + dt.Rows[x][3].ToString(), dt.Rows[x][3].ToString() });
+                        }
                             
-                        }
-                        if(CBlist.Items.Count != 0)
-                        {
-                            CBlist.SelectedIndex = 0;
-                        }
                     }
-                    else
+                    if(CBlist.Items.Count != 0)
                     {
-                        MessageBox.Show("รหัสผู้ใช้ไม่ถูกต้อง","System",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                        CBlist.SelectedIndex = 0;
                     }
-
+                    Checkmember(false);
                 }
-
+                else
+                {
+                    MessageBox.Show("รหัสผู้ใช้ไม่ถูกต้อง","System",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                }
             }
             else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
             {
@@ -137,10 +133,16 @@ namespace BankTeacher.Bank.Loan
                     TBTeacherName.Text = "";
                     DGVCancelLoan.Rows.Clear();
                     CBlist.Enabled = false;
+                    Checkmember(true);
                     Check = 0;
                 }
             }
 
+        }
+        private void Checkmember(bool tf)
+        {
+            TBTeacherNo.Enabled = tf;
+            BSearchTeacher.Enabled = tf;
         }
 
         private void CBList_SelectedIndexChanged(object sender, EventArgs e)
@@ -169,19 +171,23 @@ namespace BankTeacher.Bank.Loan
                 {
                     for (int x = 0; x < DGVCancelLoan.Rows.Count; x++)
                     {
-                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
-                        .Replace("{WhereLoanNo}", DGVCancelLoan.Rows[x].Cells[0].Value.ToString())
-                        .Replace("{TeacherNoUser}", Class.UserInfo.TeacherNo));
+                        if (DGVCancelLoan.Rows[x].Cells[0].Value.ToString() != "")
+                        {
+                            Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
+                            .Replace("{WhereLoanNo}", DGVCancelLoan.Rows[x].Cells[0].Value.ToString())
+                            .Replace("{TeacherNoUser}", Class.UserInfo.TeacherNo));
 
-                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[4]
-                            .Replace("{WhereLoanNo}", DGVCancelLoan.Rows[x].Cells[0].Value.ToString()));
+                            Class.SQLConnection.InputSQLMSSQL(SQLDefault[4]
+                                .Replace("{WhereLoanNo}", DGVCancelLoan.Rows[x].Cells[0].Value.ToString()));
+                        }
                     }
 
-                    MessageBox.Show("บันทึกสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("บันทึกสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     TBTeacherNo.Text = "";
                     TBTeacherName.Text = "";
                     CBlist.Items.Clear();
                     DGVCancelLoan.Rows.Clear();
+                    Checkmember(true);
                 }
                 catch(Exception ex)
                 {
@@ -214,6 +220,7 @@ namespace BankTeacher.Bank.Loan
                     DGVCancelLoan.Rows.Clear();
                     CBlist.Enabled = false;
                     Check = 0;
+                    Checkmember(true);
                 }
                 else
                 {

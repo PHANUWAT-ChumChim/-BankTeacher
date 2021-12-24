@@ -185,5 +185,10 @@ namespace BankTeacher.Bank.log
         {
 
         }
+
+        private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
+        {
+            TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
+        }
     }
 }

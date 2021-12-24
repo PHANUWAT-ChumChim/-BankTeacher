@@ -31,10 +31,13 @@ namespace BankTeacher.Bank
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReportEpenses));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.BExitForm = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.BTPrint = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.BSearchTeacher = new System.Windows.Forms.Button();
             this.TBTeacherName = new System.Windows.Forms.TextBox();
             this.TBTeacherNo = new System.Windows.Forms.TextBox();
@@ -48,11 +51,14 @@ namespace BankTeacher.Bank
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.DGV = new System.Windows.Forms.DataGridView();
+            this.DTP = new System.Windows.Forms.DateTimePicker();
+            this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DTP = new System.Windows.Forms.DateTimePicker();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
@@ -60,7 +66,7 @@ namespace BankTeacher.Bank
             // 
             // panel1
             // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.BExitForm);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.DGV);
@@ -76,7 +82,7 @@ namespace BankTeacher.Bank
             this.BExitForm.BackgroundImage = global::BankTeacher.Properties.Resources.logout;
             this.BExitForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BExitForm.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.BExitForm.Location = new System.Drawing.Point(799, 550);
+            this.BExitForm.Location = new System.Drawing.Point(799, 565);
             this.BExitForm.Name = "BExitForm";
             this.BExitForm.Size = new System.Drawing.Size(73, 66);
             this.BExitForm.TabIndex = 116;
@@ -86,6 +92,8 @@ namespace BankTeacher.Bank
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.BTPrint);
+            this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.BSearchTeacher);
             this.panel2.Controls.Add(this.TBTeacherName);
             this.panel2.Controls.Add(this.TBTeacherNo);
@@ -98,10 +106,36 @@ namespace BankTeacher.Bank
             this.panel2.Controls.Add(this.label7);
             this.panel2.Controls.Add(this.label8);
             this.panel2.Controls.Add(this.label9);
-            this.panel2.Location = new System.Drawing.Point(3, 69);
+            this.panel2.Location = new System.Drawing.Point(3, 54);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(869, 133);
+            this.panel2.Size = new System.Drawing.Size(869, 174);
             this.panel2.TabIndex = 92;
+            // 
+            // BTPrint
+            // 
+            this.BTPrint.BackColor = System.Drawing.Color.White;
+            this.BTPrint.BackgroundImage = global::BankTeacher.Properties.Resources._10x10_Print;
+            this.BTPrint.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BTPrint.CausesValidation = false;
+            this.BTPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTPrint.Location = new System.Drawing.Point(768, 107);
+            this.BTPrint.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.BTPrint.Name = "BTPrint";
+            this.BTPrint.Size = new System.Drawing.Size(95, 54);
+            this.BTPrint.TabIndex = 126;
+            this.BTPrint.UseVisualStyleBackColor = false;
+            this.BTPrint.Click += new System.EventHandler(this.BTPrint_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(700, 117);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(62, 36);
+            this.label1.TabIndex = 127;
+            this.label1.Text = "Print :";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // BSearchTeacher
             // 
@@ -181,7 +215,7 @@ namespace BankTeacher.Bank
             // TBAmountWithDraw
             // 
             this.TBAmountWithDraw.Enabled = false;
-            this.TBAmountWithDraw.Location = new System.Drawing.Point(731, 72);
+            this.TBAmountWithDraw.Location = new System.Drawing.Point(428, 114);
             this.TBAmountWithDraw.Name = "TBAmountWithDraw";
             this.TBAmountWithDraw.Size = new System.Drawing.Size(133, 42);
             this.TBAmountWithDraw.TabIndex = 12;
@@ -190,7 +224,7 @@ namespace BankTeacher.Bank
             // TBAmountLoan
             // 
             this.TBAmountLoan.Enabled = false;
-            this.TBAmountLoan.Location = new System.Drawing.Point(406, 72);
+            this.TBAmountLoan.Location = new System.Drawing.Point(216, 114);
             this.TBAmountLoan.Name = "TBAmountLoan";
             this.TBAmountLoan.Size = new System.Drawing.Size(133, 42);
             this.TBAmountLoan.TabIndex = 13;
@@ -199,7 +233,7 @@ namespace BankTeacher.Bank
             // TBAmount
             // 
             this.TBAmount.Enabled = false;
-            this.TBAmount.Location = new System.Drawing.Point(141, 72);
+            this.TBAmount.Location = new System.Drawing.Point(22, 114);
             this.TBAmount.Name = "TBAmount";
             this.TBAmount.Size = new System.Drawing.Size(133, 42);
             this.TBAmount.TabIndex = 14;
@@ -208,7 +242,7 @@ namespace BankTeacher.Bank
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(541, 75);
+            this.label7.Location = new System.Drawing.Point(404, 75);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(184, 36);
             this.label7.TabIndex = 8;
@@ -217,7 +251,7 @@ namespace BankTeacher.Bank
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(272, 75);
+            this.label8.Location = new System.Drawing.Point(221, 75);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(128, 36);
             this.label8.TabIndex = 9;
@@ -226,7 +260,7 @@ namespace BankTeacher.Bank
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(-3, 75);
+            this.label9.Location = new System.Drawing.Point(12, 75);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(143, 36);
             this.label9.TabIndex = 10;
@@ -251,19 +285,52 @@ namespace BankTeacher.Bank
             this.DGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column2,
             this.dataGridViewTextBoxColumn2,
             this.Column4,
             this.Column1,
             this.Column7});
             this.DGV.GridColor = System.Drawing.SystemColors.Control;
-            this.DGV.Location = new System.Drawing.Point(3, 208);
+            this.DGV.Location = new System.Drawing.Point(3, 234);
             this.DGV.Name = "DGV";
             this.DGV.ReadOnly = true;
             this.DGV.RowHeadersVisible = false;
             this.DGV.RowHeadersWidth = 51;
             this.DGV.RowTemplate.Height = 24;
-            this.DGV.Size = new System.Drawing.Size(869, 336);
+            this.DGV.Size = new System.Drawing.Size(869, 325);
             this.DGV.TabIndex = 6;
+            // 
+            // DTP
+            // 
+            this.DTP.Location = new System.Drawing.Point(3, 8);
+            this.DTP.Name = "DTP";
+            this.DTP.Size = new System.Drawing.Size(200, 42);
+            this.DTP.TabIndex = 7;
+            this.DTP.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
+            // 
+            // printPreviewDialog1
+            // 
+            this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
+            this.printPreviewDialog1.Document = this.printDocument1;
+            this.printPreviewDialog1.Enabled = true;
+            this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
+            this.printPreviewDialog1.Name = "printPreviewDialog1";
+            this.printPreviewDialog1.Visible = false;
+            // 
+            // printDocument1
+            // 
+            this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "ลำดับที่";
+            this.Column2.MinimumWidth = 6;
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Visible = false;
+            this.Column2.Width = 125;
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -298,14 +365,6 @@ namespace BankTeacher.Bank
             this.Column7.MinimumWidth = 6;
             this.Column7.Name = "Column7";
             this.Column7.ReadOnly = true;
-            // 
-            // DTP
-            // 
-            this.DTP.Location = new System.Drawing.Point(40, 18);
-            this.DTP.Name = "DTP";
-            this.DTP.Size = new System.Drawing.Size(200, 42);
-            this.DTP.TabIndex = 7;
-            this.DTP.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
             // ReportEpenses
             // 
@@ -348,10 +407,15 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DataGridView DGV;
+        private System.Windows.Forms.Button BExitForm;
+        private System.Windows.Forms.Button BTPrint;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
+        private System.Drawing.Printing.PrintDocument printDocument1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column7;
-        private System.Windows.Forms.Button BExitForm;
     }
 }

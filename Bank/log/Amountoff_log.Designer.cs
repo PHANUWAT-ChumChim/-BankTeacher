@@ -33,6 +33,10 @@ namespace BankTeacher.Bank.log
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.DGV = new System.Windows.Forms.DataGridView();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RBday = new System.Windows.Forms.RadioButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.LB1Id = new System.Windows.Forms.Label();
@@ -43,10 +47,6 @@ namespace BankTeacher.Bank.log
             this.TBTeacherName = new System.Windows.Forms.TextBox();
             this.RBSelectTeacherAdd = new System.Windows.Forms.RadioButton();
             this.DTP = new System.Windows.Forms.DateTimePicker();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
             this.panel2.SuspendLayout();
@@ -92,6 +92,34 @@ namespace BankTeacher.Bank.log
             this.DGV.RowHeadersVisible = false;
             this.DGV.Size = new System.Drawing.Size(851, 415);
             this.DGV.TabIndex = 94;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "ชื่อ - สกุล";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Width = 175;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "เลขบิลล์";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 140;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "รูปแบบ";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.Width = 140;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "จำนวนเงิน";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.Width = 140;
             // 
             // RBday
             // 
@@ -213,34 +241,6 @@ namespace BankTeacher.Bank.log
             this.DTP.TabIndex = 0;
             this.DTP.ValueChanged += new System.EventHandler(this.DTP_ValueChanged);
             // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "ชื่อ - สกุล";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.Width = 175;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "เลขบิลล์";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Width = 140;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "รูปแบบ";
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            this.Column3.Width = 140;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "จำนวนเงิน";
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            this.Column4.Width = 140;
-            // 
             // Amountoff_log
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 28F);
@@ -249,9 +249,11 @@ namespace BankTeacher.Bank.log
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.Name = "Amountoff_log";
             this.Text = "CancelBill_log";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Amountoff_log_KeyDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).EndInit();

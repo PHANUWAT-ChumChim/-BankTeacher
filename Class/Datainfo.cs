@@ -252,7 +252,9 @@ namespace BankTeacher.Class
                 }
                 if (Year)
                     if (dt.Rows.Count != 0)
+                    {
                         if (Year) { CB.Items.Add(Sqldate_Now - Y); }
+                    }
                 SQL_Code = SQL_Code.Replace($"{Sqldate_Now - Y}", "{Year}");
                 if (Mounth)
                     break;

@@ -13,7 +13,7 @@ namespace BankTeacher.Bank.Add_Member
 {
     public partial class CancelMember : Form
     {
-        int Check = 0;
+        bool Check = false;
         int StatusBoxFile = 0;
         String imgeLocation = "";
         bool CheckBRegister = false;
@@ -76,6 +76,18 @@ namespace BankTeacher.Bank.Add_Member
           "FROM EmployeeBank.dbo.tblMemberResignation \r\n " +
           "GROUP BY  YEAR(Date) "
            ,
+           //[5] SELECT MEMBER (Enter) INPUT: {Text}
+            "SELECT TOP(20) a.TeacherNo , CAST(ISNULL(c.PrefixName+' ','')+[Fname] +' '+ [Lname] as NVARCHAR)AS Name, e.SavingAmount,    \r\n " +
+            "b.TeacherLicenseNo,b.IdNo AS IDNo,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar) AS UserStatususing    \r\n " +
+            "FROM EmployeeBank.dbo.tblMember as a    \r\n " +
+            "LEFT JOIN Personal.dbo.tblTeacherHis as b ON a.TeacherNo = b.TeacherNo    \r\n " +
+            "LEFT JOIN BaseData.dbo.tblPrefix as c ON c.PrefixNo = b.PrefixNo   \r\n " +
+            "INNER JOIN EmployeeBank.dbo.tblMemberStatus as d on a.MemberStatusNo = d.MemberStatusNo  \r\n " +
+            "LEFT JOIN EmployeeBank.dbo.tblShare as e on a.TeacherNo = e.TeacherNo \r\n " +
+            "WHERE a.MemberStatusNo = 1 and a.TeacherNo = '{Text}' and a.MemberStatusNo = 1         \r\n " +
+            "GROUP BY a.TeacherNo , CAST(ISNULL(c.PrefixName+' ','')+[Fname] +' '+ [Lname] as NVARCHAR), e.SavingAmount,    \r\n " +
+            "b.TeacherLicenseNo,b.IdNo ,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar)   \r\n " +
+            "ORDER BY a.TeacherNo; "
 
         };
         public CancelMember()
@@ -88,6 +100,10 @@ namespace BankTeacher.Bank.Add_Member
                 {
                     CBYear_HistoryCancel.Items.Add(dt.Rows[x][0].ToString());
                 }
+                if (CBYear_HistoryCancel.Items.Count != 0)
+                    CBYear_HistoryCancel.SelectedIndex = 0;
+                else
+                    CBYear_HistoryCancel.Enabled = false;
             }
             Relaodcancelmember();
         }
@@ -117,29 +133,28 @@ namespace BankTeacher.Bank.Add_Member
 
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter && TBTeacherNo.Text.Length == 6)
+            if (e.KeyCode == Keys.Enter)
             {
-                if (TBTeacherNo.Text.Length == 6)
+                TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
+                DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0].Replace("{Text}", TBTeacherNo.Text));
+                if(ds.Tables[0].Rows.Count != 0)
                 {
-                    try
-                    {
-                        DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0].Replace("{Text}", TBTeacherNo.Text));
-                        TBTeacherName.Text = ds.Tables[0].Rows[0][1].ToString();
-                        Saving = Convert.ToDouble(ds.Tables[0].Rows[0][2].ToString());
-                        Check = 1;
-
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
+                    TBTeacherName.Text = ds.Tables[0].Rows[0][1].ToString();
+                    Saving = Convert.ToDouble(ds.Tables[0].Rows[0][2].ToString());
+                    Check = true;
+                    Checkmember(false);
+                }
+                else
+                {
+                    MessageBox.Show("ไม่พยรายชื่อ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                 }
             }
-            else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back && Check == 1)
+            else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back && Check)
             {
                 TBTeacherName.Text = "";
                 CheckBCancel = false;
-                Check = 0;
+                Check = false;
+                Checkmember(true);
             }
         }
 
@@ -149,60 +164,66 @@ namespace BankTeacher.Bank.Add_Member
             {
                 if (TBTeacherNo.Text != "")
                 {
-                    DataTable dtCheckSavingAmount = Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
-                        .Replace("{TeacherNo}", TBTeacherNo.Text));
-                    if (Convert.ToInt32(dtCheckSavingAmount.Rows[0][0].ToString()) < 1)
+                    //Input Location Folder
+                    var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("CancelMember");
+                    //Input Contain words แนะนำ เป็นรหัสอาจารย์ ในหน้าทั่วไปส่วนหน้าไหนถ้ามีการทำรายการเยอะๆให้เอาเป็นเลขบิลล์ของหน้านั้นๆเช่นหน้าดูเอกสารกู้ จะใส่เป็นเลขกู้ หน้าดูเอกสาร สมัครสมาชิกจะใส่เป็นชื่ออาจารย์
+                    smb.ThreadCheckFiles(TBTeacherNo.Text, "CancelMember");
+                    if (BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun.Contains("ไม่พบ"))
                     {
-                        Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
-                        .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
-                        .Replace("{TeacherNo}", TBTeacherNo.Text)
-                        .Replace("{Note}", TBNote.Text)
-                        .Replace("{DocStatusNo}", "2")
-                        .Replace("{DocUploadPath}", "")
-                        .Replace("{Status}", "2"));
-                        MessageBox.Show("ยกเลิกผู้ใช้เรียบร้อย", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        CheckBCancel = true;
-                        imgeLocation = "";
+                        MessageBox.Show(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun, "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else if (BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun != "")
+                    {
+                        DataTable dtCheckSavingAmount = Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
+                        .Replace("{TeacherNo}", TBTeacherNo.Text));
+                        if (Convert.ToInt32(dtCheckSavingAmount.Rows[0][0].ToString()) < 1)
+                        {
+                            Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
+                            .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
+                            .Replace("{TeacherNo}", TBTeacherNo.Text)
+                            .Replace("{Note}", TBNote.Text)
+                            .Replace("{DocStatusNo}", "2")
+                            .Replace("{DocUploadPath}", "")
+                            .Replace("{Status}", "2"));
+                            MessageBox.Show("ยกเลิกผู้ใช้เรียบร้อย", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            CheckBCancel = true;
+                            Checkmember(true);
+                            imgeLocation = "";
+                        }
+                        else
+                        {
+                            if ((MessageBox.Show("ยอดเงินคงเหลือของท่านยังอยู่ในระบบ \r\n ต้องถอนเงินออกจากระบบก่อน", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes))
+                            {
+                                AmountOff FAmountOff = new AmountOff();
+                                Menu FMenu = new Menu();
+
+                                FAmountOff.FormBorderStyle = FormBorderStyle.Sizable;
+                                FAmountOff.Show();
+                                FAmountOff.TBTeacherNo.Text = TBTeacherNo.Text;
+                                FAmountOff.TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+                                foreach (Form f in Application.OpenForms)
+                                {
+                                    if (f.Name == "Menu")
+                                    {
+                                        f.Enabled = false;
+                                        f.Hide();
+                                        break;
+                                    }
+                                }
+                            }
+                        }
                     }
                     else
                     {
-                        if ((MessageBox.Show("ยอดเงินคงเหลือของท่านยังอยู่ในระบบ \r\n ต้องถอนเงินออกจากระบบก่อน", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes))
-                        {
-                            AmountOff FAmountOff = new AmountOff();
-                            //Menu menu = new Menu();
-                            //menu.Visible = false;
-                            Menu FMenu = new Menu();
-
-                            FAmountOff.FormBorderStyle = FormBorderStyle.Sizable;
-                            FAmountOff.Show();
-                            FAmountOff.TBTeacherNo.Text = TBTeacherNo.Text;
-                            FAmountOff.TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
-
-                            //List<Form> openForms = new List<Form>();
-
-                            foreach (Form f in Application.OpenForms)
-                            {
-                                if (f.Name == "Menu")
-                                {
-                                    f.Enabled = false;
-                                    f.Hide();
-                                    break;
-                                }
-                            }
-                            //FMenu.Close();
-                        }
+                        MessageBox.Show("กรุณาใส่รหัสให้ถูกต้อง", "เตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
-                }
-                else
-                {
-                    MessageBox.Show("กรุณาใส่รหัสให้ถูกต้อง", "เตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
         }
 
         private void BOpenFile_Click(object sender, EventArgs e)
         {
-            if (TBTeacherNO_Cancel.Text.Length == 6)
+            if (Check)
             {
                 if (StatusBoxFile == 0)
                 {
@@ -223,7 +244,7 @@ namespace BankTeacher.Bank.Add_Member
                             var smb = new SmbFileContainer("CancelMember");
                             if (smb.IsValidConnection())
                             {
-                                String Return = smb.SendFile(imgeLocation, "CancelMember" + TBTeacherNO_Cancel.Text + ".pdf");
+                                String Return = smb.SendFile(imgeLocation, "CancelMember" + TBTeacherNO_Cancel.Text + ".pdf" , TBTeacherNo.Text , 2 , BankTeacher.Class.UserInfo.TeacherNo);
                                 MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 if (Return.Contains("อัพโหลดสำเร็จ"))
                                 {
@@ -321,18 +342,25 @@ namespace BankTeacher.Bank.Add_Member
                     TBTeacherNo.Text = "";
                     TBTeacherName.Text = "";
                     TBNote.Text = "";
-                    Check = 0;
+                    Check = false;
                     StatusBoxFile = 0;
                     imgeLocation = "";
                     CheckBRegister = false;
                     CheckBCancel = false;
                     Saving = 0;
+                    Checkmember(true);
                 }
                 else
                 {
                     BExitForm_Click(new object(), new EventArgs());
                 }
             }
+        }
+        
+        private void Checkmember(bool tf)
+        {
+            TBTeacherNo.Enabled = tf;
+            BSearch.Enabled = tf;
         }
     }
 }

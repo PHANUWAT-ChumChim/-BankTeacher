@@ -76,11 +76,11 @@ namespace BankTeacher.Bank
                     int AmountLoan = 0;
                     for (int x = 0; x < EpensesInfo.Tables[0].Rows.Count; x++)
                     {
-                        DGV.Rows.Add(EpensesInfo.Tables[0].Rows[x][0].ToString(),EpensesInfo.Tables[0].Rows[x][1].ToString(), "รายการกู้ " + EpensesInfo.Tables[0].Rows[x][2].ToString(), EpensesInfo.Tables[0].Rows[x][3], EpensesInfo.Tables[0].Rows[x][4]);
+                        DGV.Rows.Add(x+1,EpensesInfo.Tables[0].Rows[x][0].ToString(),EpensesInfo.Tables[0].Rows[x][1].ToString(), "รายการกู้ " + EpensesInfo.Tables[0].Rows[x][2].ToString(), EpensesInfo.Tables[0].Rows[x][3], EpensesInfo.Tables[0].Rows[x][4]);
                             AmountLoan += Convert.ToInt32(EpensesInfo.Tables[0].Rows[x][4]);
                         SumAmount += Convert.ToInt32(EpensesInfo.Tables[0].Rows[x][4]);
                     }
-                    DGV.Rows.Add("", "", "สรุปรายการกู้", "", AmountLoan.ToString());
+                    DGV.Rows.Add("","", "", "สรุปรายการกู้", "", AmountLoan.ToString());
                     DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                     TBAmountLoan.Text = AmountLoan.ToString();
                 }
@@ -89,11 +89,11 @@ namespace BankTeacher.Bank
                     int AmountSaving = 0;
                     for (int x = 0; x < EpensesInfo.Tables[1].Rows.Count; x++)
                     {
-                        DGV.Rows.Add(EpensesInfo.Tables[1].Rows[x][0].ToString(),EpensesInfo.Tables[1].Rows[x][1].ToString(), "รายการถอนหุ้นสะสม", EpensesInfo.Tables[1].Rows[x][2], EpensesInfo.Tables[1].Rows[x][3]);
+                        DGV.Rows.Add(x+1,EpensesInfo.Tables[1].Rows[x][0].ToString(),EpensesInfo.Tables[1].Rows[x][1].ToString(), "รายการถอนหุ้นสะสม", EpensesInfo.Tables[1].Rows[x][2], EpensesInfo.Tables[1].Rows[x][3]);
                         AmountSaving += Convert.ToInt32(EpensesInfo.Tables[1].Rows[x][3]);
                         SumAmount += Convert.ToInt32(EpensesInfo.Tables[1].Rows[x][3]);
                     }
-                    DGV.Rows.Add("", "", "สรุปรายการถอนหุ้นสะสม", "", AmountSaving.ToString());
+                    DGV.Rows.Add("","", "", "สรุปรายการถอนหุ้นสะสม", "", AmountSaving.ToString());
                     DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                     TBAmountWithDraw.Text = AmountSaving.ToString();
                 }
@@ -113,7 +113,7 @@ namespace BankTeacher.Bank
                     }
                 }
                 TBAmount.Text = SumAmount.ToString();
-                DGV.Rows.Add("", "", "สรุปรายการทั้งหมด", "",SumAmount.ToString());
+                DGV.Rows.Add("","", "", "รวมรายการทั้งหมด", "",SumAmount.ToString());
                 DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.CornflowerBlue;
             }
         }
@@ -136,6 +136,24 @@ namespace BankTeacher.Bank
             int x = this.Width / 2 - panel1.Size.Width / 2;
             int y = this.Height / 2 - panel1.Size.Height / 2;
             panel1.Location = new Point(x, y);
+        }
+
+        private void BTPrint_Click(object sender, EventArgs e)
+        {
+            if(DGV.Rows.Count != 0)
+            {
+                if(printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    printDocument1.Print();
+                }
+            }
+            else
+                MessageBox.Show("ไม่พบรายการบิลล์ ในตาราง", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV, "รายการจ่าย", AccessibilityObject.Name, 2, "A4", 1);
         }
     }
 }
