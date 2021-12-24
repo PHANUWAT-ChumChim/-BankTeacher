@@ -183,9 +183,10 @@ namespace BankTeacher.Bank.Add_Member
                     TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
                     DataSet dsInfoMember = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[0]
                         .Replace("{TeacherNo}", TBTeacherNo.Text) +
-                        "\r\n" + SQLDefault[2]
+                        "\r\n" + 
+                        SQLDefault[2]
                         .Replace("{TeacherNo}" , TBTeacherNo.Text));
-                    if(dsInfoMember.Tables[0].Rows.Count != 0 || dsInfoMember.Tables[1].Rows.Count != 0)
+                    if(dsInfoMember.Tables[0].Rows.Count != 0 && dsInfoMember.Tables[1].Rows.Count != 0 && dsInfoMember.Tables[2].Rows.Count != 0)
                     {
                         TBTeacherName.Text = dsInfoMember.Tables[0].Rows[0][0].ToString();
                         TBNameInfo.Text = dsInfoMember.Tables[0].Rows[0][0].ToString();
