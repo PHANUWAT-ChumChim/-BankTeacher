@@ -124,11 +124,25 @@ namespace BankTeacher.Class.ProtocolSharing
                     }
                 }
             }
-            Thread ThreadCheckFile;
-            public String ThreadCheckFiles(string ID = "" , String LocalReplace = "")
+            String ID = "";
+            String LocalReplace = "";
+
+            private void CancelToken()
             {
+                var source = new CancellationTokenSource();
+                CancellationToken token = source.Token;
+                Task.Factory.StartNew(() => CheckFile(ID,LocalReplace), token);
+                source.CancelAfter(5000);
+            }
+
+            Thread ThreadCheckFile;
+            public String ThreadCheckFiles(string id = "" , String localreplace = "")
+            {
+                ID = id;
+                LocalReplace = localreplace;
+                
                 Stopwatch time = new Stopwatch();
-                ThreadCheckFile = new Thread(() => CheckFile(ID,LocalReplace));
+                ThreadCheckFile = new Thread(() => CancelToken());
                 ThreadCheckFile.Start();
                 time.Start();
 
@@ -145,57 +159,65 @@ namespace BankTeacher.Class.ProtocolSharing
 
                 return StatusRetrun;
             }
+
             public void CheckFile(string ID = "", String LocalReplace = "")
             {
-                using (var network = new NetworkConnection(networkPath, networkCredential))
+                try
                 {
-                    network.Connect();
-                    int CountFile = 0;
-                    String path = PathFile;
-                    int Count = 0;
-                    System.IO.DirectoryInfo par = new System.IO.DirectoryInfo(path);
-                    foreach (System.IO.FileInfo f in par.GetFiles())
+                    using (var network = new NetworkConnection(networkPath, networkCredential))
                     {
-                        if (f.Name.Contains(ID))
-                            Count++;
-                    }
-                    foreach(System.IO.FileInfo f in par.GetFiles())
-                    {
-                        if (f.Name.Contains(ID))
+                        network.Connect();
+                        int CountFile = 0;
+                        String path = PathFile;
+                        int Count = 0;
+                        System.IO.DirectoryInfo par = new System.IO.DirectoryInfo(path);
+                        foreach (System.IO.FileInfo f in par.GetFiles())
                         {
-                            if(Count > 1)
-                                for(int x = 0; x < Count; x++)
-                                {
-                                    if(f.Name
-                                        .Replace(LocalReplace+"_","")
-                                        .Replace(".pdf","")
-                                        .Replace("_"+x,"") == ID)
+                            if (f.Name.Contains(ID))
+                                Count++;
+                        }
+                        foreach(System.IO.FileInfo f in par.GetFiles())
+                        {
+                            if (f.Name.Contains(ID))
+                            {
+                                if(Count > 1)
+                                    for(int x = 0; x < Count; x++)
                                     {
-                                        CountFile++;
-                                        break;
+                                        if(f.Name
+                                            .Replace(LocalReplace+"_","")
+                                            .Replace(".pdf","")
+                                            .Replace("_"+x,"") == ID)
+                                        {
+                                            CountFile++;
+                                            break;
+                                        }
                                     }
-                                }
+                            }
+                            else if (f.Name
+                                .Replace(LocalReplace + "_", "")
+                                .Replace(".pdf", "") == ID)
+                            {
+                                CountFile++;
+                                break;
+                            }
                         }
-                        else if (f.Name
-                            .Replace(LocalReplace + "_", "")
-                            .Replace(".pdf", "") == ID)
+                        if (CountFile != 0 && path != "")
                         {
-                            CountFile++;
-                            break;
+                            network.Dispose();
+                            StatusRetrun = "มีเอกสารแล้ว";
+                            return;
+                        }
+                        else
+                        {
+                            network.Dispose();
+                            StatusRetrun = "ไม่พบเอกสารโปรดอัพโหลด เอกสารก่อนทำรายการ";
+                            return;
                         }
                     }
-                    if (CountFile != 0 && path != "")
-                    {
-                        network.Dispose();
-                        StatusRetrun = "มีเอกสารแล้ว";
-                        return;
-                    }
-                    else
-                    {
-                        network.Dispose();
-                        StatusRetrun = "ไม่พบเอกสารโปรดอัพโหลด เอกสารก่อนทำรายการ";
-                        return;
-                    }
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message);
                 }
             }
 
