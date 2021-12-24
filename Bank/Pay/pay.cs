@@ -1257,6 +1257,10 @@ namespace BankTeacher.Bank.Pay
                         printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                         printDocument1.DefaultPageSettings.Landscape = true;
                         Class.Print.PrintPreviewDialog.info_Payment = CBPayment_Pay.Items[CBPayment_Pay.SelectedIndex].ToString();
+                        CBYearSelection_ShareInfo.SelectedIndex = CBYearSelection_ShareInfo.SelectedIndex;
+                        CBLoanSelection_LoanInfo.SelectedIndex = CBLoanSelection_LoanInfo.SelectedIndex;
+                        CBYearSelection_BillInfo.SelectedIndex = CBYearSelection_BillInfo.SelectedIndex;
+
                         if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                         {
                             printDocument1.Print();
