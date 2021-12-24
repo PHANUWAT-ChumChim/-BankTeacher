@@ -462,7 +462,6 @@ namespace BankTeacher.Bank.Loan
                 MessageBox.Show("ดูเหมือนคุณจะลืมอะไรนะ");
             }
         }
-
         private void BExitForm_Click(object sender, EventArgs e)
         {
             BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
