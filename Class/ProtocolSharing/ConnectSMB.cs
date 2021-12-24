@@ -174,7 +174,7 @@ namespace BankTeacher.Class.ProtocolSharing
                         foreach (System.IO.FileInfo f in par.GetFiles())
                         {
                             if (f.Name.Contains(ID))
-                                Count++;
+                                CountFile++;
                         }
                         foreach(System.IO.FileInfo f in par.GetFiles())
                         {
