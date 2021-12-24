@@ -1260,6 +1260,7 @@ namespace BankTeacher.Bank.Pay
                         CBYearSelection_ShareInfo.SelectedIndex = CBYearSelection_ShareInfo.SelectedIndex;
                         CBLoanSelection_LoanInfo.SelectedIndex = CBLoanSelection_LoanInfo.SelectedIndex;
                         CBYearSelection_BillInfo.SelectedIndex = CBYearSelection_BillInfo.SelectedIndex;
+
                         if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                         {
                             printDocument1.Print();
