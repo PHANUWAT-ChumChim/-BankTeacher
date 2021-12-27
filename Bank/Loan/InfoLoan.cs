@@ -204,6 +204,7 @@ namespace BankTeacher.Bank.Loan
                 {
                     TBTeacherName.Text = dt.Rows[0][1].ToString();
                     CB_LoanNo.Enabled = true;
+                    tabControl1.Enabled = true;
                     CB_LoanNo.Items.Clear();
                     Check = 1;
                     ComboBox[] cb = new ComboBox[] { CB_LoanNo };
@@ -411,9 +412,11 @@ namespace BankTeacher.Bank.Loan
                     Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
                     Class.Print.PrintPreviewDialog.info_TeacherAdd = dt.Rows[0][4].ToString();
                     Class.Print.PrintPreviewDialog.info_Payment = dt.Rows[0][5].ToString();
+                    string date = "";
+                    if(dt.Rows[0][1].ToString() == "") { date = "รอดำเนินการ"; }
                     for (int loop = 0; loop < dt.Rows.Count; loop++)
                     {
-                        DGV_Historyloanpay.Rows.Add(dt.Rows[0][0].ToString(), dt.Rows[0][1].ToString(), "จ่ายกู้", dt.Rows[0][2].ToString());
+                        DGV_Historyloanpay.Rows.Add(dt.Rows[0][0].ToString(),date, dt.Rows[0][3].ToString(), dt.Rows[0][2].ToString());
                         //DGV_info.Rows.Add(loop + 1, "จ่ายกู้", dt.Rows[0][2].ToString());
                     }
 
@@ -425,33 +428,44 @@ namespace BankTeacher.Bank.Loan
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             if(CB_SelectPrint.SelectedIndex == 0)
-            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVLoanDetail, tabControl1.SelectedTab.Text, this.AccessibilityObject.Name,2,"A4",1);
+            {
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVLoanDetail, tabControl1.SelectedTab.Text, this.AccessibilityObject.Name,false,false,"A4", 1);
+            }
             else if(CB_SelectPrint.SelectedIndex == 1)
             {
                 Class.Print.PrintPreviewDialog.PrintLoan(e, SQLDefault[3].Replace("{TeacherNo}", TBTeacherNo.Text).Replace("{LoanNo}",TBLoanNo.Text),
                    Bank.Menu.Date[2], Bank.Menu.Monthname, (Convert.ToInt32(Bank.Menu.Date[0]) + 543).ToString(),
-                   TBTeacherNo.Text, TBLoanNo.Text, DGVGuarantor.RowCount,SandCRonot);
+                   TBTeacherNo.Text, TBLoanNo.Text, DGVGuarantor.RowCount,checkBox_scrip.Checked,checkBox_copy.Checked);
             }
             else
             {
-                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Historyloanpay, tabControl1.SelectedTab.Text, this.AccessibilityObject.Name, SandCRonot, "A4", 1);
+                Class.Print.PrintPreviewDialog.details = 1;
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Historyloanpay, tabControl1.SelectedTab.Text, this.AccessibilityObject.Name,checkBox_scrip.Checked,checkBox_copy.Checked, "A4",0);
             }
+            Class.Print.PrintPreviewDialog.details = 0;
         }
-        int SandCRonot = 0;
         private void BTPrint_Click_1(object sender, EventArgs e)
         {
-            // เลือก ต้น ฉบับ หรือ สำเนา หรือ ไม่
-            if (checkBox_scrip.Checked == true) { SandCRonot = 3; }
-            if (checkBox_copy.Checked == true) { SandCRonot = 4; }
-            if (checkBox_scrip.Checked == true && checkBox_copy.Checked == true) { SandCRonot = 1; }
-            if (checkBox_scrip.Checked == false && checkBox_copy.Checked == false) { SandCRonot = 0; }
-            if(CB_SelectPrint.SelectedIndex == 2)
+            if(CB_SelectPrint.SelectedIndex == 0)
             {
-                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
-                printDocument1.DefaultPageSettings.Landscape = true;
+                if(DGVLoanDetail.Rows.Count != 0)
+                {
+                    printDocument1.DefaultPageSettings.PaperSize = new PaperSize("Letter", 850, 1100);
+                    printDocument1.DefaultPageSettings.Landscape = false;
+                    if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                    {
+                        printDocument1.Print();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("โปรดเเจ้งผู้ทำระบบ", "เเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
-            if (DGVLoanDetail.RowCount != 0)
+            else if(CB_SelectPrint.SelectedIndex == 1)
             {
+                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("Letter", 850, 1100);
+                printDocument1.DefaultPageSettings.Landscape = false;
                 if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                 {
                     printDocument1.Print();
@@ -459,7 +473,19 @@ namespace BankTeacher.Bank.Loan
             }
             else
             {
-                MessageBox.Show("ดูเหมือนคุณจะลืมอะไรนะ");
+                if (DGV_Historyloanpay.Rows.Count != 0)
+                {
+                    printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+                    printDocument1.DefaultPageSettings.Landscape = true;
+                    if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                    {
+                        printDocument1.Print();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("โปรดเเจ้งผู้ทำระบบ", "เเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
         private void BExitForm_Click(object sender, EventArgs e)
@@ -568,6 +594,20 @@ namespace BankTeacher.Bank.Loan
             else
             {
                 MessageBox.Show("กรุณาเลือกรายการกู้ก่อนอัพโหลดเอกสาร", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void CB_SelectPrint_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(CB_SelectPrint.SelectedIndex > 0)
+            {
+                checkBox_scrip.Enabled = true;
+                checkBox_copy.Enabled = true;
+            }
+            else
+            {
+                checkBox_scrip.Enabled = false;
+                checkBox_copy.Enabled = false;
             }
         }
     }

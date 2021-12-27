@@ -76,7 +76,7 @@ namespace BankTeacher.Class.Print
         // เส้นปิดข้าง
         static List<float> cutline = new List<float>();
         // เเบบ ปริ้น หน้า สมัคร
-        public static void PrintMember(System.Drawing.Printing.PrintPageEventArgs e, String SQLCode, String Day, String Month, String Year, String TeacherNo, String Amount,int confirmation)
+        public static void PrintMember(System.Drawing.Printing.PrintPageEventArgs e, String SQLCode, String Day, String Month, String Year, String TeacherNo, String Amount,bool confirmation_scrip,bool confirmation_copy)
         {
             e.HasMorePages = true;
             int PageX = (e.PageBounds.Width - 50);
@@ -92,6 +92,40 @@ namespace BankTeacher.Class.Print
             if (Amount == "")
             {
                 Amount = BankTeacher.Bank.Menu.startAmountMin.ToString();
+            }
+            
+            int confirmation = 0;
+            if (confirmation_scrip == true && confirmation_copy == true)
+            {
+                confirmation = 1;
+            }
+            else if (confirmation_scrip == false && confirmation_copy == false)
+            {
+                confirmation = 0;
+            }
+            else
+            {
+                if (confirmation_scrip == true) { confirmation = 2; }
+                else { confirmation = 3; }
+            }
+            if (confirmation != 0 && pageNow == 0)
+            {
+                if (confirmation == 1)
+                {
+                    Class.Print.SetPrintMedtods.confirmation(e, PenBlack, BrushBlack, Print_two, PageX, 0);
+                }
+                else
+                {
+                    Print_two++;
+                    if (confirmation == 2)
+                    {
+                        Class.Print.SetPrintMedtods.confirmation(e, PenBlack, BrushBlack, 0, PageX, 0);
+                    }
+                    else if (confirmation == 3)
+                    {
+                        Class.Print.SetPrintMedtods.confirmation(e, PenBlack, BrushBlack, 1, PageX, 0);
+                    }
+                }
             }
             // X 850 = 22 cm เเนะนำ 800 //
             // A4 = 21 cm  {Width = 356.70163 Height = 136.230438} {Width = 356.70163 Height = 102.954086} // 
@@ -169,30 +203,49 @@ namespace BankTeacher.Class.Print
 
             Class.Print.SetPrintMedtods.CenterRight(e, "ผู้สมัคร", FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 100, XP, XD + 230);
 
-            int c = 0;
-            if (confirmation != 0)
+            if (Print_two >= 1 || confirmation == 0)
             {
-                if (confirmation == 1)
-                    c = Print_two;
-                else if (confirmation == 4)
-                    c = 2;
-                if (confirmation != 2)
-                    Class.Print.SetPrintMedtods.confirmation(e, PenBlack, BrushBlack,c, PageX, 0);
-            }
-            if (Print_two == 1 || confirmation == 3 || confirmation == 4 || confirmation == 2 || confirmation == 0)
-            {
-                Print_two = 0;
-                e.HasMorePages = false;
+                Print_two++;
+                if (Print_two >= 2 || confirmation == 0)
+                {
+                    Print_two = 0;
+                    e.HasMorePages = false;
+                }
+                else
+                {
+                    e.HasMorePages = true;
+                }
             }
             else
             {
                 Print_two++;
                 e.HasMorePages = true;
             }
-            
+
+            //int c = 0;
+            //if (confirmation_scrip != 0)
+            //{
+            //    if (confirmation_scrip == 1)
+            //        c = Print_two;
+            //    else if (confirmation_scrip == 4)
+            //        c = 2;
+            //    if (confirmation_scrip != 2)
+            //        Class.Print.SetPrintMedtods.confirmation(e, PenBlack, BrushBlack,c, PageX, 0);
+            //}
+            //if (Print_two == 1 || confirmation_scrip == 3 || confirmation_scrip == 4 || confirmation_scrip == 2 || confirmation_scrip == 0)
+            //{
+            //    Print_two = 0;
+            //    e.HasMorePages = false;
+            //}
+            //else
+            //{
+            //    Print_two++;
+            //    e.HasMorePages = true;
+            //}
+
         }
         // เเบบ ปริ้น หน้า กู้
-        public static void PrintLoan(System.Drawing.Printing.PrintPageEventArgs e, String SQLCode, String Day, String Month, String Year, String TeacherNo, String LoanNo,int Rowscount,int confirmation)
+        public static void PrintLoan(System.Drawing.Printing.PrintPageEventArgs e, String SQLCode, String Day, String Month, String Year, String TeacherNo, String LoanNo,int Rowscount,bool confirmation_scrip,bool confirmation_copy)
         {
             if (TeacherNo != "")
             {
@@ -205,6 +258,40 @@ namespace BankTeacher.Class.Print
                 int SpacePerRow = 35;
                 int CurrentRows = 0;
                 e.HasMorePages = true;
+                int confirmation = 0;
+                if (confirmation_scrip == true && confirmation_copy == true)
+                {
+                    confirmation = 1;
+                }
+                else if (confirmation_scrip == false && confirmation_copy == false)
+                {
+                    Print_two++;
+                    confirmation = 0;
+                }
+                else
+                {
+                    Print_two++;
+                    if (confirmation_scrip == true) { confirmation = 2; }
+                    else { confirmation = 3; }
+                }
+                if (confirmation != 0 && pageNow == 0)
+                {
+                    if (confirmation == 1)
+                    {
+                        Class.Print.SetPrintMedtods.confirmation(e, PenBlack, BrushBlack,Print_two, 200, 0);
+                    }
+                    else
+                    {
+                        if (confirmation == 2)
+                        {
+                            Class.Print.SetPrintMedtods.confirmation(e, PenBlack, BrushBlack,0, 200, 0);
+                        }
+                        else if (confirmation == 3)
+                        {
+                            Class.Print.SetPrintMedtods.confirmation(e, PenBlack, BrushBlack,1, 200, 0);
+                        }
+                    }
+                }
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLCode);
                 //string IDBorrower = dt.Rows[0][0].ToString();
                 string School = $"{DT.Rows[0][0].ToString()}";
@@ -291,19 +378,10 @@ namespace BankTeacher.Class.Print
 
 
                 }
-                int c = 0;
-                if (confirmation != 0)
-                {
-                    if (confirmation == 1)
-                        c = Print_two;
-                    else if (confirmation == 4)
-                        c = 4;
-                     if (pageNow == 0 && confirmation != 2)
-                        Class.Print.SetPrintMedtods.confirmation(e, PenBlack, BrushBlack,c, 200, 0);
-                }
                 if(pageNow == 1)
                 {
-                    if (Print_two == 1 || confirmation == 3 || confirmation == 4 || confirmation == 2 || confirmation == 0)
+                    Print_two++;
+                    if (Print_two >= 2)
                     {
                         Print_two = 0;
                         pageNow = 0;
@@ -311,7 +389,6 @@ namespace BankTeacher.Class.Print
                     }
                     else
                     {
-                        Print_two++;
                         pageNow = 0;
                         e.HasMorePages = true;
                     }
@@ -341,11 +418,11 @@ namespace BankTeacher.Class.Print
         /// <para> (DataGridView G) INDAX : DataGridView</para>
         /// <para> (string header) INDAX : Name_header</para>
         /// <para> (string TextForm) INDAX : Name_From</para>
-        /// <para> (int confirmation) INDAX : 1 ues / 2 Not / 3 scrip / 4  copy</para>
+        /// <para> (int confirmation) INDAX : Scrip_true = ues // copy_false = not ues</para>
         /// <para> (string Sizepaper) INDAX : A4 / A5</para>
         /// <para> (int summarize) INDAX : 0 ues / > 0 not</para>
         /// </summary>
-        public static void PrintReportGrid(System.Drawing.Printing.PrintPageEventArgs e, DataGridView G, string header, string TextForm,int confirmation, string Sizepaper,int summarize)
+        public static void PrintReportGrid(System.Drawing.Printing.PrintPageEventArgs e, DataGridView G, string header, string TextForm,bool confirmation_scrip,bool confirmation_copy, string Sizepaper,int summarize)
         {
             page_length = e.PageBounds.Height-50;
             PenBlack.Width = 1;
@@ -408,10 +485,23 @@ namespace BankTeacher.Class.Print
             {
                 SizeRows = 4;
             }
-            if (confirmation == 1) { }
-            else if (confirmation == 2) { }
-            else if (confirmation == 3) { }
-            else { }
+            // ตัวกำหนดการวาด ต้นฉบับ กับ สำเนา 
+            //  0 = ไม่ใช่ // 1 = ใช่ทั้งหมด // 2 = เเค่ต้นฉบับ // 3 = เเค่สำเนา
+            int confirmation = 0;
+            if (confirmation_scrip == true && confirmation_copy == true)
+            {
+                confirmation = 1;
+            }
+            else if(confirmation_scrip == false && confirmation_copy == false)
+            {
+                confirmation = 0;
+            }
+            else
+            {
+                Print_two++;
+                if (confirmation_scrip == true) { confirmation = 2; }
+                else { confirmation = 3; }
+            }
             // ========================== กล่อง =========================
             float Box_SizeX = 200;
             float Box_SizeY = 30;
@@ -455,15 +545,23 @@ namespace BankTeacher.Class.Print
                     TextY += Size.Height;
                 }
                 // ================================================= ปริ้นข้อความต้นฉบับ ==================================
-                int c = 0;
-                if (confirmation != 0)
+                if(confirmation != 0)
                 {
-                    if (confirmation == 1)
-                        c = Print_two;
-                    else if (confirmation == 4)
-                        c = 2;
-                    if (confirmation != 2)
-                        Class.Print.SetPrintMedtods.confirmation(e, PenBlack, BrushBlack, c, Line2_x, 260);
+                    if(confirmation == 1)
+                    {
+                        Class.Print.SetPrintMedtods.confirmation(e, PenBlack, BrushBlack, Print_two, Line2_x, 260);
+                    }
+                    else 
+                    {
+                        if(confirmation == 2)
+                        {
+                            Class.Print.SetPrintMedtods.confirmation(e, PenBlack, BrushBlack,0, Line2_x, 260);
+                        }
+                        else if(confirmation == 3)
+                        {
+                            Class.Print.SetPrintMedtods.confirmation(e, PenBlack, BrushBlack,1, Line2_x, 260);
+                        }
+                    }
                 }
                 // =========================================================== ตารางบอก หลายการข้อมูล (กล่อง) ============================================
                 if (TextForm == "InfoLoan")
@@ -486,7 +584,7 @@ namespace BankTeacher.Class.Print
                 if (onetimestartColumns == 0)
                 {
                     //========================================================= Check Form for Print ตวรจสอบข้อความที่จะปริ้นในหน้านั้นๆ
-                    if (TextForm == "InfoLoan")
+                    if (TextForm == "InfoLoan" && details != 1)
                     {
                         string infomember = $"ชื่อ-นามสกุล : {Bank.Loan.InfoLoan.info_name}            รหัสประจำตัว : {Bank.Loan.InfoLoan.info_id}            เลขที่สัญญากู้ : {Bank.Loan.InfoLoan.info_Loanid}\r\n" +
                                            $"ยอดเงินค้ำ : {Bank.Loan.InfoLoan.Amount[0]} บาท                      เปอร์เซ็นต์ค้ำ : {Bank.Loan.InfoLoan.Percent[0]}%\r\n" +
@@ -562,16 +660,16 @@ namespace BankTeacher.Class.Print
                     else if (TextForm == "Home")
                     {
                         string Remain;
-                        if (Bank.Home.info_Lona_AmountRemain != "0")
+                        if (info_Lona_AmountRemain != "0")
                         {
-                            Remain = $"ยอดกู้คงเหลือ : {Bank.Home.info_Lona_AmountRemain}";
+                            Remain = $"ยอดกู้คงเหลือ : {info_Lona_AmountRemain}";
                         }
                         else
                         {
                             Remain = "";
                         }
-                        string infoHome = $"ชื่อ-นามสกุล : {Bank.Home.info_name}            รหัสประจำตัว : {Bank.Home.info_id}           \r\n" +
-                                         $"หุ้นสะสมทั้งหมด : {Bank.Home.info_totelAmountpay}            {Remain}        ";
+                        string infoHome = $"ชื่อ-นามสกุล : {info_name}            รหัสประจำตัว : {info_id}           \r\n" +
+                                         $"หุ้นสะสมทั้งหมด : {info_Savingtotel}            {Remain}        ";
 
                         Size = e.Graphics.MeasureString(infoHome, FonT(18, ThaiSarabun, FontStyle.Regular));
                         //// กรอบ
@@ -914,7 +1012,7 @@ namespace BankTeacher.Class.Print
 
                     e.Graphics.DrawString("ใบเสร็จรับเงินฉบับนี้จะสมบูรณ์เมื่อผู้รับเงินลงลายมือชื่อเป็นอันเสร็จสิ้น \r\n" +
                                         "ชำระเเล้วไม่สามารถรับคืนหรือเปลี่ยนตัวไม่ว่ากรณีใดๆ", FonT(12, ThaiSarabun, FontStyle.Bold), BrushBlack, 50 + TextSize.Width, startTableY + 40);
-                    if (TextForm == "pay" || TextForm == "AmountOff" || TextForm == "PayLoan")
+                    if (TextForm == "pay" || TextForm == "AmountOff" || TextForm == "PayLoan" || TextForm == "InfoLoan")
                     {
                         Amountotel_SUM += Convert.ToInt32(SUM.Sum());
                         Amountotel_Pay += Convert.ToInt32(Pay.Sum());
@@ -972,40 +1070,16 @@ namespace BankTeacher.Class.Print
                     startTableY = 2000; // ทำให้ความยาวหน้ากระดาษ เกิน 
                 }
             }
-            else
+            pagepaper++;
+            if (Currentposition_Row >= G.RowCount) // เเถวต้องเท่ากับเเถวทั้งหมดเเล้ว
             {
-                if (details != 1 && TextForm == "pay" || TextForm == "AmountOff" || TextForm == "PayLoan")
-                {
-                    e.Graphics.DrawString("รูปเเบบการจ่าย ", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, 50, startTableY + 10);
-                    TextSize = e.Graphics.MeasureString("รูปเเบบการจ่าย ", FonT(16, ThaiSarabun, FontStyle.Bold));
-
-                    e.Graphics.DrawString($" : {info_Payment}", FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50 + TextSize.Width, startTableY + 10);
-
-                    e.Graphics.DrawString("หมายเหตุ", FonT(18, ThaiSarabun, FontStyle.Bold), BrushBlack, 50, startTableY + 40);
-                    TextSize = e.Graphics.MeasureString("หมายเหตุ", FonT(18, ThaiSarabun, FontStyle.Regular));
-
-                    e.Graphics.DrawString("ใบเสร็จรับเงินฉบับนี้จะสมบูรณ์เมื่อผู้รับเงินลงลายมือชื่อเป็นอันเสร็จสิ้น \r\n" +
-                                        "ชำระเเล้วไม่สามารถรับคืนหรือเปลี่ยนตัวไม่ว่ากรณีใดๆ", FonT(12, ThaiSarabun, FontStyle.Bold), BrushBlack, 50 + TextSize.Width, startTableY + 40);
-
-                    TextSize = e.Graphics.MeasureString("_____________________________", FonT(13, ThaiSarabun, FontStyle.Regular));
-                    e.Graphics.DrawString("_____________________________", FonT(13, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - TextSize.Width, startTableY + 50);
-                    TextSize1 = e.Graphics.MeasureString("ลงนาม", FonT(18, ThaiSarabun, FontStyle.Bold));
-                    e.Graphics.DrawString("ลงนาม", FonT(18, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - (TextSize.Width + TextSize1.Width), startTableY + 40);
-                    // คนทำรายการ
-                    TextSize1 = e.Graphics.MeasureString(info_TeacherAdd, FonT(18, ThaiSarabun, FontStyle.Regular));
-                    e.Graphics.DrawString(info_TeacherAdd, FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, (Line2_x - TextSize1.Width) - ((TextSize.Width - TextSize1.Width) / 2), startTableY + 80);
-                }
-                startTableY = 2000; // ทำให้ความยาวหน้ากระดาษ เกิน 
-            }
-           
-            
-            if (Currentposition_Row >= G.RowCount)
-            {
+                // ========== Clear ===========
                 SUM.Clear();
                 Pay.Clear();
                 Loan.Clear();
                 cutline.Clear();
                 Center.Clear();
+                // ยอด
                 Amountotel_SUM = 0;
                 Amountotel_Pay = 0;
                 Amountotel_Loan = 0;
@@ -1016,19 +1090,22 @@ namespace BankTeacher.Class.Print
                 position = 0;
                 // เลขหน้า
                 pagepaper = 1;
+                // ========== Clear ===========
                 Print_two++;
-                start_and_stop++;
+                //start_and_stop++;
                 if (confirmation == 1)
                 {
-                    if (Print_two == 2)
+                    if (Print_two >= 2)
                     {
                         e.HasMorePages = false;  // ปิด
                         Print_two = 0;
                     }
                     else
-                        e.HasMorePages = true;
+                    {
+                        e.HasMorePages = true; // เปิด
+                    }
                 }
-                else if (confirmation == 2 || confirmation == 3)
+                else
                 {
                     Print_two = 0;
                     e.HasMorePages = false;  // ปิด
@@ -1036,12 +1113,10 @@ namespace BankTeacher.Class.Print
             }
             else
             {
-                if (confirmation != 0)
-                    SUM.Clear();
-                //else
-                //    SUM.Clear();
+                // ========== Clear ===========
+                SUM.Clear();
                 position = 0;
-                pagepaper++;
+                // ========== Clear ===========
                 // เปิดต่อ
                 e.HasMorePages = true;
             }

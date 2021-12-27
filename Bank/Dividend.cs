@@ -339,7 +339,7 @@ namespace BankTeacher.Bank
         }
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV, "ปันผล", AccessibilityObject.Name, 2, "A4", 1); ;
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV, "ปันผล", AccessibilityObject.Name, true, true, "A4", 1); ;
         }
     }
 }

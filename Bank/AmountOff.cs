@@ -500,23 +500,41 @@ namespace BankTeacher.Bank
             Class.Print.PrintPreviewDialog.info_Loanstatus = TBLoanStatus.Text;
             Class.Print.PrintPreviewDialog.info_Amounoffinsystem = TBCreditSystem.Text;
             Class.Print.PrintPreviewDialog.info_canbeAmounoff = TBCreditWithDraw.Text;
-            if (SELECT_Print > 0)
-            {
-                // ========================= info =====================================
-                Class.Print.PrintPreviewDialog.info_BillAmounoff = dt.Rows[0][0].ToString();
-                Class.Print.PrintPreviewDialog.info_datepayAmounoff = dt_date.Rows[0][3].ToString();
-                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, 1, "A5", 0);
-                SELECT_Print--;
-            }
-            else if (CB_SelectPrint.SelectedIndex == 1)
-            {
-                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, SandCRonot, "A5", 0);
-            }
-            else
+            
+            if(CB_SelectPrint.SelectedIndex == 0)
             {
                 Class.Print.PrintPreviewDialog.details = 1;
-                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVAmountOffHistory, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, 2, "A4", 1);
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVAmountOffHistory, "ถอนหุ้นสะสม", this.AccessibilityObject.Name,false,false, "A4", 1);
             }
+            else if(CB_SelectPrint.SelectedIndex == 1)
+            {
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name,checkBox_scrip.Checked,checkBox_copy.Checked, "A5", 0);
+            }
+            else
+            { 
+                Class.Print.PrintPreviewDialog.info_BillAmounoff = dt.Rows[0][0].ToString();
+                Class.Print.PrintPreviewDialog.info_datepayAmounoff = dt_date.Rows[0][3].ToString();
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name,true, true, "A5", 0);
+            }
+
+            //if (SELECT_Print > 0)
+            //{
+            //    // ========================= info =====================================
+            //    Class.Print.PrintPreviewDialog.info_BillAmounoff = dt.Rows[0][0].ToString();
+            //    Class.Print.PrintPreviewDialog.info_datepayAmounoff = dt_date.Rows[0][3].ToString();
+            //    Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, true, true, "A5", 0);
+            //    SELECT_Print--;
+            //}
+            //else if (CB_SelectPrint.SelectedIndex == 1)
+            //{
+            //    Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, true, true, "A5", 0);
+            //}
+            //else
+            //{
+            //    Class.Print.PrintPreviewDialog.details = 1;
+            //    Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVAmountOffHistory, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, true, true, "A4", 1);
+            //}
+
             Class.Print.PrintPreviewDialog.details = 0;
             if(Class.Print.PrintPreviewDialog.start_and_stop == 1 || Class.Print.PrintPreviewDialog.start_and_stop == 2)
             {
@@ -585,14 +603,14 @@ namespace BankTeacher.Bank
                 tabControl1.SelectedIndex = 0;
             }
         }
-        int SandCRonot = 0;
+        //int SandCRonot = 0;
         private void BT_Print_Click(object sender, EventArgs e)
         {
-            // เลือก ต้น ฉบับ หรือ สำเนา หรือ ไม่
-            if (checkBox_scrip.Checked == true) { SandCRonot = 3; }
-            if (checkBox_copy.Checked == true) { SandCRonot = 4; }
-            if (checkBox_scrip.Checked == true && checkBox_copy.Checked == true) { SandCRonot = 1; }
-            if (checkBox_scrip.Checked == false && checkBox_copy.Checked == false) { SandCRonot = 0; }
+            //// เลือก ต้น ฉบับ หรือ สำเนา หรือ ไม่
+            //if (checkBox_scrip.Checked == true) { SandCRonot = 3; }
+            //if (checkBox_copy.Checked == true) { SandCRonot = 4; }
+            //if (checkBox_scrip.Checked == true && checkBox_copy.Checked == true) { SandCRonot = 1; }
+            //if (checkBox_scrip.Checked == false && checkBox_copy.Checked == false) { SandCRonot = 0; }
             if (TB_Bill.Text == "") { DGV_Testter.Rows.Clear(); }
             if (DGVAmountOffHistory.Rows.Count != 0)
             {

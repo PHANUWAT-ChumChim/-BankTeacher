@@ -449,6 +449,7 @@ namespace BankTeacher.Bank.Loan
             {
                 MessageBox.Show("ไม่พบรายการ กรุณาลงรายการใหม่อีกครั้ง");
                 //BExitForm_Click(new object(), new EventArgs());
+                Class.FromSettingMedtod.ReturntoHome(this);
             }
         }
 
@@ -484,7 +485,7 @@ namespace BankTeacher.Bank.Loan
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-                Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_PayLoan, "จ่ายกู้", this.AccessibilityObject.Name, 1, "A5", 0);
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e,DGV_PayLoan, "จ่ายกู้", this.AccessibilityObject.Name, true, true, "A5", 0);
         }
     }
 }
