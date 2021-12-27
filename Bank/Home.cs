@@ -11,16 +11,6 @@ namespace BankTeacher.Bank
 {
     public partial class Home : Form
     {
-        // ======================= ข้อมูลเเบบปริ้น ====================
-        //ข้อมูลส่วนตัว
-        public static string info_name;
-        public static string info_id;
-        // จ่าย
-        public static string info_totelAmountpay;
-        public static string info_datepay;
-        // กู้
-        public static string info_Lona_AmountRemain;
-        //--------------------------------------------------------
         public static Font F = new Font("TH Sarabun New",16,FontStyle.Regular);
         int Check = 0;
         public static int SelectIndexRow = -1;
@@ -361,11 +351,11 @@ namespace BankTeacher.Bank
         {
             DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[7]
                 .Replace("{TeacherNo}", TBTeacherNo.Text));
-            info_name = TBTeacherName.Text;
-            info_id = TBTeacherNo.Text;
-            info_totelAmountpay = dt.Rows[0][1].ToString();
-            info_Lona_AmountRemain = dt.Rows[0][2].ToString();
-            Class.Print.PrintPreviewDialog.PrintReportGrid(e, dataGridView3, "ตารางการผ่อนชำระ", this.AccessibilityObject.Name,2,"A4",1);
+            Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
+            Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
+            Class.Print.PrintPreviewDialog.info_Savingtotel = dt.Rows[0][1].ToString();
+            Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = dt.Rows[0][3].ToString();
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e, dataGridView3, "ตารางการผ่อนชำระ", this.AccessibilityObject.Name,false,false, "A4",1);
         }
     }
 }

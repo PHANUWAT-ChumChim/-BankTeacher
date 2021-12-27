@@ -46,7 +46,7 @@ namespace BankTeacher.Bank
         public Menu()
         {
             InitializeComponent();
-            menuStrip1.Visible = true;
+            //menuStrip1.Visible = true;
             Date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]).Rows[0][0].ToString().Split('-');
             BankTeacher.Bank.Menu.Monthname = Month[Convert.ToInt32(BankTeacher.Bank.Menu.Date[1]) - 1];
             Class.UserInfo.SetTeacherInformation("T43005", "Manit Hodkuntod", "1");
@@ -70,7 +70,22 @@ namespace BankTeacher.Bank
             Parent = this;
             F.WindowState = FormWindowState.Maximized;
             F.Show();
-            this.menuStrip1.Visible = false;
+            if(this.AccessibilityObject.Name != "หน้าเเรก - [Home]")
+            {
+                if(this.AccessibilityObject.Name == "หน้าเเรก")
+                {
+                    BankTeacher.Bank.Home f = new BankTeacher.Bank.Home();
+                    f.MdiParent = BankTeacher.Bank.Menu.Parent;
+                    f.WindowState = FormWindowState.Maximized;
+                    f.Show();
+
+                }
+                else
+                {
+                    this.menuStrip1.Visible = false;
+                }
+            }
+          
         }
         public void menuStrip1_ItemAdded(object sender, ToolStripItemEventArgs e)
         {
@@ -84,8 +99,8 @@ namespace BankTeacher.Bank
         }
         private void Menu_Load_1(object sender, EventArgs e)
         {
-            BankTeacher.Bank.Home startHome = new BankTeacher.Bank.Home();
-            CloseFrom(startHome);
+            //BankTeacher.Bank.Home startHome = new BankTeacher.Bank.Home();
+            //CloseFrom(startHome);
             menuStrip1.Visible = true;
         }
         private void Menu_setring_Click(object sender, EventArgs e)
@@ -210,9 +225,10 @@ namespace BankTeacher.Bank
             if (menuStrip1.Visible == true)
             {
                 BankTeacher.Bank.Home F = new BankTeacher.Bank.Home();
-                F.MdiParent = BankTeacher.Bank.Menu.Parent;
-                F.WindowState = FormWindowState.Maximized;
-                F.Show();
+                //F.MdiParent = BankTeacher.Bank.Menu.Parent;
+                //F.WindowState = FormWindowState.Maximized;
+                //F.Show();
+                CloseFrom(F);
             }
         }
     }

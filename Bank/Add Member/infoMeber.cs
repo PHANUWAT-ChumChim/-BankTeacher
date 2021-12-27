@@ -252,7 +252,7 @@ namespace BankTeacher.Bank.Add_Member
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            BankTeacher.Class.Print.PrintPreviewDialog.PrintMember(e, SQLDefault[4], BankTeacher.Bank.Menu.Date[2], BankTeacher.Bank.Menu.Monthname, (Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + 543).ToString(),TBTeacherNo.Text,TBTeacherName.Text,SandCRonot);
+            BankTeacher.Class.Print.PrintPreviewDialog.PrintMember(e, SQLDefault[4], BankTeacher.Bank.Menu.Date[2], BankTeacher.Bank.Menu.Monthname, (Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + 543).ToString(),TBTeacherNo.Text,TBTeacherName.Text,checkBox_scrip.Checked,checkBox_copy.Checked);
         }
         int SandCRonot = 0;
         private void BTPrint_Click(object sender, EventArgs e)

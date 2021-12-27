@@ -147,7 +147,7 @@ namespace BankTeacher.Bank
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_All, "รายการบิลล์", AccessibilityObject.Name, 2, "A4",1);
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_All, "รายการบิลล์", AccessibilityObject.Name,false,false, "A4",1);
         }
 
         private void BTPrint_Click(object sender, EventArgs e)
