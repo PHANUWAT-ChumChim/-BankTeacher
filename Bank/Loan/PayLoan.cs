@@ -123,7 +123,7 @@ namespace BankTeacher.Bank.Loan
                 IN = new Bank.Search(SQLDefault[0]);
                 IN.ShowDialog();
                 
-                if(Bank.Search.Return.Length != 1)
+                if(Bank.Search.Return[0] != "")
                 {
                     TBTeacherNo.Text = Bank.Search.Return[0];
                     TBTeacherName.Text = Bank.Search.Return[1];
