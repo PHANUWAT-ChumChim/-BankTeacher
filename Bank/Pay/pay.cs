@@ -47,6 +47,10 @@ namespace BankTeacher.Bank.Pay
         /// <para>[13] SELECT Detail Loan INPUT: {LoanID}</para>
         /// <para>[14] Select Billinfomation INPUT: {TeacherNo , {Year}</para>
         /// <para>[15] print backwards IN: {billl} </para>
+        /// <para>[16] print data IN: {BillNo} </para>
+        /// <para>[17] SELECT MEMBER (Enter) INPUT: {Text} </para>
+        /// <para>[18] Search Member and SavingAmount - RemainAmount in Guarantor INPUT: {TeacherNoNotLike} {Text} </para>
+        /// <para>[19] Get YearBillInfo Back 5 year INPUT: - </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -250,7 +254,7 @@ namespace BankTeacher.Bank.Pay
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as c on b.TypeNo = c.TypeNo \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailPayment as d on b.BillDetailPaymentNo = d.BillDetailPaymentNo \r\n " +
-          "WHERE TeacherNo = '{TeacherNo}' and Year = {Year} and Cancel = 1 \r\n " +
+          "WHERE TeacherNo = '{TeacherNo}' and CAST(CAST(a.DateAdd as Date) as nvarchar) LIKE '%{Year}%' and a.Cancel = 1\r\n " +
           "ORDER BY a.BillNo DESC"
           ,
            //[15] print backwards IN: {billl}
@@ -281,6 +285,39 @@ namespace BankTeacher.Bank.Pay
           "GROUP BY a.TeacherNo , CAST(ISNULL(c.PrefixName+' ','')+[Fname] +' '+ [Lname] as NVARCHAR), e.SavingAmount,    \r\n " +
           "b.TeacherLicenseNo,b.IdNo ,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar)   \r\n " +
           "ORDER BY a.TeacherNo; "
+
+             ,
+
+          //[18] Search Member and SavingAmount - RemainAmount in Guarantor INPUT: {TeacherNoNotLike}  {Text}
+           "SELECT TOP(20)TeacherNo, Name, RemainAmount  \r\n " +
+          "FROM (SELECT a.TeacherNo , CAST(ISNULL(c.PrefixName,'')+' '+Fname +' '+ Lname as NVARCHAR)AS Name,     \r\n " +
+          "ROUND(ISNULL(e.SavingAmount,0) - ISNULL(SUM(d.RemainsAmount),0),0,1) as RemainAmount, Fname    \r\n " +
+          "FROM EmployeeBank.dbo.tblMember as a      \r\n " +
+          "LEFT JOIN (    \r\n " +
+          "SELECT TeacherNo , Fname , Lname , PrefixNo    \r\n " +
+          "FROM Personal.dbo.tblTeacherHis     \r\n " +
+          ") as b ON a.TeacherNo = b.TeacherNo      \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as c ON b.PrefixNo = c.PrefixNo      \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblGuarantor as d on a.TeacherNo = d.TeacherNo     \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblShare as e ON e.TeacherNo = a.TeacherNo     \r\n " +
+          "LEFT JOIN (SELECT TeacherNo   \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan    \r\n " +
+          "WHERE LoanStatusNo = 1 or LoanStatusNo = 2 GROUP BY TeacherNo) as f on a.TeacherNo = f.TeacherNo    \r\n " +
+          "WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(c.PrefixName,'')+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1    \r\n " +
+          "GROUP BY a.TeacherNo , CAST(ISNULL(c.PrefixName,'')+' '+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname ) as a     \r\n " +
+          "WHERE RemainAmount IS NOT NULL {TeacherNoNotLike} \r\n " +
+          "GROUP BY TeacherNo, Name, RemainAmount ,a.Fname  \r\n " +
+          "ORDER BY a.Fname; "
+           ,
+
+           //[19] Get YearBillInfo Back 5 year INPUT: -
+           "SELECT TOP 5 YEAR(a.DateAdd) \r\n " +
+          "FROM EmployeeBank.dbo.tblBill as a \r\n " +
+          "WHERE a.TeacherNo LIKE 'T50019' \r\n " +
+          "GROUP BY YEAR(a.DateAdd) \r\n " +
+          "ORDER BY YEAR(a.DateAdd) DESC"
+           ,
+
          };
 
         
@@ -331,7 +368,8 @@ namespace BankTeacher.Bank.Pay
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
             //เปิดหน้าค้นหาแล้วให้ใส่ Code จาก SQLDefault[0] ที่ใช้สำหรับค้นหาสมาชิก
-            Bank.Search IN = new Bank.Search(SQLDefault[0] , "หุ้นสะสม");
+            Bank.Search IN = new Bank.Search(SQLDefault[18]
+                .Replace("{TeacherNoNotLike}" , $"and a.TeacherNo NOT LIKE '{TBTeacherNo.Text}'"), "หุ้นสะสม");
             IN.ShowDialog();
             //ถ้า ID สมาชิกที่เลือกไม่เป็นว่างเปล่า ให้ ใส่ลงใน TBTeacherNo และ ไปทำ event Keydown ของ TBTeacherNo
             if(Bank.Search.Return[0] != "")
@@ -677,7 +715,27 @@ namespace BankTeacher.Bank.Pay
                         }
                     }
                     Checkmember(false);
+
+                    CBYearSelection_BillInfo.Items.Clear();
+                    DataSet dtYearBillInfo = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[19]);
+                    if(dtYearBillInfo.Tables[0].Rows.Count != 0)
+                    {
+                        for(int x = 0; x < dtYearBillInfo.Tables[0].Rows.Count; x++)
+                        {
+                            CBYearSelection_BillInfo.Items.Add(dtYearBillInfo.Tables[0].Rows[x][0]);
+                        }
+                        if(CBYearSelection_BillInfo.Items.Count != 0)
+                        {
+                            CBYearSelection_BillInfo.SelectedIndex = 0;
+                        }
+                        else
+                        {
+                            CBYearSelection_BillInfo.Enabled = false;
+                        }
+                    }
+
                 }
+
             }
         }
 

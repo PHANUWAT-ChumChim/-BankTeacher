@@ -146,12 +146,10 @@ namespace BankTeacher.Bank.Loan
 
                 IN = new Bank.Search(SQLDefault[0]);
                 IN.ShowDialog();
-                TBTeacherNo.Text = Bank.Search.Return[0];
-                TBTeacherName.Text = Bank.Search.Return[1];
                 CB_LoanNo.Enabled = true;
                 CB_LoanNo.Items.Clear();
                 Check = 1;
-                Checkmember(false);
+                //Checkmember(false);
                 CB_LoanNo.Items.Clear();
                 CB_LoanNo.SelectedIndex = -1;
                 TBTeacherName.Text = "";
@@ -164,11 +162,11 @@ namespace BankTeacher.Bank.Loan
                 TBSavingAmount.Text = "";
                 DGVGuarantor.Rows.Clear();
                 DGVLoanDetail.Rows.Clear();
-                ComboBox[] cb = new ComboBox[] { CB_LoanNo };
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
-                    .Replace("{TeacherNo}", TBTeacherNo.Text));
-                for (int x = 0; x < dt.Rows.Count; x++)
-                if(Bank.Search.Return[0].ToString() != "")
+                //ComboBox[] cb = new ComboBox[] { CB_LoanNo };
+                //DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
+                //    .Replace("{TeacherNo}", TBTeacherNo.Text));
+                //for (int x = 0; x < dt.Rows.Count; x++)
+                if(Bank.Search.Return[0] != "")
                 {
                     TBTeacherNo.Text = Bank.Search.Return[0];
                     TBTeacherName.Text = Bank.Search.Return[1];

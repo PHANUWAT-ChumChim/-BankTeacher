@@ -26,6 +26,8 @@ namespace BankTeacher.Bank.Add_Member
         /// <para>[2] SELECT Check SavingAmount INPUT: {TeacherNo}</para>
         /// <para>[3] Select MemberResignation INPUT: {Date}</para>
         /// <para>[4] SELECT Year INPUT: </para>
+        /// <para>[5] SELECT MEMBER (Enter) INPUT: {Text}</para>
+        /// <para>[6] Search Member and SavingAmount - RemainAmount in Guarantor INPUT: {TeacherNoNotLike}  {Text}</para>
         /// </summary>
         private String[] SQLDefault = new string[]
         {
@@ -89,6 +91,30 @@ namespace BankTeacher.Bank.Add_Member
             "b.TeacherLicenseNo,b.IdNo ,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar)   \r\n " +
             "ORDER BY a.TeacherNo; "
 
+            ,
+
+            //[6] Search Member and SavingAmount - RemainAmount in Guarantor INPUT: {TeacherNoNotLike}  {Text}
+           "SELECT TOP(20)TeacherNo, Name, RemainAmount  \r\n " +
+          "FROM (SELECT a.TeacherNo , CAST(ISNULL(c.PrefixName,'')+' '+Fname +' '+ Lname as NVARCHAR)AS Name,     \r\n " +
+          "ROUND(ISNULL(e.SavingAmount,0) - ISNULL(SUM(d.RemainsAmount),0),0,1) as RemainAmount, Fname    \r\n " +
+          "FROM EmployeeBank.dbo.tblMember as a      \r\n " +
+          "LEFT JOIN (    \r\n " +
+          "SELECT TeacherNo , Fname , Lname , PrefixNo    \r\n " +
+          "FROM Personal.dbo.tblTeacherHis     \r\n " +
+          ") as b ON a.TeacherNo = b.TeacherNo      \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as c ON b.PrefixNo = c.PrefixNo      \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblGuarantor as d on a.TeacherNo = d.TeacherNo     \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblShare as e ON e.TeacherNo = a.TeacherNo     \r\n " +
+          "LEFT JOIN (SELECT TeacherNo   \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan    \r\n " +
+          "WHERE LoanStatusNo = 1 or LoanStatusNo = 2 GROUP BY TeacherNo) as f on a.TeacherNo = f.TeacherNo    \r\n " +
+          "WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(c.PrefixName,'')+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1    \r\n " +
+          "GROUP BY a.TeacherNo , CAST(ISNULL(c.PrefixName,'')+' '+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname ) as a     \r\n " +
+          "WHERE RemainAmount IS NOT NULL {TeacherNoNotLike} \r\n " +
+          "GROUP BY TeacherNo, Name, RemainAmount ,a.Fname  \r\n " +
+          "ORDER BY a.Fname; "
+           ,
+
         };
         public CancelMember()
         {
@@ -116,7 +142,8 @@ namespace BankTeacher.Bank.Add_Member
         {
             try
             {
-                Bank.Search IN = new Bank.Search(SQLDefault[0] , "หุ้นสะสม");
+                Bank.Search IN = new Bank.Search(SQLDefault[6]
+                    .Replace("{TeacherNoNotLike}", $"and a.TeacherNo NOT LIKE '{TBTeacherNo.Text}'"), "หุ้นสะสม");
                 IN.ShowDialog();
                 if (Bank.Search.Return[0] != "")
                 {

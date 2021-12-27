@@ -173,9 +173,9 @@ namespace BankTeacher.Bank
           "SET @AmountDivident = (SELECT FLOOR(SUM(ROUND(ROUND((SavingAmount/@PerShare), 2 ,1) * @AVGDivident ,2 , 1) )) \r\n " +
           "FROM EmployeeBank.dbo.tblShare); \r\n " +
           " \r\n " +
-          "SELECT @Interest as InterestInyear , ISNULL(@InterestBeforYear,0) as InterestBeforYear, @InterestNextYear as InterestNextYear , @AmountSaving as AmountSaving , @AVGDivident as AVGDivident , @AmountDivident as AmountDivident\r\n" +
-
-           "SELECT a.TeacherNo ,CAST(ISNULL(c.Prefixname,'')+ b.Fname + ' ' + b.Lname as nvarchar) , SavingAmount , FLOOR(ROUND(ROUND((SavingAmount/@PerShare), 2 ,1) * @AVGDivident ,2 , 1) ) \r\n " +
+          "SELECT ISNULL(@Interest, 0) as InterestInyear , ISNULL(@InterestBeforYear,0) as InterestBeforYear, ISNULL(@InterestNextYear , 0) as InterestNextYear , ISNULL(@AmountSaving, 0) as AmountSaving , ISNULl(@AVGDivident,0) as AVGDivident , ISNULL(@AmountDivident,0) as AmountDivident\r\n" +
+             "\r\n" +
+           "SELECT a.TeacherNo ,CAST(ISNULL(c.Prefixname,'')+ b.Fname + ' ' + b.Lname as nvarchar) , SavingAmount , ISNULL(FLOOR(ROUND(ROUND((SavingAmount/@PerShare), 2 ,1) * @AVGDivident ,2 , 1) ) ,0) \r\n " +
           "FROM EmployeeBank.dbo.tblMember as a \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo =  c.PrefixNo \r\n " +
@@ -187,9 +187,8 @@ namespace BankTeacher.Bank
           "FROM EmployeeBank.dbo.tblDividend  \r\n " +
           "WHERE Cancel = 1 \r\n " +
           "GROUP BY Year"
+
            ,
-
-
 
          };
 
