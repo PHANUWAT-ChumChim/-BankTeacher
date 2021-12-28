@@ -1139,8 +1139,8 @@ namespace BankTeacher.Bank.Pay
         private void DGV_Pay_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             if (Int32.TryParse(DGV_Pay.Rows[e.RowIndex].Cells[2].Value.ToString(), out int Amount))
-                Summoney();
-
+                    Summoney();
+            DGV_Printbypoon.Rows[e.RowIndex].Cells[3].Value = Amount;
         }
         //Can only Type Numbers in textbox Amount
         private void TBAmount_Pay_KeyPress(object sender, KeyPressEventArgs e)
