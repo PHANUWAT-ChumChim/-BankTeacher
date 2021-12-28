@@ -1253,6 +1253,7 @@ namespace BankTeacher.Bank.Pay
         }
 
         //SaveInfo Button
+        int Printbill = 0;
         private void BSave_Pay_Click(object sender, EventArgs e)
         {
             BankTeacher.Class.ComboBoxPayment Payment = (CBPayment_Pay.SelectedItem as BankTeacher.Class.ComboBoxPayment);
@@ -1312,11 +1313,12 @@ namespace BankTeacher.Bank.Pay
                         CBYearSelection_ShareInfo.SelectedIndex = CBYearSelection_ShareInfo.SelectedIndex;
                         CBLoanSelection_LoanInfo.SelectedIndex = CBLoanSelection_LoanInfo.SelectedIndex;
                         CBYearSelection_BillInfo.SelectedIndex = CBYearSelection_BillInfo.SelectedIndex;
-
+                        Printbill = 1;
                         if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                         {
                             printDocument1.Print();
                         }
+                        Printbill = 0;
                         for (int a = 0; a < DGV_Pay.Rows.Count; a++)
                         {
                             if (DGV_Pay.Rows[a].Cells[1].Value.ToString().Contains("หุ้น"))
@@ -1962,7 +1964,7 @@ namespace BankTeacher.Bank.Pay
         }
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            if(CB_SelectPrint.SelectedIndex == 0)
+            if(CB_SelectPrint.SelectedIndex == 0 && Printbill != 1)
             {
                 Class.Print.PrintPreviewDialog.details = 1;
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_BillInfo, "บิลล์การจ่าย", this.AccessibilityObject.Name,false,false, "A4", 1);
@@ -1973,7 +1975,7 @@ namespace BankTeacher.Bank.Pay
             }
             else
             {
-                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Printbypoon, "ใบเสร็จรับเงิน", this.AccessibilityObject.Name,true,true, "A5", 1);
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Printbypoon, "ใบเสร็จรับเงิน", this.AccessibilityObject.Name,true,true, "A5",0);
             }
             Class.Print.PrintPreviewDialog.details = 0;
         }
