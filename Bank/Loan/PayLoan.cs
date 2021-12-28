@@ -256,6 +256,7 @@ namespace BankTeacher.Bank.Loan
             {
                 try
                 {
+                    String a = "";
                     //Input Location Folder
                     var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("Loan");
                     //Input Contain words แนะนำ เป็นรหัสอาจารย์ ในหน้าทั่วไปส่วนหน้าไหนถ้ามีการทำรายการเยอะๆให้เอาเป็นเลขบิลล์ของหน้านั้นๆเช่นหน้าดูเอกสารกู้ จะใส่เป็นเลขกู้ หน้าดูเอกสาร สมัครสมาชิกจะใส่เป็นชื่ออาจารย์
@@ -264,7 +265,8 @@ namespace BankTeacher.Bank.Loan
                     {
                         MessageBox.Show(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun, "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
-                    else if (BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun != "" && !(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun.Contains("หมดเวลา")))
+                    else if (BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun != "" && !(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun.Contains("หมดเวลา")) /*a == ""*/)
+
                     {
                         DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text));
                         if (dt.Rows.Count == 0)
@@ -310,7 +312,7 @@ namespace BankTeacher.Bank.Loan
                     }
                     else
                     {
-                        MessageBox.Show("จ่ายไม่สำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("จ่ายไม่สำเร็จ โปรดอัพโหลดไฟล์ก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
                 catch
@@ -318,10 +320,10 @@ namespace BankTeacher.Bank.Loan
                     MessageBox.Show("จ่ายล้มเหลว", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-            else if (SaveCheck == DialogResult.No)
-            {
-                MessageBox.Show("จ่ายไม่สำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+            //else if (SaveCheck == DialogResult.No)
+            //{
+            //    MessageBox.Show("จ่ายไม่สำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //}
             else if (CBB4Oppay.SelectedIndex == -1)
                 MessageBox.Show("จ่ายไม่สำเร็จ โปรดระบุช่องทางการจ่ายเงิน", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else

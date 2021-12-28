@@ -50,7 +50,7 @@ namespace BankTeacher.Bank
           "    WHEN a.YearPay = {Year} THEN (ROUND((CAST(a.InterestRate as float) / 100) * a.LoanAmount , 0) / a.PayNo  * (12 - a.MonthPay + 1)) \r\n " +
           "END , 0)) \r\n " +
           "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
-          "WHERE a.LoanStatusNo = 2 and a.YearPay = {Year} or a.YearPay = {Year} - 1; \r\n " +
+          "WHERE (a.LoanStatusNo = 2 or a.LoanStatusNo = 3) and a.YearPay = {Year} or a.YearPay = {Year} - 1; \r\n " +
           " \r\n " +
           "SELECT @Interest = @Interest + RemainInterestLastYear \r\n " +
           "FROM EmployeeBank.dbo.tblDividend \r\n " +
@@ -159,7 +159,7 @@ namespace BankTeacher.Bank
           "     WHEN a.YearPay = {Year} THEN (ROUND((CAST(a.InterestRate as float) / 100) * a.LoanAmount , 0) / a.PayNo  * (12 - a.MonthPay + 1))  \r\n " +
           " END , 0))  \r\n " +
           " FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
-          " WHERE a.LoanStatusNo = 2 and a.YearPay = {Year} or a.YearPay = {Year} - 1;  \r\n " +
+          " WHERE (a.LoanStatusNo = 2 or a.LoanStatusNo = 3) and a.YearPay = {Year} or a.YearPay = {Year} - 1;  \r\n " +
           " \r\n " +
           "  SELECT @Interest =@Interest + RemainInterestLastYear  \r\n " +
           " FROM EmployeeBank.dbo.tblDividend  \r\n " +
@@ -280,6 +280,7 @@ namespace BankTeacher.Bank
                     SQLDefault[4]);
                 if(ds.Tables[0].Rows.Count != 0)
                 {
+                    DGV.Rows.Clear();
                     TBSavingAmount.Text = ds.Tables[0].Rows[0][3].ToString();
                         TBDividendAmount.Text = ds.Tables[0].Rows[0][5].ToString();
                         TBInterestAmount.Text = ds.Tables[0].Rows[0][0].ToString();

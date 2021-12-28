@@ -328,6 +328,7 @@ namespace BankTeacher.Bank.Add_Member
                         Check = 1;
                         CheckBRegister = false;
                         BTPrintfShare_Reg.Enabled = true;
+                        StatusBoxFile = 0;
                         Checkmember(false);
                     }
                 }
