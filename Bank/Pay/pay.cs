@@ -50,7 +50,7 @@ namespace BankTeacher.Bank.Pay
         /// <para>[16] print data IN: {BillNo} </para>
         /// <para>[17] SELECT MEMBER (Enter) INPUT: {Text} </para>
         /// <para>[18] Search Member and SavingAmount - RemainAmount in Guarantor INPUT: {TeacherNoNotLike} {Text} </para>
-        /// <para>[19] Get YearBillInfo Back 5 year INPUT: - </para>
+        /// <para>[19] Get YearBillInfo Back 5 year INPUT: {TeacherNo} </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -310,10 +310,10 @@ namespace BankTeacher.Bank.Pay
           "ORDER BY a.Fname; "
            ,
 
-           //[19] Get YearBillInfo Back 5 year INPUT: -
+           //[19] Get YearBillInfo Back 5 year INPUT: {TeacherNo}
            "SELECT TOP 5 YEAR(a.DateAdd) \r\n " +
           "FROM EmployeeBank.dbo.tblBill as a \r\n " +
-          "WHERE a.TeacherNo LIKE 'T50019' \r\n " +
+          "WHERE a.TeacherNo LIKE '{TeacherNo}' \r\n " +
           "GROUP BY YEAR(a.DateAdd) \r\n " +
           "ORDER BY YEAR(a.DateAdd) DESC"
            ,
@@ -717,22 +717,18 @@ namespace BankTeacher.Bank.Pay
                     Checkmember(false);
 
                     CBYearSelection_BillInfo.Items.Clear();
-                    DataSet dtYearBillInfo = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[19]);
+                    DataSet dtYearBillInfo = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[19]
+                        .Replace("{TeacherNo}", TBTeacherNo.Text));
                     if(dtYearBillInfo.Tables[0].Rows.Count != 0)
                     {
                         for(int x = 0; x < dtYearBillInfo.Tables[0].Rows.Count; x++)
                         {
-                            CBYearSelection_BillInfo.Items.Add(dtYearBillInfo.Tables[0].Rows[x][0]);
+                            CBYearSelection_BillInfo.Items.Add(dtYearBillInfo.Tables[0].Rows[x][0].ToString());
                         }
-                        if(CBYearSelection_BillInfo.Items.Count != 0)
-                        {
-                            CBYearSelection_BillInfo.SelectedIndex = 0;
-                        }
-                        else
-                        {
-                            CBYearSelection_BillInfo.Enabled = false;
-                        }
+                        CBYearSelection_BillInfo.SelectedIndex = 0;
                     }
+                    else
+                        CBYearSelection_BillInfo.Enabled = false;
 
                 }
 
