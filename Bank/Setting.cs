@@ -26,7 +26,7 @@ namespace BankTeacher.Bank
         /// </summary>
         private static String[] SQLDefault = new String[]
         { 
-             //[0]Edit Setting INPUT: {DateAmountChange} {StartAmountMin} {StartAmountMax} {PerShare}
+             //[0]Edit Setting INPUT: {DateAmountChange} {StartAmountMin} {StartAmountMax} {PerShare}  {MinLoan}
              "UPDATE EmployeeBank.dbo.tblSettingAmount \r\n" +
              "SET DateAmountChange = {DateAmountChange}, StartAmountMin = {StartAmountMin} , StartAmountMax = {StartAmountMax} , PerShare = {PerShare} , MinLoan = {MinLoan}\r\n" +
              "WHERE SettingNo = 1 ;"
@@ -126,7 +126,8 @@ namespace BankTeacher.Bank
                     Class.SQLConnection.InputSQLMSSQL(SQLDefault[0].Replace("{DateAmountChange}", TranChbToInt.ToString())
                         .Replace("{StartAmountMin}", TB_Min.Text)
                         .Replace("{StartAmountMax}", TB_Max.Text)
-                        .Replace("{PerShare}",TBPerShare.Text));
+                        .Replace("{PerShare}",TBPerShare.Text)
+                        .Replace("{MinLoan}" , TBMinLoan.Text));
                     BankTeacher.Bank.Menu.startAmountMin = Convert.ToInt32(TB_Min.Text);
                     BankTeacher.Bank.Menu.startAmountMax = Convert.ToInt32(TB_Max.Text);
                     MessageBox.Show("เสร็จสิ้น", "ตั้งค่า", MessageBoxButtons.OK, MessageBoxIcon.Information);
