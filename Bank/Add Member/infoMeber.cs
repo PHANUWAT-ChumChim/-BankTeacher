@@ -216,7 +216,7 @@ namespace BankTeacher.Bank.Add_Member
 //<<<<<<< Nice
                         button1.Enabled = true;
 //=======
-                        button3.Enabled = true;
+                        //button3.Enabled = true;
                         //button1.Enabled = true;
 //>>>>>>> master
                         tabControl1.Enabled = true;
