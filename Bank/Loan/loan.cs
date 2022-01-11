@@ -740,7 +740,6 @@ namespace BankTeacher.Bank.Loan
         {
             if (e.Button == MouseButtons.Right)
             {
-                
                 int currentMouseOverRow = DGVGuarantor.HitTest(e.X, e.Y).RowIndex;
                 if (currentMouseOverRow > 0)
                 {
@@ -855,7 +854,6 @@ namespace BankTeacher.Bank.Loan
             }
             if(DGVGuarantorCredit.Rows.Count != 0)
                 DGVGuarantorCredit.Rows.RemoveAt(e.RowIndex);
-
         }
         private void DGVGuarantor_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
         {

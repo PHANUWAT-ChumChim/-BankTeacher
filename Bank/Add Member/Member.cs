@@ -393,8 +393,6 @@ namespace BankTeacher.Bank.Add_Member
                 label5.Text = "เอกสารในการสมัครชิกสหกร์ครู";
                 BTPrintfShare_Reg.Enabled = false;
             }
-              
-
         }
 
         private void TBTeacherNo_Reg_EnabledChanged(object sender, EventArgs e)
