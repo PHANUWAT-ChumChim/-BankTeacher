@@ -313,7 +313,7 @@ namespace BankTeacher.Bank.Pay
            //[19] Get YearBillInfo Back 5 year INPUT: {TeacherNo}
            "SELECT TOP 5 YEAR(a.DateAdd) \r\n " +
           "FROM EmployeeBank.dbo.tblBill as a \r\n " +
-          "WHERE a.TeacherNo LIKE '{TeacherNo}' \r\n " +
+          "WHERE a.TeacherNo LIKE '{TeacherNo}' and a.Cancel != 2 \r\n " +
           "GROUP BY YEAR(a.DateAdd) \r\n " +
           "ORDER BY YEAR(a.DateAdd) DESC"
            ,
@@ -1357,6 +1357,7 @@ namespace BankTeacher.Bank.Pay
                     BSave_Pay.Enabled = false;
                     TBAmount_Pay.Enabled = false;
                     BAutoSelection.Enabled = false;
+                    tabControl1.Enabled = false;
                     CheckPay = true;
                     //ClearForm();
                     //TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
@@ -1551,18 +1552,21 @@ namespace BankTeacher.Bank.Pay
                     int Sum = 0;
                     int Balance = 0;
                     int firstBill = 0;
+                    int Line = 0;
+                    int Amountsum = 0;
+                    int Number = 1,number = 1;
                     for (int x = 0; x < dt.Rows.Count; x++)
                     {
                         if ( firstBill == 0)
                         {
-                            DGV_BillInfo.Rows.Add(x + 1, dt.Rows[x][0].ToString(), Convert.ToDateTime(dt.Rows[x][5].ToString()).ToString("dd-MM-yyyy"), dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
+                            DGV_BillInfo.Rows.Add(Number++, dt.Rows[x][0].ToString(), Convert.ToDateTime(dt.Rows[x][5].ToString()).ToString("dd-MM-yyyy"), dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
                             BillNo = dt.Rows[x][0].ToString();
                             firstBill++;
                             Sum = 0;
                         }
                         else if (BillNo == dt.Rows[x][0].ToString())
                         {
-                            DGV_BillInfo.Rows.Add(x + 1, "","", dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), "", dt.Rows[x][3].ToString());
+                            DGV_BillInfo.Rows.Add($"{Number-1}.{number++}", "","", dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), "", dt.Rows[x][3].ToString());
                             //DGV_BillInfo.Rows[x-2].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
                         }
                         else if(BillNo != dt.Rows[x][0].ToString())
@@ -1573,18 +1577,22 @@ namespace BankTeacher.Bank.Pay
                             //DGV_BillInfo.Rows[x].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
                             firstBill--;
                             Sum = 0;
+                            Line++;
+                            number = 1;
                         }
                         Sum = Sum + Convert.ToInt32(dt.Rows[x][3].ToString());
-                        Balance += Convert.ToInt32(dt.Rows[x][3].ToString());
+                        if(Amountsum < dt.Rows.Count)
+                        Balance += Convert.ToInt32(dt.Rows[Amountsum++][3].ToString());
                         if(x == dt.Rows.Count - 1)
                         {
                             DGV_BillInfo.Rows.Add("", "", "", "", "รวม", "", Sum);
                             DGV_BillInfo.Rows[DGV_BillInfo.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Yellow;
                             Sum = 0;
+                            Line++;
                         }
-                        if (x < 10) 
+                        if (x+Line < 10) 
                         { 
-                            LINE = 25 * (x + 1); 
+                            LINE = 25 * (x + 1 + Line); 
                         }
                         else 
                         { 
@@ -1969,7 +1977,7 @@ namespace BankTeacher.Bank.Pay
                 Class.Print.PrintPreviewDialog.details = 1;
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_BillInfo, "บิลล์การจ่าย", this.AccessibilityObject.Name,false,false, "A4", 1);
             }
-            else if(CB_SelectPrint.SelectedIndex == 1)
+            else if(CB_SelectPrint.SelectedIndex == 1 && Printbill != 1)
             {
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Tester, "ใบเสร็จรับเงิน(ย้อนหลัง)", this.AccessibilityObject.Name,checkBox_scrip.Checked,checkBox_copy.Checked, "A5", 0);
             }

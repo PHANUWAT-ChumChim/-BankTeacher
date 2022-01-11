@@ -15,6 +15,7 @@ namespace BankTeacher.Bank.Add_Member
         {
             InitializeComponent();
         }
+     
         /// <summary> 
         /// SQLDefault 
         /// <para>[0] Get InfoMember INPUT: {TeacherNo}  </para> 
@@ -22,6 +23,8 @@ namespace BankTeacher.Bank.Add_Member
         /// <para>[2] Check Bill Teacher Have Ever Paid INPUT: {TeacherNo}</para>
         /// <para>[3] Save Edit Bsave INPUT: {Amount}  {TeacherNo} </para>
         /// <para>[4] Select Detail Memner INPUT: {TeacherNo} </para>
+        /// <para>[5] Chcek flie INPUT : {TeacherNo} </para>
+        /// <para>[6] update file INPUT : {TeacharNo} {num} </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -85,6 +88,17 @@ namespace BankTeacher.Bank.Add_Member
           "LEFT JOIN EmployeeBank.dbo.tblMember as f on a.TeacherNo = f.TeacherNo  \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as h on f.TeacherAddBy = h.TeacherNo  \r\n " +
           "WHERE a.TeacherNo = '{TeacherNo}'; "
+          ,
+          //[5] Chcek flie INPUT : {TeacherNo}
+          "SELECT CAST(b.DocStatusName as NVARCHAR)  \r\n " +
+          "FROM EmployeeBank.dbo.tblMember as a  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblDocStatus as b on a.DocStatusNo = b.DocStatusNo  \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}' " 
+           ,
+           //[6] update file INPUT : {TeacharNo} {num}
+           "UPDATE EmployeeBank.dbo.tblMember \r\n " +
+           "set DocStatusNo = '{num}' \r\n " +
+           "where TeacherNo = '{TeacherNo}'"
          };
 
         int StartAmount = 0;
@@ -92,12 +106,10 @@ namespace BankTeacher.Bank.Add_Member
         {
             Class.FromSettingMedtod.ChangeSizePanal(this, PL);
         }
-
         private void BExitForm_Click(object sender, EventArgs e)
         {
             BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
         }
-
         private void infoMeber_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
@@ -115,7 +127,7 @@ namespace BankTeacher.Bank.Add_Member
                     BSaveEdit.Enabled = false;
                     SavingAmountStart = "";
                     TBStartAmount.Enabled = false;
-                    button3.Enabled = false;
+                    TB_selectflie.Enabled = false;
                     Checkmember(true);
                 }
                 else
@@ -201,11 +213,24 @@ namespace BankTeacher.Bank.Add_Member
 
                         if (Convert.ToInt32(dsInfoMember.Tables[1].Rows[0][0].ToString()) == 0 && Convert.ToInt32(dsInfoMember.Tables[2].Rows[0][0].ToString()) == 0)
                             TBStartAmount.Enabled = true;
+//<<<<<<< Nice
+                        button1.Enabled = true;
+//=======
                         button3.Enabled = true;
                         //button1.Enabled = true;
+//>>>>>>> master
                         tabControl1.Enabled = true;
                         Checkmember(false);
 
+                        DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text));
+                        if(dt.Rows[0][0].ToString() != "ไม่ได้อัพโหลด")
+                        {
+                            label12.Text = "อัพโหลดไฟล์เรียบร้อย";
+                            label12.ForeColor = Color.Green;
+                            TB_selectflie.Enabled = true;
+                            TB_deletefile.Enabled = true;
+                        }
+                            
                     }
                 }
                 catch(Exception ex)
@@ -224,7 +249,7 @@ namespace BankTeacher.Bank.Add_Member
                 TBSavingAmount.Text = "";
                 BSaveEdit.Enabled = false;
                 TBStartAmount.Enabled = false;
-                button3.Enabled = false;
+                TB_selectflie.Enabled = false;
                 SavingAmountStart = "";
                 Checkmember(true);
             }
@@ -271,13 +296,14 @@ namespace BankTeacher.Bank.Add_Member
 
             }
         }
-        int StatusBoxFile = 0;
+       
         String imgeLocation = "";
         private void BTOpenfile_Reg_Click(object sender, EventArgs e)
         {
-            if (TBTeacherNo.Text.Length == 6)
+            if (TBTeacherNo.Text.Length >= 6)
             {
-                if (StatusBoxFile == 0)
+                DataTable dt_CheckFlie = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text));
+                if (dt_CheckFlie.Rows[0][0].ToString() == "ไม่ได้อัพโหลด")
                 {
 
                     try
@@ -290,19 +316,18 @@ namespace BankTeacher.Bank.Add_Member
                         }
                         if (imgeLocation != "")
                         {
-                            //BTOpenfile_Reg.Text = "ส่งไฟล์";
-                            StatusBoxFile = 1;
-
                             var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
                             if (smb.IsValidConnection())
                             {
                                 String Return = smb.SendFile(imgeLocation, "Regmember" + TBTeacherNo.Text + ".pdf" ,TBTeacherNo.Text, 1, BankTeacher.Class.UserInfo.TeacherNo);
                                 MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                if (Return.Contains("อัพโหลดสำเร็จ"))
+                                if (Return.Contains("อัพโหลดเอกสารสำเร็จ"))
                                 {
-                                    //BTdeletefile_Reg.Enabled = true;
-                                    //LScan_Reg.Text = "อัพโหลดไฟล์สำเร็จ";
-                                    //LScan_Reg.ForeColor = Color.Green;
+                                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("{TeacherNo}", TBTeacherNo.Text).Replace("{num}","1"));
+                                    label12.Text = "อัพโหลดไฟล์เรียบร้อย";
+                                    label12.ForeColor = Color.Green;
+                                    TB_selectflie.Enabled = true;
+                                    TB_deletefile.Enabled = true;
                                     imgeLocation = "";
                                 }
                             }
@@ -317,7 +342,7 @@ namespace BankTeacher.Bank.Add_Member
                         MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                else if (StatusBoxFile == 1)
+                else
                 {
                     MessageBox.Show("ทำการส่งไฟล์แล้ว ไม่สามารถดำเนินการส่งไฟล์ซ้ำได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
@@ -327,26 +352,55 @@ namespace BankTeacher.Bank.Add_Member
                 MessageBox.Show("กรุณากรอก รหัสผู้ใช้ก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+        public static string OroD;
         private void button3_Click(object sender, EventArgs e)
         {
-            if(TBTeacherNo.Text != "")
+            OroD = "เปิดไฟล์";
+            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text));
+            if (dt.Rows[0][0].ToString() == "อัพโหลดเอกสารแล้ว")
             {
-                //Input Location Folder
-                var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
-                //Input Contain words แนะนำ เป็นรหัสอาจารย์ ในหน้าทั่วไปส่วนหน้าไหนถ้ามีการทำรายการเยอะๆให้เอาเป็นเลขบิลล์ของหน้านั้นๆเช่นหน้าดูเอกสารกู้ จะใส่เป็นเลขกู้ หน้าดูเอกสาร สมัครสมาชิกจะใส่เป็นชื่ออาจารย์
-                smb.ThreadOpenFile(TBTeacherNo.Text);
-                if(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun != "")
+                if (TBTeacherNo.Text != "")
                 {
-                    MessageBox.Show(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun, "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    //Input Location Folder
+                    var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
+                    //Input Contain words แนะนำ เป็นรหัสอาจารย์ ในหน้าทั่วไปส่วนหน้าไหนถ้ามีการทำรายการเยอะๆให้เอาเป็นเลขบิลล์ของหน้านั้นๆเช่นหน้าดูเอกสารกู้ จะใส่เป็นเลขกู้ หน้าดูเอกสาร สมัครสมาชิกจะใส่เป็นชื่ออาจารย์
+                    smb.ThreadOpenFile(TBTeacherNo.Text);
+                    if (BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun != "")
+                    {
+                        MessageBox.Show(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun, "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
             }
+            else
+            {
+                label12.Text = "ยังไม่ได้อัพโหลดไฟล์";
+                label12.ForeColor = Color.Red;
+                TB_selectflie.Enabled = false;
+                TB_deletefile.Enabled = false;
+            }
         }
-
-        private void button2_Click(object sender, EventArgs e)
+        public void button4_Click(object sender, EventArgs e)
         {
-
+            Bank.SelectFile.TeaNo = TBTeacherNo.Text;
+            OroD = "ลบ";
+            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text));
+            if (dt.Rows[0][0].ToString() == "อัพโหลดเอกสารแล้ว")
+            {
+                if (TBTeacherNo.Text != "")
+                {
+                    //Input Location Folder
+                    var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
+                    smb.ThreadOpenFile(TBTeacherNo.Text);
+                }
+            }
+            else
+            {
+                label12.Text = "ยังไม่ได้อัพโหลดไฟล์";
+                label12.ForeColor = Color.Red;
+                TB_selectflie.Enabled = false;
+                TB_deletefile.Enabled = false;
+            }
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
             if(TBStartAmount.Enabled == true)

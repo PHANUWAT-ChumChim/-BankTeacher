@@ -63,7 +63,7 @@ namespace BankTeacher.Bank.Add_Member
             this.label8.Location = new System.Drawing.Point(22, 94);
             this.label8.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(65, 32);
+            this.label8.Size = new System.Drawing.Size(83, 40);
             this.label8.TabIndex = 7;
             this.label8.Text = "ชื่อ-สกุล";
             // 
@@ -74,7 +74,7 @@ namespace BankTeacher.Bank.Add_Member
             this.label9.Location = new System.Drawing.Point(34, 36);
             this.label9.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(42, 32);
+            this.label9.Size = new System.Drawing.Size(52, 40);
             this.label9.TabIndex = 8;
             this.label9.Text = "รหัส";
             // 
@@ -123,10 +123,11 @@ namespace BankTeacher.Bank.Add_Member
             // 
             this.LScan_Reg.AutoSize = true;
             this.LScan_Reg.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LScan_Reg.ForeColor = System.Drawing.Color.Red;
             this.LScan_Reg.Location = new System.Drawing.Point(29, 234);
             this.LScan_Reg.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.LScan_Reg.Name = "LScan_Reg";
-            this.LScan_Reg.Size = new System.Drawing.Size(131, 30);
+            this.LScan_Reg.Size = new System.Drawing.Size(170, 37);
             this.LScan_Reg.TabIndex = 53;
             this.LScan_Reg.Text = "ยังไม่ได้อัพโหลดไฟล์";
             // 
@@ -138,7 +139,7 @@ namespace BankTeacher.Bank.Add_Member
             this.label5.Location = new System.Drawing.Point(29, 52);
             this.label5.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(196, 30);
+            this.label5.Size = new System.Drawing.Size(251, 37);
             this.label5.TabIndex = 18;
             this.label5.Text = "เอกสารในการสมัครชิกสหกร์ครู";
             // 
@@ -147,6 +148,7 @@ namespace BankTeacher.Bank.Add_Member
             this.BTOpenfile_Reg.BackColor = System.Drawing.Color.White;
             this.BTOpenfile_Reg.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BTOpenfile_Reg.Cursor = System.Windows.Forms.Cursors.Default;
+            this.BTOpenfile_Reg.Enabled = false;
             this.BTOpenfile_Reg.Location = new System.Drawing.Point(27, 172);
             this.BTOpenfile_Reg.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.BTOpenfile_Reg.Name = "BTOpenfile_Reg";
@@ -169,6 +171,7 @@ namespace BankTeacher.Bank.Add_Member
             this.BTdeletefile_Reg.TabIndex = 21;
             this.BTdeletefile_Reg.Text = "ลบไฟล์";
             this.BTdeletefile_Reg.UseVisualStyleBackColor = false;
+            this.BTdeletefile_Reg.Click += new System.EventHandler(this.BTdeletefile_Reg_Click);
             // 
             // BTPrintfShare_Reg
             // 
@@ -215,7 +218,7 @@ namespace BankTeacher.Bank.Add_Member
             this.label4.Location = new System.Drawing.Point(34, 214);
             this.label4.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(286, 30);
+            this.label4.Size = new System.Drawing.Size(369, 37);
             this.label4.TabIndex = 17;
             this.label4.Text = "*ชี้แจง หุ้นที่ซื้อ สามารถเปลี่ยนแปลงราคาซื้อได้";
             // 
@@ -240,7 +243,7 @@ namespace BankTeacher.Bank.Add_Member
             this.TBTeacherName_Reg.Location = new System.Drawing.Point(118, 93);
             this.TBTeacherName_Reg.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
             this.TBTeacherName_Reg.Name = "TBTeacherName_Reg";
-            this.TBTeacherName_Reg.Size = new System.Drawing.Size(253, 36);
+            this.TBTeacherName_Reg.Size = new System.Drawing.Size(253, 43);
             this.TBTeacherName_Reg.TabIndex = 34;
             // 
             // BSearchTeacher_Reg
@@ -264,12 +267,10 @@ namespace BankTeacher.Bank.Add_Member
             this.TBTeacherNo_Reg.Location = new System.Drawing.Point(118, 33);
             this.TBTeacherNo_Reg.Margin = new System.Windows.Forms.Padding(1, 3, 1, 3);
             this.TBTeacherNo_Reg.Name = "TBTeacherNo_Reg";
-            this.TBTeacherNo_Reg.Size = new System.Drawing.Size(253, 36);
+            this.TBTeacherNo_Reg.Size = new System.Drawing.Size(253, 43);
             this.TBTeacherNo_Reg.TabIndex = 18;
             this.TBTeacherNo_Reg.EnabledChanged += new System.EventHandler(this.TBTeacherNo_Reg_EnabledChanged);
-            this.TBTeacherNo_Reg.TextChanged += new System.EventHandler(this.TBTeacherNo_Reg_TextChanged);
             this.TBTeacherNo_Reg.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TBTeacherNo_KeyDown);
-            this.TBTeacherNo_Reg.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TBTeacherNo_MouseDown);
             // 
             // TBStartAmountShare_Reg
             // 
@@ -278,7 +279,7 @@ namespace BankTeacher.Bank.Add_Member
             this.TBStartAmountShare_Reg.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.TBStartAmountShare_Reg.MaxLength = 10;
             this.TBStartAmountShare_Reg.Name = "TBStartAmountShare_Reg";
-            this.TBStartAmountShare_Reg.Size = new System.Drawing.Size(160, 36);
+            this.TBStartAmountShare_Reg.Size = new System.Drawing.Size(160, 43);
             this.TBStartAmountShare_Reg.TabIndex = 16;
             this.TBStartAmountShare_Reg.Text = "0";
             this.TBStartAmountShare_Reg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -291,7 +292,7 @@ namespace BankTeacher.Bank.Add_Member
             this.label10.Location = new System.Drawing.Point(393, 159);
             this.label10.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(38, 30);
+            this.label10.Size = new System.Drawing.Size(50, 37);
             this.label10.TabIndex = 15;
             this.label10.Text = "บาท";
             // 
@@ -302,7 +303,7 @@ namespace BankTeacher.Bank.Add_Member
             this.label16.Location = new System.Drawing.Point(22, 156);
             this.label16.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(142, 30);
+            this.label16.Size = new System.Drawing.Size(187, 37);
             this.label16.TabIndex = 15;
             this.label16.Text = "เลือกจำนวนเงินเริ่มต้น";
             // 
@@ -323,7 +324,7 @@ namespace BankTeacher.Bank.Add_Member
             // 
             // Member
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(903, 657);
