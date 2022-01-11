@@ -301,5 +301,10 @@ namespace BankTeacher.Bank.log
                 }
             }
         }
+
+        private void CancelBill_log_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
