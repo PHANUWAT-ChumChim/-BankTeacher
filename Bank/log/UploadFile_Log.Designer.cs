@@ -29,19 +29,19 @@ namespace BankTeacher.Bank.log
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.RBSelectTeacherAdd = new System.Windows.Forms.RadioButton();
             this.RBday = new System.Windows.Forms.RadioButton();
             this.DGV = new System.Windows.Forms.DataGridView();
             this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel2 = new System.Windows.Forms.Panel();
             this.LB1Id = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -86,6 +86,7 @@ namespace BankTeacher.Bank.log
             this.RBSelectTeacherAdd.TabIndex = 92;
             this.RBSelectTeacherAdd.Text = "ดูข้อมูลรายคน";
             this.RBSelectTeacherAdd.UseVisualStyleBackColor = true;
+            this.RBSelectTeacherAdd.CheckedChanged += new System.EventHandler(this.RBSelectTeacherAdd_CheckedChanged);
             // 
             // RBday
             // 
@@ -96,30 +97,31 @@ namespace BankTeacher.Bank.log
             this.RBday.TabIndex = 92;
             this.RBday.Text = "ดูข้อมูลรายวัน";
             this.RBday.UseVisualStyleBackColor = true;
+            this.RBday.CheckedChanged += new System.EventHandler(this.RBday_CheckedChanged);
             // 
             // DGV
             // 
             this.DGV.AllowUserToAddRows = false;
             this.DGV.AllowUserToDeleteRows = false;
             this.DGV.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.DGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.DGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.DGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column6,
-            this.Column2,
             this.Column5,
             this.Column1,
             this.Column4,
-            this.Column3});
+            this.Column3,
+            this.Column2});
             this.DGV.Location = new System.Drawing.Point(22, 133);
             this.DGV.Name = "DGV";
             this.DGV.ReadOnly = true;
@@ -134,13 +136,6 @@ namespace BankTeacher.Bank.log
             this.Column6.ReadOnly = true;
             this.Column6.Width = 165;
             // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "รหัส";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.Width = 130;
-            // 
             // Column5
             // 
             this.Column5.HeaderText = "ชื่อ - สกุล";
@@ -150,23 +145,30 @@ namespace BankTeacher.Bank.log
             // 
             // Column1
             // 
-            this.Column1.HeaderText = "วันที่";
+            this.Column1.HeaderText = "ประเภท";
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
             // 
             // Column4
             // 
-            this.Column4.HeaderText = "จำนวนเงินเริ่มต้น";
+            this.Column4.HeaderText = "เลขกู้";
             this.Column4.Name = "Column4";
             this.Column4.ReadOnly = true;
             this.Column4.Width = 130;
             // 
             // Column3
             // 
-            this.Column3.HeaderText = "สถานะ";
+            this.Column3.HeaderText = "Path";
             this.Column3.Name = "Column3";
             this.Column3.ReadOnly = true;
             this.Column3.Width = 110;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "วันที่ทำรายการ";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Width = 130;
             // 
             // panel2
             // 
@@ -234,6 +236,7 @@ namespace BankTeacher.Bank.log
             this.BSearchTeacher.Size = new System.Drawing.Size(32, 32);
             this.BSearchTeacher.TabIndex = 91;
             this.BSearchTeacher.UseVisualStyleBackColor = false;
+            this.BSearchTeacher.Click += new System.EventHandler(this.BSearchTeacher_Click);
             // 
             // TBTeacherNo
             // 
@@ -245,6 +248,7 @@ namespace BankTeacher.Bank.log
             this.TBTeacherNo.Name = "TBTeacherNo";
             this.TBTeacherNo.Size = new System.Drawing.Size(116, 36);
             this.TBTeacherNo.TabIndex = 89;
+            this.TBTeacherNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TBTeacherNo_KeyDown);
             // 
             // TBTeacherName
             // 
@@ -262,6 +266,7 @@ namespace BankTeacher.Bank.log
             this.DTP.Name = "DTP";
             this.DTP.Size = new System.Drawing.Size(200, 35);
             this.DTP.TabIndex = 0;
+            this.DTP.ValueChanged += new System.EventHandler(this.DTP_ValueChanged);
             // 
             // UploadFile_Log
             // 
@@ -274,6 +279,7 @@ namespace BankTeacher.Bank.log
             this.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.Name = "UploadFile_Log";
             this.Text = "UploadFile_Log";
+            this.Load += new System.EventHandler(this.UploadFile_Log_Load);
             this.panel1.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
@@ -291,12 +297,6 @@ namespace BankTeacher.Bank.log
         private System.Windows.Forms.RadioButton RBSelectTeacherAdd;
         private System.Windows.Forms.RadioButton RBday;
         private System.Windows.Forms.DataGridView DGV;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label LB1Id;
         private System.Windows.Forms.Label label1;
@@ -305,5 +305,11 @@ namespace BankTeacher.Bank.log
         private System.Windows.Forms.TextBox TBTeacherNo;
         private System.Windows.Forms.TextBox TBTeacherName;
         private System.Windows.Forms.DateTimePicker DTP;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
     }
 }

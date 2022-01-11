@@ -88,7 +88,7 @@ namespace BankTeacher.Bank.log
             this.Column3,
             this.Column4,
             this.Column5});
-            this.DGV.Location = new System.Drawing.Point(22, 132);
+            this.DGV.Location = new System.Drawing.Point(24, 132);
             this.DGV.Name = "DGV";
             this.DGV.ReadOnly = true;
             this.DGV.RowHeadersVisible = false;
@@ -262,6 +262,7 @@ namespace BankTeacher.Bank.log
             this.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.Name = "CancelBill_log";
             this.Text = "CancelBill_log";
+            this.Load += new System.EventHandler(this.CancelBill_log_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CancelBill_log_KeyDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

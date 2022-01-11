@@ -39,6 +39,7 @@ namespace BankTeacher.Class.ProtocolSharing
                 // IP พี่ตังค์ \\LAPTOP-A1H4E5P4\ShareFileTestSBM
                 // IP  PathFile = this.networkPath = @"\\192.168.1.3\ShareFileTestSBM\" + Location + @"\";
                 PathFile = this.networkPath = @"\\LAPTOP-A1H4E5P4\ShareFileTestSBM\" + Location + @"\";
+-
                 var userName = "tang1811";
                 var password = "123456789";
                 var domain = "";

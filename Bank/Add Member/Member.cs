@@ -162,6 +162,7 @@ namespace BankTeacher.Bank.Add_Member
         // Available values|  SQLDefault[1] / TB //
         private void BSave_Click_1(object sender, EventArgs e)
         {
+       
             if (CheckBRegister == false && TBTeacherName_Reg.Text != "")
             {
                 //Input Location Folder
@@ -400,6 +401,20 @@ namespace BankTeacher.Bank.Add_Member
                 {
                     BExitForm_Click(new object(), new EventArgs());
                 }
+            }
+        }
+        private void TBTeacherNo_Reg_TextChanged(object sender, EventArgs e)
+        {
+            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{TeacherNo}", TBTeacherNo_Reg.Text));
+            if (dt.Rows.Count != 0 && dt.Rows[0][0].ToString() == TBTeacherNo_Reg.Text)
+            {
+                label5.Text = "เอกสมัครสมาชิกย้อนหลัง";
+                BTPrintfShare_Reg.Enabled = true;
+            }
+            else
+            {
+                label5.Text = "เอกสารในการสมัครชิกสหกร์ครู";
+                BTPrintfShare_Reg.Enabled = false;
             }
         }
         private void TBTeacherNo_Reg_EnabledChanged(object sender, EventArgs e)
