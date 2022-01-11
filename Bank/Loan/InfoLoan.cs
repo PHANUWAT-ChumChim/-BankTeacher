@@ -102,7 +102,7 @@ namespace BankTeacher.Bank.Loan
           "GROUP BY b.LoanAmount,b.InterestRate,b.PayNo"
            ,
            //[3] for printback  INPUT : {TeacherNo} {LoanNo}
-         "SELECT TOP(1) a.TeacherNo,CAST(ISNULL(d.PrefixName+' ','')+Fname +' '+ Lname as NVARCHAR)AS Name,LoanAmount , \r\n " +
+         "SELECT a.TeacherNo,CAST(ISNULL(d.PrefixName+' ','')+Fname +' '+ Lname as NVARCHAR)AS Name,LoanAmount , \r\n " +
          "CAST(cNo + ' หมู่ ' + cMu + 'ซอย  ' + cSoi + ' ถนน' + cRoad + ' ตำบล' +  TumBonName + ' อำเภอ'  + AmphurName + ' จังหวัด ' + JangWatLongName + ' รหัสไปรสณี ' + ZipCode as NVARCHAR(255)) AS ADDRESS, \r\n " +
          "MonthPay , YearPay , PayNo , InterestRate \r\n " +
          "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
@@ -217,6 +217,17 @@ namespace BankTeacher.Bank.Loan
                     Checkmember(false);
                     if (CB_LoanNo.Items.Count == 1)
                         CB_LoanNo.SelectedIndex = 0;
+
+                    if (System.IO.File.Exists($@"\\LAPTOP-A1H4E5P4\ShareFileTestSBM\Loan\Loan{TBLoanNo.Text}.pdf") == false)
+                    {
+                        LB_Flie.Text = "กรุณาอัพโหลดเอกสาร";
+                        LB_Flie.ForeColor = Color.Red;
+                    }
+                    else
+                    {
+                        LB_Flie.Text = "อัพโหลดเอกสารสำเร็จ";
+                        LB_Flie.ForeColor = Color.Green;
+                    }
                 }
                 else
                 {
@@ -538,6 +549,7 @@ namespace BankTeacher.Bank.Loan
 
         private void button3_Click(object sender, EventArgs e)
         {
+            Bank.Add_Member.infoMeber.OroD = "เปิดไฟล์";
             if (CB_LoanNo.SelectedIndex != -1)
             {
                 BankTeacher.Class.ComboBoxPayment Loan = (CB_LoanNo.SelectedItem as BankTeacher.Class.ComboBoxPayment);
@@ -606,6 +618,22 @@ namespace BankTeacher.Bank.Loan
             {
                 checkBox_scrip.Enabled = false;
                 checkBox_copy.Enabled = false;
+            }
+        }
+
+        private void BT_deleteflie_Click(object sender, EventArgs e)
+        {
+            if (System.IO.File.Exists($@"\\LAPTOP-A1H4E5P4\ShareFileTestSBM\Loan\Loan{TBLoanNo.Text}.pdf") == true)
+            {
+                Bank.SelectFile.TeaNo = TBLoanNo.Text;
+                Bank.Add_Member.infoMeber.OroD = "ลบ";
+                //Input Location Folder
+                var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("Loan");
+                smb.ThreadOpenFile(TBLoanNo.Text);
+            }
+            else
+            {
+                MessageBox.Show("ไม่พบไฟล์ โปรดตวรจสอบ การส่งไฟล์ใหม่ หรือ ดูที่อยู่ไฟล์","ไฟล์",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
     }

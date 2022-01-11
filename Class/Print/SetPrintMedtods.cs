@@ -347,7 +347,6 @@ namespace BankTeacher.Class.Print
             int up = 1;
             string getRemove = GetNumber.ToString();
             string getNum = "";
-         
             for (int loop = 0; loop < GetNumber.ToString().Length; loop++)
             {
                 getNum = getRemove.Remove(0, 1);

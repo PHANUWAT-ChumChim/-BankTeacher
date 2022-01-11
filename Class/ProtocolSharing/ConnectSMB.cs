@@ -36,14 +36,16 @@ namespace BankTeacher.Class.ProtocolSharing
 
             public SmbFileContainer(String Location)
             {
-                PathFile = this.networkPath = @"\\192.168.1.3\ShareFileTestSBM\" + Location + @"\";
+                // IP พี่ตังค์ \\LAPTOP-A1H4E5P4\ShareFileTestSBM
+                // IP  PathFile = this.networkPath = @"\\192.168.1.3\ShareFileTestSBM\" + Location + @"\";
+                PathFile = this.networkPath = @"\\LAPTOP-A1H4E5P4\ShareFileTestSBM\" + Location + @"\";
                 var userName = "tang1811";
                 var password = "123456789";
                 var domain = "";
                 networkCredential = new NetworkCredential(userName, password, domain);
                 StatusRetrun = "";
                 //NetworkCredential a = new NetworkCredential();
-            }
+             }
 
             public bool IsValidConnection()
             {
@@ -60,7 +62,7 @@ namespace BankTeacher.Class.ProtocolSharing
                 ThreadOPFile = new Thread(() => GetFile(ContainsName));
                 ThreadOPFile.Start();
                 time.Start();
-
+                if(Bank.Add_Member.infoMeber.OroD != "ลบ")
                 while (ThreadOPFile.ThreadState == System.Threading.ThreadState.Running)
                 {
                     if (time.ElapsedMilliseconds >= 5000 && ThreadOPFile.IsAlive)
@@ -115,7 +117,6 @@ namespace BankTeacher.Class.ProtocolSharing
                             StatusRetrun = "ไม่พบไฟล์";
                             return;
                         }
-
                     }
                     catch(Exception e)
                     {
@@ -150,8 +151,8 @@ namespace BankTeacher.Class.ProtocolSharing
                 {
                     if (time.ElapsedMilliseconds >= 5000 && ThreadCheckFile.IsAlive)
                     {
-                        ThreadCheckFile.Abort();
                         StatusRetrun = "หมดเวลาการเชื่อมต่อ";
+                        //ThreadCheckFile.Abort();
                         break;
                     }
                 }

@@ -67,14 +67,14 @@ namespace BankTeacher.Bank.Add_Member
 
 
           //[2]  Select Detail Memner INPUT: {TeacherNo} 
-          "SELECT a.TeacherNo ,CAST(ISNULL(b.PrefixName+' ','')+a.Fname +' '+ a.Lname as NVARCHAR)AS Name,f.TeacherAddBy,CAST(ISNULL(b.PrefixName+' ','')+h.Fname +' '+ h.Lname as NVARCHAR) as NameTadd,a.IdNo, IIF(a.cNo != null,a.cNo,'-'),IIF(CAST(a.cMu as nvarchar) != null,a.cMu,'-'),IIF(CAST(c.TumBonName as nvarchar) != null,c.TumBonName,'-'),IIF(CAST(d.AmPhurName as nvarchar) != null,d.AmPhurName,'-'),IIF(CAST(e.JangWatLongName as nvarchar) != null,e.JangWatLongName,'-'),a.TelMobile,f.StartAmount  \r\n " +
+          "SELECT a.TeacherNo ,CAST(ISNULL(b.PrefixName+' ','')+a.Fname +' '+ a.Lname as NVARCHAR)AS Name,f.TeacherAddBy,CAST(ISNULL(b.PrefixName+' ','')+h.Fname +' '+ h.Lname as NVARCHAR) as NameTadd,a.IdNo, IIF(a.cNo != null,'-',a.cNo) as cNo,IIF(CAST(a.cMu as nvarchar) != null,'-',a.cMu) as cMu,IIF(CAST(c.TumBonName as nvarchar) != null,'-',CAST(c.TumBonName as nvarchar)) as TumBonName,IIF(CAST(d.AmPhurName as nvarchar) != null,'-',CAST(d.AmPhurName as nvarchar)) as AmPhurName,IIF(CAST(e.JangWatLongName as nvarchar) != null,'-',CAST(e.JangWatLongName as nvarchar)) as JangWatLongName,a.TelMobile,f.StartAmount \r\n " +
           "FROM Personal.dbo.tblTeacherHis as a \r\n " +
-          "LEFT JOIN BaseData.dbo.tblPrefix as b ON a.PrefixNo = b.PrefixNo  \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as b ON a.PrefixNo = b.PrefixNo \r\n " +
           "LEFT JOIN BaseData.dbo.tblTumBon as c on a.cTumBonNo = c.TumBonNo \r\n " +
           "LEFT JOIN BaseData.dbo.tblAmphur as d on a.cAmPhurNo = d.AmphurNo \r\n " +
           "LEFT JOIN BaseData.dbo.tblJangWat as e on a.cJangWatNo = e.JangWatNo \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblMember as f on a.TeacherNo = f.TeacherNo  \r\n " +
-          "LEFT JOIN Personal.dbo.tblTeacherHis as h on f.TeacherAddBy = h.TeacherNo  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblMember as f on a.TeacherNo = f.TeacherNo \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as h on f.TeacherAddBy = h.TeacherNo \r\n " +
           "WHERE a.TeacherNo = '{TeacherNo}'; "
 
           ,
@@ -106,8 +106,8 @@ namespace BankTeacher.Bank.Add_Member
           "ELSE \r\n " +
           "BEGIN \r\n " +
           " \r\n " +
-          "INSERT INTO EmployeeBank.dbo.tblMember(TeacherNo, TeacherAddBy, StartAmount, DateAdd)  \r\n " +
-          "VALUES('{TeacherNo}','{TeacherNoAddBy}',{StartAmount},CURRENT_TIMESTAMP)   \r\n " +
+          "INSERT INTO EmployeeBank.dbo.tblMember(TeacherNo, TeacherAddBy, StartAmount, DateAdd,DocStatusNo)  \r\n " +
+          "VALUES('{TeacherNo}','{TeacherNoAddBy}',{StartAmount},CURRENT_TIMESTAMP,1)   \r\n " +
           "INSERT INTO EmployeeBank.dbo.tblShare(TeacherNo, SavingAmount) \r\n " +
           "VALUES('{TeacherNo}',{StartAmount})  \r\n " +
           "INSERT INTO EmployeeBank.dbo.tblBill(TeacherNo, TeacherNoAddBy, DateAdd)  \r\n " +
@@ -204,6 +204,10 @@ namespace BankTeacher.Bank.Add_Member
                                 }
                                 else
                                 {
+                                    StatusBoxFile = 0;
+                                    BTOpenfile_Reg.Text = "อัพโหลดไฟล์";
+                                    LScan_Reg.Text = "ยังไม่ได้อัพโหลดไฟล์";
+                                    LScan_Reg.ForeColor = Color.Red;
                                     MessageBox.Show("ยกเลิกการสมัคร", "สมัครสมาชิก", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 }
 
@@ -223,6 +227,7 @@ namespace BankTeacher.Bank.Add_Member
                         MessageBox.Show("โปรดเลือกสมาชิกในการสมัคร", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
+                else { MessageBox.Show("โปรดตรวจสอบ การเชื่อมต่อ หรือ เช็คโฟลเดอร์ที่ทำการส่งไฟล์", "เเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
             }
         }
         // Available values| TB /
@@ -256,9 +261,11 @@ namespace BankTeacher.Bank.Add_Member
         {
             if(TBTeacherNo_Reg.Text.Length != 0)
             {
-                if (StatusBoxFile == 0)
-                {
 
+                //var File = System.IO.File.Exists($@"\\LAPTOP-A1H4E5P4\ShareFileTestSBM\RegMember\Member_{TBTeacherNo_Reg.Text}.pdf\");
+                var Filee = System.IO.File.Exists($@"\\LAPTOP-A1H4E5P4\ShareFileTestSBM\RegMember\Member_{TBTeacherNo_Reg.Text}.pdf");
+                if (StatusBoxFile == 0 && Filee == false)
+                {
                     try
                     {
                         OpenFileDialog dialog = new OpenFileDialog();
@@ -269,7 +276,7 @@ namespace BankTeacher.Bank.Add_Member
                         }
                         if (imgeLocation != "")
                         {
-                            //BTOpenfile_Reg.Text = "ส่งไฟล์";
+                            BTOpenfile_Reg.Text = "ส่งไฟล์";
                             StatusBoxFile = 1;
                             
                             var smb = new SmbFileContainer("RegMember");
@@ -277,7 +284,7 @@ namespace BankTeacher.Bank.Add_Member
                             {
                                 String Return = smb.SendFile(imgeLocation, "Member_" + TBTeacherNo_Reg.Text + ".pdf" , TBTeacherNo_Reg.Text, 1, BankTeacher.Class.UserInfo.TeacherNo);
                                 MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                if (Return.Contains("อัพโหลดสำเร็จ"))
+                                if (Return.Contains("อัพโหลดเอกสารสำเร็จ"))
                                 {
                                     BTdeletefile_Reg.Enabled = true;
                                     LScan_Reg.Text = "อัพโหลดไฟล์สำเร็จ";
@@ -288,7 +295,7 @@ namespace BankTeacher.Bank.Add_Member
                             }
                             else
                             {
-                                MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBox.Show("ไม่พบตำเเหน่งไฟล์", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
                         }
 
@@ -298,7 +305,7 @@ namespace BankTeacher.Bank.Add_Member
                         MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                else if (StatusBoxFile == 1)
+                else if (StatusBoxFile == 1 || Filee == true)
                 {
                     MessageBox.Show("ทำการส่งไฟล์แล้ว ไม่สามารถดำเนินการส่งไฟล์ซ้ำได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
@@ -308,12 +315,6 @@ namespace BankTeacher.Bank.Add_Member
                 MessageBox.Show("กรุณากรอก รหัสผู้ใช้ก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-
-        private void TBTeacherNo_MouseDown(object sender, MouseEventArgs e)
-        {
-
-        }
-
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -325,9 +326,25 @@ namespace BankTeacher.Bank.Add_Member
                     if(ds.Tables[0].Rows.Count != 0)
                     {
                         TBTeacherName_Reg.Text = ds.Tables[0].Rows[0][1].ToString();
+                        var File = System.IO.File.Exists($@"\\LAPTOP-A1H4E5P4\ShareFileTestSBM\RegMember\Member_{TBTeacherNo_Reg.Text}.pdf");
+                        if(File == true)
+                        {
+                            LScan_Reg.Text = "อัพโหลดไฟล์สำเร็จ";
+                            LScan_Reg.ForeColor = Color.Green;
+                            BTOpenfile_Reg.Text = "ส่งไฟล์";
+                            BTdeletefile_Reg.Enabled = true;
+                        }
+                        else
+                        {
+                            LScan_Reg.Text = "ยังไม่ได้อัพโหลดไฟล์";
+                            LScan_Reg.ForeColor = Color.Red;
+                            BTOpenfile_Reg.Text = "อัพโหลดไฟล์";
+                            BTdeletefile_Reg.Enabled = false;
+                        }
                         Check = 1;
                         CheckBRegister = false;
                         BTPrintfShare_Reg.Enabled = true;
+                        BTOpenfile_Reg.Enabled = true;
                         StatusBoxFile = 0;
                         Checkmember(false);
                     }
@@ -335,6 +352,7 @@ namespace BankTeacher.Bank.Add_Member
                 catch (Exception ex)
                 {
                     BTPrintfShare_Reg.Enabled = false;
+                    BTOpenfile_Reg.Enabled = false;
                     Console.WriteLine(ex);
                 }
             }
@@ -364,13 +382,18 @@ namespace BankTeacher.Bank.Add_Member
                 {
                     TBTeacherNo_Reg.Text = "";
                     TBTeacherName_Reg.Text = "";
-                    TBStartAmountShare_Reg.Text = "";
+                    TBStartAmountShare_Reg.Text = BankTeacher.Bank.Menu.startAmountMin.ToString(); ;
                     Check = 0;
                     StatusBoxFile = 0;
                     imgeLocation = "";
                     CheckBRegister = false;
                     CheckBCancel = false;
                     Saving = 0;
+                    // ไฟล์
+                    StatusBoxFile = 0;
+                    BTOpenfile_Reg.Text = "อัพโหลดไฟล์";
+                    LScan_Reg.Text = "ยังไม่ได้อัพโหลดไฟล์";
+                    LScan_Reg.ForeColor = Color.Red;
                     Checkmember(true);
                 }
                 else
@@ -379,24 +402,6 @@ namespace BankTeacher.Bank.Add_Member
                 }
             }
         }
-
-        private void TBTeacherNo_Reg_TextChanged(object sender, EventArgs e)
-        {
-            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{TeacherNo}", TBTeacherNo_Reg.Text));
-            if (dt.Rows.Count != 0 && dt.Rows[0][0].ToString() == TBTeacherNo_Reg.Text)
-            {
-                label5.Text = "เอกสมัครสมาชิกย้อนหลัง";
-                BTPrintfShare_Reg.Enabled = true;
-            }
-            else
-            {
-                label5.Text = "เอกสารในการสมัครชิกสหกร์ครู";
-                BTPrintfShare_Reg.Enabled = false;
-            }
-              
-
-        }
-
         private void TBTeacherNo_Reg_EnabledChanged(object sender, EventArgs e)
         {
             if (TBTeacherNo_Reg.Enabled == true)
@@ -407,6 +412,19 @@ namespace BankTeacher.Bank.Add_Member
             {
                 BSave_Reg.Enabled = true;
             }
+        }
+
+        private void BTdeletefile_Reg_Click(object sender, EventArgs e)
+        {
+            Bank.SelectFile.TeaNo = TBTeacherNo_Reg.Text;
+            Bank.Add_Member.infoMeber.OroD = "ลบ";
+            //Input Location Folder
+            var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
+            smb.ThreadOpenFile(TBTeacherNo_Reg.Text);
+            TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+            //LScan_Reg.Text = "ยังไม่ได้อัพโหลดไฟล์";
+            //LScan_Reg.ForeColor = Color.Red;
+            //StatusBoxFile = 0;
         }
     }
 }

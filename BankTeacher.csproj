@@ -203,40 +203,40 @@
     <Compile Include="Bank\Pay\CancelBill.Designer.cs">
       <DependentUpon>CancelBill.cs</DependentUpon>
     </Compile>
-    <Compile Include="Bank\Report.cs">
+    <Compile Include="Bank\Report\Report.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Bank\Report.Designer.cs">
+    <Compile Include="Bank\Report\Report.Designer.cs">
       <DependentUpon>Report.cs</DependentUpon>
     </Compile>
-    <Compile Include="Bank\ReportDividend.cs">
+    <Compile Include="Bank\Report\ReportDividend.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Bank\ReportDividend.Designer.cs">
+    <Compile Include="Bank\Report\ReportDividend.Designer.cs">
       <DependentUpon>ReportDividend.cs</DependentUpon>
     </Compile>
-    <Compile Include="Bank\ReportEpensesAll.cs">
+    <Compile Include="Bank\Report\ReportEpensesAll.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Bank\ReportEpensesAll.Designer.cs">
+    <Compile Include="Bank\Report\ReportEpensesAll.Designer.cs">
       <DependentUpon>ReportEpensesAll.cs</DependentUpon>
     </Compile>
-    <Compile Include="Bank\ReportEpenses.cs">
+    <Compile Include="Bank\Report\ReportEpenses.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Bank\ReportEpenses.Designer.cs">
+    <Compile Include="Bank\Report\ReportEpenses.Designer.cs">
       <DependentUpon>ReportEpenses.cs</DependentUpon>
     </Compile>
-    <Compile Include="Bank\ReportIncomeAll.cs">
+    <Compile Include="Bank\Report\ReportIncomeAll.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Bank\ReportIncomeAll.Designer.cs">
+    <Compile Include="Bank\Report\ReportIncomeAll.Designer.cs">
       <DependentUpon>ReportIncomeAll.cs</DependentUpon>
     </Compile>
-    <Compile Include="Bank\ReportIncome.cs">
+    <Compile Include="Bank\Report\ReportIncome.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Bank\ReportIncome.Designer.cs">
+    <Compile Include="Bank\Report\ReportIncome.Designer.cs">
       <DependentUpon>ReportIncome.cs</DependentUpon>
     </Compile>
     <Compile Include="Bank\Search.cs">
@@ -361,22 +361,22 @@
     <EmbeddedResource Include="Bank\Pay\CancelBill.resx">
       <DependentUpon>CancelBill.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Bank\Report.resx">
+    <EmbeddedResource Include="Bank\Report\Report.resx">
       <DependentUpon>Report.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Bank\ReportDividend.resx">
+    <EmbeddedResource Include="Bank\Report\ReportDividend.resx">
       <DependentUpon>ReportDividend.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Bank\ReportEpensesAll.resx">
+    <EmbeddedResource Include="Bank\Report\ReportEpensesAll.resx">
       <DependentUpon>ReportEpensesAll.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Bank\ReportEpenses.resx">
+    <EmbeddedResource Include="Bank\Report\ReportEpenses.resx">
       <DependentUpon>ReportEpenses.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Bank\ReportIncomeAll.resx">
+    <EmbeddedResource Include="Bank\Report\ReportIncomeAll.resx">
       <DependentUpon>ReportIncomeAll.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Bank\ReportIncome.resx">
+    <EmbeddedResource Include="Bank\Report\ReportIncome.resx">
       <DependentUpon>ReportIncome.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Search.resx">

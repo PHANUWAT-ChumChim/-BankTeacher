@@ -34,6 +34,7 @@ namespace BankTeacher.Bank.Add_Member
             this.BExitForm = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TP_info = new System.Windows.Forms.TabPage();
+            this.button1 = new System.Windows.Forms.Button();
             this.BSaveEdit = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label7 = new System.Windows.Forms.Label();
@@ -60,18 +61,21 @@ namespace BankTeacher.Bank.Add_Member
             this.label8 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.TB_Print = new System.Windows.Forms.TabPage();
+            this.panel13 = new System.Windows.Forms.Panel();
+            this.label14 = new System.Windows.Forms.Label();
+            this.panel14 = new System.Windows.Forms.Panel();
+            this.TB_deletefile = new System.Windows.Forms.Button();
             this.panel12 = new System.Windows.Forms.Panel();
             this.label15 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.label13 = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
-            this.button3 = new System.Windows.Forms.Button();
+            this.TB_selectflie = new System.Windows.Forms.Button();
             this.panel8 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
             this.BTOpenfile_Reg = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
             this.BSearchTeacher = new System.Windows.Forms.Button();
             this.TBTeacherName = new System.Windows.Forms.TextBox();
@@ -81,7 +85,6 @@ namespace BankTeacher.Bank.Add_Member
             this.LB1Id = new System.Windows.Forms.Label();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-            this.button1 = new System.Windows.Forms.Button();
             this.PL.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.TP_info.SuspendLayout();
@@ -92,6 +95,8 @@ namespace BankTeacher.Bank.Add_Member
             this.panel2.SuspendLayout();
             this.panel6.SuspendLayout();
             this.TB_Print.SuspendLayout();
+            this.panel13.SuspendLayout();
+            this.panel14.SuspendLayout();
             this.panel12.SuspendLayout();
             this.panel10.SuspendLayout();
             this.panel11.SuspendLayout();
@@ -156,6 +161,19 @@ namespace BankTeacher.Bank.Add_Member
             this.TP_info.Size = new System.Drawing.Size(1131, 491);
             this.TP_info.TabIndex = 0;
             this.TP_info.Text = "ข้อมูล";
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.White;
+            this.button1.Enabled = false;
+            this.button1.Location = new System.Drawing.Point(708, 406);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(159, 51);
+            this.button1.TabIndex = 81;
+            this.button1.Text = "เเก้ไข";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // BSaveEdit
             // 
@@ -465,6 +483,8 @@ namespace BankTeacher.Bank.Add_Member
             // 
             // TB_Print
             // 
+            this.TB_Print.Controls.Add(this.panel13);
+            this.TB_Print.Controls.Add(this.panel14);
             this.TB_Print.Controls.Add(this.panel12);
             this.TB_Print.Controls.Add(this.panel10);
             this.TB_Print.Controls.Add(this.panel11);
@@ -478,6 +498,55 @@ namespace BankTeacher.Bank.Add_Member
             this.TB_Print.TabIndex = 1;
             this.TB_Print.Text = "อัพโหลดเอกสาร";
             this.TB_Print.UseVisualStyleBackColor = true;
+            // 
+            // panel13
+            // 
+            this.panel13.BackColor = System.Drawing.Color.White;
+            this.panel13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel13.Controls.Add(this.label14);
+            this.panel13.Location = new System.Drawing.Point(814, 73);
+            this.panel13.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel13.Name = "panel13";
+            this.panel13.Size = new System.Drawing.Size(296, 52);
+            this.panel13.TabIndex = 85;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.BackColor = System.Drawing.Color.Transparent;
+            this.label14.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.ForeColor = System.Drawing.SystemColors.ButtonShadow;
+            this.label14.Location = new System.Drawing.Point(8, 14);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(72, 37);
+            this.label14.TabIndex = 79;
+            this.label14.Text = "ลบไฟล์";
+            // 
+            // panel14
+            // 
+            this.panel14.BackColor = System.Drawing.Color.White;
+            this.panel14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel14.Controls.Add(this.TB_deletefile);
+            this.panel14.Location = new System.Drawing.Point(814, 130);
+            this.panel14.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel14.Name = "panel14";
+            this.panel14.Size = new System.Drawing.Size(296, 275);
+            this.panel14.TabIndex = 86;
+            // 
+            // TB_deletefile
+            // 
+            this.TB_deletefile.BackColor = System.Drawing.Color.White;
+            this.TB_deletefile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.TB_deletefile.Cursor = System.Windows.Forms.Cursors.Default;
+            this.TB_deletefile.Enabled = false;
+            this.TB_deletefile.Location = new System.Drawing.Point(15, 10);
+            this.TB_deletefile.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.TB_deletefile.Name = "TB_deletefile";
+            this.TB_deletefile.Size = new System.Drawing.Size(265, 150);
+            this.TB_deletefile.TabIndex = 85;
+            this.TB_deletefile.Text = "ลบเอกสารที่อัพโหลด";
+            this.TB_deletefile.UseVisualStyleBackColor = false;
+            this.TB_deletefile.Click += new System.EventHandler(this.button4_Click);
             // 
             // panel12
             // 
@@ -541,27 +610,27 @@ namespace BankTeacher.Bank.Add_Member
             // 
             this.panel11.BackColor = System.Drawing.Color.White;
             this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel11.Controls.Add(this.button3);
+            this.panel11.Controls.Add(this.TB_selectflie);
             this.panel11.Location = new System.Drawing.Point(421, 130);
             this.panel11.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(378, 275);
             this.panel11.TabIndex = 83;
             // 
-            // button3
+            // TB_selectflie
             // 
-            this.button3.BackColor = System.Drawing.Color.White;
-            this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button3.Cursor = System.Windows.Forms.Cursors.Default;
-            this.button3.Enabled = false;
-            this.button3.Location = new System.Drawing.Point(15, 10);
-            this.button3.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(344, 150);
-            this.button3.TabIndex = 85;
-            this.button3.Text = "ดูเอกสารที่อัพโหลด";
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.TB_selectflie.BackColor = System.Drawing.Color.White;
+            this.TB_selectflie.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.TB_selectflie.Cursor = System.Windows.Forms.Cursors.Default;
+            this.TB_selectflie.Enabled = false;
+            this.TB_selectflie.Location = new System.Drawing.Point(15, 10);
+            this.TB_selectflie.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.TB_selectflie.Name = "TB_selectflie";
+            this.TB_selectflie.Size = new System.Drawing.Size(344, 150);
+            this.TB_selectflie.TabIndex = 85;
+            this.TB_selectflie.Text = "ดูเอกสารที่อัพโหลด";
+            this.TB_selectflie.UseVisualStyleBackColor = false;
+            this.TB_selectflie.Click += new System.EventHandler(this.button3_Click);
             // 
             // panel8
             // 
@@ -591,7 +660,6 @@ namespace BankTeacher.Bank.Add_Member
             this.panel9.BackColor = System.Drawing.Color.White;
             this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel9.Controls.Add(this.BTOpenfile_Reg);
-            this.panel9.Controls.Add(this.button2);
             this.panel9.Location = new System.Drawing.Point(21, 130);
             this.panel9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel9.Name = "panel9";
@@ -611,21 +679,6 @@ namespace BankTeacher.Bank.Add_Member
             this.BTOpenfile_Reg.Text = "อัพโหลดเอกสาร";
             this.BTOpenfile_Reg.UseVisualStyleBackColor = false;
             this.BTOpenfile_Reg.Click += new System.EventHandler(this.BTOpenfile_Reg_Click);
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.White;
-            this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button2.Cursor = System.Windows.Forms.Cursors.Default;
-            this.button2.Enabled = false;
-            this.button2.Location = new System.Drawing.Point(252, 164);
-            this.button2.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(107, 60);
-            this.button2.TabIndex = 55;
-            this.button2.Text = "ลบไฟล์";
-            this.button2.UseVisualStyleBackColor = false;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // panel7
             // 
@@ -731,19 +784,6 @@ namespace BankTeacher.Bank.Add_Member
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
             // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.White;
-            this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(708, 406);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(159, 51);
-            this.button1.TabIndex = 81;
-            this.button1.Text = "เเก้ไข";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // infoMeber
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -774,6 +814,9 @@ namespace BankTeacher.Bank.Add_Member
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.TB_Print.ResumeLayout(false);
+            this.panel13.ResumeLayout(false);
+            this.panel13.PerformLayout();
+            this.panel14.ResumeLayout(false);
             this.panel12.ResumeLayout(false);
             this.panel12.PerformLayout();
             this.panel10.ResumeLayout(false);
@@ -801,7 +844,6 @@ namespace BankTeacher.Bank.Add_Member
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Button BSearchTeacher;
         private System.Windows.Forms.TextBox TBTeacherName;
-        private System.Windows.Forms.TextBox TBTeacherNo;
         private System.Windows.Forms.Label LB2Ne;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label LB1Id;
@@ -827,8 +869,6 @@ namespace BankTeacher.Bank.Add_Member
         private System.Windows.Forms.Panel panel8;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Panel panel9;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Button BTPrint;
         private System.Windows.Forms.Panel panel12;
         private System.Windows.Forms.Label label15;
@@ -836,11 +876,17 @@ namespace BankTeacher.Bank.Add_Member
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.Button BTOpenfile_Reg;
-        private System.Windows.Forms.Button button3;
         private System.Drawing.Printing.PrintDocument printDocument1;
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Windows.Forms.CheckBox checkBox_scrip;
         private System.Windows.Forms.CheckBox checkBox_copy;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel panel13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Panel panel14;
+        public System.Windows.Forms.Label label12;
+        public System.Windows.Forms.Button TB_selectflie;
+        public System.Windows.Forms.Button TB_deletefile;
+        public System.Windows.Forms.TextBox TBTeacherNo;
     }
 }

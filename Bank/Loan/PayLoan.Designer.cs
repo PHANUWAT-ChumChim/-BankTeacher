@@ -70,6 +70,17 @@ namespace BankTeacher.Bank.Loan
             this.BSave = new System.Windows.Forms.Button();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.checkBox_scrip = new System.Windows.Forms.CheckBox();
+            this.checkBox_copy = new System.Windows.Forms.CheckBox();
+            this.CB_SelectPrint = new System.Windows.Forms.ComboBox();
+            this.BTPrint = new System.Windows.Forms.Button();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label22 = new System.Windows.Forms.Label();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.button3 = new System.Windows.Forms.Button();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.label24 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -79,6 +90,10 @@ namespace BankTeacher.Bank.Loan
             this.tabPage2.SuspendLayout();
             this.panel5.SuspendLayout();
             this.panel7.SuspendLayout();
+            this.panel6.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel11.SuspendLayout();
+            this.panel8.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -366,6 +381,10 @@ namespace BankTeacher.Bank.Loan
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.panel8);
+            this.tabPage2.Controls.Add(this.panel6);
+            this.tabPage2.Controls.Add(this.panel3);
+            this.tabPage2.Controls.Add(this.panel11);
             this.tabPage2.Controls.Add(this.panel5);
             this.tabPage2.Controls.Add(this.label5);
             this.tabPage2.Controls.Add(this.panel10);
@@ -386,7 +405,7 @@ namespace BankTeacher.Bank.Loan
             this.panel5.Location = new System.Drawing.Point(20, 104);
             this.panel5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(530, 319);
+            this.panel5.Size = new System.Drawing.Size(394, 319);
             this.panel5.TabIndex = 123;
             // 
             // BTdeletefile
@@ -395,10 +414,10 @@ namespace BankTeacher.Bank.Loan
             this.BTdeletefile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BTdeletefile.Cursor = System.Windows.Forms.Cursors.Default;
             this.BTdeletefile.Enabled = false;
-            this.BTdeletefile.Location = new System.Drawing.Point(335, 188);
+            this.BTdeletefile.Location = new System.Drawing.Point(155, 160);
             this.BTdeletefile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BTdeletefile.Name = "BTdeletefile";
-            this.BTdeletefile.Size = new System.Drawing.Size(145, 67);
+            this.BTdeletefile.Size = new System.Drawing.Size(103, 67);
             this.BTdeletefile.TabIndex = 75;
             this.BTdeletefile.Text = "ลบไฟล์";
             this.BTdeletefile.UseVisualStyleBackColor = false;
@@ -409,10 +428,10 @@ namespace BankTeacher.Bank.Loan
             this.BTOpenfile.BackColor = System.Drawing.Color.White;
             this.BTOpenfile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BTOpenfile.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BTOpenfile.Location = new System.Drawing.Point(51, 53);
+            this.BTOpenfile.Location = new System.Drawing.Point(20, 16);
             this.BTOpenfile.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BTOpenfile.Name = "BTOpenfile";
-            this.BTOpenfile.Size = new System.Drawing.Size(429, 131);
+            this.BTOpenfile.Size = new System.Drawing.Size(339, 131);
             this.BTOpenfile.TabIndex = 74;
             this.BTOpenfile.Text = "อัพโหลด";
             this.BTOpenfile.UseVisualStyleBackColor = false;
@@ -435,7 +454,7 @@ namespace BankTeacher.Bank.Loan
             this.panel10.Location = new System.Drawing.Point(20, 40);
             this.panel10.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(530, 57);
+            this.panel10.Size = new System.Drawing.Size(394, 57);
             this.panel10.TabIndex = 124;
             // 
             // panel7
@@ -563,6 +582,145 @@ namespace BankTeacher.Bank.Loan
             // 
             this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
             // 
+            // panel6
+            // 
+            this.panel6.BackColor = System.Drawing.Color.White;
+            this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel6.Controls.Add(this.checkBox_scrip);
+            this.panel6.Controls.Add(this.checkBox_copy);
+            this.panel6.Controls.Add(this.CB_SelectPrint);
+            this.panel6.Controls.Add(this.BTPrint);
+            this.panel6.Location = new System.Drawing.Point(812, 104);
+            this.panel6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(282, 319);
+            this.panel6.TabIndex = 127;
+            // 
+            // checkBox_scrip
+            // 
+            this.checkBox_scrip.AutoSize = true;
+            this.checkBox_scrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.checkBox_scrip.Enabled = false;
+            this.checkBox_scrip.Location = new System.Drawing.Point(10, 145);
+            this.checkBox_scrip.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBox_scrip.Name = "checkBox_scrip";
+            this.checkBox_scrip.Size = new System.Drawing.Size(171, 41);
+            this.checkBox_scrip.TabIndex = 120;
+            this.checkBox_scrip.Text = "เฉพราะ(ต้นฉบับ)";
+            this.checkBox_scrip.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_copy
+            // 
+            this.checkBox_copy.AutoSize = true;
+            this.checkBox_copy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.checkBox_copy.Enabled = false;
+            this.checkBox_copy.Location = new System.Drawing.Point(10, 183);
+            this.checkBox_copy.Margin = new System.Windows.Forms.Padding(4);
+            this.checkBox_copy.Name = "checkBox_copy";
+            this.checkBox_copy.Size = new System.Drawing.Size(162, 41);
+            this.checkBox_copy.TabIndex = 121;
+            this.checkBox_copy.Text = "เฉพราะ(สำเนา)";
+            this.checkBox_copy.UseVisualStyleBackColor = true;
+            // 
+            // CB_SelectPrint
+            // 
+            this.CB_SelectPrint.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.CB_SelectPrint.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CB_SelectPrint.FormattingEnabled = true;
+            this.CB_SelectPrint.Items.AddRange(new object[] {
+            "ปริ้นรายละเอียดการกู้",
+            "ปริ้นเอกสารการกู้ย้อนหลัง",
+            "ปริ้นเอการการจ่ายกู้"});
+            this.CB_SelectPrint.Location = new System.Drawing.Point(10, 101);
+            this.CB_SelectPrint.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.CB_SelectPrint.Name = "CB_SelectPrint";
+            this.CB_SelectPrint.Size = new System.Drawing.Size(266, 39);
+            this.CB_SelectPrint.TabIndex = 108;
+            // 
+            // BTPrint
+            // 
+            this.BTPrint.BackgroundImage = global::BankTeacher.Properties.Resources._10x10_Print;
+            this.BTPrint.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BTPrint.CausesValidation = false;
+            this.BTPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTPrint.Location = new System.Drawing.Point(10, 10);
+            this.BTPrint.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.BTPrint.Name = "BTPrint";
+            this.BTPrint.Size = new System.Drawing.Size(266, 87);
+            this.BTPrint.TabIndex = 105;
+            this.BTPrint.UseVisualStyleBackColor = true;
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.Color.White;
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.label22);
+            this.panel3.Location = new System.Drawing.Point(431, 40);
+            this.panel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(359, 52);
+            this.panel3.TabIndex = 125;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.BackColor = System.Drawing.Color.Transparent;
+            this.label22.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label22.ForeColor = System.Drawing.SystemColors.ButtonShadow;
+            this.label22.Location = new System.Drawing.Point(3, -2);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(151, 37);
+            this.label22.TabIndex = 79;
+            this.label22.Text = "ตรวจสอบเอกสาร";
+            // 
+            // panel11
+            // 
+            this.panel11.BackColor = System.Drawing.Color.White;
+            this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel11.Controls.Add(this.button3);
+            this.panel11.Location = new System.Drawing.Point(431, 104);
+            this.panel11.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(359, 319);
+            this.panel11.TabIndex = 126;
+            // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.Color.White;
+            this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.button3.Cursor = System.Windows.Forms.Cursors.Default;
+            this.button3.Enabled = false;
+            this.button3.Location = new System.Drawing.Point(9, 10);
+            this.button3.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(344, 150);
+            this.button3.TabIndex = 85;
+            this.button3.Text = "ดูเอกสารที่อัพโหลด";
+            this.button3.UseVisualStyleBackColor = false;
+            // 
+            // panel8
+            // 
+            this.panel8.BackColor = System.Drawing.Color.White;
+            this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel8.Controls.Add(this.label24);
+            this.panel8.Location = new System.Drawing.Point(812, 40);
+            this.panel8.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(282, 45);
+            this.panel8.TabIndex = 128;
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.BackColor = System.Drawing.Color.Transparent;
+            this.label24.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.ForeColor = System.Drawing.SystemColors.ButtonShadow;
+            this.label24.Location = new System.Drawing.Point(3, -2);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(220, 37);
+            this.label24.TabIndex = 79;
+            this.label24.Text = "เอกสารสมัครกู้ เเละ ข้อมูล";
+            // 
             // PayLoan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -592,6 +750,13 @@ namespace BankTeacher.Bank.Loan
             this.panel5.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
+            this.panel6.ResumeLayout(false);
+            this.panel6.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
+            this.panel11.ResumeLayout(false);
+            this.panel8.ResumeLayout(false);
+            this.panel8.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -640,5 +805,16 @@ namespace BankTeacher.Bank.Loan
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.CheckBox checkBox_scrip;
+        private System.Windows.Forms.CheckBox checkBox_copy;
+        private System.Windows.Forms.ComboBox CB_SelectPrint;
+        private System.Windows.Forms.Button BTPrint;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Panel panel11;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Label label24;
     }
 }

@@ -368,7 +368,7 @@ namespace BankTeacher.Bank
             }
             else
             {
-                MessageBox.Show("ดูเหมือนคุณจะลืมอะไรนะ");
+                MessageBox.Show("ไม่พบข้อมูล กรุณาเลือก เดือนปี ที่มีรายการในตาราง","ไฟล์",MessageBoxButtons.OK,MessageBoxIcon.Information);
             }
         }
 
