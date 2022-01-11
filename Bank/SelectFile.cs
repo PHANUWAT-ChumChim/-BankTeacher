@@ -60,6 +60,12 @@ namespace BankTeacher.Bank
                             System.IO.File.Delete(file);
                             comboBox1.Items.RemoveAt(comboBox1.SelectedIndex);
                             MessageBox.Show("ลบไฟล์เสร็จสิ้น", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            Bank.Add_Member.infoMeber FInfoMember = new Add_Member.infoMeber();
+                            FInfoMember.label12.Text = "ยังไม่ได้อัพโหลดไฟล์";
+                            FInfoMember.label12.ForeColor = Color.Red;
+                            FInfoMember.TB_selectflie.Enabled = false;
+                            FInfoMember.TB_deletefile.Enabled = false;
+
                             if (comboBox1.Items.Count <= 0)
                             {
                                 DataTable dt = Class.SQLConnection.InputSQLMSSQL("UPDATE EmployeeBank.dbo.tblMember \r\n " +
