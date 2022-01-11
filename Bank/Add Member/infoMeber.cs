@@ -49,20 +49,21 @@ namespace BankTeacher.Bank.Add_Member
           "WHERE (a.TeacherNo LIKE '%{Text}%'  or CAST(ISNULL(c.PrefixNameFull , '') + b.Fname + ' ' + Lname as NVARCHAR) LIKE '%{Text}%')and a.MemberStatusNo = 1 {TeacherNotLike};"
            ,
            //[2] Check Bill Teacher Have Ever Paid INPUT: {TeacherNo}
-           "SELECT COUNT(a.BillNo)  \r\n " +
-          "FROM EmployeeBank.dbo.tblBill as a  \r\n " +
-          "LEFT JOIN (SELECT a.BillNo  \r\n " +
-          "FROM EmployeeBank.dbo.tblBillDetail as a \r\n " +
-          "WHERE a.TypeNo <> 3 \r\n " +
-          "GROUP BY a.BillNo) as b on a.BillNo = b.BillNo  \r\n " +
-          "WHERE a.Cancel = 1 and a.TeacherNo LIKE '%{TeacherNo}%' \r\n " +
-          " \r\n " +
-          "SELECT COUNT(c.WithDrawNo) \r\n " +
-          "FROM EmployeeBank.dbo.tblMember as a \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblShareWithdraw as c on b.ShareNo = c.ShareNo \r\n " +
-          "WHERE a.TeacherNo LIKE '%{TeacherNo}%'"
+           " \r\n " +
+          "SELECT COUNT(a.BillNo)   \r\n " +
+          " FROM EmployeeBank.dbo.tblBill as a \r\n " +
+          " WHERE a.Cancel = 1 and a.TeacherNo LIKE '%T52026%' and a.BillNo NOT IN (SELECT a.BillNo   \r\n " +
+          " FROM EmployeeBank.dbo.tblBillDetail as a  \r\n " +
+          " WHERE a.TypeNo = 3 \r\n " +
+          " GROUP BY a.BillNo) \r\n " +
+          "   \r\n " +
+          " SELECT COUNT(c.WithDrawNo)  \r\n " +
+          " FROM EmployeeBank.dbo.tblMember as a  \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo  \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblShareWithdraw as c on b.ShareNo = c.ShareNo  \r\n " +
+          " WHERE a.TeacherNo LIKE '%T52026%'"
            ,
+
 
            //[3]Save Edit Bsave INPUT: {Amount}  {TeacherNo}
            "-- BSave Edit \r\n " +
@@ -201,7 +202,7 @@ namespace BankTeacher.Bank.Add_Member
                         if (Convert.ToInt32(dsInfoMember.Tables[1].Rows[0][0].ToString()) == 0 && Convert.ToInt32(dsInfoMember.Tables[2].Rows[0][0].ToString()) == 0)
                             TBStartAmount.Enabled = true;
                         button3.Enabled = true;
-                        button1.Enabled = true;
+                        //button1.Enabled = true;
                         tabControl1.Enabled = true;
                         Checkmember(false);
 

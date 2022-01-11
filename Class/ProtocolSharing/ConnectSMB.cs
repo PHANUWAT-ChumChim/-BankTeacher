@@ -36,7 +36,7 @@ namespace BankTeacher.Class.ProtocolSharing
 
             public SmbFileContainer(String Location)
             {
-                PathFile = this.networkPath = @"\\192.168.1.3\ShareFileTestSBM\" + Location + @"\";
+                PathFile = this.networkPath = @"C:\Users\admin\OneDrive\Desktop\ShareFileTestSBM\" + Location + @"\";
                 var userName = "tang1811";
                 var password = "123456789";
                 var domain = "";

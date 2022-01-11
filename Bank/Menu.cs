@@ -106,7 +106,7 @@ namespace BankTeacher.Bank
         private void Menu_setring_Click(object sender, EventArgs e)
         {
             Bank.Setting St = new Bank.Setting();
-            St.ShowDialog();
+            CloseFrom(St);
         }
         private void Cancel_Click(object sender, EventArgs e)
         {

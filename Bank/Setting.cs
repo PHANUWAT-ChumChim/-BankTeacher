@@ -51,42 +51,6 @@ namespace BankTeacher.Bank
             Max = Convert.ToInt32(TB_Max.Text);
         }
 
-        private void B_Cancel_Click_1(object sender, EventArgs e)
-        {
-            this.Hide();
-        }
-        private void B_Save_Click_1(object sender, EventArgs e)
-        {
-            if (TB_Min.Text != Min.ToString() || TB_Max.Text != Max.ToString() || CHB_edittime.Checked != chb)
-            {
-                if (Convert.ToInt32(TB_Min.Text) <= Convert.ToInt32(TB_Max.Text))
-                {
-                    int TranChbToInt;
-                    if (CHB_edittime.Checked == true)
-                    {
-                        TranChbToInt = 1;
-                        BankTeacher.Bank.Menu.DateAmountChange = TranChbToInt;
-                    }
-                    else
-                    {
-                        TranChbToInt = 0;
-                        BankTeacher.Bank.Menu.DateAmountChange = TranChbToInt;
-                    }
-
-                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[0].Replace("{DateAmountChange}", TranChbToInt.ToString())
-                        .Replace("{StartAmountMin}", TB_Min.Text)
-                        .Replace("{StartAmountMax}", TB_Max.Text)
-                        .Replace("{MinLoan}",TBMinLoan.Text));
-                    BankTeacher.Bank.Menu.startAmountMin = Convert.ToInt32(TB_Min.Text);
-                    BankTeacher.Bank.Menu.startAmountMax = Convert.ToInt32(TB_Max.Text);
-                    BankTeacher.Bank.Menu.MinLoan = Convert.ToInt32(TBMinLoan.Text);
-                    this.Hide();
-                }
-                else
-                    MessageBox.Show("ค่าสูงสุดต้องไม่น้อยกว่าค่าต่ำสุด", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-            }
-        }
 
         private void TB_Min_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -106,7 +70,6 @@ namespace BankTeacher.Bank
 
         private void B_Save_Click(object sender, EventArgs e)
         {
-
             if (TB_Min.Text != Min.ToString() || TB_Max.Text != Max.ToString() || CHB_edittime.Checked != chb)
             {
                 if (Convert.ToInt32(TB_Min.Text) <= Convert.ToInt32(TB_Max.Text))
@@ -140,18 +103,9 @@ namespace BankTeacher.Bank
         }
         private void B_Cancel_Click(object sender, EventArgs e)
         {
-            this.Hide();
-
+            BExitForm_Click(new object(), new EventArgs());
         }
 
-        private void Setting_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            
-        }
-
-        private static void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -159,17 +113,35 @@ namespace BankTeacher.Bank
             f.ShowDialog();
         }
 
-        private void tabControl1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if(e.KeyCode == Keys.Escape)
-                this.Close();
-        }
-
         private void TBMinLoan_KeyPress(object sender, KeyPressEventArgs e)
         {
             if ((e.KeyChar < '0' || e.KeyChar > '9') && (e.KeyChar != '\b'))
             {
                 e.Handled = true;
+            }
+        }
+
+        private void BExitForm_Click(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
+
+
+        private void tabControl1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (TB_Max.Text != "" || TB_Min.Text != "" || TBPerShare.Text != "" || TBMinLoan.Text != "")
+                {
+                    TBMinLoan.Text = "";
+                    TBPerShare.Text = "";
+                    TB_Max.Text = "";
+                    TB_Min.Text = "";
+                }
+                else
+                {
+                    BExitForm_Click(new object(), new EventArgs());
+                }
             }
         }
     }
