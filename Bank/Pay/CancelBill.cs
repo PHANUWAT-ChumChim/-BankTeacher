@@ -25,6 +25,7 @@ namespace BankTeacher.Bank.Pay
         /// <para>[3] + RemainAmount In Guarantor (CancelBill) INPUT: {LoanNo} , {LoanAmount}</para>
         /// <para>[4] Search All Bill in to day (CancelBill) INPUT: {BillNo} {today} {Text}</para>
         /// <para>[5] Check Dividend Year INPUT: </para>
+        /// <para>[6] Chcek LoanstatusNo INPUT : {TeacharNo} {BillNo} </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
         {
@@ -82,14 +83,25 @@ namespace BankTeacher.Bank.Pay
           "  LEFT JOIN EmployeeBank.dbo.tblBillDetailType as f on b.TypeNo = f.TypeNo   \r\n " +
           "  WHERE  (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255)) LIKE '%{Text}%' )and MemberStatusNo != 2 and Cancel = 1 and CAST(a.DateAdd as Date) Like '{today}%' and b.TypeNo != 3 \r\n " +
           " GROUP BY a.TeacherNo,CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255)),a.BillNo"
-
             ,
-
             //[5] Check Dividend Year INPUT: 
             "SELECT Year\r\n " +
             "FROM EmployeeBank.dbo.tblDividend \r\n" +
             "WHERE Cancel = 1 \r\n" +
             "GROUP BY Year;"
+            ,
+            //[6] Chcek LoanstatusNo INPUT : {TeacharNo} {BillNo}
+            "DECLARE @LoanStatusNo int \r\n" +
+            "DECLARE @LoanNo int \r\n" +
+            "SELECT @LoanStatusNo = a.LoanStatusNo  FROM EmployeeBank.dbo.tblLoan as a WHERE TeacherNo = '{TeacharNo}' \r\n" +
+            "SELECT @LoanNo = b.LoanNo  FROM EmployeeBank.dbo.tblBillDetail as b WHERE b.BillNo = '{BillNo}' \r\n" +
+            "IF(@LoanStatusNo = 3) \r\n" +
+            "BEGIN \r\n" +
+            "UPDATE EmployeeBank.dbo.tblLoan \r\n" +
+            "SET LoanStatusNo = '2' \r\n" +
+            "WHERE LoanNo = @LoanNo \r\n" +
+            "END"
+
         };
 
 
@@ -233,6 +245,7 @@ namespace BankTeacher.Bank.Pay
                                     }
                                     else if (DGV_Cancelbill.Rows[x].Cells[1].Value.ToString().Contains("กู้"))
                                     {
+                                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("{TeacharNo}", TBTeacherNO_Cancelbill.Text).Replace("{BillNo}", TBBillNo_Cancelbill.Text));
                                         Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
                                         .Replace("{LoanNo}", DGV_Cancelbill.Rows[x].Cells[3].Value.ToString())
                                         .Replace("{LoanAmount}", DGV_Cancelbill.Rows[x].Cells[2].Value.ToString())

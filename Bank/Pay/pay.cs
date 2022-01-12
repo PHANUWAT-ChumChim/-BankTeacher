@@ -2039,8 +2039,8 @@ namespace BankTeacher.Bank.Pay
                 for(int r = 0; r < DGV_Pay.RowCount; r++)
                 {
                     DGV_Printbypoon.Rows.Add(r + 1, DGV_Pay.Rows[r].Cells[0].Value.ToString(),
-                        CBList_Pay.Text, TBAmount_Pay.Text, DGV_Pay.Rows[r].Cells[3].Value.ToString(),
-                        CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
+                        DGV_Pay.Rows[r].Cells[1].Value.ToString(), DGV_Pay.Rows[r].Cells[2].Value.ToString(), DGV_Pay.Rows[r].Cells[3].Value.ToString(),
+                        CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text); ;
                 }
             }
         }

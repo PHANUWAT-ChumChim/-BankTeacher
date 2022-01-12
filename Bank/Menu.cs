@@ -46,16 +46,19 @@ namespace BankTeacher.Bank
         public Menu()
         {
             InitializeComponent();
-            //menuStrip1.Visible = true;
-            Date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]).Rows[0][0].ToString().Split('-');
-            BankTeacher.Bank.Menu.Monthname = Month[Convert.ToInt32(BankTeacher.Bank.Menu.Date[1]) - 1];
-            Class.UserInfo.SetTeacherInformation("T43005", "Manit Hodkuntod", "1");
-            dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]);
-            DateAmountChange = Convert.ToInt32(dt.Rows[0][0]);
-            startAmountMin = Convert.ToInt32(dt.Rows[0][1]);
-            startAmountMax = Convert.ToInt32(dt.Rows[0][2]);
-            MinLoan = Convert.ToInt32(dt.Rows[0][3]);
-            perShare = Convert.ToInt32(dt.Rows[0][4]);
+            try
+            {
+                Date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]).Rows[0][0].ToString().Split('-');
+                BankTeacher.Bank.Menu.Monthname = Month[Convert.ToInt32(BankTeacher.Bank.Menu.Date[1]) - 1];
+                Class.UserInfo.SetTeacherInformation("T43005", "Manit Hodkuntod", "1");
+                dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]);
+                DateAmountChange = Convert.ToInt32(dt.Rows[0][0]);
+                startAmountMin = Convert.ToInt32(dt.Rows[0][1]);
+                startAmountMax = Convert.ToInt32(dt.Rows[0][2]);
+                MinLoan = Convert.ToInt32(dt.Rows[0][3]);
+                perShare = Convert.ToInt32(dt.Rows[0][4]);
+            }
+            catch { MessageBox.Show("โปรดทำการเชื่อมฐานข้อมูล", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning); this.Enabled = false; };
         }
         public void CloseFrom(Form F)
         {

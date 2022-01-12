@@ -29,9 +29,9 @@ namespace BankTeacher.Bank
         //public static string info_Amounoff;
         //public static string info_Amounoffinsystem;
         //public static string info_canbeAmounoff;
-        int SELECT_Print = 0;
-        int StatusBoxFile = 0;
-        String imgeLocation = "";
+
+        //int StatusBoxFile = 0;
+        //String imgeLocation = "";
         /// <summary>
         /// <para>[0] DGV SELECT LoanNo,RemainAmount,Name,EndDate INPUT: {TeacherNo}</para>
         /// <para>[1] SELECT TeacherNo,Name,SumRemainAmount,AmountCredit,SavingAmount,ShareNo INPUT: {TeacherNo}</para>
@@ -337,7 +337,7 @@ namespace BankTeacher.Bank
                 }
             }
         }
-
+        private static int PinrtChcek = 0;
         private void BSaveAmountOff_Click(object sender, EventArgs e)
         {
             BankTeacher.Class.ComboBoxPayment Payment = (CBTypePay.SelectedItem as BankTeacher.Class.ComboBoxPayment);
@@ -364,7 +364,7 @@ namespace BankTeacher.Bank
                         Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(Convert.ToInt32(TBSavingAmount.Text) - Convert.ToInt32(TBWithDraw.Text)).ToString();
                         printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                         printDocument1.DefaultPageSettings.Landscape = true;
-                        SELECT_Print = 3;
+                        PinrtChcek = 1;
                         if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                         {
                             printDocument1.Print();
@@ -521,18 +521,17 @@ namespace BankTeacher.Bank
             DataTable dt_date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[9].Replace("{WithDrawNo}", dt.Rows[0][0].ToString()));
             Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
             Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
-            Class.Print.PrintPreviewDialog.info_Savingtotel = TBSavingAmount.Text;
             Class.Print.PrintPreviewDialog.info_ShareNo = TBShareNo.Text;
             Class.Print.PrintPreviewDialog.info_Loanstatus = TBLoanStatus.Text;
             Class.Print.PrintPreviewDialog.info_Amounoffinsystem = TBCreditSystem.Text;
             Class.Print.PrintPreviewDialog.info_canbeAmounoff = TBCreditWithDraw.Text;
-            
-            if(CB_SelectPrint.SelectedIndex == 0)
+
+            if (CB_SelectPrint.SelectedIndex == 0 && PinrtChcek != 1)
             {
                 Class.Print.PrintPreviewDialog.details = 1;
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVAmountOffHistory, "ถอนหุ้นสะสม", this.AccessibilityObject.Name,false,false, "A4", 1);
             }
-            else if(CB_SelectPrint.SelectedIndex == 1)
+            else if(CB_SelectPrint.SelectedIndex == 1 && PinrtChcek != 1)
             {
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name,checkBox_scrip.Checked,checkBox_copy.Checked, "A5", 0);
             }
@@ -610,8 +609,6 @@ namespace BankTeacher.Bank
                     CBTypePay.Enabled = false;
                     BSaveAmountOff.Enabled = false;
                     Check = 0;
-                    StatusBoxFile = 0;
-                    imgeLocation = "";
                     Checkmember(true);
     }
                 else

@@ -45,7 +45,7 @@ namespace BankTeacher.Class.ProtocolSharing
                 networkCredential = new NetworkCredential(userName, password, domain);
                 StatusRetrun = "";
                 //NetworkCredential a = new NetworkCredential();
-             }
+            }
 
             public bool IsValidConnection()
             {
