@@ -205,10 +205,6 @@ namespace BankTeacher.Bank.Add_Member
                                 }
                                 else
                                 {
-                                    StatusBoxFile = 0;
-                                    BTOpenfile_Reg.Text = "อัพโหลดไฟล์";
-                                    LScan_Reg.Text = "ยังไม่ได้อัพโหลดไฟล์";
-                                    LScan_Reg.ForeColor = Color.Red;
                                     MessageBox.Show("ยกเลิกการสมัคร", "สมัครสมาชิก", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 }
 
@@ -228,7 +224,7 @@ namespace BankTeacher.Bank.Add_Member
                         MessageBox.Show("โปรดเลือกสมาชิกในการสมัคร", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
-                else { MessageBox.Show("โปรดตรวจสอบ การเชื่อมต่อ หรือ เช็คโฟลเดอร์ที่ทำการส่งไฟล์", "เเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+                else { MessageBox.Show("โปรดตรวจสอบ ตวรจสอบการส่งเอกสารใหม่อีกครั้ง", "เเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
             }
         }
         // Available values| TB /
@@ -277,9 +273,6 @@ namespace BankTeacher.Bank.Add_Member
                         }
                         if (imgeLocation != "")
                         {
-                            BTOpenfile_Reg.Text = "ส่งไฟล์";
-                            StatusBoxFile = 1;
-                            
                             var smb = new SmbFileContainer("RegMember");
                             if (smb.IsValidConnection())
                             {
@@ -287,6 +280,8 @@ namespace BankTeacher.Bank.Add_Member
                                 MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 if (Return.Contains("อัพโหลดเอกสารสำเร็จ"))
                                 {
+                                    BTOpenfile_Reg.Text = "ส่งไฟล์";
+                                    StatusBoxFile = 1;
                                     BTdeletefile_Reg.Enabled = true;
                                     LScan_Reg.Text = "อัพโหลดไฟล์สำเร็จ";
                                     LScan_Reg.ForeColor = Color.Green;
@@ -308,7 +303,7 @@ namespace BankTeacher.Bank.Add_Member
                 }
                 else if (StatusBoxFile == 1 || Filee == true)
                 {
-                    MessageBox.Show("ทำการส่งไฟล์แล้ว ไม่สามารถดำเนินการส่งไฟล์ซ้ำได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("โปรดตรวจสอบ การเชื่อมต่อ หรือ เช็คโฟลเดอร์ที่ทำการส่งไฟล์มีการส่งเอกสารเเล้ว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else

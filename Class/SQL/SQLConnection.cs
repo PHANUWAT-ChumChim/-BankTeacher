@@ -34,18 +34,18 @@ namespace BankTeacher.Class
         public static DataTable InputSQLMSSQL(string SQLCode)
         {
             DataTable dt = new DataTable();
-            //try
-            //{
-             if (con.State == ConnectionState.Closed)
+            try
+            {
+                if (con.State == ConnectionState.Closed)
               con.Open();
               System.Data.OleDb.OleDbDataAdapter da = new System.Data.OleDb.OleDbDataAdapter(SQLCode, con);
-             con.Close();
+              con.Close();
               da.Fill(dt);
-            //}
-            //catch(Exception e )
-            //{
-            //    Console.WriteLine($"==========={e}============");
-            //}
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"==========={e}============");
+            }
             return dt;
         }
     }
