@@ -45,12 +45,13 @@ namespace BankTeacher.Bank
           "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo; \r\n " +
           " \r\n " +
           "--Interest \r\n " +
-          "SELECT @Interest = SUM(ISNULL(CASE \r\n " +
-          "    WHEN a.YearPay = {Year} - 1 and a.MonthPay + a.PayNo - 1 > 12  THEN (ROUND((CAST(a.InterestRate as float) / 100) * a.LoanAmount , 0) / a.PayNo  * (a.PayNo - (12 - a.MonthPay + 1))) \r\n " +
-          "    WHEN a.YearPay = {Year} THEN (ROUND((CAST(a.InterestRate as float) / 100) * a.LoanAmount , 0) / a.PayNo  * (12 - a.MonthPay + 1)) \r\n " +
-          "END , 0)) \r\n " +
-          "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
-          "WHERE (a.LoanStatusNo = 2 or a.LoanStatusNo = 3) and a.YearPay = {Year} or a.YearPay = {Year} - 1; \r\n " +
+           "SELECT @Interest =  SUM(ISNULL(CASE   \r\n " +
+          "      WHEN a.YearPay = {Year} - 1 and a.MonthPay + a.PayNo - 1 > 12  THEN (ROUND((CAST(a.InterestRate as float) / 100) * a.LoanAmount , 0) / a.PayNo  * (a.PayNo - (12 - a.MonthPay + 1)))   \r\n " +
+          "      WHEN a.YearPay = {Year} and a.MonthPay + a.PayNo - 1 > 12 THEN (ROUND((CAST(a.InterestRate as float) / 100) * a.LoanAmount , 0) / a.PayNo  * (12 - a.MonthPay + 1))   \r\n " +
+          "	  WHEN a.YearPay = {Year} and a.MonthPay + a.PayNo - 1 <= 12 THEN ROUND((CAST(a.InterestRate as float) / 100) * a.LoanAmount , 0)  \r\n " +
+          "  END , 0))   \r\n " +
+          "  FROM EmployeeBank.dbo.tblLoan as a   \r\n " +
+          "  WHERE (a.LoanStatusNo = 2 or a.LoanStatusNo = 3) and a.YearPay = 2022 or a.YearPay = {Year} - 1; \r\n " +
           " \r\n " +
           "SELECT @Interest = @Interest + RemainInterestLastYear \r\n " +
           "FROM EmployeeBank.dbo.tblDividend \r\n " +
@@ -154,12 +155,13 @@ namespace BankTeacher.Bank
           " WHERE a.MemberStatusNo = 1;  \r\n " +
           " \r\n " +
           " --Interest  \r\n " +
-          " SELECT @Interest = SUM(ISNULL(CASE  \r\n " +
-          "     WHEN a.YearPay = {Year} - 1 and a.MonthPay + a.PayNo - 1 > 12  THEN (ROUND((CAST(a.InterestRate as float) / 100) * a.LoanAmount , 0) / a.PayNo  * (a.PayNo - (12 - a.MonthPay + 1)))  \r\n " +
-          "     WHEN a.YearPay = {Year} THEN (ROUND((CAST(a.InterestRate as float) / 100) * a.LoanAmount , 0) / a.PayNo  * (12 - a.MonthPay + 1))  \r\n " +
-          " END , 0))  \r\n " +
-          " FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
-          " WHERE (a.LoanStatusNo = 2 or a.LoanStatusNo = 3) and a.YearPay = {Year} or a.YearPay = {Year} - 1;  \r\n " +
+          "SELECT @Interest = SUM(ISNULL(CASE   \r\n " +
+          "      WHEN a.YearPay = {Year} - 1 and a.MonthPay + a.PayNo - 1 > 12  THEN (ROUND((CAST(a.InterestRate as float) / 100) * a.LoanAmount , 0) / a.PayNo  * (a.PayNo - (12 - a.MonthPay + 1)))   \r\n " +
+          "      WHEN a.YearPay = {Year} and a.MonthPay + a.PayNo - 1 > 12 THEN (ROUND((CAST(a.InterestRate as float) / 100) * a.LoanAmount , 0) / a.PayNo  * (12 - a.MonthPay + 1))   \r\n " +
+          "	  WHEN a.YearPay = {Year} and a.MonthPay + a.PayNo - 1 <= 12 THEN ROUND((CAST(a.InterestRate as float) / 100) * a.LoanAmount , 0)  \r\n " +
+          "  END , 0))   \r\n " +
+          "  FROM EmployeeBank.dbo.tblLoan as a   \r\n " +
+          "  WHERE (a.LoanStatusNo = 2 or a.LoanStatusNo = 3) and a.YearPay = 2022 or a.YearPay = {Year} - 1; \r\n " +
           " \r\n " +
           "  SELECT @Interest =@Interest + RemainInterestLastYear  \r\n " +
           " FROM EmployeeBank.dbo.tblDividend  \r\n " +
@@ -211,20 +213,20 @@ namespace BankTeacher.Bank
                 }
                 CBYearDividend.Enabled = true;
             }
-            if (CBYearDividend.Items.Count != 0)
-            {
-                for (int x = 0; x < CBYearDividend.Items.Count; x++)
-                {
-                    for (int y = 0; y < CBYearDividend.Items.Count; y++)
-                    {
-                        if (dsStartYear.Tables[1].Rows[x][0].ToString() == CBYearDividend.Items[y].ToString())
-                        {
-                            CBYearDividend.Items.RemoveAt(y);
-                            break;
-                        }
-                    }
-                }
-            }
+            //if (CBYearDividend.Items.Count != 0)
+            //{
+            //    for (int x = 0; x < CBYearDividend.Items.Count; x++)
+            //    {
+            //        for (int y = 0; y < CBYearDividend.Items.Count; y++)
+            //        {
+            //            if (dsStartYear.Tables[1].Rows[x][0].ToString() == CBYearDividend.Items[y].ToString())
+            //            {
+            //                CBYearDividend.Items.RemoveAt(y);
+            //                break;
+            //            }
+            //        }
+            //    }
+            //}
             if (CBYearDividend.Items.Count < 1)
             {
                 CBYearDividend.Enabled = false;

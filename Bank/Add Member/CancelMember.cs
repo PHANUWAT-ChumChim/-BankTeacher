@@ -187,7 +187,7 @@ namespace BankTeacher.Bank.Add_Member
 
         private void BSave_Click(object sender, EventArgs e)
         {
-            if (CheckBCancel == false && TBTeacherName.Text != "")
+            if (/*CheckBCancel == false && */TBTeacherName.Text != "")
             {
                 
                 if (TBTeacherNo.Text != "")

@@ -225,10 +225,12 @@ namespace BankTeacher.Bank
             this.TBMinLoan.Name = "TBMinLoan";
             this.TBMinLoan.Size = new System.Drawing.Size(180, 36);
             this.TBMinLoan.TabIndex = 12;
+            this.TBMinLoan.TextChanged += new System.EventHandler(this.TBMinLoan_TextChanged);
             this.TBMinLoan.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBMinLoan_KeyPress);
             // 
             // B_Save
             // 
+            this.B_Save.Enabled = false;
             this.B_Save.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.B_Save.Location = new System.Drawing.Point(266, 298);
             this.B_Save.Margin = new System.Windows.Forms.Padding(2, 5, 2, 5);
@@ -247,6 +249,7 @@ namespace BankTeacher.Bank
             this.TBPerShare.Name = "TBPerShare";
             this.TBPerShare.Size = new System.Drawing.Size(180, 36);
             this.TBPerShare.TabIndex = 12;
+            this.TBPerShare.TextChanged += new System.EventHandler(this.TBPerShare_TextChanged);
             this.TBPerShare.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TB_Max_KeyPress);
             // 
             // TB_Max
@@ -257,6 +260,7 @@ namespace BankTeacher.Bank
             this.TB_Max.Name = "TB_Max";
             this.TB_Max.Size = new System.Drawing.Size(180, 36);
             this.TB_Max.TabIndex = 12;
+            this.TB_Max.TextChanged += new System.EventHandler(this.TB_Max_TextChanged);
             this.TB_Max.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TB_Max_KeyPress);
             // 
             // TB_Min
@@ -267,6 +271,7 @@ namespace BankTeacher.Bank
             this.TB_Min.Name = "TB_Min";
             this.TB_Min.Size = new System.Drawing.Size(180, 36);
             this.TB_Min.TabIndex = 13;
+            this.TB_Min.TextChanged += new System.EventHandler(this.TB_Min_TextChanged);
             this.TB_Min.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TB_Min_KeyPress);
             // 
             // ตั้งการเเก้ไขเวลา
