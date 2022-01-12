@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -28,7 +29,9 @@ namespace BankTeacher.Bank
                 comboBox1.SelectedIndex = 0;
             BOpenFile.Text = Bank.Add_Member.infoMeber.OroD;
         }
-        public static string TeaNo; 
+        public static string TeaNo;
+
+        Thread ChangeEnableAnotherForm;
         private void BOpenFile_Click(object sender, EventArgs e)
         {
             if (comboBox1.SelectedIndex != -1)
@@ -51,8 +54,8 @@ namespace BankTeacher.Bank
                 else
                 {
                     BankTeacher.Class.ComboboxSelectFile SelectFile = (comboBox1.SelectedItem as BankTeacher.Class.ComboboxSelectFile);
-                    try
-                    {
+                    //try
+                    //{
                        DialogResult con = MessageBox.Show($"คุณต้องการลบชื่อ {SelectFile.Name} ไฟล์นี้ หรือ ไม่", "ไฟล์", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                         if(con == DialogResult.Yes)
                         {
@@ -60,11 +63,12 @@ namespace BankTeacher.Bank
                             System.IO.File.Delete(file);
                             comboBox1.Items.RemoveAt(comboBox1.SelectedIndex);
                             MessageBox.Show("ลบไฟล์เสร็จสิ้น", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            Bank.Add_Member.infoMeber FInfoMember = new Add_Member.infoMeber();
-                            FInfoMember.label12.Text = "ยังไม่ได้อัพโหลดไฟล์";
-                            FInfoMember.label12.ForeColor = Color.Red;
-                            FInfoMember.TB_selectflie.Enabled = false;
-                            FInfoMember.TB_deletefile.Enabled = false;
+
+                            
+
+                            ////var forr = (from Form form in Application.OpenForms
+                            ////                  where form.Name == "infoMeber"
+                            ////                  select form);
 
                             if (comboBox1.Items.Count <= 0)
                             {
@@ -73,14 +77,45 @@ namespace BankTeacher.Bank
                                 "where TeacherNo = '{TeacherNo}'"
                                 .Replace("{TeacherNo}", TeaNo));
                             }
+                            ChangeEnableAnotherForm = new Thread(() => ChangevalueAnotherForm());
+                            ChangeEnableAnotherForm.Start();
+
                         }
-                    }
-                    catch (System.IO.IOException ioExp)
+                    //}
+                    //catch (System.IO.IOException ioExp)
+                    //{
+                    //    Console.WriteLine(ioExp.Message);
+                    //}
+                }
+            }
+        }
+        public void ChangevalueAnotherForm()
+        {
+            try
+            {
+                for (int Num = 0; Num < Application.OpenForms.Count; Num++)
+                {
+                    if (Application.OpenForms[Num].Name == "infoMeber")
                     {
-                        Console.WriteLine(ioExp.Message);
+                        //if (BOpenFile.InvokeRequired)
+                        //{
+                        //    BOpenFile.Invoke(new Action(ChangevalueAnotherForm));
+                        //    return;
+                        //}
+                        Bank.Add_Member.infoMeber InfoMember = (Bank.Add_Member.infoMeber)Application.OpenForms[Num];
+                        InfoMember.label12.Text = "ยังไม่ได้อัพโหลดไฟล์";
+                        InfoMember.label12.ForeColor = Color.Red;
+                        InfoMember.TB_deletefile.Enabled = false;
+                        InfoMember.TB_selectflie.Enabled = false;
+                        break;
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"---------------------{ex}--------------------");
+            }
+            
         }
         private void SelectFile_KeyDown(object sender, KeyEventArgs e)
         {

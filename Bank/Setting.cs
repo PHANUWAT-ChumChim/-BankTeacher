@@ -49,6 +49,7 @@ namespace BankTeacher.Bank
             chb = CHB_edittime.Checked;
             Min = Convert.ToInt32(TB_Min.Text);
             Max = Convert.ToInt32(TB_Max.Text);
+            B_Save.Enabled = false;
         }
 
 
@@ -70,36 +71,35 @@ namespace BankTeacher.Bank
 
         private void B_Save_Click(object sender, EventArgs e)
         {
-            if (TB_Min.Text != Min.ToString() || TB_Max.Text != Max.ToString() || CHB_edittime.Checked != chb)
+            
+            if (Convert.ToInt32(TB_Min.Text) <= Convert.ToInt32(TB_Max.Text))
             {
-                if (Convert.ToInt32(TB_Min.Text) <= Convert.ToInt32(TB_Max.Text))
+                int TranChbToInt;
+                if (CHB_edittime.Checked == true)
                 {
-                    int TranChbToInt;
-                    if (CHB_edittime.Checked == true)
-                    {
-                        TranChbToInt = 1;
-                        BankTeacher.Bank.Menu.DateAmountChange = TranChbToInt;
-                    }
-                    else
-                    {
-                        TranChbToInt = 0;
-                        BankTeacher.Bank.Menu.DateAmountChange = TranChbToInt;
-                    }
-
-                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[0].Replace("{DateAmountChange}", TranChbToInt.ToString())
-                        .Replace("{StartAmountMin}", TB_Min.Text)
-                        .Replace("{StartAmountMax}", TB_Max.Text)
-                        .Replace("{PerShare}",TBPerShare.Text)
-                        .Replace("{MinLoan}" , TBMinLoan.Text));
-                    BankTeacher.Bank.Menu.startAmountMin = Convert.ToInt32(TB_Min.Text);
-                    BankTeacher.Bank.Menu.startAmountMax = Convert.ToInt32(TB_Max.Text);
-                    MessageBox.Show("เสร็จสิ้น", "ตั้งค่า", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.Hide();
+                    TranChbToInt = 1;
+                    BankTeacher.Bank.Menu.DateAmountChange = TranChbToInt;
                 }
                 else
-                    MessageBox.Show("ค่าสูงสุดต้องไม่น้อยกว่าค่าต่ำสุด", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                {
+                    TranChbToInt = 0;
+                    BankTeacher.Bank.Menu.DateAmountChange = TranChbToInt;
+                }
 
+                Class.SQLConnection.InputSQLMSSQL(SQLDefault[0].Replace("{DateAmountChange}", TranChbToInt.ToString())
+                    .Replace("{StartAmountMin}", TB_Min.Text)
+                    .Replace("{StartAmountMax}", TB_Max.Text)
+                    .Replace("{PerShare}",TBPerShare.Text)
+                    .Replace("{MinLoan}" , TBMinLoan.Text));
+                BankTeacher.Bank.Menu.startAmountMin = Convert.ToInt32(TB_Min.Text);
+                BankTeacher.Bank.Menu.startAmountMax = Convert.ToInt32(TB_Max.Text);
+                MessageBox.Show("เสร็จสิ้น", "ตั้งค่า", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                B_Save.Enabled = false;
             }
+            else
+                MessageBox.Show("ค่าสูงสุดต้องไม่น้อยกว่าค่าต่ำสุด", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+            
         }
         private void B_Cancel_Click(object sender, EventArgs e)
         {
@@ -143,6 +143,26 @@ namespace BankTeacher.Bank
                     BExitForm_Click(new object(), new EventArgs());
                 }
             }
+        }
+
+        private void TB_Min_TextChanged(object sender, EventArgs e)
+        {
+            B_Save.Enabled = true;
+        }
+
+        private void TB_Max_TextChanged(object sender, EventArgs e)
+        {
+            B_Save.Enabled = true;
+        }
+
+        private void TBPerShare_TextChanged(object sender, EventArgs e)
+        {
+            B_Save.Enabled = true;
+        }
+
+        private void TBMinLoan_TextChanged(object sender, EventArgs e)
+        {
+            B_Save.Enabled = true;
         }
     }
 }

@@ -118,7 +118,7 @@ namespace BankTeacher.Class.ProtocolSharing
                             return;
                         }
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         Console.WriteLine("Error This :=> " + e);
                         return;
