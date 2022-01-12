@@ -673,6 +673,7 @@ namespace BankTeacher.Bank
                 Class.Print.PrintPreviewDialog.info_Amounoff = dt.Rows[0][4].ToString();
                 Class.Print.PrintPreviewDialog.info_Payment = dt.Rows[0][5].ToString();
                 Class.Print.PrintPreviewDialog.info_TeacherAdd = dt.Rows[0][6].ToString();
+                Class.Print.PrintPreviewDialog.info_Savingtotel = TBSavingAmount.Text;
                 TB_Bill.Text = DGVAmountOffHistory.Rows[e.RowIndex].Cells[1].Value.ToString();
                 if (dt.Rows.Count != 0)
                 {

@@ -213,12 +213,7 @@ namespace BankTeacher.Bank.Add_Member
 
                         if (Convert.ToInt32(dsInfoMember.Tables[1].Rows[0][0].ToString()) == 0 && Convert.ToInt32(dsInfoMember.Tables[2].Rows[0][0].ToString()) == 0)
                             TBStartAmount.Enabled = true;
-//<<<<<<< Nice
                         button1.Enabled = true;
-//=======
-                        //button3.Enabled = true;
-                        //button1.Enabled = true;
-//>>>>>>> master
                         tabControl1.Enabled = true;
                         Checkmember(false);
 
@@ -319,7 +314,7 @@ namespace BankTeacher.Bank.Add_Member
                             var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
                             if (smb.IsValidConnection())
                             {
-                                String Return = smb.SendFile(imgeLocation, "Regmember" + TBTeacherNo.Text + ".pdf" ,TBTeacherNo.Text, 1, BankTeacher.Class.UserInfo.TeacherNo);
+                                String Return = smb.SendFile(imgeLocation, "Member_" + TBTeacherNo.Text + ".pdf" ,TBTeacherNo.Text, 1, BankTeacher.Class.UserInfo.TeacherNo);
                                 MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 if (Return.Contains("อัพโหลดเอกสารสำเร็จ"))
                                 {
