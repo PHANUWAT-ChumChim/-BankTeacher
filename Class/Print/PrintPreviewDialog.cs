@@ -682,7 +682,7 @@ namespace BankTeacher.Class.Print
                     else if (TextForm == "AmountOff" && details != 1)
                     {
                         string infoAmountoff = $"ชื่อ-นามสกุล : {info_name}            รหัสประจำตัว : {info_id}            เลขที่หุ้นสะสม : {info_ShareNo}\r\n" +
-                                           $"ยอดเงินสะสมทั้งหมด : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_Savingtotel))} บาท          ยอดเงินที่ถอนออกได้ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_canbeAmounoff))}            สถานะ : {info_Loanstatus}\r\n" +
+                                           $"ยอดเงินสะสมทั้งหมด : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_Savingtotel))} บาท          ยอดเงินที่ถอนออกได้ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_canbeAmounoff))} บาท           สถานะ : {info_Loanstatus}\r\n" +
                                            $"ยอดที่ถอนออก : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_Amounoff))} บาท                      ยอดเงินค้ำในระบบ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_Amounoffinsystem))}";
                         Size = e.Graphics.MeasureString(infoAmountoff, FonT(18, ThaiSarabun, FontStyle.Regular));
                         //// กรอบ
@@ -1008,11 +1008,16 @@ namespace BankTeacher.Class.Print
 
                     e.Graphics.DrawString($" : {info_Payment}", FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50 + TextSize.Width, startTableY + 10);
 
-                    e.Graphics.DrawString("หมายเหตุ", FonT(18, ThaiSarabun, FontStyle.Bold), BrushBlack, 50, startTableY + 40);
+                    e.Graphics.DrawString("ยอดรวมทั้งหมด ", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, 50, startTableY + 40);
+                    TextSize = e.Graphics.MeasureString("ยอดรวมทั้งหมด ", FonT(16, ThaiSarabun, FontStyle.Bold));
+
+                    e.Graphics.DrawString($" : {Amountotel_SUM}", FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50 + TextSize.Width, startTableY + 40);
+
+                    e.Graphics.DrawString("หมายเหตุ", FonT(18, ThaiSarabun, FontStyle.Bold), BrushBlack, 50, startTableY + 70);
                     TextSize = e.Graphics.MeasureString("หมายเหตุ", FonT(18, ThaiSarabun, FontStyle.Regular));
 
                     e.Graphics.DrawString("ใบเสร็จรับเงินฉบับนี้จะสมบูรณ์เมื่อผู้รับเงินลงลายมือชื่อเป็นอันเสร็จสิ้น \r\n" +
-                                        "ชำระเเล้วไม่สามารถรับคืนหรือเปลี่ยนตัวไม่ว่ากรณีใดๆ", FonT(12, ThaiSarabun, FontStyle.Bold), BrushBlack, 50 + TextSize.Width, startTableY + 40);
+                                        "ชำระเเล้วไม่สามารถรับคืนหรือเปลี่ยนตัวไม่ว่ากรณีใดๆ", FonT(12, ThaiSarabun, FontStyle.Bold), BrushBlack, 80 + TextSize.Width, startTableY + 70);
                     if (TextForm == "pay" || TextForm == "AmountOff" || TextForm == "PayLoan" || TextForm == "InfoLoan")
                     {
                    

@@ -189,59 +189,55 @@ namespace BankTeacher.Bank.Add_Member
         {
             if (CheckBCancel == false && TBTeacherName.Text != "")
             {
+                
                 if (TBTeacherNo.Text != "")
                 {
-                    //Input Location Folder
-                    var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("CancelMember");
-                    //Input Contain words แนะนำ เป็นรหัสอาจารย์ ในหน้าทั่วไปส่วนหน้าไหนถ้ามีการทำรายการเยอะๆให้เอาเป็นเลขบิลล์ของหน้านั้นๆเช่นหน้าดูเอกสารกู้ จะใส่เป็นเลขกู้ หน้าดูเอกสาร สมัครสมาชิกจะใส่เป็นชื่ออาจารย์
-                    smb.ThreadCheckFiles(TBTeacherNo.Text, "CancelMember");
-                    if (BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun.Contains("ไม่พบ"))
+                    DataTable dtCheckSavingAmount = Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
+                    .Replace("{TeacherNo}", TBTeacherNo.Text));
+                    if (Convert.ToInt32(dtCheckSavingAmount.Rows[0][0].ToString()) < 1)
                     {
-                        MessageBox.Show(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun, "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else if (BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun != "" && !(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun.Contains("หมดเวลา")))
-                    {
-                        DataTable dtCheckSavingAmount = Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
-                        .Replace("{TeacherNo}", TBTeacherNo.Text));
-                        if (Convert.ToInt32(dtCheckSavingAmount.Rows[0][0].ToString()) < 1)
+                        //Delete File
+                        var Filee = System.IO.File.Exists($@"\\LAPTOP-A1H4E5P4\ShareFileTestSBM\RegMember\Member_{TBTeacherNo.Text}.pdf");
+                        if (Filee)
                         {
-                            Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
-                            .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
-                            .Replace("{TeacherNo}", TBTeacherNo.Text)
-                            .Replace("{Note}", TBNote.Text)
-                            .Replace("{DocStatusNo}", "2")
-                            .Replace("{DocUploadPath}", "")
-                            .Replace("{Status}", "2"));
-                            MessageBox.Show("ยกเลิกผู้ใช้เรียบร้อย", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            CheckBCancel = true;
-                            Checkmember(true);
-                            imgeLocation = "";
+                            System.IO.File.Delete($@"\\LAPTOP-A1H4E5P4\ShareFileTestSBM\RegMember\Member_{TBTeacherNo.Text}.pdf");
+                            DataTable dt = Class.SQLConnection.InputSQLMSSQL("UPDATE EmployeeBank.dbo.tblMember \r\n " +
+                               "set DocStatusNo = '2' \r\n " +
+                               "where TeacherNo = '{TeacherNo}'"
+                               .Replace("{TeacherNo}", TBTeacherNo.Text));
                         }
-                        else
-                        {
-                            if ((MessageBox.Show("ยอดเงินคงเหลือของท่านยังอยู่ในระบบ \r\n ต้องถอนเงินออกจากระบบก่อน", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes))
-                            {
-                                AmountOff FAmountOff = new AmountOff();
-                                Menu FMenu = new Menu();
-                                FAmountOff.FormBorderStyle = FormBorderStyle.Sizable;
-                                FAmountOff.Show();
-                                FAmountOff.TBTeacherNo.Text = TBTeacherNo.Text;
-                                FAmountOff.TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
-                                foreach (Form f in Application.OpenForms)
-                                {
-                                    if (f.Name == "Menu")
-                                    {
-                                        f.Enabled = false;
-                                        f.Hide();
-                                        break;
-                                    }
-                                }
-                            }
-                        }
+                        Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
+                        .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
+                        .Replace("{TeacherNo}", TBTeacherNo.Text)
+                        .Replace("{Note}", TBNote.Text)
+                        .Replace("{DocStatusNo}", "2")
+                        .Replace("{DocUploadPath}", "")
+                        .Replace("{Status}", "2"));
+                        MessageBox.Show("ยกเลิกผู้ใช้เรียบร้อย", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        CheckBCancel = true;
+                        Checkmember(true);
+                        imgeLocation = "";
                     }
                     else
                     {
-                        MessageBox.Show("กรุณาใส่รหัสให้ถูกต้อง", "เตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        if ((MessageBox.Show("ยอดเงินคงเหลือของท่านยังอยู่ในระบบ \r\n ต้องถอนเงินออกจากระบบก่อน", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes))
+                        {
+                            AmountOff FAmountOff = new AmountOff();
+                            Menu FMenu = new Menu();
+                            FAmountOff.FormBorderStyle = FormBorderStyle.Sizable;
+                            FAmountOff.Show();
+                            FAmountOff.TBTeacherNo.Text = TBTeacherNo.Text;
+                            FAmountOff.TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+                            foreach (Form f in Application.OpenForms)
+                            {
+                                if (f.Name == "Menu")
+                                {
+                                    f.Enabled = false;
+                                    f.Hide();
+                                    break;
+                                }
+                            }
+                        }
                     }
                 }
             }
