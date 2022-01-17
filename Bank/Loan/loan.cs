@@ -279,6 +279,7 @@ namespace BankTeacher.Bank.Loan
                 label15.Visible = true;
                 UserOutCreditLimit = DialogResult.No;
                 TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Back));
+                TBTeacherNo.Text = "";
             }
             else if(LLackAmount.Text != "0" || LOutCredit.Text != "0")
             {

@@ -21,8 +21,8 @@ namespace BankTeacher.Bank
         /// <summary> 
         /// SQLDefault 
         /// <para>[0] Insert Dividend INPUT: {Year} {TeacherAddbyNo} </para> 
-        /// <para>[1] Table[1]Select StartYear and Table[2]Select EndYear INPUT: </para>
-        /// <para>[2] Table[1]Get Name , a.SavingAmount , a.DividendAmount , a.Interest , a.RemainInterestLastYear , a.AverageDividend Table[2]Get InterestLastYear INPUT: {Year}</para>
+        /// <para>[1] Table[0]Select StartYear and Table[1]Select EndYear INPUT: </para>
+        /// <para>[2] Table[0]Get Name , a.SavingAmount , a.DividendAmount , a.Interest , a.RemainInterestLastYear , a.AverageDividend Table[1]Get InterestLastYear INPUT: {Year}</para>
         /// <para>[3] AfterDividentInfo INPUT: {Year}</para>
         /// <para>[4] Select Divident INPUT: </para>
         /// </summary> 
@@ -65,7 +65,7 @@ namespace BankTeacher.Bank
           " SET @AVGDivident = @Interest/@AmountShare;  \r\n " +
           "   \r\n " +
           " INSERT EmployeeBank.dbo.tblDividend (Interest,AverageDividend,Year,Cancel,CancelBy,TeacherAddby,DateAdd,DateCancel)  \r\n " +
-          " VALUES (@Interest, ROUND(@AVGDivident,2,1),{Year},1,'',{TeacherAddbyNo},CURRENT_TIMESTAMP,'');  \r\n " +
+          " VALUES (@Interest, ROUND(@AVGDivident,2,1),{Year},1,'','{TeacherAddbyNo}',CURRENT_TIMESTAMP,'');  \r\n " +
           "   \r\n " +
           " SET @DividendNo = SCOPE_IDENTITY();  \r\n " +
           "   \r\n " +
@@ -90,34 +90,47 @@ namespace BankTeacher.Bank
           " WHERE EmployeeBank.dbo.tblShare.TeacherNo IN (SELECT b.TeacherNo  \r\n " +
           " 	FROM EmployeeBank.dbo.tblDividend as a  \r\n " +
           " 	LEFT JOIN EmployeeBank.dbo.tblDividendDetail as b on a.DividendNo = b.DividendNo  \r\n " +
-          " 	WHERE a.DividendNo = @DividendNo and a.Cancel = 1)"
+          " 	WHERE a.DividendNo = @DividendNo and a.Cancel = 1)\r\n" +
+          "\r\n" +
+          "UPDATE EmployeeBank.dbo.tblLoan \r\n " + 
+          "SET LoanStatusNo = 4 \r\n " +
+          "WHERE LoanStatusNo = 1;"
            ,
 
 
            //[1] Table[0]Select StartYear and Table[1]Select EndYear INPUT: -
-           "DECLARE @Getnull int;  \r\n " +
-          "   \r\n " +
-          " SELECT TOP 1 @Getnull = ISNULL(MAX(a.Year) + 1 , 0)  \r\n " +
-          " FROM EmployeeBank.dbo.tblDividend as a   \r\n " +
-          " WHERE a.Cancel = 1 ;  \r\n " +
-          "   \r\n " +
-          " IF (@Getnull = 0)  \r\n " +
-          " BEGIN  \r\n " +
-          "	SELECT TOP 1 MIN(a.YearPay) \r\n " +
-          "	FROM EmployeeBank.dbo.tblLoan as a \r\n " +
-          "	WHERE a.LoanStatusNo = 2 or a.LoanStatusNo = 3 \r\n " +
-          " END  \r\n " +
-          " ELSE  \r\n " +
-          " BEGIN  \r\n " +
-          "     SELECT TOP 1 ISNULL(MAX(a.Year) + 1 , 0)  \r\n " +
-          "     FROM EmployeeBank.dbo.tblDividend as a   \r\n " +
-          "     WHERE a.Cancel = 1 ;  \r\n " +
-          " END  \r\n " +
-          "   \r\n " +
-          " SELECT TOP 1 MAX(b.Year)   \r\n " +
-          " FROM EmployeeBank.dbo.tblBill as a  \r\n " +
-          " LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo  \r\n " +
-          " WHERE a.Cancel = 1 and b.TypeNo = 2;"
+           "DECLARE @Getnull int; \r\n " +
+          "DECLARE @LoanYear int; \r\n " +
+          "     \r\n " +
+          "SELECT TOP 1 @Getnull = ISNULL(MAX(a.Year) + 1 , 0)   \r\n " +
+          "FROM EmployeeBank.dbo.tblDividend as a    \r\n " +
+          "WHERE a.Cancel = 1 ; \r\n " +
+          " \r\n " +
+          "SELECT TOP 1 @LoanYear = MIN(a.YearPay)  \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
+          "WHERE a.LoanStatusNo = 2 or a.LoanStatusNo = 3  \r\n " +
+          "     \r\n " +
+          "  IF (@Getnull = 0)   \r\n " +
+          "  BEGIN   \r\n " +
+          " 	SELECT TOP 1 MIN(a.YearPay)  \r\n " +
+          " 	FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
+          " 	WHERE a.LoanStatusNo = 2 or a.LoanStatusNo = 3  \r\n " +
+          "  END   \r\n " +
+          "  ELSE IF(@LoanYear = @Getnull - 1) \r\n " +
+          "  BEGIN \r\n " +
+          "	SELECT NULL; \r\n " +
+          "  END \r\n " +
+          "  ELSE IF (@Getnull != 0) \r\n " +
+          "  BEGIN   \r\n " +
+          "      SELECT TOP 1 ISNULL(MAX(a.Year) + 1 , 0) \r\n " +
+          "      FROM EmployeeBank.dbo.tblDividend as a    \r\n " +
+          "      WHERE a.Cancel = 1 ;   \r\n " +
+          "  END   \r\n " +
+          "     \r\n " +
+          "SELECT TOP 1 MAX(b.Year)    \r\n " +
+          "FROM EmployeeBank.dbo.tblBill as a   \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo   \r\n " +
+          "WHERE a.Cancel = 1 and b.TypeNo = 2;"
 
            ,
            
@@ -359,7 +372,7 @@ namespace BankTeacher.Bank
         }
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV, "ปันผล", AccessibilityObject.Name, true, true, "A4", 1); ;
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV, "ปันผล", AccessibilityObject.Name, true, true, "A4", 1); 
         }
     }
 }
