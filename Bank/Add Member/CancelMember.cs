@@ -169,6 +169,7 @@ namespace BankTeacher.Bank.Add_Member
                     TBTeacherName.Text = ds.Tables[0].Rows[0][1].ToString();
                     Saving = Convert.ToDouble(ds.Tables[0].Rows[0][2].ToString());
                     Check = true;
+                    TBTeacherNo.Enabled = true;
                     Checkmember(false);
                 }
                 else
@@ -217,6 +218,10 @@ namespace BankTeacher.Bank.Add_Member
                         CheckBCancel = true;
                         Checkmember(true);
                         imgeLocation = "";
+                        TBTeacherNo.Text = "";
+                        TBTeacherName.Text = "";
+                        TBNote.Text = "";
+                        BSave.Enabled = false;
                     }
                     else
                     {
