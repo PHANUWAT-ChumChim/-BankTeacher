@@ -332,6 +332,7 @@ namespace BankTeacher.Bank.Loan
                     int SumInstallment = Convert.ToInt32(Pay + Interest);
                     int SumCheckInterest = 0;
 
+
                     for (int Num = 0; Num < int.Parse(TBPayNo.Text); Num++)
                     {
                         if (Month > 12)
