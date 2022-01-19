@@ -93,6 +93,16 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _64x64_IceZ {
+            get {
+                object obj = ResourceManager.GetObject("_64x64_IceZ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap _64x64_magnifying_glass {
             get {
                 object obj = ResourceManager.GetObject("_64x64_magnifying_glass", resourceCulture);
@@ -116,6 +126,16 @@ namespace BankTeacher.Properties {
         internal static System.Drawing.Bitmap _64x64_money_bag__1_ {
             get {
                 object obj = ResourceManager.GetObject("_64x64_money_bag__1_", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _64x64_no_internet {
+            get {
+                object obj = ResourceManager.GetObject("_64x64_no_internet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -29,9 +29,14 @@ namespace BankTeacher.Bank
                 comboBox1.SelectedIndex = 0;
             BOpenFile.Text = Bank.Add_Member.infoMeber.OroD;
         }
-        public static string TeaNo;
-
-        Thread ChangeEnableAnotherForm;
+        public static class info_File
+        {
+            public static string No;
+            public static string Type;
+        }
+      
+        public static bool OpenEnableButton;
+        //Thread ChangeEnableAnotherForm;
         private void BOpenFile_Click(object sender, EventArgs e)
         {
             if (comboBox1.SelectedIndex != -1)
@@ -54,38 +59,61 @@ namespace BankTeacher.Bank
                 else
                 {
                     BankTeacher.Class.ComboboxSelectFile SelectFile = (comboBox1.SelectedItem as BankTeacher.Class.ComboboxSelectFile);
-                    //try
-                    //{
-                       DialogResult con = MessageBox.Show($"คุณต้องการลบชื่อ {SelectFile.Name} ไฟล์นี้ หรือ ไม่", "ไฟล์", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    String file = Path + SelectFile.Name;
+                    string SQLUPDATE,SQLSELCET;
+                    if (info_File.Type == "MemberNo")
+                    {
+                        SQLSELCET = "select a.DocStatusNo, a.DocUploadPath \r\n " +
+                         "from EmployeeBank.dbo.tblMember as a \r\n" +
+                         $"where a.TeacherNo = '{info_File.No}'";
+                        SQLUPDATE = "UPDATE EmployeeBank.dbo.tblMember \r\n " +
+                    "set DocStatusNo = '2',DocUploadPath = '' \r\n " +
+                    "where TeacherNo = '{TeacherNo}'"
+                    .Replace("{TeacherNo}", info_File.No);
+                    }
+                    else
+                    {
+                        SQLSELCET = "SELECT a.DocStatusNo,a.DocUploadPath \r\n " +
+                       "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
+                       "WHERE a.LoanNo = '{LoanNo}'".Replace("{LoanNo}",info_File.No);
+                        SQLUPDATE = "UPDATE EmployeeBank.dbo.tblLoan \r\n" +
+                     "set DocStatusNo = 2, DocUploadPath = '' \r\n" +
+                     "WHERE LoanNo = '{LoanNo}'".Replace("{LoanNo}", info_File.No);
+                    }
+                    try
+                    {
+                        DialogResult con = MessageBox.Show($"คุณต้องการลบชื่อ {SelectFile.Name} ไฟล์นี้ หรือ ไม่", "ไฟล์", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                         if(con == DialogResult.Yes)
                         {
-                            String file = Path + SelectFile.Name;
-                            System.IO.File.Delete(file);
-                            comboBox1.Items.RemoveAt(comboBox1.SelectedIndex);
-                            MessageBox.Show("ลบไฟล์เสร็จสิ้น", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                            
-
-                            ////var forr = (from Form form in Application.OpenForms
-                            ////                  where form.Name == "infoMeber"
-                            ////                  select form);
-
-                            if (comboBox1.Items.Count <= 0)
+                            DataTable dt_file = Class.SQLConnection.InputSQLMSSQL(SQLSELCET);
+                            if (dt_file.Rows.Count != 0)
                             {
-                                DataTable dt = Class.SQLConnection.InputSQLMSSQL("UPDATE EmployeeBank.dbo.tblMember \r\n " +
-                                "set DocStatusNo = '2' \r\n " +
-                                "where TeacherNo = '{TeacherNo}'"
-                                .Replace("{TeacherNo}", TeaNo));
+                                System.IO.FileInfo f = new System.IO.FileInfo(dt_file.Rows[0][1].ToString());
+                                DateTime Date = Convert.ToDateTime(f.CreationTime);
+                                string a = Date.ToString("dd-MM-yyyy hh:mm");
+                                string b = comboBox1.SelectedItem.ToString();
+                                if (comboBox1.SelectedItem.ToString() == Date.ToString("dd-MM-yyyy hh:mm"))
+                                {
+                                    System.IO.File.Delete(file);
+                                    comboBox1.Items.RemoveAt(comboBox1.SelectedIndex);
+                                    MessageBox.Show("ลบไฟล์เสร็จสิ้น", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    Class.SQLConnection.InputSQLMSSQL(SQLUPDATE);
+                                    OpenEnableButton = false;
+                                }
+                                else { MessageBox.Show("ไม่สามรถลบไฟล์ที่ไม่เกี่ยวข้องกับเอกสารปัจุบันได้", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information); }
                             }
-                            ChangeEnableAnotherForm = new Thread(() => ChangevalueAnotherForm());
-                            ChangeEnableAnotherForm.Start();
-
+                            else { System.IO.File.Delete(file);
+                                MessageBox.Show("ลบไฟล์เสร็จสิ้น", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                comboBox1.Items.RemoveAt(comboBox1.SelectedIndex);
+                                OpenEnableButton = false;
+                            }
+                          
                         }
-                    //}
-                    //catch (System.IO.IOException ioExp)
-                    //{
-                    //    Console.WriteLine(ioExp.Message);
-                    //}
+                    }
+                    catch (System.IO.IOException ioExp)
+                    {
+                        Console.WriteLine(ioExp.Message);
+                    }
                 }
             }
         }

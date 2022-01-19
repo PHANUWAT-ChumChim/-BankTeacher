@@ -15,7 +15,7 @@ namespace BankTeacher.Bank.Add_Member
         {
             InitializeComponent();
         }
-     
+
         /// <summary> 
         /// SQLDefault 
         /// <para>[0] Get InfoMember INPUT: {TeacherNo}  </para> 
@@ -24,7 +24,7 @@ namespace BankTeacher.Bank.Add_Member
         /// <para>[3] Save Edit Bsave INPUT: {Amount}  {TeacherNo} </para>
         /// <para>[4] Select Detail Memner INPUT: {TeacherNo} </para>
         /// <para>[5] Chcek flie INPUT : {TeacherNo} </para>
-        /// <para>[6] update file INPUT : {TeacharNo} {num} </para>
+        /// <para>[6] update file INPUT : {TeacharNo} {num} {PathFile} </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -95,9 +95,9 @@ namespace BankTeacher.Bank.Add_Member
           "LEFT JOIN EmployeeBank.dbo.tblDocStatus as b on a.DocStatusNo = b.DocStatusNo  \r\n " +
           "WHERE a.TeacherNo = '{TeacherNo}' " 
            ,
-           //[6] update file INPUT : {TeacharNo} {num}
+           //[6] update file INPUT : {TeacharNo} {num} {PathFile}
            "UPDATE EmployeeBank.dbo.tblMember \r\n " +
-           "set DocStatusNo = '{num}' \r\n " +
+           "set DocStatusNo = '{num}',DocUploadPath = '{PathFile}' \r\n " +
            "where TeacherNo = '{TeacherNo}'"
          };
 
@@ -217,6 +217,12 @@ namespace BankTeacher.Bank.Add_Member
                         tabControl1.Enabled = true;
                         Checkmember(false);
 
+                        // เช็คการเชื่อมต่อ
+                        var wifi = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
+                        if (wifi.IsValidConnection()) { label17.Text = "ปกติ"; label17.ForeColor = Color.Green; pb_disconnectwifi.Visible = false; pb_connectwifi.Visible = true; }
+                        else { label17.Text = "ขาดการเชื่อมต่อ"; label17.ForeColor = Color.Red; pb_disconnectwifi.Visible = true; pb_connectwifi.Visible = false; BT_Rewifi.Visible = true; }
+
+                        // เช็คการส่งไฟล์
                         DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text));
                         if(dt.Rows[0][0].ToString() != "ไม่ได้อัพโหลด")
                         {
@@ -300,7 +306,6 @@ namespace BankTeacher.Bank.Add_Member
                 DataTable dt_CheckFlie = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text));
                 if (dt_CheckFlie.Rows[0][0].ToString() == "ไม่ได้อัพโหลด")
                 {
-
                     try
                     {
                         OpenFileDialog dialog = new OpenFileDialog();
@@ -311,14 +316,27 @@ namespace BankTeacher.Bank.Add_Member
                         }
                         if (imgeLocation != "")
                         {
+                            DataTable dt_Chcek = Class.SQLConnection.InputSQLMSSQL("SELECT a.DocUploadPath \r\n" +
+                            "FROM EmployeeBank.dbo.tblMemberResignation as a \r\n" +
+                            "WHERE a.TeacherNo = '{TeacherNo}'".Replace("{TeacherNo}", TBTeacherNo.Text));
                             var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
-                            if (smb.IsValidConnection())
+                            if (dt_Chcek.Rows.Count != 0)
                             {
-                                String Return = smb.SendFile(imgeLocation, "Member_" + TBTeacherNo.Text + ".pdf" ,TBTeacherNo.Text, 1, BankTeacher.Class.UserInfo.TeacherNo);
+                                Class.PathFile.File = $"Member_{TBTeacherNo.Text}_{dt_Chcek.Rows.Count}.pdf";
+                                Class.PathFile.FileNo = dt_Chcek.Rows.Count.ToString();
+                            }
+                            else
+                            {
+                                Class.PathFile.File = $@"Member_{TBTeacherNo.Text}.pdf";
+                            }
+
+                                if (smb.IsValidConnection())
+                                {
+                                String Return = smb.SendFile(imgeLocation,Class.PathFile.File,TBTeacherNo.Text, 1, BankTeacher.Class.UserInfo.TeacherNo);
                                 MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 if (Return.Contains("อัพโหลดเอกสารสำเร็จ"))
                                 {
-                                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("{TeacherNo}", TBTeacherNo.Text).Replace("{num}","1"));
+                                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("{TeacherNo}", TBTeacherNo.Text).Replace("{num}","1").Replace("{PathFile}",smb.networkPath+Class.PathFile.File));
                                     label12.Text = "อัพโหลดไฟล์เรียบร้อย";
                                     label12.ForeColor = Color.Green;
                                     TB_selectflie.Enabled = true;
@@ -358,12 +376,12 @@ namespace BankTeacher.Bank.Add_Member
                 {
                     //Input Location Folder
                     var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
-                    //Input Contain words แนะนำ เป็นรหัสอาจารย์ ในหน้าทั่วไปส่วนหน้าไหนถ้ามีการทำรายการเยอะๆให้เอาเป็นเลขบิลล์ของหน้านั้นๆเช่นหน้าดูเอกสารกู้ จะใส่เป็นเลขกู้ หน้าดูเอกสาร สมัครสมาชิกจะใส่เป็นชื่ออาจารย์
-                    smb.ThreadOpenFile(TBTeacherNo.Text);
-                    if (BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun != "")
+                    if (smb.IsValidConnection())
                     {
-                        MessageBox.Show(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun, "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        //Input Contain words แนะนำ เป็นรหัสอาจารย์ ในหน้าทั่วไปส่วนหน้าไหนถ้ามีการทำรายการเยอะๆให้เอาเป็นเลขบิลล์ของหน้านั้นๆเช่นหน้าดูเอกสารกู้ จะใส่เป็นเลขกู้ หน้าดูเอกสาร สมัครสมาชิกจะใส่เป็นชื่ออาจารย์
+                        smb.GetFile(TBTeacherNo.Text);
                     }
+                    else { MessageBox.Show("โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเข้าถึงโฟร์เดอร์ได้", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
                 }
             }
             else
@@ -376,26 +394,45 @@ namespace BankTeacher.Bank.Add_Member
         }
         public void button4_Click(object sender, EventArgs e)
         {
-            Bank.SelectFile.TeaNo = TBTeacherNo.Text;
-            OroD = "ลบ";
-            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text));
-            if (dt.Rows[0][0].ToString() == "อัพโหลดเอกสารแล้ว")
+            do
             {
-                if (TBTeacherNo.Text != "")
+                Bank.SelectFile.info_File.No = TBTeacherNo.Text;
+                Bank.SelectFile.info_File.Type = "MemberNo";
+                OroD = "ลบ";
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text));
+                if (dt.Rows[0][0].ToString() == "อัพโหลดเอกสารแล้ว")
                 {
-                    //Input Location Folder
-                    var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
-                    smb.ThreadOpenFile(TBTeacherNo.Text);
+                    if (TBTeacherNo.Text != "")
+                    {
+                        //Input Location Folder
+                        var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
+                        if (smb.IsValidConnection())
+                        {
+                            smb.GetFile(TBTeacherNo.Text);
+                            //if (BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun != "")
+                            //{
+                            //    MessageBox.Show(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun, "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            //}
+                        }
+                        else { 
+                            MessageBox.Show("โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเข้าถึงโฟร์เดอร์ได้", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            Bank.SelectFile.OpenEnableButton = true;
+                        }
+                        
+                       
+                    }
                 }
-            }
-            else
-            {
-                label12.Text = "ยังไม่ได้อัพโหลดไฟล์";
-                label12.ForeColor = Color.Red;
-                TB_selectflie.Enabled = false;
-                TB_deletefile.Enabled = false;
-            }
+                else
+                {
+                    Bank.SelectFile.OpenEnableButton = true;
+                    label12.Text = "ยังไม่ได้อัพโหลดไฟล์";
+                    label12.ForeColor = Color.Red;
+                    TB_selectflie.Enabled = false;
+                    TB_deletefile.Enabled = false;
+                }
+            } while(!Bank.SelectFile.OpenEnableButton);
         }
+        public static string T = "";
         private void button1_Click(object sender, EventArgs e)
         {
             if(TBStartAmount.Enabled == true)
@@ -406,6 +443,11 @@ namespace BankTeacher.Bank.Add_Member
             {
                 TBStartAmount.Enabled = true;
             }
+        }
+
+        private void BT_Rewifi_Click(object sender, EventArgs e)
+        {
+            TBTeacherNo_KeyDown(sender,new KeyEventArgs(Keys.Enter));
         }
     }
 }

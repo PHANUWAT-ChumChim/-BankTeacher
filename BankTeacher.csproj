@@ -492,6 +492,11 @@
   <ItemGroup>
     <None Include="Resources\Image1.bmp" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\IceZ.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\no-internet.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

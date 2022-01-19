@@ -197,7 +197,8 @@ namespace BankTeacher.Bank
         private void Dividend_Load(object sender, EventArgs e)
         {
             DataSet dsStartYear = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]+"\r\n"+SQLDefault[4]);
-            if(dsStartYear.Tables[0].Rows.Count != 0)
+            String ddd = dsStartYear.Tables[0].Rows[0][0].ToString();
+            if (dsStartYear.Tables[0].Rows[0][0].ToString() != "NULL")
             {
                 for(int x = 0; x < dsStartYear.Tables[0].Rows.Count; x++)
                 {
@@ -205,7 +206,7 @@ namespace BankTeacher.Bank
                 }
                 CBYearDividend.Enabled = true;
             }
-            else if(dsStartYear.Tables[1].Rows.Count != 0)
+            else if (dsStartYear.Tables[1].Rows[0][0].ToString() != "NULL")
             {
                 for(int x = 0; x < dsStartYear.Tables[1].Rows.Count; x++)
                 {
@@ -277,7 +278,7 @@ namespace BankTeacher.Bank
         {
             if (CBYearDividend.SelectedIndex != -1)
             {
-                DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[3].Replace("{Year}",CBYearDividend.Items[CBYearDividend.SelectedIndex].ToString())+
+                DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[3].Replace("{Year}",CBYearDividend.SelectedItem.ToString())+
                     "\r\n"+
                     SQLDefault[4]);
                 if(ds.Tables[0].Rows.Count != 0)

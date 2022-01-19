@@ -485,7 +485,7 @@ namespace BankTeacher.Bank
                 }
             }
         }
-        private void BMaxWithDraw_AmountOff_Click(object sender, EventArgs e)
+        public void BMaxWithDraw_AmountOff_Click(object sender, EventArgs e)
         {
             if(TBCreditWithDraw.Text != "")
             {
