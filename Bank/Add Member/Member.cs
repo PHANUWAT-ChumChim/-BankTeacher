@@ -205,6 +205,7 @@ namespace BankTeacher.Bank.Add_Member
                                     MessageBox.Show("สมัครเสร็จสิ้น", "สมัครสมาชิก", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     CheckBRegister = true;
                                     Checkmember(true);
+                                    TBStartAmountShare_Reg.Enabled = false;
                                 }
                                 else
                                 {
@@ -372,6 +373,7 @@ namespace BankTeacher.Bank.Add_Member
                         BTPrintfShare_Reg.Enabled = true;
                         BTOpenfile_Reg.Enabled = true;
                         Checkmember(false);
+                        TBStartAmountShare_Reg.Enabled = true;
                     }
                 }
                 catch (Exception ex)

@@ -169,6 +169,7 @@ namespace BankTeacher.Bank.Add_Member
                     TBTeacherName.Text = ds.Tables[0].Rows[0][1].ToString();
                     Saving = Convert.ToDouble(ds.Tables[0].Rows[0][2].ToString());
                     Check = true;
+                    TBTeacherNo.Enabled = true;
                     Checkmember(false);
                 }
                 else
@@ -219,8 +220,26 @@ namespace BankTeacher.Bank.Add_Member
                             Checkmember(true);
                             imgeLocation = "";
                         }
+//<<<<<<< POON_File
                         else { MessageBox.Show("กรุณาส่งเอกสารสมัครสมาชิก เพื่อยืนยันการสมัคร", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
                      
+//=======
+                        //Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
+                        //.Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
+                        //.Replace("{TeacherNo}", TBTeacherNo.Text)
+                        //.Replace("{Note}", TBNote.Text)
+                        //.Replace("{DocStatusNo}", "2")
+                        //.Replace("{DocUploadPath}", "")
+                        //.Replace("{Status}", "2"));
+                        //MessageBox.Show("ยกเลิกผู้ใช้เรียบร้อย", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                       // CheckBCancel = true;
+                       // Checkmember(true);
+                       // imgeLocation = "";
+                        //TBTeacherNo.Text = "";
+                       // TBTeacherName.Text = "";
+                       // TBNote.Text = "";
+                       // BSave.Enabled = false;
+//>>>>>>> master
                     }
                     else
                     {
