@@ -217,8 +217,10 @@ namespace BankTeacher.Bank.Loan
                     Checkmember(false);
                     if (CB_LoanNo.Items.Count == 1)
                         CB_LoanNo.SelectedIndex = 0;
-
-                    if (System.IO.File.Exists($@"\\LAPTOP-A1H4E5P4\ShareFileTestSBM\Loan\Loan{TBLoanNo.Text}.pdf") == false)
+                    DataTable dt_ChcekFile = Class.SQLConnection.InputSQLMSSQL("SELECT a.LoanNo,a.DocStatusNo,a.DocUploadPath \r\n" +
+                    "FROM EmployeeBank.dbo.tblLoan as a \r\n" +
+                    "WHERE a.LoanNo = '{LoanNo}'".Replace("{LoanNo}",TBLoanNo.Text));
+                    if (dt_ChcekFile.Rows[0][1].ToString() ==  "2")
                     {
                         LB_Flie.Text = "กรุณาอัพโหลดเอกสาร";
                         LB_Flie.ForeColor = Color.Red;
@@ -422,7 +424,7 @@ namespace BankTeacher.Bank.Loan
                     Class.Print.PrintPreviewDialog.info_TeacherAdd = dt.Rows[0][4].ToString();
                     Class.Print.PrintPreviewDialog.info_Payment = dt.Rows[0][5].ToString();
                     string date = "";
-                    if(dt.Rows[0][1].ToString() == "") { date = "รอดำเนินการ"; }
+                    if(dt.Rows[0][1].ToString() == "") { date = "รอดำเนินการ"; } else { date = dt.Rows[0][1].ToString(); }
                     for (int loop = 0; loop < dt.Rows.Count; loop++)
                     {
                         DGV_Historyloanpay.Rows.Add(dt.Rows[0][0].ToString(),date, dt.Rows[0][3].ToString(), dt.Rows[0][2].ToString());
@@ -555,51 +557,63 @@ namespace BankTeacher.Bank.Loan
                 BankTeacher.Class.ComboBoxPayment Loan = (CB_LoanNo.SelectedItem as BankTeacher.Class.ComboBoxPayment);
                 //Input Location Folder
                 var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("Loan");
-                //Input Contain words แนะนำ เป็นรหัสอาจารย์ ในหน้าทั่วไปส่วนหน้าไหนถ้ามีการทำรายการเยอะๆให้เอาเป็นเลขบิลล์ของหน้านั้นๆเช่นหน้าดูเอกสารกู้ จะใส่เป็นเลขกู้ หน้าดูเอกสาร สมัครสมาชิกจะใส่เป็นชื่ออาจารย์
-                smb.ThreadOpenFile(Loan.No);
-                if (BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun != "")
+                if (smb.IsValidConnection())
                 {
-                    MessageBox.Show(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun, "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    //Input Contain words แนะนำ เป็นรหัสอาจารย์ ในหน้าทั่วไปส่วนหน้าไหนถ้ามีการทำรายการเยอะๆให้เอาเป็นเลขบิลล์ของหน้านั้นๆเช่นหน้าดูเอกสารกู้ จะใส่เป็นเลขกู้ หน้าดูเอกสาร สมัครสมาชิกจะใส่เป็นชื่ออาจารย์
+                    smb.GetFile(Loan.No);
                 }
+                else { MessageBox.Show("โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเข้าถึงโฟร์เดอร์ได้", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
             }
         }
         String imgeLocation = "";
         private void BTOpenfile_Reg_Click(object sender, EventArgs e)
         {
+            DataTable dt = Class.SQLConnection.InputSQLMSSQL("SELECT a.DocStatusNo, a.DocUploadPath \r\n" +
+            "FROM EmployeeBank.dbo.tblLoan as a \r\n" +
+            "WHERE a.LoanNo = '{LoanNo}'".Replace("{LoanNo}", TBLoanNo.Text));
             if (CB_LoanNo.SelectedIndex != -1)
             {
-                BankTeacher.Class.ComboBoxPayment Loan = (CB_LoanNo.SelectedItem as BankTeacher.Class.ComboBoxPayment);
-                try
+                if (dt.Rows[0][0].ToString() != "1")
                 {
-                    OpenFileDialog dialog = new OpenFileDialog();
-                    dialog.Filter = "pdf files(*.pdf)|*.pdf";
-                    if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    BankTeacher.Class.ComboBoxPayment Loan = (CB_LoanNo.SelectedItem as BankTeacher.Class.ComboBoxPayment);
+                    try
                     {
-                        imgeLocation = dialog.FileName;
-                    }
-                    if (imgeLocation != "")
-                    {
-
-                        var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("Loan");
-                        if (smb.IsValidConnection())
+                        OpenFileDialog dialog = new OpenFileDialog();
+                        dialog.Filter = "pdf files(*.pdf)|*.pdf";
+                        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                         {
-                            String Return = smb.SendFile(imgeLocation, "Loan" + Loan.No + ".pdf" , TBTeacherNo.Text, 3, BankTeacher.Class.UserInfo.TeacherNo , Loan.No);
-                            MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            if (Return.Contains("อัพโหลดสำเร็จ"))
+                            imgeLocation = dialog.FileName;
+                        }
+                        if (imgeLocation != "")
+                        {
+
+                            var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("Loan");
+                            if (smb.IsValidConnection())
                             {
-                                imgeLocation = "";
+                                String Return = smb.SendFile(imgeLocation, "Loan" + Loan.No + ".pdf", TBTeacherNo.Text, 3, BankTeacher.Class.UserInfo.TeacherNo, Loan.No);
+                                MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                if (Return.Contains("อัพโหลดเอกสารสำเร็จ"))
+                                {
+                                    Class.SQLConnection.InputSQLMSSQL("UPDATE EmployeeBank.dbo.tblLoan \r\n" +
+                                    "set DocStatusNo = 1, DocUploadPath = '{PathFile}' \r\n".Replace("{PathFile}", smb.networkPath + "Loan" + Loan.No + ".pdf") +
+                                    "WHERE LoanNo = '{LoanNo}'".Replace("{LoanNo}", TBLoanNo.Text));
+                                    imgeLocation = "";
+                                    LB_Flie.Text = "อัพโหลดสำเร็จ";
+                                    LB_Flie.ForeColor = Color.Green;
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
                         }
-                        else
-                        {
-                            MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        }
+                    }
+                    catch
+                    {
+                        MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                catch
-                {
-                    MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                else { MessageBox.Show("ทำการส่งไฟล์แล้ว ไม่สามารถดำเนินการส่งไฟล์ซ้ำได้", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
             }
             else
             {
@@ -623,18 +637,33 @@ namespace BankTeacher.Bank.Loan
 
         private void BT_deleteflie_Click(object sender, EventArgs e)
         {
-            if (System.IO.File.Exists($@"\\LAPTOP-A1H4E5P4\ShareFileTestSBM\Loan\Loan{TBLoanNo.Text}.pdf") == true)
+            do
             {
-                Bank.SelectFile.TeaNo = TBLoanNo.Text;
+                Bank.SelectFile.info_File.No = TBLoanNo.Text;
+                Bank.SelectFile.info_File.Type = "LoanNo";
                 Bank.Add_Member.infoMeber.OroD = "ลบ";
-                //Input Location Folder
                 var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("Loan");
-                smb.ThreadOpenFile(TBLoanNo.Text);
+                if (smb.IsValidConnection())
+                {
+                    smb.GetFile(TBLoanNo.Text);
+                }
+                else { MessageBox.Show("โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเข้าถึงโฟร์เดอร์ได้", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+
             }
-            else
-            {
-                MessageBox.Show("ไม่พบไฟล์ โปรดตวรจสอบ การส่งไฟล์ใหม่ หรือ ดูที่อยู่ไฟล์","ไฟล์",MessageBoxButtons.OK,MessageBoxIcon.Information);
-            }
+            while (!Bank.SelectFile.OpenEnableButton);
+            
+            //if (BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun != "")
+            //{
+            //    MessageBox.Show(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun, "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //}
+            //if (System.IO.File.Exists($@"{smb.networkPath}\Loan{TBLoanNo.Text}.pdf"))
+            //{
+
+            //}
+            //else
+            //{
+            //    MessageBox.Show("ไม่พบไฟล์ โปรดตวรจสอบ การส่งไฟล์ใหม่ หรือ ดูที่อยู่ไฟล์","ไฟล์",MessageBoxButtons.OK,MessageBoxIcon.Information);
+            //}
         }
     }
 }

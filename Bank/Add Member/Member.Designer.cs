@@ -149,7 +149,7 @@ namespace BankTeacher.Bank.Add_Member
             this.BTOpenfile_Reg.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BTOpenfile_Reg.Cursor = System.Windows.Forms.Cursors.Default;
             this.BTOpenfile_Reg.Enabled = false;
-            this.BTOpenfile_Reg.Location = new System.Drawing.Point(27, 172);
+            this.BTOpenfile_Reg.Location = new System.Drawing.Point(31, 172);
             this.BTOpenfile_Reg.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.BTOpenfile_Reg.Name = "BTOpenfile_Reg";
             this.BTOpenfile_Reg.Size = new System.Drawing.Size(168, 60);

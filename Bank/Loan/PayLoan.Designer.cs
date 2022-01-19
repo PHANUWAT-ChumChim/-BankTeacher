@@ -69,6 +69,8 @@ namespace BankTeacher.Bank.Loan
             this.BSave = new System.Windows.Forms.Button();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.label4 = new System.Windows.Forms.Label();
+            this.TB_password = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -133,7 +135,12 @@ namespace BankTeacher.Bank.Loan
             // 
             // tabPage4
             // 
+//<<<<<<< POON_File
+            this.tabPage4.Controls.Add(this.TB_password);
+            this.tabPage4.Controls.Add(this.label4);
+//=======
             this.tabPage4.Controls.Add(this.panel5);
+//>>>>>>> master
             this.tabPage4.Controls.Add(this.label6);
             this.tabPage4.Controls.Add(this.DGV_PayLoan);
             this.tabPage4.Controls.Add(this.label5);
@@ -559,6 +566,31 @@ namespace BankTeacher.Bank.Loan
             // 
             this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.BackColor = System.Drawing.Color.White;
+            this.label4.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.ForeColor = System.Drawing.Color.Black;
+            this.label4.Location = new System.Drawing.Point(416, 363);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(187, 37);
+            this.label4.TabIndex = 102;
+            this.label4.Text = "รหัสขอสิทธ์ทำรายการ";
+            this.label4.Visible = false;
+            // 
+            // TB_password
+            // 
+            this.TB_password.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TB_password.Location = new System.Drawing.Point(619, 357);
+            this.TB_password.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TB_password.MaxLength = 6;
+            this.TB_password.Name = "TB_password";
+            this.TB_password.Size = new System.Drawing.Size(179, 43);
+            this.TB_password.TabIndex = 103;
+            this.TB_password.Visible = false;
+            this.TB_password.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TB_password_KeyDown);
+            // 
             // PayLoan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -633,5 +665,7 @@ namespace BankTeacher.Bank.Loan
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.TextBox TB_password;
+        private System.Windows.Forms.Label label4;
     }
 }

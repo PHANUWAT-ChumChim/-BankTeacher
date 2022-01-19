@@ -61,7 +61,7 @@ namespace BankTeacher.Bank.Add_Member
              "WHERE DividendNo = (SELECT TOP 1 DividendNo FROM EmployeeBank.dbo.tblDividend ORDER BY DividendNo DESC);"
             ,
             //[2] SELECT Check SavingAmount INPUT: {TeacherNo}
-           "SELECT b.SavingAmount \r\n " +
+           "SELECT b.SavingAmount,a.DocStatusNo,a.DocUploadPath  \r\n " +
           "FROM EmployeeBank.dbo.tblMember as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo \r\n " +
           "WHERE a.TeacherNo LIKE '{TeacherNo}%'"
@@ -198,30 +198,48 @@ namespace BankTeacher.Bank.Add_Member
                     if (Convert.ToInt32(dtCheckSavingAmount.Rows[0][0].ToString()) < 1)
                     {
                         //Delete File
-                        var Filee = System.IO.File.Exists($@"\\LAPTOP-A1H4E5P4\ShareFileTestSBM\RegMember\Member_{TBTeacherNo.Text}.pdf");
-                        if (Filee)
+                        bool Connect;
+                        var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
+                        Connect = smb.FileConncet(dtCheckSavingAmount.Rows[0][2].ToString());
+                        if (Connect)
                         {
-                            System.IO.File.Delete($@"\\LAPTOP-A1H4E5P4\ShareFileTestSBM\RegMember\Member_{TBTeacherNo.Text}.pdf");
+                            //System.IO.File.Delete($@"\\LAPTOP-A1H4E5P4\ShareFileTestSBM\RegMember\Member_{TBTeacherNo.Text}.pdf");
                             DataTable dt = Class.SQLConnection.InputSQLMSSQL("UPDATE EmployeeBank.dbo.tblMember \r\n " +
                                "set DocStatusNo = '2' \r\n " +
                                "where TeacherNo = '{TeacherNo}'"
                                .Replace("{TeacherNo}", TBTeacherNo.Text));
+                            Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
+                            .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
+                            .Replace("{TeacherNo}", TBTeacherNo.Text)
+                            .Replace("{Note}", TBNote.Text)
+                            .Replace("{DocStatusNo}", "2")
+                            .Replace("{DocUploadPath}", dtCheckSavingAmount.Rows[0][2].ToString())
+                            .Replace("{Status}", "2"));
+                            MessageBox.Show("ยกเลิกผู้ใช้เรียบร้อย", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            CheckBCancel = true;
+                            Checkmember(true);
+                            imgeLocation = "";
                         }
-                        Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
-                        .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
-                        .Replace("{TeacherNo}", TBTeacherNo.Text)
-                        .Replace("{Note}", TBNote.Text)
-                        .Replace("{DocStatusNo}", "2")
-                        .Replace("{DocUploadPath}", "")
-                        .Replace("{Status}", "2"));
-                        MessageBox.Show("ยกเลิกผู้ใช้เรียบร้อย", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        CheckBCancel = true;
-                        Checkmember(true);
-                        imgeLocation = "";
-                        TBTeacherNo.Text = "";
-                        TBTeacherName.Text = "";
-                        TBNote.Text = "";
-                        BSave.Enabled = false;
+//<<<<<<< POON_File
+                        else { MessageBox.Show("กรุณาส่งเอกสารสมัครสมาชิก เพื่อยืนยันการสมัคร", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+                     
+//=======
+                        //Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
+                        //.Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
+                        //.Replace("{TeacherNo}", TBTeacherNo.Text)
+                        //.Replace("{Note}", TBNote.Text)
+                        //.Replace("{DocStatusNo}", "2")
+                        //.Replace("{DocUploadPath}", "")
+                        //.Replace("{Status}", "2"));
+                        //MessageBox.Show("ยกเลิกผู้ใช้เรียบร้อย", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                       // CheckBCancel = true;
+                       // Checkmember(true);
+                       // imgeLocation = "";
+                        //TBTeacherNo.Text = "";
+                       // TBTeacherName.Text = "";
+                       // TBNote.Text = "";
+                       // BSave.Enabled = false;
+//>>>>>>> master
                     }
                     else
                     {
@@ -233,6 +251,8 @@ namespace BankTeacher.Bank.Add_Member
                             FAmountOff.Show();
                             FAmountOff.TBTeacherNo.Text = TBTeacherNo.Text;
                             FAmountOff.TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+                            FAmountOff.BMaxWithDraw_AmountOff_Click(sender,e);
+                            FAmountOff.TBWithDraw.Enabled = false;
                             foreach (Form f in Application.OpenForms)
                             {
                                 if (f.Name == "Menu")

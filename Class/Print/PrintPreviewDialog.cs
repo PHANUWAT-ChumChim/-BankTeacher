@@ -163,7 +163,7 @@ namespace BankTeacher.Class.Print
             //                                      $"{School}\r\n" +
             //                                      $"วันที่ {Day} เดือน {Month} พ.ศ. {Year}\r\n",
             //          THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 10, 400f, 200, false);
-
+            e.Graphics.DrawString($"หน้า 1/1", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack,700, 20);
             SizeText = e.Graphics.MeasureString($"{MemberID}", FonT(18, ThaiSarabun, FontStyle.Regular));
             e.Graphics.DrawString($"{MemberID}", FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, PageX - SizeText.Width, Y + (SpacePerRow * CurrentRows++));
             SizeText = e.Graphics.MeasureString($"{School}", FonT(18, ThaiSarabun, FontStyle.Regular));
@@ -245,6 +245,7 @@ namespace BankTeacher.Class.Print
 
         }
         // เเบบ ปริ้น หน้า กู้
+        private static int dub = 1;
         public static void PrintLoan(System.Drawing.Printing.PrintPageEventArgs e, String SQLCode, String Day, String Month, String Year, String TeacherNo, String LoanNo,int Rowscount,bool confirmation_scrip,bool confirmation_copy)
         {
             if (TeacherNo != "")
@@ -318,6 +319,9 @@ namespace BankTeacher.Class.Print
                 }
                 //----------------------
 
+                string Text_number;
+                if (dub <= 2) { Text_number = dub.ToString(); dub++; } else { Text_number = "1"; dub = 1; }
+                e.Graphics.DrawString($"หน้า {Text_number}/2", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack,735,20);
                 if (pageNow == 0)
                 {
                     //------------------------
@@ -389,6 +393,7 @@ namespace BankTeacher.Class.Print
                     }
                     else
                     {
+                        dub = 1;
                         pageNow = 0;
                         e.HasMorePages = true;
                     }
@@ -521,9 +526,18 @@ namespace BankTeacher.Class.Print
                 //e.Graphics.DrawString($"วันที่ออกใบ {Bank.Pay.pay.info_datepay}", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - Size.Width, 50);
                 //e.Graphics.DrawString($"วันที่ออกใบ {DateTime.Now.Day}/{DateTime.Now.Month}/{DateTime.Now.Year}", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - Size.Width, 50);
                 // ================================================================ เวลาที่เอกสารถูกปริ้น ===================================================================
-                // เลขหน้า
-                Size = e.Graphics.MeasureString($"หน้า {pagepaper}/{pagepaper} ", FonT(16, ThaiSarabun, FontStyle.Bold));
-                e.Graphics.DrawString($"หน้า {pagepaper}/{pagepaper} ",FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack,Line2_x-Size.Width,30);
+                if(TextForm != "InfoLoan")
+                {
+                    // เลขหน้า
+                    int all_paper, number;
+                    if (details == 1) { number = 18; } else { number = 4; }
+                    double b = (double)G.RowCount / number;
+                    if (G.RowCount / number == 0) { all_paper = 1; }
+                    else if (b.ToString().Length > 2) { all_paper = (G.RowCount / number) + 1; }
+                    else { all_paper = 0; }
+                    Size = e.Graphics.MeasureString($"หน้า {pagepaper}/{all_paper.ToString()} ", FonT(16, ThaiSarabun, FontStyle.Bold));
+                    e.Graphics.DrawString($"หน้า {pagepaper}/{all_paper.ToString()} ", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - Size.Width, 30);
+                }
                 // เเบบพิมพ์ชื่อ วิทยาลัยเทคโนโลยีเเหลมฉบัง Thai
                 TextX += imageX;
                 e.Graphics.DrawString(TLC, FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, new RectangleF(TextX+10, TextY, 700, 100));
@@ -647,7 +661,7 @@ namespace BankTeacher.Class.Print
                             Remain = "";
                         }
                         string infopay = $"ชื่อ-นามสกุล : {info_name}            รหัสประจำตัว : {info_id}           \r\n" +
-                                         $"หุ้นสะสมทั้งหมด : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_Savingtotel))}            {Remain}        ";
+                                         $"หุ้นสะสมทั้งหมดก่อนเเละหลัง : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_Savingtotel))}            {Remain}        ";
                         // กรอบ อร่อยต้อง Rectangle
                         Size = e.Graphics.MeasureString(infopay, FonT(18, ThaiSarabun, FontStyle.Regular));
                         //// กรอบ

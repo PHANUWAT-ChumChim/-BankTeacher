@@ -171,9 +171,7 @@ namespace BankTeacher.Bank
 
         private void Search_Load(object sender, EventArgs e)
         {
-            TBSearch.SelectionStart = 0;
             TBSearch.Select();
-            TBSearch.Focus();
         }
     }
 }
