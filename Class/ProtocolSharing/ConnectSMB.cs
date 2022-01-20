@@ -300,18 +300,15 @@ namespace BankTeacher.Class.ProtocolSharing
                     var path = Path.Combine(networkPath, SetFile.TargetFile);
                     if (!File.Exists(path))
                     {
-                        network.Connect();
-                        var path = Path.Combine(networkPath, SetFile.TargetFile);
-                        if (!File.Exists(path))
+                        File.Copy(SetFile.LocationFile, path, true);
+                    }
+                    else
+                    {
+                        for (int x = 0; x < x + 1; x++)
                         {
-                            //path = path.Replace(SetFile.TargetFile, "");
-                            File.Copy(SetFile.LocationFile, path, true);
-                        }
-                        else
-                        {
-                            if (!File.Exists(path.Replace(".pdf", "_" + (x + 1) + ".pdf")))
+                            if (!File.Exists(path.Replace(".pdf", "" + (x + 1) + ".pdf")))
                             {
-                                path = path.Replace(".pdf", "_" + (x + 1) + ".pdf");
+                                path = path.Replace(".pdf", "" + (x + 1) + ".pdf");
                                 File.Copy(SetFile.LocationFile, path);
                                 break;
                             }
@@ -319,14 +316,14 @@ namespace BankTeacher.Class.ProtocolSharing
 
                     }
                     BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]
-                        .Replace("{TeacherNo}",TeacherNo)
-                        .Replace("{FileTypeNo}",FileTypeNo.ToString())
+                        .Replace("{TeacherNo}", TeacherNo)
+                        .Replace("{FileTypeNo}", FileTypeNo.ToString())
                         .Replace("{PathFile}", path)
-                        .Replace("{TeacherAddBy}",TeacherAddBy)
-                        .Replace("{LoanID}",LoanID));
-                    
-                        SetFile.Return = "อัพโหลดเอกสารสำเร็จ";
-                        return;
+                        .Replace("{TeacherAddBy}", TeacherAddBy)
+                        .Replace("{LoanID}", LoanID));
+
+                    SetFile.Return = "อัพโหลดเอกสารสำเร็จ";
+                    return;
                 }
                 catch
                 {
