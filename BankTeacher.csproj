@@ -95,6 +95,7 @@
     <Compile Include="Bank\Add Member\infoMeber.Designer.cs">
       <DependentUpon>infoMeber.cs</DependentUpon>
     </Compile>
+    <Compile Include="Bank\Add Member\PdfDocument.cs" />
     <Compile Include="Bank\AmountOff.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -51,6 +51,7 @@ namespace BankTeacher.Bank.Add_Member
             this.label16 = new System.Windows.Forms.Label();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
+            this.printDialog1 = new System.Windows.Forms.PrintDialog();
             this.panel1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -323,6 +324,10 @@ namespace BankTeacher.Bank.Add_Member
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
             // 
+            // printDialog1
+            // 
+            this.printDialog1.UseEXDialog = true;
+            // 
             // Member
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -370,5 +375,6 @@ namespace BankTeacher.Bank.Add_Member
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Button BExitForm;
+        private System.Windows.Forms.PrintDialog printDialog1;
     }
 }

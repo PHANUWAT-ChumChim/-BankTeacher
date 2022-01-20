@@ -35,13 +35,13 @@ namespace BankTeacher.Bank.Loan
             this.BExit = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.BTdeletefile = new System.Windows.Forms.Button();
+            this.BTOpenfile = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.DGV_PayLoan = new System.Windows.Forms.DataGridView();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label5 = new System.Windows.Forms.Label();
+            this.panel10 = new System.Windows.Forms.Panel();
             this.CBB4Oppay = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.LB8pay = new System.Windows.Forms.Label();
@@ -53,11 +53,6 @@ namespace BankTeacher.Bank.Loan
             this.CB_LoanNo = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.BTdeletefile = new System.Windows.Forms.Button();
-            this.BTOpenfile = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
-            this.panel10 = new System.Windows.Forms.Panel();
             this.panel7 = new System.Windows.Forms.Panel();
             this.BSearchTeacher = new System.Windows.Forms.Button();
             this.TBTeacherName = new System.Windows.Forms.TextBox();
@@ -69,13 +64,18 @@ namespace BankTeacher.Bank.Loan
             this.BSave = new System.Windows.Forms.Button();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_PayLoan)).BeginInit();
             this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.panel5.SuspendLayout();
             this.panel7.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -125,7 +125,7 @@ namespace BankTeacher.Bank.Loan
             this.tabControl1.Enabled = false;
             this.tabControl1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(4, 64);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(869, 444);
@@ -145,13 +145,54 @@ namespace BankTeacher.Bank.Loan
             this.tabPage4.Controls.Add(this.BT_Loanpay);
             this.tabPage4.Controls.Add(this.panel2);
             this.tabPage4.Location = new System.Drawing.Point(4, 39);
-            this.tabPage4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage4.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage4.Size = new System.Drawing.Size(861, 401);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "จ่ายเงินกู้";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // panel5
+            // 
+            this.panel5.BackColor = System.Drawing.Color.White;
+            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel5.Controls.Add(this.BTdeletefile);
+            this.panel5.Controls.Add(this.BTOpenfile);
+            this.panel5.Location = new System.Drawing.Point(26, 306);
+            this.panel5.Margin = new System.Windows.Forms.Padding(2);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(250, 91);
+            this.panel5.TabIndex = 123;
+            // 
+            // BTdeletefile
+            // 
+            this.BTdeletefile.BackColor = System.Drawing.Color.White;
+            this.BTdeletefile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BTdeletefile.Cursor = System.Windows.Forms.Cursors.Default;
+            this.BTdeletefile.Enabled = false;
+            this.BTdeletefile.Location = new System.Drawing.Point(161, 34);
+            this.BTdeletefile.Margin = new System.Windows.Forms.Padding(2);
+            this.BTdeletefile.Name = "BTdeletefile";
+            this.BTdeletefile.Size = new System.Drawing.Size(77, 45);
+            this.BTdeletefile.TabIndex = 75;
+            this.BTdeletefile.Text = "ลบไฟล์";
+            this.BTdeletefile.UseVisualStyleBackColor = false;
+            this.BTdeletefile.Click += new System.EventHandler(this.BTdeletefile_Click);
+            // 
+            // BTOpenfile
+            // 
+            this.BTOpenfile.BackColor = System.Drawing.Color.White;
+            this.BTOpenfile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BTOpenfile.Cursor = System.Windows.Forms.Cursors.Default;
+            this.BTOpenfile.Location = new System.Drawing.Point(15, 10);
+            this.BTOpenfile.Margin = new System.Windows.Forms.Padding(2);
+            this.BTOpenfile.Name = "BTOpenfile";
+            this.BTOpenfile.Size = new System.Drawing.Size(140, 69);
+            this.BTOpenfile.TabIndex = 74;
+            this.BTOpenfile.Text = "อัพโหลด";
+            this.BTOpenfile.UseVisualStyleBackColor = false;
+            this.BTOpenfile.Click += new System.EventHandler(this.BTOpenfile_Click);
             // 
             // label6
             // 
@@ -187,46 +228,26 @@ namespace BankTeacher.Bank.Loan
             this.DGV_PayLoan.TabIndex = 101;
             this.DGV_PayLoan.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DGV_PayLoan_MouseClick);
             // 
-            // Column4
+            // label5
             // 
-            this.Column4.HeaderText = "ลำดับที่";
-            this.Column4.MinimumWidth = 6;
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            this.Column4.Visible = false;
-            this.Column4.Width = 125;
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label5.Location = new System.Drawing.Point(30, 265);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(291, 32);
+            this.label5.TabIndex = 73;
+            this.label5.Text = "อัพโหลดเอกสารสัญญากู้ที่มีลายเซ็นครบถ้วน";
             // 
-            // Column5
+            // panel10
             // 
-            this.Column5.HeaderText = "เลขที่สัญญากู้";
-            this.Column5.MinimumWidth = 6;
-            this.Column5.Name = "Column5";
-            this.Column5.ReadOnly = true;
-            this.Column5.Width = 150;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "วันที่สมัครกู้";
-            this.Column1.MinimumWidth = 6;
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Width = 150;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "รายการ";
-            this.Column2.MinimumWidth = 6;
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.Width = 200;
-            // 
-            // Column3
-            // 
-            this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column3.HeaderText = "ยอดเงิน";
-            this.Column3.MinimumWidth = 6;
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
+            this.panel10.BackColor = System.Drawing.Color.White;
+            this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel10.Location = new System.Drawing.Point(26, 255);
+            this.panel10.Margin = new System.Windows.Forms.Padding(2);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(296, 47);
+            this.panel10.TabIndex = 124;
             // 
             // CBB4Oppay
             // 
@@ -237,7 +258,7 @@ namespace BankTeacher.Bank.Loan
             this.CBB4Oppay.ForeColor = System.Drawing.Color.Black;
             this.CBB4Oppay.FormattingEnabled = true;
             this.CBB4Oppay.Location = new System.Drawing.Point(464, 251);
-            this.CBB4Oppay.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CBB4Oppay.Margin = new System.Windows.Forms.Padding(2);
             this.CBB4Oppay.Name = "CBB4Oppay";
             this.CBB4Oppay.Size = new System.Drawing.Size(139, 38);
             this.CBB4Oppay.TabIndex = 94;
@@ -273,7 +294,7 @@ namespace BankTeacher.Bank.Loan
             this.panel4.Controls.Add(this.label2);
             this.panel4.Controls.Add(this.label3);
             this.panel4.Location = new System.Drawing.Point(607, 251);
-            this.panel4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(252, 46);
             this.panel4.TabIndex = 89;
@@ -310,7 +331,7 @@ namespace BankTeacher.Bank.Loan
             this.BT_Loanpay.Enabled = false;
             this.BT_Loanpay.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BT_Loanpay.Location = new System.Drawing.Point(603, 323);
-            this.BT_Loanpay.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BT_Loanpay.Margin = new System.Windows.Forms.Padding(2);
             this.BT_Loanpay.Name = "BT_Loanpay";
             this.BT_Loanpay.Size = new System.Drawing.Size(256, 64);
             this.BT_Loanpay.TabIndex = 100;
@@ -327,7 +348,7 @@ namespace BankTeacher.Bank.Loan
             this.panel2.Controls.Add(this.label8);
             this.panel2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.panel2.Location = new System.Drawing.Point(14, 10);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(251, 56);
             this.panel2.TabIndex = 64;
@@ -338,7 +359,7 @@ namespace BankTeacher.Bank.Loan
             this.CB_LoanNo.Enabled = false;
             this.CB_LoanNo.FormattingEnabled = true;
             this.CB_LoanNo.Location = new System.Drawing.Point(66, 8);
-            this.CB_LoanNo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CB_LoanNo.Margin = new System.Windows.Forms.Padding(2);
             this.CB_LoanNo.Name = "CB_LoanNo";
             this.CB_LoanNo.Size = new System.Drawing.Size(157, 38);
             this.CB_LoanNo.TabIndex = 65;
@@ -369,68 +390,6 @@ namespace BankTeacher.Bank.Loan
             this.label8.TabIndex = 67;
             this.label8.Text = "รอบกู้";
             // 
-            // panel5
-            // 
-            this.panel5.BackColor = System.Drawing.Color.White;
-            this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel5.Controls.Add(this.BTdeletefile);
-            this.panel5.Controls.Add(this.BTOpenfile);
-            this.panel5.Location = new System.Drawing.Point(26, 306);
-            this.panel5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(250, 91);
-            this.panel5.TabIndex = 123;
-            // 
-            // BTdeletefile
-            // 
-            this.BTdeletefile.BackColor = System.Drawing.Color.White;
-            this.BTdeletefile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BTdeletefile.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BTdeletefile.Enabled = false;
-            this.BTdeletefile.Location = new System.Drawing.Point(161, 34);
-            this.BTdeletefile.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.BTdeletefile.Name = "BTdeletefile";
-            this.BTdeletefile.Size = new System.Drawing.Size(77, 45);
-            this.BTdeletefile.TabIndex = 75;
-            this.BTdeletefile.Text = "ลบไฟล์";
-            this.BTdeletefile.UseVisualStyleBackColor = false;
-            this.BTdeletefile.Click += new System.EventHandler(this.BTdeletefile_Click);
-            // 
-            // BTOpenfile
-            // 
-            this.BTOpenfile.BackColor = System.Drawing.Color.White;
-            this.BTOpenfile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BTOpenfile.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BTOpenfile.Location = new System.Drawing.Point(15, 10);
-            this.BTOpenfile.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.BTOpenfile.Name = "BTOpenfile";
-            this.BTOpenfile.Size = new System.Drawing.Size(140, 69);
-            this.BTOpenfile.TabIndex = 74;
-            this.BTOpenfile.Text = "อัพโหลด";
-            this.BTOpenfile.UseVisualStyleBackColor = false;
-            this.BTOpenfile.Click += new System.EventHandler(this.BTOpenfile_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label5.Location = new System.Drawing.Point(30, 265);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(291, 32);
-            this.label5.TabIndex = 73;
-            this.label5.Text = "อัพโหลดเอกสารสัญญากู้ที่มีลายเซ็นครบถ้วน";
-            // 
-            // panel10
-            // 
-            this.panel10.BackColor = System.Drawing.Color.White;
-            this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel10.Location = new System.Drawing.Point(26, 255);
-            this.panel10.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(296, 47);
-            this.panel10.TabIndex = 124;
-            // 
             // panel7
             // 
             this.panel7.BackColor = System.Drawing.Color.White;
@@ -443,7 +402,7 @@ namespace BankTeacher.Bank.Loan
             this.panel7.Controls.Add(this.LB1Id);
             this.panel7.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.panel7.Location = new System.Drawing.Point(4, 2);
-            this.panel7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel7.Margin = new System.Windows.Forms.Padding(2);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(868, 60);
             this.panel7.TabIndex = 63;
@@ -469,7 +428,7 @@ namespace BankTeacher.Bank.Loan
             this.TBTeacherName.Enabled = false;
             this.TBTeacherName.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBTeacherName.Location = new System.Drawing.Point(353, 10);
-            this.TBTeacherName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBTeacherName.Margin = new System.Windows.Forms.Padding(2);
             this.TBTeacherName.Name = "TBTeacherName";
             this.TBTeacherName.Size = new System.Drawing.Size(289, 36);
             this.TBTeacherName.TabIndex = 83;
@@ -478,7 +437,7 @@ namespace BankTeacher.Bank.Loan
             // 
             this.TBTeacherNo.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBTeacherNo.Location = new System.Drawing.Point(52, 11);
-            this.TBTeacherNo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBTeacherNo.Margin = new System.Windows.Forms.Padding(2);
             this.TBTeacherNo.MaxLength = 6;
             this.TBTeacherNo.Name = "TBTeacherNo";
             this.TBTeacherNo.Size = new System.Drawing.Size(174, 36);
@@ -559,6 +518,52 @@ namespace BankTeacher.Bank.Loan
             // 
             this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
             // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "ลำดับที่";
+            this.Column4.MinimumWidth = 6;
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column4.Visible = false;
+            this.Column4.Width = 125;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "เลขที่สัญญากู้";
+            this.Column5.MinimumWidth = 6;
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            this.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column5.Width = 150;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "วันที่สมัครกู้";
+            this.Column1.MinimumWidth = 6;
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column1.Width = 150;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "รายการ";
+            this.Column2.MinimumWidth = 6;
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column2.Width = 200;
+            // 
+            // Column3
+            // 
+            this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column3.HeaderText = "ยอดเงิน";
+            this.Column3.MinimumWidth = 6;
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
             // PayLoan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -568,7 +573,7 @@ namespace BankTeacher.Bank.Loan
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "PayLoan";
             this.Text = "PayLoan";
             this.Load += new System.EventHandler(this.PayLoan_Load);
@@ -578,12 +583,12 @@ namespace BankTeacher.Bank.Loan
             this.tabControl1.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            this.panel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_PayLoan)).EndInit();
             this.panel4.ResumeLayout(false);
             this.panel4.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.panel5.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
             this.ResumeLayout(false);
@@ -625,13 +630,13 @@ namespace BankTeacher.Bank.Loan
         private System.Windows.Forms.DataGridView DGV_PayLoan;
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Drawing.Printing.PrintDocument printDocument1;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Panel panel10;
     }
 }

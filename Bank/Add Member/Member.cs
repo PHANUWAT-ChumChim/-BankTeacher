@@ -242,10 +242,33 @@ namespace BankTeacher.Bank.Add_Member
         }
         private void BTPrintfShare_Click(object sender, EventArgs e)
         {
-            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
-            {
-                printDocument1.Print();
+            printPreviewDialog1.Document = printDocument1;
+            ToolStripButton b = new ToolStripButton();
+            //b.Image = Properties.Resources.Reports1;
+            b.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            b.Click += printPreview_PrintClick;
+            ((ToolStrip)(printPreviewDialog1.Controls[1])).Items.RemoveAt(0);
+            ((ToolStrip)(printPreviewDialog1.Controls[1])).Items.Insert(0, b);
+            printPreviewDialog1.ShowDialog();
+            //if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+            //{
+            //    printDocument1.Print();
 
+            //}
+        }
+        private void printPreview_PrintClick(object sender, EventArgs e)
+        {
+            try
+            {
+                printDialog1.Document = printDocument1;
+                if (printDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    printDocument1.Print();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ToString());
             }
         }
 

@@ -25,7 +25,7 @@ namespace BankTeacher.Bank
         private String[] SQLDefault = new String[]
          { 
            //[0]SELECT Max 1 Year INPUT: 
-           "SELECT MAX(a.Year) \r\n " +
+           "SELECT TOP 1 MAX(a.Year) \r\n " +
           "FROM EmployeeBank.dbo.tblDividend as a \r\n " +
           "WHERE a.Cancel = 1"
 
@@ -112,10 +112,12 @@ namespace BankTeacher.Bank
                     .Replace("{TeacherNo}" , Class.UserInfo.TeacherNo));
                      CBYear.Items.RemoveAt(CBYear.SelectedIndex);
                     MessageBox.Show("ยกเลิกปันผลเรียบร้อยแล้ว","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                }
-                else
-                {
-                    MessageBox.Show("การบันทึกล้มเหลว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    DataTable dtYear = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]);
+                    CBYear.Items.Clear();
+                    for(int x = 0; x < dtYear.Rows.Count; x++)
+                    {
+                        CBYear.Items.Add(dtYear.Rows[0][0]);
+                    }
                 }
             }
             catch (Exception ex)
