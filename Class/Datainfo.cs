@@ -45,6 +45,11 @@ namespace BankTeacher.Class
             return Name;
         }
     }
+    class PathFile
+    {
+        public static string File {get;set;}
+        public static string FileNo { get;set;}
+    }
     class ComboboxSelectFile
     {
         public String DateAdd { get; set; }
@@ -66,7 +71,6 @@ namespace BankTeacher.Class
     {
         public String Name { get; set; }
         public String No { get; set; }
-
 
         public ComboBoxPayment(String name, String no)
         {
