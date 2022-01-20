@@ -232,6 +232,13 @@ namespace BankTeacher.Bank.Add_Member
                             TB_selectflie.Enabled = true;
                             TB_deletefile.Enabled = true;
                         }
+                        else
+                        {
+                            label12.Text = "ยังไม่ได้อัพโหลดไฟล์";
+                            label12.ForeColor = Color.Red;
+                            TB_selectflie.Enabled = false;
+                            TB_deletefile.Enabled = false;
+                        }
                             
                     }
                 }
@@ -254,6 +261,26 @@ namespace BankTeacher.Bank.Add_Member
                 TB_selectflie.Enabled = false;
                 SavingAmountStart = "";
                 Checkmember(true);
+            }
+            else if(e.KeyCode == Keys.K)
+            {
+                // เช็คการเชื่อมต่อ
+                var wifi = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
+                if (wifi.IsValidConnection()) { label17.Text = "ปกติ"; label17.ForeColor = Color.Green; pb_disconnectwifi.Visible = false; pb_connectwifi.Visible = true; BT_Rewifi.Visible = false; }
+                else { label17.Text = "ขาดการเชื่อมต่อ"; label17.ForeColor = Color.Red; pb_disconnectwifi.Visible = true; pb_connectwifi.Visible = false; BT_Rewifi.Visible = true; BT_Rewifi.Text = "รีเซ็ตการเชื่อมต่อ";
+                    BT_Rewifi.Enabled = true;
+                    BT_Rewifi.BackColor = Color.Transparent;
+                }
+
+                // เช็คการส่งไฟล์
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text));
+                if (dt.Rows[0][0].ToString() != "ไม่ได้อัพโหลด")
+                {
+                    label12.Text = "อัพโหลดไฟล์เรียบร้อย";
+                    label12.ForeColor = Color.Green;
+                    TB_selectflie.Enabled = true;
+                    TB_deletefile.Enabled = true;
+                }
             }
         }
 
@@ -336,7 +363,7 @@ namespace BankTeacher.Bank.Add_Member
                                 MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 if (Return.Contains("อัพโหลดเอกสารสำเร็จ"))
                                 {
-                                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("{TeacherNo}", TBTeacherNo.Text).Replace("{num}","1").Replace("{PathFile}",smb.networkPath+Class.PathFile.File));
+                                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("{TeacherNo}", TBTeacherNo.Text).Replace("{num}","1").Replace("{PathFile}",smb.PathFile+Class.PathFile.File));
                                     label12.Text = "อัพโหลดไฟล์เรียบร้อย";
                                     label12.ForeColor = Color.Green;
                                     TB_selectflie.Enabled = true;
@@ -375,13 +402,14 @@ namespace BankTeacher.Bank.Add_Member
                 if (TBTeacherNo.Text != "")
                 {
                     //Input Location Folder
+                    TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.K));
                     var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
                     if (smb.IsValidConnection())
                     {
                         //Input Contain words แนะนำ เป็นรหัสอาจารย์ ในหน้าทั่วไปส่วนหน้าไหนถ้ามีการทำรายการเยอะๆให้เอาเป็นเลขบิลล์ของหน้านั้นๆเช่นหน้าดูเอกสารกู้ จะใส่เป็นเลขกู้ หน้าดูเอกสาร สมัครสมาชิกจะใส่เป็นชื่ออาจารย์
                         smb.GetFile(TBTeacherNo.Text);
                     }
-                    else { MessageBox.Show("โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเข้าถึงโฟร์เดอร์ได้", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+                    else { MessageBox.Show($"โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเข้าถึงโฟร์เดอร์ได้\r\n{Class.ProtocolSharing.ConnectSMB.StatusRetrun}", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
                 }
             }
             else
@@ -404,15 +432,13 @@ namespace BankTeacher.Bank.Add_Member
                 {
                     if (TBTeacherNo.Text != "")
                     {
+                        TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.K));
                         //Input Location Folder
                         var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
                         if (smb.IsValidConnection())
                         {
                             smb.GetFile(TBTeacherNo.Text);
-                            //if (BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun != "")
-                            //{
-                            //    MessageBox.Show(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun, "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            //}
+                            TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
                         }
                         else { 
                             MessageBox.Show("โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเข้าถึงโฟร์เดอร์ได้", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -444,10 +470,34 @@ namespace BankTeacher.Bank.Add_Member
                 TBStartAmount.Enabled = true;
             }
         }
-
+        //System.Threading.Thread Tark; 
         private void BT_Rewifi_Click(object sender, EventArgs e)
         {
-            TBTeacherNo_KeyDown(sender,new KeyEventArgs(Keys.Enter));
+            BT_Rewifi.Text = "กำลังโหลด";
+            BT_Rewifi.Enabled = false;
+            BT_Rewifi.BackColor = Color.Silver;
+            TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.K));
+
+          
+            //System.Diagnostics.Stopwatch time = new System.Diagnostics.Stopwatch();
+            //Tark = new System.Threading.Thread(() => Rewifi(sender,e));
+            //Tark.Start();
+            //time.Start();
+            //while (Tark.ThreadState == System.Threading.ThreadState.Running)
+            //{
+            //    if(time.ElapsedMilliseconds >= 5000 && Tark.IsAlive)
+            //    {
+            //        Tark.Abort();
+            //        BT_Rewifi.Text = "รีเซ็ตการเชื่อมต่อ";
+            //        BT_Rewifi.Enabled = true;
+            //        BT_Rewifi.BackColor = Color.Transparent;
+            //        break;
+            //    }
+            //}
+        }
+        private void Rewifi(object sender, EventArgs e)
+        {
+            //TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.K));
         }
     }
 }

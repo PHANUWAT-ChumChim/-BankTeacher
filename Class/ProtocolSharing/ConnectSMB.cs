@@ -64,7 +64,6 @@ namespace BankTeacher.Class.ProtocolSharing
                         }
                         break;
                     }
-
                 }
                 time.Stop();
                 return door;
@@ -77,6 +76,7 @@ namespace BankTeacher.Class.ProtocolSharing
                     var result = network.Connect();
                     // ข้อมูล การเชื่อมต่อ
                     var INFO_CONNECT = Class.ProtocolSharing.SBM.GetError(result);
+                    StatusRetrun = INFO_CONNECT;
                     door = result == 0;
                     return result == 0;
                 }
@@ -109,46 +109,51 @@ namespace BankTeacher.Class.ProtocolSharing
             //}
             public void GetFile(string ContainsName = "")
             {
-                using (var network = new NetworkConnection(networkPath, networkCredential))
+                try
                 {
-                    List<String> GetFileName = new List<string>();
-                    List<DateTime> DateaddFile = new List<DateTime>();
-                    GetFileName.Clear();
-                    DateaddFile.Clear();
-                    file.Clear();
-                    String path = PathFile;
-                    System.IO.DirectoryInfo par = new System.IO.DirectoryInfo(path);
-                    foreach (System.IO.FileInfo f in par.GetFiles())
+                    using (var network = new NetworkConnection(networkPath, networkCredential))
                     {
-                        if (f.Name.Contains(ContainsName))
+                        List<String> GetFileName = new List<string>();
+                        List<DateTime> DateaddFile = new List<DateTime>();
+                        GetFileName.Clear();
+                        DateaddFile.Clear();
+                        file.Clear();
+                        String path = PathFile;
+                        System.IO.DirectoryInfo par = new System.IO.DirectoryInfo(path);
+                        foreach (System.IO.FileInfo f in par.GetFiles())
                         {
-                            FileInfo fi = new FileInfo(f.FullName);
-                            DateTime created = Convert.ToDateTime(fi.CreationTime);
-                            DateTime lastmodified = fi.LastWriteTime;
-                            GetFileName.Add(f.Name);
-                            DateaddFile.Add(created);
+                            if (f.Name.Contains(ContainsName))
+                            {
+                                FileInfo fi = new FileInfo(f.FullName);
+                                DateTime created = Convert.ToDateTime(fi.CreationTime);
+                                DateTime lastmodified = fi.LastWriteTime;
+                                GetFileName.Add(f.Name);
+                                DateaddFile.Add(created);
+                            }
                         }
-                    }
-                    if (GetFileName.Count != 0 && path != "")
-                    {
-                        for (int x = 0; x < GetFileName.Count; x++)
+                        if (GetFileName.Count != 0 && path != "")
                         {
-                            file.Add(new BankTeacher.Class.linkedFile(GetFileName[x].ToString(), DateaddFile[x]));
+                            for (int x = 0; x < GetFileName.Count; x++)
+                            {
+                                file.Add(new BankTeacher.Class.linkedFile(GetFileName[x].ToString(), DateaddFile[x]));
+                            }
+                            BankTeacher.Bank.SelectFile SF = new BankTeacher.Bank.SelectFile(path);
+                            SF.ShowDialog();
+                            network.Dispose();
+                            Bank.SelectFile.OpenEnableButton = true;
                         }
-                        BankTeacher.Bank.SelectFile SF = new BankTeacher.Bank.SelectFile(path);
-                        SF.ShowDialog();
-                        network.Dispose();
-                        Bank.SelectFile.OpenEnableButton = true;
-                    }
-                    else
-                    {
-                        network.Dispose();
-                        Bank.SelectFile.OpenEnableButton = true;
-                        StatusRetrun = "ไม่พบไฟล์ กรุณาส่งไฟล์ก่อนจึงจะสามรถเปิดไฟล์ได้";
-                        System.Windows.Forms.MessageBox.Show(StatusRetrun, "ไฟล์", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
-                        return;
+                        else
+                        {
+                            network.Dispose();
+                            Bank.SelectFile.OpenEnableButton = true;
+                            StatusRetrun = "ไม่พบไฟล์ กรุณาส่งไฟล์ก่อนจึงจะสามรถเปิดไฟล์ได้";
+                            System.Windows.Forms.MessageBox.Show(StatusRetrun, "ไฟล์", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
+                            return;
+                        }
                     }
                 }
+                catch { Bank.SelectFile.OpenEnableButton = true; return; }
+                
             }
             String ID = "";
             String LocalReplace = "";

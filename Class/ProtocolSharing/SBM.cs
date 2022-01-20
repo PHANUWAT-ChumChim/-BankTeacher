@@ -25,7 +25,7 @@ namespace BankTeacher.Class.ProtocolSharing
         public class NetworkConnection : IDisposable
         {
             private string _networkName;
-            private NetworkCredential _credentials;
+            public  NetworkCredential _credentials;
 
             public NetworkConnection(string networkName, NetworkCredential credentials)
             {
@@ -65,19 +65,25 @@ namespace BankTeacher.Class.ProtocolSharing
                 Dispose(true);
                 GC.SuppressFinalize(this);
             }
-
+            
             protected virtual void Dispose(bool disposing)
             {
-                WNetCancelConnection2(_networkName, 0, true);
+               var satatus = WNetCancelConnection2(_networkName,0x00000001,false);
             }
-
+            // เซิร์ฟเวอร์ Connect To server
             [DllImport("mpr.dll")]
             private static extern int WNetAddConnection2(NetResource netResource,
                 string password, string username, int flags);
-
-            [DllImport("mpr.dll")]
-            private static extern int WNetCancelConnection2(string name, int flags,
-                bool force);
+            [DllImport("Mpr.dll")]
+            private static extern int WNetCancelConnection2(
+           string lpName,
+           int dwFlags,
+           bool fForce
+       );
+            // ยกเลิกการเชื่อมต่อ V2 ancelConnection
+            //[DllImport("mpr.dll")]
+            //private static extern int WNetCancelConnection2(string name, int flags,
+            //    bool force);
         }
 
 
