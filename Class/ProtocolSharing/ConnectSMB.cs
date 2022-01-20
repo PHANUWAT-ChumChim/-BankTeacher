@@ -39,7 +39,8 @@ namespace BankTeacher.Class.ProtocolSharing
                 // IP พี่ตังค์ \\LAPTOP-A1H4E5P4\ShareFileTestSBM
                 // IP  PathFile = this.networkPath = @"\\192.168.1.3\ShareFileTestSBM\" + Location + @"\";
                 PathFile = this.networkPath = @"\\LAPTOP-A1H4E5P4\ShareFileTestSBM\" + Location + @"\";
-                var userName = "tang1811";
+                //PathFile = this.networkPath = @"\\192.168.1.8\ShareFolder2\Test" + /*Location + */@"\";
+                var userName = "SMB";
                 var password = "123456789";
                 var domain = "";
                 networkCredential = new NetworkCredential(userName, password, domain);
@@ -273,6 +274,7 @@ namespace BankTeacher.Class.ProtocolSharing
                         var path = Path.Combine(networkPath, SetFile.TargetFile);
                         if (!File.Exists(path))
                         {
+                            //path = path.Replace(SetFile.TargetFile, "");
                             File.Copy(SetFile.LocationFile, path, true);
                         }
                         else

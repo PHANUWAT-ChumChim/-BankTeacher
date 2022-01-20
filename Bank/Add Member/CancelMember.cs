@@ -171,6 +171,7 @@ namespace BankTeacher.Bank.Add_Member
                     Check = true;
                     TBTeacherNo.Enabled = true;
                     Checkmember(false);
+                    BSave.Enabled = true;
                 }
                 else
                 {
@@ -233,6 +234,7 @@ namespace BankTeacher.Bank.Add_Member
                             FAmountOff.Show();
                             FAmountOff.TBTeacherNo.Text = TBTeacherNo.Text;
                             FAmountOff.TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+                            FAmountOff.BMaxWithDraw_AmountOff_Click(sender, new EventArgs());
                             foreach (Form f in Application.OpenForms)
                             {
                                 if (f.Name == "Menu")
