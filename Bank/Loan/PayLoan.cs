@@ -339,15 +339,16 @@ namespace BankTeacher.Bank.Loan
                 }
             }
             else {
-                var con = MessageBox.Show("โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเช็คการส่งเอกสารได้\r\nsหรือ กรอกรหัสการข้อทำรายการก่อน", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning); 
+                var con = MessageBox.Show("โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเช็คการส่งเอกสารได้\r\nหรือ สามรถขอสิทธ์ทำรายการก่อน", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning); 
                 if(con == DialogResult.Yes) { TB_password.Visible = true; label4.Visible = true; }
             } 
         }
-
-
         private void BTOpenfile_Click(object sender, EventArgs e)
         {
-            if (StatusBoxFile == 0)
+            DataTable dt = Class.SQLConnection.InputSQLMSSQL("SELECT a.DocStatusNo,a.DocUploadPath \r\n" +
+            "FROM EmployeeBank.dbo.tblLoan as a \r\n" +
+            "WHERE a.LoanNo = '{Loan}'".Replace("{Loan}",DGV_PayLoan.Rows[0].Cells[1].Value.ToString()));
+            if (dt.Rows[0][0].ToString() != "1")
             {
                 try
                 {
@@ -365,14 +366,16 @@ namespace BankTeacher.Bank.Loan
                             var smb = new SmbFileContainer("Loan");
                             if (smb.IsValidConnection())
                             {
-                                String Return = smb.SendFile(imgeLocation, "Loan" + DGV_PayLoan.Rows[0].Cells[1].Value.ToString() + ".pdf" , TBTeacherNo.Text, 3, BankTeacher.Class.UserInfo.TeacherNo , DGV_PayLoan.Rows[0].Cells[1].Value.ToString());
+                                String Return = smb.SendFile(imgeLocation, @"Loan" + DGV_PayLoan.Rows[0].Cells[1].Value.ToString() + ".pdf" , TBTeacherNo.Text, 3, BankTeacher.Class.UserInfo.TeacherNo , DGV_PayLoan.Rows[0].Cells[1].Value.ToString());
                                 MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                if (Return.Contains("อัพโหลดสำเร็จ"))
+                                if (Return.Contains("อัพโหลดเอกสารสำเร็จ"))
                                 {
+                                    Class.SQLConnection.InputSQLMSSQL("UPDATE EmployeeBank.dbo.tblLoan \r\n" +
+                                   "set DocStatusNo = 1, DocUploadPath = '{PathFile}' \r\n".Replace("{PathFile}", smb.PathFile + @"Loan" + DGV_PayLoan.Rows[0].Cells[1].Value.ToString() + ".pdf") +
+                                   "WHERE LoanNo = '{LoanNo}'".Replace("{LoanNo}",DGV_PayLoan.Rows[0].Cells[1].Value.ToString()));
                                     imgeLocation = "";
                                     label5.ForeColor = Color.Green;
                                     label5.Text = "อัพโหลดไฟล์สำเร็จ";
-                                    BTdeletefile.Enabled = true;
                                     StatusBoxFile = 1;
                                 }
                                 else
@@ -396,7 +399,7 @@ namespace BankTeacher.Bank.Loan
                     MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            else if (StatusBoxFile == 1)
+            else 
             {
                 MessageBox.Show("ทำการส่งไฟล์แล้ว ไม่สามารถดำเนินการส่งไฟล์ซ้ำได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -404,6 +407,33 @@ namespace BankTeacher.Bank.Loan
 
         private void BTdeletefile_Click(object sender, EventArgs e)
         {
+            Bank.SelectFile.info_File.No = DGV_PayLoan.Rows[0].Cells[1].Value.ToString();
+            Bank.SelectFile.info_File.Type = "Loan";
+            Bank.Add_Member.infoMeber.OroD = "ลบ";
+            DataTable dt = Class.SQLConnection.InputSQLMSSQL("SELECT a.DocStatusNo,a.DocUploadPath \r\n" +
+            "FROM EmployeeBank.dbo.tblLoan as a \r\n" +
+            "WHERE a.LoanNo = '{Loan}'".Replace("{Loan}", DGV_PayLoan.Rows[0].Cells[1].Value.ToString()));
+            if (dt.Rows[0][0].ToString() == "1")
+            {
+                if (TBTeacherNo.Text != "")
+                {
+                    //Input Location Folder
+                    var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer(@"Loan");
+                    if (smb.IsValidConnection())
+                    {
+                        smb.GetFile(DGV_PayLoan.Rows[0].Cells[1].Value.ToString());
+                    }
+                    else
+                    {
+                        MessageBox.Show("โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเข้าถึงโฟร์เดอร์ได้", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        Bank.SelectFile.OpenEnableButton = true;
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("ไม่พบไฟล์ กรูณาส่งเอกสาร","ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
         private void PayLoan_SizeChanged(object sender, EventArgs e)
         {

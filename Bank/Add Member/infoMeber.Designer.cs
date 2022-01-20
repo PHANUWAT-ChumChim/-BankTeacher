@@ -31,6 +31,7 @@ namespace BankTeacher.Bank.Add_Member
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(infoMeber));
             this.PL = new System.Windows.Forms.Panel();
+            this.BExitForm = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TP_info = new System.Windows.Forms.TabPage();
             this.BSaveEdit = new System.Windows.Forms.Button();
@@ -50,6 +51,7 @@ namespace BankTeacher.Bank.Add_Member
             this.panel2 = new System.Windows.Forms.Panel();
             this.checkBox_scrip = new System.Windows.Forms.CheckBox();
             this.checkBox_copy = new System.Windows.Forms.CheckBox();
+            this.BTPrint = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.TBSavingAmount = new System.Windows.Forms.TextBox();
             this.TBStartAmount = new System.Windows.Forms.TextBox();
@@ -58,6 +60,12 @@ namespace BankTeacher.Bank.Add_Member
             this.label8 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.TB_Print = new System.Windows.Forms.TabPage();
+            this.BT_Rewifi = new System.Windows.Forms.Button();
+            this.panel15 = new System.Windows.Forms.Panel();
+            this.pb_disconnectwifi = new System.Windows.Forms.PictureBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.pb_connectwifi = new System.Windows.Forms.PictureBox();
+            this.label16 = new System.Windows.Forms.Label();
             this.panel13 = new System.Windows.Forms.Panel();
             this.label14 = new System.Windows.Forms.Label();
             this.panel14 = new System.Windows.Forms.Panel();
@@ -74,6 +82,7 @@ namespace BankTeacher.Bank.Add_Member
             this.panel9 = new System.Windows.Forms.Panel();
             this.BTOpenfile_Reg = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
+            this.BSearchTeacher = new System.Windows.Forms.Button();
             this.TBTeacherName = new System.Windows.Forms.TextBox();
             this.TBTeacherNo = new System.Windows.Forms.TextBox();
             this.LB2Ne = new System.Windows.Forms.Label();
@@ -82,15 +91,6 @@ namespace BankTeacher.Bank.Add_Member
             this.button1 = new System.Windows.Forms.Button();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-            this.panel15 = new System.Windows.Forms.Panel();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.BExitForm = new System.Windows.Forms.Button();
-            this.BTPrint = new System.Windows.Forms.Button();
-            this.pb_disconnectwifi = new System.Windows.Forms.PictureBox();
-            this.pb_connectwifi = new System.Windows.Forms.PictureBox();
-            this.BSearchTeacher = new System.Windows.Forms.Button();
-            this.BT_Rewifi = new System.Windows.Forms.Button();
             this.PL.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.TP_info.SuspendLayout();
@@ -101,6 +101,9 @@ namespace BankTeacher.Bank.Add_Member
             this.panel2.SuspendLayout();
             this.panel6.SuspendLayout();
             this.TB_Print.SuspendLayout();
+            this.panel15.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_disconnectwifi)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_connectwifi)).BeginInit();
             this.panel13.SuspendLayout();
             this.panel14.SuspendLayout();
             this.panel12.SuspendLayout();
@@ -109,9 +112,6 @@ namespace BankTeacher.Bank.Add_Member
             this.panel8.SuspendLayout();
             this.panel9.SuspendLayout();
             this.panel7.SuspendLayout();
-            this.panel15.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_disconnectwifi)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_connectwifi)).BeginInit();
             this.SuspendLayout();
             // 
             // PL
@@ -125,6 +125,19 @@ namespace BankTeacher.Bank.Add_Member
             this.PL.Name = "PL";
             this.PL.Size = new System.Drawing.Size(1168, 736);
             this.PL.TabIndex = 99;
+            // 
+            // BExitForm
+            // 
+            this.BExitForm.BackgroundImage = global::BankTeacher.Properties.Resources.logout;
+            this.BExitForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BExitForm.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.BExitForm.Location = new System.Drawing.Point(1053, 651);
+            this.BExitForm.Margin = new System.Windows.Forms.Padding(4);
+            this.BExitForm.Name = "BExitForm";
+            this.BExitForm.Size = new System.Drawing.Size(97, 81);
+            this.BExitForm.TabIndex = 80;
+            this.BExitForm.UseVisualStyleBackColor = true;
+            this.BExitForm.Click += new System.EventHandler(this.BExitForm_Click);
             // 
             // tabControl1
             // 
@@ -362,6 +375,21 @@ namespace BankTeacher.Bank.Add_Member
             this.checkBox_copy.Text = "เฉพราะ(สำเนา)";
             this.checkBox_copy.UseVisualStyleBackColor = true;
             // 
+            // BTPrint
+            // 
+            this.BTPrint.BackColor = System.Drawing.Color.White;
+            this.BTPrint.BackgroundImage = global::BankTeacher.Properties.Resources._10x10_Print;
+            this.BTPrint.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BTPrint.CausesValidation = false;
+            this.BTPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTPrint.Location = new System.Drawing.Point(75, 27);
+            this.BTPrint.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.BTPrint.Name = "BTPrint";
+            this.BTPrint.Size = new System.Drawing.Size(141, 71);
+            this.BTPrint.TabIndex = 110;
+            this.BTPrint.UseVisualStyleBackColor = false;
+            this.BTPrint.Click += new System.EventHandler(this.BTPrint_Click);
+            // 
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.Color.White;
@@ -467,6 +495,76 @@ namespace BankTeacher.Bank.Add_Member
             this.TB_Print.TabIndex = 1;
             this.TB_Print.Text = "อัพโหลดเอกสาร";
             this.TB_Print.UseVisualStyleBackColor = true;
+            // 
+            // BT_Rewifi
+            // 
+            this.BT_Rewifi.Location = new System.Drawing.Point(472, 62);
+            this.BT_Rewifi.Name = "BT_Rewifi";
+            this.BT_Rewifi.Size = new System.Drawing.Size(147, 52);
+            this.BT_Rewifi.TabIndex = 88;
+            this.BT_Rewifi.Text = "รีเซ็ตการเชื่อมต่อ";
+            this.BT_Rewifi.UseVisualStyleBackColor = true;
+            this.BT_Rewifi.Visible = false;
+            this.BT_Rewifi.Click += new System.EventHandler(this.BT_Rewifi_Click);
+            // 
+            // panel15
+            // 
+            this.panel15.BackColor = System.Drawing.Color.White;
+            this.panel15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel15.Controls.Add(this.pb_disconnectwifi);
+            this.panel15.Controls.Add(this.label17);
+            this.panel15.Controls.Add(this.pb_connectwifi);
+            this.panel15.Controls.Add(this.label16);
+            this.panel15.Location = new System.Drawing.Point(23, 57);
+            this.panel15.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel15.Name = "panel15";
+            this.panel15.Size = new System.Drawing.Size(443, 57);
+            this.panel15.TabIndex = 87;
+            // 
+            // pb_disconnectwifi
+            // 
+            this.pb_disconnectwifi.Image = global::BankTeacher.Properties.Resources._64x64_no_internet;
+            this.pb_disconnectwifi.Location = new System.Drawing.Point(378, 4);
+            this.pb_disconnectwifi.Name = "pb_disconnectwifi";
+            this.pb_disconnectwifi.Size = new System.Drawing.Size(60, 46);
+            this.pb_disconnectwifi.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pb_disconnectwifi.TabIndex = 89;
+            this.pb_disconnectwifi.TabStop = false;
+            this.pb_disconnectwifi.Visible = false;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label17.ForeColor = System.Drawing.Color.Green;
+            this.label17.Location = new System.Drawing.Point(218, 9);
+            this.label17.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(51, 37);
+            this.label17.TabIndex = 90;
+            this.label17.Text = "ปกติ";
+            // 
+            // pb_connectwifi
+            // 
+            this.pb_connectwifi.Image = global::BankTeacher.Properties.Resources._64x64_IceZ;
+            this.pb_connectwifi.Location = new System.Drawing.Point(378, 4);
+            this.pb_connectwifi.Name = "pb_connectwifi";
+            this.pb_connectwifi.Size = new System.Drawing.Size(60, 46);
+            this.pb_connectwifi.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pb_connectwifi.TabIndex = 88;
+            this.pb_connectwifi.TabStop = false;
+            this.pb_connectwifi.Visible = false;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(8, 9);
+            this.label16.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(160, 37);
+            this.label16.TabIndex = 85;
+            this.label16.Text = "สถานะการเชื่อมต่อ";
             // 
             // panel13
             // 
@@ -668,6 +766,21 @@ namespace BankTeacher.Bank.Add_Member
             this.panel7.Size = new System.Drawing.Size(1168, 72);
             this.panel7.TabIndex = 63;
             // 
+            // BSearchTeacher
+            // 
+            this.BSearchTeacher.BackColor = System.Drawing.Color.White;
+            this.BSearchTeacher.BackgroundImage = global::BankTeacher.Properties.Resources._64x64_magnifying_glass;
+            this.BSearchTeacher.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BSearchTeacher.Font = new System.Drawing.Font("TH Sarabun New", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BSearchTeacher.ImageKey = "(none)";
+            this.BSearchTeacher.Location = new System.Drawing.Point(243, 14);
+            this.BSearchTeacher.Margin = new System.Windows.Forms.Padding(3, 7, 3, 7);
+            this.BSearchTeacher.Name = "BSearchTeacher";
+            this.BSearchTeacher.Size = new System.Drawing.Size(43, 43);
+            this.BSearchTeacher.TabIndex = 85;
+            this.BSearchTeacher.UseVisualStyleBackColor = false;
+            this.BSearchTeacher.Click += new System.EventHandler(this.BSearchTeacher_Click);
+            // 
             // TBTeacherName
             // 
             this.TBTeacherName.Enabled = false;
@@ -752,119 +865,6 @@ namespace BankTeacher.Bank.Add_Member
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
             // 
-            // panel15
-            // 
-            this.panel15.BackColor = System.Drawing.Color.White;
-            this.panel15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel15.Controls.Add(this.pb_disconnectwifi);
-            this.panel15.Controls.Add(this.label17);
-            this.panel15.Controls.Add(this.pb_connectwifi);
-            this.panel15.Controls.Add(this.label16);
-            this.panel15.Location = new System.Drawing.Point(23, 57);
-            this.panel15.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel15.Name = "panel15";
-            this.panel15.Size = new System.Drawing.Size(443, 57);
-            this.panel15.TabIndex = 87;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(8, 9);
-            this.label16.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(160, 37);
-            this.label16.TabIndex = 85;
-            this.label16.Text = "สถานะการเชื่อมต่อ";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.ForeColor = System.Drawing.Color.Green;
-            this.label17.Location = new System.Drawing.Point(218, 9);
-            this.label17.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(51, 37);
-            this.label17.TabIndex = 90;
-            this.label17.Text = "ปกติ";
-            // 
-            // BExitForm
-            // 
-            this.BExitForm.BackgroundImage = global::BankTeacher.Properties.Resources.logout;
-            this.BExitForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BExitForm.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.BExitForm.Location = new System.Drawing.Point(1053, 651);
-            this.BExitForm.Margin = new System.Windows.Forms.Padding(4);
-            this.BExitForm.Name = "BExitForm";
-            this.BExitForm.Size = new System.Drawing.Size(97, 81);
-            this.BExitForm.TabIndex = 80;
-            this.BExitForm.UseVisualStyleBackColor = true;
-            this.BExitForm.Click += new System.EventHandler(this.BExitForm_Click);
-            // 
-            // BTPrint
-            // 
-            this.BTPrint.BackColor = System.Drawing.Color.White;
-            this.BTPrint.BackgroundImage = global::BankTeacher.Properties.Resources._10x10_Print;
-            this.BTPrint.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BTPrint.CausesValidation = false;
-            this.BTPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTPrint.Location = new System.Drawing.Point(75, 27);
-            this.BTPrint.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.BTPrint.Name = "BTPrint";
-            this.BTPrint.Size = new System.Drawing.Size(141, 71);
-            this.BTPrint.TabIndex = 110;
-            this.BTPrint.UseVisualStyleBackColor = false;
-            this.BTPrint.Click += new System.EventHandler(this.BTPrint_Click);
-            // 
-            // pb_disconnectwifi
-            // 
-            this.pb_disconnectwifi.Image = global::BankTeacher.Properties.Resources._64x64_no_internet;
-            this.pb_disconnectwifi.Location = new System.Drawing.Point(378, 4);
-            this.pb_disconnectwifi.Name = "pb_disconnectwifi";
-            this.pb_disconnectwifi.Size = new System.Drawing.Size(60, 46);
-            this.pb_disconnectwifi.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pb_disconnectwifi.TabIndex = 89;
-            this.pb_disconnectwifi.TabStop = false;
-            this.pb_disconnectwifi.Visible = false;
-            // 
-            // pb_connectwifi
-            // 
-            this.pb_connectwifi.Image = global::BankTeacher.Properties.Resources._64x64_IceZ;
-            this.pb_connectwifi.Location = new System.Drawing.Point(378, 4);
-            this.pb_connectwifi.Name = "pb_connectwifi";
-            this.pb_connectwifi.Size = new System.Drawing.Size(60, 46);
-            this.pb_connectwifi.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pb_connectwifi.TabIndex = 88;
-            this.pb_connectwifi.TabStop = false;
-            this.pb_connectwifi.Visible = false;
-            // 
-            // BSearchTeacher
-            // 
-            this.BSearchTeacher.BackColor = System.Drawing.Color.White;
-            this.BSearchTeacher.BackgroundImage = global::BankTeacher.Properties.Resources._64x64_magnifying_glass;
-            this.BSearchTeacher.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BSearchTeacher.Font = new System.Drawing.Font("TH Sarabun New", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BSearchTeacher.ImageKey = "(none)";
-            this.BSearchTeacher.Location = new System.Drawing.Point(243, 14);
-            this.BSearchTeacher.Margin = new System.Windows.Forms.Padding(3, 7, 3, 7);
-            this.BSearchTeacher.Name = "BSearchTeacher";
-            this.BSearchTeacher.Size = new System.Drawing.Size(43, 43);
-            this.BSearchTeacher.TabIndex = 85;
-            this.BSearchTeacher.UseVisualStyleBackColor = false;
-            this.BSearchTeacher.Click += new System.EventHandler(this.BSearchTeacher_Click);
-            // 
-            // BT_Rewifi
-            // 
-            this.BT_Rewifi.Location = new System.Drawing.Point(472, 62);
-            this.BT_Rewifi.Name = "BT_Rewifi";
-            this.BT_Rewifi.Size = new System.Drawing.Size(147, 52);
-            this.BT_Rewifi.TabIndex = 88;
-            this.BT_Rewifi.Text = "รีเซ็ตการเชื่อมต่อ";
-            this.BT_Rewifi.UseVisualStyleBackColor = true;
-            this.BT_Rewifi.Visible = false;
-            this.BT_Rewifi.Click += new System.EventHandler(this.BT_Rewifi_Click);
-            // 
             // infoMeber
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -895,6 +895,10 @@ namespace BankTeacher.Bank.Add_Member
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.TB_Print.ResumeLayout(false);
+            this.panel15.ResumeLayout(false);
+            this.panel15.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_disconnectwifi)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pb_connectwifi)).EndInit();
             this.panel13.ResumeLayout(false);
             this.panel13.PerformLayout();
             this.panel14.ResumeLayout(false);
@@ -908,10 +912,6 @@ namespace BankTeacher.Bank.Add_Member
             this.panel9.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             this.panel7.PerformLayout();
-            this.panel15.ResumeLayout(false);
-            this.panel15.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_disconnectwifi)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_connectwifi)).EndInit();
             this.ResumeLayout(false);
 
         }
