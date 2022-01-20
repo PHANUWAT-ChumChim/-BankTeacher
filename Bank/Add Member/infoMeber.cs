@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -294,10 +295,9 @@ namespace BankTeacher.Bank.Add_Member
             if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
             {
                 printDocument1.Print();
-
             }
         }
-       
+
         String imgeLocation = "";
         private void BTOpenfile_Reg_Click(object sender, EventArgs e)
         {

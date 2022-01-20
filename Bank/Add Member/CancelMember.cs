@@ -171,6 +171,7 @@ namespace BankTeacher.Bank.Add_Member
                     Check = true;
                     TBTeacherNo.Enabled = true;
                     Checkmember(false);
+                    BSave.Enabled = true;
                 }
                 else
                 {
