@@ -916,6 +916,7 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ComboBox CBTypePay;
         private System.Windows.Forms.Label LB8pay;
+        private System.Windows.Forms.Button BSaveAmountOff;
         private System.Windows.Forms.Button BExit;
         public System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage4;

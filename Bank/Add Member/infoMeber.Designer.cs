@@ -486,13 +486,14 @@ namespace BankTeacher.Bank.Add_Member
             this.TB_Print.Controls.Add(this.panel10);
             this.TB_Print.Controls.Add(this.panel11);
             this.TB_Print.Controls.Add(this.panel8);
+            this.TB_Print.Controls.Add(this.panel9);
             this.TB_Print.Location = new System.Drawing.Point(4, 45);
             this.TB_Print.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TB_Print.Name = "TB_Print";
             this.TB_Print.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TB_Print.Size = new System.Drawing.Size(1131, 518);
             this.TB_Print.TabIndex = 1;
-            this.TB_Print.Text = "เอกสาร";
+            this.TB_Print.Text = "อัพโหลดเอกสาร";
             this.TB_Print.UseVisualStyleBackColor = true;
             // 
             // BT_Rewifi
