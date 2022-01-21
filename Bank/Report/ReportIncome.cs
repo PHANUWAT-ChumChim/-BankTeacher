@@ -70,8 +70,10 @@ namespace BankTeacher.Bank
             TBPaymentCash.Text = "0";
             TBPaymentCradit.Text = "0";
             TBPaymentTranfer.Text = "0";
-            TBTeacherName.Text = "";
-            TBTeacherNo.Text = "";
+
+            if(TBTeacherNo.Text != "")
+                TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
+
 
         }
         private void BSearchTeacher_Click(object sender, EventArgs e)
