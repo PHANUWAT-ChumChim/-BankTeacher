@@ -68,7 +68,7 @@ namespace BankTeacher.Class.ProtocolSharing
             
             protected virtual void Dispose(bool disposing)
             {
-                WNetCancelConnection2(_networkName, 0,false);
+                WNetCancelConnection2(_networkName, 0,true);
             }
             // เซิร์ฟเวอร์ Connect To server
             [DllImport("mpr.dll")]

@@ -507,12 +507,12 @@ namespace BankTeacher.Bank
 
         private void TBWithDraw_TextChanged(object sender, EventArgs e)
         {
-           //if(TBWithDraw.Text!= "")
-           //{
-           //     BSaveAmountOff.Enabled = true;
-           //}
-           //else
-           //     BSaveAmountOff.Enabled = false;
+            if (TBWithDraw.Text != "")
+            {
+                BSaveAmountOff.Enabled = true;
+            }
+            else
+                BSaveAmountOff.Enabled = false;
         }
         private void printDocument1_PrintPage_1(object sender, PrintPageEventArgs e)
         {

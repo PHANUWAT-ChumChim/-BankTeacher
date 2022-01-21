@@ -206,7 +206,7 @@ namespace BankTeacher.Bank.Add_Member
                         {
                             //System.IO.File.Delete($@"\\LAPTOP-A1H4E5P4\ShareFileTestSBM\RegMember\Member_{TBTeacherNo.Text}.pdf");
                             DataTable dt = Class.SQLConnection.InputSQLMSSQL("UPDATE EmployeeBank.dbo.tblMember \r\n " +
-                               "set DocStatusNo = '2' \r\n " +
+                               "set DocStatusNo = '2',DocUploadPath = '' \r\n " +
                                "where TeacherNo = '{TeacherNo}'"
                                .Replace("{TeacherNo}", TBTeacherNo.Text));
                             Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
@@ -220,27 +220,12 @@ namespace BankTeacher.Bank.Add_Member
                             CheckBCancel = true;
                             Checkmember(true);
                             imgeLocation = "";
+                            TBTeacherNo.Text = "";
+                            TBTeacherName.Text = "";
+                            TBNote.Text = "";
+                            BSave.Enabled = false;
                         }
-//<<<<<<< POON_File
                         else { MessageBox.Show("กรุณาส่งเอกสารสมัครสมาชิก เพื่อยืนยันการสมัคร", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
-                     
-//=======
-                        //Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
-                        //.Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
-                        //.Replace("{TeacherNo}", TBTeacherNo.Text)
-                        //.Replace("{Note}", TBNote.Text)
-                        //.Replace("{DocStatusNo}", "2")
-                        //.Replace("{DocUploadPath}", "")
-                        //.Replace("{Status}", "2"));
-                        //MessageBox.Show("ยกเลิกผู้ใช้เรียบร้อย", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                       // CheckBCancel = true;
-                       // Checkmember(true);
-                       // imgeLocation = "";
-                        //TBTeacherNo.Text = "";
-                       // TBTeacherName.Text = "";
-                       // TBNote.Text = "";
-                       // BSave.Enabled = false;
-//>>>>>>> master
                     }
                     else
                     {

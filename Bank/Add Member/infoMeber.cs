@@ -407,7 +407,10 @@ namespace BankTeacher.Bank.Add_Member
                     if (smb.IsValidConnection())
                     {
                         //Input Contain words แนะนำ เป็นรหัสอาจารย์ ในหน้าทั่วไปส่วนหน้าไหนถ้ามีการทำรายการเยอะๆให้เอาเป็นเลขบิลล์ของหน้านั้นๆเช่นหน้าดูเอกสารกู้ จะใส่เป็นเลขกู้ หน้าดูเอกสาร สมัครสมาชิกจะใส่เป็นชื่ออาจารย์
-                        smb.GetFile(TBTeacherNo.Text);
+                        DataTable dtGetpath = Class.SQLConnection.InputSQLMSSQL($"SELECT DocUploadPath FROM EmployeeBank.dbo.tblMember WHERE TeacherNo LIKE '%{TBTeacherNo.Text}%'");
+                        String FileName = dtGetpath.Rows[0][0].ToString();
+                        FileName = FileName.Replace(smb.PathFile, "");
+                        smb.GetFile(FileName);
                     }
                     else { MessageBox.Show($"โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเข้าถึงโฟร์เดอร์ได้\r\n{Class.ProtocolSharing.ConnectSMB.StatusRetrun}", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
                     //System.IO.Path.Combine(@"net use * / delete");
@@ -438,7 +441,10 @@ namespace BankTeacher.Bank.Add_Member
                         var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
                         if (smb.IsValidConnection())
                         {
-                            smb.GetFile(TBTeacherNo.Text);
+                            DataTable dtGetpath = Class.SQLConnection.InputSQLMSSQL($"SELECT DocUploadPath FROM EmployeeBank.dbo.tblMember WHERE TeacherNo LIKE '%{TBTeacherNo.Text}%'");
+                            String FileName = dtGetpath.Rows[0][0].ToString();
+                            FileName = FileName.Replace(smb.PathFile, "");
+                            smb.GetFile(FileName);
                             TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
                         }
                         else { 

@@ -38,9 +38,10 @@ namespace BankTeacher.Class.ProtocolSharing
             {
                 // IP พี่ตังค์ \\LAPTOP-A1H4E5P4\ShareFileTestSBM
                 // IP  PathFile = this.networkPath = @"\\192.168.1.3\ShareFileTestSBM\" + Location + @"\";
-                PathFile = this.networkPath = @"\\LAPTOP-A1H4E5P4\ShareFileTestSBM\" + Location + @"\";
-                //PathFile = this.networkPath = @"\\192.168.1.8\ShareFolder2\Test" + /*Location + */@"\";
-                var userName = "SMB";
+                //PathFile = this.networkPath = @"\\LAPTOP-A1H4E5P4\ShareFileTestSBM\" + Location + @"\";
+                PathFile = this.networkPath = $@"\\192.168.1.3\ShareFileTestSBM\{Location}\";
+                this.networkPath = $@"\\192.168.1.3\ShareFileTestSBM\{Location}";
+                var userName = "tang1811";
                 var password = "123456789";
                 var domain = "";
                 networkCredential = new NetworkCredential(userName, password, domain);
@@ -81,32 +82,6 @@ namespace BankTeacher.Class.ProtocolSharing
                     return result == 0;
                 }
             }
-            //Thread ThreadOPFile;
-            //public String ThreadOpenFile(string ContainsName = "")
-            //{
-            //    //if (Bank.Add_Member.infoMeber.OroD != "ลบ")
-            //    //{
-            //        //Stopwatch time = new Stopwatch();
-            //        //ThreadOPFile = new Thread(() => GetFile(ContainsName));
-            //        //ThreadOPFile.Start();
-            //        //time.Start();
-            //        //while (ThreadOPFile.ThreadState == System.Threading.ThreadState.Running)
-            //        //{
-            //        //    if (time.ElapsedMilliseconds >= 5000 && ThreadOPFile.IsAlive)
-            //        //    {
-            //        //        //ThreadOPFile.Abort();
-            //        //        StatusRetrun = "โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเข้าถึงโฟร์เดอร์ได้";
-            //        //        break;
-            //        //    }
-
-            //        //}
-            //        //time.Stop();
-            //    //}
-            //    //else { GetFile(ContainsName); }
-
-
-            //    return StatusRetrun;
-            //}
             public void GetFile(string ContainsName = "")
             {
                 try
@@ -276,20 +251,7 @@ namespace BankTeacher.Class.ProtocolSharing
                 Locationfile_TargetFile SetFile = new Locationfile_TargetFile();
                 SetFile.LocationFile = LocationFile;
                 SetFile.TargetFile = TargetFile;
-                //Stopwatch time = new Stopwatch();
-                //SendFileThread = new Thread(() => FileSendThread(SetFile , TeacherNo , FileTypeNo , TeacherAddBy , LoanID));
-                //SendFileThread.Start();
-                //time.Start();
                 FileSendThread(SetFile, TeacherNo, FileTypeNo, TeacherAddBy, LoanID);
-                //while (SendFileThread.ThreadState == System.Threading.ThreadState.Running)
-                //{
-                //    if (time.ElapsedMilliseconds >= 5000 && SendFileThread.IsAlive)
-                //    {
-                //        SendFileThread.Abort();
-                //        SetFile.Return = "โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเข้าถึงโฟร์เดอร์ได้";
-                //    }
-                //}
-                //time.Stop();
                 return SetFile.Return;
             }
             public void FileSendThread(Locationfile_TargetFile SetFile, String TeacherNo, int FileTypeNo, String TeacherAddBy, String LoanID = "NULL")
@@ -306,9 +268,9 @@ namespace BankTeacher.Class.ProtocolSharing
                     {
                         for (int x = 0; x < x + 1; x++)
                         {
-                            if (!File.Exists(path.Replace(".pdf", "" + (x + 1) + ".pdf")))
+                            if (!File.Exists(path.Replace(".pdf", "_" + (x + 1) + ".pdf")))
                             {
-                                path = path.Replace(".pdf", "" + (x + 1) + ".pdf");
+                                path = path.Replace(".pdf", "_" + (x + 1) + ".pdf");
                                 File.Copy(SetFile.LocationFile, path);
                                 break;
                             }

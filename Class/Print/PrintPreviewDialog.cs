@@ -530,11 +530,26 @@ namespace BankTeacher.Class.Print
                 {
                     // เลขหน้า
                     int all_paper, number;
-                    if (details == 1) { number = 18; } else { number = 4; }
+                    if (details == 1) 
+                    { 
+                        number = 18; 
+                    } else 
+                    { 
+                        number = 4; 
+                    }
                     double b = (double)G.RowCount / number;
-                    if (G.RowCount / number == 0) { all_paper = 1; }
-                    else if (b.ToString().Length > 2) { all_paper = (G.RowCount / number) + 1; }
-                    else { all_paper = 0; }
+                    if (G.RowCount / number == 0)
+                    { 
+                        all_paper = 1; 
+                    }
+                    else if (b.ToString().Length > 2) 
+                    { 
+                        all_paper = (G.RowCount / number) + 1;
+                    }
+                    else 
+                    { 
+                        all_paper = 1; 
+                    }
                     Size = e.Graphics.MeasureString($"หน้า {pagepaper}/{all_paper.ToString()} ", FonT(16, ThaiSarabun, FontStyle.Bold));
                     e.Graphics.DrawString($"หน้า {pagepaper}/{all_paper.ToString()} ", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - Size.Width, 30);
                 }

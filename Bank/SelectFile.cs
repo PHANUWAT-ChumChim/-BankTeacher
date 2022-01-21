@@ -86,7 +86,7 @@ namespace BankTeacher.Bank
                         if(con == DialogResult.Yes)
                         {
                             DataTable dt_file = Class.SQLConnection.InputSQLMSSQL(SQLSELCET);
-                            if (dt_file.Rows.Count != 0)
+                            if (dt_file.Rows[0][1] != "")
                             {
                                 System.IO.FileInfo f = new System.IO.FileInfo(dt_file.Rows[0][1].ToString());
                                 DateTime Date = Convert.ToDateTime(f.CreationTime);
@@ -94,18 +94,41 @@ namespace BankTeacher.Bank
                                 string b = comboBox1.SelectedItem.ToString();
                                 if (comboBox1.SelectedItem.ToString() == Date.ToString("dd-MM-yyyy hh:mm"))
                                 {
-                                    System.IO.File.Delete(file);
-                                    comboBox1.Items.RemoveAt(comboBox1.SelectedIndex);
-                                    MessageBox.Show("ลบไฟล์เสร็จสิ้น", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    Class.SQLConnection.InputSQLMSSQL(SQLUPDATE);
-                                    OpenEnableButton = false;
+                                    if(file == dt_file.Rows[0][1].ToString())
+                                    {
+                                        System.IO.File.Delete(file);
+                                        comboBox1.Items.RemoveAt(comboBox1.SelectedIndex);
+                                        MessageBox.Show("ลบไฟล์เสร็จสิ้น", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        Class.SQLConnection.InputSQLMSSQL(SQLUPDATE);
+                                        OpenEnableButton = false;
+                                    }
                                 }
                                 else { MessageBox.Show("ไม่สามรถลบไฟล์ที่ไม่เกี่ยวข้องกับเอกสารปัจุบันได้", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information); }
                             }
-                            else { System.IO.File.Delete(file);
-                                MessageBox.Show("ลบไฟล์เสร็จสิ้น", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                comboBox1.Items.RemoveAt(comboBox1.SelectedIndex);
-                                OpenEnableButton = false;
+                            else {
+                                DataTable dt = Class.SQLConnection.InputSQLMSSQL("SELECT a.TeacherNo, a.DocUploadPath " +
+                             "FROM EmployeeBank.dbo.tblMemberResignation as a " +
+                             "WHERE a.TeacherNo = '{TeacherNo}'".Replace("{TeacherNo}",info_File.No));
+                                bool IS = false;
+                                for(int loop = 0; loop < dt.Rows.Count;loop++)
+                                {
+                                    if (file == dt.Rows[loop][1].ToString())
+                                    {
+                                        IS = true;
+                                        break;
+                                    }
+                                }
+                                if (IS)
+                                {
+                                    MessageBox.Show("คุณไม่สามรถลบ ไฟล์การสมัครเอกสารเก่าได้ คุณสามารถลบเอกสาร    ที่ทำการสมัคร ณ ปัจุบันเท่านั้น  เว้นเเต่ขอสิทธ์การลบเอกสารได้ที่ ผู้อำนวยการ", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                }
+                                else
+                                {
+                                    System.IO.File.Delete(file);
+                                    MessageBox.Show("ลบไฟล์เสร็จสิ้น", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    comboBox1.Items.RemoveAt(comboBox1.SelectedIndex);
+                                    OpenEnableButton = false;
+                                }
                             }
                           
                         }

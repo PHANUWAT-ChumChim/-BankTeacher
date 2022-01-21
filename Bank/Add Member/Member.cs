@@ -369,6 +369,7 @@ namespace BankTeacher.Bank.Add_Member
                                 LScan_Reg.ForeColor = Color.Red;
                                 BTOpenfile_Reg.Text = "อัพโหลดไฟล์";
                                 BTdeletefile_Reg.Enabled = false;
+                                StatusBoxFile = 0;
                             }
                         }
                         else
@@ -389,6 +390,7 @@ namespace BankTeacher.Bank.Add_Member
                                 LScan_Reg.ForeColor = Color.Red;
                                 BTOpenfile_Reg.Text = "อัพโหลดไฟล์";
                                 BTdeletefile_Reg.Enabled = false;
+                                StatusBoxFile = 0;
                             }
                         }
                         Check = 1;
@@ -487,7 +489,11 @@ namespace BankTeacher.Bank.Add_Member
             var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
             if (smb.IsValidConnection())
             {
-                smb.GetFile(TBTeacherNo_Reg.Text);
+                DataTable dtGetpath = Class.SQLConnection.InputSQLMSSQL($"SELECT DocUploadPath FROM EmployeeBank.dbo.tblMember WHERE TeacherNo LIKE '%{TBTeacherNo_Reg.Text}%'");
+                String FileName = dtGetpath.Rows[0][0].ToString();
+                FileName = FileName.Replace(smb.PathFile, "");
+                smb.GetFile(FileName);
+                //smb.GetFile(TBTeacherNo_Reg.Text);
                 TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
             }
            

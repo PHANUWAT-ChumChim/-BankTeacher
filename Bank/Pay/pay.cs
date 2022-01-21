@@ -1164,7 +1164,9 @@ namespace BankTeacher.Bank.Pay
                         String Time = CBYearSelection_Pay.Text + "/" + CBMonthSelection_Pay.Text;
                         if (DGV_Pay.Rows.Count == 0)
                         {
+                            Notadd = true;
                             DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
+                            Notadd = false;
                             CheckInsertDGVBehidePay();
                         }
                         else
@@ -1177,7 +1179,9 @@ namespace BankTeacher.Bank.Pay
                                 }
                                 else if (Count == DGV_Pay.Rows.Count - 1)
                                 {
+                                    Notadd = true;
                                     DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
+                                    Notadd = false;
                                     CheckInsertDGVBehidePay();
                                 }
                             }
@@ -1289,12 +1293,8 @@ namespace BankTeacher.Bank.Pay
                 }
             }
         }
-
-        private void TBAmount_Pay_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
         //Add list to datagridview
+        private bool Notadd;
         private void BListAdd_Pay_Click(object sender, EventArgs e)
         {
             if (CBList_Pay.SelectedIndex != -1)
@@ -1317,7 +1317,9 @@ namespace BankTeacher.Bank.Pay
                                     }
                                     else if (y == DGV_Pay.Rows.Count - 1)
                                     {
-                                        DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text); 
+                                        Notadd = true;
+                                        DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
+                                        Notadd = false;
                                         CheckInsertDGVBehidePay();
                                         CBList_Pay.Items.RemoveAt(CBList_Pay.SelectedIndex);
                                         ReadonlyDGVPay();
@@ -1330,8 +1332,11 @@ namespace BankTeacher.Bank.Pay
                             }
                             else
                             {
+                                Notadd = true;
                                 DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
+                                Notadd = false;
                                 CheckInsertDGVBehidePay();
+                              
                                 CBList_Pay.Items.RemoveAt(CBList_Pay.SelectedIndex);
                                 ReadonlyDGVPay();
                                 RemoveComboboxhAfterAdd();
@@ -2390,7 +2395,10 @@ namespace BankTeacher.Bank.Pay
             {
                 Num = 1;
             }
-            DGV_Printbypoon.Rows.Add(Num++, DGV_Pay.Rows[e.RowIndex].Cells[0].Value.ToString(), CBList_Pay.Text, TBAmount_Pay.Text, DGV_Pay.Rows[e.RowIndex].Cells[3].Value.ToString(), CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
+            if (Notadd)
+            {
+                DGV_Printbypoon.Rows.Add(Num++, DGV_Pay.Rows[e.RowIndex].Cells[0].Value.ToString(), CBList_Pay.Text, TBAmount_Pay.Text, DGV_Pay.Rows[e.RowIndex].Cells[3].Value.ToString(), CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
+            }
         }
         private void BTPrint_Click(object sender, EventArgs e)
         {
