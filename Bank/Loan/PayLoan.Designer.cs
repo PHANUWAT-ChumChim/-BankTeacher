@@ -47,8 +47,8 @@ namespace BankTeacher.Bank.Loan
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.label5 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
             this.CBB4Oppay = new System.Windows.Forms.ComboBox();
             this.label9 = new System.Windows.Forms.Label();
             this.LB8pay = new System.Windows.Forms.Label();
@@ -104,7 +104,7 @@ namespace BankTeacher.Bank.Loan
             this.BExitForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BExitForm.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
             this.BExitForm.Location = new System.Drawing.Point(1057, 631);
-            this.BExitForm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BExitForm.Margin = new System.Windows.Forms.Padding(4);
             this.BExitForm.Name = "BExitForm";
             this.BExitForm.Size = new System.Drawing.Size(97, 81);
             this.BExitForm.TabIndex = 111;
@@ -167,6 +167,7 @@ namespace BankTeacher.Bank.Loan
             this.TB_password.Name = "TB_password";
             this.TB_password.Size = new System.Drawing.Size(184, 43);
             this.TB_password.TabIndex = 103;
+            this.TB_password.UseSystemPasswordChar = true;
             this.TB_password.Visible = false;
             this.TB_password.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TB_password_KeyDown);
             // 
@@ -249,7 +250,7 @@ namespace BankTeacher.Bank.Loan
             this.Column2,
             this.Column3});
             this.DGV_PayLoan.Location = new System.Drawing.Point(19, 86);
-            this.DGV_PayLoan.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.DGV_PayLoan.Margin = new System.Windows.Forms.Padding(4);
             this.DGV_PayLoan.Name = "DGV_PayLoan";
             this.DGV_PayLoan.ReadOnly = true;
             this.DGV_PayLoan.RowHeadersVisible = false;
@@ -299,16 +300,6 @@ namespace BankTeacher.Bank.Loan
             this.Column3.Name = "Column3";
             this.Column3.ReadOnly = true;
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label5.Location = new System.Drawing.Point(3, 10);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(371, 40);
-            this.label5.TabIndex = 73;
-            this.label5.Text = "อัพโหลดเอกสารสัญญากู้ที่มีลายเซ็นครบถ้วน";
-            // 
             // panel10
             // 
             this.panel10.BackColor = System.Drawing.Color.White;
@@ -319,6 +310,16 @@ namespace BankTeacher.Bank.Loan
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(394, 57);
             this.panel10.TabIndex = 124;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label5.Location = new System.Drawing.Point(3, 10);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(371, 40);
+            this.label5.TabIndex = 73;
+            this.label5.Text = "อัพโหลดเอกสารสัญญากู้ที่มีลายเซ็นครบถ้วน";
             // 
             // CBB4Oppay
             // 

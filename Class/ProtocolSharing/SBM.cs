@@ -68,22 +68,16 @@ namespace BankTeacher.Class.ProtocolSharing
             
             protected virtual void Dispose(bool disposing)
             {
-               var satatus = WNetCancelConnection2(_networkName,0x00000001,false);
+                WNetCancelConnection2(_networkName, 0,false);
             }
             // เซิร์ฟเวอร์ Connect To server
             [DllImport("mpr.dll")]
             private static extern int WNetAddConnection2(NetResource netResource,
                 string password, string username, int flags);
-            [DllImport("Mpr.dll")]
-            private static extern int WNetCancelConnection2(
-           string lpName,
-           int dwFlags,
-           bool fForce
-       );
             // ยกเลิกการเชื่อมต่อ V2 ancelConnection
-            //[DllImport("mpr.dll")]
-            //private static extern int WNetCancelConnection2(string name, int flags,
-            //    bool force);
+            [DllImport("mpr.dll")]
+            private static extern int WNetCancelConnection2(string name, int flags,
+                bool force);
         }
 
 
