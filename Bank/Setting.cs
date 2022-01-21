@@ -93,6 +93,8 @@ namespace BankTeacher.Bank
                     .Replace("{MinLoan}" , TBMinLoan.Text));
                 BankTeacher.Bank.Menu.startAmountMin = Convert.ToInt32(TB_Min.Text);
                 BankTeacher.Bank.Menu.startAmountMax = Convert.ToInt32(TB_Max.Text);
+                BankTeacher.Bank.Menu.perShare = Convert.ToInt32(TBPerShare.Text);
+                BankTeacher.Bank.Menu.MinLoan = Convert.ToInt32(TBMinLoan.Text);
                 MessageBox.Show("เสร็จสิ้น", "ตั้งค่า", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 B_Save.Enabled = false;
             }

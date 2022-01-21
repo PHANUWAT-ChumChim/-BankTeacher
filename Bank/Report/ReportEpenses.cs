@@ -63,7 +63,8 @@ namespace BankTeacher.Bank
             TBAmountLoan.Text = "0";
             TBAmountWithDraw.Text = "0";
             TBAmount.Text = "0";
-            TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
+            if(TBTeacherNo.Text != "")
+                TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
         }
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
