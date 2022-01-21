@@ -1,4 +1,4 @@
-﻿
+
 namespace BankTeacher.Bank.Pay
 {
     partial class pay

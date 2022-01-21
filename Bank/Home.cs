@@ -212,6 +212,7 @@ namespace BankTeacher.Bank
                         }
                         CByear.SelectedIndex = 0;
                         CByear.Text = BankTeacher.Bank.Menu.Date[0];
+                        panel7.Enabled = false;
                     }
                     else
                     {
@@ -381,6 +382,22 @@ namespace BankTeacher.Bank
             Class.Print.PrintPreviewDialog.info_Savingtotel = dt.Rows[0][1].ToString();
             Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = dt.Rows[0][3].ToString();
             Class.Print.PrintPreviewDialog.PrintReportGrid(e, dataGridView3, "ตารางการผ่อนชำระ", this.AccessibilityObject.Name,false,false, "A4",1);
+        }
+
+        private void Home_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (TBTeacherNo.Text.Length != 0)
+                {
+                    TBTeacherNo.Text = "";
+                    TBTeacherName.Text = "";
+                    CByear.SelectedIndex = -1;
+                    CByear.Items.Clear();
+                    TBTeacherBill.Text = "";
+                    dataGridView3.Rows.Clear();
+                }
+            }
         }
     }
 }

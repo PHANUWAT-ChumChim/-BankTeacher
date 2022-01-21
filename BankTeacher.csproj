@@ -95,6 +95,7 @@
     <Compile Include="Bank\Add Member\infoMeber.Designer.cs">
       <DependentUpon>infoMeber.cs</DependentUpon>
     </Compile>
+    <Compile Include="Bank\Add Member\PdfDocument.cs" />
     <Compile Include="Bank\AmountOff.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -492,6 +493,11 @@
   <ItemGroup>
     <None Include="Resources\Image1.bmp" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\IceZ.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\no-internet.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

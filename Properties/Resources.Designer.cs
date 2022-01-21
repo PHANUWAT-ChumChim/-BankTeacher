@@ -10,8 +10,9 @@
 
 namespace BankTeacher.Properties {
     using System;
-    
-    
+    using System.Drawing;
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -31,7 +32,9 @@ namespace BankTeacher.Properties {
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-        
+
+        public static Image PrintIcon { get; internal set; }
+
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -93,6 +96,16 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _64x64_IceZ {
+            get {
+                object obj = ResourceManager.GetObject("_64x64_IceZ", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap _64x64_magnifying_glass {
             get {
                 object obj = ResourceManager.GetObject("_64x64_magnifying_glass", resourceCulture);
@@ -116,6 +129,16 @@ namespace BankTeacher.Properties {
         internal static System.Drawing.Bitmap _64x64_money_bag__1_ {
             get {
                 object obj = ResourceManager.GetObject("_64x64_money_bag__1_", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap _64x64_no_internet {
+            get {
+                object obj = ResourceManager.GetObject("_64x64_no_internet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -331,7 +331,7 @@ namespace BankTeacher.Bank
                     TBWithDraw.Enabled = false;
                     CBTypePay.SelectedIndex = -1;
                     CBTypePay.Enabled = false;
-                    BSaveAmountOff.Enabled = false;
+                    //BSaveAmountOff.Enabled = false;
                     Check = 0;
                     Checkmember(true);
                 }
@@ -485,7 +485,7 @@ namespace BankTeacher.Bank
                 }
             }
         }
-        private void BMaxWithDraw_AmountOff_Click(object sender, EventArgs e)
+        public void BMaxWithDraw_AmountOff_Click(object sender, EventArgs e)
         {
             if(TBCreditWithDraw.Text != "")
             {
@@ -507,12 +507,12 @@ namespace BankTeacher.Bank
 
         private void TBWithDraw_TextChanged(object sender, EventArgs e)
         {
-           if(TBWithDraw.Text!= "")
-           {
-                BSaveAmountOff.Enabled = true;
-           }
-           else
-                BSaveAmountOff.Enabled = false;
+           //if(TBWithDraw.Text!= "")
+           //{
+           //     BSaveAmountOff.Enabled = true;
+           //}
+           //else
+           //     BSaveAmountOff.Enabled = false;
         }
         private void printDocument1_PrintPage_1(object sender, PrintPageEventArgs e)
         {
@@ -607,7 +607,7 @@ namespace BankTeacher.Bank
                     TBWithDraw.Enabled = false;
                     CBTypePay.SelectedIndex = -1;
                     CBTypePay.Enabled = false;
-                    BSaveAmountOff.Enabled = false;
+                    //BSaveAmountOff.Enabled = false;
                     Check = 0;
                     Checkmember(true);
     }

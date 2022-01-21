@@ -279,6 +279,7 @@ namespace BankTeacher.Bank.Loan
                 label15.Visible = true;
                 UserOutCreditLimit = DialogResult.No;
                 TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Back));
+                TBTeacherNo.Text = "";
             }
             else if(LLackAmount.Text != "0" || LOutCredit.Text != "0")
             {
@@ -330,6 +331,7 @@ namespace BankTeacher.Bank.Loan
                     int Pay = Convert.ToInt32(TBLoanAmount.Text) / Convert.ToInt32(TBPayNo.Text);
                     int SumInstallment = Convert.ToInt32(Pay + Interest);
                     int SumCheckInterest = 0;
+
 
                     for (int Num = 0; Num < int.Parse(TBPayNo.Text); Num++)
                     {
