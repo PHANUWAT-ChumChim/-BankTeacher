@@ -181,9 +181,9 @@ namespace BankTeacher.Class.ProtocolSharing
 
                 while (ThreadCheckFile.ThreadState == System.Threading.ThreadState.Running)
                 {
-                    if (time.ElapsedMilliseconds >= 5000 && ThreadCheckFile.IsAlive)
+                    if (time.ElapsedMilliseconds >= 2000 && ThreadCheckFile.IsAlive)
                     {
-                        StatusRetrun = "โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเข้าถึงโฟร์เดอร์ได้";
+                        StatusRetrun = "ไม่พบเอกสารการสมัครในระบบ";
                         //ThreadCheckFile.Abort();
                         break;
                     }

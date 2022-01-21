@@ -29,7 +29,7 @@ namespace BankTeacher.Bank.Add_Member
         private String[] SQLDefault = new String[]
          { 
            //[0]Get InfoMember INPUT: {TeacherNo}  
-           "SELECT CAST(ISNULL(c.PrefixNameFull , '') + b.Fname + ' ' + b.Lname as NVARCHAR) as Name , f.Name as TeacherAddByName , d.MemberStatusName , CAST(a.DateAdd as date)  \r\n " +
+           "SELECT CAST(ISNULL(c.PrefixNameFull , '') + b.Fname + ' ' + b.Lname as NVARCHAR) as Name , f.Name as TeacherAddByName ,CAST(d.MemberStatusName as NVARCHAR) , CAST(a.DateAdd as date)  \r\n " +
           ", a.StartAmount , e.SavingAmount \r\n " +
           "FROM EmployeeBank.dbo.tblMember as a \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo \r\n " +
@@ -410,6 +410,7 @@ namespace BankTeacher.Bank.Add_Member
                         smb.GetFile(TBTeacherNo.Text);
                     }
                     else { MessageBox.Show($"โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเข้าถึงโฟร์เดอร์ได้\r\n{Class.ProtocolSharing.ConnectSMB.StatusRetrun}", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+                    //System.IO.Path.Combine(@"net use * / delete");
                 }
             }
             else

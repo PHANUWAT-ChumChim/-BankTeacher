@@ -291,7 +291,7 @@ namespace BankTeacher.Bank.Add_Member
                             }
                             else
                             {
-                                MessageBox.Show("ไม่พบตำเเหน่งไฟล์", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBox.Show("โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเข้าถึงโฟร์เดอร์ได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
                         }
 
