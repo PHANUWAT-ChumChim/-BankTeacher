@@ -274,13 +274,13 @@ namespace BankTeacher.Bank
         {
             if (e.KeyCode == Keys.Tab)
             {
-                if (tabControl1.SelectedIndex == tabControl1.TabCount - 1)
+                if (TP_LUP.SelectedIndex == TP_LUP.TabCount - 1)
                 {
-                    tabControl1.SelectedIndex = 0;
+                    TP_LUP.SelectedIndex = 0;
                 }
                 else
                 {
-                    tabControl1.SelectedIndex = tabControl1.SelectedIndex + 1;
+                    TP_LUP.SelectedIndex = TP_LUP.SelectedIndex + 1;
                 }
             }
         }
