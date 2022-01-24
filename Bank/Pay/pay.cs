@@ -115,7 +115,7 @@ namespace BankTeacher.Bank.Pay
            //[5] Check if you have paid ( Loan ) INPUT: {LoanNo} , {Month} , {Year} , {Date} 
            "  SELECT a.TeacherNo, \r\n " +
           "  ROUND(Convert(float, ( (g.InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0)  AS PayLoan, \r\n " +
-          "  (LoanAmount  + Convert(float , (InterestRate / 100) * LoanAmount)) - (ROUND(Convert(float, ( (InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0)) * (PayNo -1)AS LastPay \r\n " +
+          "  ROUND((LoanAmount  + Convert(float , (InterestRate / 100) * LoanAmount)) - (ROUND(Convert(float, ( (InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0)) * (PayNo -1),0)AS LastPay \r\n " +
           "  FROM EmployeeBank.dbo.tblMember as a    \r\n " +
           "  LEFT JOIN EmployeeBank.dbo.tblBill as b on a.TeacherNo = b.TeacherNo   \r\n " +
           "  LEFT JOIN EmployeeBank.dbo.tblBillDetail as c on b.BillNo = c.BillNo   \r\n " +
@@ -140,7 +140,7 @@ namespace BankTeacher.Bank.Pay
           " \r\n " +
           "  SELECT LoanNo ,MonthPay , YearPay , PayNo,  \r\n " +
           "   ROUND(Convert(float, ( (InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float ,  LoanAmount / PayNo),0) AS PayLoan , \r\n " +
-          "	(LoanAmount  + Convert(float , (InterestRate / 100) * LoanAmount)) - (ROUND(Convert(float, ( (InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0)) * (PayNo -1) AS LastPay,  \r\n " +
+          "	ROUND((LoanAmount  + Convert(float , (InterestRate / 100) * LoanAmount)) - (ROUND(Convert(float, ( (InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0)) * (PayNo -1),0) AS LastPay,  \r\n " +
           "    EOMONTH(DATEADD(MONTH,PayNo-1,CAST(CAST(CAST(YearPay as nvarchar) +'/' + CAST(MonthPay AS nvarchar) + '/05' AS nvarchar) AS date))) AS EndLoan \r\n " +
           "   FROM EmployeeBank.dbo.tblLoan \r\n " +
           "   WHERE LoanNo = {LoanNo} and LoanStatusNo = 2 ;  \r\n " +
@@ -880,10 +880,7 @@ namespace BankTeacher.Bank.Pay
                                         //หากเป็นจ่ายกู้เดือนสุดท้าย 
                                         if (DateLoan == Convert.ToDateTime(CBYearSelection_Pay.Text + '-' + CBMonthSelection_Pay.Text + '-' + DateTime.DaysInMonth(Convert.ToInt32(CBYearSelection_Pay.Text), Convert.ToInt32(CBMonthSelection_Pay.Text)).ToString()))
                                         {
-                                            if (Int32.TryParse(dsLoan.Tables[0].Rows[0][2].ToString(), out int Bal))
-                                                Balance = Bal;
-                                            else
-                                                Balance = Convert.ToInt32(Decimal.Truncate(Convert.ToDecimal(Convert.ToDouble(dsLoan.Tables[0].Rows[0][2].ToString()))) + 1);
+                                                Balance = Convert.ToInt32(dsLoan.Tables[0].Rows[0][2].ToString());
                                         }
                                         //หากเงื่อนไขบนไม่เป็นจริง หรือก็คือ เป็นเดือนปกติ ที่ไม่ใช่เดือนสุดท้ายของการกู้
                                         else
@@ -1059,10 +1056,7 @@ namespace BankTeacher.Bank.Pay
                                     //หากเป็นจ่ายกู้เดือนสุดท้าย 
                                     if (DateLoan == Convert.ToDateTime(CBYearSelection_Pay.Text + '-' + CBMonthSelection_Pay.Text + '-' + DateTime.DaysInMonth(Convert.ToInt32(CBYearSelection_Pay.Text), Convert.ToInt32(CBMonthSelection_Pay.Text)).ToString()))
                                     {
-                                        if (Int32.TryParse(dsLoan.Tables[0].Rows[0][2].ToString(), out int Bal))
-                                            Balance = Bal;
-                                        else
-                                            Balance = Convert.ToInt32(Decimal.Truncate(Convert.ToDecimal(Convert.ToDouble(dsLoan.Tables[0].Rows[0][2].ToString()))) + 1);
+                                            Balance = Convert.ToInt32(dsLoan.Tables[0].Rows[0][2].ToString());
                                     }
                                     //หากเงื่อนไขบนไม่เป็นจริง หรือก็คือ เป็นเดือนปกติ ที่ไม่ใช่เดือนสุดท้ายของการกู้
                                     else
@@ -1109,11 +1103,7 @@ namespace BankTeacher.Bank.Pay
                                 //หากเดือนนี้เป็นเดือนสุดท้ายให้เปลี่ยนราคา
                                 if (Now == EndDatePayLoan)
                                 {
-                                    if (Int32.TryParse(dsLoan.Tables[1].Rows[0][5].ToString(), out int Values))
-                                        AmountPay = Values;
-                                    else
-                                        if (Decimal.TryParse(dsLoan.Tables[1].Rows[0][5].ToString(), out decimal value))
-                                        AmountPay = Convert.ToInt32(value) + 1;
+                                        AmountPay = Convert.ToInt32(dsLoan.Tables[0].Rows[0][2].ToString());
                                 }
                                 if (DGV_Pay.Rows.Count != 0)
                                 {
