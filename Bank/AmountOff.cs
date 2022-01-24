@@ -369,6 +369,7 @@ namespace BankTeacher.Bank
                         {
                             printDocument1.Print();
                         }
+                        PinrtChcek = 0;
                         TBTeacherNo.Text = "";
                         TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Back));
                     }
@@ -541,25 +542,6 @@ namespace BankTeacher.Bank
                 Class.Print.PrintPreviewDialog.info_datepayAmounoff = dt_date.Rows[0][3].ToString();
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name,true, true, "A5", 0);
             }
-
-            //if (SELECT_Print > 0)
-            //{
-            //    // ========================= info =====================================
-            //    Class.Print.PrintPreviewDialog.info_BillAmounoff = dt.Rows[0][0].ToString();
-            //    Class.Print.PrintPreviewDialog.info_datepayAmounoff = dt_date.Rows[0][3].ToString();
-            //    Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, true, true, "A5", 0);
-            //    SELECT_Print--;
-            //}
-            //else if (CB_SelectPrint.SelectedIndex == 1)
-            //{
-            //    Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Testter, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, true, true, "A5", 0);
-            //}
-            //else
-            //{
-            //    Class.Print.PrintPreviewDialog.details = 1;
-            //    Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVAmountOffHistory, "ถอนหุ้นสะสม", this.AccessibilityObject.Name, true, true, "A4", 1);
-            //}
-
             Class.Print.PrintPreviewDialog.details = 0;
             if(Class.Print.PrintPreviewDialog.start_and_stop == 1 || Class.Print.PrintPreviewDialog.start_and_stop == 2)
             {

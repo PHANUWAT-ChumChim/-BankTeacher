@@ -396,6 +396,7 @@ namespace BankTeacher.Bank.Add_Member
         private void button3_Click(object sender, EventArgs e)
         {
             OroD = "เปิดไฟล์";
+            Bank.SelectFile.info_File.Type = "MemberNo";
             DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text));
             if (dt.Rows[0][0].ToString() == "อัพโหลดเอกสารแล้ว")
             {
@@ -407,6 +408,7 @@ namespace BankTeacher.Bank.Add_Member
                     if (smb.IsValidConnection())
                     {
                         //Input Contain words แนะนำ เป็นรหัสอาจารย์ ในหน้าทั่วไปส่วนหน้าไหนถ้ามีการทำรายการเยอะๆให้เอาเป็นเลขบิลล์ของหน้านั้นๆเช่นหน้าดูเอกสารกู้ จะใส่เป็นเลขกู้ หน้าดูเอกสาร สมัครสมาชิกจะใส่เป็นชื่ออาจารย์
+                        //smb.GetFile(TBTeacherNo.Text);
                         DataTable dtGetpath = Class.SQLConnection.InputSQLMSSQL($"SELECT DocUploadPath FROM EmployeeBank.dbo.tblMember WHERE TeacherNo LIKE '%{TBTeacherNo.Text}%'");
                         String FileName = dtGetpath.Rows[0][0].ToString();
                         FileName = FileName.Replace(smb.PathFile, "");

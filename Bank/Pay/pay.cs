@@ -1284,7 +1284,10 @@ namespace BankTeacher.Bank.Pay
             }
         }
         //Add list to datagridview
+        // เช็คว่ารายการไหนควรที่จะเพิ่ม
         private bool Notadd;
+        // ตรวจสอบยอดกู้ที่ทำการจ่ายทั้งหมด
+        private string Amount_payLoan;
         private void BListAdd_Pay_Click(object sender, EventArgs e)
         {
             if (CBList_Pay.SelectedIndex != -1)
@@ -1309,6 +1312,7 @@ namespace BankTeacher.Bank.Pay
                                     {
                                         Notadd = true;
                                         DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
+                                        Amount_payLoan = TBAmount_Pay.Text;
                                         Notadd = false;
                                         CheckInsertDGVBehidePay();
                                         CBList_Pay.Items.RemoveAt(CBList_Pay.SelectedIndex);
@@ -1324,6 +1328,7 @@ namespace BankTeacher.Bank.Pay
                             {
                                 Notadd = true;
                                 DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
+                                Amount_payLoan = TBAmount_Pay.Text;
                                 Notadd = false;
                                 CheckInsertDGVBehidePay();
                               
@@ -1437,7 +1442,7 @@ namespace BankTeacher.Bank.Pay
                         else { Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(Convert.ToInt32(TBToatalSaving_ShareInfo.Text) + Convert.ToInt32(LBalance_Pay.Text)).ToString(); }
 
                         Class.Print.PrintPreviewDialog.info_Billpay = TBTeacherBill.Text;
-                        Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
+                        Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = Convert.ToInt32(Convert.ToInt32(Amount_payLoan) - Convert.ToInt32(TBAmountRemain_LoanInfo.Text)).ToString();
                         Class.Print.PrintPreviewDialog.info_datepayShare = DateTime.Today.Day.ToString() + '/' + DateTime.Today.Month.ToString() + '/' + DateTime.Today.Year.ToString();
                         printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                         printDocument1.DefaultPageSettings.Landscape = true;

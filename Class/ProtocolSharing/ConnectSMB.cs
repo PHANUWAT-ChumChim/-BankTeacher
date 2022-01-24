@@ -69,7 +69,7 @@ namespace BankTeacher.Class.ProtocolSharing
                 time.Stop();
                 return door;
             }
-            // เช็คการเชื่อมต่อเซิร์ฟเวอร์ ข้อมูลจะเเสดงรายละเอียดการเชื่อมต่อ
+            // เช็คการเชื่อมต่อเซิร์ฟเวอร์ ข้อมูลจะเเสดงรายละเอียดการเชื่อมต่อ \
             public bool Connection()
             {
                 using (var network = new NetworkConnection($"{networkPath}", networkCredential))
@@ -84,8 +84,8 @@ namespace BankTeacher.Class.ProtocolSharing
             }
             public void GetFile(string ContainsName = "")
             {
-                try
-                {
+                //try
+                //{
                     using (var network = new NetworkConnection(networkPath, networkCredential))
                     {
                         List<String> GetFileName = new List<string>();
@@ -126,8 +126,8 @@ namespace BankTeacher.Class.ProtocolSharing
                             return;
                         }
                     }
-                }
-                catch { Bank.SelectFile.OpenEnableButton = true; return; }
+                //}
+                //catch { Bank.SelectFile.OpenEnableButton = true; return; }
                 
             }
             String ID = "";

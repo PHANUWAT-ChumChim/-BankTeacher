@@ -141,7 +141,12 @@ namespace BankTeacher.Bank.Loan
             this.BExitForm.BackgroundImage = global::BankTeacher.Properties.Resources.logout;
             this.BExitForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BExitForm.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+//<<<<<<< P
+            this.BExitForm.Location = new System.Drawing.Point(1041, 609);
+            this.BExitForm.Margin = new System.Windows.Forms.Padding(4);
+//=======
             this.BExitForm.Location = new System.Drawing.Point(781, 495);
+//>>>>>>> master
             this.BExitForm.Name = "BExitForm";
             this.BExitForm.Size = new System.Drawing.Size(73, 66);
             this.BExitForm.TabIndex = 110;
@@ -232,8 +237,13 @@ namespace BankTeacher.Bank.Loan
             // TBGuarantorNo
             // 
             this.TBGuarantorNo.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+//<<<<<<< P
+            this.TBGuarantorNo.Location = new System.Drawing.Point(106, 14);
+            this.TBGuarantorNo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+//=======
             this.TBGuarantorNo.Location = new System.Drawing.Point(77, 11);
             this.TBGuarantorNo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+//>>>>>>> master
             this.TBGuarantorNo.MaxLength = 6;
             this.TBGuarantorNo.Name = "TBGuarantorNo";
             this.TBGuarantorNo.Size = new System.Drawing.Size(128, 36);

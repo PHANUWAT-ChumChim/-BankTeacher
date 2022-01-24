@@ -49,7 +49,21 @@ namespace BankTeacher.Bank
                         if (BankTeacher.Class.ProtocolSharing.ConnectSMB.file[x].DateAdd.ToString("dd-MM-yyyy hh:mm:ss.fffffff") == SelectFile.FullDateAdd.ToString())
                         {
                             String file = Path + SelectFile.Name;
-                            System.Diagnostics.Process.Start(file);
+                            string Folder;
+                            // สร้างโฟลเดอร์
+                            if (info_File.Type == "MemberNo")
+                            {
+                                Folder = "RICE";
+                            }
+                            else
+                            {
+                                Folder = "ใบสมัครกู้ครู";
+                            }
+                            var f = System.IO.Path.Combine("C:\\",Folder);
+                            var a = System.IO.Directory.CreateDirectory(f);
+                            var s =  a.FullName;
+                            System.IO.File.Copy(file,s);
+                            System.Diagnostics.Process.Start(f);
                             break;
                         }
                         else if (x == BankTeacher.Class.ProtocolSharing.ConnectSMB.file.Count - 1)
@@ -86,51 +100,60 @@ namespace BankTeacher.Bank
                         if(con == DialogResult.Yes)
                         {
                             DataTable dt_file = Class.SQLConnection.InputSQLMSSQL(SQLSELCET);
-                            if (dt_file.Rows[0][1] != "")
+                            if (dt_file.Rows.Count != 0)
                             {
-                                System.IO.FileInfo f = new System.IO.FileInfo(dt_file.Rows[0][1].ToString());
-                                DateTime Date = Convert.ToDateTime(f.CreationTime);
-                                string a = Date.ToString("dd-MM-yyyy hh:mm");
-                                string b = comboBox1.SelectedItem.ToString();
-                                if (comboBox1.SelectedItem.ToString() == Date.ToString("dd-MM-yyyy hh:mm"))
+                                if (dt_file.Rows[0][1] != "")
                                 {
-                                    if(file == dt_file.Rows[0][1].ToString())
+                                    System.IO.FileInfo f = new System.IO.FileInfo(dt_file.Rows[0][1].ToString());
+                                    DateTime Date = Convert.ToDateTime(f.CreationTime);
+                                    string a = Date.ToString("dd-MM-yyyy hh:mm");
+                                    string b = comboBox1.SelectedItem.ToString();
+                                    if (comboBox1.SelectedItem.ToString() == Date.ToString("dd-MM-yyyy hh:mm"))
                                     {
-                                        System.IO.File.Delete(file);
-                                        comboBox1.Items.RemoveAt(comboBox1.SelectedIndex);
-                                        MessageBox.Show("ลบไฟล์เสร็จสิ้น", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                        Class.SQLConnection.InputSQLMSSQL(SQLUPDATE);
-                                        OpenEnableButton = false;
+                                        if (file == dt_file.Rows[0][1].ToString())
+                                        {
+                                            System.IO.File.Delete(file);
+                                            comboBox1.Items.RemoveAt(comboBox1.SelectedIndex);
+                                            MessageBox.Show("ลบไฟล์เสร็จสิ้น", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                            Class.SQLConnection.InputSQLMSSQL(SQLUPDATE);
+                                            OpenEnableButton = false;
+                                        }
                                     }
-                                }
-                                else { MessageBox.Show("ไม่สามรถลบไฟล์ที่ไม่เกี่ยวข้องกับเอกสารปัจุบันได้", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information); }
-                            }
-                            else {
-                                DataTable dt = Class.SQLConnection.InputSQLMSSQL("SELECT a.TeacherNo, a.DocUploadPath " +
-                             "FROM EmployeeBank.dbo.tblMemberResignation as a " +
-                             "WHERE a.TeacherNo = '{TeacherNo}'".Replace("{TeacherNo}",info_File.No));
-                                bool IS = false;
-                                for(int loop = 0; loop < dt.Rows.Count;loop++)
-                                {
-                                    if (file == dt.Rows[loop][1].ToString())
-                                    {
-                                        IS = true;
-                                        break;
-                                    }
-                                }
-                                if (IS)
-                                {
-                                    MessageBox.Show("คุณไม่สามรถลบ ไฟล์การสมัครเอกสารเก่าได้ คุณสามารถลบเอกสาร    ที่ทำการสมัคร ณ ปัจุบันเท่านั้น  เว้นเเต่ขอสิทธ์การลบเอกสารได้ที่ ผู้อำนวยการ", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    else { MessageBox.Show("ไม่สามรถลบไฟล์ที่ไม่เกี่ยวข้องกับเอกสารปัจุบันได้", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information); }
                                 }
                                 else
                                 {
-                                    System.IO.File.Delete(file);
-                                    MessageBox.Show("ลบไฟล์เสร็จสิ้น", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    comboBox1.Items.RemoveAt(comboBox1.SelectedIndex);
-                                    OpenEnableButton = false;
+                                    DataTable dt = Class.SQLConnection.InputSQLMSSQL("SELECT a.TeacherNo, a.DocUploadPath " +
+                                 "FROM EmployeeBank.dbo.tblMemberResignation as a " +
+                                 "WHERE a.TeacherNo = '{TeacherNo}'".Replace("{TeacherNo}", info_File.No));
+                                    bool IS = false;
+                                    for (int loop = 0; loop < dt.Rows.Count; loop++)
+                                    {
+                                        if (file == dt.Rows[loop][1].ToString())
+                                        {
+                                            IS = true;
+                                            break;
+                                        }
+                                    }
+                                    if (IS)
+                                    {
+                                        MessageBox.Show("คุณไม่สามรถลบ ไฟล์การสมัครเอกสารเก่าได้ คุณสามารถลบเอกสาร    ที่ทำการสมัคร ณ ปัจุบันเท่านั้น  เว้นเเต่ขอสิทธ์การลบเอกสารได้ที่ ผู้อำนวยการ", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    }
+                                    else
+                                    {
+                                        System.IO.File.Delete(file);
+                                        MessageBox.Show("ลบไฟล์เสร็จสิ้น", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        comboBox1.Items.RemoveAt(comboBox1.SelectedIndex);
+                                        OpenEnableButton = false;
+                                    }
                                 }
                             }
-                          
+                            else {
+                                System.IO.File.Delete(file);
+                                MessageBox.Show("ลบไฟล์เสร็จสิ้น", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                comboBox1.Items.RemoveAt(comboBox1.SelectedIndex);
+                                OpenEnableButton = false;
+                            }
                         }
                     }
                     catch (System.IO.IOException ioExp)

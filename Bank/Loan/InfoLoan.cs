@@ -552,6 +552,7 @@ namespace BankTeacher.Bank.Loan
         private void button3_Click(object sender, EventArgs e)
         {
             Bank.Add_Member.infoMeber.OroD = "เปิดไฟล์";
+            Bank.SelectFile.info_File.Type = "LoanNo";
             if (CB_LoanNo.SelectedIndex != -1)
             {
                 BankTeacher.Class.ComboBoxPayment Loan = (CB_LoanNo.SelectedItem as BankTeacher.Class.ComboBoxPayment);
