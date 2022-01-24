@@ -269,5 +269,20 @@ namespace BankTeacher.Bank
                 printDocument1.Print();
             }
         }
+
+        private void Report_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+                if (TP_LUP.SelectedIndex == TP_LUP.TabCount - 1)
+                {
+                    TP_LUP.SelectedIndex = 0;
+                }
+                else
+                {
+                    TP_LUP.SelectedIndex = TP_LUP.SelectedIndex + 1;
+                }
+            }
+        }
     }
 }

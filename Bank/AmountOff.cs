@@ -701,5 +701,20 @@ namespace BankTeacher.Bank
             TBTeacherNo.Enabled = tf;
             BSearchTeacher.Enabled = tf;
         }
+
+        private void AmountOff_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+                if (tabControl1.SelectedIndex == tabControl1.TabCount - 1)
+                {
+                    tabControl1.SelectedIndex = 0;
+                }
+                else
+                {
+                    tabControl1.SelectedIndex = tabControl1.SelectedIndex + 1;
+                }
+            }
+        }
     }
 }
