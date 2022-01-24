@@ -733,6 +733,15 @@ namespace BankTeacher.Bank.Pay
                 }
 
             }
+            //Fix ว่าไม่ให้ห่างจากปีที่ค้างปีแรกเกิน 3 ปี
+            if (DM.Count > 3)
+                for (int x = 3; x < DM.Count; x++)
+                {
+                    DM.RemoveAt(x);
+                    YearinCB.RemoveAt(x);
+                    BackupDM.RemoveAt(x);
+                    CBYearSelection_Pay.Items.RemoveAt(x);
+                }
         }
 
         private void TBTeacherNo_KeyPress(object sender, KeyPressEventArgs e)
