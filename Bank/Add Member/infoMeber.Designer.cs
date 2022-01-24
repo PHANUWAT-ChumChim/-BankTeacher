@@ -121,7 +121,7 @@ namespace BankTeacher.Bank.Add_Member
             this.PL.Controls.Add(this.tabControl1);
             this.PL.Controls.Add(this.panel7);
             this.PL.Location = new System.Drawing.Point(19, 32);
-            this.PL.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PL.Margin = new System.Windows.Forms.Padding(2);
             this.PL.Name = "PL";
             this.PL.Size = new System.Drawing.Size(876, 598);
             this.PL.TabIndex = 99;
@@ -145,7 +145,7 @@ namespace BankTeacher.Bank.Add_Member
             this.tabControl1.Enabled = false;
             this.tabControl1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(11, 63);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(854, 461);
@@ -162,9 +162,9 @@ namespace BankTeacher.Bank.Add_Member
             this.TP_info.Controls.Add(this.panel2);
             this.TP_info.Controls.Add(this.panel6);
             this.TP_info.Location = new System.Drawing.Point(4, 39);
-            this.TP_info.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TP_info.Margin = new System.Windows.Forms.Padding(2);
             this.TP_info.Name = "TP_info";
-            this.TP_info.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TP_info.Padding = new System.Windows.Forms.Padding(2);
             this.TP_info.Size = new System.Drawing.Size(846, 418);
             this.TP_info.TabIndex = 0;
             this.TP_info.Text = "ข้อมูล";
@@ -187,7 +187,7 @@ namespace BankTeacher.Bank.Add_Member
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.label7);
             this.panel1.Location = new System.Drawing.Point(630, 24);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(212, 43);
             this.panel1.TabIndex = 77;
@@ -211,7 +211,7 @@ namespace BankTeacher.Bank.Add_Member
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel4.Controls.Add(this.label10);
             this.panel4.Location = new System.Drawing.Point(325, 24);
-            this.panel4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel4.Margin = new System.Windows.Forms.Padding(2);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(301, 43);
             this.panel4.TabIndex = 77;
@@ -235,7 +235,7 @@ namespace BankTeacher.Bank.Add_Member
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel3.Controls.Add(this.label9);
             this.panel3.Location = new System.Drawing.Point(11, 24);
-            this.panel3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel3.Margin = new System.Windows.Forms.Padding(2);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(310, 43);
             this.panel3.TabIndex = 76;
@@ -264,7 +264,7 @@ namespace BankTeacher.Bank.Add_Member
             this.panel5.Controls.Add(this.label2);
             this.panel5.Controls.Add(this.label4);
             this.panel5.Location = new System.Drawing.Point(10, 71);
-            this.panel5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel5.Margin = new System.Windows.Forms.Padding(2);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(310, 224);
             this.panel5.TabIndex = 78;
@@ -274,7 +274,7 @@ namespace BankTeacher.Bank.Add_Member
             this.TBMemberStatus.Enabled = false;
             this.TBMemberStatus.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBMemberStatus.Location = new System.Drawing.Point(113, 148);
-            this.TBMemberStatus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBMemberStatus.Margin = new System.Windows.Forms.Padding(2);
             this.TBMemberStatus.MaxLength = 6;
             this.TBMemberStatus.Name = "TBMemberStatus";
             this.TBMemberStatus.Size = new System.Drawing.Size(176, 36);
@@ -285,7 +285,7 @@ namespace BankTeacher.Bank.Add_Member
             this.TBTeacherAddByName.Enabled = false;
             this.TBTeacherAddByName.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBTeacherAddByName.Location = new System.Drawing.Point(113, 91);
-            this.TBTeacherAddByName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBTeacherAddByName.Margin = new System.Windows.Forms.Padding(2);
             this.TBTeacherAddByName.MaxLength = 6;
             this.TBTeacherAddByName.Name = "TBTeacherAddByName";
             this.TBTeacherAddByName.Size = new System.Drawing.Size(176, 36);
@@ -296,7 +296,7 @@ namespace BankTeacher.Bank.Add_Member
             this.TBNameInfo.Enabled = false;
             this.TBNameInfo.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBNameInfo.Location = new System.Drawing.Point(113, 33);
-            this.TBNameInfo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBNameInfo.Margin = new System.Windows.Forms.Padding(2);
             this.TBNameInfo.MaxLength = 6;
             this.TBNameInfo.Name = "TBNameInfo";
             this.TBNameInfo.Size = new System.Drawing.Size(176, 36);
@@ -350,7 +350,7 @@ namespace BankTeacher.Bank.Add_Member
             this.panel2.Controls.Add(this.checkBox_copy);
             this.panel2.Controls.Add(this.BTPrint);
             this.panel2.Location = new System.Drawing.Point(630, 71);
-            this.panel2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel2.Margin = new System.Windows.Forms.Padding(2);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(212, 224);
             this.panel2.TabIndex = 79;
@@ -385,7 +385,7 @@ namespace BankTeacher.Bank.Add_Member
             this.BTPrint.CausesValidation = false;
             this.BTPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTPrint.Location = new System.Drawing.Point(56, 22);
-            this.BTPrint.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BTPrint.Margin = new System.Windows.Forms.Padding(2);
             this.BTPrint.Name = "BTPrint";
             this.BTPrint.Size = new System.Drawing.Size(106, 58);
             this.BTPrint.TabIndex = 110;
@@ -403,7 +403,7 @@ namespace BankTeacher.Bank.Add_Member
             this.panel6.Controls.Add(this.label8);
             this.panel6.Controls.Add(this.label5);
             this.panel6.Location = new System.Drawing.Point(327, 71);
-            this.panel6.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel6.Margin = new System.Windows.Forms.Padding(2);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(299, 224);
             this.panel6.TabIndex = 79;
@@ -413,7 +413,7 @@ namespace BankTeacher.Bank.Add_Member
             this.TBSavingAmount.Enabled = false;
             this.TBSavingAmount.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBSavingAmount.Location = new System.Drawing.Point(130, 154);
-            this.TBSavingAmount.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBSavingAmount.Margin = new System.Windows.Forms.Padding(2);
             this.TBSavingAmount.MaxLength = 6;
             this.TBSavingAmount.Name = "TBSavingAmount";
             this.TBSavingAmount.Size = new System.Drawing.Size(142, 36);
@@ -424,7 +424,7 @@ namespace BankTeacher.Bank.Add_Member
             this.TBStartAmount.Enabled = false;
             this.TBStartAmount.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBStartAmount.Location = new System.Drawing.Point(130, 94);
-            this.TBStartAmount.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBStartAmount.Margin = new System.Windows.Forms.Padding(2);
             this.TBStartAmount.MaxLength = 6;
             this.TBStartAmount.Name = "TBStartAmount";
             this.TBStartAmount.Size = new System.Drawing.Size(142, 36);
@@ -436,7 +436,7 @@ namespace BankTeacher.Bank.Add_Member
             this.TBDateAdd.Enabled = false;
             this.TBDateAdd.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBDateAdd.Location = new System.Drawing.Point(130, 34);
-            this.TBDateAdd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBDateAdd.Margin = new System.Windows.Forms.Padding(2);
             this.TBDateAdd.MaxLength = 6;
             this.TBDateAdd.Name = "TBDateAdd";
             this.TBDateAdd.Size = new System.Drawing.Size(142, 36);
@@ -493,9 +493,9 @@ namespace BankTeacher.Bank.Add_Member
             this.TB_Print.Controls.Add(this.panel8);
             this.TB_Print.Controls.Add(this.panel9);
             this.TB_Print.Location = new System.Drawing.Point(4, 39);
-            this.TB_Print.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TB_Print.Margin = new System.Windows.Forms.Padding(2);
             this.TB_Print.Name = "TB_Print";
-            this.TB_Print.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TB_Print.Padding = new System.Windows.Forms.Padding(2);
             this.TB_Print.Size = new System.Drawing.Size(846, 418);
             this.TB_Print.TabIndex = 1;
             this.TB_Print.Text = "อัพโหลดเอกสาร";
@@ -504,7 +504,7 @@ namespace BankTeacher.Bank.Add_Member
             // BT_Rewifi
             // 
             this.BT_Rewifi.Location = new System.Drawing.Point(354, 50);
-            this.BT_Rewifi.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.BT_Rewifi.Margin = new System.Windows.Forms.Padding(2);
             this.BT_Rewifi.Name = "BT_Rewifi";
             this.BT_Rewifi.Size = new System.Drawing.Size(110, 42);
             this.BT_Rewifi.TabIndex = 88;
@@ -522,7 +522,7 @@ namespace BankTeacher.Bank.Add_Member
             this.panel15.Controls.Add(this.pb_connectwifi);
             this.panel15.Controls.Add(this.label16);
             this.panel15.Location = new System.Drawing.Point(17, 46);
-            this.panel15.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel15.Margin = new System.Windows.Forms.Padding(2);
             this.panel15.Name = "panel15";
             this.panel15.Size = new System.Drawing.Size(333, 47);
             this.panel15.TabIndex = 87;
@@ -531,7 +531,7 @@ namespace BankTeacher.Bank.Add_Member
             // 
             this.pb_disconnectwifi.Image = global::BankTeacher.Properties.Resources._64x64_no_internet;
             this.pb_disconnectwifi.Location = new System.Drawing.Point(284, 3);
-            this.pb_disconnectwifi.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pb_disconnectwifi.Margin = new System.Windows.Forms.Padding(2);
             this.pb_disconnectwifi.Name = "pb_disconnectwifi";
             this.pb_disconnectwifi.Size = new System.Drawing.Size(45, 37);
             this.pb_disconnectwifi.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -555,7 +555,7 @@ namespace BankTeacher.Bank.Add_Member
             // 
             this.pb_connectwifi.Image = global::BankTeacher.Properties.Resources._64x64_IceZ;
             this.pb_connectwifi.Location = new System.Drawing.Point(284, 3);
-            this.pb_connectwifi.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.pb_connectwifi.Margin = new System.Windows.Forms.Padding(2);
             this.pb_connectwifi.Name = "pb_connectwifi";
             this.pb_connectwifi.Size = new System.Drawing.Size(45, 37);
             this.pb_connectwifi.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -630,7 +630,7 @@ namespace BankTeacher.Bank.Add_Member
             this.panel12.Controls.Add(this.label15);
             this.panel12.Controls.Add(this.label12);
             this.panel12.Location = new System.Drawing.Point(16, 4);
-            this.panel12.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel12.Margin = new System.Windows.Forms.Padding(2);
             this.panel12.Name = "panel12";
             this.panel12.Size = new System.Drawing.Size(334, 39);
             this.panel12.TabIndex = 84;
@@ -664,7 +664,7 @@ namespace BankTeacher.Bank.Add_Member
             this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel10.Controls.Add(this.label13);
             this.panel10.Location = new System.Drawing.Point(310, 165);
-            this.panel10.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel10.Margin = new System.Windows.Forms.Padding(2);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(284, 43);
             this.panel10.TabIndex = 82;
@@ -714,7 +714,7 @@ namespace BankTeacher.Bank.Add_Member
             this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel8.Controls.Add(this.label11);
             this.panel8.Location = new System.Drawing.Point(16, 165);
-            this.panel8.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel8.Margin = new System.Windows.Forms.Padding(2);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(284, 43);
             this.panel8.TabIndex = 80;
@@ -770,7 +770,7 @@ namespace BankTeacher.Bank.Add_Member
             this.panel7.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel7.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.panel7.Location = new System.Drawing.Point(0, 0);
-            this.panel7.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel7.Margin = new System.Windows.Forms.Padding(2);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(876, 59);
             this.panel7.TabIndex = 63;
@@ -795,7 +795,7 @@ namespace BankTeacher.Bank.Add_Member
             this.TBTeacherName.Enabled = false;
             this.TBTeacherName.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBTeacherName.Location = new System.Drawing.Point(280, 11);
-            this.TBTeacherName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBTeacherName.Margin = new System.Windows.Forms.Padding(2);
             this.TBTeacherName.Name = "TBTeacherName";
             this.TBTeacherName.Size = new System.Drawing.Size(242, 36);
             this.TBTeacherName.TabIndex = 83;
@@ -804,7 +804,7 @@ namespace BankTeacher.Bank.Add_Member
             // 
             this.TBTeacherNo.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TBTeacherNo.Location = new System.Drawing.Point(52, 11);
-            this.TBTeacherNo.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TBTeacherNo.Margin = new System.Windows.Forms.Padding(2);
             this.TBTeacherNo.MaxLength = 6;
             this.TBTeacherNo.Name = "TBTeacherNo";
             this.TBTeacherNo.Size = new System.Drawing.Size(116, 36);
@@ -886,11 +886,12 @@ namespace BankTeacher.Bank.Add_Member
             this.Controls.Add(this.PL);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "infoMeber";
             this.Text = "infoMeber";
             this.SizeChanged += new System.EventHandler(this.infoMeber_SizeChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.infoMeber_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.infoMeber_KeyUp);
             this.PL.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.TP_info.ResumeLayout(false);

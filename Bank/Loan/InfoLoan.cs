@@ -665,5 +665,20 @@ namespace BankTeacher.Bank.Loan
             //    MessageBox.Show("ไม่พบไฟล์ โปรดตวรจสอบ การส่งไฟล์ใหม่ หรือ ดูที่อยู่ไฟล์","ไฟล์",MessageBoxButtons.OK,MessageBoxIcon.Information);
             //}
         }
+
+        private void InfoLoan_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+                if (tabControl1.SelectedIndex == tabControl1.TabCount - 1)
+                {
+                    tabControl1.SelectedIndex = 0;
+                }
+                else
+                {
+                    tabControl1.SelectedIndex = tabControl1.SelectedIndex + 1;
+                }
+            }
+        }
     }
 }

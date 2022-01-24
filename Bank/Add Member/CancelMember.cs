@@ -132,6 +132,7 @@ namespace BankTeacher.Bank.Add_Member
                     CBYear_HistoryCancel.Enabled = false;
             }
             Relaodcancelmember();
+            //tabControl1 = tabControl1a;
         }
         private void CancelMember_SizeChanged_1(object sender, EventArgs e)
         {
@@ -394,6 +395,29 @@ namespace BankTeacher.Bank.Add_Member
         {
             TBTeacherNo.Enabled = tf;
             BSearch.Enabled = tf;
+        }
+
+        private void tabControl1_KeyDown(object sender, KeyEventArgs e)
+        {
+            
+        }
+        public class MyTextBox : TextBox
+        {
+        }
+
+        private void CancelMember_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+                if (tabControl1.SelectedIndex == tabControl1.TabCount - 1)
+                {
+                    tabControl1.SelectedIndex = 0;
+                }
+                else
+                {
+                    tabControl1.SelectedIndex = tabControl1.SelectedIndex + 1;
+                }
+            }
         }
     }
 }
