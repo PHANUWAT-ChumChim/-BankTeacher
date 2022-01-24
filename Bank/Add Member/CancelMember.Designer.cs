@@ -138,6 +138,7 @@ namespace BankTeacher.Bank.Add_Member
             this.tabControl1.Size = new System.Drawing.Size(840, 516);
             this.tabControl1.TabIndex = 61;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
+            this.tabControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tabControl1_KeyDown);
             // 
             // tabPage1
             // 
@@ -394,6 +395,7 @@ namespace BankTeacher.Bank.Add_Member
             this.Text = "CancelMember";
             this.SizeChanged += new System.EventHandler(this.CancelMember_SizeChanged_1);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CancelMember_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.CancelMember_KeyUp);
             this.panel1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

@@ -506,5 +506,20 @@ namespace BankTeacher.Bank.Add_Member
         {
             //TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.K));
         }
+
+        private void infoMeber_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Tab)
+            {
+                if (tabControl1.SelectedIndex == tabControl1.TabCount - 1)
+                {
+                    tabControl1.SelectedIndex = 0;
+                }
+                else
+                {
+                    tabControl1.SelectedIndex = tabControl1.SelectedIndex + 1;
+                }
+            }
+        }
     }
 }
