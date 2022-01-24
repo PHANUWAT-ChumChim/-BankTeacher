@@ -637,7 +637,7 @@ namespace BankTeacher.Bank.Loan
                         SQLDefault[1]
                         .Replace("{Text}", TBGuarantorNo.Text)
                         .Replace("{TeacherNoNotLike}", NotLike)
-                        .Replace("{RemainAmount}" , "RemainAmount >= 500"));
+                        .Replace("{RemainAmount}" , $"RemainAmount >= {Bank.Menu.MinLoan}"));
                     if (dtRemainAmount.Rows.Count != 0)
                     {
                         String[] Num = new string[] { };
@@ -799,8 +799,8 @@ namespace BankTeacher.Bank.Loan
                     }
                     IN = new Bank.Search(SQLDefault[10]
                            .Replace("{TeacherNoNotLike}", NotLike)
-                           .Replace("{RemainAmount}", "RemainAmount > 500"), "หุ้นสะสม");
-
+                           .Replace("{RemainAmount}", $"RemainAmount > {Bank.Menu.MinLoan}"), "หุ้นสะสม");
+                    
                     IN.ShowDialog();
                     if (Bank.Search.Return[0] != "")
                     {

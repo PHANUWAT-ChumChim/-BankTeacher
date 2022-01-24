@@ -36,7 +36,8 @@ namespace BankTeacher.Bank.Pay
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as c ON b.TypeNo = c.TypeNo  \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as d on a.TeacherNoAddBy = d.TeacherNo  \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as e on d.PrefixNo = e.PrefixNo  \r\n " +
-          "WHERE YEAR(a.DateAdd) = {Year} and MONTH(a.DateAdd) = {Month} and Cancel != {CancelNo}\r\n"+
+          "WHERE YEAR(a.DateAdd) = {Year} and MONTH(a.DateAdd) = {Month} and DAY(a.DateAdd) = '{Day}' and Cancel != {CancelNo}\r\n"+
+          "GROUP By  CAST(ISNULL(e.PrefixName,'')+''+d.Fname+' '+d.Lname as nvarchar(255)),a.BillNo,CAST(a.DateAdd as date),c.TypeName,b.Amount,a.Cancel,DateAdd \r\n"+
           "ORDER BY a.DateAdd"
             ,
           //[1] Select Year INPUT: 
@@ -62,6 +63,7 @@ namespace BankTeacher.Bank.Pay
         public static int Mont = 0, Year = 0;
         private void Billcancelhistory_Load(object sender, EventArgs e)
         {
+            // เลืกอ ปีที่อยู่ในฐานข้อมูลที่ไม่เกินจากปีปัจุบันลบไป 5 ปี เพื่อข้อมูลที่เรียงออกมาจะไม่เกินใน CB
             DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]);
             if(dt.Rows.Count != 0)
                 for (int x = 0; x < dt.Rows.Count; x++)
@@ -79,8 +81,7 @@ namespace BankTeacher.Bank.Pay
             {
                 CBMonthSelection_Bill.Enabled = false;
                 CB_Typebill.Enabled = false;
-            }
-                         
+            }       
         }
         // เลือกปี เเล้ว บอกข้อมูลรายการ เดือนที่มีบิลล์ย้อนหลัง ไม่เกิน 5 ปี
         private void CBYearSelection_Bill_SelectedIndexChanged_1(object sender, EventArgs e)
@@ -105,7 +106,6 @@ namespace BankTeacher.Bank.Pay
                         }
                     if (CBMonthSelection_Bill.SelectedIndex == -1)
                         CBMonthSelection_Bill.SelectedIndex = 0;
-
                     CBMonthSelection_Bill.Enabled = true;
                 }
                 else
@@ -118,16 +118,40 @@ namespace BankTeacher.Bank.Pay
 
         private void CBMonthSelection_Bill_SelectedIndexChanged(object sender, EventArgs e)
         {
+            CB_DaySelection_Bill.Items.Clear();
             if(CBMonthSelection_Bill.SelectedIndex != -1)
             {
                 CB_Typebill.Enabled = true;
-                CB_Typebill.SelectedIndex = 0;
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL("SELECT DAY(DateAdd) as DAY,MONTH(DateAdd)  as MONTH \r\n " +
+                "FROM EmployeeBank.dbo.tblBill as a \r\n " +
+                "WHERE Year(DateAdd) = '{Year}' AND  MONTH(DateAdd) = '{Mount}' \r\n ".Replace("{Year}", CBYearSelection_Bill.Text).Replace("{Mount}", CBMonthSelection_Bill.Text) +
+                "GROUP BY DAY(DateAdd), MONTH(DateAdd) \r\n " +
+                "ORDER BY MONTH(DateAdd)");
+                if (dt.Rows.Count != 0)
+                {
+                    for (int loop = 0; loop < dt.Rows.Count; loop++)
+                    {
+                        CB_DaySelection_Bill.Items.Add(dt.Rows[loop][0]);
+                    }
+                }
+                CB_DaySelection_Bill.SelectedIndex = 0;
+                if (CB_Typebill.SelectedIndex == -1)
+                {
+                    CB_Typebill.SelectedIndex = 0;
+                }
+                else { CB_Typebill_SelectedIndexChanged(sender, e); }
+                
+                
             }
             else
             {
                 CB_Typebill.Enabled = false;
                 CB_Typebill.SelectedIndex = -1;
             }
+        }
+        private void CB_DaySelection_Bill_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CB_Typebill_SelectedIndexChanged(sender, e);
         }
         private void CB_Typebill_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -148,7 +172,8 @@ namespace BankTeacher.Bank.Pay
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]
                     .Replace("{Month}", CBMonthSelection_Bill.Text)
                    .Replace("{Year}", CBYearSelection_Bill.Text)
-                   .Replace("{CancelNo}", CancelNo.ToString()));
+                   .Replace("{CancelNo}", CancelNo.ToString())
+                   .Replace("{Day}",CB_DaySelection_Bill.Text));
                 if (dt.Rows.Count != 0)
                 {
                     if (dt.Rows[0][5].ToString() == "1")
@@ -191,7 +216,7 @@ namespace BankTeacher.Bank.Pay
                     Amountall += AmountBill;
                     DGV_Bill.Rows.Add("", "", "", "สรุปรายการบิลล์", AmountBill, "");
                     DGV_Bill.Rows[DGV_Bill.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
-                    DGV_Bill.Rows.Add("", "", "", "สรุปรายการบิลล์ทั้งเดือน", Amountall, "");
+                    DGV_Bill.Rows.Add("", "", "", "ยอดรวม", Amountall, "");
                     DGV_Bill.Rows[DGV_Bill.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Yellow;
                 }
             }
@@ -204,8 +229,6 @@ namespace BankTeacher.Bank.Pay
                 BExitForm_Click(new object(), new EventArgs());
             }
         }
-
-
         private void BExitForm_Click(object sender, EventArgs e)
         {
             BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
