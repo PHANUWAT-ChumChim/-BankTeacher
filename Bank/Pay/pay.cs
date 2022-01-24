@@ -2281,7 +2281,10 @@ namespace BankTeacher.Bank.Pay
                                 CBMonthSelection_Pay.Enabled = false;
                                 if (Convert.ToInt32(TBAmount_Pay.Text) != 0)
                                     TBAmount_Pay.Text = "0";
-                                MessageBox.Show("ไม่พบรายการให้ชำระเพิ่มแล้ว", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                BAutoSelection.Enabled = false;
+                                BListAdd_Pay.Enabled = false;
+                                CBList_Pay.Enabled = false;
+                                //MessageBox.Show("ไม่พบรายการให้ชำระเพิ่มแล้ว", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
                         }
                     }
@@ -2299,7 +2302,10 @@ namespace BankTeacher.Bank.Pay
                             CBMonthSelection_Pay.Enabled = false;
                             if (Convert.ToInt32(TBAmount_Pay.Text) != 0)
                                 TBAmount_Pay.Text = "0";
-                            MessageBox.Show("ไม่พบรายการให้ชำระเพิ่มแล้ว", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            BAutoSelection.Enabled = false;
+                            BListAdd_Pay.Enabled = false;
+                            CBList_Pay.Enabled = false;
+                            //MessageBox.Show("ไม่พบรายการให้ชำระเพิ่มแล้ว", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
                     else
@@ -2308,7 +2314,10 @@ namespace BankTeacher.Bank.Pay
                         CBMonthSelection_Pay.Enabled = false;
                         if (Convert.ToInt32(TBAmount_Pay.Text) != 0)
                             TBAmount_Pay.Text = "0";
-                        MessageBox.Show("ไม่พบรายการให้ชำระเพิ่มแล้ว", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        BAutoSelection.Enabled = false;
+                        BListAdd_Pay.Enabled = false;
+                        CBList_Pay.Enabled = false;
+                        //MessageBox.Show("ไม่พบรายการให้ชำระเพิ่มแล้ว", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
             }
