@@ -172,6 +172,7 @@ namespace BankTeacher.Bank.Add_Member
             this.BTdeletefile_Reg.TabIndex = 21;
             this.BTdeletefile_Reg.Text = "ลบไฟล์";
             this.BTdeletefile_Reg.UseVisualStyleBackColor = false;
+            this.BTdeletefile_Reg.Visible = false;
             this.BTdeletefile_Reg.Click += new System.EventHandler(this.BTdeletefile_Reg_Click);
             // 
             // BTPrintfShare_Reg

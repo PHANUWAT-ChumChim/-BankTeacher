@@ -192,8 +192,11 @@ namespace BankTeacher.Bank
           "    SELECT @InterestBeforYear = RemainInterestLastYear   \r\n " +
           "    FROM EmployeeBank.dbo.tblDividend     \r\n " +
           "    WHERE Cancel = 1 and Year = {Year} - 1;    \r\n " +
-          "    --AVGDivident    \r\n " +
-          "     SET @AVGDivident = @Interest/@AmountShare;     \r\n " +
+          "    --AVGDivident\r\n" +
+             "if(@AmountShare > 0) \r\n " +
+             "BEGIN \r\n" +
+          "     SET @AVGDivident = @Interest/@AmountShare; \r\n " +
+             "END \r\n" +
           "     \r\n " +
           "   --@AMountDivident    \r\n " +
           "   DECLARE @SumSavingAmount float;   \r\n " +

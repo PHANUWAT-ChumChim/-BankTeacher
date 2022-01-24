@@ -99,6 +99,16 @@ namespace BankTeacher.Bank
                     BSaveCancelDividend.Enabled = true;
                 }
             }
+            else
+            {
+                BSaveCancelDividend.Enabled = false;
+                DGVReportDividend.Rows.Clear();
+                TB_SavingAmount.Text = "";
+                TB_DividendAmount.Text = "";
+                TB_InterestAmount.Text = "";
+                TB_InterestNextYear.Text = "";
+                TB_DividendPerShare.Text = "";
+            }
         }
 
         private void BSaveCancelDividend_Click(object sender, EventArgs e)
@@ -113,11 +123,22 @@ namespace BankTeacher.Bank
                      CBYear.Items.RemoveAt(CBYear.SelectedIndex);
                     MessageBox.Show("ยกเลิกปันผลเรียบร้อยแล้ว","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Information);
                     DataTable dtYear = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]);
+                    CBYear.SelectedIndex = -1;
                     CBYear.Items.Clear();
-                    for(int x = 0; x < dtYear.Rows.Count; x++)
+                    if(dtYear.Rows.Count != 0 && dtYear.Rows[0][0].ToString() != "")
                     {
-                        CBYear.Items.Add(dtYear.Rows[0][0]);
+                        for (int x = 0; x < dtYear.Rows.Count; x++)
+                        {
+                            CBYear.Items.Add(dtYear.Rows[0][0]);
+                        }
                     }
+                    //if(CBYear.Items.Count > 0)
+                    //{
+                    //    CBYear.SelectedIndex = 0;
+                    //}
+                    //else
+                    //{
+                    //}
                 }
             }
             catch (Exception ex)
@@ -128,10 +149,18 @@ namespace BankTeacher.Bank
             if (CBYear.Items.Count == 0)
             {
                 CBYear.Enabled = false;
+                BSaveCancelDividend.Enabled = false;
+                DGVReportDividend.Rows.Clear();
+                TB_SavingAmount.Text = "";
+                TB_DividendAmount.Text = "";
+                TB_InterestAmount.Text = "";
+                TB_InterestNextYear.Text = "";
+                TB_DividendPerShare.Text = "";
             }
             else
             {
                 CBYear.Enabled = true;
+                CBYear.SelectedIndex = 0;
             }
         }
 

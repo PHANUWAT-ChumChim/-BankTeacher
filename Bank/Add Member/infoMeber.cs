@@ -53,26 +53,25 @@ namespace BankTeacher.Bank.Add_Member
           "WHERE (a.TeacherNo LIKE '%{Text}%'  or CAST(ISNULL(c.PrefixNameFull , '') + b.Fname + ' ' + Lname as NVARCHAR) LIKE '%{Text}%')and a.MemberStatusNo = 1 {TeacherNotLike};"
            ,
            //[2] Check Bill Teacher Have Ever Paid INPUT: {TeacherNo}
-           " \r\n " +
-          "SELECT COUNT(a.BillNo)   \r\n " +
-          " FROM EmployeeBank.dbo.tblBill as a \r\n " +
-          " WHERE a.Cancel = 1 and a.TeacherNo LIKE '%T52026%' and a.BillNo NOT IN (SELECT a.BillNo   \r\n " +
-          " FROM EmployeeBank.dbo.tblBillDetail as a  \r\n " +
-          " WHERE a.TypeNo = 3 \r\n " +
-          " GROUP BY a.BillNo) \r\n " +
-          "   \r\n " +
-          " SELECT COUNT(c.WithDrawNo)  \r\n " +
-          " FROM EmployeeBank.dbo.tblMember as a  \r\n " +
-          " LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo  \r\n " +
-          " LEFT JOIN EmployeeBank.dbo.tblShareWithdraw as c on b.ShareNo = c.ShareNo  \r\n " +
-          " WHERE a.TeacherNo LIKE '%T52026%'"
+           "SELECT COUNT(b.BillNo)  \r\n " +
+          "FROM EmployeeBank.dbo.tblMember as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBill as b on a.TeacherNo = b.TeacherNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as c on b.BillNo = c.BillNo \r\n " +
+          "WHERE a.TeacherNo LIKE '{TeacherNo}' and c.TypeNo !=3 \r\n " +
+          " \r\n " +
+          "SELECT COUNT(c.WithDrawNo) \r\n " +
+          "FROM EmployeeBank.dbo.tblMember as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblShareWithdraw as c on b.ShareNo = c.ShareNo \r\n " +
+          "WHERE a.TeacherNo LIKE '{TeacherNo}'"
+
            ,
 
 
            //[3]Save Edit Bsave INPUT: {Amount}  {TeacherNo}
            "-- BSave Edit \r\n " +
           "UPDATE EmployeeBank.dbo.tblMember  \r\n " +
-          "SET StartAmount = {Amount} \r\n " +
+          "SET StartAmount = {Amount}\r\n " +
           "WHERE TeacherNo = '{TeacherNo}'; \r\n " +
           " \r\n " +
           "UPDATE EmployeeBank.dbo.tblShare \r\n " +
@@ -202,6 +201,7 @@ namespace BankTeacher.Bank.Add_Member
                         .Replace("{TeacherNo}" , TBTeacherNo.Text));
                     if(dsInfoMember.Tables[0].Rows.Count != 0 && dsInfoMember.Tables[1].Rows.Count != 0 && dsInfoMember.Tables[2].Rows.Count != 0)
                     {
+                        //
                         TBTeacherName.Text = dsInfoMember.Tables[0].Rows[0][0].ToString();
                         TBNameInfo.Text = dsInfoMember.Tables[0].Rows[0][0].ToString();
                         TBTeacherAddByName.Text = dsInfoMember.Tables[0].Rows[0][1].ToString();
