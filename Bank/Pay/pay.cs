@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace BankTeacher.Bank.Pay
 {
@@ -1675,7 +1676,8 @@ namespace BankTeacher.Bank.Pay
         private void CBYearSelect_BillInfo_SelectedIndexChanged(object sender, EventArgs e)
         {
             LINE = 0; timer1.Stop(); P1_X.Visible = false; P2_X.Visible = false; P2_Y.Visible = false; P1_Y.Visible = false;
-            if (CBYearSelection_Pay.SelectedIndex != -1)
+            int a = CBYearSelection_BillInfo.SelectedIndex;
+            if (CBYearSelection_BillInfo.SelectedIndex != -1)
             {
                 DGV_Tester.Rows.Clear();
                 DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[14]
@@ -2136,7 +2138,11 @@ namespace BankTeacher.Bank.Pay
         //Cleartabpage 1
         private void Cleartabpage1()
         {
-            //tabpage 1 (Pay) ===================================================
+            //tabpage 1 (Pay) ===================================================CBYearSelection_BillInfo.DroppedDown = false
+            CBYearSelection_Pay.DroppedDown = false;
+            CBMonthSelection_Pay.DroppedDown = false;
+            CBList_Pay.DroppedDown = false;
+            CBPayment_Pay.DroppedDown = false;
             DGV_Printbypoon.Rows.Clear();
             DGV_Pay.Rows.Clear();
             DGV_Behidepay.Rows.Clear();
@@ -2157,6 +2163,7 @@ namespace BankTeacher.Bank.Pay
         private void Cleartabpage2()
         {
             //tabpage 2 (ShareInfo) =============================================
+            CBYearSelection_ShareInfo.DroppedDown = false;
             DGV_ShareInfo.Rows.Clear();
             CBYearSelection_ShareInfo.SelectedIndex = -1;
             CBYearSelection_ShareInfo.Items.Clear();
@@ -2169,6 +2176,7 @@ namespace BankTeacher.Bank.Pay
         private void Cleartabpage3()
         {
             //tabpage 3 (LoanInfo) ==============================================
+            CBLoanSelection_LoanInfo.DroppedDown = false;
             DGV_LoanInfo.Rows.Clear();
             CBLoanSelection_LoanInfo.SelectedIndex = -1;
             CBLoanSelection_LoanInfo.Items.Clear();
@@ -2184,19 +2192,10 @@ namespace BankTeacher.Bank.Pay
         private void Cleartabpage4()
         {
             //tabpage 4 (BillInfo) ==============================================
+            CBYearSelection_BillInfo.DroppedDown = false;
             CBYearSelection_BillInfo.Items.Clear();
             DGV_BillInfo.Rows.Clear();
             LBalance_BillInfo.Text = "0";
-            //====================================================================
-        }
-        //Cleartabpage 5
-        private void Cleartabpage5()
-        {
-            //tabpage 5 (Cancel Bill) ==============================================
-            LSumAmount_CancelBill.Text = "0";
-            TBBIllDate_Cancelbill.Text = "";
-            TBTeacherName_Cancelbill.Text = "";
-            TBTeacherNO_Cancelbill.Text = "";
             //====================================================================
         }
 
@@ -2207,7 +2206,6 @@ namespace BankTeacher.Bank.Pay
             Cleartabpage2();
             Cleartabpage3();
             Cleartabpage4();
-            Cleartabpage5();
         }
 
         private void CBPapersize_SelectedIndexChanged(object sender, EventArgs e)
@@ -2448,6 +2446,7 @@ namespace BankTeacher.Bank.Pay
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
+                    CBPayment_Pay.SelectedIndex = -1;
                     ClearForm();
                     TBTeacherNo.Text = "";
                     TBTeacherName.Text = "";
@@ -2457,16 +2456,30 @@ namespace BankTeacher.Bank.Pay
                     CBLoanSelection_LoanInfo.Enabled = false;
                     CBMonthSelection_Pay.Enabled = false;
                     CBList_Pay.Enabled = false;
-                    CBPayment_Pay.SelectedIndex = -1;
                     Checkmember(true);
+                    //RemoveClickEvent(CBYearSelection_BillInfo);
+
                 }
                 else
                 {
                     BExitForm_Click(new object(), new EventArgs());
                 }
             }
-
         }
+
+        private void RemoveClickEvent(ComboBox b)
+        {
+            FieldInfo f1 = typeof(Control).GetField("EventClick",
+                BindingFlags.Static | BindingFlags.NonPublic);
+
+            object obj = f1.GetValue(b);
+            PropertyInfo pi = b.GetType().GetProperty("Events",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+
+            EventHandlerList list = (EventHandlerList)pi.GetValue(b, null);
+            list.RemoveHandler(obj, list[obj]);
+        }
+
         int pus = 0;
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -2629,6 +2642,11 @@ namespace BankTeacher.Bank.Pay
                     tabControl1.SelectedIndex = tabControl1.SelectedIndex + 1;
                 }
             }
+        }
+
+        private void CBYearSelection_BillInfo_KeyDown(object sender, KeyEventArgs e)
+        {
+
         }
         //===============================================================================================
     }

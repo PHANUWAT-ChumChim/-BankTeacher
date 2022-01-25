@@ -59,11 +59,13 @@ namespace BankTeacher.Bank
                             {
                                 Folder = "ใบสมัครกู้ครู";
                             }
-                            var f = System.IO.Path.Combine("C:\\",Folder);
-                            var a = System.IO.Directory.CreateDirectory(f);
-                            var s =  a.FullName;
-                            System.IO.File.Copy(file,s);
-                            System.Diagnostics.Process.Start(f);
+                            //var f = System.IO.Path.Combine("C:\\", Folder);
+                            //string aa = ""C:\\",Folder"
+                            //var a = System.IO.Directory.CreateDirectory(f);
+                            //var s = a.FullName;
+                            String a = $@"\\192.168.1.3\ShareFileTestSBM\Test\{SelectFile.Name}";
+                            System.IO.File.Copy(file, a);
+                            System.Diagnostics.Process.Start(a);
                             break;
                         }
                         else if (x == BankTeacher.Class.ProtocolSharing.ConnectSMB.file.Count - 1)
