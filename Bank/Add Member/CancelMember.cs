@@ -371,7 +371,7 @@ namespace BankTeacher.Bank.Add_Member
         {
             if(e.KeyCode == Keys.Escape)
             {
-                if(TBTeacherNo.Text.Length != 0)
+                if(TBTeacherNo.Text.Length != 0 || DGV_HistoryCancel.Rows.Count > 0 || CBYear_HistoryCancel.SelectedIndex != -1)
                 {
                     TBTeacherNo.Text = "";
                     TBTeacherName.Text = "";
@@ -382,6 +382,9 @@ namespace BankTeacher.Bank.Add_Member
                     CheckBRegister = false;
                     CheckBCancel = false;
                     Saving = 0;
+                    CBYear_HistoryCancel.DroppedDown = false;
+                    CBYear_HistoryCancel.Items.Clear();
+                    DGV_HistoryCancel.Rows.Clear();
                     Checkmember(true);
                 }
                 else

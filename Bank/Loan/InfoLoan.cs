@@ -61,19 +61,19 @@ namespace BankTeacher.Bank.Loan
 
                 ,
           //[1] SELECT LOAN INPUT: {TeacherNo} : 
-           "SELECT a.LoanNo , CAST(ISNULL(d.PrefixNameFull , '') + Fname + ' ' + Lname AS NVARCHAR)  \r\n " +
+           "SELECT TOP 5 a.LoanNo , CAST(ISNULL(d.PrefixNameFull , '') + Fname + ' ' + Lname AS NVARCHAR)  \r\n " +
           "FROM EmployeeBank.dbo.tblLoan as a   \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo   \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as c on a.TeacherNo = c.TeacherNo  \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo  \r\n " +
           "WHERE a.TeacherNo = '{TeacherNo}' and LoanStatusNo != 4   \r\n " +
           "GROUP BY a.LoanNo , CAST(ISNULL(d.PrefixNameFull , '') + Fname + ' ' + Lname AS NVARCHAR) \r\n " +
-          "ORDER BY a.LoanNo  "
+          "ORDER BY a.LoanNo DESC"
            ,
 
           //[2] SELECT Detail Loan INPUT: {LoanID}
            "SELECT b.TeacherNo , CAST(ISNULL(d.PrefixNameFull , '') + c.Fname + ' ' + c.Lname AS NVARCHAR) AS NameTeacher,CAST(DateAdd as date) as SignUpdate,  \r\n " +
-          " a.PayDate,MonthPay,YearPay,PayNo,InterestRate,LoanAmount,b.Amount,a.LoanStatusNo   \r\n " +
+          " a.PayDate,MonthPay,YearPay,PayNo,InterestRate,LoanAmount,b.Amount,g.LoanStatusName    \r\n " +
           " ,TeacherNoAddBy, CAST(ISNULL(f.PrefixNameFull , '') + e.Fname + ' ' + e.Lname AS NVARCHAR) AS NameTeacherAddby   \r\n " +
           " , DATEADD(MONTH,a.PayNo-1,CAST(CAST(a.YearPay as varchar) + '/' + CAST(a.MonthPay as varchar) +'/01' as date)) as FinishDate \r\n " +
           " , (a.InterestRate / 100) * a.LoanAmount as Interest  \r\n " +
@@ -83,8 +83,9 @@ namespace BankTeacher.Bank.Loan
           " LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo    \r\n " +
           " LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo     \r\n " +
           " LEFT JOIN Personal.dbo.tblTeacherHis as e on a.TeacherNoAddBy = e.TeacherNo   \r\n " +
-          " LEFT JOIN BaseData.dbo.tblPrefix as f on e.PrefixNo = f.PrefixNo     \r\n " +
-          " WHERE a.LoanNo = '{LoanID}' and LoanStatusNo != 4 ;  \r\n " +
+          " LEFT JOIN BaseData.dbo.tblPrefix as f on e.PrefixNo = f.PrefixNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblLoanStatus as g on a.LoanStatusNo = g.LoanStatusNo\r\n" +
+          " WHERE a.LoanNo = '{LoanID}' and a.LoanStatusNo != 4 ;  \r\n " +
           "   \r\n " +
           " SELECT Concat(b.Mount , '/' , Year)  \r\n " +
           " FROM EmployeeBank.dbo.tblLoan as a   \r\n " +
@@ -510,6 +511,7 @@ namespace BankTeacher.Bank.Loan
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
+                    CB_LoanNo.DroppedDown = false;
                     Checkmember(true);
                     TBTeacherNo.Text = "";
                     CB_LoanNo.Items.Clear();
