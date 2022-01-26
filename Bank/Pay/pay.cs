@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace BankTeacher.Bank.Pay
 {
@@ -2128,7 +2129,11 @@ namespace BankTeacher.Bank.Pay
         //Cleartabpage 1
         private void Cleartabpage1()
         {
-            //tabpage 1 (Pay) ===================================================
+            //tabpage 1 (Pay) ===================================================CBYearSelection_BillInfo.DroppedDown = false
+            CBYearSelection_Pay.DroppedDown = false;
+            CBMonthSelection_Pay.DroppedDown = false;
+            CBList_Pay.DroppedDown = false;
+            CBPayment_Pay.DroppedDown = false;
             DGV_Printbypoon.Rows.Clear();
             DGV_Pay.Rows.Clear();
             DGV_Behidepay.Rows.Clear();
@@ -2149,6 +2154,7 @@ namespace BankTeacher.Bank.Pay
         private void Cleartabpage2()
         {
             //tabpage 2 (ShareInfo) =============================================
+            CBYearSelection_ShareInfo.DroppedDown = false;
             DGV_ShareInfo.Rows.Clear();
             CBYearSelection_ShareInfo.SelectedIndex = -1;
             CBYearSelection_ShareInfo.Items.Clear();
@@ -2161,6 +2167,7 @@ namespace BankTeacher.Bank.Pay
         private void Cleartabpage3()
         {
             //tabpage 3 (LoanInfo) ==============================================
+            CBLoanSelection_LoanInfo.DroppedDown = false;
             DGV_LoanInfo.Rows.Clear();
             CBLoanSelection_LoanInfo.SelectedIndex = -1;
             CBLoanSelection_LoanInfo.Items.Clear();
@@ -2176,19 +2183,10 @@ namespace BankTeacher.Bank.Pay
         private void Cleartabpage4()
         {
             //tabpage 4 (BillInfo) ==============================================
+            CBYearSelection_BillInfo.DroppedDown = false;
             CBYearSelection_BillInfo.Items.Clear();
             DGV_BillInfo.Rows.Clear();
             LBalance_BillInfo.Text = "0";
-            //====================================================================
-        }
-        //Cleartabpage 5
-        private void Cleartabpage5()
-        {
-            //tabpage 5 (Cancel Bill) ==============================================
-            LSumAmount_CancelBill.Text = "0";
-            TBBIllDate_Cancelbill.Text = "";
-            TBTeacherName_Cancelbill.Text = "";
-            TBTeacherNO_Cancelbill.Text = "";
             //====================================================================
         }
 
@@ -2199,7 +2197,6 @@ namespace BankTeacher.Bank.Pay
             Cleartabpage2();
             Cleartabpage3();
             Cleartabpage4();
-            Cleartabpage5();
         }
 
         private void CBPapersize_SelectedIndexChanged(object sender, EventArgs e)
@@ -2440,15 +2437,6 @@ namespace BankTeacher.Bank.Pay
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
-                    //CBYearSelection_BillInfo.SelectedIndex = -1;
-                    //CBYearSelection_BillInfo.Items.Clear();
-                    //CBLoanSelection_LoanInfo.SelectedIndex = -1;
-                    //CBLoanSelection_LoanInfo.Items.Clear();
-                    //CBYearSelection_ShareInfo.SelectedIndex = -1;
-                    //CBYearSelection_ShareInfo.Items.Clear();
-                    //CBList_Pay.SelectedIndex = -1;
-                    //CBList_Pay.Items.Clear();
-                    //TBTeacherNo.Focus();
                     CBPayment_Pay.SelectedIndex = -1;
                     ClearForm();
                     TBTeacherNo.Text = "";
@@ -2460,14 +2448,30 @@ namespace BankTeacher.Bank.Pay
                     CBMonthSelection_Pay.Enabled = false;
                     CBList_Pay.Enabled = false;
                     Checkmember(true);
+                    //RemoveClickEvent(CBYearSelection_BillInfo);
+
                 }
                 else
                 {
                     BExitForm_Click(new object(), new EventArgs());
                 }
             }
-
+            
         }
+
+        private void RemoveClickEvent(ComboBox b)
+        {
+            FieldInfo f1 = typeof(Control).GetField("EventClick",
+                BindingFlags.Static | BindingFlags.NonPublic);
+
+            object obj = f1.GetValue(b);
+            PropertyInfo pi = b.GetType().GetProperty("Events",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+
+            EventHandlerList list = (EventHandlerList)pi.GetValue(b, null);
+            list.RemoveHandler(obj, list[obj]);
+        }
+
         int pus = 0;
         private void timer1_Tick(object sender, EventArgs e)
         {
