@@ -408,9 +408,6 @@ namespace BankTeacher.Bank.Loan
 
         private void BTdeletefile_Click(object sender, EventArgs e)
         {
-            Bank.SelectFile.info_File.No = DGV_PayLoan.Rows[0].Cells[1].Value.ToString();
-            Bank.SelectFile.info_File.Type = "Loan";
-            Bank.Add_Member.infoMeber.OroD = "ลบ";
             DataTable dt = Class.SQLConnection.InputSQLMSSQL("SELECT a.DocStatusNo,a.DocUploadPath \r\n" +
             "FROM EmployeeBank.dbo.tblLoan as a \r\n" +
             "WHERE a.LoanNo = '{Loan}'".Replace("{Loan}", DGV_PayLoan.Rows[0].Cells[1].Value.ToString()));
@@ -427,7 +424,6 @@ namespace BankTeacher.Bank.Loan
                     else
                     {
                         MessageBox.Show("โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเข้าถึงโฟร์เดอร์ได้", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        Bank.SelectFile.OpenEnableButton = true;
                     }
                 }
             }

@@ -392,11 +392,8 @@ namespace BankTeacher.Bank.Add_Member
                 MessageBox.Show("กรุณากรอก รหัสผู้ใช้ก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-        public static string OroD;
         private void button3_Click(object sender, EventArgs e)
         {
-            OroD = "เปิดไฟล์";
-            Bank.SelectFile.info_File.Type = "MemberNo";
             DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text));
             if (dt.Rows[0][0].ToString() == "อัพโหลดเอกสารแล้ว")
             {
@@ -409,6 +406,7 @@ namespace BankTeacher.Bank.Add_Member
                     {
                         //Input Contain words แนะนำ เป็นรหัสอาจารย์ ในหน้าทั่วไปส่วนหน้าไหนถ้ามีการทำรายการเยอะๆให้เอาเป็นเลขบิลล์ของหน้านั้นๆเช่นหน้าดูเอกสารกู้ จะใส่เป็นเลขกู้ หน้าดูเอกสาร สมัครสมาชิกจะใส่เป็นชื่ออาจารย์
                         //smb.GetFile(TBTeacherNo.Text);
+                        //Fix Here 25-1-2022
                         DataTable dtGetpath = Class.SQLConnection.InputSQLMSSQL($"SELECT DocUploadPath FROM EmployeeBank.dbo.tblMember WHERE TeacherNo LIKE '%{TBTeacherNo.Text}%'");
                         String FileName = dtGetpath.Rows[0][0].ToString();
                         FileName = FileName.Replace(smb.PathFile, "");
@@ -428,44 +426,36 @@ namespace BankTeacher.Bank.Add_Member
         }
         public void button4_Click(object sender, EventArgs e)
         {
-            do
+            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text));
+            if (dt.Rows[0][0].ToString() == "อัพโหลดเอกสารแล้ว")
             {
-                Bank.SelectFile.info_File.No = TBTeacherNo.Text;
-                Bank.SelectFile.info_File.Type = "MemberNo";
-                OroD = "ลบ";
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text));
-                if (dt.Rows[0][0].ToString() == "อัพโหลดเอกสารแล้ว")
+                if (TBTeacherNo.Text != "")
                 {
-                    if (TBTeacherNo.Text != "")
+                    TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.K));
+                    //Input Location Folder
+                    var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
+                    if (smb.IsValidConnection())
                     {
-                        TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.K));
-                        //Input Location Folder
-                        var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
-                        if (smb.IsValidConnection())
-                        {
-                            DataTable dtGetpath = Class.SQLConnection.InputSQLMSSQL($"SELECT DocUploadPath FROM EmployeeBank.dbo.tblMember WHERE TeacherNo LIKE '%{TBTeacherNo.Text}%'");
-                            String FileName = dtGetpath.Rows[0][0].ToString();
-                            FileName = FileName.Replace(smb.PathFile, "");
-                            smb.GetFile(FileName);
-                            TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
-                        }
-                        else { 
-                            MessageBox.Show("โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเข้าถึงโฟร์เดอร์ได้", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            Bank.SelectFile.OpenEnableButton = true;
-                        }
+                        DataTable dtGetpath = Class.SQLConnection.InputSQLMSSQL($"SELECT DocUploadPath FROM EmployeeBank.dbo.tblMember WHERE TeacherNo LIKE '%{TBTeacherNo.Text}%'");
+                        String FileName = dtGetpath.Rows[0][0].ToString();
+                        FileName = FileName.Replace(smb.PathFile, "");
+                        smb.GetFile(FileName);
+                        TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+                    }
+                    else { 
+                        MessageBox.Show("โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเข้าถึงโฟร์เดอร์ได้", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                         
                        
-                    }
                 }
-                else
-                {
-                    Bank.SelectFile.OpenEnableButton = true;
-                    label12.Text = "ยังไม่ได้อัพโหลดไฟล์";
-                    label12.ForeColor = Color.Red;
-                    TB_selectflie.Enabled = false;
-                    TB_deletefile.Enabled = false;
-                }
-            } while(!Bank.SelectFile.OpenEnableButton);
+            }
+            else
+            {
+                label12.Text = "ยังไม่ได้อัพโหลดไฟล์";
+                label12.ForeColor = Color.Red;
+                TB_selectflie.Enabled = false;
+                TB_deletefile.Enabled = false;
+            }
         }
         public static string T = "";
         private void button1_Click(object sender, EventArgs e)
