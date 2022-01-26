@@ -59,7 +59,6 @@ namespace BankTeacher.Bank
                                 System.IO.File.Copy(FileServerPath, @"C:\BankTeacher\Loan\" + SelectFile.Name);
                             ThisPcFilePath = @"C:\BankTeacher\Loan\" + SelectFile.Name;
                         }
-                        //OpenFile
                         System.Diagnostics.Process.Start(ThisPcFilePath);
                         break;
                     }
