@@ -1666,7 +1666,8 @@ namespace BankTeacher.Bank.Pay
         private void CBYearSelect_BillInfo_SelectedIndexChanged(object sender, EventArgs e)
         {
             LINE = 0; timer1.Stop(); P1_X.Visible = false; P2_X.Visible = false; P2_Y.Visible = false; P1_Y.Visible = false;
-            if (CBYearSelection_Pay.SelectedIndex != -1)
+            int a = CBYearSelection_BillInfo.SelectedIndex;
+            if (CBYearSelection_BillInfo.SelectedIndex != -1)
             {
                 DGV_Tester.Rows.Clear();
                 DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[14]
@@ -2439,6 +2440,16 @@ namespace BankTeacher.Bank.Pay
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
+                    //CBYearSelection_BillInfo.SelectedIndex = -1;
+                    //CBYearSelection_BillInfo.Items.Clear();
+                    //CBLoanSelection_LoanInfo.SelectedIndex = -1;
+                    //CBLoanSelection_LoanInfo.Items.Clear();
+                    //CBYearSelection_ShareInfo.SelectedIndex = -1;
+                    //CBYearSelection_ShareInfo.Items.Clear();
+                    //CBList_Pay.SelectedIndex = -1;
+                    //CBList_Pay.Items.Clear();
+                    //TBTeacherNo.Focus();
+                    CBPayment_Pay.SelectedIndex = -1;
                     ClearForm();
                     TBTeacherNo.Text = "";
                     TBTeacherName.Text = "";
@@ -2448,7 +2459,6 @@ namespace BankTeacher.Bank.Pay
                     CBLoanSelection_LoanInfo.Enabled = false;
                     CBMonthSelection_Pay.Enabled = false;
                     CBList_Pay.Enabled = false;
-                    CBPayment_Pay.SelectedIndex = -1;
                     Checkmember(true);
                 }
                 else
@@ -2620,6 +2630,11 @@ namespace BankTeacher.Bank.Pay
                     tabControl1.SelectedIndex = tabControl1.SelectedIndex + 1;
                 }
             }
+        }
+
+        private void CBYearSelection_BillInfo_KeyDown(object sender, KeyEventArgs e)
+        {
+
         }
         //===============================================================================================
     }
