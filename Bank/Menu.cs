@@ -234,5 +234,10 @@ namespace BankTeacher.Bank
                 CloseFrom(F);
             }
         }
+
+        private void Menu_KeyDown(object sender, KeyEventArgs e)
+        {
+
+        }
     }
 }

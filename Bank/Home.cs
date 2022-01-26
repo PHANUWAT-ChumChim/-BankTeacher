@@ -213,6 +213,7 @@ namespace BankTeacher.Bank
                         CByear.SelectedIndex = 0;
                         CByear.Text = BankTeacher.Bank.Menu.Date[0];
                         panel7.Enabled = false;
+                        CByear.Enabled = true;
                     }
                     else
                     {
@@ -357,6 +358,7 @@ namespace BankTeacher.Bank
                 else
                     dataGridView3.Rows[x].Cells[3].Style = new DataGridViewCellStyle { ForeColor = Color.Green };
             }
+            this.Focus();
         }
         private void BTPrint_Click(object sender, EventArgs e)
         {
@@ -396,6 +398,44 @@ namespace BankTeacher.Bank
                     CByear.Items.Clear();
                     TBTeacherBill.Text = "";
                     dataGridView3.Rows.Clear();
+                    CByear.Enabled = false;
+                    panel7.Enabled = true;
+                }
+            }
+        }
+
+        private void dataGridView3_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (TBTeacherNo.Text.Length != 0)
+                {
+                    TBTeacherNo.Text = "";
+                    TBTeacherName.Text = "";
+                    CByear.SelectedIndex = -1;
+                    CByear.Items.Clear();
+                    TBTeacherBill.Text = "";
+                    dataGridView3.Rows.Clear();
+                    CByear.Enabled = false;
+                    panel7.Enabled = true;
+                }
+            }
+        }
+
+        private void CByear_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                if (TBTeacherNo.Text.Length != 0)
+                {
+                    TBTeacherNo.Text = "";
+                    TBTeacherName.Text = "";
+                    CByear.SelectedIndex = -1;
+                    CByear.Items.Clear();
+                    TBTeacherBill.Text = "";
+                    dataGridView3.Rows.Clear();
+                    CByear.Enabled = false;
+                    panel7.Enabled = true;
                 }
             }
         }

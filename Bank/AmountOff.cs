@@ -578,6 +578,9 @@ namespace BankTeacher.Bank
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
+                    CBYear.DroppedDown = false;
+                    CBYear.Items.Clear();
+                    DGVAmountOffHistory.Rows.Clear();
                     TBTeacherNo.Text = "";
                     TBTeacherName.Text = "";
                     TBShareNo.Text = "";
@@ -589,6 +592,7 @@ namespace BankTeacher.Bank
                     TBWithDraw.Enabled = false;
                     CBTypePay.SelectedIndex = -1;
                     CBTypePay.Enabled = false;
+                    CBYear.Enabled = false;
                     //BSaveAmountOff.Enabled = false;
                     Check = 0;
                     Checkmember(true);

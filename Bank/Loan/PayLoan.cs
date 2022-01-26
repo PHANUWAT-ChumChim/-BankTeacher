@@ -220,33 +220,40 @@ namespace BankTeacher.Bank.Loan
         }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            BankTeacher.Class.ComboBoxPayment Loan = (CB_LoanNo.SelectedItem as BankTeacher.Class.ComboBoxPayment);
-            DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{LoanNo}", Loan.No));
-            if (DGV_PayLoan.RowCount < 1)
+            if(CB_LoanNo.SelectedIndex != -1)
             {
-                if (dt.Rows.Count != 0)
+                BankTeacher.Class.ComboBoxPayment Loan = (CB_LoanNo.SelectedItem as BankTeacher.Class.ComboBoxPayment);
+                DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{LoanNo}", Loan.No));
+                if (DGV_PayLoan.RowCount < 1)
                 {
-                    DGV_PayLoan.Rows.Add(1, Loan.No, (Convert.ToDateTime(dt.Rows[0][1].ToString())).ToString("dd/MM/yyyy"), "จ่ายกู้", dt.Rows[0][3].ToString());
-                    CBB4Oppay.Enabled = true;
-                    label3.Text = dt.Rows[0][3].ToString();
-                    // ================ Clear ItemList ======================
-                    CB_LoanNo.Items.RemoveAt(CB_LoanNo.SelectedIndex);
-                    if (CB_LoanNo.Items.Count == 0)
-                        CB_LoanNo.Enabled = false;
+                    if (dt.Rows.Count != 0)
+                    {
+                        DGV_PayLoan.Rows.Add(1, Loan.No, (Convert.ToDateTime(dt.Rows[0][1].ToString())).ToString("dd/MM/yyyy"), "จ่ายกู้", dt.Rows[0][3].ToString());
+                        CBB4Oppay.Enabled = true;
+                        label3.Text = dt.Rows[0][3].ToString();
+                        // ================ Clear ItemList ======================
+                        CB_LoanNo.Items.RemoveAt(CB_LoanNo.SelectedIndex);
+                        if (CB_LoanNo.Items.Count == 0)
+                            CB_LoanNo.Enabled = false;
+                    }
                 }
-            }
-            else
-            {
-                DialogResult dialogResult = MessageBox.Show("ไม่สามารถ ทำรายการจ่ายมากกว่า 2 รายการขึ้นไป\r\n คุณต้องการเเทนที่รายการใหม่ หรือ ไม่", "เจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                if(dialogResult == DialogResult.Yes)
+                else
                 {
-                    label3.Text = dt.Rows[0][3].ToString();
-                    CB_LoanNo.Items.RemoveAt(CB_LoanNo.SelectedIndex); // ลบรายการใน cb
-                    Class.ComboxAdd_item.NumberRanking(0, DGV_PayLoan, CB_LoanNo, "รายการกู้"); // เช็ครายการใหม่
-                    DGV_PayLoan.Rows.Add(1, Loan.No, (Convert.ToDateTime(dt.Rows[0][1].ToString())).ToString("dd/MM/yyyy"), "จ่ายกู้", dt.Rows[0][3].ToString());
+                    DialogResult dialogResult = MessageBox.Show("ไม่สามารถ ทำรายการจ่ายมากกว่า 2 รายการขึ้นไป\r\n คุณต้องการเเทนที่รายการใหม่ หรือ ไม่", "เจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        label3.Text = dt.Rows[0][3].ToString();
+                        CB_LoanNo.Items.RemoveAt(CB_LoanNo.SelectedIndex); // ลบรายการใน cb
+                        Class.ComboxAdd_item.NumberRanking(0, DGV_PayLoan, CB_LoanNo, "รายการกู้"); // เช็ครายการใหม่
+                        DGV_PayLoan.Rows.Add(1, Loan.No, (Convert.ToDateTime(dt.Rows[0][1].ToString())).ToString("dd/MM/yyyy"), "จ่ายกู้", dt.Rows[0][3].ToString());
+                    }
+                    else
+                    {
+                        CB_LoanNo.SelectedIndex = -1;
+                    }
                 }
+                BT_Loanpay.Enabled = true;
             }
-            BT_Loanpay.Enabled = true;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -448,6 +455,7 @@ namespace BankTeacher.Bank.Loan
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
+                    CB_LoanNo.DroppedDown = false;
                     TBTeacherNo.Text = "";
                     CB_LoanNo.Items.Clear();
                     CB_LoanNo.SelectedIndex = -1;

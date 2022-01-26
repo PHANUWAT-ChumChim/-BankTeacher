@@ -2456,20 +2456,6 @@ namespace BankTeacher.Bank.Pay
                     BExitForm_Click(new object(), new EventArgs());
                 }
             }
-            
-        }
-
-        private void RemoveClickEvent(ComboBox b)
-        {
-            FieldInfo f1 = typeof(Control).GetField("EventClick",
-                BindingFlags.Static | BindingFlags.NonPublic);
-
-            object obj = f1.GetValue(b);
-            PropertyInfo pi = b.GetType().GetProperty("Events",
-                BindingFlags.NonPublic | BindingFlags.Instance);
-
-            EventHandlerList list = (EventHandlerList)pi.GetValue(b, null);
-            list.RemoveHandler(obj, list[obj]);
         }
 
         int pus = 0;
