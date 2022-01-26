@@ -37,11 +37,11 @@ namespace BankTeacher.Bank
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.DGV = new System.Windows.Forms.DataGridView();
+            this.CLpassword = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CLname = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TBSearch = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.CLpassword = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CLname = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -79,7 +79,7 @@ namespace BankTeacher.Bank
             dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.DGV.DefaultCellStyle = dataGridViewCellStyle5;
             this.DGV.Location = new System.Drawing.Point(23, 48);
-            this.DGV.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.DGV.Margin = new System.Windows.Forms.Padding(2);
             this.DGV.Name = "DGV";
             this.DGV.ReadOnly = true;
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -98,40 +98,6 @@ namespace BankTeacher.Bank
             this.DGV.Size = new System.Drawing.Size(578, 305);
             this.DGV.TabIndex = 0;
             this.DGV.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
-            // 
-            // TBSearch
-            // 
-            this.TBSearch.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.TBSearch.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.TBSearch.Location = new System.Drawing.Point(81, 8);
-            this.TBSearch.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.TBSearch.Name = "TBSearch";
-            this.TBSearch.Size = new System.Drawing.Size(522, 36);
-            this.TBSearch.TabIndex = 18;
-            this.TBSearch.Text = " ";
-            this.TBSearch.TextChanged += new System.EventHandler(this.TBTeacherNo_TextChanged);
-            this.TBSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TBSearch_KeyDown);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(30, 10);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 30);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "ค้นหา";
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.label1);
-            this.panel2.Controls.Add(this.TBSearch);
-            this.panel2.Controls.Add(this.DGV);
-            this.panel2.Location = new System.Drawing.Point(-12, 2);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(666, 396);
-            this.panel2.TabIndex = 4;
             // 
             // CLpassword
             // 
@@ -157,6 +123,39 @@ namespace BankTeacher.Bank
             this.CLname.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.CLname.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
+            // TBSearch
+            // 
+            this.TBSearch.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.TBSearch.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.TBSearch.Location = new System.Drawing.Point(81, 8);
+            this.TBSearch.Margin = new System.Windows.Forms.Padding(2);
+            this.TBSearch.Name = "TBSearch";
+            this.TBSearch.Size = new System.Drawing.Size(522, 36);
+            this.TBSearch.TabIndex = 18;
+            this.TBSearch.TextChanged += new System.EventHandler(this.TBTeacherNo_TextChanged);
+            this.TBSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TBSearch_KeyDown);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(30, 10);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(47, 30);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "ค้นหา";
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Controls.Add(this.TBSearch);
+            this.panel2.Controls.Add(this.DGV);
+            this.panel2.Location = new System.Drawing.Point(-12, 2);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(666, 396);
+            this.panel2.TabIndex = 4;
+            // 
             // Search
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -167,7 +166,7 @@ namespace BankTeacher.Bank
             this.Cursor = System.Windows.Forms.Cursors.Default;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Search";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "search";
