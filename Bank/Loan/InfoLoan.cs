@@ -551,8 +551,6 @@ namespace BankTeacher.Bank.Loan
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Bank.Add_Member.infoMeber.OroD = "เปิดไฟล์";
-            Bank.SelectFile.info_File.Type = "LoanNo";
             if (CB_LoanNo.SelectedIndex != -1)
             {
                 BankTeacher.Class.ComboBoxPayment Loan = (CB_LoanNo.SelectedItem as BankTeacher.Class.ComboBoxPayment);
@@ -638,20 +636,14 @@ namespace BankTeacher.Bank.Loan
 
         private void BT_deleteflie_Click(object sender, EventArgs e)
         {
-            do
-            {
-                Bank.SelectFile.info_File.No = TBLoanNo.Text;
-                Bank.SelectFile.info_File.Type = "LoanNo";
-                Bank.Add_Member.infoMeber.OroD = "ลบ";
                 var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("Loan");
                 if (smb.IsValidConnection())
                 {
                     smb.GetFile(TBLoanNo.Text);
                 }
-                else { MessageBox.Show("โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเข้าถึงโฟร์เดอร์ได้", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+                else 
+                    MessageBox.Show("โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเข้าถึงโฟร์เดอร์ได้", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-            }
-            while (!Bank.SelectFile.OpenEnableButton);
             
             //if (BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun != "")
             //{
