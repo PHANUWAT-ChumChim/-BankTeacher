@@ -2465,6 +2465,7 @@ namespace BankTeacher.Bank.Pay
                     BExitForm_Click(new object(), new EventArgs());
                 }
             }
+            
         }
 
         private void RemoveClickEvent(ComboBox b)
