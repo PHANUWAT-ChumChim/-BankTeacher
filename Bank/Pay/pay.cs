@@ -1420,6 +1420,10 @@ namespace BankTeacher.Bank.Pay
                                 .Replace("{Month}", DGV_Pay.Rows[x].Cells[5].Value.ToString())
                                 .Replace("{Year}", DGV_Pay.Rows[x].Cells[4].Value.ToString())
                                 .Replace("{BillDetailPaymentNo}", (CBPayment_Pay.SelectedIndex + 1).ToString()));
+
+                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[10]
+                                    .Replace("{TeacherNo}", TBTeacherNo.Text)
+                                    .Replace("{SavingAmount}", DGV_Pay.Rows[x].Cells[2].Value.ToString()));
                             }
                             else if (DGV_Pay.Rows[x].Cells[1].Value.ToString().Contains("กู้"))
                             {
@@ -1431,6 +1435,10 @@ namespace BankTeacher.Bank.Pay
                                 .Replace("{Month}", DGV_Pay.Rows[x].Cells[5].Value.ToString())
                                 .Replace("{Year}", DGV_Pay.Rows[x].Cells[4].Value.ToString())
                                 .Replace("{BillDetailPaymentNo}", (CBPayment_Pay.SelectedIndex + 1).ToString()));
+
+                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[9]
+                                    .Replace("{LoanNo}", DGV_Pay.Rows[x].Cells[3].Value.ToString())
+                                    .Replace("{LoanAmount}", DGV_Pay.Rows[x].Cells[2].Value.ToString()));
                             }
                         }
 
@@ -1456,28 +1464,11 @@ namespace BankTeacher.Bank.Pay
                             printDocument1.Print();
                         }
                         Printbill = 0;
-                        for (int a = 0; a < DGV_Pay.Rows.Count; a++)
-                        {
-                            if (DGV_Pay.Rows[a].Cells[1].Value.ToString().Contains("หุ้น"))
-                            {
-                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[10]
-                                    .Replace("{TeacherNo}", TBTeacherNo.Text)
-                                    .Replace("{SavingAmount}", DGV_Pay.Rows[a].Cells[2].Value.ToString()));
-                            }
-                            else if (DGV_Pay.Rows[a].Cells[1].Value.ToString().Contains("กู้"))
-                            {
-                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[9]
-                                    .Replace("{LoanNo}", DGV_Pay.Rows[a].Cells[3].Value.ToString())
-                                    .Replace("{LoanAmount}", DGV_Pay.Rows[a].Cells[2].Value.ToString()));
-                            }
-                        }
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine($"---------------------{ex}----------------------");
                     }
-
-                    MessageBox.Show("ชำระสำเร็จ", "แจ้งเตือนการขำระ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     //info_name = TBTeacherName.Text;
                     //info_id = TBTeacherNo.Text;
                     //info_totelAmountpay = TBToatalSaving_ShareInfo.Text;

@@ -482,9 +482,6 @@ namespace BankTeacher.Bank.Add_Member
 
         private void BTdeletefile_Reg_Click(object sender, EventArgs e)
         {
-            Bank.SelectFile.info_File.No = TBTeacherNo_Reg.Text;
-            Bank.SelectFile.info_File.Type = "MemberNo";
-            Bank.Add_Member.infoMeber.OroD = "ลบ";
             //Input Location Folder
             var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
             if (smb.IsValidConnection())
