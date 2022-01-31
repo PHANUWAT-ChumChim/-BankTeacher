@@ -15,7 +15,6 @@ namespace BankTeacher.Bank
         public Dividend()
         {
             InitializeComponent();
-
         }
 
         /// <summary> 
@@ -24,7 +23,8 @@ namespace BankTeacher.Bank
         /// <para>[1] Table[0]Select StartYear and Table[1]Select EndYear INPUT: </para>
         /// <para>[2] Table[0]Get Name , a.SavingAmount , a.DividendAmount , a.Interest , a.RemainInterestLastYear , a.AverageDividend Table[1]Get InterestLastYear INPUT: {Year}</para>
         /// <para>[3] AfterDividentInfo INPUT: {Year}</para>
-        /// <para>[4] Select Divident INPUT: </para>
+        /// <para>[4] Check Loan Paid are Complete in Year INPUT: {Year} </para>
+        /// <para>[5] Get TeacherList Unpaid INPUT: {Year} </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -224,6 +224,28 @@ namespace BankTeacher.Bank
           "  GROUP BY Year"
            ,
 
+           //[4] Check Loan Paid are Complete in Year INPUT: {Year}
+           "SELECT COUNT(a.LoanNo) \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.LoanNo = b.LoanNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBill as c on b.BillNo = c.BillNo \r\n " +
+          "WHERE (a.LoanStatusNo = 2) or (b.Mount < 12 and b.Year = {Year} and c.Cancel = 1 and b.TypeNo = 2) \r\n " +
+          "GROUP BY a.LoanNo"
+           ,
+
+           //[5] Get TeacherList Unpaid INPUT: {Year}
+           "SELECT a.LoanNo , a.TeacherNo ,CAST(ISNULL(c.PrefixNameFull , '') + b.Fname + ' ' + b.Lname as NVARCHAR(255)) \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo \r\n " +
+          "WHERE a.LoanNo in (SELECT a.LoanNo \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.LoanNo = b.LoanNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBill as c on b.BillNo = c.BillNo \r\n " +
+          "WHERE (a.LoanStatusNo = 2) or (b.Mount < 12 and b.Year = {Year} and c.Cancel = 1 and b.TypeNo = 2) \r\n " +
+          "GROUP BY a.LoanNo) \r\n " +
+          "ORDER BY b.Fname"
+           ,
 
 
          };
@@ -286,31 +308,49 @@ namespace BankTeacher.Bank
             if (MessageBox.Show("ยืนยันที่จะบันทึกหรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes && CBYearDividend.SelectedIndex != -1
                 && CBYearDividend.SelectedIndex == 0)
             {
-                try
+                DataTable dtCheckPaid = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{Year}", CBYearDividend.SelectedItem.ToString()));
+                if(Convert.ToInt32(dtCheckPaid.Rows[0][0].ToString()) == 0)
                 {
-                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]
-                    .Replace("{Year}", CBYearDividend.Items[CBYearDividend.SelectedIndex].ToString())
-                    .Replace("{TeacherAddbyNo}", Class.UserInfo.TeacherNo));
-                    MessageBox.Show("บันทึกสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    if (DGV.Rows.Count != 0)
+                    try
                     {
-                        if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]
+                        .Replace("{Year}", CBYearDividend.Items[CBYearDividend.SelectedIndex].ToString())
+                        .Replace("{TeacherAddbyNo}", Class.UserInfo.TeacherNo));
+                        MessageBox.Show("บันทึกสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        if (DGV.Rows.Count != 0)
                         {
-                            printDocument1.Print();
+                            if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                            {
+                                printDocument1.Print();
+                            }
                         }
-                    }
 
-                    CBYearDividend.Items.RemoveAt(CBYearDividend.SelectedIndex);
-                    if (CBYearDividend.Items.Count != 0)
-                        CBYearDividend.SelectedIndex = -1;
-                    else
-                        CBYearDividend.Enabled = false;
-                    BSaveDividend.Enabled = false;
+                        CBYearDividend.Items.RemoveAt(CBYearDividend.SelectedIndex);
+                        if (CBYearDividend.Items.Count != 0)
+                            CBYearDividend.SelectedIndex = -1;
+                        else
+                            CBYearDividend.Enabled = false;
+                        BSaveDividend.Enabled = false;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"------------------------{ex}-------------------------");
+                        MessageBox.Show("บันทึกล้มเหลว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    Console.WriteLine($"------------------------{ex}-------------------------");
-                    MessageBox.Show("บันทึกล้มเหลว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    if (MessageBox.Show("ต้องการที่จะดูรายชื่อผู้ที่ค้างชำระหรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    {
+                        DataTable dtUnpaid = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{Year}", CBYearDividend.SelectedItem.ToString()));
+                        UnpaidLoanList UnpaidLoan = new UnpaidLoanList();
+                        UnpaidLoan.Show();
+                        for(int a = 0; a < dtUnpaid.Rows.Count; a++)
+                        {
+                            UnpaidLoan.DGV.Rows.Add(dtUnpaid.Rows[a][0], dtUnpaid.Rows[a][1], dtUnpaid.Rows[a][2]);
+                        }
+                        
+                    }
                 }
 
             }
