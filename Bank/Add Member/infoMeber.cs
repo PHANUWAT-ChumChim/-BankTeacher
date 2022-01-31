@@ -325,6 +325,7 @@ namespace BankTeacher.Bank.Add_Member
                                 .Replace("{TeacherAddBy}",BankTeacher.Class.UserInfo.TeacherNo));
                             label12.Text = "อัพโหลดไฟล์เรียบร้อย";
                             label12.ForeColor = Color.Green;
+                            MessageBox.Show("อัพโหลดเอกสารสำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                         }
                         PathFile = "";
                         BTUploadFile_Reg.Enabled = true;
@@ -374,7 +375,7 @@ namespace BankTeacher.Bank.Add_Member
                         .Replace("{TeacherRemoveBy}" , BankTeacher.Class.UserInfo.TeacherNo)
                         .Replace("{ID}", dt.Rows[0][0].ToString())
                         .Replace("{TeacherNo}", TBTeacherNo.Text));
-
+                    MessageBox.Show("ลบเอกสารสำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                     label12.Text = "ยังไม่ได้อัพโหลดไฟล์";
                     label12.ForeColor = Color.Red;
                     BTOpenFile.Enabled = false;

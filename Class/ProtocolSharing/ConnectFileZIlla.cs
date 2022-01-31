@@ -150,13 +150,13 @@ namespace BankTeacher.Class.ProtocolSharing
                 while (true)
                 {
                     //ให่้เวลานานกว่าอันอื่นหน่อยเพราะ มันทำงานไปหลายจุด
-                    if (time.ElapsedMilliseconds >= 7000 && ThreadConnected.IsAlive && StatusRunning)
+                    if (time.ElapsedMilliseconds >= 5000 && ThreadConnected.IsAlive && StatusRunning)
                     {
                         ThreadConnected.Abort();
                         MessageBox.Show("หมดเวลาการเชื่อมต่อโปรดเชื่อมต่อเครือข่าย", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         break;
                     }
-                    else if (time.ElapsedMilliseconds >= 7000 && ThreadConnected.ThreadState == System.Threading.ThreadState.Stopped)
+                    else if (time.ElapsedMilliseconds >= 5000 && ThreadConnected.ThreadState == System.Threading.ThreadState.Stopped)
                     {
                         break;
                     }
@@ -193,7 +193,6 @@ namespace BankTeacher.Class.ProtocolSharing
                             }
                             StatusReturn = true;
                             StatusRunning = false;
-                            MessageBox.Show("อัพโหลดไฟล์สำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         }
                         catch (Exception ex)
@@ -237,7 +236,6 @@ namespace BankTeacher.Class.ProtocolSharing
                             session.RemoveFile(PathFile + filename);
                             StatusReturn = true;
                             StatusRunning = false;
-                            MessageBox.Show("ลบไฟล์เสร็จเรียบร้อย", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         catch
                         {
