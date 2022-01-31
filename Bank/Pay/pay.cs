@@ -1701,7 +1701,7 @@ namespace BankTeacher.Bank.Pay
                     int firstBill = 0;
                     int Line = 0;
                     int Amountsum = 0;
-                    int Number = 1, number = 1;
+                    int Number = 1;
                     for (int x = 0; x < dt.Rows.Count; x++)
                     {
                         if (firstBill == 0)
@@ -1713,26 +1713,25 @@ namespace BankTeacher.Bank.Pay
                         }
                         else if (BillNo == dt.Rows[x][0].ToString())
                         {
-                            DGV_BillInfo.Rows.Add($"{Number - 1}.{number++}", "", "", dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), "", dt.Rows[x][3].ToString());
+                            DGV_BillInfo.Rows.Add($"", "", "", dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), "", dt.Rows[x][3].ToString());
                             //DGV_BillInfo.Rows[x-2].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
                         }
                         else if (BillNo != dt.Rows[x][0].ToString())
                         {
-                            DGV_BillInfo.Rows.Add("", "", "", "", "รวม", "", Sum);
+                            DGV_BillInfo.Rows.Add("", "", "", "", "รวม  ", "", Sum);
                             DGV_BillInfo.Rows[DGV_BillInfo.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Yellow;
                             x--;
                             //DGV_BillInfo.Rows[x].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
                             firstBill--;
                             Sum = 0;
                             Line++;
-                            number = 1;
                         }
                         Sum = Sum + Convert.ToInt32(dt.Rows[x][3].ToString());
                         if (Amountsum < dt.Rows.Count)
                             Balance += Convert.ToInt32(dt.Rows[Amountsum++][3].ToString());
                         if (x == dt.Rows.Count - 1)
                         {
-                            DGV_BillInfo.Rows.Add("", "", "", "", "รวม", "", Sum);
+                            DGV_BillInfo.Rows.Add("", "", "", "", "รวม  ", "", Sum);
                             DGV_BillInfo.Rows[DGV_BillInfo.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Yellow;
                             Sum = 0;
                             Line++;
@@ -1752,7 +1751,7 @@ namespace BankTeacher.Bank.Pay
                         {
                             DGV_BillInfo.Rows[loop].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
                         }
-                        else if (DGV_BillInfo.Rows[loop].Cells[4].Value.ToString() != "รวม")
+                        else if (DGV_BillInfo.Rows[loop].Cells[4].Value.ToString() != "รวม  ")
                         {
                             DGV_BillInfo.Rows[loop].DefaultCellStyle.BackColor = Color.LightYellow;
                         }
@@ -2322,8 +2321,9 @@ namespace BankTeacher.Bank.Pay
         {
             if (CB_SelectPrint.SelectedIndex == 0 && Printbill != 1)
             {
-                Class.Print.PrintPreviewDialog.details = 1;
-                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_BillInfo, "บิลล์การจ่าย", this.AccessibilityObject.Name, false, false, "A4", 1);
+                //Class.Print.PrintPreviewDialog.details = 1;
+                //Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_BillInfo, "บิลล์การจ่าย", this.AccessibilityObject.Name, false, false, "A4", 1);
+                Class.Print.PrintPreviewDialog.ABCD(e, DGV_BillInfo,"รายการ");
             }
             else if (CB_SelectPrint.SelectedIndex == 1 && Printbill != 1)
             {

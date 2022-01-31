@@ -70,6 +70,7 @@ namespace BankTeacher.Class.ProtocolSharing
                 return door;
             }
             // เช็คการเชื่อมต่อเซิร์ฟเวอร์ ข้อมูลจะเเสดงรายละเอียดการเชื่อมต่อ \
+
             public bool Connection()
             {
                 using (var network = new NetworkConnection($"{networkPath}", networkCredential))

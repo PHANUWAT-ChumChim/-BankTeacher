@@ -213,6 +213,8 @@ namespace BankTeacher.Bank
                         CByear.SelectedIndex = 0;
                         CByear.Text = BankTeacher.Bank.Menu.Date[0];
                         panel7.Enabled = false;
+                        CByear.Enabled = true;
+                        BTPrint.Enabled = true;
                     }
                     else
                     {
