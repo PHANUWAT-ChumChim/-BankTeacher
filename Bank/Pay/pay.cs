@@ -614,11 +614,8 @@ namespace BankTeacher.Bank.Pay
                                 }
                             for(int DetailRMonthCount = 0; DetailRMonthCount < RMonth.Count; DetailRMonthCount++)
                             {
-                                if(RMonth[DetailRMonthCount].Count == 0)
-                                {
-                                    break;
-                                }
-                                else if(DetailRMonthCount == RMonth.Count - 1)
+                                //ขอแก้แบบโง่ๆไปก่อนตอนนี้ จะ 6 โมงเช้าแล้วยังแก้ ไฟล์ไม่เสร็จเลยขอรับ -Mon
+                                if(DetailRMonthCount == RMonth.Count - 1)
                                 {
                                     //loop เอาเดือนจาก RMonth แล้ว loop จาก RMonth[เดือน] ออกมา
                                     //หาว่ามีรายการอยู่ในนั้นมั้ย หาก มี ให้ข้าม หาก ไม่จน loop หมดทั้งเดือน ให้ ลบ

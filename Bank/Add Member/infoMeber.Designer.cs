@@ -60,27 +60,21 @@ namespace BankTeacher.Bank.Add_Member
             this.label8 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.TB_Print = new System.Windows.Forms.TabPage();
-            this.BT_Rewifi = new System.Windows.Forms.Button();
-            this.panel15 = new System.Windows.Forms.Panel();
-            this.pb_disconnectwifi = new System.Windows.Forms.PictureBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.pb_connectwifi = new System.Windows.Forms.PictureBox();
-            this.label16 = new System.Windows.Forms.Label();
             this.panel13 = new System.Windows.Forms.Panel();
             this.label14 = new System.Windows.Forms.Label();
             this.panel14 = new System.Windows.Forms.Panel();
-            this.TB_deletefile = new System.Windows.Forms.Button();
+            this.BTRemoveFile = new System.Windows.Forms.Button();
             this.panel12 = new System.Windows.Forms.Panel();
             this.label15 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.panel10 = new System.Windows.Forms.Panel();
             this.label13 = new System.Windows.Forms.Label();
             this.panel11 = new System.Windows.Forms.Panel();
-            this.TB_selectflie = new System.Windows.Forms.Button();
+            this.BTOpenFile = new System.Windows.Forms.Button();
             this.panel8 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
             this.panel9 = new System.Windows.Forms.Panel();
-            this.BTOpenfile_Reg = new System.Windows.Forms.Button();
+            this.BTUploadFile_Reg = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
             this.BSearchTeacher = new System.Windows.Forms.Button();
             this.TBTeacherName = new System.Windows.Forms.TextBox();
@@ -101,9 +95,6 @@ namespace BankTeacher.Bank.Add_Member
             this.panel2.SuspendLayout();
             this.panel6.SuspendLayout();
             this.TB_Print.SuspendLayout();
-            this.panel15.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_disconnectwifi)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_connectwifi)).BeginInit();
             this.panel13.SuspendLayout();
             this.panel14.SuspendLayout();
             this.panel12.SuspendLayout();
@@ -483,8 +474,6 @@ namespace BankTeacher.Bank.Add_Member
             // 
             // TB_Print
             // 
-            this.TB_Print.Controls.Add(this.BT_Rewifi);
-            this.TB_Print.Controls.Add(this.panel15);
             this.TB_Print.Controls.Add(this.panel13);
             this.TB_Print.Controls.Add(this.panel14);
             this.TB_Print.Controls.Add(this.panel12);
@@ -500,79 +489,6 @@ namespace BankTeacher.Bank.Add_Member
             this.TB_Print.TabIndex = 1;
             this.TB_Print.Text = "อัพโหลดเอกสาร";
             this.TB_Print.UseVisualStyleBackColor = true;
-            // 
-            // BT_Rewifi
-            // 
-            this.BT_Rewifi.Location = new System.Drawing.Point(354, 50);
-            this.BT_Rewifi.Margin = new System.Windows.Forms.Padding(2);
-            this.BT_Rewifi.Name = "BT_Rewifi";
-            this.BT_Rewifi.Size = new System.Drawing.Size(110, 42);
-            this.BT_Rewifi.TabIndex = 88;
-            this.BT_Rewifi.Text = "รีเซ็ตการเชื่อมต่อ";
-            this.BT_Rewifi.UseVisualStyleBackColor = true;
-            this.BT_Rewifi.Visible = false;
-            this.BT_Rewifi.Click += new System.EventHandler(this.BT_Rewifi_Click);
-            // 
-            // panel15
-            // 
-            this.panel15.BackColor = System.Drawing.Color.White;
-            this.panel15.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel15.Controls.Add(this.pb_disconnectwifi);
-            this.panel15.Controls.Add(this.label17);
-            this.panel15.Controls.Add(this.pb_connectwifi);
-            this.panel15.Controls.Add(this.label16);
-            this.panel15.Location = new System.Drawing.Point(17, 46);
-            this.panel15.Margin = new System.Windows.Forms.Padding(2);
-            this.panel15.Name = "panel15";
-            this.panel15.Size = new System.Drawing.Size(333, 47);
-            this.panel15.TabIndex = 87;
-            // 
-            // pb_disconnectwifi
-            // 
-            this.pb_disconnectwifi.Image = global::BankTeacher.Properties.Resources._64x64_no_internet;
-            this.pb_disconnectwifi.Location = new System.Drawing.Point(284, 3);
-            this.pb_disconnectwifi.Margin = new System.Windows.Forms.Padding(2);
-            this.pb_disconnectwifi.Name = "pb_disconnectwifi";
-            this.pb_disconnectwifi.Size = new System.Drawing.Size(45, 37);
-            this.pb_disconnectwifi.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pb_disconnectwifi.TabIndex = 89;
-            this.pb_disconnectwifi.TabStop = false;
-            this.pb_disconnectwifi.Visible = false;
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.ForeColor = System.Drawing.Color.Green;
-            this.label17.Location = new System.Drawing.Point(164, 7);
-            this.label17.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(39, 30);
-            this.label17.TabIndex = 90;
-            this.label17.Text = "ปกติ";
-            // 
-            // pb_connectwifi
-            // 
-            this.pb_connectwifi.Image = global::BankTeacher.Properties.Resources._64x64_IceZ;
-            this.pb_connectwifi.Location = new System.Drawing.Point(284, 3);
-            this.pb_connectwifi.Margin = new System.Windows.Forms.Padding(2);
-            this.pb_connectwifi.Name = "pb_connectwifi";
-            this.pb_connectwifi.Size = new System.Drawing.Size(45, 37);
-            this.pb_connectwifi.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pb_connectwifi.TabIndex = 88;
-            this.pb_connectwifi.TabStop = false;
-            this.pb_connectwifi.Visible = false;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(6, 7);
-            this.label16.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(124, 30);
-            this.label16.TabIndex = 85;
-            this.label16.Text = "สถานะการเชื่อมต่อ";
             // 
             // panel13
             // 
@@ -601,27 +517,27 @@ namespace BankTeacher.Bank.Add_Member
             // 
             this.panel14.BackColor = System.Drawing.Color.White;
             this.panel14.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel14.Controls.Add(this.TB_deletefile);
+            this.panel14.Controls.Add(this.BTRemoveFile);
             this.panel14.Location = new System.Drawing.Point(602, 210);
             this.panel14.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel14.Name = "panel14";
             this.panel14.Size = new System.Drawing.Size(239, 208);
             this.panel14.TabIndex = 86;
             // 
-            // TB_deletefile
+            // BTRemoveFile
             // 
-            this.TB_deletefile.BackColor = System.Drawing.Color.White;
-            this.TB_deletefile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.TB_deletefile.Cursor = System.Windows.Forms.Cursors.Default;
-            this.TB_deletefile.Enabled = false;
-            this.TB_deletefile.Location = new System.Drawing.Point(16, 48);
-            this.TB_deletefile.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.TB_deletefile.Name = "TB_deletefile";
-            this.TB_deletefile.Size = new System.Drawing.Size(201, 150);
-            this.TB_deletefile.TabIndex = 85;
-            this.TB_deletefile.Text = "ลบเอกสารที่อัพโหลด";
-            this.TB_deletefile.UseVisualStyleBackColor = false;
-            this.TB_deletefile.Click += new System.EventHandler(this.button4_Click);
+            this.BTRemoveFile.BackColor = System.Drawing.Color.White;
+            this.BTRemoveFile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BTRemoveFile.Cursor = System.Windows.Forms.Cursors.Default;
+            this.BTRemoveFile.Enabled = false;
+            this.BTRemoveFile.Location = new System.Drawing.Point(16, 48);
+            this.BTRemoveFile.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.BTRemoveFile.Name = "BTRemoveFile";
+            this.BTRemoveFile.Size = new System.Drawing.Size(201, 150);
+            this.BTRemoveFile.TabIndex = 85;
+            this.BTRemoveFile.Text = "ลบเอกสารที่อัพโหลด";
+            this.BTRemoveFile.UseVisualStyleBackColor = false;
+            this.BTRemoveFile.Click += new System.EventHandler(this.BTRemoveFile_Click);
             // 
             // panel12
             // 
@@ -686,27 +602,27 @@ namespace BankTeacher.Bank.Add_Member
             // 
             this.panel11.BackColor = System.Drawing.Color.White;
             this.panel11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel11.Controls.Add(this.TB_selectflie);
+            this.panel11.Controls.Add(this.BTOpenFile);
             this.panel11.Location = new System.Drawing.Point(310, 210);
             this.panel11.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(284, 208);
             this.panel11.TabIndex = 83;
             // 
-            // TB_selectflie
+            // BTOpenFile
             // 
-            this.TB_selectflie.BackColor = System.Drawing.Color.White;
-            this.TB_selectflie.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.TB_selectflie.Cursor = System.Windows.Forms.Cursors.Default;
-            this.TB_selectflie.Enabled = false;
-            this.TB_selectflie.Location = new System.Drawing.Point(16, 48);
-            this.TB_selectflie.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.TB_selectflie.Name = "TB_selectflie";
-            this.TB_selectflie.Size = new System.Drawing.Size(248, 150);
-            this.TB_selectflie.TabIndex = 85;
-            this.TB_selectflie.Text = "ดูเอกสารที่อัพโหลด";
-            this.TB_selectflie.UseVisualStyleBackColor = false;
-            this.TB_selectflie.Click += new System.EventHandler(this.button3_Click);
+            this.BTOpenFile.BackColor = System.Drawing.Color.White;
+            this.BTOpenFile.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BTOpenFile.Cursor = System.Windows.Forms.Cursors.Default;
+            this.BTOpenFile.Enabled = false;
+            this.BTOpenFile.Location = new System.Drawing.Point(16, 48);
+            this.BTOpenFile.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.BTOpenFile.Name = "BTOpenFile";
+            this.BTOpenFile.Size = new System.Drawing.Size(248, 150);
+            this.BTOpenFile.TabIndex = 85;
+            this.BTOpenFile.Text = "ดูเอกสารที่อัพโหลด";
+            this.BTOpenFile.UseVisualStyleBackColor = false;
+            this.BTOpenFile.Click += new System.EventHandler(this.BTOpenFile_Click);
             // 
             // panel8
             // 
@@ -736,26 +652,26 @@ namespace BankTeacher.Bank.Add_Member
             // 
             this.panel9.BackColor = System.Drawing.Color.White;
             this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel9.Controls.Add(this.BTOpenfile_Reg);
+            this.panel9.Controls.Add(this.BTUploadFile_Reg);
             this.panel9.Location = new System.Drawing.Point(16, 210);
             this.panel9.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(284, 208);
             this.panel9.TabIndex = 81;
             // 
-            // BTOpenfile_Reg
+            // BTUploadFile_Reg
             // 
-            this.BTOpenfile_Reg.BackColor = System.Drawing.Color.White;
-            this.BTOpenfile_Reg.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BTOpenfile_Reg.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BTOpenfile_Reg.Location = new System.Drawing.Point(11, 48);
-            this.BTOpenfile_Reg.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
-            this.BTOpenfile_Reg.Name = "BTOpenfile_Reg";
-            this.BTOpenfile_Reg.Size = new System.Drawing.Size(258, 150);
-            this.BTOpenfile_Reg.TabIndex = 56;
-            this.BTOpenfile_Reg.Text = "อัพโหลดเอกสาร";
-            this.BTOpenfile_Reg.UseVisualStyleBackColor = false;
-            this.BTOpenfile_Reg.Click += new System.EventHandler(this.BTOpenfile_Reg_Click);
+            this.BTUploadFile_Reg.BackColor = System.Drawing.Color.White;
+            this.BTUploadFile_Reg.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BTUploadFile_Reg.Cursor = System.Windows.Forms.Cursors.Default;
+            this.BTUploadFile_Reg.Location = new System.Drawing.Point(11, 48);
+            this.BTUploadFile_Reg.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
+            this.BTUploadFile_Reg.Name = "BTUploadFile_Reg";
+            this.BTUploadFile_Reg.Size = new System.Drawing.Size(258, 150);
+            this.BTUploadFile_Reg.TabIndex = 56;
+            this.BTUploadFile_Reg.Text = "อัพโหลดเอกสาร";
+            this.BTUploadFile_Reg.UseVisualStyleBackColor = false;
+            this.BTUploadFile_Reg.Click += new System.EventHandler(this.BTUploadFile_Click);
             // 
             // panel7
             // 
@@ -908,10 +824,6 @@ namespace BankTeacher.Bank.Add_Member
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.TB_Print.ResumeLayout(false);
-            this.panel15.ResumeLayout(false);
-            this.panel15.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_disconnectwifi)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pb_connectwifi)).EndInit();
             this.panel13.ResumeLayout(false);
             this.panel13.PerformLayout();
             this.panel14.ResumeLayout(false);
@@ -973,7 +885,7 @@ namespace BankTeacher.Bank.Add_Member
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Panel panel11;
-        private System.Windows.Forms.Button BTOpenfile_Reg;
+        private System.Windows.Forms.Button BTUploadFile_Reg;
         private System.Drawing.Printing.PrintDocument printDocument1;
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Windows.Forms.CheckBox checkBox_scrip;
@@ -983,14 +895,8 @@ namespace BankTeacher.Bank.Add_Member
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Panel panel14;
         public System.Windows.Forms.Label label12;
-        public System.Windows.Forms.Button TB_selectflie;
-        public System.Windows.Forms.Button TB_deletefile;
+        public System.Windows.Forms.Button BTOpenFile;
+        public System.Windows.Forms.Button BTRemoveFile;
         public System.Windows.Forms.TextBox TBTeacherNo;
-        private System.Windows.Forms.PictureBox pb_disconnectwifi;
-        private System.Windows.Forms.PictureBox pb_connectwifi;
-        private System.Windows.Forms.Panel panel15;
-        private System.Windows.Forms.Label label16;
-        public System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Button BT_Rewifi;
     }
 }

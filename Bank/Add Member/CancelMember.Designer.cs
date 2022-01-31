@@ -184,7 +184,7 @@ namespace BankTeacher.Bank.Add_Member
             this.BSave.BackColor = System.Drawing.Color.White;
             this.BSave.Enabled = false;
             this.BSave.Font = new System.Drawing.Font("TH Sarabun New", 19.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BSave.Location = new System.Drawing.Point(636, 252);
+            this.BSave.Location = new System.Drawing.Point(636, 239);
             this.BSave.Name = "BSave";
             this.BSave.Size = new System.Drawing.Size(168, 60);
             this.BSave.TabIndex = 56;

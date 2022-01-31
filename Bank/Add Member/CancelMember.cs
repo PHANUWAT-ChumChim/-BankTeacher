@@ -28,6 +28,9 @@ namespace BankTeacher.Bank.Add_Member
         /// <para>[4] SELECT Year INPUT: </para>
         /// <para>[5] SELECT MEMBER (Enter) INPUT: {Text}</para>
         /// <para>[6] Search Member and SavingAmount - RemainAmount in Guarantor INPUT: {TeacherNoNotLike}  {Text}</para>
+        /// <para>[7] Count Cancel Member File INPUT: {TeacherNo}</para>
+        /// <para>[8] Chcek flie Regmember INPUT : {TeacherNo}</para>
+        /// <para>[9] UPDATE Status File INPUT: {TeacherNoAddBy} {ID} {TeacherNo} {PathFile} </para>
         /// </summary>
         private String[] SQLDefault = new string[]
         {
@@ -44,12 +47,12 @@ namespace BankTeacher.Bank.Add_Member
             "b.TeacherLicenseNo,b.IdNo ,b.TelMobile ,a.StartAmount,CAST(d.MemberStatusName as nvarchar)   \r\n " +
             "ORDER BY a.TeacherNo; "
             ,
-             //[1] Change Status Member INPUT: {TeacherNoAddBy} {TeacherNo} {Note} {DocStatusNo} {DocUploadPath} {Status}
+             //[1] Change Status Member INPUT: {TeacherNoAddBy} {TeacherNo} {Note} {DocStatusNo} {PathFile}
              "INSERT INTO EmployeeBank.dbo.tblMemberResignation (TeacherNoAddBy,TeacherNo,Date,Note,DocStatusNo,DocUploadPath)  \r\n " +
-             "VALUES ('{TeacherNoAddBy}','{TeacherNo}',CURRENT_TIMESTAMP,'{Note}','{DocStatusNo}','{DocUploadPath}');  \r\n " +
+             "VALUES ('{TeacherNoAddBy}','{TeacherNo}',CURRENT_TIMESTAMP,'{Note}','{DocStatusNo}','{PathFile}');  \r\n " +
              "   \r\n " +
              "UPDATE EmployeeBank.dbo.tblMember  \r\n " +
-             "SET MemberStatusNo = '{Status}' \r\n " +
+             "SET MemberStatusNo = '2' , DocStatusNo = 2 , DocUploadPath = ''\r\n " +
              "WHERE TeacherNo = '{TeacherNo}'; \r\n " +
              " \r\n " +
              "UPDATE EmployeeBank.dbo.tblDividend  \r\n " +
@@ -64,7 +67,7 @@ namespace BankTeacher.Bank.Add_Member
            "SELECT b.SavingAmount,a.DocStatusNo,a.DocUploadPath  \r\n " +
           "FROM EmployeeBank.dbo.tblMember as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo \r\n " +
-          "WHERE a.TeacherNo LIKE '{TeacherNo}%'"
+          "WHERE a.TeacherNo = '{TeacherNo}'"
            ,
            //[3] Select MemberResignation INPUT: {Date}
            "SELECT Date,b.TeacherNo , CAST (ISNULL(c.PrefixName , '')+' '+Fname + ' ' + Lname as nvarchar),Note \r\n " +
@@ -113,6 +116,27 @@ namespace BankTeacher.Bank.Add_Member
           "WHERE RemainAmount IS NOT NULL {TeacherNoNotLike} \r\n " +
           "GROUP BY TeacherNo, Name, RemainAmount ,a.Fname  \r\n " +
           "ORDER BY a.Fname; "
+           ,
+           //[7] Count Cancel Member File INPUT: {TeacherNo}
+           "SELECT Count(ID) \r\n " +
+          "  FROM EmployeeBank.dbo.tblFile \r\n " +
+          "  WHERE FiletypeNo = 2 and IsUse = 1 and TeacherNo = {TeacherNo}"
+           ,
+           //[8] Chcek flie Regmember INPUT : {TeacherNo}
+           "SELECT c.ID , c.pathFile\r\n " +
+          " FROM EmployeeBank.dbo.tblMember as a   \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblDocStatus as b on a.DocStatusNo = b.DocStatusNo   \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblFile as c on a.TeacherNo = c.TeacherNo \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblStatusFileInSystem as d on c.StatusFileInSystem = d.ID \r\n " +
+          " WHERE a.TeacherNo = '{TeacherNo}' and c.IsUse = 1 and FiletypeNo = 1 and StatusFileInSystem = 2"
+           ,
+           //[9] UPDATE Status File INPUT: {TeacherNoAddBy} {ID} {TeacherNo} {PathFile} 
+           "UPDATE EmployeeBank.dbo.tblFile \r\n " +
+          "SET TeacherRemoveFileBy = '{TeacherNoAddBy}' , IsUse = 0 , DateRemvoeFile = CURRENT_TIMESTAMP , StatusFileInSystem = 2 \r\n " +
+          "WHERE ID = '{ID}' \r\n " +
+          " \r\n " +
+          "INSERT INTO EmployeeBank.dbo.tblFile(TeacherNo,FiletypeNo,pathFile,TeacherAddBy,LoanID,DateAddFile,IsUse,TeacherRemoveFileBy,DateRemvoeFile,StatusFileInSystem) \r\n " +
+          "VALUES('{TeacherNo}','2','{PathFile}','{TeacherNoAddBy}',null,CURRENT_TIMESTAMP,1,null,null,1)"
            ,
 
         };
@@ -190,34 +214,24 @@ namespace BankTeacher.Bank.Add_Member
 
         private void BSave_Click(object sender, EventArgs e)
         {
-            if (/*CheckBCancel == false && */TBTeacherName.Text != "")
+            if (TBTeacherName.Text != "")
             {
                 
                 if (TBTeacherNo.Text != "")
                 {
-                    DataTable dtCheckSavingAmount = Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
+                    BankTeacher.Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("RegMember");
+                    DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]+ "\r\n" + SQLDefault[7] + "\r\n" + SQLDefault[8]
                     .Replace("{TeacherNo}", TBTeacherNo.Text));
-                    if (Convert.ToInt32(dtCheckSavingAmount.Rows[0][0].ToString()) < 1)
+                    if (Convert.ToInt32(ds.Tables[0].Rows[0][0].ToString()) < 1)
                     {
-                        //Delete File
-                        bool Connect;
-                        var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("RegMember");
-                        Connect = smb.FileConncet(dtCheckSavingAmount.Rows[0][2].ToString());
-                        if (Connect)
+                        if (ds.Tables[2].Rows.Count != 0)
                         {
-                            //System.IO.File.Delete($@"\\LAPTOP-A1H4E5P4\ShareFileTestSBM\RegMember\Member_{TBTeacherNo.Text}.pdf");
-                            DataTable dt = Class.SQLConnection.InputSQLMSSQL("UPDATE EmployeeBank.dbo.tblMember \r\n " +
-                               "set DocStatusNo = '2',DocUploadPath = '' \r\n " +
-                               "where TeacherNo = '{TeacherNo}'"
-                               .Replace("{TeacherNo}", TBTeacherNo.Text));
-                            Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
-                            .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
-                            .Replace("{TeacherNo}", TBTeacherNo.Text)
-                            .Replace("{Note}", TBNote.Text)
-                            .Replace("{DocStatusNo}", "2")
-                            .Replace("{DocUploadPath}", dtCheckSavingAmount.Rows[0][2].ToString())
-                            .Replace("{Status}", "2"));
-                            MessageBox.Show("ยกเลิกผู้ใช้เรียบร้อย", "System", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            String Rename = $"Member_{TBTeacherNo.Text}.pdf";
+                            if (ds.Tables[1].Rows.Count != 0)
+                            {
+                                Rename = Rename.Replace(".pdf", $"_{ds.Tables[1].Rows[0][0].ToString()}.pdf");
+                            }
+
                             CheckBCancel = true;
                             Checkmember(true);
                             imgeLocation = "";
@@ -225,12 +239,27 @@ namespace BankTeacher.Bank.Add_Member
                             TBTeacherName.Text = "";
                             TBNote.Text = "";
                             BSave.Enabled = false;
+
+                            FTP.FTPMoveFileandRename($"Member_{TBTeacherNo.Text}.pdf", "CancelMember", Rename);
+                            if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
+                            {
+                                Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1] + "\r\n" + SQLDefault[9]
+                                .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
+                                .Replace("{TeacherNo}", TBTeacherNo.Text)
+                                .Replace("{Note}", TBNote.Text)
+                                .Replace("{DocStatusNo}", "1")
+                                .Replace("{PathFile}", FTP.HostplusPathFile+Rename .Replace("RegMember", "CancelMember"))
+                                .Replace("{ID}",ds.Tables[2].Rows[0][0].ToString()));
+                                MessageBox.Show("ยกเลิกผู้ใช้สำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+
                         }
-                        else { MessageBox.Show("กรุณาส่งเอกสารสมัครสมาชิก เพื่อยืนยันการสมัคร", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+                        else
+                            MessageBox.Show("กรุณาส่งเอกสารสมัครสมาชิก เพื่อยืนยันการสมัคร", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning); 
                     }
                     else
                     {
-                        if ((MessageBox.Show("ยอดเงินคงเหลือของท่านยังอยู่ในระบบ \r\n ต้องถอนเงินออกจากระบบก่อน", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes))
+                        if ((MessageBox.Show("ยอดเงินคงเหลือของท่านยังอยู่ในระบบ \r\n ต้องถอนเงินออกจากระบบก่อน", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes))
                         {
                             AmountOff FAmountOff = new AmountOff();
                             Menu FMenu = new Menu();
@@ -253,72 +282,6 @@ namespace BankTeacher.Bank.Add_Member
                     }
                 }
             }
-        }
-
-        private void BOpenFile_Click(object sender, EventArgs e)
-        {
-            if (Check)
-            {
-                if (StatusBoxFile == 0)
-                {
-
-                    try
-                    {
-                        OpenFileDialog dialog = new OpenFileDialog();
-                        dialog.Filter = "pdf files(*.pdf)|*.pdf";
-                        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                        {
-                            imgeLocation = dialog.FileName;
-                        }
-                        if (imgeLocation != "")
-                        {
-                            //LScan_Cancel.Text = "Scan( พบไฟล์ )";
-                            //BOpenFile_Cancel.Text = "ส่งไฟล์";
-                            StatusBoxFile = 1;
-                            var smb = new SmbFileContainer("CancelMember");
-                            if (smb.IsValidConnection())
-                            {
-                                String Return = smb.SendFile(imgeLocation, "CancelMember_" + TBTeacherNo.Text + ".pdf" , TBTeacherNo.Text , 2 , BankTeacher.Class.UserInfo.TeacherNo);
-                                if (Return.Contains("อัพโหลดสำเร็จ"))
-                                {
-                                    MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    //BOpenFile_Cancel.Text = "เปิดไฟล์";
-                                    LScan_Cancel.Text = Return;
-                                    LScan_Cancel.ForeColor = Color.Green;
-                                    imgeLocation = "";
-                                    BDeleteFile_Cancel.Enabled = true;
-                                }
-                            }
-                            else
-                            {
-                                MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            }
-                        }
-
-                    }
-                    catch
-                    {
-                        MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-                else if (StatusBoxFile == 1)
-                {
-                    MessageBox.Show("ทำการส่งไฟล์แล้ว ไม่สามารถดำเนินการส่งไฟล์ซ้ำได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-            }
-            else
-            {
-                MessageBox.Show("กรุณากรอก รหัสผู้ใช้ก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
-        private void BDeleteFile_Click(object sender, EventArgs e)
-        {
-            //LScan_Cancel.Text = "ยังไม่ได้อัพโหลดไฟล์";
-            //LScan_Cancel.ForeColor = Color.Black;
-            //imgeLocation = "";
-            //BDeleteFile_Cancel.Enabled = false;
-            //StatusBoxFile = 0;
         }
 
         private void CBYear_HistoryCancel_SelectedIndexChanged(object sender, EventArgs e)

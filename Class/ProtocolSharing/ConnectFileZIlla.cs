@@ -5,60 +5,391 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Forms;
+using System.Threading;
+using System.Diagnostics;
+using WinSCP;
 namespace BankTeacher.Class.ProtocolSharing
 {
-    class ConnectFileZIlla
+    class FileZilla
     {
-        public bool UploadFile(string strLocalFile, string strRemoteFile, string strFTPHost, string strUserName, string strPassword)
-        { // Output file to remote App Data directory
-            byte[] byteBuffer;
-            int intBufferSize = 2048; // Buffer size.
-            string strErrorMessage = ""; // Error Message upon failure.
-            FtpWebRequest ftpRequest = null; // FTP Request object.
-            Stream ftpStream = null; // FTP Stream
-            bool bolSuccess = true; // Assume "true" for success. If errors out, then "false" for failure.
-            int intWriteBytes = 0; // Bytes being written out
+        public static List<BankTeacher.Class.linkedFile> file = new List<BankTeacher.Class.linkedFile>();
+        public static bool StatusReturn = false;
+        protected static bool StatusRunning = false;
+        public class FileZillaConnection
+        {
 
-            string strRemotePath = strFTPHost + "/" + strRemoteFile; // Becomes essentially: ftp://00.000.000.000//App_Data/AdvertisementRates.xml
-            System.IO.FileStream fsLocalStream;
-            try
+            // Path to shared folder:
+            public readonly string networkPath;
+            public readonly String PathFile;
+            public readonly String HostplusPathFile;
+
+            protected static String Folder { get; } = "ShareFile";
+            protected static String Location { get; private set; } = "";
+
+            SessionOptions sessionOptions = new SessionOptions
             {
-                ftpRequest = (FtpWebRequest)FtpWebRequest.Create(strRemotePath); // Create an FTP Request to ftp://00.000.000.000//App_Data/AdvertisementRates.xml
-                ftpRequest.Credentials = new NetworkCredential(strUserName, strPassword); // Log in to the FTP Server with the User Name and Password Provided
-                ftpRequest.UseBinary = true; // When in doubt, use these options
-                ftpRequest.UsePassive = false; // POTENTIAL ERROR: Was = true. But to keep active changed to = false for FileZilla Server.
-                ftpRequest.KeepAlive = true;
-                ftpRequest.EnableSsl = false;
-                ftpRequest.Method = WebRequestMethods.Ftp.UploadFile; // Specify the Type of FTP Request [ ERRORS OUT ]
-                ftpStream = ftpRequest.GetRequestStream(); // Establish Return Communication with the FTP Server
-                fsLocalStream = System.IO.File.OpenRead(strLocalFile); // Open a File Stream to Read the File for Upload, at
-                                                                       // C:\PollofPolls\PollofPolls\App_Data\AdvertisementRates.xml
-                byteBuffer = new byte[intBufferSize]; // Buffer for the Downloaded Data
-                intWriteBytes = fsLocalStream.Read(byteBuffer, 0, intBufferSize); // (1) Read in first bytes of the file.
-                try // Upload the File by Sending the Buffered Data Until the Transfer is Complete
+                Protocol = Protocol.Ftp,
+                FtpSecure = FtpSecure.Explicit,
+                HostName = "192.168.1.3",
+                UserName = "test",
+                Password = "test",
+                PortNumber = 21,
+                TlsHostCertificateFingerprint = "7c:9e:ef:e8:d7:0a:93:1d:56:53:2e:26:4e:35:d3:b6:41:4c:65:76:16:5c:ff:4c:70:85:dc:06:3d:75:c2:9f"
+            };
+
+            public FileZillaConnection(String location)
+            {
+                StatusReturn = false;
+                PathFile = this.networkPath = $"/{Folder}/{location}/";
+                this.networkPath = $@"ftp://{sessionOptions.HostName}/{Folder}/{location}/";
+                HostplusPathFile = $@"//{sessionOptions.HostName}{PathFile}";
+                Location = location;
+            }
+
+            Thread ThreadConnected;
+            public void FTPSendFile(String pathfile, String ChangeFilename)
+            {
+                Stopwatch time = new Stopwatch();
+                ThreadConnected = new Thread(() => ThreadSendFile(pathfile,ChangeFilename));
+                ThreadConnected.Start();
+                time.Start();
+                StatusRunning = true;
+                while (true)
                 {
-                    while (intWriteBytes > 0)
+                    if (time.ElapsedMilliseconds >= 5000 && ThreadConnected.IsAlive && StatusRunning)
                     {
-                        ftpStream.Write(byteBuffer, 0, intWriteBytes); // Write out bytes from the prior Read (1) or (2) if looping through the file.
-                        intWriteBytes = fsLocalStream.Read(byteBuffer, 0, intBufferSize); // (2) Read in next string of bytes, if any still exist
+                        ThreadConnected.Abort();
+                        MessageBox.Show("หมดเวลาการเชื่อมต่อโปรดเชื่อมต่อเครือข่าย", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        break;
+                    }
+                    else if (time.ElapsedMilliseconds >= 5000 && ThreadConnected.ThreadState == System.Threading.ThreadState.Stopped)
+                    {
+                        break;
                     }
                 }
-                catch (Exception ex) // Discover errors in the reading and writing to the Upload directory.
-                {
-                    strErrorMessage = ex.Message;
-                    bolSuccess = false;
-                }
-                fsLocalStream.Close(); // (3) Resource Cleanup
-                ftpStream.Close();
-                ftpRequest = null;
+                time.Stop();
             }
-            catch (Exception ex) // Discover Errors upon connection.
-            { // If .UsePassive = false (therefore Active = true) then produced error message is this:
-                bolSuccess = false; // "The remote server returned an error: 227 Entering Passive Mode (34,232,100,121,192,8)\r\n."
-                strErrorMessage = ex.Message; // If .UsePassive = true (therefore Active = false) then produced error message is this:
-            } // "The remote server returned an error: (550) File unavailable (e.g., file not found, no access)."
-            return bolSuccess; // Return Success or failure.
+
+            public void FTPRemoveFile(String filename)
+            {
+                Stopwatch time = new Stopwatch();
+                ThreadConnected = new Thread(() => ThreadDeleteFile(filename));
+                ThreadConnected.Start();
+                time.Start();
+                StatusRunning = true;
+                while (true)
+                {
+                    if (time.ElapsedMilliseconds >= 5000 && ThreadConnected.IsAlive && StatusRunning)
+                    {
+                        ThreadConnected.Abort();
+                        MessageBox.Show("หมดเวลาการเชื่อมต่อโปรดเชื่อมต่อเครือข่าย", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        break;
+                    }
+                    else if (time.ElapsedMilliseconds >= 5000 && ThreadConnected.ThreadState == System.Threading.ThreadState.Stopped)
+                    {
+                        break;
+                    }
+                }
+                time.Stop();
+            }
+
+            public void FTPOpenFile(String filename)
+            {
+                Stopwatch time = new Stopwatch();
+                ThreadConnected = new Thread(() => ThreadOpenFile(filename));
+                ThreadConnected.Start();
+                time.Start();
+                StatusRunning = true;
+                while (true)
+                {
+                    if (time.ElapsedMilliseconds >= 5000 && ThreadConnected.IsAlive && StatusRunning)
+                    {
+                        ThreadConnected.Abort();
+                        MessageBox.Show("หมดเวลาการเชื่อมต่อโปรดเชื่อมต่อเครือข่าย", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        break;
+                    }
+                    else if (time.ElapsedMilliseconds >= 5000 && ThreadConnected.ThreadState == System.Threading.ThreadState.Stopped)
+                    {
+                        break;
+                    }
+                }
+                time.Stop();
+            }
+
+            public void FTPMoveFile(String filename, String Foldertarget)
+            {
+                Stopwatch time = new Stopwatch();
+                ThreadConnected = new Thread(() => ThreadMoveLocationFIle(filename, Foldertarget));
+                ThreadConnected.Start();
+                time.Start();
+                StatusRunning = true;
+                while (true)
+                {
+                    if (time.ElapsedMilliseconds >= 5000 && ThreadConnected.IsAlive && StatusRunning)
+                    {
+                        ThreadConnected.Abort();
+                        MessageBox.Show("หมดเวลาการเชื่อมต่อโปรดเชื่อมต่อเครือข่าย", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        break;
+                    }
+                    else if (time.ElapsedMilliseconds >= 5000 && ThreadConnected.ThreadState == System.Threading.ThreadState.Stopped)
+                    {
+                        break;
+                    }
+                }
+                time.Stop();
+            }
+
+            public void FTPMoveFileandRename(String filename, String Foldertarget, String Rename)
+            {
+                Stopwatch time = new Stopwatch();
+                ThreadConnected = new Thread(() => ThreadMoveLocationFIleRename(filename, Foldertarget , Rename));
+                ThreadConnected.Start();
+                time.Start();
+                StatusRunning = true;
+                while (true)
+                {
+                    //ให่้เวลานานกว่าอันอื่นหน่อยเพราะ มันทำงานไปหลายจุด
+                    if (time.ElapsedMilliseconds >= 7000 && ThreadConnected.IsAlive && StatusRunning)
+                    {
+                        ThreadConnected.Abort();
+                        MessageBox.Show("หมดเวลาการเชื่อมต่อโปรดเชื่อมต่อเครือข่าย", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        break;
+                    }
+                    else if (time.ElapsedMilliseconds >= 7000 && ThreadConnected.ThreadState == System.Threading.ThreadState.Stopped)
+                    {
+                        break;
+                    }
+                }
+                time.Stop();
+            }
+
+            private void ThreadSendFile(String pathfile, String Changefilename)
+            {
+                using (Session session = new Session())
+                {
+                    // Connect
+                    session.Open(sessionOptions);
+
+                    if (!session.FileExists(PathFile+Changefilename))
+                    {
+                        try
+                        {
+                            // Upload files
+                            TransferOptions transferOptions = new TransferOptions();
+                            transferOptions.TransferMode = TransferMode.Binary;
+
+                            TransferOperationResult transferResult;
+                            transferResult =
+                                session.PutFiles(pathfile, PathFile + Changefilename, false, transferOptions);
+
+                            // Throw on any error
+                            transferResult.Check();
+
+                            // Print results
+                            foreach (TransferEventArgs transfer in transferResult.Transfers)
+                            {
+                                Console.WriteLine($"Upload of {transfer.FileName} Succeeded");
+                            }
+                            StatusReturn = true;
+                            StatusRunning = false;
+                            MessageBox.Show("อัพโหลดไฟล์สำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ThreadConnected.ThreadState == System.Threading.ThreadState.Running)
+                            {
+                                Console.WriteLine($"Error -> {ex}");
+                                StatusRunning = false;
+                                MessageBox.Show("อัพโหลดไฟล์ไม่สำเร็จกรุณาลองใหม่อีกครั้ง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
+                            StatusReturn = false;
+                        }
+                    }
+                    else
+                    {
+                        StatusReturn = false;
+                        StatusRunning = false;
+                        MessageBox.Show("มีเอกสารอยู่ในระบบแล้วไม่สามารถอัพโหลดซ้ำได้", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    return;
+                }
+            }
+
+            private void ThreadDeleteFile(String filename)
+            {
+                using (Session session = new Session())
+                {
+                    // Connect
+                    session.Open(sessionOptions);
+
+                    if (!session.FileExists(PathFile + filename))
+                    {
+                        MessageBox.Show("ไม่พบไฟล์","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                        StatusReturn = false;
+                        StatusRunning = false;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            session.RemoveFile(PathFile + filename);
+                            StatusReturn = true;
+                            StatusRunning = false;
+                            MessageBox.Show("ลบไฟล์เสร็จเรียบร้อย","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                        }
+                        catch
+                        {
+                            StatusReturn = false;
+                            StatusRunning = false;
+                            MessageBox.Show("เกิดข้อผิดพลาดโปรดลองใหม่อีกครั้ง","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                        }
+                    }
+                    return;
+                }
+            }
+
+            private void ThreadOpenFile(String filename)
+            {
+                String ThisPcPath = DowloadFile(filename);
+                if(ThisPcPath != null)
+                {
+                    System.Diagnostics.Process.Start(ThisPcPath);
+                    StatusRunning = false;
+                    StatusReturn = true;
+                }
+                else
+                {
+                    StatusReturn = false;
+                    StatusRunning = false;
+                }
+                return;
+            }
+
+            private String DowloadFile(String filename)
+            {
+                using (Session session = new Session())
+                {
+                    // Connect
+                    session.Open(sessionOptions);
+
+                    if (!session.FileExists(PathFile + filename))
+                    {
+                        MessageBox.Show("ไม่พบไฟล์", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        StatusReturn = false;
+                        StatusRunning = false;
+                        return null;
+                    }
+                    else
+                    {
+                        String ThisPcFilePath = "";
+                        if (Location.Contains("RegMember"))
+                            ThisPcFilePath = @"C:\BankTeacher\RegMember\" + filename;
+                        else if (Location.Contains("Loan"))
+                            ThisPcFilePath = @"C:\BankTeacher\Loan\" + filename;
+                        else if (Location.Contains("CancelMember"))
+                            ThisPcFilePath = @"C:\BankTeacher\CancelMember\" + filename;
+                        try
+                        {
+                            session.GetFileToDirectory(PathFile + filename, ThisPcFilePath);
+                            return ThisPcFilePath;
+                        }
+                        catch
+                        {
+                            StatusReturn = false;
+                            StatusRunning = false;
+                            MessageBox.Show("เกิดข้อผิดพลาดโปรดลองใหม่อีกครั้ง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return null;
+                        }
+                    }
+                }
+            }
+
+            private void ThreadMoveLocationFIle(String filename , String Foldertarget)
+            {
+                using (Session session = new Session())
+                {
+                    // Connect
+                    session.Open(sessionOptions);
+                    String targetPath = PathFile.Replace(Location, Foldertarget) + filename;
+                    if (!session.FileExists(PathFile + filename))
+                    {
+                        MessageBox.Show("ไม่พบไฟล์", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        StatusReturn = false;
+                        StatusRunning = false;
+                        return;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            session.MoveFile(PathFile + filename, targetPath);
+                            StatusReturn = true;
+                            StatusRunning = false;
+                            return;
+                        }
+                        catch
+                        {
+                            MessageBox.Show("เกิดข้อผิดพลาดโปรดลองใหม่อีกครั้ง","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                            StatusReturn = false;
+                            StatusRunning = false;
+                            return;
+                        }
+                    }
+                }
+            }
+
+            private void ThreadMoveLocationFIleRename(String filename, String Foldertarget , String Rename)
+            {
+                using (Session session = new Session())
+                {
+                    // Connect
+                    session.Open(sessionOptions);
+                    String targetPath = PathFile.Replace(Location, Foldertarget) + filename;
+                    if (!session.FileExists(PathFile + filename))
+                    {
+                        MessageBox.Show("ไม่พบไฟล์", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        StatusReturn = false;
+                        StatusRunning = false;
+                        return;
+                    }
+                    else
+                    {
+                        try
+                        {
+                            String ThisPcFilePath = "";
+                            if (Foldertarget.Contains("RegMember"))
+                                ThisPcFilePath = @"C:\BankTeacher\RegMember\" + filename;
+                            else if (Foldertarget.Contains("Loan"))
+                                ThisPcFilePath = @"C:\BankTeacher\Loan\" + filename;
+                            else if (Foldertarget.Contains("CancelMember"))
+                                ThisPcFilePath = @"C:\BankTeacher\CancelMember\" + filename;
+
+                            TransferOptions transferOptions = new TransferOptions();
+                            transferOptions.TransferMode = TransferMode.Binary;
+                            TransferOperationResult transferResult;
+
+                            //DowloadFile
+                            session.GetFileToDirectory(PathFile + filename, ThisPcFilePath);
+                            //UploadFile
+                            transferResult = session.PutFiles(ThisPcFilePath, PathFile.Replace(Location,Foldertarget) + Rename, false, transferOptions);
+                            //CheckFile
+                            transferResult.Check();
+                            StatusReturn = true;
+                            StatusRunning = false;
+                            return;
+                        }
+                        catch
+                        {
+                            MessageBox.Show("เกิดข้อผิดพลาดโปรดลองใหม่อีกครั้ง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            StatusReturn = false;
+                            StatusRunning = false;
+                            return;
+                        }
+                    }
+                }
+            }
         }
     }
 }
