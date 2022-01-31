@@ -163,13 +163,13 @@ namespace BankTeacher.Class.Print
             //                                      $"{School}\r\n" +
             //                                      $"วันที่ {Day} เดือน {Month} พ.ศ. {Year}\r\n",
             //          THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 10, 400f, 200, false);
-            e.Graphics.DrawString($"หน้า 1/1", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack,700, 20);
-            SizeText = e.Graphics.MeasureString($"{MemberID}", FonT(18, ThaiSarabun, FontStyle.Regular));
-            e.Graphics.DrawString($"{MemberID}", FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, PageX - SizeText.Width, Y + (SpacePerRow * CurrentRows++));
-            SizeText = e.Graphics.MeasureString($"{School}", FonT(18, ThaiSarabun, FontStyle.Regular));
-            e.Graphics.DrawString($"{School}", FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, PageX - SizeText.Width, Y + (SpacePerRow * CurrentRows++));
-            SizeText = e.Graphics.MeasureString($"วันที่ {Day} เดือน {Month} พ.ศ. {Year}", FonT(18, ThaiSarabun, FontStyle.Regular));
-            e.Graphics.DrawString($"วันที่ {Day} เดือน {Month} พ.ศ. {Year}", FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, PageX - SizeText.Width, Y + (SpacePerRow * CurrentRows++));
+            e.Graphics.DrawString($"หน้า 1/1", Font(16, ThaiSarabun, FontStyle.Bold), BrushBlack,700, 20);
+            SizeText = e.Graphics.MeasureString($"{MemberID}", Font(18, ThaiSarabun, FontStyle.Regular));
+            e.Graphics.DrawString($"{MemberID}", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, PageX - SizeText.Width, Y + (SpacePerRow * CurrentRows++));
+            SizeText = e.Graphics.MeasureString($"{School}", Font(18, ThaiSarabun, FontStyle.Regular));
+            e.Graphics.DrawString($"{School}", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, PageX - SizeText.Width, Y + (SpacePerRow * CurrentRows++));
+            SizeText = e.Graphics.MeasureString($"วันที่ {Day} เดือน {Month} พ.ศ. {Year}", Font(18, ThaiSarabun, FontStyle.Regular));
+            e.Graphics.DrawString($"วันที่ {Day} เดือน {Month} พ.ศ. {Year}", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, PageX - SizeText.Width, Y + (SpacePerRow * CurrentRows++));
 
 
             Class.Print.SetPrintMedtods.CenterLeft(e, $"ถึงคณะกรรมการดำเนินการกิจกรรมสหกรณ์ครู{DT.Rows[0][0].ToString()}", THsarabun18, BrushBlack, X + XD, Y + (SpacePerRow * CurrentRows++), XP, XD);
@@ -199,9 +199,9 @@ namespace BankTeacher.Class.Print
             CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "ข้อที่ 3 เมื่อ ข้าพเจ้าเป็นสมาชิกจะปฎิบัติตามข้อบังคับทุกประการ เเละจะพยายามส่งเสริมให้กิจกรรมสหกณ์ครูให้เจริญก้าวหน้ายิี่งขึ้นไป", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 750, 700);
             // ตกลง
             CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "ลงชื่อ......................................................." +
-                                        "       (..............................................................)", FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 100, 400, 700);
+                                        "       (..............................................................)", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 100, 400, 700);
 
-            Class.Print.SetPrintMedtods.CenterRight(e, "ผู้สมัคร", FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 100, XP, XD + 230);
+            Class.Print.SetPrintMedtods.CenterRight(e, "ผู้สมัคร", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 100, XP, XD + 230);
 
             if (Print_two >= 1 || confirmation == 0)
             {
@@ -321,7 +321,7 @@ namespace BankTeacher.Class.Print
 
                 string Text_number;
                 if (dub <= 2) { Text_number = dub.ToString(); dub++; } else { Text_number = "1"; dub = 1; }
-                e.Graphics.DrawString($"หน้า {Text_number}/2", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack,735,20);
+                e.Graphics.DrawString($"หน้า {Text_number}/2", Font(16, ThaiSarabun, FontStyle.Bold), BrushBlack,735,20);
                 if (pageNow == 0)
                 {
                     //------------------------
@@ -550,27 +550,27 @@ namespace BankTeacher.Class.Print
                     { 
                         all_paper = 1; 
                     }
-                    Size = e.Graphics.MeasureString($"หน้า {pagepaper}/{all_paper.ToString()} ", FonT(16, ThaiSarabun, FontStyle.Bold));
-                    e.Graphics.DrawString($"หน้า {pagepaper}/{all_paper.ToString()} ", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - Size.Width, 30);
+                    Size = e.Graphics.MeasureString($"หน้า {pagepaper}/{all_paper.ToString()} ", Font(16, ThaiSarabun, FontStyle.Bold));
+                    e.Graphics.DrawString($"หน้า {pagepaper}/{all_paper.ToString()} ", Font(16, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - Size.Width, 30);
                 }
                 // เเบบพิมพ์ชื่อ วิทยาลัยเทคโนโลยีเเหลมฉบัง Thai
                 TextX += imageX;
-                e.Graphics.DrawString(TLC, FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, new RectangleF(TextX+10, TextY, 700, 100));
-                Size = e.Graphics.MeasureString(TLC, FonT(16, ThaiSarabun, FontStyle.Bold));
+                e.Graphics.DrawString(TLC, Font(16, ThaiSarabun, FontStyle.Bold), BrushBlack, new RectangleF(TextX+10, TextY, 700, 100));
+                Size = e.Graphics.MeasureString(TLC, Font(16, ThaiSarabun, FontStyle.Bold));
                 TextY += Size.Height/2;
                 // เเบพิมพ์ชื่อ วิทยาลัยเทคโนโลยีเเหลมฉบัง English
-                e.Graphics.DrawString(tlc, FonT(14, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(TextX+10, TextY, 700, 100));
-                Size = e.Graphics.MeasureString(tlc, FonT(14, ThaiSarabun, FontStyle.Regular));
+                e.Graphics.DrawString(tlc, Font(14, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(TextX+10, TextY, 700, 100));
+                Size = e.Graphics.MeasureString(tlc, Font(14, ThaiSarabun, FontStyle.Regular));
                 TextY += Size.Height/2;
                 // สถานที่ตั้ง
-                TextY += calculate_distance(e, address, FonT(12, ThaiSarabun, FontStyle.Regular), BrushBlack, TextX + 10, TextY + 10,300,200, Line2_x / 2, 100);
-                Size = e.Graphics.MeasureString(address, FonT(12, ThaiSarabun, FontStyle.Regular));
+                TextY += calculate_distance(e, address, Font(12, ThaiSarabun, FontStyle.Regular), BrushBlack, TextX + 10, TextY + 10,300,200, Line2_x / 2, 100);
+                Size = e.Graphics.MeasureString(address, Font(12, ThaiSarabun, FontStyle.Regular));
                 TextY += Size.Height;
                 // =============================================================== หัวข้อรายการ ================================================
                 if (header != "")
                 {
-                    Size = e.Graphics.MeasureString(header, FonT(18, ThaiSarabun, FontStyle.Bold));
-                    e.Graphics.DrawString(header, FonT(18, ThaiSarabun, FontStyle.Bold), BrushBlack, new RectangleF(((Line2_x + 50) / 2) - Size.Width / 2, TextY += 50, 500, 100));
+                    Size = e.Graphics.MeasureString(header, Font(18, ThaiSarabun, FontStyle.Bold));
+                    e.Graphics.DrawString(header, Font(18, ThaiSarabun, FontStyle.Bold), BrushBlack, new RectangleF(((Line2_x + 50) / 2) - Size.Width / 2, TextY += 50, 500, 100));
                     TextY += Size.Height;
                 }
                 // ================================================= ปริ้นข้อความต้นฉบับ ==================================
@@ -619,12 +619,12 @@ namespace BankTeacher.Class.Print
                                            $"ยอดเงินค้ำ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Bank.Loan.InfoLoan.Amount[0]))} บาท                      เปอร์เซ็นต์ค้ำ : {Bank.Loan.InfoLoan.Percent[0]}%\r\n" +
                                            $"ยอดที่กู้ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Bank.Loan.InfoLoan.info_Sum))} บาท                   ยอดคงเหลือ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Bank.Loan.InfoLoan.info_totelLoan))} บาท                   ยอดที่ชำระ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Bank.Loan.InfoLoan.info_Loanpayall))}";
                         // กรอบ อร่อยต้อง Rectangle พูดอีกอย่างคือ ขนาดข้อความ
-                        Size = e.Graphics.MeasureString(infomember, FonT(18, ThaiSarabun, FontStyle.Regular));
+                        Size = e.Graphics.MeasureString(infomember, Font(18, ThaiSarabun, FontStyle.Regular));
                         // กรอบ
                         e.Graphics.DrawRectangle(PenBlack, 50, TextY, Line2_x - 50, Size.Height - 20 + 5);
 
-                        Size = e.Graphics.MeasureString("infomeber", FonT(16, ThaiSarabun, FontStyle.Regular));
-                        result = calculate_distance(e, infomember, FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50, TextY, 700, 300, Line2_x, Size.Height + 5);
+                        Size = e.Graphics.MeasureString("infomeber", Font(16, ThaiSarabun, FontStyle.Regular));
+                        result = calculate_distance(e, infomember, Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50, TextY, 700, 300, Line2_x, Size.Height + 5);
                         TextY += (Size.Height * result);
 
                         // เว้นระยะตัวหนังสือกัวกรอบ
@@ -632,8 +632,8 @@ namespace BankTeacher.Class.Print
 
                         if (Bank.Loan.InfoLoan.how_many_laps >= 1)
                         {
-                            e.Graphics.DrawString($"ผู้ค้ำ {Bank.Loan.InfoLoan.how_many_laps} คน", FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, 50, TextY);
-                            Size = e.Graphics.MeasureString("ผู้ค้ำ", FonT(18, ThaiSarabun, FontStyle.Bold));
+                            e.Graphics.DrawString($"ผู้ค้ำ {Bank.Loan.InfoLoan.how_many_laps} คน", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, 50, TextY);
+                            Size = e.Graphics.MeasureString("ผู้ค้ำ", Font(18, ThaiSarabun, FontStyle.Bold));
                             TextY += Size.Height;
                         }
 
@@ -643,9 +643,9 @@ namespace BankTeacher.Class.Print
                         {
                             string infoGuarantor = $"ชื่อ-นามสกุล : {Bank.Loan.InfoLoan.info_GuarantrN[Grt]}            ยอดค้ำ : {Bank.Loan.InfoLoan.info_GuarantRemains[Grt]}\r\n" +
                                                    $"ยอดเงินค้ำ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Bank.Loan.InfoLoan.info_GuarantrAmount[Grt]))} บาท                      เปอร์เซ็นต์ค้ำ : {Bank.Loan.InfoLoan.info_GuarantrPercent[Grt]}%";
-                            Size = e.Graphics.MeasureString(infoGuarantor, FonT(16, ThaiSarabun, FontStyle.Regular));
-                            Size1 = e.Graphics.MeasureString("infoGuarantor", FonT(16, ThaiSarabun, FontStyle.Regular));
-                            result = calculate_distance(e, infoGuarantor, FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50, TextY + 5, 700, 300, Line2_x, Size1.Height);
+                            Size = e.Graphics.MeasureString(infoGuarantor, Font(16, ThaiSarabun, FontStyle.Regular));
+                            Size1 = e.Graphics.MeasureString("infoGuarantor", Font(16, ThaiSarabun, FontStyle.Regular));
+                            result = calculate_distance(e, infoGuarantor, Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50, TextY + 5, 700, 300, Line2_x, Size1.Height);
                             if (Grt > 0)
                             {
                                 e.Graphics.DrawLine(PenBlack, 50, TextY, Line2_x, TextY);
@@ -678,12 +678,12 @@ namespace BankTeacher.Class.Print
                         string infopay = $"ชื่อ-นามสกุล : {info_name}            รหัสประจำตัว : {info_id}           \r\n" +
                                          $"หุ้นสะสมทั้งหมดก่อนเเละหลัง : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_Savingtotel))}            {Remain}        ";
                         // กรอบ อร่อยต้อง Rectangle
-                        Size = e.Graphics.MeasureString(infopay, FonT(18, ThaiSarabun, FontStyle.Regular));
+                        Size = e.Graphics.MeasureString(infopay, Font(18, ThaiSarabun, FontStyle.Regular));
                         //// กรอบ
                         //e.Graphics.DrawRectangle(PenBlack, 50, TextY, x2 - 50, Size.Height - 20 + 5);
 
-                        Size = e.Graphics.MeasureString("infopay", FonT(16, ThaiSarabun, FontStyle.Regular));
-                        result = calculate_distance(e, infopay, FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50, TextY, 700, 300, Line2_x, Size.Height + 5);
+                        Size = e.Graphics.MeasureString("infopay", Font(16, ThaiSarabun, FontStyle.Regular));
+                        result = calculate_distance(e, infopay, Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50, TextY, 700, 300, Line2_x, Size.Height + 5);
                         TextY += (Size.Height * result);
                     }
                     else if (TextForm == "Home")
@@ -700,12 +700,12 @@ namespace BankTeacher.Class.Print
                         string infoHome = $"ชื่อ-นามสกุล : {info_name}            รหัสประจำตัว : {info_id}           \r\n" +
                                          $"หุ้นสะสมทั้งหมด : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_Savingtotel))}            {Remain}        ";
 
-                        Size = e.Graphics.MeasureString(infoHome, FonT(18, ThaiSarabun, FontStyle.Regular));
+                        Size = e.Graphics.MeasureString(infoHome, Font(18, ThaiSarabun, FontStyle.Regular));
                         //// กรอบ
                         //e.Graphics.DrawRectangle(PenBlack, 50, TextY, x2 - 50, Size.Height - 20 + 5);
 
-                        Size = e.Graphics.MeasureString("infopay", FonT(16, ThaiSarabun, FontStyle.Regular));
-                        result = calculate_distance(e, infoHome, FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50, TextY, 700, 300, Line2_x, Size.Height + 5);
+                        Size = e.Graphics.MeasureString("infopay", Font(16, ThaiSarabun, FontStyle.Regular));
+                        result = calculate_distance(e, infoHome, Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50, TextY, 700, 300, Line2_x, Size.Height + 5);
                         TextY += (Size.Height * result);
                     }
                     else if (TextForm == "AmountOff" && details != 1)
@@ -713,21 +713,21 @@ namespace BankTeacher.Class.Print
                         string infoAmountoff = $"ชื่อ-นามสกุล : {info_name}            รหัสประจำตัว : {info_id}            เลขที่หุ้นสะสม : {info_ShareNo}\r\n" +
                                            $"ยอดเงินสะสมทั้งหมด : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_Savingtotel))} บาท          ยอดเงินที่ถอนออกได้ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_canbeAmounoff))} บาท           สถานะ : {info_Loanstatus}\r\n" +
                                            $"ยอดที่ถอนออก : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_Amounoff))} บาท                      ยอดเงินค้ำในระบบ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_Amounoffinsystem))}";
-                        Size = e.Graphics.MeasureString(infoAmountoff, FonT(18, ThaiSarabun, FontStyle.Regular));
+                        Size = e.Graphics.MeasureString(infoAmountoff, Font(18, ThaiSarabun, FontStyle.Regular));
                         //// กรอบ
                         //e.Graphics.DrawRectangle(PenBlack, 50, TextY, x2 - 50, Size.Height - 20 + 5);
 
-                        Size = e.Graphics.MeasureString("infoAmountoff", FonT(16, ThaiSarabun, FontStyle.Regular));
-                        result = calculate_distance(e, infoAmountoff, FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50, TextY, 700, 300, Line2_x, Size.Height + 5);
+                        Size = e.Graphics.MeasureString("infoAmountoff", Font(16, ThaiSarabun, FontStyle.Regular));
+                        result = calculate_distance(e, infoAmountoff, Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50, TextY, 700, 300, Line2_x, Size.Height + 5);
                         TextY += (Size.Height * result);
                     }
                     else if(TextForm == "PayLoan")
                     {
                         string info_Loanpay = $"ชื่อ-นามสกุล : {info_name}            รหัสประจำตัว : {info_id}";
 
-                        Size = e.Graphics.MeasureString(info_Loanpay, FonT(18, ThaiSarabun, FontStyle.Regular));
-                        Size = e.Graphics.MeasureString("info_Loanpay", FonT(16, ThaiSarabun, FontStyle.Regular));
-                        result = calculate_distance(e, info_Loanpay, FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50, TextY, 700, 300, Line2_x, Size.Height + 5);
+                        Size = e.Graphics.MeasureString(info_Loanpay, Font(18, ThaiSarabun, FontStyle.Regular));
+                        Size = e.Graphics.MeasureString("info_Loanpay", Font(16, ThaiSarabun, FontStyle.Regular));
+                        result = calculate_distance(e, info_Loanpay, Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50, TextY, 700, 300, Line2_x, Size.Height + 5);
                         TextY += (Size.Height * result);
                     }
                 }
@@ -753,12 +753,12 @@ namespace BankTeacher.Class.Print
                                 if(TextForm == "pay")
                                 {
                                     Getwidth += 100 + Class.Print.SetPrintMedtods.Chcekspan(e, G, startTableX, startTableY, G.Columns[Columns - 1].HeaderText
-                                    , setcut, Columns, FonT(18, ThaiSarabun, FontStyle.Regular), 0, 0);
+                                    , setcut, Columns, Font(18, ThaiSarabun, FontStyle.Regular), 0, 0);
                                 }
                                 else
                                 {
                                     Getwidth +=Class.Print.SetPrintMedtods.Chcekspan(e, G, startTableX, startTableY, G.Columns[Columns - 1].HeaderText
-                                  , setcut, Columns, FonT(18, ThaiSarabun, FontStyle.Regular), 0, 0);
+                                  , setcut, Columns, Font(18, ThaiSarabun, FontStyle.Regular), 0, 0);
                                 }
                                 if (onetimestartColumns == 0)
                                     cutline.Add(Getwidth);
@@ -766,7 +766,7 @@ namespace BankTeacher.Class.Print
                             else
                             {
                                 Getwidth += Class.Print.SetPrintMedtods.Chcekspan(e, G, startTableX, startTableY, G.Columns[Columns - 1].HeaderText
-                             , setcut, Columns, FonT(18, ThaiSarabun, FontStyle.Regular), 0, 0);
+                             , setcut, Columns, Font(18, ThaiSarabun, FontStyle.Regular), 0, 0);
                                 if (onetimestartColumns == 0)
                                     cutline.Add(Getwidth);
                             }
@@ -775,7 +775,7 @@ namespace BankTeacher.Class.Print
                         else
                         {
                             Getwidth += Class.Print.SetPrintMedtods.Chcekspan(e, G, startTableX, startTableY, G.Columns[Columns - 1].HeaderText
-                              , setcut, Columns, FonT(18, ThaiSarabun, FontStyle.Regular), 0, 0);
+                              , setcut, Columns, Font(18, ThaiSarabun, FontStyle.Regular), 0, 0);
                             if (onetimestartColumns == 0)
                                 cutline.Add(Getwidth);
                         }
@@ -790,20 +790,20 @@ namespace BankTeacher.Class.Print
                     Class.Print.SetPrintMedtods.CutingCharAndString
                     (e, G.Columns[Columns].HeaderText, setcut, 50, startTableY, out Rectangle_X, out Rectangle_Y, 0);
                     // เก็บขนาดของข้อความในเเถว
-                    Size = e.Graphics.MeasureString(G.Columns[Columns].HeaderText, FonT(18, ThaiSarabun, FontStyle.Regular));
+                    Size = e.Graphics.MeasureString(G.Columns[Columns].HeaderText, Font(18, ThaiSarabun, FontStyle.Regular));
                     // ระยะการวาดในรอบถัดไป สูตร(ขนาดของกรอบ / 2 + ความยาว - กรอบ / 2)
                     if (Columns != 0)
                         center = (Rectangle_X / 2 + Getwidth - Rectangle_X / 2);
                     else
                     {
-                        Size = e.Graphics.MeasureString(G.Columns[Columns].HeaderText, FonT(18, ThaiSarabun, FontStyle.Regular));
+                        Size = e.Graphics.MeasureString(G.Columns[Columns].HeaderText, Font(18, ThaiSarabun, FontStyle.Regular));
                         center = ((50 + Size.Width / 2)-10);
                     }
 
                     float CT = center;
                     if (Columns == G.ColumnCount - 1)
                     {
-                        SizeF f = e.Graphics.MeasureString(G.Rows[0].Cells[G.Rows[0].Cells.Count-1].Value.ToString(), FonT(18, ThaiSarabun, FontStyle.Regular));
+                        SizeF f = e.Graphics.MeasureString(G.Rows[0].Cells[G.Rows[0].Cells.Count-1].Value.ToString(), Font(18, ThaiSarabun, FontStyle.Regular));
                         center = (Line2_x - f.Width);
                     }
                     if(onetimestartColumns == 0)
@@ -817,10 +817,10 @@ namespace BankTeacher.Class.Print
                     // ========================= วาดข้อความ Columns
                     if(Columns != 0)
                     {
-                        e.Graphics.DrawString(G.Columns[Columns].HeaderText, FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(center, startTableY, Rectangle_X - 50, Rectangle_Y - 50));
+                        e.Graphics.DrawString(G.Columns[Columns].HeaderText, Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(center, startTableY, Rectangle_X - 50, Rectangle_Y - 50));
                     }
                     else // ลำดับที่
-                        e.Graphics.DrawString(G.Columns[Columns].HeaderText, FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(center-Size.Width/2+10, startTableY, Rectangle_X - 50, Rectangle_Y - 50));
+                        e.Graphics.DrawString(G.Columns[Columns].HeaderText, Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(center-Size.Width/2+10, startTableY, Rectangle_X - 50, Rectangle_Y - 50));
 
 
                     //================================ เส้นปิด =======================================
@@ -976,14 +976,14 @@ namespace BankTeacher.Class.Print
                                     
                                     if (Cells == G.Rows[Rows].Cells.Count - 1)
                                     {
-                                        Size = e.Graphics.MeasureString(NameG, FonT(18, ThaiSarabun, FontStyle.Regular));
+                                        Size = e.Graphics.MeasureString(NameG, Font(18, ThaiSarabun, FontStyle.Regular));
                                         // วาดRows ลำดับสุดท้าย
-                                        e.Graphics.DrawString(NameG, FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Line2_x - Size.Width, startTableY, Rectangle_X - 50, Rectangle_Y - 50));
+                                        e.Graphics.DrawString(NameG, Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Line2_x - Size.Width, startTableY, Rectangle_X - 50, Rectangle_Y - 50));
                                     }
                                     else
                                     {
                                         // วาดRows
-                                        e.Graphics.DrawString(NameG, FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Center[Cells], startTableY, Rectangle_X - 50, Rectangle_Y - 50));
+                                        e.Graphics.DrawString(NameG, Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Center[Cells], startTableY, Rectangle_X - 50, Rectangle_Y - 50));
                                     }
                               
                                 // =================================================== เช็คว่าขนาดข้อความใหญ่เกินกำหนดหรือไม่ เพื่อความปลอดภัย ในการทับเส้น
@@ -1025,28 +1025,28 @@ namespace BankTeacher.Class.Print
             // ====================================== ตัวเเปร ====================================
             SizeF TextSize = e.Graphics.MeasureString("", THsarabun16);
             SizeF TextSize1 = e.Graphics.MeasureString("", THsarabun16);
-            TextSize1 = e.Graphics.MeasureString($"ได้เวลาสนุกเเล้วสิ", FonT(16, ThaiSarabun, FontStyle.Regular));
+            TextSize1 = e.Graphics.MeasureString($"ได้เวลาสนุกเเล้วสิ", Font(16, ThaiSarabun, FontStyle.Regular));
             startTableY += TextSize1.Height + 10;
             if(summarize == 0)
             {
                 Amountotel_SUM += Convert.ToInt32(SUM.Sum());
                 if (Currentposition_Row == G.Rows.Count) // ตำเเหน่งปัจุบันเกินขนาด ความยาวที่กำหนด หรือ ไม่
                 {
-                    e.Graphics.DrawString("รูปเเบบการจ่าย ", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, 50, startTableY + 10);
-                    TextSize = e.Graphics.MeasureString("รูปเเบบการจ่าย ", FonT(16, ThaiSarabun, FontStyle.Bold));
+                    e.Graphics.DrawString("รูปเเบบการจ่าย ", Font(16, ThaiSarabun, FontStyle.Bold), BrushBlack, 50, startTableY + 10);
+                    TextSize = e.Graphics.MeasureString("รูปเเบบการจ่าย ", Font(16, ThaiSarabun, FontStyle.Bold));
 
-                    e.Graphics.DrawString($" : {info_Payment}", FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50 + TextSize.Width, startTableY + 10);
+                    e.Graphics.DrawString($" : {info_Payment}", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50 + TextSize.Width, startTableY + 10);
 
-                    e.Graphics.DrawString("ยอดรวมทั้งหมด ", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, 50, startTableY + 40);
-                    TextSize = e.Graphics.MeasureString("ยอดรวมทั้งหมด ", FonT(16, ThaiSarabun, FontStyle.Bold));
+                    e.Graphics.DrawString("ยอดรวมทั้งหมด ", Font(16, ThaiSarabun, FontStyle.Bold), BrushBlack, 50, startTableY + 40);
+                    TextSize = e.Graphics.MeasureString("ยอดรวมทั้งหมด ", Font(16, ThaiSarabun, FontStyle.Bold));
 
-                    e.Graphics.DrawString($" : {Amountotel_SUM}", FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50 + TextSize.Width, startTableY + 40);
+                    e.Graphics.DrawString($" : {Amountotel_SUM}", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50 + TextSize.Width, startTableY + 40);
 
-                    e.Graphics.DrawString("หมายเหตุ", FonT(18, ThaiSarabun, FontStyle.Bold), BrushBlack, 50, startTableY + 70);
-                    TextSize = e.Graphics.MeasureString("หมายเหตุ", FonT(18, ThaiSarabun, FontStyle.Regular));
+                    e.Graphics.DrawString("หมายเหตุ", Font(18, ThaiSarabun, FontStyle.Bold), BrushBlack, 50, startTableY + 70);
+                    TextSize = e.Graphics.MeasureString("หมายเหตุ", Font(18, ThaiSarabun, FontStyle.Regular));
 
                     e.Graphics.DrawString("ใบเสร็จรับเงินฉบับนี้จะสมบูรณ์เมื่อผู้รับเงินลงลายมือชื่อเป็นอันเสร็จสิ้น \r\n" +
-                                        "ชำระเเล้วไม่สามารถรับคืนหรือเปลี่ยนตัวไม่ว่ากรณีใดๆ", FonT(12, ThaiSarabun, FontStyle.Bold), BrushBlack, 80 + TextSize.Width, startTableY + 70);
+                                        "ชำระเเล้วไม่สามารถรับคืนหรือเปลี่ยนตัวไม่ว่ากรณีใดๆ", Font(12, ThaiSarabun, FontStyle.Bold), BrushBlack, 80 + TextSize.Width, startTableY + 70);
                     if (TextForm == "pay" || TextForm == "AmountOff" || TextForm == "PayLoan" || TextForm == "InfoLoan")
                     {
                    
@@ -1056,51 +1056,51 @@ namespace BankTeacher.Class.Print
                         {
                             //TextSize1 = e.Graphics.MeasureString($"ได้เวลาสนุกเเล้วสิ", FonT(16, ThaiSarabun, FontStyle.Regular));
                             //startTableY += TextSize1.Height+10;
-                            TextSize = e.Graphics.MeasureString("บาท", FonT(16, ThaiSarabun, FontStyle.Regular));
-                            TextSize1 = e.Graphics.MeasureString($"{Amountotel_Pay.ToString("D")}", FonT(16, ThaiSarabun, FontStyle.Regular));
+                            TextSize = e.Graphics.MeasureString("บาท", Font(16, ThaiSarabun, FontStyle.Regular));
+                            TextSize1 = e.Graphics.MeasureString($"{Amountotel_Pay.ToString("D")}", Font(16, ThaiSarabun, FontStyle.Regular));
                             for (int Bath = 0; Bath < 2; Bath++)
                             {
-                                e.Graphics.DrawString("บาท", FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - TextSize.Width, startTableY);
+                                e.Graphics.DrawString("บาท", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - TextSize.Width, startTableY);
                                 if (Bath == 0)
                                 {
-                                    e.Graphics.DrawString($"{Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Amountotel_Pay.ToString("D")))}", FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 100), startTableY);
-                                    e.Graphics.DrawString($"หุ้นสะสม", FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 200), startTableY);
+                                    e.Graphics.DrawString($"{Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Amountotel_Pay.ToString("D")))}", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 100), startTableY);
+                                    e.Graphics.DrawString($"หุ้นสะสม", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 200), startTableY);
                                 }
                                 else
                                 {
-                                    e.Graphics.DrawString($"{Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Amountotel_Loan.ToString("D")))}", FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 100), startTableY);
-                                    e.Graphics.DrawString($"กู้", FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 200), startTableY);
+                                    e.Graphics.DrawString($"{Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Amountotel_Loan.ToString("D")))}", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 100), startTableY);
+                                    e.Graphics.DrawString($"กู้", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 200), startTableY);
                                 }
                                 // เน้นช๊อกโก็เเลต บวก บัพเฟอร์ ที่ เเสนอร่่อย เนื้อ ครีมเน้นๆ ต้อง  DrawRectangle
                                 e.Graphics.DrawRectangle(PenBlack, Line2_x - (TextSize1.Width + TextSize.Width + 200), startTableY, Line2_x - (Line2_x - (TextSize1.Width + TextSize.Width + 200)), TextSize1.Height);
                                 startTableY += TextSize.Height;
                             }
-                            TextSize = e.Graphics.MeasureString("บาท", FonT(16, ThaiSarabun, FontStyle.Regular));
-                            e.Graphics.DrawString("บาท", FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - TextSize.Width, startTableY);
-                            TextSize1 = e.Graphics.MeasureString($"{Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Amountotel_SUM.ToString("D")))}", FonT(16, ThaiSarabun, FontStyle.Regular));
-                            e.Graphics.DrawString($"{Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Amountotel_SUM.ToString("D")))}", FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 100), startTableY);
-                            e.Graphics.DrawString($"รวมเป็นเเงิน", FonT(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 200), startTableY);
+                            TextSize = e.Graphics.MeasureString("บาท", Font(16, ThaiSarabun, FontStyle.Regular));
+                            e.Graphics.DrawString("บาท", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - TextSize.Width, startTableY);
+                            TextSize1 = e.Graphics.MeasureString($"{Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Amountotel_SUM.ToString("D")))}", Font(16, ThaiSarabun, FontStyle.Regular));
+                            e.Graphics.DrawString($"{Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Amountotel_SUM.ToString("D")))}", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 100), startTableY);
+                            e.Graphics.DrawString($"รวมเป็นเเงิน", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 200), startTableY);
                             // กรอบๆ
                             e.Graphics.DrawRectangle(PenBlack, Line2_x - (TextSize1.Width + TextSize.Width + 200), startTableY, Line2_x - (Line2_x - (TextSize1.Width + TextSize.Width + 200)), TextSize1.Height);
                         }
-                        TextSize = e.Graphics.MeasureString("_____________________________", FonT(13, ThaiSarabun, FontStyle.Regular));
-                        e.Graphics.DrawString("_____________________________", FonT(13, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - TextSize.Width, startTableY + 50);
-                        TextSize1 = e.Graphics.MeasureString("ลงนาม", FonT(18, ThaiSarabun, FontStyle.Bold));
-                        e.Graphics.DrawString("ลงนาม", FonT(18, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - (TextSize.Width + TextSize1.Width), startTableY + 30);
+                        TextSize = e.Graphics.MeasureString("_____________________________", Font(13, ThaiSarabun, FontStyle.Regular));
+                        e.Graphics.DrawString("_____________________________", Font(13, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - TextSize.Width, startTableY + 50);
+                        TextSize1 = e.Graphics.MeasureString("ลงนาม", Font(18, ThaiSarabun, FontStyle.Bold));
+                        e.Graphics.DrawString("ลงนาม", Font(18, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - (TextSize.Width + TextSize1.Width), startTableY + 30);
                         // คนทำรายการ
-                        TextSize1 = e.Graphics.MeasureString(info_TeacherAdd, FonT(18, ThaiSarabun, FontStyle.Regular));
-                        e.Graphics.DrawString(info_TeacherAdd, FonT(18, ThaiSarabun, FontStyle.Regular), BrushBlack, (Line2_x - TextSize1.Width) - ((TextSize.Width - TextSize1.Width) / 2), startTableY + 80);
+                        TextSize1 = e.Graphics.MeasureString(info_TeacherAdd, Font(18, ThaiSarabun, FontStyle.Regular));
+                        e.Graphics.DrawString(info_TeacherAdd, Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, (Line2_x - TextSize1.Width) - ((TextSize.Width - TextSize1.Width) / 2), startTableY + 80);
                     }
                 }
                 else
                 {
                     if (TextForm == "pay" || TextForm == "AmountOff" || TextForm == "PayLoan")
                     {
-                        e.Graphics.DrawString("หมายเหตุ", FonT(18, ThaiSarabun, FontStyle.Bold), BrushBlack, 50, startTableY + 20);
-                        TextSize = e.Graphics.MeasureString("หมายเหตุ", FonT(18, ThaiSarabun, FontStyle.Regular));
+                        e.Graphics.DrawString("หมายเหตุ", Font(18, ThaiSarabun, FontStyle.Bold), BrushBlack, 50, startTableY + 20);
+                        TextSize = e.Graphics.MeasureString("หมายเหตุ", Font(18, ThaiSarabun, FontStyle.Regular));
 
                         e.Graphics.DrawString("ใบเสร็จรับเงินฉบับนี้จะสมบูรณ์เมื่อผู้รับเงินลงลายมือชื่อเป็นอันเสร็จสิ้น \r\n" +
-                                            "ชำระเเล้วไม่สามารถรับคืนหรือเปลี่ยนตัวไม่ว่ากรณีใดๆ", FonT(12, ThaiSarabun, FontStyle.Bold), BrushBlack, 50 + TextSize.Width, startTableY + 20);
+                                            "ชำระเเล้วไม่สามารถรับคืนหรือเปลี่ยนตัวไม่ว่ากรณีใดๆ", Font(12, ThaiSarabun, FontStyle.Bold), BrushBlack, 50 + TextSize.Width, startTableY + 20);
                     }
                     startTableY = 2000; // ทำให้ความยาวหน้ากระดาษ เกิน 
                 }
@@ -1156,9 +1156,586 @@ namespace BankTeacher.Class.Print
                 e.HasMorePages = true;
             }
         }
+        static int PresentRow = 0;
+        static bool CheckPage;
+        public static void Detailspayment(System.Drawing.Printing.PrintPageEventArgs e, DataGridView G)
+        {
+
+            CheckPage = false;
+            //// sizepage
+            float page_width = e.PageBounds.Width - 50, page_height = e.PageBounds.Height;
+            //// SET PoSITION
+            float page_x = 50, page_y = 50;
+            //// Sizepage
+            float Sizepage_x = e.PageBounds.Width, Sizepage_y = e.PageBounds.Height;
+            //// Sizestring
+            SizeF SizeString = new SizeF();
+            //SizeF Size_2 = new SizeF();
+            //SizeF Size_3 = new SizeF();
+            //// Text
+            //// ข้อมูลวิทยาลัย
+            string college_thai = DT.Rows[0][0].ToString(),
+            college_english = DT.Rows[0][1].ToString(),
+            college_address = DT.Rows[0][5].ToString();
+            //// ข้อมูลในกระดาษ
+            string Header = "รายละเอียดการจ่าย";
+            //// ข้อมูลในตาราง
+            //// ================================================================== รูปภาพ เเละ ชื่อวิทยาลัย =================================================
+            System.Drawing.Image img = global::BankTeacher.Properties.Resources._64x64_TLC;
+            //// วาดภาw (โลโก้)
+            //// set
+            int x = 50, y = 50, width_img = 100, height_img = 100;
+            e.Graphics.DrawImage(img, x, y, width_img, height_img);
+            page_x += width_img + 10;
+            //// ชื่อวิทยาลัย
+            e.Graphics.DrawString(college_thai, Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, page_x, page_y);
+            SizeString = e.Graphics.MeasureString(college_thai, Font(16, ThaiSarabun, FontStyle.Regular));
+            page_y += SizeString.Height / 2 + 5;
+            //// ชื่อวิทยาลัยภาษาอังกฤษ
+            e.Graphics.DrawString(college_english, Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, page_x, page_y);
+            SizeString = e.Graphics.MeasureString(college_english, Font(16, ThaiSarabun, FontStyle.Regular));
+            page_y += SizeString.Height / 2 + 5;
+            //// ที่ตั้ง
+            e.Graphics.DrawString(college_address, Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, page_x, page_y);
+            SizeString = e.Graphics.MeasureString(college_address, Font(16, ThaiSarabun, FontStyle.Regular));
+            page_y += SizeString.Height / 2 + 5;
+            //// หัวข้อ
+            page_y += 50;
+            SizeString = e.Graphics.MeasureString(Header, Font(18, ThaiSarabun, FontStyle.Regular));
+            e.Graphics.DrawString(Header, Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Sizepage_x / 2 - SizeString.Width / 2, page_y);
+            //// Reset page
+            page_x = 50;
+            page_y += 50;
+            //// ========================================================= เริ่มวาดตาราง =============================================
+            //// ลูปหัวข้อตาราง เเล้วเช็คขนาดที่กว้างที่สุด
+            float Text_width = 0; // ขนาดความยาวของความ
+                                  //// material  width
+                                  ////float SizeCol = 0;
+            SizeF SumSizeCol = new SizeF();
+            List<float> SizeCol = new List<float> { };
+            ////SizeF b = e.Graphics.MeasureString("sijoij", Font(18, ThaiSarabun, FontStyle.Regular));
+            ////b = e.Graphics.MeasureString("sijoij", Font(18, ThaiSarabun, FontStyle.Regular));
+            for (int ColCount = 0; ColCount < G.Columns.Count; ColCount++)
+            {
+                SumSizeCol += e.Graphics.MeasureString(G.Columns[ColCount].HeaderText, Font(18, ThaiSarabun, FontStyle.Regular));
+                SumSizeCol.Width += 50;
+                SizeF ColSize = new SizeF();
+                ColSize = e.Graphics.MeasureString(G.Columns[ColCount].HeaderText, Font(18, ThaiSarabun, FontStyle.Regular));
+                ColSize.Width += 50;
+                SizeCol.Add(ColSize.Width);
+            }
+            if (e.PageBounds.Width - 100 > SumSizeCol.Width)
+            {
+                SizeF Differrence = new SizeF();
+                Differrence.Width = ((e.PageBounds.Width - 100) - SumSizeCol.Width) / G.Columns.Count;
+                SumSizeCol.Width = 0;
+                for (int a = 0; a < SizeCol.Count; a++)
+                {
+                    SizeCol[a] += Differrence.Width;
+                }
+            }
+            else if (e.PageBounds.Width - 100 < SumSizeCol.Width)
+            {
+                SizeF Differrence = new SizeF();
+                Differrence.Width = (SumSizeCol.Width - (e.PageBounds.Width - 100)) / G.Columns.Count;
+                SumSizeCol.Width = 0;
+                for (int a = 0; a < SizeCol.Count; a++)
+                {
+                    SizeCol[a] -= Differrence.Width;
+                    SumSizeCol.Width += SizeCol[a];
+                }
+            }
+            //float PointStart = 50;
+            float PointEnd = e.PageBounds.Width - 50;
+            float Space = 7;
+            page_y += Space;
+
+            //Column Header
+            e.Graphics.DrawLine(PenBlack, page_x, page_y, PointEnd, page_y);
+            page_y += Space;
+            float LocX = 0, LocY = 0;
+            for (int Num = 0; Num < G.Columns.Count; Num++)
+            {
+                float Row = 0;
+                SizeString = e.Graphics.MeasureString(G.Columns[Num].HeaderText, Font(16, ThaiSarabun, FontStyle.Regular));
+                Row = SizeString.Width / SizeCol[Num];
+                String[] PlusRow = new string[] { };
+                PlusRow = Row.ToString().Split('.');
+                if (Convert.ToInt32(PlusRow[1]) > 0)
+                    Row = Convert.ToInt32(PlusRow[0]) + 1;
+
+                if (SizeString.Width <= SizeCol[Num])
+                {
+                    LocX = (SizeCol[Num] / 2) - (SizeString.Width / 2) + page_x;
+                    //Row = SizeString.Width / SizeCol[Num];
+                    Row = SizeString.Height * Row - Space;
+                    e.Graphics.DrawString(G.Columns[Num].HeaderText, Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(LocX, page_y, SizeCol[Num], Row));
+                }
+                else
+                {
+                    LocX = page_x + 2;
+                    Row = SizeString.Height * Row - Space;
+                    e.Graphics.DrawString(G.Columns[Num].HeaderText, Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(LocX, page_y, SizeCol[Num], Row));
+                    //page_x += SizeCol[Num] + 2;
+                }
+
+                if (LocY < Row)
+                    LocY = Row;
+                page_x += SizeCol[Num];
+            }
+            page_x = 50;
+            page_y += LocY;
+            e.Graphics.DrawLine(PenBlack, page_x, page_y, PointEnd, page_y);
+
+            float StartHeight = page_y;
+
+            int RowCount;
+            List<int[]> RowColDuplicate = new List<int[]> { };
+            //bool CheckGetNull = true;
+
+            for (RowCount = PresentRow; RowCount < G.Rows.Count; RowCount++)
+            {
+                //if (Row == G.Rows.Count - 1)
+                //    page_y += Space ;
+                //else
+                //    page_y -= Space;
+                page_y += Space;
+
+                float HeightRecString = 0;
+                //ลูปเช็คว่ากระดาษพอไหม และ คำนวณความสูงของสติงที่สูงที่สุดในแถวนั้น
+                for (int Col = 0; Col < G.Columns.Count; Col++)
+                {
+                    SizeString = e.Graphics.MeasureString("++++++" + G.Rows[RowCount].Cells[Col].Value.ToString(), Font(16, ThaiSarabun, FontStyle.Regular));
+                    float SizeRow = SizeString.Width / SizeCol[Col];
+                    String[] CheckRow = SizeRow.ToString().Split('.');
+                    if (CheckRow.Length > 1)
+                    {
+                        if (Convert.ToInt32(CheckRow[1]) > 0)
+                        {
+                            SizeRow = Convert.ToInt32(CheckRow[0]) + 1;
+                        }
+                        SizeRow = SizeString.Height * SizeRow - Space;
+                        if (page_y + SizeRow > e.PageBounds.Height - 100)
+                        {
+                            CheckPage = true;
+                            break;
+                        }
+                        else if (page_y + SizeRow < e.PageBounds.Height - 100 && HeightRecString < SizeRow)
+                        {
+                            HeightRecString = SizeRow;
+                        }
+                        if (RowCount < G.Rows.Count - 1)
+                            HeightRecString -= Space;
+                    }
+                    
+                }
+                if (CheckPage == false)
+                {
+                    for (int ColNum = 0; ColNum < G.Columns.Count; ColNum++)
+                    {
+                        if (G.Rows[RowCount].Cells[4].Value.ToString().Contains("รวม"))
+                        {
+                            SizeString = e.Graphics.MeasureString(G.Rows[RowCount].Cells[ColNum].Value.ToString(), Font(16, ThaiSarabun, FontStyle.Regular));
+                            if (SizeString.Width <= SizeCol[ColNum])
+                            {
+                                LocX = (SizeCol[ColNum] / 2) - (SizeString.Width / 2) + page_x;
+                                //Row = SizeString.Width / SizeCol[Num];
+                                //Row = SizeString.Height * Row - Space;
+                                e.Graphics.DrawString(G.Rows[RowCount].Cells[ColNum].Value.ToString(), Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(LocX, page_y, SizeCol[ColNum], HeightRecString));
+                            }
+                            else
+                            {
+                                LocX = page_x + 2;
+                                //Row = SizeString.Height * Row - Space;
+                                e.Graphics.DrawString(G.Rows[RowCount].Cells[ColNum].Value.ToString(), Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(LocX, page_y, SizeCol[ColNum], HeightRecString));
+                                //page_x += SizeCol[Num] + 2;
+                            }
+                            page_x += SizeCol[ColNum];
+                        }
+                        else if(RowCount < G.Rows.Count - 1)
+                        {
+                            //if(ColNum > 0)
+                            //    page_x += SizeCol[ColNum];
+
+                            
+                            if (RowCount >= 0 && (G.Rows[RowCount + 1].Cells[4].Value.ToString().Contains("รวม") || G.Rows[RowCount + 1].Cells[ColNum].Value.ToString() != ""))
+                            {
+                                SizeString = e.Graphics.MeasureString(G.Rows[RowCount].Cells[ColNum].Value.ToString(), Font(16, ThaiSarabun, FontStyle.Regular));
+                                if (SizeString.Width <= SizeCol[ColNum])
+                                {
+                                    LocX = (SizeCol[ColNum] / 2) - (SizeString.Width / 2) + page_x;
+                                    //Row = SizeString.Width / SizeCol[Num];
+                                    //Row = SizeString.Height * Row - Space;
+                                    e.Graphics.DrawString(G.Rows[RowCount].Cells[ColNum].Value.ToString(), Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(LocX, page_y, SizeCol[ColNum], HeightRecString));
+                                }
+                                else
+                                {
+                                    LocX = page_x + 2;
+                                    //Row = SizeString.Height * Row - Space;
+                                    e.Graphics.DrawString(G.Rows[RowCount].Cells[ColNum].Value.ToString(), Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(LocX, page_y, SizeCol[ColNum], HeightRecString));
+                                    //page_x += SizeCol[Num] + 2;
+                                }
+                                page_x += SizeCol[ColNum];
+                            }
+                            else if (/*RowCount == 0 && */G.Rows[RowCount + 1].Cells[ColNum].Value.ToString() == "")
+                            {
+                                SizeString = e.Graphics.MeasureString("", Font(16, ThaiSarabun, FontStyle.Regular));
+                                if (SizeString.Width <= SizeCol[ColNum])
+                                {
+                                    LocX = (SizeCol[ColNum] / 2) - (SizeString.Width / 2) + page_x;
+                                    //Row = SizeString.Width / SizeCol[Num];
+                                    //Row = SizeString.Height * Row - Space;
+                                    e.Graphics.DrawString("", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(LocX, page_y, SizeCol[ColNum], HeightRecString));
+                                }
+                                else
+                                {
+                                    LocX = page_x + 2;
+                                    //Row = SizeString.Height * Row - Space;
+                                    e.Graphics.DrawString("", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(LocX, page_y, SizeCol[ColNum], HeightRecString));
+                                    //page_x += SizeCol[Num] + 2;
+                                }
+                                page_x += SizeCol[ColNum];
+
+                                if(RowCount >= 1 && G.Rows[RowCount - 1].Cells[ColNum].Value.ToString() != "")
+                                {
+                                    RowColDuplicate.Add(new int[] { RowCount , ColNum });
+                                }
+                            }
+                        }
+                        //else
+                        //{
+                        //    SizeString = e.Graphics.MeasureString(G.Rows[RowCount].Cells[ColNum].Value.ToString(), Font(16, ThaiSarabun, FontStyle.Regular));
+                        //    if (SizeString.Width <= SizeCol[ColNum])
+                        //    {
+                        //        LocX = (SizeCol[ColNum] / 2) - (SizeString.Width / 2) + page_x;
+                        //        //Row = SizeString.Width / SizeCol[Num];
+                        //        //Row = SizeString.Height * Row - Space;
+                        //        e.Graphics.DrawString(G.Rows[RowCount].Cells[ColNum].Value.ToString(), Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(LocX, page_y, SizeCol[ColNum], HeightRecString));
+                        //    }
+                        //    else
+                        //    {
+                        //        LocX = page_x + 2;
+                        //        //Row = SizeString.Height * Row - Space;
+                        //        e.Graphics.DrawString(G.Rows[RowCount].Cells[ColNum].Value.ToString(), Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(LocX, page_y, SizeCol[ColNum], HeightRecString));
+                        //        //page_x += SizeCol[Num] + 2;
+                        //    }
+                        //    page_x += SizeCol[ColNum];
+                        //}
+                        
+                    }
+                        
+                }
+                else
+                    break;
+                page_x = 50;
+
+                float EndHieght = 0;
+                if(G.Rows[RowCount].Cells[4].Value.ToString().Contains("รวม"))
+                {
+                    //เส้นบนแถว รวม
+                    page_y -=  Space;
+                    e.Graphics.DrawLine(PenBlack, page_x, page_y, PointEnd, page_y);
+                    EndHieght = page_y;
+
+                    float CenterRow = EndHieght - StartHeight;
+                    CenterRow = CenterRow / 2;
+                    CenterRow += StartHeight;
+
+                    for(int a = 0; a < RowColDuplicate.Count; a++)
+                    {
+
+                    }
+                    //for (int a = 0; a < RowDuplicate.Count; a++)
+                    //{
+                    //    SizeString = e.Graphics.MeasureString(G.Rows[RowCount].Cells[RowDuplicate[a]].Value.ToString(), Font(16, ThaiSarabun, FontStyle.Regular));
+
+                    //    e.Graphics.DrawString(G.Rows[RowCount].Cells[RowDuplicate[a]].Value.ToString(), Font(16, ThaiSarabun, FontStyle.Regular))
+                    //}
+
+                        //เส้นล่างแถว รวม
+                        page_y += Space + HeightRecString + Space;
+                    e.Graphics.DrawLine(PenBlack, page_x, page_y, PointEnd, page_y);
+                    StartHeight = page_y;
+                }
+                else
+                {
+                    page_y += HeightRecString;
+                }
+                //page_y += HeightRecString + Space;
+                ////if (G.Rows[Row].Cells[3].Value.ToString() != "รวม")
+                ////    page_y -= Space;
+                ////else
+                ////    page_y += Space;
+                //if (RowCount == G.Rows.Count - 1)
+                //    page_y -= Space;
+                //e.Graphics.DrawLine(PenBlack, page_x, page_y, PointEnd, page_y);
+                ////e.HasMorePages = true; 
+            }
+            PresentRow = RowCount;
+
+            if (PresentRow < G.Rows.Count - 1)
+            {
+                e.HasMorePages = true;
+            }
+            else
+            {
+                e.HasMorePages = false;
+                PresentRow = 0;
+            }
+            //e.Graphics.DrawString(college_thai, Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, page_x, page_y);
+            //SizeString = e.Graphics.MeasureString(college_thai, Font(16, ThaiSarabun, FontStyle.Regular));
+            //page_y += SizeString.Height + Space / 2;
+            //e.Graphics.DrawLine(PenBlack, PointStart, page_y, PointEnd, page_y);
+
+            //List<float> List_Text_width = new List<float>(); // เก็บ ความยาวทั้งหมดไว้
+            //List<float[]> List_Text_width2 = new List<float[]>(); // เก็บขนาดRows ความยาวที่มากที่สุดเเต่ละหน้ามา
+            //// หาค่าที่ซ้ำกัน
+            //int similar = 0; // เก็บค่าที่ ซ้ำกันในรายการ
+            //// material similar
+            //List<int> List_similar = new List<int>(); // เก็บค่าทีซ้ำกันไว้สำหรับคัดเเยก
+            //List<int> List_similar2 = new List<int>(); // ค่าที่คัดเเยกเรียบร้อย
+            //for (int C = 0; C < G.Columns.Count; C++) // ลูป ข้อมูลตาราง
+            //{
+            //    // ขนาดข้อความหัวข้อ
+            //    Size = e.Graphics.MeasureString(G.Columns[C].HeaderText.ToString(), Font(18, ThaiSarabun, FontStyle.Regular));
+            //    for (int R = 0; R < G.Rows.Count; R++) // ลูป ข้อมูลเเถว
+            //    {
+            //        // ========= ส่วนการทำงานหาขนาด ========
+            //        // ขนาดข้อความในเเถว
+            //        //Size_2 = e.Graphics.MeasureString(G.Rows[R].Cells[C].Value.ToString(), Font(18, ThaiSarabun, FontStyle.Regular));
+            //        //if (Size_2.Width > Size_3.Width) // ขนาดในเเถว เเต่ละรอบ เเล้วหาขาดที่มากที่สุด
+            //        //{
+            //        //    Text_width = Size_2.Width;
+            //        //}
+            //        //else
+            //        //{
+            //        //    Text_width = Size_3.Width;
+            //        //}
+            //        //Size_3.Width = Size_2.Width;
+            //        // ========= ส่วนการทำงานหารายการที่ซ้ำกัน ========
+            //        if (C == 1)
+            //        {
+            //            if (G.Rows[R].Cells[4].Value.ToString() != "รวม") // ซ้ำกัน  // (รวม) ถูกกำหนดไว้ ถ้าข้อมูลในตารางเปลี่ยน ข้อมูลอาจเสียหาย
+            //            {
+            //                similar++;
+            //            }
+            //            else  // ไม่ซ้ำ
+            //            {
+            //                List_similar.Add(similar + 1);
+            //                similar = 0;
+            //            }
+            //            // ========= ส่วนการทำงานเเยกรายการที่ซ้ำกันเเล้วตรวจสอบข้อมูลที่ควรจะปริ้นในเเต่ละหน้า ========
+            //            if (R == G.RowCount - 1)
+            //            {
+            //                int sum = 0; // รวม Rows ที่ ปริ้นได้ในรอบหน้ากระดาษ
+            //                bool Is = false; // เช็คข้อมูลว่าครบหรือยัง
+            //                // ตวรจสอบข้อมูลที่ควรปริ้นใน เเต่ละ โดยเเยกออกมาเก็บไว้ใน List
+            //                do
+            //                {
+            //                    sum += List_similar[0]; // เก็บค่า 
+            //                    if (sum >= 18) // ตรวจสอบว่าเกินขนาดหรือไม่ 18 คือขนาดทีRows ที่ไม่ควรเกินหน้ากระดาษ
+            //                    {
+            //                        if (sum > 18) // ถ้าขนาดไม่ พอ ดี ตามกำหนด ให้ตัด ขนาดที่เกินออกไป
+            //                        {
+            //                            sum -= List_similar[0];
+            //                        }
+            //                        List_similar2.Add(sum);
+            //                        sum = 0;
+            //                    }
+            //                    List_similar.RemoveAt(0);
+            //                    if (List_similar.Count == 0) // เช็คข้อมูลที่ตกหล่น
+            //                    {
+            //                        if (sum > 0) // เช็คว่าข้อมูลยังเหลืออยู่หรือไม่
+            //                        {
+            //                            List_similar2.Add(sum);
+            //                            sum = 0;
+            //                        }
+            //                        Is = true;
+            //                    }
+            //                } while (!Is); // ถ้าข้อมูลหมดเเล้ว จะได้เป็น เธอ
+            //            }
+            //        }
+            //    }
+            //    // หาขนาดที่ยาวที่สุดเพื่อวาดตารางของหัวข้อนั้นๆ
+            //    //if (Size.Width > Text_width)
+            //    //{
+            //    //    Text_width = Size.Width;
+            //    //}
+            //    // เก็บขนาดที่มากที่สุดของเเเต่ละ เเถว
+            //    //List_Text_width.Add(Text_width);
+            //}
+            //// วาดเส้นเปิด
+            //e.Graphics.DrawLine(PenBlack, page_width, page_y, page_x, page_y);
+            //// เพิ่มRowsเเละเก็บค่า
+            //int up = 0, get = 0; // ขนาดข้อความหัวข้อ
+            //int setcut = 20; // ขนาดการตัดข้อความ
+            //// ลูปรายการที่มีในเเต่ละหน้า รายเเก่ได้เเก่ ขนาดที่ปริ้นในเเต่ละหน้า
+            //for (int list = 0; list < List_similar2.Count(); list++)
+            //{
+            //    for (int C = 0; C < G.ColumnCount; C++)  // หัวตาราง
+            //    {
+            //        Size.Width = Class.Print.SetPrintMedtods.CutingCharAndString(e, G.Columns[C].HeaderText.ToString(), setcut, 0, 0, out Class.Print.SetPrintMedtods.nu, out Class.Print.SetPrintMedtods.nu, 1);
+            //        //Size = e.Graphics.MeasureString(G.Columns[C].HeaderText.ToString(), Font(18, ThaiSarabun, FontStyle.Regular)); // ขนาดหัวตารางของเเต่ละอัน
+            //        for (int loop = 0; loop < List_similar2[list]; loop++)
+            //        {
+            //            // ========= ส่วนการทำงานหาขนาด ========
+            //            if (list == 0) // ครั้งเเรกให้เก็บค่าใน loop
+            //            {
+            //                up = loop;
+            //            }
+            //            else // ถ้ารายการมีมากกว่า 2 หมายถึงมีมากกว่า 1 หน้า  ให้ทำการ เก็บ ค่า จาก get ซึ่งรับของมูลมาจาก List_similar2[list]
+            //            {
+            //                up = get + loop;
+            //            }
+            //            // ขนาดข้อความในเเถว
+            //            // ใช้สำหรับหาขนาดที่ถูกตัด ข้อดีคือหาขนาดที่เเน่นอนได้ หลังการตัด
+            //            Size_2.Width = Class.Print.SetPrintMedtods.CutingCharAndString(e, G.Rows[up].Cells[C].Value.ToString(), setcut, 0, 0, out Class.Print.SetPrintMedtods.nu, out Class.Print.SetPrintMedtods.nu, 1);
+            //            // ข้อเสียไม่สามรถตรวจสอบการเว้นบรรดทัดได้ จึงเสียพื้นที่ได้การวาดได้
+            //            //Size_3 = e.Graphics.MeasureString(G.Rows[up].Cells[C].Value.ToString(), Font(18, ThaiSarabun, FontStyle.Regular));
+            //            if (Size_2.Width > Size_3.Width) // ขนาดในเเถว เเต่ละรอบ เเล้วหาขาดที่มากที่สุด
+            //            {
+            //                Text_width = Size_2.Width;
+            //            }
+            //            else
+            //            {
+            //                Text_width = Size_3.Width;
+            //            }
+            //            Size_3.Width = Size_2.Width;
+            //        }
+            //        // หาขนาดที่ยาวที่สุดเพื่อวาดตารางของหัวข้อนั้นๆ
+            //        if (Size.Width > Text_width)
+            //        {
+            //            Text_width = Size.Width;
+            //        }
+            //        // เก็บขนาดที่มากที่สุดของเเเต่ละ เเถว
+            //        List_Text_width.Add(Text_width);
+            //        up = 0;
+            //    }
+            //    List_Text_width2.Add(List_Text_width.ToArray()); // เก็บค่าของเเต่ละหน้า
+            //    List_Text_width.Clear(); // ลบ
+            //    get += List_similar2[list]; // เเทนค่าให้สำหรับเช็คตำเเหน่งใน Rows
+            //}
+            //float page_notovers = 0; // หน้ากระดาษเหลือ
+            //float Rectanglef_width, Rectanglef_height; // กำหนดกรอบการวาด
+            //bool center = true; // กึ่งกลาง = true
+            //float Center_, Center = 50; // Ceter_ ค่าที่คำนวณ / Ceter ค่าที่ใช้
+            //List<float> ListOver_height = new List<float>(); // ขนาดความยาว สำหรับหาค่่า Y เพื่อปริ้นในรอบถัดไป
+            //for (int loop = 0; loop < List_similar2.Count(); loop++) // ลูปหน้ากระดาษที่มีการส่งค่า
+            //{
+            //    if (List_Text_width2[loop].Sum() + 50 <= page_width) // ถ้าขนาดที่วาดเหลือให้เอาไปบวกเพิ่ม
+            //    {
+            //        page_notovers = (page_width - (List_Text_width2[loop].Sum() + 50)) / G.ColumnCount; // ขนาดพื้นที่ที่เหลือ
+            //    }
+            //    for (int C = 0; C < G.ColumnCount; C++) // หัวตาราง
+            //    {
+            //        Size = e.Graphics.MeasureString(G.Columns[C].HeaderText, Font(18, ThaiSarabun, FontStyle.Regular)); // เก็บค่าหัวตาราง
+            //        if (page_x + Size.Width > page_width) // ถ้า ระยะการวาด เกิน ขอบที่กำหนดให้ตัดเส้น
+            //        {
+            //            Rectanglef_width = page_x + Size.Width - page_width;
+            //            Rectanglef_height = Size.Height;
+            //        }
+            //        else
+            //        {
+            //            Rectanglef_width = List_Text_width2[loop][C];
+            //            Rectanglef_height = Size.Height;
+            //            if (C == G.ColumnCount - 1 && Center < page_width)
+            //            {
+            //                Rectanglef_width = page_width - Center;
+            //            }
+            //        }
+            //        if (center)  // เป็นจริงให้ ตำเเหน่งกลาง
+            //        {
+            //            Size = e.Graphics.MeasureString(G.Columns[C].HeaderText, Font(18, ThaiSarabun, FontStyle.Regular));
+            //            Center_ = ((List_Text_width2[loop][C] / 2) + (page_notovers / 2));
+            //            //Center += Center_ - (Size.Width / 2);
+            //            Center += Center_ - (Size.Width / 2);
+            //            if (Center > page_width) // ถ้าขนาดหน้าเกินกำหนดให้ใช้ค่าที่ไม่เกินขนาด
+            //            {
+            //                Center = page_x;
+            //            }
+            //        }
+            //        else // ไม่เป็นจริงให้ ชิดซ้าย
+            //        {
+            //            Center = page_x;
+            //        }
+            //        Size_2 = e.Graphics.MeasureString($"{G.Columns[C].HeaderText}", Font(18, ThaiSarabun, FontStyle.Regular)); // เก็บขนาด
+            //        if (Size_2.Width > Rectanglef_width) // ถ้าขนาด ความยาวเกินกรอบให้ทำการเพิ่มระยะคววามยาว
+            //        {
+            //            var @decimal = Size_2.Width / Rectanglef_width;
+            //            var Ceiling = Math.Ceiling(@decimal);
+            //            var INDAX_int = Size.Height * Ceiling;
+            //            Rectanglef_height = (float)INDAX_int;
+            //        }
+            //        ListOver_height.Add(Rectanglef_height); // เก็บค่าความยาว
+            //        e.Graphics.DrawString($"{G.Columns[C].HeaderText}", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Center, page_y, Rectanglef_width, Rectanglef_height)); // วาด หัวข้อความ
+            //        // Test
+            //        //e.Graphics.DrawRectangle(PenBlack, page_x, page_y, Rectanglef_width, Rectanglef_height); // Test กรอบ
+            //        //e.Graphics.DrawString($"|{Center}", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Center, page_y + 50, 200, 200)); // Test สำหรับผู้เเเก้ไข กลาง
+            //        //e.Graphics.DrawString($"|{page_x}", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(page_x, page_y + 100, 200, 200)); // Test สำหรับผู้เเเก้ไข ชิดซ้าย
+            //        page_x += List_Text_width2[loop][C] + page_notovers; // บวกขนาดในรอบถัดไป
+            //        Center = page_x;
+            //    }
+            //    page_x = 50; // Test ถ้าใช้งานจริงจะไม่ loop เเต่เป็นการบอกรายการใน Array เองว่าเป็นรายการอะไร
+            //    page_y += Class.Print.SetPrintMedtods.MaxValues(0, ListOver_height);
+
+            //}
+            //// วาดเส้นเปิด
+            //e.Graphics.DrawLine(PenRed, page_width, page_y, page_x, page_y);
+            //e.Graphics.DrawString("|-850", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(page_width, 170, 50, 50));
+            //e.Graphics.DrawString("|-50", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(50, 170, 50, 50));
+            ////วาด Rows กำลังทดสอบ
+            //for (int R = 0; R < G.RowCount; R++)
+            //{
+            //    for (int c = 0; c < G.Rows[R].Cells.Count; c++)
+            //    {
+            //        Size = e.Graphics.MeasureString($"{G.Rows[R].Cells[c].Value}", Font(18, ThaiSarabun, FontStyle.Regular)); // เก็บค่าหัวตาราง
+            //        if (page_x + Size.Width > page_width) // ถ้า ระยะการวาด เกิน ขอบที่กำหนดให้ตัดเส้น
+            //        {
+            //            Rectanglef_width = page_x + Size.Width - page_width;
+            //            Rectanglef_height = Size.Height;
+            //        }
+            //        else
+            //        {
+            //            Rectanglef_width = List_Text_width2[0][c];
+            //            Rectanglef_height = Size.Height;
+            //            if (R == G.Rows[R].Cells.Count - 1 && Center < page_width)
+            //            {
+            //                Rectanglef_width = page_width - Center;
+            //            }
+            //        }
+            //        if (!center)  // เป็นจริงให้ ตำเเหน่งกลาง
+            //        {
+            //            Size = e.Graphics.MeasureString($"{G.Rows[R].Cells[c].Value}", Font(18, ThaiSarabun, FontStyle.Regular));
+            //            Center_ = ((List_Text_width2[0][c] / 2) + (page_notovers / 2));
+            //            //Center += Center_ - (Size.Width / 2);
+            //            Center += Center_ - (Size.Width / 2);
+            //            if (Center > page_width) // ถ้าขนาดหน้าเกินกำหนดให้ใช้ค่าที่ไม่เกินขนาด
+            //            {
+            //                Center = page_x;
+            //            }
+            //        }
+            //        else // ไม่เป็นจริงให้ ชิดซ้าย
+            //        {
+            //            Center = page_x;
+            //        }
+            //        Size_2 = e.Graphics.MeasureString($"{G.Rows[R].Cells[c].Value}", Font(18, ThaiSarabun, FontStyle.Regular)); // เก็บขนาด
+            //        if (Size_2.Width > Rectanglef_width) // ถ้าขนาด ความยาวเกินกรอบให้ทำการเพิ่มระยะคววามยาว
+            //        {
+            //            var @decimal = Size_2.Width / Rectanglef_width;
+            //            var Ceiling = Math.Ceiling(@decimal);
+            //            var INDAX_int = Size.Height * Ceiling;
+            //            Rectanglef_height = (float)INDAX_int;
+            //        }
+            //    }
+            //    page_x += List_Text_width2[0][R] + page_notovers; // บวกขนาดในรอบถัดไป
+            //    Center = page_x;
+            //}
+        }
+
+
 
         // เลือก Font ตามใจฉัน
-        public static Font FonT(float SizeFont, String Font, FontStyle Fontstyle)
+        public static Font Font(float SizeFont, String Font, FontStyle Fontstyle)
         {
             Font F = new Font(Font, SizeFont, Fontstyle);
             return F;
