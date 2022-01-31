@@ -866,7 +866,7 @@ namespace BankTeacher.Bank.Pay
             this.DGV_Pay.Margin = new System.Windows.Forms.Padding(2);
             this.DGV_Pay.Name = "DGV_Pay";
             this.DGV_Pay.RowHeadersVisible = false;
-            this.DGV_Pay.RowHeadersWidth = 51;
+            this.DGV_Pay.RowHeadersWidth = 51; 
             this.DGV_Pay.RowTemplate.Height = 24;
             this.DGV_Pay.Size = new System.Drawing.Size(846, 182);
             this.DGV_Pay.TabIndex = 99;
