@@ -11,7 +11,7 @@ namespace BankTeacher.Class.Print
     class SetPrintMedtods
     {
         // ถังขยะ 
-        static float nu;
+        public static float nu;
         // Array ไม่เเน่ใจในการใช้งาน
         static List<float> OverMax = new List<float>();
 
@@ -110,7 +110,7 @@ namespace BankTeacher.Class.Print
             , int SetCut, float X, float Y, out float ReturnX, out float ReturnY, int selectresult)
         {
             // ขนาด Point ข้อความ
-            SizeF SizeText = e.Graphics.MeasureString("", Class.Print.PrintPreviewDialog.FonT(18, "TH Sarabun New", FontStyle.Regular));
+            SizeF SizeText = e.Graphics.MeasureString("", Class.Print.PrintPreviewDialog.Font(18, "TH Sarabun New", FontStyle.Regular));
             // สระ
             Char[] Word = { 'ำ', 'ะ', 'ั', 'ี', 'ุ', 'ึ', 'เ', '็', '้', '๋', 'ิ', 'ื', '์', '.', ' ' }; //  ,'่'
             // ตัด สระ
@@ -166,7 +166,7 @@ namespace BankTeacher.Class.Print
                     // เเทนค่าที่เเยกออกมาสู่กระบวนการผลิต
                     TextToCut = storeCut;
                     // ตรวจสอบขนาด ข้อคววาม ความยาว
-                    SizeText = e.Graphics.MeasureString(splitCut, Class.Print.PrintPreviewDialog.FonT(18, "TH Sarabun New", FontStyle.Regular));
+                    SizeText = e.Graphics.MeasureString(splitCut, Class.Print.PrintPreviewDialog.Font(18, "TH Sarabun New", FontStyle.Regular));
                     // ทำการเก็บขนาดข้อความที่ยาวที่สุดไว้
                     if (one == 0)
                     {
@@ -182,11 +182,11 @@ namespace BankTeacher.Class.Print
             }
             else
             {
-                SizeText = e.Graphics.MeasureString(TextToCut, Class.Print.PrintPreviewDialog.FonT(18, "TH Sarabun New", FontStyle.Regular));
+                SizeText = e.Graphics.MeasureString(TextToCut, Class.Print.PrintPreviewDialog.Font(18, "TH Sarabun New", FontStyle.Regular));
                 Y += SizeText.Height;
                 OverMax.Add(Y);
 
-                SizeText = e.Graphics.MeasureString(TextToCut, Class.Print.PrintPreviewDialog.FonT(18, "TH Sarabun New", FontStyle.Regular));
+                SizeText = e.Graphics.MeasureString(TextToCut, Class.Print.PrintPreviewDialog.Font(18, "TH Sarabun New", FontStyle.Regular));
                 X += SizeText.Width;
             }
             // ส่งกรอบกำหนด เเก X กลับไป กว้าง
@@ -279,13 +279,13 @@ namespace BankTeacher.Class.Print
             int sum;
             // ยอดที่รวมได้ทั้งหมด 
             sum = Convert.ToInt32(array.Sum());
-            SizeF SizeSUM = e.Graphics.MeasureString(Class.Print.PrintPreviewDialog.NumToBath(sum.ToString()), Class.Print.PrintPreviewDialog.FonT(Fontsize, "TH Sarabun New", FontStyle.Bold));
+            SizeF SizeSUM = e.Graphics.MeasureString(Class.Print.PrintPreviewDialog.NumToBath(sum.ToString()), Class.Print.PrintPreviewDialog.Font(Fontsize, "TH Sarabun New", FontStyle.Bold));
             // ตัวหนังสือเลข
-            e.Graphics.DrawString(Class.Print.PrintPreviewDialog.NumToBath(sum.ToString()), Class.Print.PrintPreviewDialog.FonT(18, "TH Sarabun New", FontStyle.Bold), B, x, y);
+            e.Graphics.DrawString(Class.Print.PrintPreviewDialog.NumToBath(sum.ToString()), Class.Print.PrintPreviewDialog.Font(18, "TH Sarabun New", FontStyle.Bold), B, x, y);
             // เส้น
             e.Graphics.DrawRectangle(pen, x, y, SizeSUM.Width, SizeSUM.Height);
             // ตัวเลข
-            e.Graphics.DrawString($"{comma(sum).ToString()} บาท", Class.Print.PrintPreviewDialog.FonT(18, "TH Sarabun New", FontStyle.Bold), B, ((Sizepaper - 50) - SizeSUM.Width) / 2 + SizeSUM.Width, y);
+            e.Graphics.DrawString($"{comma(sum).ToString()} บาท", Class.Print.PrintPreviewDialog.Font(18, "TH Sarabun New", FontStyle.Bold), B, ((Sizepaper - 50) - SizeSUM.Width) / 2 + SizeSUM.Width, y);
             // เส้น
             e.Graphics.DrawRectangle(pen, SizeSUM.Width + x, y, (Sizepaper-50) - SizeSUM.Width, SizeSUM.Height);
         }
@@ -302,11 +302,11 @@ namespace BankTeacher.Class.Print
                 script = "สำเนา";
             }
             // ต้นฉบับ  สำเนา
-            SizeF Size = e.Graphics.MeasureString(script, Class.Print.PrintPreviewDialog.FonT(30, "TH Sarabun New", FontStyle.Bold));
+            SizeF Size = e.Graphics.MeasureString(script, Class.Print.PrintPreviewDialog.Font(30, "TH Sarabun New", FontStyle.Bold));
             // พื้นหลัง
             e.Graphics.FillRectangle(Brushes.White, SizeForm_Width - Size.Width - move, 50, Size.Width, Size.Height - 10);
             // ข้อความ
-            e.Graphics.DrawString(script, Class.Print.PrintPreviewDialog.FonT(30, "TH Sarabun New", FontStyle.Bold), Brush, SizeForm_Width - Size.Width - move, 50);
+            e.Graphics.DrawString(script, Class.Print.PrintPreviewDialog.Font(30, "TH Sarabun New", FontStyle.Bold), Brush, SizeForm_Width - Size.Width - move, 50);
             // กล่อง
             e.Graphics.DrawRectangle(Pen, SizeForm_Width - Size.Width - move, 50, Size.Width, Size.Height - 10);
         }
@@ -329,11 +329,11 @@ namespace BankTeacher.Class.Print
                     Text = string_Text2;
                     Textinfo = Textinfo2;
                 }
-                Size = e.Graphics.MeasureString(Textinfo,Class.Print.PrintPreviewDialog.FonT(18, "TH Sarabun New", FontStyle.Bold));
-                Size1 = e.Graphics.MeasureString(Text,Class.Print.PrintPreviewDialog.FonT(16, "TH Sarabun New", FontStyle.Regular));
-                e.Graphics.DrawString(Text,Class.Print.PrintPreviewDialog.FonT(16, "TH Sarabun New", FontStyle.Regular), BrushBlack, (Line2_x - Box_SizeX) - Size1.Width, location_Box + 5);
+                Size = e.Graphics.MeasureString(Textinfo,Class.Print.PrintPreviewDialog.Font(18, "TH Sarabun New", FontStyle.Bold));
+                Size1 = e.Graphics.MeasureString(Text,Class.Print.PrintPreviewDialog.Font(16, "TH Sarabun New", FontStyle.Regular));
+                e.Graphics.DrawString(Text,Class.Print.PrintPreviewDialog.Font(16, "TH Sarabun New", FontStyle.Regular), BrushBlack, (Line2_x - Box_SizeX) - Size1.Width, location_Box + 5);
                 // ข้อความ
-                e.Graphics.DrawString(Textinfo,Class.Print.PrintPreviewDialog.FonT(18, "TH Sarabun New", FontStyle.Bold), BrushBlack, Line2_x - (Box_SizeX / 2) - Size.Width / 2, location_Box);
+                e.Graphics.DrawString(Textinfo,Class.Print.PrintPreviewDialog.Font(18, "TH Sarabun New", FontStyle.Bold), BrushBlack, Line2_x - (Box_SizeX / 2) - Size.Width / 2, location_Box);
                 // กล่อง
                 e.Graphics.DrawRectangle(PenBlack, Line2_x - Box_SizeX, location_Box, Box_SizeX, Box_SizeY);
                 location_Box += Box_SizeY;
@@ -378,7 +378,8 @@ namespace BankTeacher.Class.Print
         public static void Center(System.Drawing.Printing.PrintPageEventArgs e, float LocY, String Text, Font fontText, Brush brush)
         {
             SizeF SizeString = e.Graphics.MeasureString(Text, fontText);
-            float StartLoc = e.PageBounds.Width / 2 - SizeString.Width / 2; e.Graphics.DrawString(Text, fontText, brush, new PointF(StartLoc, LocY));
+            float StartLoc = e.PageBounds.Width / 2 - SizeString.Width / 2; 
+            e.Graphics.DrawString(Text, fontText, brush, new PointF(StartLoc, LocY));
         }
         // Comment!
         public static void CenterRight(System.Drawing.Printing.PrintPageEventArgs e, string Text, Font fontText, Brush brush, float X, float Y, float Pointplus, float Pointdelete)
