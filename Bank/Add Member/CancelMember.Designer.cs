@@ -138,6 +138,7 @@ namespace BankTeacher.Bank.Add_Member
             this.tabControl1.Size = new System.Drawing.Size(840, 516);
             this.tabControl1.TabIndex = 61;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
+            this.tabControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tabControl1_KeyDown);
             // 
             // tabPage1
             // 
@@ -183,7 +184,7 @@ namespace BankTeacher.Bank.Add_Member
             this.BSave.BackColor = System.Drawing.Color.White;
             this.BSave.Enabled = false;
             this.BSave.Font = new System.Drawing.Font("TH Sarabun New", 19.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BSave.Location = new System.Drawing.Point(636, 252);
+            this.BSave.Location = new System.Drawing.Point(636, 239);
             this.BSave.Name = "BSave";
             this.BSave.Size = new System.Drawing.Size(168, 60);
             this.BSave.TabIndex = 56;
@@ -348,6 +349,7 @@ namespace BankTeacher.Bank.Add_Member
             this.Column1.MinimumWidth = 6;
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
+            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Column1.Width = 150;
             // 
             // Column4
@@ -356,6 +358,7 @@ namespace BankTeacher.Bank.Add_Member
             this.Column4.MinimumWidth = 6;
             this.Column4.Name = "Column4";
             this.Column4.ReadOnly = true;
+            this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Column4.Width = 130;
             // 
             // Column2
@@ -366,6 +369,7 @@ namespace BankTeacher.Bank.Add_Member
             this.Column2.MinimumWidth = 6;
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
+            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Column2.Width = 250;
             // 
             // Column3
@@ -377,6 +381,7 @@ namespace BankTeacher.Bank.Add_Member
             this.Column3.MinimumWidth = 6;
             this.Column3.Name = "Column3";
             this.Column3.ReadOnly = true;
+            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // CancelMember
             // 
@@ -394,6 +399,7 @@ namespace BankTeacher.Bank.Add_Member
             this.Text = "CancelMember";
             this.SizeChanged += new System.EventHandler(this.CancelMember_SizeChanged_1);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CancelMember_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.CancelMember_KeyUp);
             this.panel1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -440,10 +446,10 @@ namespace BankTeacher.Bank.Add_Member
         private System.Windows.Forms.Label LB5Ye;
         private System.Windows.Forms.ComboBox CBYear_HistoryCancel;
         private System.Windows.Forms.DataGridView DGV_HistoryCancel;
+        private System.Windows.Forms.Button BExitForm;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.Button BExitForm;
     }
 }

@@ -1283,6 +1283,8 @@ namespace BankTeacher.Class.Print
                             }
                             if (@string_Unicode == "") { @string_Unicode = G.Rows[-1].Cells[-1].Value.ToString(); } // เเจ้งเตือน Error ไม่มี ยอดสรุป เเบบปริ้นนี้จำเป็นต้องอ้างอิงยอดสรุป
 
+    
+
                             if (!G.Rows[R].Cells[location_Unicode_Cells].Value.ToString().Contains(Unicode)) // ซ้ำกัน  // (เเบบปริ้นนี้จำเป็นต้องอ้างอิงยอดสรุป) ถูกกำหนดไว้ ถ้าข้อมูลในตารางเปลี่ยน ข้อมูลอาจเสียหาย สามารถอ้างอิงโดยใช้ Unicode
                             {
                                 similar++; // บวกขนาดที่ไม่มี ยอดสรุป

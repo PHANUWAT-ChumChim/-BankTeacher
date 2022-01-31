@@ -48,20 +48,21 @@ namespace BankTeacher.Class.ProtocolSharing
                 StatusRetrun = "";
             }
             //เช็คเวลาการเชื่อมต่อ
-            Thread Td; bool door;
+            Thread ThreadRunTime; 
+            bool door;
             public bool IsValidConnection()
             {
                 Stopwatch time = new Stopwatch();
-                Td = new Thread(() => Connection());
-                Td.Start();
+                ThreadRunTime = new Thread(() => Connection());
+                ThreadRunTime.Start();
                 time.Start();
-                while (Td.ThreadState == System.Threading.ThreadState.Running)
+                while (ThreadRunTime.ThreadState == System.Threading.ThreadState.Running)
                 {
-                    if (time.ElapsedMilliseconds >= 1000 && Td.IsAlive)
+                    if (time.ElapsedMilliseconds >= 3000 && ThreadRunTime.IsAlive)
                     {
                         if (!door)
                         {
-                            Td.Abort();
+                            ThreadRunTime.Abort();
                         }
                         break;
                     }
@@ -69,6 +70,7 @@ namespace BankTeacher.Class.ProtocolSharing
                 time.Stop();
                 return door;
             }
+
             // เช็คการเชื่อมต่อเซิร์ฟเวอร์ ข้อมูลจะเเสดงรายละเอียดการเชื่อมต่อ \
 
             public bool Connection()
@@ -116,19 +118,15 @@ namespace BankTeacher.Class.ProtocolSharing
                             BankTeacher.Bank.SelectFile SF = new BankTeacher.Bank.SelectFile(path);
                             SF.ShowDialog();
                             network.Dispose();
-                            Bank.SelectFile.OpenEnableButton = true;
                         }
                         else
                         {
                             network.Dispose();
-                            Bank.SelectFile.OpenEnableButton = true;
                             StatusRetrun = "ไม่พบไฟล์ กรุณาส่งไฟล์ก่อนจึงจะสามรถเปิดไฟล์ได้";
                             System.Windows.Forms.MessageBox.Show(StatusRetrun, "ไฟล์", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Information);
                             return;
                         }
                     }
-                //}
-                //catch { Bank.SelectFile.OpenEnableButton = true; return; }
                 
             }
             String ID = "";
@@ -158,7 +156,7 @@ namespace BankTeacher.Class.ProtocolSharing
                     if (time.ElapsedMilliseconds >= 2000 && ThreadCheckFile.IsAlive)
                     {
                         StatusRetrun = "ไม่พบเอกสารการสมัครในระบบ";
-                        //ThreadCheckFile.Abort();
+                        ThreadCheckFile.Abort();
                         break;
                     }
                 }
@@ -296,21 +294,21 @@ namespace BankTeacher.Class.ProtocolSharing
             }
 
             // ตัวเเปรสำหรับเช็คการเเยกการทำงานกับเช็คการเข้าออก
-            Thread Found;
+            Thread ThreadConnected;
             // เช็คภายในโฟร์เดอร์ส่ามีเอกสารอยู่หรือไม่
             public bool FileConncet(string File)
             {
                 Stopwatch time = new Stopwatch();
-                Found = new Thread(() => File_(File));
-                Found.Start();
+                ThreadConnected = new Thread(() => File_(File));
+                ThreadConnected.Start();
                 time.Start();
-                while (Found.ThreadState == System.Threading.ThreadState.Running)
+                while (ThreadConnected.ThreadState == System.Threading.ThreadState.Running)
                 {
-                    if (time.ElapsedMilliseconds >= 1000 && Found.IsAlive || door)
+                    if (time.ElapsedMilliseconds >= 3000 && ThreadConnected.IsAlive || door)
                     {
                         if (!door)
                         {
-                            Found.Abort();
+                            ThreadConnected.Abort();
                             break;
                         }
                       

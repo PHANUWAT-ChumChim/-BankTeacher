@@ -125,19 +125,20 @@ namespace BankTeacher.Bank.Add_Member
             this.LScan_Reg.AutoSize = true;
             this.LScan_Reg.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.LScan_Reg.ForeColor = System.Drawing.Color.Red;
-            this.LScan_Reg.Location = new System.Drawing.Point(29, 234);
+            this.LScan_Reg.Location = new System.Drawing.Point(26, 234);
             this.LScan_Reg.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.LScan_Reg.Name = "LScan_Reg";
             this.LScan_Reg.Size = new System.Drawing.Size(131, 30);
             this.LScan_Reg.TabIndex = 53;
             this.LScan_Reg.Text = "ยังไม่ได้อัพโหลดไฟล์";
+            this.LScan_Reg.Visible = false;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(29, 52);
+            this.label5.Location = new System.Drawing.Point(26, 44);
             this.label5.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(196, 30);
@@ -153,7 +154,7 @@ namespace BankTeacher.Bank.Add_Member
             this.BTOpenfile_Reg.Location = new System.Drawing.Point(31, 172);
             this.BTOpenfile_Reg.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.BTOpenfile_Reg.Name = "BTOpenfile_Reg";
-            this.BTOpenfile_Reg.Size = new System.Drawing.Size(168, 60);
+            this.BTOpenfile_Reg.Size = new System.Drawing.Size(129, 60);
             this.BTOpenfile_Reg.TabIndex = 20;
             this.BTOpenfile_Reg.Text = "อัพโหลดไฟล์";
             this.BTOpenfile_Reg.UseVisualStyleBackColor = false;
@@ -164,14 +165,14 @@ namespace BankTeacher.Bank.Add_Member
             this.BTdeletefile_Reg.BackColor = System.Drawing.Color.White;
             this.BTdeletefile_Reg.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BTdeletefile_Reg.Cursor = System.Windows.Forms.Cursors.Default;
-            this.BTdeletefile_Reg.Enabled = false;
-            this.BTdeletefile_Reg.Location = new System.Drawing.Point(197, 172);
+            this.BTdeletefile_Reg.Location = new System.Drawing.Point(162, 172);
             this.BTdeletefile_Reg.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.BTdeletefile_Reg.Name = "BTdeletefile_Reg";
-            this.BTdeletefile_Reg.Size = new System.Drawing.Size(107, 60);
+            this.BTdeletefile_Reg.Size = new System.Drawing.Size(130, 60);
             this.BTdeletefile_Reg.TabIndex = 21;
-            this.BTdeletefile_Reg.Text = "ลบไฟล์";
+            this.BTdeletefile_Reg.Text = "ลบไฟล์ที่เลือก";
             this.BTdeletefile_Reg.UseVisualStyleBackColor = false;
+            this.BTdeletefile_Reg.Visible = false;
             this.BTdeletefile_Reg.Click += new System.EventHandler(this.BTdeletefile_Reg_Click);
             // 
             // BTPrintfShare_Reg
@@ -180,10 +181,10 @@ namespace BankTeacher.Bank.Add_Member
             this.BTPrintfShare_Reg.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BTPrintfShare_Reg.Cursor = System.Windows.Forms.Cursors.Default;
             this.BTPrintfShare_Reg.Enabled = false;
-            this.BTPrintfShare_Reg.Location = new System.Drawing.Point(27, 91);
+            this.BTPrintfShare_Reg.Location = new System.Drawing.Point(31, 94);
             this.BTPrintfShare_Reg.Margin = new System.Windows.Forms.Padding(1, 2, 1, 2);
             this.BTPrintfShare_Reg.Name = "BTPrintfShare_Reg";
-            this.BTPrintfShare_Reg.Size = new System.Drawing.Size(168, 60);
+            this.BTPrintfShare_Reg.Size = new System.Drawing.Size(261, 60);
             this.BTPrintfShare_Reg.TabIndex = 22;
             this.BTPrintfShare_Reg.Text = "Print";
             this.BTPrintfShare_Reg.UseVisualStyleBackColor = false;

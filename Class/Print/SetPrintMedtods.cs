@@ -378,7 +378,8 @@ namespace BankTeacher.Class.Print
         public static void Center(System.Drawing.Printing.PrintPageEventArgs e, float LocY, String Text, Font fontText, Brush brush)
         {
             SizeF SizeString = e.Graphics.MeasureString(Text, fontText);
-            float StartLoc = e.PageBounds.Width / 2 - SizeString.Width / 2; e.Graphics.DrawString(Text, fontText, brush, new PointF(StartLoc, LocY));
+            float StartLoc = e.PageBounds.Width / 2 - SizeString.Width / 2; 
+            e.Graphics.DrawString(Text, fontText, brush, new PointF(StartLoc, LocY));
         }
         // Comment!
         public static void CenterRight(System.Drawing.Printing.PrintPageEventArgs e, string Text, Font fontText, Brush brush, float X, float Y, float Pointplus, float Pointdelete)

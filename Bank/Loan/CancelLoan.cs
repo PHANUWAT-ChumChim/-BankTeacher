@@ -148,18 +148,21 @@ namespace BankTeacher.Bank.Loan
         private void CBList_SelectedIndexChanged(object sender, EventArgs e)
         {
             //DGV.Rows.Clear();
-
-            BankTeacher.Class.ComboBoxPayment Loan = (CBlist.SelectedItem as BankTeacher.Class.ComboBoxPayment);
-            DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{LoanNo}",Loan.No));
-            if (dt.Rows.Count != 0)
+            if(CBlist.SelectedIndex != -1)
             {
-                TBTeacherName.Text = dt.Rows[0][0].ToString();
-                DGVCancelLoan.Rows.Add(Loan.No,dt.Rows[0][1].ToString(),dt.Rows[0][0].ToString(),dt.Rows[0][3].ToString());
-                for(int x = 1; x < dt.Rows.Count; x++)
+                DGVCancelLoan.Rows.Clear();
+                BankTeacher.Class.ComboBoxPayment Loan = (CBlist.SelectedItem as BankTeacher.Class.ComboBoxPayment);
+                DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[2].Replace("{LoanNo}", Loan.No));
+                if (dt.Rows.Count != 0)
                 {
-                    DGVCancelLoan.Rows.Add("","", dt.Rows[x][0].ToString(), dt.Rows[x][3].ToString());
+                    TBTeacherName.Text = dt.Rows[0][0].ToString();
+                    DGVCancelLoan.Rows.Add(Loan.No, dt.Rows[0][1].ToString(), dt.Rows[0][0].ToString(), dt.Rows[0][3].ToString());
+                    for (int x = 1; x < dt.Rows.Count; x++)
+                    {
+                        DGVCancelLoan.Rows.Add("", "", dt.Rows[x][0].ToString(), dt.Rows[x][3].ToString());
+                    }
+                    //CBlist.Items.RemoveAt(CBlist.SelectedIndex);
                 }
-                CBlist.Items.RemoveAt(CBlist.SelectedIndex);
             }
         }
 
@@ -213,6 +216,7 @@ namespace BankTeacher.Bank.Loan
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
+                    CBlist.DroppedDown = false;
                     TBTeacherNo.Text = "";
                     CBlist.Items.Clear();
                     CBlist.SelectedIndex = -1;

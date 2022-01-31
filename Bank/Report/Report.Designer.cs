@@ -517,6 +517,7 @@ namespace BankTeacher.Bank
             this.Text = "Report";
             this.Load += new System.EventHandler(this.Report_Load);
             this.SizeChanged += new System.EventHandler(this.Report_SizeChanged);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Report_KeyUp);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.TP_LUP.ResumeLayout(false);
