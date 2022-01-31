@@ -613,36 +613,43 @@ namespace BankTeacher.Bank.Pay
                                         RMonth[x].Add(0);
                                     }
                                 }
-                            //loop เอาเดือนจาก RMonth แล้ว loop จาก RMonth[เดือน] ออกมา
-                            //หาว่ามีรายการอยู่ในนั้นมั้ย หาก มี ให้ข้าม หาก ไม่จน loop หมดทั้งเดือน ให้ ลบ
-                            for (int Count = 0; Count < RMonth.Count; Count++)
+                            for(int DetailRMonthCount = 0; DetailRMonthCount < RMonth.Count; DetailRMonthCount++)
                             {
-                                for (int CountDetail = 0; CountDetail < RMonth[Count].Count; CountDetail++)
+                                //ขอแก้แบบโง่ๆไปก่อนตอนนี้ จะ 6 โมงเช้าแล้วยังแก้ ไฟล์ไม่เสร็จเลยขอรับ -Mon
+                                if(DetailRMonthCount == RMonth.Count - 1)
                                 {
-                                    if (RMonth[Count][CountDetail] == 1)
+                                    //loop เอาเดือนจาก RMonth แล้ว loop จาก RMonth[เดือน] ออกมา
+                                    //หาว่ามีรายการอยู่ในนั้นมั้ย หาก มี ให้ข้าม หาก ไม่จน loop หมดทั้งเดือน ให้ ลบ
+                                    for (int Count = 0; Count < RMonth.Count; Count++)
                                     {
-                                        break;
-                                    }
-                                    else if (CountDetail == RMonth[Count].Count - 1)
-                                    {
-                                        if (RemovePosistion.Count != 0)
+                                        for (int CountDetail = 0; CountDetail < RMonth[Count].Count; CountDetail++)
                                         {
-                                            for (int y = 0; y < RemovePosistion.Count; y++)
+                                            if (RMonth[Count][CountDetail] == 1)
                                             {
-                                                if (RemovePosistion[y] == x)
+                                                break;
+                                            }
+                                            else if (CountDetail == RMonth[Count].Count - 1)
+                                            {
+                                                if (RemovePosistion.Count != 0)
                                                 {
-                                                    break;
+                                                    for (int y = 0; y < RemovePosistion.Count; y++)
+                                                    {
+                                                        if (RemovePosistion[y] == Count)
+                                                        {
+                                                            break;
+                                                        }
+                                                        else if (y == RemovePosistion.Count - 1 && RemovePosistion[y] != Count && RMonth[Count][CountDetail] == 0)
+                                                        {
+                                                            RemovePosistion.Add(Count);
+                                                            break;
+                                                        }
+                                                    }
                                                 }
-                                                else if (y == RemovePosistion.Count - 1 && RemovePosistion[y] != x && RMonth[x][CountDetail] == 0)
+                                                else
                                                 {
-                                                    RemovePosistion.Add(x);
-                                                    break;
+                                                    RemovePosistion.Add(Count);
                                                 }
                                             }
-                                        }
-                                        else
-                                        {
-                                            RemovePosistion.Add(x);
                                         }
                                     }
                                 }
@@ -731,6 +738,16 @@ namespace BankTeacher.Bank.Pay
                     else
                         CBYearSelection_BillInfo.Enabled = false;
 
+                    if(CBYearSelection_Pay.Items.Count > 3)
+                    {
+                        for(int x  = 3; x < CBYearSelection_Pay.Items.Count; x++)
+                        {
+                            CBYearSelection_Pay.Items.RemoveAt(x);
+                            DM.RemoveAt(x);
+                            YearinCB.RemoveAt(x);
+                            BackupDM.RemoveAt(x);
+                        }
+                    }
                 }
 
             }
