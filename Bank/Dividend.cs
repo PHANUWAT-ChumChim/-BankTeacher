@@ -380,7 +380,20 @@ namespace BankTeacher.Bank
         {
             if (e.KeyCode == Keys.Escape)
             {
-                 BExitForm_Click(new object(), new EventArgs());
+                if(CBYearDividend.SelectedIndex > -1)
+                {
+                    CBYearDividend.DroppedDown = false;
+                    CBYearDividend.SelectedIndex = -1;
+                    TBDividendAmount.Text = "";
+                    TBDividendPerShare.Text = "";
+                    TBInterestAmount.Text = "";
+                    TBInterestNextYear.Text = "";
+                    TBRemainInterest.Text = "";
+                    TBSavingAmount.Text = "";
+                    DGV.Rows.Clear();
+                }
+                else
+                    BExitForm_Click(new object(), new EventArgs());
             }
         }
 
