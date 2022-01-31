@@ -23,8 +23,8 @@ namespace BankTeacher.Bank
         /// <para>[1] Table[0]Select StartYear and Table[1]Select EndYear INPUT: </para>
         /// <para>[2] Table[0]Get Name , a.SavingAmount , a.DividendAmount , a.Interest , a.RemainInterestLastYear , a.AverageDividend Table[1]Get InterestLastYear INPUT: {Year}</para>
         /// <para>[3] AfterDividentInfo INPUT: {Year}</para>
-        /// <para>[4] Check Loan Paid are Complete in Year INPUT: {Year} </para>
-        /// <para>[5] Get TeacherList Unpaid INPUT: {Year} </para>
+        /// <para>[4] Check Loan Paid are Complete in Year INPUT: {Year} </para>\
+        /// <para>[5] Get TeacherList Unpaid INPUT: {Year} </para>\
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -349,7 +349,7 @@ namespace BankTeacher.Bank
                         {
                             UnpaidLoan.DGV.Rows.Add(dtUnpaid.Rows[a][0], dtUnpaid.Rows[a][1], dtUnpaid.Rows[a][2]);
                         }
-                        
+                        \
                     }
                 }
 
