@@ -383,6 +383,7 @@ namespace BankTeacher.Bank.Add_Member
                     StatusBoxFile = 0;
                     BTOpenfile_Reg.Text = "อัพโหลดไฟล์";
                     LScan_Reg.Text = "ยังไม่ได้อัพโหลดไฟล์";
+                    BTPrintfShare_Reg.Enabled = false;
                     LScan_Reg.ForeColor = Color.Red;
                     Checkmember(true);
                 }

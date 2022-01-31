@@ -214,6 +214,10 @@ namespace BankTeacher.Bank
                         CByear.Text = BankTeacher.Bank.Menu.Date[0];
                         panel7.Enabled = false;
                         CByear.Enabled = true;
+//<<<<<<< PP
+                        BTPrint.Enabled = true;
+//=======
+//>>>>>>> master
                     }
                     else
                     {

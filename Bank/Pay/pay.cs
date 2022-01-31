@@ -1718,7 +1718,7 @@ namespace BankTeacher.Bank.Pay
                         }
                         else if (BillNo != dt.Rows[x][0].ToString())
                         {
-                            DGV_BillInfo.Rows.Add("", "", "", "", "รวม", "", Sum);
+                            DGV_BillInfo.Rows.Add("", "", "", "", "รวม  ", "", Sum);
                             DGV_BillInfo.Rows[DGV_BillInfo.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Yellow;
                             x--;
                             //DGV_BillInfo.Rows[x].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
@@ -1731,7 +1731,7 @@ namespace BankTeacher.Bank.Pay
                             Balance += Convert.ToInt32(dt.Rows[Amountsum++][3].ToString());
                         if (x == dt.Rows.Count - 1)
                         {
-                            DGV_BillInfo.Rows.Add("", "", "", "", "รวม", "", Sum);
+                            DGV_BillInfo.Rows.Add("", "", "", "", "รวม  ", "", Sum);
                             DGV_BillInfo.Rows[DGV_BillInfo.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Yellow;
                             Sum = 0;
                             Line++;
@@ -1751,7 +1751,7 @@ namespace BankTeacher.Bank.Pay
                         {
                             DGV_BillInfo.Rows[loop].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
                         }
-                        else if (DGV_BillInfo.Rows[loop].Cells[4].Value.ToString() != "รวม")
+                        else if (DGV_BillInfo.Rows[loop].Cells[4].Value.ToString() != "รวม  ")
                         {
                             DGV_BillInfo.Rows[loop].DefaultCellStyle.BackColor = Color.LightYellow;
                         }
@@ -2328,7 +2328,11 @@ namespace BankTeacher.Bank.Pay
             {
                 //Class.Print.PrintPreviewDialog.details = 1;
                 //Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_BillInfo, "บิลล์การจ่าย", this.AccessibilityObject.Name, false, false, "A4", 1);
-                Class.Print.PrintPreviewDialog.Detailspayment(e,DGV_BillInfo);
+//<<<<<<< PP
+                Class.Print.PrintPreviewDialog.ABCD(e, DGV_BillInfo,"รายการ");
+//=======
+                //Class.Print.PrintPreviewDialog.Detailspayment(e,DGV_BillInfo);
+//>>>>>>> master
             }
             else if (CB_SelectPrint.SelectedIndex == 1 && Printbill != 1)
             {
