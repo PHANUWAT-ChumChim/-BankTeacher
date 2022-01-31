@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -38,7 +38,10 @@ namespace BankTeacher.Bank.Loan
         /// <para>[1] SELECT LOAN INPUT: {TeacherNo} </para>
         /// <para>[2] SELECT Detail Loan INPUT: {LoanID} </para>
         /// <para>[3] for printback  INPUT : {TeacherNo} {LoanNo} </para>
-        ///   //[4] BackPrint payLoan INPUT : {TeacherNo} {LoanNo}
+        /// <para>[4] BackPrint payLoan INPUT : {TeacherNo} {LoanNo}</para>
+        /// <para>[5] CheckFile INPUT: {LoanNo} </para>
+        /// <para>[6] INSERT And Update File INPUT: {TeacherNo} {PathFile} {TeacherNoAddBy}</para>
+        /// <para>[7] Remove File INPUT: {TeacherRemoveBy} {LoanNo} {ID}</para>
         /// </summary>
         private String[] SQLDefault =
         {
@@ -61,19 +64,19 @@ namespace BankTeacher.Bank.Loan
 
                 ,
           //[1] SELECT LOAN INPUT: {TeacherNo} : 
-           "SELECT TOP 5 a.LoanNo , CAST(ISNULL(d.PrefixNameFull , '') + Fname + ' ' + Lname AS NVARCHAR)  \r\n " +
+           "SELECT a.LoanNo , CAST(ISNULL(d.PrefixNameFull , '') + Fname + ' ' + Lname AS NVARCHAR)  \r\n " +
           "FROM EmployeeBank.dbo.tblLoan as a   \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo   \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as c on a.TeacherNo = c.TeacherNo  \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo  \r\n " +
           "WHERE a.TeacherNo = '{TeacherNo}' and LoanStatusNo != 4   \r\n " +
           "GROUP BY a.LoanNo , CAST(ISNULL(d.PrefixNameFull , '') + Fname + ' ' + Lname AS NVARCHAR) \r\n " +
-          "ORDER BY a.LoanNo DESC"
+          "ORDER BY a.LoanNo  "
            ,
 
           //[2] SELECT Detail Loan INPUT: {LoanID}
            "SELECT b.TeacherNo , CAST(ISNULL(d.PrefixNameFull , '') + c.Fname + ' ' + c.Lname AS NVARCHAR) AS NameTeacher,CAST(DateAdd as date) as SignUpdate,  \r\n " +
-          " a.PayDate,MonthPay,YearPay,PayNo,InterestRate,LoanAmount,b.Amount,g.LoanStatusName    \r\n " +
+          " a.PayDate,MonthPay,YearPay,PayNo,InterestRate,LoanAmount,b.Amount,g.LoanStatusName   \r\n " +
           " ,TeacherNoAddBy, CAST(ISNULL(f.PrefixNameFull , '') + e.Fname + ' ' + e.Lname AS NVARCHAR) AS NameTeacherAddby   \r\n " +
           " , DATEADD(MONTH,a.PayNo-1,CAST(CAST(a.YearPay as varchar) + '/' + CAST(a.MonthPay as varchar) +'/01' as date)) as FinishDate \r\n " +
           " , (a.InterestRate / 100) * a.LoanAmount as Interest  \r\n " +
@@ -83,8 +86,8 @@ namespace BankTeacher.Bank.Loan
           " LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo    \r\n " +
           " LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo     \r\n " +
           " LEFT JOIN Personal.dbo.tblTeacherHis as e on a.TeacherNoAddBy = e.TeacherNo   \r\n " +
-          " LEFT JOIN BaseData.dbo.tblPrefix as f on e.PrefixNo = f.PrefixNo \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblLoanStatus as g on a.LoanStatusNo = g.LoanStatusNo\r\n" +
+          " LEFT JOIN BaseData.dbo.tblPrefix as f on e.PrefixNo = f.PrefixNo     \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblLoanStatus as g on a.LoanStatusNo = g.LoanStatusNo \r\n" + 
           " WHERE a.LoanNo = '{LoanID}' and a.LoanStatusNo != 4 ;  \r\n " +
           "   \r\n " +
           " SELECT Concat(b.Mount , '/' , Year)  \r\n " +
@@ -123,6 +126,30 @@ namespace BankTeacher.Bank.Loan
           "LEFT JOIN BaseData.dbo.tblPrefix d ON c.PrefixNo = d.PrefixNo \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailPayment f ON a.BillDetailPaymentNo = f.BillDetailPaymentNo \r\n " +
           "WHERE a.TeacherNo = '{TeacherNo}'AND LoanNo = '{LoanNo}'"
+          ,
+          //[5] CheckFile INPUT: {LoanNo} 
+           "SELECT ID \r\n " +
+          "FROM EmployeeBank.dbo.tblFile \r\n " +
+          "WHERE FiletypeNo = 3 and LoanID = '{LoanNo}' and IsUse = 1 and StatusFileInSystem = 1"
+           ,
+           //[6] INSERT And Update File INPUT: {TeacherNo} {PathFile} {TeacherNoAddBy}
+           "INSERT INTO EmployeeBank.dbo.tblFile(TeacherNo,FiletypeNo,pathFile,TeacherAddBy,LoanID,DateAddFile,IsUse,TeacherRemoveFileBy,DateRemvoeFile,StatusFileInSystem) \r\n " +
+          "VALUES('{TeacherNo}','3','{PathFile}','{TeacherNoAddBy}',{LoanNo},CURRENT_TIMESTAMP,1,null,null,1) \r\n " +
+          " \r\n " +
+          "UPDATE EmployeeBank.dbo.tblLoan \r\n " +
+          "SET DocStatusNo = 1 , DocUploadPath = '{PathFile}' \r\n"+
+          "WHERE LoanNo = '{LoanNo}';"
+           ,
+           //[7] Remove File INPUT: {TeacherRemoveBy} {LoanNo} {ID}
+           "UPDATE EmployeeBank.dbo.tblFile \r\n " +
+          "SET IsUse = 0, TeacherRemoveFileBy = '{TeacherRemoveBy}', DateRemvoeFile = CURRENT_TIMESTAMP , StatusFileInSystem = 2 \r\n " +
+          "WHERE ID = '{ID}'; \r\n " +
+          " \r\n " +
+          "UPDATE EmployeeBank.dbo.tblLoan \r\n " +
+          "SET DocStatusNo = 2 , DocUploadPath = '' \r\n " +
+          "WHERE LoanNo = '{LoanNo}'"
+           ,
+
 
 
         };
@@ -250,8 +277,8 @@ namespace BankTeacher.Bank.Loan
                     CB_LoanNo.Enabled = false;
 
                     //comboBox1.Enabled = false;
-                    button3.Enabled = false;
-                    BTOpenfile_Reg.Enabled = false;
+                    BTOpenFile.Enabled = false;
+                    BTUploadFile.Enabled = false;
                     Checkmember(true);
                     Check = 0;
                     TBLoanNo.Text = "";
@@ -336,8 +363,8 @@ namespace BankTeacher.Bank.Loan
                         DGVGuarantor.Rows.Add(ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][1].ToString(), Percent[x], ds.Tables[0].Rows[x][9].ToString());
                     }
                     TBLoanNo.Text = Loan.No;
-                    button3.Enabled = true;
-                    BTOpenfile_Reg.Enabled = true;
+                    BTOpenFile.Enabled = true;
+                    BTUploadFile.Enabled = true;
                     TBYearPay_Detail.Text = ds.Tables[0].Rows[0][5].ToString();
                     TBMonthPay_Detail.Text = ds.Tables[0].Rows[0][4].ToString();
                     TBTotalAmount_Detail.Text = ds.Tables[0].Rows[0][15].ToString();
@@ -471,7 +498,7 @@ namespace BankTeacher.Bank.Loan
                 }
                 else
                 {
-                    MessageBox.Show("โปรดเเจ้งผู้ทำระบบ", "เเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("เกิดข้อผิดพลาดโปรดลองใหม่อีกครั้งภายหลัง", "เเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else if(CB_SelectPrint.SelectedIndex == 1)
@@ -496,7 +523,7 @@ namespace BankTeacher.Bank.Loan
                 }
                 else
                 {
-                    MessageBox.Show("โปรดเเจ้งผู้ทำระบบ", "เเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("เกิดข้อผิดพลาด โปรดแจ้งคนทำเลยจ้า", "เเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
         }
@@ -511,7 +538,6 @@ namespace BankTeacher.Bank.Loan
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
-                    CB_LoanNo.DroppedDown = false;
                     Checkmember(true);
                     TBTeacherNo.Text = "";
                     CB_LoanNo.Items.Clear();
@@ -520,10 +546,12 @@ namespace BankTeacher.Bank.Loan
                     DGVGuarantor.Rows.Clear();
 
                     CB_LoanNo.Enabled = false;
-
+                    tabControl1.SelectedIndex = 0;
+                    tabControl1.Enabled = false;
                     //comboBox1.Enabled = false;
                     //button3.Enabled = false;
-                    BTOpenfile_Reg.Enabled = false;
+                    BTUploadFile.Enabled = false;
+                    BTPrint.Enabled = false;
 
                     Check = 0;
                     TBLoanNo.Text = "";
@@ -555,66 +583,65 @@ namespace BankTeacher.Bank.Loan
         {
             if (CB_LoanNo.SelectedIndex != -1)
             {
-                BankTeacher.Class.ComboBoxPayment Loan = (CB_LoanNo.SelectedItem as BankTeacher.Class.ComboBoxPayment);
-                //Input Location Folder
-                var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("Loan");
-                if (smb.IsValidConnection())
+                DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[5]
+                    .Replace("{LoanNo}", TBLoanNo.Text));
+                if (dt.Rows.Count != 0)
                 {
-                    //Input Contain words แนะนำ เป็นรหัสอาจารย์ ในหน้าทั่วไปส่วนหน้าไหนถ้ามีการทำรายการเยอะๆให้เอาเป็นเลขบิลล์ของหน้านั้นๆเช่นหน้าดูเอกสารกู้ จะใส่เป็นเลขกู้ หน้าดูเอกสาร สมัครสมาชิกจะใส่เป็นชื่ออาจารย์
-                    smb.GetFile(Loan.No);
+                    BankTeacher.Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("Loan");
+                    BTOpenFile.Enabled = false;
+                    BTRemoveFile.Enabled = false;
+                    BTUploadFile.Enabled = false;
+                    FTP.FTPOpenFile($"Loan{TBLoanNo.Text}.pdf");
+                    BTOpenFile.Enabled = true;
+                    BTRemoveFile.Enabled = true;
+                    BTUploadFile.Enabled = true;
                 }
-                else { MessageBox.Show("โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเข้าถึงโฟร์เดอร์ได้", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+                else
+                    MessageBox.Show("ไม่พบเอกสารในระบบโปรดอัพโหลดเอกสารก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-        String imgeLocation = "";
+        String PathFile = "";
         private void BTOpenfile_Reg_Click(object sender, EventArgs e)
         {
-            DataTable dt = Class.SQLConnection.InputSQLMSSQL("SELECT a.DocStatusNo, a.DocUploadPath \r\n" +
-            "FROM EmployeeBank.dbo.tblLoan as a \r\n" +
-            "WHERE a.LoanNo = '{LoanNo}'".Replace("{LoanNo}", TBLoanNo.Text));
             if (CB_LoanNo.SelectedIndex != -1)
             {
-                if (dt.Rows[0][0].ToString() != "1")
+                BankTeacher.Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("Loan");
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5]
+                    .Replace("{LoanNo}", TBLoanNo.Text));
+                if (dt.Rows.Count == 0)
                 {
                     BankTeacher.Class.ComboBoxPayment Loan = (CB_LoanNo.SelectedItem as BankTeacher.Class.ComboBoxPayment);
-                    try
+                    OpenFileDialog dialog = new OpenFileDialog();
+                    dialog.Filter = "pdf files(*.pdf)|*.pdf";
+                    if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
-                        OpenFileDialog dialog = new OpenFileDialog();
-                        dialog.Filter = "pdf files(*.pdf)|*.pdf";
-                        if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                        {
-                            imgeLocation = dialog.FileName;
-                        }
-                        if (imgeLocation != "")
-                        {
-
-                            var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("Loan");
-                            if (smb.IsValidConnection())
-                            {
-                                String Return = smb.SendFile(imgeLocation, "Loan" + Loan.No + ".pdf", TBTeacherNo.Text, 3, BankTeacher.Class.UserInfo.TeacherNo, Loan.No);
-                                MessageBox.Show(Return, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                if (Return.Contains("อัพโหลดเอกสารสำเร็จ"))
-                                {
-                                    Class.SQLConnection.InputSQLMSSQL("UPDATE EmployeeBank.dbo.tblLoan \r\n" +
-                                    "set DocStatusNo = 1, DocUploadPath = '{PathFile}' \r\n".Replace("{PathFile}", smb.networkPath + "Loan" + Loan.No + ".pdf") +
-                                    "WHERE LoanNo = '{LoanNo}'".Replace("{LoanNo}", TBLoanNo.Text));
-                                    imgeLocation = "";
-                                    LB_Flie.Text = "อัพโหลดสำเร็จ";
-                                    LB_Flie.ForeColor = Color.Green;
-                                }
-                            }
-                            else
-                            {
-                                MessageBox.Show("ไม่สามารถสร้างไฟล์ในที่นั้นได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            }
-                        }
+                        PathFile = dialog.FileName;
                     }
-                    catch
+                    if (PathFile != "" && PathFile != null)
                     {
-                        MessageBox.Show("An Error Occured", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        BTOpenFile.Enabled = false;
+                        BTRemoveFile.Enabled = false;
+                        BTUploadFile.Enabled = false;
+                        FTP.FTPSendFile(PathFile,$@"Loan{TBLoanNo.Text}.pdf");
+                        if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
+                        {
+                            Class.SQLConnection.InputSQLMSSQL(SQLDefault[6]
+                                .Replace("{TeacherNo}",TBTeacherNo.Text)
+                                .Replace("{TeacherNoAddBy}",BankTeacher.Class.UserInfo.TeacherNo)
+                                .Replace("{PathFile}",FTP.HostplusPathFile+ $@"Loan{TBLoanNo.Text}.pdf")
+                                .Replace("{LoanNo}",TBLoanNo.Text));
+                            PathFile = "";
+                            LB_Flie.Text = "อัพโหลดสำเร็จ";
+                            LB_Flie.ForeColor = Color.Green;
+                            MessageBox.Show("อัพโหลดเอกสารสำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                        }
+                        BTOpenFile.Enabled = true;
+                        BTRemoveFile.Enabled = true;
+                        BTUploadFile.Enabled = true;
                     }
                 }
-                else { MessageBox.Show("ทำการส่งไฟล์แล้ว ไม่สามารถดำเนินการส่งไฟล์ซ้ำได้", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Warning); }
+                else 
+                    MessageBox.Show("ไม่สามารถอัพโหลดเอกสารได้เนื่องจากมีเอกสารอยู่ในระบบแล้ว", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             else
             {
@@ -638,27 +665,23 @@ namespace BankTeacher.Bank.Loan
 
         private void BT_deleteflie_Click(object sender, EventArgs e)
         {
-                var smb = new BankTeacher.Class.ProtocolSharing.ConnectSMB.SmbFileContainer("Loan");
-                if (smb.IsValidConnection())
+            DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[5]
+                .Replace("{LoanNo}", TBLoanNo.Text));
+            if (dt.Rows.Count != 0)
+            {
+                BankTeacher.Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("Loan");
+                FTP.FTPRemoveFile($@"Loan{TBLoanNo.Text}.pdf");
+                if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
                 {
-                    smb.GetFile(TBLoanNo.Text);
+                    BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[7]
+                        .Replace("{TeacherRemoveBy}",BankTeacher.Class.UserInfo.TeacherNo)
+                        .Replace("{ID}",dt.Rows[0][0].ToString())
+                        .Replace("{LoanNo}",TBLoanNo.Text));
+                    MessageBox.Show("ลบเอกสารสำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                 }
-                else 
-                    MessageBox.Show("โปรดตรวจสอบการเชื่อมต่อ ไม่สามรถเข้าถึงโฟร์เดอร์ได้", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-            
-            //if (BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun != "")
-            //{
-            //    MessageBox.Show(BankTeacher.Class.ProtocolSharing.ConnectSMB.StatusRetrun, "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //}
-            //if (System.IO.File.Exists($@"{smb.networkPath}\Loan{TBLoanNo.Text}.pdf"))
-            //{
-
-            //}
-            //else
-            //{
-            //    MessageBox.Show("ไม่พบไฟล์ โปรดตวรจสอบ การส่งไฟล์ใหม่ หรือ ดูที่อยู่ไฟล์","ไฟล์",MessageBoxButtons.OK,MessageBoxIcon.Information);
-            //}
+            }
+            else
+                MessageBox.Show("ไม่สามารถลบได้เนื่องจากไม่มีเอกสารอยู่ในระบบ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
         }
 
         private void InfoLoan_KeyUp(object sender, KeyEventArgs e)
