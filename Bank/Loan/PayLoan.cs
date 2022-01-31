@@ -283,14 +283,24 @@ namespace BankTeacher.Bank.Loan
             {
                 try
                 {
-                    if (PathFile != "" && PathFile != null)
+                    if (PathFile == "" && PathFile != null)
                     {
                         StatusEnableForm(false);
                         FTP.FTPSendFile(PathFile, $"Loan{DGV_PayLoan.Rows[0].Cells[1].Value.ToString()}.pdf");
                         if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
                         {
+                            bool Yes = true;
                             DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text));
-                            if (dt.Rows.Count == 0)
+                            if(dt.Rows.Count > 0)
+                            {
+                                DialogResult Dr = MessageBox.Show("มีรายการ กู้ อยู่ในระบบอยู่เเล้วคุณต้องการทำรายการเพิ่มหรือไม่", "กู้", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                                if(Dr == DialogResult.Yes)
+                                {
+                                    Yes = true;
+                                }
+                                else { Yes = false; }
+                            }
+                            if (Yes)
                             {
                                 BankTeacher.Class.ComboBoxPayment Payment = (CBPayment.SelectedItem as BankTeacher.Class.ComboBoxPayment);
                                 Class.SQLConnection.InputSQLMSSQL((SQLDefault[4] + "\r\n" + SQLDefault[7])
@@ -302,7 +312,7 @@ namespace BankTeacher.Bank.Loan
                                     .Replace("{PathFile}",FTP.HostplusPathFile+ $"Loan{DGV_PayLoan.Rows[0].Cells[1].Value.ToString()}.pdf"));
 
                                 MessageBox.Show("ทำรายการสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                                tabControl1.Enabled = false;
                                 printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                                 printDocument1.DefaultPageSettings.Landscape = true;
                                 Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
@@ -311,7 +321,7 @@ namespace BankTeacher.Bank.Loan
                                 Class.Print.PrintPreviewDialog.info_Payment = CBPayment.SelectedItem.ToString();
                                 Class.Print.PrintPreviewDialog.info_PayLoanBill = DGV_PayLoan.Rows[0].Cells[1].Value.ToString();
                                 Class.Print.PrintPreviewDialog.info_PayLoandate = Bank.Menu.Date_Time_SQL_Now.Rows[0][0].ToString();
-
+                                
 
                                 if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                                 {
@@ -320,7 +330,7 @@ namespace BankTeacher.Bank.Loan
                             }
                             else
                             {
-                                MessageBox.Show("มีรายการ กู้ อยู่ในระบบ\r\nโปรดชำระรายการกู้ให้เรียบร้อย", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                MessageBox.Show("รายการได้ถูกยกเลิกเรียบร้อย", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 StatusEnableForm(true);
                             }
                         }
