@@ -1447,6 +1447,14 @@ namespace BankTeacher.Bank.Loan
             }
         }
 
+        private void TBPayNo_TextChanged(object sender, EventArgs e)
+        {
+            if (Int32.TryParse(TBPayNo.Text, out int x) && x <= 0)
+            {
+                TBPayNo.Text = "";
+            }
+        }
+
         private void BExitForm_Click(object sender, EventArgs e)
         {
             BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);

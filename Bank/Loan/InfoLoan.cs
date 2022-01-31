@@ -538,6 +538,7 @@ namespace BankTeacher.Bank.Loan
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
+                    CB_LoanNo.DroppedDown = false;
                     Checkmember(true);
                     TBTeacherNo.Text = "";
                     CB_LoanNo.Items.Clear();
