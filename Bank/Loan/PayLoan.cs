@@ -105,8 +105,8 @@ namespace BankTeacher.Bank.Loan
           "WHERE a.TeacherNo = '{TeacherNo}' AND YEAR(a.PayDate) = {Year} AND a.LoanStatusNo = 2"
            ,
             //[7] INSERT File INPUT: {TeacherNo} , {PathFile} , {TeacherNoAddBy} 
-           "INSERT INTO EmployeeBank.dbo.tblFile(TeacherNo,FiletypeNo,pathFile,TeacherAddBy,LoanID,DateAddFile,IsUse,TeacherRemoveFileBy,DateRemvoeFile,StatusFileInSystem) \r\n " +
-          "VALUES('{TeacherNo}','3','{PathFile}','{TeacherNoAddBy}',null,CURRENT_TIMESTAMP,1,null,null,1) \r\n " +
+           "INSERT INTO EmployeeBank.dbo.tblFile(TeacherNo,FiletypeNo,pathFile,TeacherAddBy,LoanID,DateAddFile,IsUse,TeacherRemoveFileBy,DateRemoveFile,StatusFileInSystem) \r\n " +
+          "VALUES('{TeacherNo}','3','{PathFile}','{TeacherNoAddBy}',{LoanID},CURRENT_TIMESTAMP,1,null,null,1) \r\n " +
           " \r\n " +
           "UPDATE EmployeeBank.dbo.tblLoan \r\n " +
           "SET DocStatusNo = 1 , DocUploadPath = '{PathFile}'"
@@ -293,7 +293,7 @@ namespace BankTeacher.Bank.Loan
                             if (dt.Rows.Count == 0)
                             {
                                 BankTeacher.Class.ComboBoxPayment Payment = (CBPayment.SelectedItem as BankTeacher.Class.ComboBoxPayment);
-                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[4] + "\r\n" + SQLDefault[7]
+                                Class.SQLConnection.InputSQLMSSQL((SQLDefault[4] + "\r\n" + SQLDefault[7])
                                     .Replace("{LoanID}", DGV_PayLoan.Rows[0].Cells[1].Value.ToString())
                                     .Replace("{TeacherNoPay}", Class.UserInfo.TeacherNo)
                                     .Replace("{PaymentNo}", Payment.No)

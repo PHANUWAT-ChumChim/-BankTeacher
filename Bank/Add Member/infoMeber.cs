@@ -105,7 +105,7 @@ namespace BankTeacher.Bank.Add_Member
            ,
            //[6] Update Status RemoveFile INPUT: {TeacherRemoveBy} , {ID} , {TeacherNo} 
            "UPDATE EmployeeBank.dbo.tblFile \r\n " +
-          "SET IsUse = 0, TeacherRemoveFileBy = '{TeacherRemoveBy}', DateRemvoeFile = CURRENT_TIMESTAMP , StatusFileInSystem = 2 \r\n " +
+          "SET IsUse = 0, TeacherRemoveFileBy = '{TeacherRemoveBy}', DateRemoveFile = CURRENT_TIMESTAMP , StatusFileInSystem = 2 \r\n " +
           "WHERE ID = '{ID}'; \r\n " +
           " \r\n " +
           "UPDATE EmployeeBank.dbo.tblMember \r\n " +
@@ -316,9 +316,9 @@ namespace BankTeacher.Bank.Add_Member
                     {
                         StatusEnableBT(false);
                         FTP.FTPSendFile(PathFile , $"Member_{TBTeacherNo.Text}.pdf");
-                        StatusEnableBT(true);
                         if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
                         {
+                            StatusEnableBT(true);
                             Class.SQLConnection.InputSQLMSSQL(SQLDefault[5]
                                 .Replace("{TeacherNo}",TBTeacherNo.Text)
                                 .Replace("{PathFile}",FTP.HostplusPathFile+ $"Member_{TBTeacherNo.Text}.pdf")
@@ -327,6 +327,7 @@ namespace BankTeacher.Bank.Add_Member
                             label12.ForeColor = Color.Green;
                         }
                         PathFile = "";
+                        BTUploadFile_Reg.Enabled = true;
                     }
                 }
             }

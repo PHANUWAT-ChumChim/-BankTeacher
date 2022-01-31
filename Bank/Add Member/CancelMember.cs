@@ -120,7 +120,7 @@ namespace BankTeacher.Bank.Add_Member
            //[7] Count Cancel Member File INPUT: {TeacherNo}
            "SELECT Count(ID) \r\n " +
           "  FROM EmployeeBank.dbo.tblFile \r\n " +
-          "  WHERE FiletypeNo = 2 and IsUse = 1 and TeacherNo = {TeacherNo}"
+          "  WHERE FiletypeNo = 2 and IsUse = 1 and TeacherNo = '{TeacherNo}'"
            ,
            //[8] Chcek flie Regmember INPUT : {TeacherNo}
            "SELECT c.ID , c.pathFile\r\n " +
@@ -132,10 +132,10 @@ namespace BankTeacher.Bank.Add_Member
            ,
            //[9] UPDATE Status File INPUT: {TeacherNoAddBy} {ID} {TeacherNo} {PathFile} 
            "UPDATE EmployeeBank.dbo.tblFile \r\n " +
-          "SET TeacherRemoveFileBy = '{TeacherNoAddBy}' , IsUse = 0 , DateRemvoeFile = CURRENT_TIMESTAMP , StatusFileInSystem = 2 \r\n " +
+          "SET TeacherRemoveFileBy = '{TeacherNoAddBy}' , IsUse = 0 , DateRemoveFile = CURRENT_TIMESTAMP , StatusFileInSystem = 2 \r\n " +
           "WHERE ID = '{ID}' \r\n " +
           " \r\n " +
-          "INSERT INTO EmployeeBank.dbo.tblFile(TeacherNo,FiletypeNo,pathFile,TeacherAddBy,LoanID,DateAddFile,IsUse,TeacherRemoveFileBy,DateRemvoeFile,StatusFileInSystem) \r\n " +
+          "INSERT INTO EmployeeBank.dbo.tblFile(TeacherNo,FiletypeNo,pathFile,TeacherAddBy,LoanID,DateAddFile,IsUse,TeacherRemoveFileBy,DateRemoveFile,StatusFileInSystem) \r\n " +
           "VALUES('{TeacherNo}','2','{PathFile}','{TeacherNoAddBy}',null,CURRENT_TIMESTAMP,1,null,null,1)"
            ,
 
@@ -220,7 +220,7 @@ namespace BankTeacher.Bank.Add_Member
                 if (TBTeacherNo.Text != "")
                 {
                     BankTeacher.Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("RegMember");
-                    DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2]+ "\r\n" + SQLDefault[7] + "\r\n" + SQLDefault[8]
+                    DataSet ds = Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[2]+ "\r\n\r\n" + SQLDefault[7] + "\r\n\r\n" + SQLDefault[8])
                     .Replace("{TeacherNo}", TBTeacherNo.Text));
                     if (Convert.ToInt32(ds.Tables[0].Rows[0][0].ToString()) < 1)
                     {
@@ -234,16 +234,12 @@ namespace BankTeacher.Bank.Add_Member
 
                             CheckBCancel = true;
                             Checkmember(true);
-                            imgeLocation = "";
-                            TBTeacherNo.Text = "";
-                            TBTeacherName.Text = "";
-                            TBNote.Text = "";
                             BSave.Enabled = false;
 
                             FTP.FTPMoveFileandRename($"Member_{TBTeacherNo.Text}.pdf", "CancelMember", Rename);
                             if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
                             {
-                                Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1] + "\r\n" + SQLDefault[9]
+                                Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[1] + "\r\n" + SQLDefault[9])
                                 .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
                                 .Replace("{TeacherNo}", TBTeacherNo.Text)
                                 .Replace("{Note}", TBNote.Text)

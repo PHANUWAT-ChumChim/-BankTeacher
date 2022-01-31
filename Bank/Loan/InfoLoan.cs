@@ -133,7 +133,7 @@ namespace BankTeacher.Bank.Loan
           "WHERE FiletypeNo = 3 and LoanID = '{LoanNo}' and IsUse = 1 and StatusFileInSystem = 1"
            ,
            //[6] INSERT And Update File INPUT: {TeacherNo} {PathFile} {TeacherNoAddBy}
-           "INSERT INTO EmployeeBank.dbo.tblFile(TeacherNo,FiletypeNo,pathFile,TeacherAddBy,LoanID,DateAddFile,IsUse,TeacherRemoveFileBy,DateRemvoeFile,StatusFileInSystem) \r\n " +
+           "INSERT INTO EmployeeBank.dbo.tblFile(TeacherNo,FiletypeNo,pathFile,TeacherAddBy,LoanID,DateAddFile,IsUse,TeacherRemoveFileBy,DateRemoveFile,StatusFileInSystem) \r\n " +
           "VALUES('{TeacherNo}','3','{PathFile}','{TeacherNoAddBy}',{LoanNo},CURRENT_TIMESTAMP,1,null,null,1) \r\n " +
           " \r\n " +
           "UPDATE EmployeeBank.dbo.tblLoan \r\n " +
@@ -142,7 +142,7 @@ namespace BankTeacher.Bank.Loan
            ,
            //[7] Remove File INPUT: {TeacherRemoveBy} {LoanNo} {ID}
            "UPDATE EmployeeBank.dbo.tblFile \r\n " +
-          "SET IsUse = 0, TeacherRemoveFileBy = '{TeacherRemoveBy}', DateRemvoeFile = CURRENT_TIMESTAMP , StatusFileInSystem = 2 \r\n " +
+          "SET IsUse = 0, TeacherRemoveFileBy = '{TeacherRemoveBy}', DateRemoveFile = CURRENT_TIMESTAMP , StatusFileInSystem = 2 \r\n " +
           "WHERE ID = '{ID}'; \r\n " +
           " \r\n " +
           "UPDATE EmployeeBank.dbo.tblLoan \r\n " +
@@ -633,7 +633,7 @@ namespace BankTeacher.Bank.Loan
                             PathFile = "";
                             LB_Flie.Text = "อัพโหลดสำเร็จ";
                             LB_Flie.ForeColor = Color.Green;
-                            MessageBox.Show("อัพโหลดเอกสารสำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                            MessageBox.Show("อัพโหลดเอกสารสำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Information);
                         }
                         BTOpenFile.Enabled = true;
                         BTRemoveFile.Enabled = true;
@@ -677,7 +677,7 @@ namespace BankTeacher.Bank.Loan
                         .Replace("{TeacherRemoveBy}",BankTeacher.Class.UserInfo.TeacherNo)
                         .Replace("{ID}",dt.Rows[0][0].ToString())
                         .Replace("{LoanNo}",TBLoanNo.Text));
-                    MessageBox.Show("ลบเอกสารสำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                    MessageBox.Show("ลบเอกสารสำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Information);
                 }
             }
             else

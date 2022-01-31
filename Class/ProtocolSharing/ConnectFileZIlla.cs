@@ -51,7 +51,7 @@ namespace BankTeacher.Class.ProtocolSharing
             public void FTPSendFile(String pathfile, String ChangeFilename)
             {
                 Stopwatch time = new Stopwatch();
-                ThreadConnected = new Thread(() => ThreadSendFile(pathfile,ChangeFilename));
+                ThreadConnected = new Thread(() => ThreadSendFile(pathfile, ChangeFilename));
                 ThreadConnected.Start();
                 time.Start();
                 StatusRunning = true;
@@ -143,7 +143,7 @@ namespace BankTeacher.Class.ProtocolSharing
             public void FTPMoveFileandRename(String filename, String Foldertarget, String Rename)
             {
                 Stopwatch time = new Stopwatch();
-                ThreadConnected = new Thread(() => ThreadMoveLocationFIleRename(filename, Foldertarget , Rename));
+                ThreadConnected = new Thread(() => ThreadMoveLocationFIleRename(filename, Foldertarget, Rename));
                 ThreadConnected.Start();
                 time.Start();
                 StatusRunning = true;
@@ -171,7 +171,7 @@ namespace BankTeacher.Class.ProtocolSharing
                     // Connect
                     session.Open(sessionOptions);
 
-                    if (!session.FileExists(PathFile+Changefilename))
+                    if (!session.FileExists(PathFile + Changefilename))
                     {
                         try
                         {
@@ -226,7 +226,7 @@ namespace BankTeacher.Class.ProtocolSharing
 
                     if (!session.FileExists(PathFile + filename))
                     {
-                        MessageBox.Show("ไม่พบไฟล์","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                        MessageBox.Show("ไม่พบไฟล์", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         StatusReturn = false;
                         StatusRunning = false;
                     }
@@ -237,13 +237,13 @@ namespace BankTeacher.Class.ProtocolSharing
                             session.RemoveFile(PathFile + filename);
                             StatusReturn = true;
                             StatusRunning = false;
-                            MessageBox.Show("ลบไฟล์เสร็จเรียบร้อย","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                            MessageBox.Show("ลบไฟล์เสร็จเรียบร้อย", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         catch
                         {
                             StatusReturn = false;
                             StatusRunning = false;
-                            MessageBox.Show("เกิดข้อผิดพลาดโปรดลองใหม่อีกครั้ง","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                            MessageBox.Show("เกิดข้อผิดพลาดโปรดลองใหม่อีกครั้ง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
                     return;
@@ -253,9 +253,9 @@ namespace BankTeacher.Class.ProtocolSharing
             private void ThreadOpenFile(String filename)
             {
                 String ThisPcPath = DowloadFile(filename);
-                if(ThisPcPath != null)
+                if (ThisPcPath != null)
                 {
-                    System.Diagnostics.Process.Start(ThisPcPath);
+                    System.Diagnostics.Process.Start(ThisPcPath+filename);
                     StatusRunning = false;
                     StatusReturn = true;
                 }
@@ -285,17 +285,17 @@ namespace BankTeacher.Class.ProtocolSharing
                     {
                         String ThisPcFilePath = "";
                         if (Location.Contains("RegMember"))
-                            ThisPcFilePath = @"C:\BankTeacher\RegMember\" + filename;
+                            ThisPcFilePath = @"C:\BankTeacher\RegMember\" ;
                         else if (Location.Contains("Loan"))
-                            ThisPcFilePath = @"C:\BankTeacher\Loan\" + filename;
+                            ThisPcFilePath = @"C:\BankTeacher\Loan\" ;
                         else if (Location.Contains("CancelMember"))
-                            ThisPcFilePath = @"C:\BankTeacher\CancelMember\" + filename;
+                            ThisPcFilePath = @"C:\BankTeacher\CancelMember\" ;
                         try
                         {
                             session.GetFileToDirectory(PathFile + filename, ThisPcFilePath);
                             return ThisPcFilePath;
                         }
-                        catch
+                        catch(Exception e)
                         {
                             StatusReturn = false;
                             StatusRunning = false;
@@ -306,7 +306,7 @@ namespace BankTeacher.Class.ProtocolSharing
                 }
             }
 
-            private void ThreadMoveLocationFIle(String filename , String Foldertarget)
+            private void ThreadMoveLocationFIle(String filename, String Foldertarget)
             {
                 using (Session session = new Session())
                 {
@@ -331,7 +331,7 @@ namespace BankTeacher.Class.ProtocolSharing
                         }
                         catch
                         {
-                            MessageBox.Show("เกิดข้อผิดพลาดโปรดลองใหม่อีกครั้ง","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                            MessageBox.Show("เกิดข้อผิดพลาดโปรดลองใหม่อีกครั้ง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             StatusReturn = false;
                             StatusRunning = false;
                             return;
@@ -340,7 +340,7 @@ namespace BankTeacher.Class.ProtocolSharing
                 }
             }
 
-            private void ThreadMoveLocationFIleRename(String filename, String Foldertarget , String Rename)
+            private void ThreadMoveLocationFIleRename(String filename, String Foldertarget, String Rename)
             {
                 using (Session session = new Session())
                 {
@@ -349,7 +349,7 @@ namespace BankTeacher.Class.ProtocolSharing
                     String targetPath = PathFile.Replace(Location, Foldertarget) + filename;
                     if (!session.FileExists(PathFile + filename))
                     {
-                        MessageBox.Show("ไม่พบไฟล์", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("ไม่พบเอกสาร", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         StatusReturn = false;
                         StatusRunning = false;
                         return;
@@ -360,11 +360,11 @@ namespace BankTeacher.Class.ProtocolSharing
                         {
                             String ThisPcFilePath = "";
                             if (Foldertarget.Contains("RegMember"))
-                                ThisPcFilePath = @"C:\BankTeacher\RegMember\" + filename;
+                                ThisPcFilePath = @"C:\BankTeacher\RegMember\";
                             else if (Foldertarget.Contains("Loan"))
-                                ThisPcFilePath = @"C:\BankTeacher\Loan\" + filename;
+                                ThisPcFilePath = @"C:\BankTeacher\Loan\";
                             else if (Foldertarget.Contains("CancelMember"))
-                                ThisPcFilePath = @"C:\BankTeacher\CancelMember\" + filename;
+                                ThisPcFilePath = @"C:\BankTeacher\CancelMember\";
 
                             TransferOptions transferOptions = new TransferOptions();
                             transferOptions.TransferMode = TransferMode.Binary;
@@ -373,9 +373,11 @@ namespace BankTeacher.Class.ProtocolSharing
                             //DowloadFile
                             session.GetFileToDirectory(PathFile + filename, ThisPcFilePath);
                             //UploadFile
-                            transferResult = session.PutFiles(ThisPcFilePath, PathFile.Replace(Location,Foldertarget) + Rename, false, transferOptions);
+                            transferResult = session.PutFiles(ThisPcFilePath+filename, PathFile.Replace(Location, Foldertarget) + Rename, false, transferOptions);
                             //CheckFile
                             transferResult.Check();
+                            //Remove
+                            session.RemoveFile(PathFile + filename);
                             StatusReturn = true;
                             StatusRunning = false;
                             return;

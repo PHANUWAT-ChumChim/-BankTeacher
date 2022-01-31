@@ -91,7 +91,7 @@ namespace BankTeacher.Bank.Add_Member
           "IF(@CountTeacher > 0) \r\n " +
           "BEGIN \r\n " +
           "UPDATE EmployeeBank.dbo.tblMember \r\n " +
-          "SET MemberStatusNo = 1 ,DateAdd = CURRENT_TIMESTAMP,DocStatusNo = 1,DocUploadPath = {PathFile} \r\n " +
+          "SET MemberStatusNo = 1 ,DateAdd = CURRENT_TIMESTAMP,DocStatusNo = 1,DocUploadPath = '{PathFile}' \r\n " +
           "WHERE TeacherNo = '{TeacherNo}'; \r\n " +
 
           "UPDATE EmployeeBank.dbo.tblShare \r\n " +
@@ -112,7 +112,7 @@ namespace BankTeacher.Bank.Add_Member
           "BEGIN \r\n " +
           " \r\n " +
           "INSERT INTO EmployeeBank.dbo.tblMember(TeacherNo, TeacherAddBy, StartAmount, DateAdd,DocStatusNo,DocUploadPath)  \r\n " +
-          "VALUES('{TeacherNo}','{TeacherNoAddBy}',{StartAmount},CURRENT_TIMESTAMP,1,{PathFile})   \r\n " +
+          "VALUES('{TeacherNo}','{TeacherNoAddBy}',{StartAmount},CURRENT_TIMESTAMP,1,'{PathFile}')   \r\n " +
 
           "INSERT INTO EmployeeBank.dbo.tblShare(TeacherNo, SavingAmount) \r\n " +
           "VALUES('{TeacherNo}',{StartAmount})  \r\n " +
