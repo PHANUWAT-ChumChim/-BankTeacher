@@ -38,10 +38,8 @@ namespace BankTeacher.Bank.Loan
         /// <para>[6] BackPrint payLoan INPUT : {TeacherNo} {Year} </para>
         /// <para>[7] INSERT File INPUT: {TeacherNo} , {PathFile} , {TeacherNoAddBy} </para>
         /// </summary>
-        private String[] SQLDefault =
-
-
-            {
+        private String[] SQLDefault = 
+        {
           //[0] SELECT MemberLona  INPUT: {Text} 
           " SELECT TOP(20) TeacherNo , NAME  \r\n" +
           " FROM(   \r\n " +
@@ -54,10 +52,6 @@ namespace BankTeacher.Bank.Loan
           " GROUP BY a.TeacherNo,CAST(ISNULL(c.PrefixName+' ','')+Fname+' '+Lname as NVARCHAR),d.SavingAmount ,Fname , LoanStatusNo) AS A   \r\n " +
           " WHERE a.TeacherNo LIKE '%{Text}%' or Fname LIKE '%{Text}%'  \r\n " +
           " ORDER BY Fname;   "
-
-
-
-
           ,
           //[1] SELECT LOAN INPUT: {TeacherNo}
           "SELECT a.LoanNo , CAST(ISNULL(d.PrefixName+' ','')+ Fname + ' ' + Lname AS NVARCHAR) , a.LoanStatusNo \r\n " +
@@ -109,7 +103,8 @@ namespace BankTeacher.Bank.Loan
           "VALUES('{TeacherNo}','3','{PathFile}','{TeacherNoAddBy}',{LoanID},CURRENT_TIMESTAMP,1,null,null,1) \r\n " +
           " \r\n " +
           "UPDATE EmployeeBank.dbo.tblLoan \r\n " +
-          "SET DocStatusNo = 1 , DocUploadPath = '{PathFile}'"
+          "SET DocStatusNo = 1 , DocUploadPath = '{PathFile}' \r\n"+
+          "WHERE LoanNo = '{LoanID}' "
            ,
 
         };

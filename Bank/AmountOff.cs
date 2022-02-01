@@ -508,6 +508,7 @@ namespace BankTeacher.Bank
 
         private void TBWithDraw_TextChanged(object sender, EventArgs e)
         {
+            BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBWithDraw);
             if (TBWithDraw.Text != "")
             {
                 BSaveAmountOff.Enabled = true;

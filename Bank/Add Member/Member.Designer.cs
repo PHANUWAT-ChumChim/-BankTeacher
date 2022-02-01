@@ -286,6 +286,7 @@ namespace BankTeacher.Bank.Add_Member
             this.TBStartAmountShare_Reg.TabIndex = 16;
             this.TBStartAmountShare_Reg.Text = "0";
             this.TBStartAmountShare_Reg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.TBStartAmountShare_Reg.TextChanged += new System.EventHandler(this.TBStartAmountShare_Reg_TextChanged);
             this.TBStartAmountShare_Reg.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBStartAmountShare_KeyPress);
             // 
             // label10

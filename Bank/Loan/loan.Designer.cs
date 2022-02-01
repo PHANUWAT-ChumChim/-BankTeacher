@@ -394,6 +394,7 @@ namespace BankTeacher.Bank.Loan
             this.TBInterestRate.TabIndex = 12;
             this.TBInterestRate.Text = "0.25";
             this.TBInterestRate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.TBInterestRate.TextChanged += new System.EventHandler(this.TBInterestRate_TextChanged);
             this.TBInterestRate.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBInterestRate_KeyPress);
             this.TBInterestRate.Leave += new System.EventHandler(this.TBInterestRate_Leave);
             // 
@@ -407,6 +408,7 @@ namespace BankTeacher.Bank.Loan
             this.TBPayNo.TabIndex = 2;
             this.TBPayNo.Text = "12";
             this.TBPayNo.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.TBPayNo.TextChanged += new System.EventHandler(this.TBPayNo_TextChanged);
             this.TBPayNo.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBPayNo_KeyPress);
             this.TBPayNo.Leave += new System.EventHandler(this.TBPayNo_Leave);
             // 
@@ -944,7 +946,6 @@ namespace BankTeacher.Bank.Loan
             this.Column8.HeaderText = "รหัส";
             this.Column8.MinimumWidth = 6;
             this.Column8.Name = "Column8";
-            this.Column8.ReadOnly = true;
             this.Column8.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Column8.Visible = false;
             this.Column8.Width = 125;

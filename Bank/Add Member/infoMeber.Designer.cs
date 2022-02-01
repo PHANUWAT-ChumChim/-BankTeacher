@@ -420,6 +420,7 @@ namespace BankTeacher.Bank.Add_Member
             this.TBStartAmount.Name = "TBStartAmount";
             this.TBStartAmount.Size = new System.Drawing.Size(142, 36);
             this.TBStartAmount.TabIndex = 87;
+            this.TBStartAmount.TextChanged += new System.EventHandler(this.TBStartAmount_TextChanged);
             this.TBStartAmount.Leave += new System.EventHandler(this.TBStartAmount_Leave);
             // 
             // TBDateAdd

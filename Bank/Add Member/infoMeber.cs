@@ -420,5 +420,10 @@ namespace BankTeacher.Bank.Add_Member
                 }
             }
         }
+
+        private void TBStartAmount_TextChanged(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBSavingAmount);
+        }
     }
 }
