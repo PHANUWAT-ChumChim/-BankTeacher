@@ -1252,7 +1252,7 @@ namespace BankTeacher.Bank.Pay
             }
             else
             {
-                if (Convert.ToInt32(TBAmount_Pay.Text) != 0)
+                if (Int32.TryParse(TBAmount_Pay.Text,out int Values)&& Values != 0)
                     TBAmount_Pay.Text = "0";
                 MessageBox.Show("โปรดเลือกเดือนและปีก่อนทำรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -1308,6 +1308,10 @@ namespace BankTeacher.Bank.Pay
             if (System.Text.RegularExpressions.Regex.IsMatch(tb.Text, "[^0-9]"))
             {
                 DGV_Pay.CancelEdit();
+            }
+            if(tb.Text.Length > 6)
+            {
+                DGV_Pay.EndEdit();
             }
         }
         void TBKeyUp(object sender, KeyEventArgs e)
