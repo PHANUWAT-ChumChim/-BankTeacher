@@ -297,6 +297,12 @@
     <Compile Include="Bank\SQLEditing.Designer.cs">
       <DependentUpon>SQLEditing.cs</DependentUpon>
     </Compile>
+    <Compile Include="Bank\UnpaidLoanList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bank\UnpaidLoanList.Designer.cs">
+      <DependentUpon>UnpaidLoanList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Class\Datainfo.cs" />
     <Compile Include="Class\FromSettingMedtod.cs" />
     <Compile Include="Class\Print\PrintPreviewDialog.cs" />
@@ -422,6 +428,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Setting.resx">
       <DependentUpon>Setting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bank\UnpaidLoanList.resx">
+      <DependentUpon>UnpaidLoanList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

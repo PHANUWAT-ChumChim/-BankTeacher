@@ -1496,11 +1496,18 @@ namespace BankTeacher.Bank.Pay
                         Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
                         Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
                         Class.Print.PrintPreviewDialog.info_TeacherAdd = Class.UserInfo.TeacherName;
-                        if (Convert.ToInt32(TBToatalSaving_ShareInfo.Text) > 0) { Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(Convert.ToInt32(TBToatalSaving_ShareInfo.Text) + Convert.ToInt32(LBalance_Pay.Text)).ToString(); }
-                        else { Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(Convert.ToInt32(TBToatalSaving_ShareInfo.Text) + Convert.ToInt32(LBalance_Pay.Text)).ToString(); }
+                        if(LBalance_Pay.Text != "")
+                        {
+                            if (Convert.ToInt32(TBToatalSaving_ShareInfo.Text) > 0) { Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(Convert.ToInt32(TBToatalSaving_ShareInfo.Text) + Convert.ToInt32(LBalance_Pay.Text)).ToString(); }
+                            else { Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(Convert.ToInt32(TBToatalSaving_ShareInfo.Text) + Convert.ToInt32(LBalance_Pay.Text)).ToString(); }
 
+                        }
                         Class.Print.PrintPreviewDialog.info_Billpay = TBTeacherBill.Text;
-                        Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = Convert.ToInt32(Convert.ToInt32(Amount_payLoan) - Convert.ToInt32(TBAmountRemain_LoanInfo.Text)).ToString();
+                        if(TBAmountRemain_LoanInfo.Text != "")
+                        {
+                            Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = Convert.ToInt32(Convert.ToInt32(Amount_payLoan) - Convert.ToInt32(TBAmountRemain_LoanInfo.Text)).ToString();
+                        }
+                        else { Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = ""; }
                         Class.Print.PrintPreviewDialog.info_datepayShare = DateTime.Today.Day.ToString() + '/' + DateTime.Today.Month.ToString() + '/' + DateTime.Today.Year.ToString();
                         printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                         printDocument1.DefaultPageSettings.Landscape = true;
@@ -2358,13 +2365,7 @@ namespace BankTeacher.Bank.Pay
         {
             if (CB_SelectPrint.SelectedIndex == 0 && Printbill != 1)
             {
-                //Class.Print.PrintPreviewDialog.details = 1;
-                //Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_BillInfo, "บิลล์การจ่าย", this.AccessibilityObject.Name, false, false, "A4", 1);
-//<<<<<<< PP
-                Class.Print.PrintPreviewDialog.ABCD(e, DGV_BillInfo,"รายการ");
-//=======
-                //Class.Print.PrintPreviewDialog.Detailspayment(e,DGV_BillInfo);
-//>>>>>>> master
+                Class.Print.PrintPreviewDialog.Detailspayment(e, DGV_BillInfo,"รายการ");
             }
             else if (CB_SelectPrint.SelectedIndex == 1 && Printbill != 1)
             {
