@@ -14,6 +14,7 @@ namespace BankTeacher.Bank.Loan
     public partial class InfoLoan : Form
     {
         int Check = 0;
+        bool CheckStatusWorking = false;
         // ======================= ข้อมูลเเบบปริ้น ====================
         public static string info_name;
         public static string info_id;
@@ -298,6 +299,7 @@ namespace BankTeacher.Bank.Loan
                     TBPaidNo_Detail.Text = "";
                     TBLoanAmount_Deatail.Text = "";
                     TBInterest_Detail.Text = "";
+                    PathFile = "";
 
                 }
             }
@@ -529,12 +531,13 @@ namespace BankTeacher.Bank.Loan
         }
         private void BExitForm_Click(object sender, EventArgs e)
         {
-            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+            if(!CheckStatusWorking)
+                BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
         }
 
         private void InfoLoan_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
+            if (e.KeyCode == Keys.Escape && !CheckStatusWorking)
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
@@ -571,9 +574,10 @@ namespace BankTeacher.Bank.Loan
                     TBFinishMonthPay_Detail.Text = "";
                     TBPaidNo_Detail.Text = "";
                     TBLoanAmount_Deatail.Text = "";
-                    TBInterest_Detail.Text = "";
+                    TBInterest_Detail.Text = ""; 
+                    PathFile = "";
                 }
-                else
+                else if(!CheckStatusWorking)
                 {
                     BExitForm_Click(new object(), new EventArgs());
                 }
@@ -588,6 +592,7 @@ namespace BankTeacher.Bank.Loan
                     .Replace("{LoanNo}", TBLoanNo.Text));
                 if (dt.Rows.Count != 0)
                 {
+                    CheckStatusWorking = true;
                     BankTeacher.Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("Loan");
                     BTOpenFile.Enabled = false;
                     BTRemoveFile.Enabled = false;
@@ -596,6 +601,7 @@ namespace BankTeacher.Bank.Loan
                     BTOpenFile.Enabled = true;
                     BTRemoveFile.Enabled = true;
                     BTUploadFile.Enabled = true;
+                    CheckStatusWorking = false;
                 }
                 else
                     MessageBox.Show("ไม่พบเอกสารในระบบโปรดอัพโหลดเอกสารก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -623,6 +629,7 @@ namespace BankTeacher.Bank.Loan
                         BTOpenFile.Enabled = false;
                         BTRemoveFile.Enabled = false;
                         BTUploadFile.Enabled = false;
+                        CheckStatusWorking = true;
                         FTP.FTPSendFile(PathFile,$@"Loan{TBLoanNo.Text}.pdf");
                         if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
                         {
@@ -636,6 +643,8 @@ namespace BankTeacher.Bank.Loan
                             LB_Flie.ForeColor = Color.Green;
                             MessageBox.Show("อัพโหลดเอกสารสำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Information);
                         }
+                        PathFile = "";
+                        CheckStatusWorking = false;
                         BTOpenFile.Enabled = true;
                         BTRemoveFile.Enabled = true;
                         BTUploadFile.Enabled = true;
@@ -672,6 +681,10 @@ namespace BankTeacher.Bank.Loan
             {
                 BankTeacher.Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("Loan");
                 FTP.FTPRemoveFile($@"Loan{TBLoanNo.Text}.pdf");
+                CheckStatusWorking = true;
+                BTOpenFile.Enabled = true;
+                BTRemoveFile.Enabled = true;
+                BTUploadFile.Enabled = true;
                 if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
                 {
                     BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[7]
@@ -679,7 +692,16 @@ namespace BankTeacher.Bank.Loan
                         .Replace("{ID}",dt.Rows[0][0].ToString())
                         .Replace("{LoanNo}",TBLoanNo.Text));
                     MessageBox.Show("ลบเอกสารสำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                    BTUploadFile.Enabled = true;
                 }
+                else
+                {
+                    BTOpenFile.Enabled = true;
+                    BTRemoveFile.Enabled = true;
+                    BTUploadFile.Enabled = true;
+                }
+                PathFile = "";
+                CheckStatusWorking = false;
             }
             else
                 MessageBox.Show("ไม่สามารถลบได้เนื่องจากไม่มีเอกสารอยู่ในระบบ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);

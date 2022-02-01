@@ -22,7 +22,7 @@ namespace BankTeacher.Bank.Add_Member
         bool CheckBCancel = false;
         double Saving = 0;
         String PathFile = null;
-        bool CheckUpload = false, CheckSendSQL = false;
+        bool CheckStatusWorking = false;
 
         //----------------------- index code -------------------- ////////
 
@@ -202,7 +202,7 @@ namespace BankTeacher.Bank.Add_Member
                                 DialogResult dialogResult = MessageBox.Show("ยืนยันการสมัคร", "สมัครสมาชิก", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                                 if (dialogResult == DialogResult.Yes)
                                 {
-
+                                    CheckStatusWorking = true;
                                     BSave_Reg.Enabled = false;
                                     CheckBRegister = true;
                                     Checkmember(true);
@@ -219,13 +219,14 @@ namespace BankTeacher.Bank.Add_Member
                                         .Replace("{Month}", BankTeacher.Bank.Menu.Date[1])
                                         .Replace("{Year}", BankTeacher.Bank.Menu.Date[0])
                                         .Replace("{PathFile}", FTP.HostplusPathFile + $"Member_{TBTeacherNo_Reg.Text}.pdf"));
-                                        CheckSendSQL = true;
                                         MessageBox.Show("สมัครเสร็จสิ้น", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     }
                                     else
                                     {
                                         MessageBox.Show("สมัครสมาชิกไม่สำเร็จโปรดลองใหม่อีกครั้ง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                     }
+                                    PathFile = "";
+                                    CheckStatusWorking = false;
                                 }
                                 else
                                 {
@@ -314,7 +315,6 @@ namespace BankTeacher.Bank.Add_Member
                 {
                     PathFile = dialog.FileName;
                     BTdeletefile_Reg.Visible = true;
-                    CheckUpload = true;
                 }
             }
             else
@@ -363,13 +363,13 @@ namespace BankTeacher.Bank.Add_Member
         }
         private void BExitForm_Click(object sender, EventArgs e)
         {
-            if((CheckUpload && CheckSendSQL) || (!CheckUpload && !CheckSendSQL))
+            if(!CheckStatusWorking)
                 BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
         }
 
         private void Member_KeyDown(object sender, KeyEventArgs e)
         {
-            if ((e.KeyCode == Keys.Escape && !CheckUpload || !CheckSendSQL) || (e.KeyCode == Keys.Escape && CheckUpload || CheckSendSQL))
+            if ((e.KeyCode == Keys.Escape && !CheckStatusWorking))
             {
                 if (TBTeacherNo_Reg.Text.Length != 0)
                 {
@@ -390,7 +390,7 @@ namespace BankTeacher.Bank.Add_Member
                     LScan_Reg.ForeColor = Color.Red;
                     Checkmember(true);
                 }
-                else
+                else if(!CheckStatusWorking)
                 {
                     BExitForm_Click(new object(), new EventArgs());
                 }

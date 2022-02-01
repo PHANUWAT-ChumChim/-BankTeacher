@@ -27,6 +27,7 @@ namespace BankTeacher.Bank.Loan
         int Check = 0;
         int StatusBoxFile = 0;
         String PathFile = "";
+        bool CheckStatusWorking = false;
         List<string[]> ItemList = new List<string[]>();
         /// <summary>
         /// <para>[0] SELECT MemberLona  INPUT: {Text}</para>
@@ -207,7 +208,8 @@ namespace BankTeacher.Bank.Loan
                     CBlistpayloan.SelectedIndex = -1;
                     TBTeacherName.Text = "";
                     label3.Text = "0";
-                    BTRemoveFile.Visible = false;
+                    BTRemoveFile.Visible = false; 
+                    PathFile = "";
                     if (CBPayment.SelectedIndex != -1)
                         CBPayment.SelectedIndex = -1;
                     CBPayment.Enabled = false;
@@ -281,6 +283,7 @@ namespace BankTeacher.Bank.Loan
                     if (PathFile == "" && PathFile != null)
                     {
                         StatusEnableForm(false);
+                        CheckStatusWorking = true;
                         FTP.FTPSendFile(PathFile, $"Loan{DGV_PayLoan.Rows[0].Cells[1].Value.ToString()}.pdf");
                         if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
                         {
@@ -334,6 +337,8 @@ namespace BankTeacher.Bank.Loan
                             MessageBox.Show("ทำรายการล้มเหลวโปรดลองใหม่อีกครั้ง","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                             StatusEnableForm(true);
                         }
+                        PathFile = "";
+                        CheckStatusWorking = false;
                     }
                     else
                     {
@@ -374,12 +379,13 @@ namespace BankTeacher.Bank.Loan
 
         private void BExitForm_Click(object sender, EventArgs e)
         {
-            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+            if(!CheckStatusWorking)
+                BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
         }
 
         private void PayLoan_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
+            if (e.KeyCode == Keys.Escape && !CheckStatusWorking)
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
@@ -387,7 +393,8 @@ namespace BankTeacher.Bank.Loan
                     CBlistpayloan.Items.Clear();
                     CBlistpayloan.SelectedIndex = -1;
                     TBTeacherName.Text = "";
-                    label3.Text = "0";
+                    label3.Text = "0"; 
+                    PathFile = "";
                     if (CBPayment.SelectedIndex != -1)
                         CBPayment.SelectedIndex = -1;
                     DGV_PayLoan.Rows.Clear();
@@ -398,7 +405,7 @@ namespace BankTeacher.Bank.Loan
                     Check = 0;
                     Checkmember(true);
                 }
-                else
+                else if (!CheckStatusWorking)
                 {
                     BExitForm_Click(new object(), new EventArgs());
                 }
