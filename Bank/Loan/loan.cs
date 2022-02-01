@@ -1011,9 +1011,10 @@ namespace BankTeacher.Bank.Loan
         }
 
         List<String[]> DGVRow = new List<String[]> { };
+        int ROWW = -1;
+        int COLL = -1;
         private void DGVGuarantorCredit_CellEndEdit(object sender, DataGridViewCellEventArgs e)
-        {
-
+        { 
             int NumCell = 0;
             if (TBLoanAmount.Text != "" && TBInterestRate.Text != "" && TBPayNo.Text != "" )
             {
@@ -1151,13 +1152,33 @@ namespace BankTeacher.Bank.Loan
                 DGVGuarantorCredit.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = DefaultEdit;
             }
         }
-
+        public TextBox tb;
         private void DGVGuarantorCredit_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
             if (DGVGuarantorCredit.CurrentCell.ColumnIndex >= 2)
             {
-                TextBox tb = (TextBox)e.Control;
+                tb = (TextBox)e.Control;
                 tb.KeyPress += new KeyPressEventHandler(TBCellGuarantorCredit_KeyPress);
+                tb.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TBKeyUp);
+                tb.TextChanged += new System.EventHandler(this.TBTextChanged);
+            }
+        }
+        void TBTextChanged(object sendet , EventArgs e)
+        {
+            if (System.Text.RegularExpressions.Regex.IsMatch(tb.Text, "[^0-9]"))
+            {
+                DGVGuarantorCredit.CancelEdit();
+            }
+        }
+        void TBKeyUp(object sender , KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.V && e.Modifiers == Keys.Control)
+            {
+                DGVGuarantorCredit.CancelEdit();
+            }
+            else if(e.KeyCode == Keys.V)
+            {
+                DGVGuarantorCredit.CancelEdit();
             }
         }
         void TBCellGuarantorCredit_KeyPress(object sender, KeyPressEventArgs e)
@@ -1266,22 +1287,15 @@ namespace BankTeacher.Bank.Loan
 
         private void DGVGuarantorCredit_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
-            DefaultEdit = int.Parse(DGVGuarantorCredit.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+            ROWW = e.RowIndex;
+            COLL = e.ColumnIndex;
+            if (Int32.TryParse(DGVGuarantorCredit.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString(), out int Values))
+                DefaultEdit = Values;
         }
 
         private void TBLoanAmount_TextChanged(object sender, EventArgs e)
         {
-            if(TBLoanAmount.Text.Length > 0)
-            {
-                if (Int32.TryParse(TBLoanAmount.Text , out int x) && x <= 0)
-                {
-                    TBLoanAmount.Text = "";
-                }
-                else if(!(Int32.TryParse(TBLoanAmount.Text , out int y)))
-                {
-                    TBLoanAmount.Text = "";
-                }
-            }
+            BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBLoanAmount);
         }
 
         private void BTPrint_Click(object sender, EventArgs e)
@@ -1453,6 +1467,12 @@ namespace BankTeacher.Bank.Loan
             {
                 TBPayNo.Text = "";
             }
+            BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBPayNo);
+        }
+
+        private void TBInterestRate_TextChanged(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBInterestRate);
         }
 
         private void BExitForm_Click(object sender, EventArgs e)
