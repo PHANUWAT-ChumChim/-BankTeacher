@@ -93,10 +93,17 @@ namespace BankTeacher.Bank.Pay
             //[6] Chcek LoanstatusNo INPUT : {TeacharNo} {BillNo}
             "DECLARE @LoanStatusNo int \r\n" +
             "DECLARE @LoanNo int \r\n" +
+            "DECLARE @InterestRate int  \r\n" +
             "SELECT @LoanStatusNo = a.LoanStatusNo  FROM EmployeeBank.dbo.tblLoan as a WHERE TeacherNo = '{TeacharNo}' \r\n" +
             "SELECT @LoanNo = b.LoanNo  FROM EmployeeBank.dbo.tblBillDetail as b WHERE b.BillNo = '{BillNo}' \r\n" +
+            "SELECT @InterestRate = c.InterestRate/100*c.LoanAmount FROM EmployeeBank.dbo.tblLoan as c WHERE c.LoanNo = @LoanNo \r\n" +
             "IF(@LoanStatusNo = 3) \r\n" +
             "BEGIN \r\n" +
+            "--- เพิ่ม หุ้นสะสสม กลับหลังจากการลบ \r\n" +
+            "update EmployeeBank.dbo.tblShare \r\n" +
+            "set SavingAmount = SavingAmount + @InterestRate \r\n" +
+            "WHERE TeacherNo = '{TeacharNo}' \r\n" +
+            "--------------------------------------- \r\n" +
             "UPDATE EmployeeBank.dbo.tblLoan \r\n" +
             "SET LoanStatusNo = '2' \r\n" +
             "WHERE LoanNo = @LoanNo \r\n" +

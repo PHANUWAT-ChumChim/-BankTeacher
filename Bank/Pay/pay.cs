@@ -41,7 +41,7 @@ namespace BankTeacher.Bank.Pay
         /// <para>[6] Check Loan INPUT: {TeacherNo} </para>
         /// <para>[7] BPaySave Insert Bill INPUT: {TeacherNo} , {TeacherNoaddby}</para>
         /// <para>[8]Insert BillDetails Use ForLoop INPUT: {BillNo},{TypeNo},{LoanNo},{Amount},{Month},{Year}</para>
-        /// <para>[9]Update Guarantor and Loan (BSavePayLoop) INPUT: {LoanAmount}  {LoanNo}</para>
+        /// <para>[9]Update Guarantor and Loan (BSavePayLoop) INPUT: {LoanAmount}  {LoanNo} {TeacharNo} {Amount} </para>
         /// <para>[10]Update Saving+ (BSavePayLoop) INPUT: {TeacherNo}  {SavingAmount}</para>
         /// <para>[11] SELECT lasted billno INPUT:</para>
         /// <para>[12] SELECT SharePayBill and SELECT ShareOfYear INPUT: {TeacherNo} , {Year}</para>
@@ -171,7 +171,7 @@ namespace BankTeacher.Bank.Pay
            "INSERT INTO EmployeeBank.dbo.tblBillDetail (BillNo,TypeNo,LoanNo,Amount,Mount,Year,BillDetailPaymentNo)  \r\n " +
           "VALUES ({BillNo},{TypeNo},{LoanNo},{Amount},{Month},{Year},{BillDetailPaymentNo});"
            ,
-           //[9]Update Guarantor and Loan (BSavePayLoop) INPUT: {LoanAmount}  {LoanNo}
+           //[9]Update Guarantor and Loan (BSavePayLoop) INPUT: {LoanAmount}  {LoanNo} {TeacharNo} {Amount}
            "-- ลบ คนค้ำ + ปิดกู้ \r\n " +
            "DECLARE @CountPayLoan int \r\n" +
            "DECLARE @PayNo int \r\n" +
@@ -189,6 +189,12 @@ namespace BankTeacher.Bank.Pay
           "SET RemainsAmount = 0 \r\n " +
           "WHERE EmployeeBank.dbo.tblGuarantor.LoanNo = {LoanNo}; \r\n " +
           " \r\n " +
+          " --- ลบ ดอกเบี้ย หุ้นสะสสม \r\n " +
+          "update EmployeeBank.dbo.tblShare \r\n " +
+          "set SavingAmount = SavingAmount - '{Amount}' \r\n " +
+          "WHERE TeacherNo = '{TeacherNo}' \r\n " +
+          "--------------------------------------- \r\n " +
+          "\r\n  "+
           "UPDATE EmployeeBank.dbo.tblLoan \r\n " +
           "SET LoanStatusNo = 3 \r\n " +
           "WHERE LoanNo = {LoanNo} \r\n " +
@@ -406,20 +412,21 @@ namespace BankTeacher.Bank.Pay
                     TBTeacherName.Text = dt.Rows[0][1].ToString();
                     CheckInputTeacher = true;
                     ComboBox[] cb = new ComboBox[] { CBLoanSelection_LoanInfo };
+                    string NumberRound = "";
                     //หารายการกู้ที่มีอยู๋ เวลาที่สมัครสมาชิก และ บิลล์ที่จ่ายล่าสุด
                     DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[2].Replace("{TeacherNo}", TBTeacherNo.Text));
                     //loop จากจำนวนรายการกู้ที่มีอยู่ในระบบ ใส่ลงใน CBLoanSelection หน้าข้อมูลกู้
                     for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
                     {
-                        for (int aa = 0; aa < cb.Length; aa++)
+                        for (int loop = 0; loop < cb.Length; loop++)
                         {
-                            cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment("รายการกู้ " + ds.Tables[0].Rows[x][1].ToString(), ds.Tables[0].Rows[x][0].ToString()));
+                            cb[loop].Items.Add(new BankTeacher.Class.ComboBoxPayment($"รายการกู้ : ({ds.Tables[0].Rows[x][0].ToString()}) " + ds.Tables[0].Rows[x][1].ToString(), ds.Tables[0].Rows[x][0].ToString()));
                             Loan.Add(Convert.ToInt32(ds.Tables[0].Rows[x][0].ToString()));
                         }
                     }
                     CBLoanSelection_LoanInfo.Enabled = true;
                     //หาก CBLoanSelection หน้าดูข้อมูลกู้มี Items อยู่อันเดียวให้เลือก อัตโนมัติให้เลย
-                    if (CBLoanSelection_LoanInfo.Items.Count == 1)
+                    if (CBLoanSelection_LoanInfo.Items.Count >= 1)
                     {
                         CBLoanSelection_LoanInfo.SelectedIndex = 0;
                     }
@@ -1121,7 +1128,14 @@ namespace BankTeacher.Bank.Pay
                                 //หากเดือนนี้เป็นเดือนสุดท้ายให้เปลี่ยนราคา
                                 if (Now == EndDatePayLoan)
                                 {
+                                    try
+                                    {
                                         AmountPay = Convert.ToInt32(dsLoan.Tables[0].Rows[0][2].ToString());
+                                    }
+                                    catch
+                                    {
+                                        AmountPay = Convert.ToInt32(dsLoan.Tables[1].Rows[0][5].ToString());
+                                    }
                                 }
                                 if (DGV_Pay.Rows.Count != 0)
                                 {
@@ -1408,7 +1422,7 @@ namespace BankTeacher.Bank.Pay
         }
 
         //SaveInfo Button
-        int Printbill = 0;
+        int Printbill = 0; string LoanNo = "";
         private void BSave_Pay_Click(object sender, EventArgs e)
         {
             BankTeacher.Class.ComboBoxPayment Payment = (CBPayment_Pay.SelectedItem as BankTeacher.Class.ComboBoxPayment);
@@ -1420,45 +1434,51 @@ namespace BankTeacher.Bank.Pay
                 calculator.ShowDialog();
                 if (BankTeacher.Bank.Pay.Calculator.Return)
                 {
-                    try
+                    DataSet dtBillNo = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[7]
+                        .Replace("{TeacherNo}", TBTeacherNo.Text)
+                        .Replace("{TeacherNoaddby}", Class.UserInfo.TeacherNo));
+                    String BillNo = dtBillNo.Tables[0].Rows[0][0].ToString();
+                    for (int x = 0; x < DGV_Pay.Rows.Count; x++)
                     {
-                        DataSet dtBillNo = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[7]
-                            .Replace("{TeacherNo}", TBTeacherNo.Text)
-                            .Replace("{TeacherNoaddby}", Class.UserInfo.TeacherNo));
-                        String BillNo = dtBillNo.Tables[0].Rows[0][0].ToString();
-                        for (int x = 0; x < DGV_Pay.Rows.Count; x++)
+                        if (DGV_Pay.Rows[x].Cells[1].Value.ToString().Contains("หุ้น"))
                         {
-                            if (DGV_Pay.Rows[x].Cells[1].Value.ToString().Contains("หุ้น"))
-                            {
-                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
-                                .Replace("{BillNo}", BillNo)
-                                .Replace("{TypeNo}", "1")
-                                .Replace("{LoanNo}", "null")
-                                .Replace("{Amount}", DGV_Pay.Rows[x].Cells[2].Value.ToString())
-                                .Replace("{Month}", DGV_Pay.Rows[x].Cells[5].Value.ToString())
-                                .Replace("{Year}", DGV_Pay.Rows[x].Cells[4].Value.ToString())
-                                .Replace("{BillDetailPaymentNo}", (CBPayment_Pay.SelectedIndex + 1).ToString()));
+                            Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
+                            .Replace("{BillNo}", BillNo)
+                            .Replace("{TypeNo}", "1")
+                            .Replace("{LoanNo}", "null")
+                            .Replace("{Amount}", DGV_Pay.Rows[x].Cells[2].Value.ToString())
+                            .Replace("{Month}", DGV_Pay.Rows[x].Cells[5].Value.ToString())
+                            .Replace("{Year}", DGV_Pay.Rows[x].Cells[4].Value.ToString())
+                            .Replace("{BillDetailPaymentNo}", (CBPayment_Pay.SelectedIndex + 1).ToString()));
 
-                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[10]
-                                    .Replace("{TeacherNo}", TBTeacherNo.Text)
-                                    .Replace("{SavingAmount}", DGV_Pay.Rows[x].Cells[2].Value.ToString()));
-                            }
-                            else if (DGV_Pay.Rows[x].Cells[1].Value.ToString().Contains("กู้"))
-                            {
-                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
-                                .Replace("{BillNo}", BillNo)
-                                .Replace("{TypeNo}", "2")
-                                .Replace("{LoanNo}", DGV_Pay.Rows[x].Cells[3].Value.ToString())
-                                .Replace("{Amount}", DGV_Pay.Rows[x].Cells[2].Value.ToString())
-                                .Replace("{Month}", DGV_Pay.Rows[x].Cells[5].Value.ToString())
-                                .Replace("{Year}", DGV_Pay.Rows[x].Cells[4].Value.ToString())
-                                .Replace("{BillDetailPaymentNo}", (CBPayment_Pay.SelectedIndex + 1).ToString()));
-
-                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[9]
-                                    .Replace("{LoanNo}", DGV_Pay.Rows[x].Cells[3].Value.ToString())
-                                    .Replace("{LoanAmount}", DGV_Pay.Rows[x].Cells[2].Value.ToString()));
-                            }
+                            Class.SQLConnection.InputSQLMSSQL(SQLDefault[10]
+                                .Replace("{TeacherNo}", TBTeacherNo.Text)
+                                .Replace("{SavingAmount}", DGV_Pay.Rows[x].Cells[2].Value.ToString()));
                         }
+                        else if (DGV_Pay.Rows[x].Cells[1].Value.ToString().Contains("กู้"))
+                        {
+                            DataTable dt_InterestRate = Class.SQLConnection.InputSQLMSSQL(
+                            "SELECT a.LoanNo, a.TeacherNo, a.LoanAmount, ROUND(CAST(a.InterestRate / 100 * a.LoanAmount as float), 0) as InterestRate,a.PayNo \r\n" +
+                            "FROM EmployeeBank.dbo.tblLoan as a \r\n" +
+                            "WHERE a.LoanNo = '{LoanNo}'".Replace("{LoanNo}",DGV_Pay.Rows[x].Cells[3].Value.ToString()));
+                            var Amount_Loan = dt_InterestRate.Rows[0][3].ToString();
+                            LoanNo = DGV_Pay.Rows[x].Cells[3].Value.ToString();
+                            Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
+                            .Replace("{BillNo}", BillNo)
+                            .Replace("{TypeNo}", "2")
+                            .Replace("{LoanNo}", DGV_Pay.Rows[x].Cells[3].Value.ToString())
+                            .Replace("{Amount}", DGV_Pay.Rows[x].Cells[2].Value.ToString())
+                            .Replace("{Month}", DGV_Pay.Rows[x].Cells[5].Value.ToString())
+                            .Replace("{Year}", DGV_Pay.Rows[x].Cells[4].Value.ToString())
+                            .Replace("{BillDetailPaymentNo}", (CBPayment_Pay.SelectedIndex + 1).ToString()));
+
+                            Class.SQLConnection.InputSQLMSSQL(SQLDefault[9]
+                                .Replace("{LoanNo}", DGV_Pay.Rows[x].Cells[3].Value.ToString())
+                                .Replace("{LoanAmount}", DGV_Pay.Rows[x].Cells[2].Value.ToString())
+                                .Replace("{TeacherNo}", TBTeacherNo.Text)
+                                .Replace("{Amount}", Amount_Loan.ToString()));
+                        }
+                    }
 
                         MessageBox.Show("ชำระสำเร็จ", "แจ้งเตือนการขำระ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
@@ -1466,9 +1486,19 @@ namespace BankTeacher.Bank.Pay
                         Class.Print.PrintPreviewDialog.info_TeacherAdd = Class.UserInfo.TeacherName;
                         if(LBalance_Pay.Text != "")
                         {
-                            if (Convert.ToInt32(TBToatalSaving_ShareInfo.Text) > 0) { Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(Convert.ToInt32(TBToatalSaving_ShareInfo.Text) + Convert.ToInt32(LBalance_Pay.Text)).ToString(); }
-                            else { Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(Convert.ToInt32(TBToatalSaving_ShareInfo.Text) + Convert.ToInt32(LBalance_Pay.Text)).ToString(); }
-
+                                if (Convert.ToInt32(TBToatalSaving_ShareInfo.Text) > 0) { Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(Convert.ToInt32(TBToatalSaving_ShareInfo.Text) + Convert.ToInt32(LBalance_Pay.Text)).ToString(); }
+                                    else { Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(Convert.ToInt32(TBToatalSaving_ShareInfo.Text) + Convert.ToInt32(LBalance_Pay.Text)).ToString(); }
+                                DataTable dt_chcek = Class.SQLConnection.InputSQLMSSQL("SELECT a.TeacherNo,a.LoanStatusNo \r\n " +
+                                "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
+                                "WHERE a.LoanNo = '{LoanNo}'".Replace("{LoanNo}",LoanNo));
+                            if (dt_chcek.Rows[0][1].ToString() == "3") 
+                            {
+                               DataTable dt = Class.SQLConnection.InputSQLMSSQL("SELECT a.TeacherNo, a.SavingAmount \r\n " +
+                                   "FROM EmployeeBank.dbo.tblShare as a \r\n " +
+                                  "WHERE a.TeacherNo = '{TeacherNo}'".Replace("{TeacherNo}", TBTeacherNo.Text));
+                                    Class.Print.PrintPreviewDialog.info_Savingtotel = dt.Rows[0][1].ToString();
+                            }
+                            LoanNo = "";
                         }
                         Class.Print.PrintPreviewDialog.info_Billpay = TBTeacherBill.Text;
                         if(TBAmountRemain_LoanInfo.Text != "")
@@ -1489,11 +1519,6 @@ namespace BankTeacher.Bank.Pay
                             printDocument1.Print();
                         }
                         Printbill = 0;
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"---------------------{ex}----------------------");
-                    }
                     //info_name = TBTeacherName.Text;
                     //info_id = TBTeacherNo.Text;
                     //info_totelAmountpay = TBToatalSaving_ShareInfo.Text;

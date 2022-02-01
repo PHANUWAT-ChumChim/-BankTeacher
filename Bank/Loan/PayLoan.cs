@@ -283,7 +283,7 @@ namespace BankTeacher.Bank.Loan
             {
                 try
                 {
-                    if (PathFile == "" && PathFile != null)
+                    if (PathFile != "" && PathFile != null)
                     {
                         StatusEnableForm(false);
                         FTP.FTPSendFile(PathFile, $"Loan{DGV_PayLoan.Rows[0].Cells[1].Value.ToString()}.pdf");
