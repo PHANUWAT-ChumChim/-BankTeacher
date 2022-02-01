@@ -280,7 +280,7 @@ namespace BankTeacher.Bank.Loan
             {
                 try
                 {
-                    if (PathFile == "" && PathFile != null)
+                    if (PathFile != "" && PathFile != null)
                     {
                         StatusEnableForm(false);
                         CheckStatusWorking = true;

@@ -351,7 +351,11 @@ namespace BankTeacher.Class.Print
             {
                 getNum = getRemove.Remove(0, 1);
                 getRemove = getRemove.Remove(1, getRemove.Length - 1);
-                Sort.Add(getRemove);
+                var isNumeric = int.TryParse(getRemove, out int n);
+                if (isNumeric)
+                {
+                    Sort.Add(getRemove);
+                }
                 getRemove = getNum;
             }
             for (int loop = 0; loop < Sort.Count; loop++)
