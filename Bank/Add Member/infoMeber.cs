@@ -117,17 +117,19 @@ namespace BankTeacher.Bank.Add_Member
          };
 
         int StartAmount = 0;
+        bool CheckStatusWorking = false;
         private void infoMeber_SizeChanged(object sender, EventArgs e)
         {
             Class.FromSettingMedtod.ChangeSizePanal(this, PL);
         }
         private void BExitForm_Click(object sender, EventArgs e)
         {
-            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+            if(!CheckStatusWorking)
+                BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
         }
         private void infoMeber_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
+            if (e.KeyCode == Keys.Escape && !CheckStatusWorking)
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
@@ -146,7 +148,7 @@ namespace BankTeacher.Bank.Add_Member
                     tabControl1.SelectedIndex = 0;
                     Checkmember(true);
                 }
-                else
+                else if(!CheckStatusWorking)
                 {
                     BExitForm_Click(new object(), new EventArgs());
                 }
@@ -315,6 +317,7 @@ namespace BankTeacher.Bank.Add_Member
                     if (PathFile != "")
                     {
                         StatusEnableBT(false);
+                        CheckStatusWorking = true;
                         FTP.FTPSendFile(PathFile , $"Member_{TBTeacherNo.Text}.pdf");
                         if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
                         {
@@ -329,6 +332,7 @@ namespace BankTeacher.Bank.Add_Member
                         }
                         PathFile = "";
                         BTUploadFile_Reg.Enabled = true;
+                        CheckStatusWorking = false;
                     }
                 }
             }
@@ -347,7 +351,9 @@ namespace BankTeacher.Bank.Add_Member
                 {
                     BankTeacher.Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new BankTeacher.Class.ProtocolSharing.FileZilla.FileZillaConnection("RegMember");
                     StatusEnableBT(false);
+                    CheckStatusWorking = true;
                     FTP.FTPOpenFile($"Member_{TBTeacherNo.Text}.pdf");
+                    CheckStatusWorking = false;
                     StatusEnableBT(true);
                 }
             }
@@ -367,6 +373,7 @@ namespace BankTeacher.Bank.Add_Member
             {
                 StatusEnableBT(false);
                 Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("RegMember");
+                CheckStatusWorking = true;
                 FTP.FTPRemoveFile("Member_"+ TBTeacherNo.Text +".pdf");
                 StatusEnableBT(true);
                 if(BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
@@ -381,6 +388,7 @@ namespace BankTeacher.Bank.Add_Member
                     BTOpenFile.Enabled = false;
                     BTRemoveFile.Enabled = false;
                 }
+                CheckStatusWorking = false;
             }
         }
         private void StatusEnableBT(bool Status)
