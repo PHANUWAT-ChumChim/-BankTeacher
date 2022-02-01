@@ -55,6 +55,7 @@ namespace BankTeacher.Bank
             this.DGV.RowHeadersVisible = false;
             this.DGV.Size = new System.Drawing.Size(672, 404);
             this.DGV.TabIndex = 0;
+            this.DGV.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DGV_KeyDown);
             // 
             // Column3
             // 
@@ -108,6 +109,8 @@ namespace BankTeacher.Bank
             this.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.Name = "UnpaidLoanList";
             this.Text = "UnpaidLoanList";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.UnpaidLoanList_FormClosed);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UnpaidLoanList_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).EndInit();
             this.ResumeLayout(false);
 

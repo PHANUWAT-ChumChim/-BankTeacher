@@ -1463,6 +1463,10 @@ namespace BankTeacher.Bank.Loan
 
         private void TBPayNo_TextChanged(object sender, EventArgs e)
         {
+            if (Int32.TryParse(TBPayNo.Text, out int x) && x <= 0)
+            {
+                TBPayNo.Text = "";
+            }
             BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBPayNo);
         }
 

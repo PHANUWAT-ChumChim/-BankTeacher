@@ -22,6 +22,7 @@ namespace BankTeacher.Bank.Add_Member
         bool CheckBCancel = false;
         double Saving = 0;
         String PathFile = null;
+        bool CheckUpload = false, CheckSendSQL = false;
 
         //----------------------- index code -------------------- ////////
 
@@ -218,7 +219,7 @@ namespace BankTeacher.Bank.Add_Member
                                         .Replace("{Month}", BankTeacher.Bank.Menu.Date[1])
                                         .Replace("{Year}", BankTeacher.Bank.Menu.Date[0])
                                         .Replace("{PathFile}", FTP.HostplusPathFile + $"Member_{TBTeacherNo_Reg.Text}.pdf"));
-                                    
+                                        CheckSendSQL = true;
                                         MessageBox.Show("สมัครเสร็จสิ้น", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                     }
                                     else
@@ -313,6 +314,7 @@ namespace BankTeacher.Bank.Add_Member
                 {
                     PathFile = dialog.FileName;
                     BTdeletefile_Reg.Visible = true;
+                    CheckUpload = true;
                 }
             }
             else
@@ -361,12 +363,13 @@ namespace BankTeacher.Bank.Add_Member
         }
         private void BExitForm_Click(object sender, EventArgs e)
         {
-            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+            if((CheckUpload && CheckSendSQL) || (!CheckUpload && !CheckSendSQL))
+                BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
         }
 
         private void Member_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
+            if ((e.KeyCode == Keys.Escape && !CheckUpload || !CheckSendSQL) || (e.KeyCode == Keys.Escape && CheckUpload || CheckSendSQL))
             {
                 if (TBTeacherNo_Reg.Text.Length != 0)
                 {

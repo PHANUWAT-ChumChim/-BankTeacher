@@ -1121,7 +1121,14 @@ namespace BankTeacher.Bank.Pay
                                 //หากเดือนนี้เป็นเดือนสุดท้ายให้เปลี่ยนราคา
                                 if (Now == EndDatePayLoan)
                                 {
+                                    try
+                                    {
                                         AmountPay = Convert.ToInt32(dsLoan.Tables[0].Rows[0][2].ToString());
+                                    }
+                                    catch
+                                    {
+                                        AmountPay = Convert.ToInt32(dsLoan.Tables[1].Rows[0][5].ToString());
+                                    }
                                 }
                                 if (DGV_Pay.Rows.Count != 0)
                                 {

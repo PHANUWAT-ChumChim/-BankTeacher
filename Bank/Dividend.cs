@@ -344,11 +344,14 @@ namespace BankTeacher.Bank
                     {
                         DataTable dtUnpaid = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{Year}", CBYearDividend.SelectedItem.ToString()));
                         UnpaidLoanList UnpaidLoan = new UnpaidLoanList();
+                        this.Enabled = false;
                         UnpaidLoan.Show();
-                        for(int a = 0; a < dtUnpaid.Rows.Count; a++)
+                        UnpaidLoan.FDividend = this;
+                        for (int a = 0; a < dtUnpaid.Rows.Count; a++)
                         {
                             UnpaidLoan.DGV.Rows.Add(dtUnpaid.Rows[a][0], dtUnpaid.Rows[a][1], dtUnpaid.Rows[a][2]);
                         }
+                        UnpaidLoan.Focus();
                     }
                 }
 
