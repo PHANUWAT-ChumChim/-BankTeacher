@@ -105,7 +105,7 @@ namespace BankTeacher.Bank.Add_Member
            ,
            //[6] Update Status RemoveFile INPUT: {TeacherRemoveBy} , {ID} , {TeacherNo} 
            "UPDATE EmployeeBank.dbo.tblFile \r\n " +
-          "SET IsUse = 0, TeacherRemoveFileBy = '{TeacherRemoveBy}', DateRemoveFile = CURRENT_TIMESTAMP , StatusFileInSystem = 2 \r\n " +
+          "SET IsUse = 0, TeacherRemoveFileBy = '{TeacherRemoveBy}', DateRemoveFile = CURRENT_TIMESTAMP , StatusFileInSystem = 1 \r\n " +
           "WHERE ID = '{ID}'; \r\n " +
           " \r\n " +
           "UPDATE EmployeeBank.dbo.tblMember \r\n " +

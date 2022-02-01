@@ -28,8 +28,7 @@ namespace BankTeacher.Bank
         { 
              //[0]Edit Setting INPUT: {DateAmountChange} {StartAmountMin} {StartAmountMax} {PerShare}  {MinLoan}
              "UPDATE EmployeeBank.dbo.tblSettingAmount \r\n" +
-             "SET DateAmountChange = {DateAmountChange}, StartAmountMin = {StartAmountMin} , StartAmountMax = {StartAmountMax} , PerShare = {PerShare} , MinLoan = {MinLoan}\r\n" +
-             "WHERE SettingNo = 1 ;"
+             "SET DateAmountChange = {DateAmountChange}, StartAmountMin = {StartAmountMin} , StartAmountMax = {StartAmountMax} , PerShare = {PerShare} , MinLoan = {MinLoan};\r\n"
             ,
         };
         public Setting()

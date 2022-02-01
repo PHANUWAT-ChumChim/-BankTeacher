@@ -1119,10 +1119,11 @@ namespace BankTeacher.Bank.Loan
                 MessageBox.Show("โปรดกรอกหน้าข้อมูลการกู้ให้ครบถ้วนก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
-            int SumCreditEdit = 0;
+            double SumCreditEdit = 0;
             for (int Num = 0; Num < DGVGuarantorCredit.Rows.Count; Num++)
             {
-                SumCreditEdit += Convert.ToInt32(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString());
+                if (double.TryParse(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString(), out double y))
+                    SumCreditEdit += y;
             }
 
             SumCreditEdit = Convert.ToInt32(LTotal.Text) - SumCreditEdit;
@@ -1168,6 +1169,10 @@ namespace BankTeacher.Bank.Loan
             if (System.Text.RegularExpressions.Regex.IsMatch(tb.Text, "[^0-9]"))
             {
                 DGVGuarantorCredit.CancelEdit();
+            }
+            if(tb.Text.Length > 8)
+            {
+                DGVGuarantorCredit.EndEdit();
             }
         }
         void TBKeyUp(object sender , KeyEventArgs e)

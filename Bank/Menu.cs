@@ -58,7 +58,10 @@ namespace BankTeacher.Bank
                 MinLoan = Convert.ToInt32(dt.Rows[0][3]);
                 perShare = Convert.ToInt32(dt.Rows[0][4]);
             }
-            catch { MessageBox.Show("โปรดทำการเชื่อมฐานข้อมูล", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning); this.Enabled = false; };
+            catch
+            {
+                MessageBox.Show("โปรดทำการเชื่อมฐานข้อมูล", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning); this.Enabled = false; 
+            }
         }
         public void CloseFrom(Form F)
         {

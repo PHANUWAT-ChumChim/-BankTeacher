@@ -301,7 +301,7 @@ namespace BankTeacher.Class.Print
             {
                 script = "สำเนา";
             }
-            // ต้นฉบับ  สำเนา
+            // ต้นฉบับ  สำเนา 
             SizeF Size = e.Graphics.MeasureString(script, Class.Print.PrintPreviewDialog.Font(30, "TH Sarabun New", FontStyle.Bold));
             // พื้นหลัง
             e.Graphics.FillRectangle(Brushes.White, SizeForm_Width - Size.Width - move, 50, Size.Width, Size.Height - 10);
