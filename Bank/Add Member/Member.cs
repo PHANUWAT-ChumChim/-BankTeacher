@@ -424,5 +424,10 @@ namespace BankTeacher.Bank.Add_Member
             PathFile = null;
             BTdeletefile_Reg.Visible = false;
         }
+
+        private void TBStartAmountShare_Reg_TextChanged(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBStartAmountShare_Reg);
+        }
     }
 }

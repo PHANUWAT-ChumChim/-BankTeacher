@@ -1275,12 +1275,44 @@ namespace BankTeacher.Bank.Pay
             }
         }
         //Can Write Num
+        TextBox tb;
         private void DGV_Pay_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
         {
-            if (DGV_Pay.CurrentCell.ColumnIndex == 2)
+            if (DGV_Pay.CurrentCell.ColumnIndex >= 2)
             {
                 e.Control.KeyPress -= NumericCheck;
                 e.Control.KeyPress += NumericCheck;
+                tb = (TextBox)e.Control;
+                tb.KeyPress += new KeyPressEventHandler(TBCellKeyPress);
+                tb.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TBKeyUp);
+                tb.TextChanged += new System.EventHandler(this.TBTextChanged);
+            }
+        }
+
+        void TBTextChanged(object sendet, EventArgs e)
+        {
+            if (System.Text.RegularExpressions.Regex.IsMatch(tb.Text, "[^0-9]"))
+            {
+                DGV_Pay.CancelEdit();
+            }
+        }
+        void TBKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.V && e.Modifiers == Keys.Control)
+            {
+                DGV_Pay.CancelEdit();
+            }
+            else if (e.KeyCode == Keys.V)
+            {
+                DGV_Pay.CancelEdit();
+            }
+        }
+        void TBCellKeyPress(object sender, KeyPressEventArgs e)
+        {
+
+            if ((!Char.IsNumber(e.KeyChar)) && (!Char.IsControl(e.KeyChar)))
+            {
+                e.Handled = true;
             }
         }
         //Summoney After ChangeAmount
@@ -2646,6 +2678,11 @@ namespace BankTeacher.Bank.Pay
         private void CBYearSelection_BillInfo_KeyDown(object sender, KeyEventArgs e)
         {
 
+        }
+
+        private void TBAmount_Pay_TextChanged(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBAmount_Pay);
         }
         //===============================================================================================
     }

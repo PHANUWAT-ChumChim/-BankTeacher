@@ -70,5 +70,20 @@ namespace BankTeacher.Class
             FORM.Close();
             BankTeacher.Bank.Menu.Parent.MainMenuStrip.Visible = true;
         }
+
+        public static void ProtectedCtrlVTB(TextBox TB)
+        {
+            if (TB.Text.Length > 0)
+            {
+                if (Int32.TryParse(TB.Text, out int x) && x <= 0)
+                {
+                    TB.Text = "";
+                }
+                else if (!(Int32.TryParse(TB.Text, out int y)))
+                {
+                    TB.Text = "";
+                }
+            }
+        }
     }
 }
