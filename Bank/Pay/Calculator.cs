@@ -58,11 +58,11 @@ namespace BankTeacher.Bank.Pay
             {
                 if (Int32.TryParse(TBGetAmount.Text, out int xx) && xx < 0)
                 {
-                    TBGetAmount.Text = "";
+                    TBGetAmount.Text = "0";
                 }
                 else if (!(Int32.TryParse(TBGetAmount.Text, out int y)))
                 {
-                    TBGetAmount.Text = "";
+                    TBGetAmount.Text = "0";
                 }
             }
             if (Int32.TryParse(TBGetAmount.Text , out int x))
