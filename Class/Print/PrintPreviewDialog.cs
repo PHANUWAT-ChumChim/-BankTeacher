@@ -125,7 +125,7 @@ namespace BankTeacher.Class.Print
                     }
                 }
             }
-            // X 850 = 22 cm เเนะนำ 800 //
+            // X 850 = 22 cm เเนะนำ 800 /
             // A4 = 21 cm  {Width = 356.70163 Height = 136.230438} {Width = 356.70163 Height = 102.954086} // 
             DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLCode.Replace("{TeacherNo}", TeacherNo));
               
