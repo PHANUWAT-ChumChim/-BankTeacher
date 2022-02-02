@@ -27,7 +27,7 @@ namespace BankTeacher.Bank
            //[0]SELECT Max 1 Year INPUT: 
            "SELECT TOP 1 MAX(a.Year) \r\n " +
           "FROM EmployeeBank.dbo.tblDividend as a \r\n " +
-          "WHERE a.Cancel = 1"
+          "WHERE a.Cancel = 1 and a.DateAdd <= DATEADD(MONTH, 3 , a.DateAdd)"
 
 
            ,
@@ -122,16 +122,25 @@ namespace BankTeacher.Bank
                     .Replace("{TeacherNo}" , Class.UserInfo.TeacherNo));
                      CBYear.Items.RemoveAt(CBYear.SelectedIndex);
                     MessageBox.Show("ยกเลิกปันผลเรียบร้อยแล้ว","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                    DataTable dtYear = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]);
-                    CBYear.SelectedIndex = -1;
+                    CBYear.DroppedDown = false;
                     CBYear.Items.Clear();
-                    if(dtYear.Rows.Count != 0 && dtYear.Rows[0][0].ToString() != "")
-                    {
-                        for (int x = 0; x < dtYear.Rows.Count; x++)
-                        {
-                            CBYear.Items.Add(dtYear.Rows[0][0]);
-                        }
-                    }
+                    TB_DividendAmount.Text = "";
+                    TB_DividendPerShare.Text = "";
+                    TB_InterestAmount.Text = "";
+                    TB_InterestNextYear.Text = "";
+                    TB_RemainInterest.Text = "";
+                    TB_SavingAmount.Text = "";
+                    DGVReportDividend.Rows.Clear();
+                    //DataTable dtYear = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]);
+                    //CBYear.SelectedIndex = -1;
+                    //CBYear.Items.Clear();
+                    //if(dtYear.Rows.Count != 0 && dtYear.Rows[0][0].ToString() != "")
+                    //{
+                    //    for (int x = 0; x < dtYear.Rows.Count; x++)
+                    //    {
+                    //        CBYear.Items.Add(dtYear.Rows[0][0]);
+                    //    }
+                    //}
                     //if(CBYear.Items.Count > 0)
                     //{
                     //    CBYear.SelectedIndex = 0;
@@ -193,17 +202,17 @@ namespace BankTeacher.Bank
                 {
                     CBYear.Items.Add(dtYear.Rows[x][0].ToString());
                 }
-
-            if(CBYear.Items.Count != 0)
-            {
-                CBYear.Enabled = true;
-                CBYear.SelectedIndex = 0;
-            }
-            else if(dtYear.Rows[0][0].ToString() == "")
+            else if (dtYear.Rows[0][0].ToString() == "")
             {
                 label1.Visible = true;
                 CBYear.Enabled = false;
                 BSaveCancelDividend.Enabled = false;
+            }
+
+            if (CBYear.Items.Count != 0)
+            {
+                CBYear.Enabled = true;
+                CBYear.SelectedIndex = 0;
             }
             else
             {
