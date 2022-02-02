@@ -524,7 +524,7 @@ namespace BankTeacher.Class.Print
                 //e.Graphics.DrawString($"วันที่ออกใบ {Bank.Pay.pay.info_datepay}", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - Size.Width, 50);
                 //e.Graphics.DrawString($"วันที่ออกใบ {DateTime.Now.Day}/{DateTime.Now.Month}/{DateTime.Now.Year}", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - Size.Width, 50);
                 // ================================================================ เวลาที่เอกสารถูกปริ้น ===================================================================
-                if(TextForm != "InfoLoan")
+                if(TextForm != "InfoLoan" && TextForm != "Home")
                 {
                     // เลขหน้า
                     int all_paper, number;
@@ -1182,7 +1182,7 @@ namespace BankTeacher.Class.Print
             college_english = DT.Rows[0][1].ToString(),
             college_address = DT.Rows[0][5].ToString();
             // ข้อมูลในตาราง
-            int all_paper, number = 18;
+            int all_paper, number = 16;
             double b = (double)G.RowCount / number;
             if (G.RowCount / number == 0)
             {
@@ -1309,16 +1309,27 @@ namespace BankTeacher.Class.Print
                                     sum += List_similar[0]; // เก็บค่า
                                     Number_round++;
                                     if(List_similar.Count() == 0) { not = true; }
-                                    if (sum >= 18) // ตรวจสอบว่าเกินขนาดหรือไม่ 18 คือขนาดทีRows ที่ไม่ควรเกินหน้ากระดาษ
+                                    if (sum >= 15) // ตรวจสอบว่าเกินขนาดหรือไม่ 18 คือขนาดทีRows ที่ไม่ควรเกินหน้ากระดาษ
                                     {
-                                        if (sum > 18) // ถ้าขนาดไม่ พอ ดี ตามกำหนด ให้ตัด ขนาดที่เกินออกไป
+                                        if (sum > 15) // ถ้าขนาดไม่ พอ ดี ตามกำหนด ให้ตัด ขนาดที่เกินออกไป
                                         {
                                             sum -= List_similar[0]; // ย้อนค่าคืน
                                             Number_round--;
                                             not = true;  // เปิดการลบค่า
                                         }
-                                        List_similar_page.Add(sum); // ข้อมูลรองที่ใช้ในการเช็ค (จำเป็น)
-                                        List_round.Add(Number_round); // ข้อมูลรองที่ใช้ในการเช็ค (จำเป็น)
+                                        if(sum != 0)
+                                        {
+                                            List_similar_page.Add(sum); // ข้อมูลรองที่ใช้ในการเช็ค (จำเป็น)
+                                            List_round.Add(Number_round); // ข้อมูลรองที่ใช้ในการเช็ค (จำเป็น)
+                                        }
+                                        else
+                                        {
+                                            sum += List_similar[0];
+                                            Number_round++;
+                                            List_similar_page.Add(sum); // ข้อมูลรองที่ใช้ในการเช็ค (จำเป็น)
+                                            List_round.Add(Number_round); // ข้อมูลรองที่ใช้ในการเช็ค (จำเป็น)
+                                            not = false;
+                                        }
                                         Number_round = 0;
                                         sum = 0;
                                     }
@@ -1589,29 +1600,36 @@ namespace BankTeacher.Class.Print
                         var INDAX_int = Size.Height * Ceiling;
                         Rectanglef_height = (float)INDAX_int;
                     }
-                    ListOver_height.Add(Rectanglef_height); // เก็บค่าความยาว
+                    if (Size_2.Width < Rectanglef_width)
+                    {
+                        ListOver_height.Add(Rectanglef_height); // เก็บค่าความยาว
+                    }
+                    else
+                    {
+                        if (!List_AloneOrNot_cells[UP][c])
+                        {
+                            ListOver_height.Add(Rectanglef_height); // เก็บค่าความยาว
+                        }
+                    }    
                     if (Rows[R][c].ToString() == "") { CHECK = true; }
-                    //if(G.Rows[R].Cells[c].Value.ToString() == "") { CHECK = true; }
                     if (!CHECK) 
                     {
                         if (List_AloneOrNot_cells[UP][c]) // เช็คว่าตำเเหน่งเป็นจริงหรือไม่
                         {
                             if (page_Y == page_y) // ขนาด กระดาษ ต้อง เหมือนเดิม
                             { page_Y = page_y; } // เก็บค่าใหม่
-                            else { page_y = page_Y; } // ถ้าขนาดไม่เหมือนเดิมให้เปลี่ยนกลับ 
-                                                    //Size_2 = e.Graphics.MeasureString($"{G.Rows[R].Cells[c].Value.ToString()}", Font(18, ThaiSarabun, FontStyle.Regular)); // เก็บขนาด
-                                                    //Size_3 = e.Graphics.MeasureString($"{G.Rows[R].Cells[location_Unicode_Cells].Value}", Font(18, ThaiSarabun, FontStyle.Regular)); // เก็บขนาด
+                            else { page_y = page_Y; } // ถ้าขนาดไม่เหมือนเดิมให้เปลี่ยนกลับ
                             Size_2 = e.Graphics.MeasureString($"{Rows[R][c]}", Font(18, ThaiSarabun, FontStyle.Regular)); // เก็บขนาด
-                            Size_3 = e.Graphics.MeasureString($"{G.Rows[R].Cells[location_Unicode_Cells].Value}", Font(18, ThaiSarabun, FontStyle.Regular)); // เก็บขนาด
-                                                                                                                                                                //var height = Size_3.Height * List_similar2[UP];
-                                                                                                                                                                //var @as = height / 2;
-                                                                                                                                                                //var tast = @as - (Size_2.Height / 2);
-                                                                                                                                                                //var tt = page_y + tast;
+                            Size_3 = e.Graphics.MeasureString($"{Rows[R][location_Unicode_Cells]}", Font(18, ThaiSarabun, FontStyle.Regular)); // เก็บขนาด
+                            //var height = Size_3.Height * List_similar2[UP];
+                            //var @as = height / 2;
+                            //var tast = @as - (Size_2.Height / 2);
+                            //var tt = page_y + tast;
                             var height = page_y + ((Size_3.Height * List_similar3[UP]) / 2) - Size_2.Height;
                             page_y = height;
                             //Test การวาดระยะ e.Graphics.DrawString($"|{a}", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(page_x, a, 200, 200)); // Test สำหรับผู้เเเก้ไข ชิดซ้าย
                         }
-                        else { page_y = page_Y; } // เก็บค่าขนาดเดิม
+                        else {  page_y = page_Y; } // เก็บค่าขนาดเดิม
                         if (c == G.Rows[R].Cells.Count - 1) // ถ้าระยะสุดท้าย ให้บวกเพิ่ม ตำเเหน่ง Rows
                         {
                             if (UP < List_AloneOrNot_cells.Count()-1)
@@ -1641,9 +1659,9 @@ namespace BankTeacher.Class.Print
                 page_x = 50; // Test ถ้าใช้งานจริงจะไม่ loop เเต่เป็นการบอกรายการใน Array เองว่าเป็นรายการอะไร
                 Center = 50;
                 page_y += Class.Print.SetPrintMedtods.MaxValues(0, ListOver_height);
+                ListOver_height.Clear();
                 location_INDAX = page_y;
                 page_Y = page_y;
-                ListOver_height.Clear();
                 CHECK = false;
                 // เส้นปิด Rows
                 if (Rows[R][location_Unicode_Cells].Contains(Unicode)) //   if (Rows[R][location_Unicode_Cells] == string_Unicode)

@@ -80,7 +80,7 @@ namespace BankTeacher.Bank
                             AmountLoan += Convert.ToInt32(EpensesInfo.Tables[0].Rows[x][4]);
                         SumAmount += Convert.ToInt32(EpensesInfo.Tables[0].Rows[x][4]);
                     }
-                    DGV.Rows.Add("","", "", "สรุปรายการกู้  ", "", AmountLoan.ToString());
+                    DGV.Rows.Add("","", "สรุปรายการกู้  ", "", "", AmountLoan.ToString());
                     DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                     TBAmountLoan.Text = AmountLoan.ToString();
                 }
@@ -93,7 +93,7 @@ namespace BankTeacher.Bank
                         AmountSaving += Convert.ToInt32(EpensesInfo.Tables[1].Rows[x][3]);
                         SumAmount += Convert.ToInt32(EpensesInfo.Tables[1].Rows[x][3]);
                     }
-                    DGV.Rows.Add("","", "", "สรุปรายการถอนหุ้นสะสม  ", "", AmountSaving.ToString());
+                    DGV.Rows.Add("","", "สรุปรายการถอนหุ้นสะสม  ", "", "", AmountSaving.ToString());
                     DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                     TBAmountWithDraw.Text = AmountSaving.ToString();
                 }
@@ -113,7 +113,7 @@ namespace BankTeacher.Bank
                     }
                 }
                 TBAmount.Text = SumAmount.ToString();
-                DGV.Rows.Add("","", "", "รวมรายการทั้งหมด  ", "",SumAmount.ToString());
+                DGV.Rows.Add("","", "รวมรายการทั้งหมด  ", "", "",SumAmount.ToString());
                 DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.CornflowerBlue;
                 BTPrint.Enabled = true;
             }
