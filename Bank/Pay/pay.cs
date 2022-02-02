@@ -1836,7 +1836,7 @@ namespace BankTeacher.Bank.Pay
                         {
                             DGV_BillInfo.Rows[loop].DefaultCellStyle.BackColor = Color.LightGoldenrodYellow;
                         }
-                        else if (DGV_BillInfo.Rows[loop].Cells[4].Value.ToString() != "รวม  ")
+                        else if (DGV_BillInfo.Rows[loop].Cells[3].Value.ToString() != "รวม  ")
                         {
                             DGV_BillInfo.Rows[loop].DefaultCellStyle.BackColor = Color.LightYellow;
                         }

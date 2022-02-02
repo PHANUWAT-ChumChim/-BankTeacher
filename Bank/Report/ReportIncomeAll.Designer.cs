@@ -31,14 +31,14 @@ namespace BankTeacher.Bank
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReportIncomeAll));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.BTPrint = new System.Windows.Forms.Button();
-            this.label5 = new System.Windows.Forms.Label();
             this.BExitForm = new System.Windows.Forms.Button();
             this.DGV_All = new System.Windows.Forms.DataGridView();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,10 +49,12 @@ namespace BankTeacher.Bank
             this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DTP = new System.Windows.Forms.DateTimePicker();
-            this.TBAmount_All = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.TBAmount_All = new System.Windows.Forms.TextBox();
+            this.BTPrint = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.TBAmountCradit_All = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.TBAmountCash_All = new System.Windows.Forms.TextBox();
@@ -79,31 +81,6 @@ namespace BankTeacher.Bank
             this.panel1.Size = new System.Drawing.Size(879, 636);
             this.panel1.TabIndex = 1;
             // 
-            // BTPrint
-            // 
-            this.BTPrint.BackColor = System.Drawing.Color.White;
-            this.BTPrint.BackgroundImage = global::BankTeacher.Properties.Resources._10x10_Print;
-            this.BTPrint.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BTPrint.CausesValidation = false;
-            this.BTPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTPrint.Location = new System.Drawing.Point(762, 57);
-            this.BTPrint.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
-            this.BTPrint.Name = "BTPrint";
-            this.BTPrint.Size = new System.Drawing.Size(94, 51);
-            this.BTPrint.TabIndex = 120;
-            this.BTPrint.UseVisualStyleBackColor = false;
-            this.BTPrint.Click += new System.EventHandler(this.BTPrint_Click);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(689, 64);
-            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(67, 37);
-            this.label5.TabIndex = 123;
-            this.label5.Text = "Print :";
-            // 
             // BExitForm
             // 
             this.BExitForm.BackgroundImage = global::BankTeacher.Properties.Resources.logout;
@@ -123,7 +100,7 @@ namespace BankTeacher.Bank
             this.DGV_All.AllowUserToDeleteRows = false;
             this.DGV_All.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.DGV_All.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DGV_All.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
@@ -143,11 +120,27 @@ namespace BankTeacher.Bank
             this.dataGridViewTextBoxColumn8,
             this.dataGridViewTextBoxColumn9,
             this.dataGridViewTextBoxColumn10});
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DGV_All.DefaultCellStyle = dataGridViewCellStyle7;
             this.DGV_All.GridColor = System.Drawing.SystemColors.Control;
             this.DGV_All.Location = new System.Drawing.Point(6, 178);
             this.DGV_All.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.DGV_All.Name = "DGV_All";
             this.DGV_All.ReadOnly = true;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGV_All.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.DGV_All.RowHeadersVisible = false;
             this.DGV_All.RowHeadersWidth = 51;
             this.DGV_All.RowTemplate.Height = 24;
@@ -230,26 +223,6 @@ namespace BankTeacher.Bank
             this.DTP.TabIndex = 7;
             this.DTP.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
-            // TBAmount_All
-            // 
-            this.TBAmount_All.Enabled = false;
-            this.TBAmount_All.Location = new System.Drawing.Point(510, 57);
-            this.TBAmount_All.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
-            this.TBAmount_All.Name = "TBAmount_All";
-            this.TBAmount_All.Size = new System.Drawing.Size(143, 43);
-            this.TBAmount_All.TabIndex = 5;
-            this.TBAmount_All.Text = "0";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(503, 9);
-            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(153, 37);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "จำนวนเงินทั้งหมด";
-            // 
             // panel4
             // 
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -268,6 +241,41 @@ namespace BankTeacher.Bank
             this.panel4.Size = new System.Drawing.Size(864, 116);
             this.panel4.TabIndex = 122;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(503, 9);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(153, 37);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "จำนวนเงินทั้งหมด";
+            // 
+            // TBAmount_All
+            // 
+            this.TBAmount_All.Enabled = false;
+            this.TBAmount_All.Location = new System.Drawing.Point(510, 57);
+            this.TBAmount_All.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
+            this.TBAmount_All.Name = "TBAmount_All";
+            this.TBAmount_All.Size = new System.Drawing.Size(143, 43);
+            this.TBAmount_All.TabIndex = 5;
+            this.TBAmount_All.Text = "0";
+            // 
+            // BTPrint
+            // 
+            this.BTPrint.BackColor = System.Drawing.Color.White;
+            this.BTPrint.BackgroundImage = global::BankTeacher.Properties.Resources._10x10_Print;
+            this.BTPrint.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BTPrint.CausesValidation = false;
+            this.BTPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTPrint.Location = new System.Drawing.Point(762, 57);
+            this.BTPrint.Margin = new System.Windows.Forms.Padding(4, 2, 4, 2);
+            this.BTPrint.Name = "BTPrint";
+            this.BTPrint.Size = new System.Drawing.Size(94, 51);
+            this.BTPrint.TabIndex = 120;
+            this.BTPrint.UseVisualStyleBackColor = false;
+            this.BTPrint.Click += new System.EventHandler(this.BTPrint_Click);
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -277,6 +285,16 @@ namespace BankTeacher.Bank
             this.label4.Size = new System.Drawing.Size(177, 37);
             this.label4.TabIndex = 4;
             this.label4.Text = "จำนวนเงินบัตรเครดิต";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(689, 64);
+            this.label5.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(67, 37);
+            this.label5.TabIndex = 123;
+            this.label5.Text = "Print :";
             // 
             // TBAmountCradit_All
             // 

@@ -31,13 +31,13 @@ namespace BankTeacher.Bank
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ReportIncome));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
-            this.TBAmount = new System.Windows.Forms.TextBox();
             this.BExitForm = new System.Windows.Forms.Button();
             this.DGV_one = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,6 +48,8 @@ namespace BankTeacher.Bank
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DTP = new System.Windows.Forms.DateTimePicker();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.TBAmount = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
             this.BTPrint = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.BSearchTeacher = new System.Windows.Forms.Button();
@@ -82,24 +84,6 @@ namespace BankTeacher.Bank
             this.panel1.Size = new System.Drawing.Size(879, 636);
             this.panel1.TabIndex = 1;
             // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(531, 70);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(143, 36);
-            this.label9.TabIndex = 10;
-            this.label9.Text = "จำนวนเงินทั้งหมด";
-            // 
-            // TBAmount
-            // 
-            this.TBAmount.Enabled = false;
-            this.TBAmount.Location = new System.Drawing.Point(515, 100);
-            this.TBAmount.Name = "TBAmount";
-            this.TBAmount.Size = new System.Drawing.Size(170, 42);
-            this.TBAmount.TabIndex = 14;
-            this.TBAmount.Text = "0";
-            // 
             // BExitForm
             // 
             this.BExitForm.BackgroundImage = global::BankTeacher.Properties.Resources.logout;
@@ -118,12 +102,12 @@ namespace BankTeacher.Bank
             this.DGV_one.AllowUserToDeleteRows = false;
             this.DGV_one.AllowUserToResizeRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.DGV_one.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DGV_one.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
@@ -137,10 +121,26 @@ namespace BankTeacher.Bank
             this.dataGridViewTextBoxColumn3,
             this.dataGridViewTextBoxColumn6,
             this.dataGridViewTextBoxColumn4});
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DGV_one.DefaultCellStyle = dataGridViewCellStyle6;
             this.DGV_one.GridColor = System.Drawing.SystemColors.Control;
             this.DGV_one.Location = new System.Drawing.Point(3, 210);
             this.DGV_one.Name = "DGV_one";
             this.DGV_one.ReadOnly = true;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DGV_one.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.DGV_one.RowHeadersVisible = false;
             this.DGV_one.RowHeadersWidth = 51;
             this.DGV_one.RowTemplate.Height = 24;
@@ -233,6 +233,24 @@ namespace BankTeacher.Bank
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(871, 146);
             this.panel2.TabIndex = 92;
+            // 
+            // TBAmount
+            // 
+            this.TBAmount.Enabled = false;
+            this.TBAmount.Location = new System.Drawing.Point(515, 100);
+            this.TBAmount.Name = "TBAmount";
+            this.TBAmount.Size = new System.Drawing.Size(170, 42);
+            this.TBAmount.TabIndex = 14;
+            this.TBAmount.Text = "0";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(531, 70);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(143, 36);
+            this.label9.TabIndex = 10;
+            this.label9.Text = "จำนวนเงินทั้งหมด";
             // 
             // BTPrint
             // 
