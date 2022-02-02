@@ -672,11 +672,14 @@ namespace BankTeacher.Bank.Loan
             {
                 e.Handled = true;
             }
+            //else if (Int32.TryParse(TBPayNo.Text + e.KeyChar.ToString(), out int a) && a > 60)
+            //{
+            //    e.Handled = true;
+            //}
         }
         // อีเว้นตัวเลข ในTB
         private void TBInterestRate_KeyPress(object sender, KeyPressEventArgs e)
         {
-
             if ((!Char.IsNumber(e.KeyChar)) && (!Char.IsControl(e.KeyChar)) && (e.KeyChar != '.'))
             {
                 e.Handled = true;
@@ -1466,6 +1469,12 @@ namespace BankTeacher.Bank.Loan
             if (Int32.TryParse(TBPayNo.Text, out int x) && x <= 0)
             {
                 TBPayNo.Text = "";
+            }
+            if(Int32.TryParse(TBPayNo.Text , out int a ) && a > 60)
+            {
+                String UndoText = TBPayNo.Text.Remove(TBPayNo.Text.Length - 1, 1);
+                TBPayNo.Text = UndoText;
+                TBPayNo.Select(TBPayNo.Text.Length, 0);
             }
             BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBPayNo);
         }

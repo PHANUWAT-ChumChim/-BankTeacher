@@ -183,10 +183,7 @@ namespace BankTeacher.Bank.Add_Member
 
         private void TBStartAmount_Leave(object sender, EventArgs e)
         {
-            if (SavingAmountStart != TBStartAmount.Text)
-            {
-                BSaveEdit.Enabled = true;
-            }
+            
         }
 
         private void TBNameInfo_Leave(object sender, EventArgs e)
@@ -274,6 +271,9 @@ namespace BankTeacher.Bank.Add_Member
                     .Replace("{Amount}", StartAmount.ToString())
                     .Replace("{TeacherNo}", TBTeacherNo.Text));
                     Checkmember(true);
+
+                    MessageBox.Show("บันทึกการแก้ไขสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    BSaveEdit.Enabled = false;
                 }
             }
             catch (Exception ex)
@@ -432,6 +432,11 @@ namespace BankTeacher.Bank.Add_Member
         private void TBStartAmount_TextChanged(object sender, EventArgs e)
         {
             BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBSavingAmount);
+
+            if (SavingAmountStart != TBStartAmount.Text)
+            {
+                BSaveEdit.Enabled = true;
+            }
         }
     }
 }
