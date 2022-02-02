@@ -80,7 +80,7 @@ namespace BankTeacher.Bank
           "  WHERE a.DividendNo = @DividendNo   \r\n " +
           "     \r\n " +
           "  UPDATE EmployeeBank.dbo.tblDividend    \r\n " +
-          "  SET RemainInterestLastYear = @Interest  \r\n " +
+          "  SET RemainInterestLastYear = @Interest , DateCancel = NULL , CancelBy = NULL  \r\n " +
           "  WHERE DividendNo = @DividendNo;  \r\n " +
           " \r\n " +
           " UPDATE EmployeeBank.dbo.tblShare   \r\n " +
@@ -305,11 +305,12 @@ namespace BankTeacher.Bank
 
         private void BSaveDividend_Click(object sender, EventArgs e)
         {
+            CBYearDividend.DroppedDown = false;
             if (MessageBox.Show("ยืนยันที่จะบันทึกหรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes && CBYearDividend.SelectedIndex != -1
                 && CBYearDividend.SelectedIndex == 0)
             {
                 DataTable dtCheckPaid = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{Year}", CBYearDividend.SelectedItem.ToString()));
-                if(Convert.ToInt32(dtCheckPaid.Rows[0][0].ToString()) == 0)
+                if (Convert.ToInt32(dtCheckPaid.Rows[0][0].ToString()) == 0)
                 {
                     try
                     {
