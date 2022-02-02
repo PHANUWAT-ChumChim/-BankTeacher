@@ -88,7 +88,7 @@ namespace BankTeacher.Bank
             this.DGV.AllowUserToAddRows = false;
             this.DGV.AllowUserToDeleteRows = false;
             this.DGV.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.DGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DGV.BackgroundColor = System.Drawing.SystemColors.ButtonHighlight;
@@ -173,7 +173,7 @@ namespace BankTeacher.Bank
             // 
             this.DTP.Location = new System.Drawing.Point(9, 17);
             this.DTP.Name = "DTP";
-            this.DTP.Size = new System.Drawing.Size(200, 42);
+            this.DTP.Size = new System.Drawing.Size(200, 35);
             this.DTP.TabIndex = 7;
             this.DTP.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
@@ -215,7 +215,7 @@ namespace BankTeacher.Bank
             this.label4.Location = new System.Drawing.Point(672, 52);
             this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(62, 36);
+            this.label4.Size = new System.Drawing.Size(49, 28);
             this.label4.TabIndex = 129;
             this.label4.Text = "Print :";
             // 
@@ -224,7 +224,7 @@ namespace BankTeacher.Bank
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(21, 10);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(143, 36);
+            this.label3.Size = new System.Drawing.Size(111, 28);
             this.label3.TabIndex = 17;
             this.label3.Text = "จำนวนเงินทั้งหมด";
             // 
@@ -233,7 +233,7 @@ namespace BankTeacher.Bank
             this.TBAmount.Enabled = false;
             this.TBAmount.Location = new System.Drawing.Point(27, 49);
             this.TBAmount.Name = "TBAmount";
-            this.TBAmount.Size = new System.Drawing.Size(133, 42);
+            this.TBAmount.Size = new System.Drawing.Size(133, 35);
             this.TBAmount.TabIndex = 20;
             this.TBAmount.Text = "0";
             // 
@@ -242,7 +242,7 @@ namespace BankTeacher.Bank
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(227, 10);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(128, 36);
+            this.label2.Size = new System.Drawing.Size(102, 28);
             this.label2.TabIndex = 16;
             this.label2.Text = "จำนวนเงินจ่ายกู้";
             // 
@@ -251,7 +251,7 @@ namespace BankTeacher.Bank
             this.TBAmountWithDraw.Enabled = false;
             this.TBAmountWithDraw.Location = new System.Drawing.Point(462, 49);
             this.TBAmountWithDraw.Name = "TBAmountWithDraw";
-            this.TBAmountWithDraw.Size = new System.Drawing.Size(133, 42);
+            this.TBAmountWithDraw.Size = new System.Drawing.Size(133, 35);
             this.TBAmountWithDraw.TabIndex = 18;
             this.TBAmountWithDraw.Text = "0";
             // 
@@ -260,7 +260,7 @@ namespace BankTeacher.Bank
             this.TBAmountLoan.Enabled = false;
             this.TBAmountLoan.Location = new System.Drawing.Point(233, 49);
             this.TBAmountLoan.Name = "TBAmountLoan";
-            this.TBAmountLoan.Size = new System.Drawing.Size(133, 42);
+            this.TBAmountLoan.Size = new System.Drawing.Size(133, 35);
             this.TBAmountLoan.TabIndex = 19;
             this.TBAmountLoan.Text = "0";
             // 
@@ -269,7 +269,7 @@ namespace BankTeacher.Bank
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(427, 10);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(184, 36);
+            this.label1.Size = new System.Drawing.Size(146, 28);
             this.label1.TabIndex = 15;
             this.label1.Text = "จำนวนเงินถอนหุ้นสะสม";
             // 
@@ -290,7 +290,7 @@ namespace BankTeacher.Bank
             // 
             // ReportEpensesAll
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 34F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 28F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(962, 665);
