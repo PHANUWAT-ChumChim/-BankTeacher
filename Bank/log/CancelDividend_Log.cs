@@ -51,5 +51,10 @@ namespace BankTeacher.Bank.log
 
 
          };
+
+        private void CancelDividend_Log_Load(object sender, EventArgs e)
+        {
+            //
+        }
     }
 }
