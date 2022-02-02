@@ -16,6 +16,7 @@ namespace BankTeacher.Class.ProtocolSharing
         public static List<BankTeacher.Class.linkedFile> file = new List<BankTeacher.Class.linkedFile>();
         public static bool StatusReturn = false;
         protected static bool StatusRunning = false;
+
         public class FileZillaConnection
         {
 
@@ -67,6 +68,10 @@ namespace BankTeacher.Class.ProtocolSharing
                     {
                         break;
                     }
+                    else if (StatusReturn)
+                    {
+                        break;
+                    }
                 }
                 time.Stop();
             }
@@ -87,6 +92,10 @@ namespace BankTeacher.Class.ProtocolSharing
                         break;
                     }
                     else if (time.ElapsedMilliseconds >= 5000 && ThreadConnected.ThreadState == System.Threading.ThreadState.Stopped)
+                    {
+                        break;
+                    }
+                    else if (StatusReturn)
                     {
                         break;
                     }
@@ -113,6 +122,10 @@ namespace BankTeacher.Class.ProtocolSharing
                     {
                         break;
                     }
+                    else if (StatusReturn)
+                    {
+                        break;
+                    }
                 }
                 time.Stop();
             }
@@ -133,6 +146,10 @@ namespace BankTeacher.Class.ProtocolSharing
                         break;
                     }
                     else if (time.ElapsedMilliseconds >= 5000 && ThreadConnected.ThreadState == System.Threading.ThreadState.Stopped)
+                    {
+                        break;
+                    }
+                    else if (StatusReturn)
                     {
                         break;
                     }
@@ -157,6 +174,10 @@ namespace BankTeacher.Class.ProtocolSharing
                         break;
                     }
                     else if (time.ElapsedMilliseconds >= 5000 && ThreadConnected.ThreadState == System.Threading.ThreadState.Stopped)
+                    {
+                        break;
+                    }
+                    else if (StatusReturn)
                     {
                         break;
                     }
