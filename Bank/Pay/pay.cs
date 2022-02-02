@@ -262,7 +262,7 @@ namespace BankTeacher.Bank.Pay
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailType as c on b.TypeNo = c.TypeNo \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailPayment as d on b.BillDetailPaymentNo = d.BillDetailPaymentNo \r\n " +
           "WHERE TeacherNo = '{TeacherNo}' and CAST(CAST(a.DateAdd as Date) as nvarchar) LIKE '%{Year}%' and a.Cancel = 1\r\n " +
-          "ORDER BY a.BillNo DESC"
+          "ORDER BY a.BillNo"
           ,
            //[15] print backwards IN: {billl}
           "SELECT  a.BillNo,d.TeacherNo,CAST(e.PrefixName+' '+d.Fname+' '+d.Lname as nvarchar),a.Amount,b.TypeName,CAST(a.Mount as nvarchar)+'/'+CAST(a.Year as nvarchar)  as  Mountandyear,CAST(f.Name as nvarchar) \r\n " +
