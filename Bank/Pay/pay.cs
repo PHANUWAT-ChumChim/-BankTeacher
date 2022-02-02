@@ -1179,74 +1179,81 @@ namespace BankTeacher.Bank.Pay
             {
                 if (CBList_Pay.Items.Count != 0)
                 {
-                    for (int x = 0; x < CBList_Pay.Items.Count; x++)
+                    if(DGV_Pay.Rows.Count <= 18)
                     {
-                        CBList_Pay.SelectedIndex = x;
-                        BankTeacher.Class.ComboBoxPay Loan = (CBList_Pay.SelectedItem as BankTeacher.Class.ComboBoxPay);
-                        String Time = CBYearSelection_Pay.Text + "/" + CBMonthSelection_Pay.Text;
-                        if (DGV_Pay.Rows.Count == 0)
+                        for (int x = 0; x < CBList_Pay.Items.Count; x++)
                         {
-                            Notadd = true;
-                            DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
-                            Notadd = false;
-                            CheckInsertDGVBehidePay();
-                        }
-                        else
-                        {
-                            for (int Count = 0; Count < DGV_Pay.Rows.Count; Count++)
+                            CBList_Pay.SelectedIndex = x;
+                            BankTeacher.Class.ComboBoxPay Loan = (CBList_Pay.SelectedItem as BankTeacher.Class.ComboBoxPay);
+                            String Time = CBYearSelection_Pay.Text + "/" + CBMonthSelection_Pay.Text;
+                            if (DGV_Pay.Rows.Count == 0)
                             {
-                                if (Time == DGV_Pay.Rows[Count].Cells[0].Value.ToString() && CBList_Pay.Text == DGV_Pay.Rows[Count].Cells[1].Value.ToString())
-                                {
-                                    break;
-                                }
-                                else if (Count == DGV_Pay.Rows.Count - 1)
-                                {
-                                    Notadd = true;
-                                    DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
-                                    Notadd = false;
-                                    CheckInsertDGVBehidePay();
-                                }
-                            }
-                        }
-                    }
-                    DM[CBYearSelection_Pay.SelectedIndex].RemoveAt(CBMonthSelection_Pay.SelectedIndex);
-                    CBMonthSelection_Pay.Items.RemoveAt(CBMonthSelection_Pay.SelectedIndex);
-                    ReadonlyDGVPay();
-                    CBList_Pay.Items.Clear();
-                    if (CBList_Pay.Items.Count != 0)
-                        CBList_Pay.SelectedIndex = 0;
-                    CBPayment_Pay.Enabled = true;
-                    CBPayment_Pay.SelectedIndex = 0;
-
-                    if (CBList_Pay.Items.Count <= 0)
-                    {
-                        CBList_Pay.Enabled = false;
-                        BListAdd_Pay.Enabled = false;
-                        TBAmount_Pay.Text = "0";
-                    }
-                    Summoney();
-                    if (CBYearSelection_Pay.Items.Count != 0)
-                    {
-                        if (CBMonthSelection_Pay.Items.Count != 0)
-                        {
-                            CBMonthSelection_Pay.SelectedIndex = 0;
-                        }
-                        else
-                        {
-                            DM.RemoveAt(CBYearSelection_Pay.SelectedIndex);
-                            CBYearSelection_Pay.Items.RemoveAt(CBYearSelection_Pay.SelectedIndex);
-                            if (CBYearSelection_Pay.Items.Count != 0)
-                            {
-                                CBYearSelection_Pay.SelectedIndex = 0;
-                                RemoveComboboxhAfterAdd();
+                                Notadd = true;
+                                DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
+                                Notadd = false;
+                                CheckInsertDGVBehidePay();
                             }
                             else
                             {
-                                CBYearSelection_Pay.Enabled = false;
-                                CBMonthSelection_Pay.Enabled = false;
-                                //MessageBox.Show("ไม่พบรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                for (int Count = 0; Count < DGV_Pay.Rows.Count; Count++)
+                                {
+                                    if (Time == DGV_Pay.Rows[Count].Cells[0].Value.ToString() && CBList_Pay.Text == DGV_Pay.Rows[Count].Cells[1].Value.ToString())
+                                    {
+                                        break;
+                                    }
+                                    else if (Count == DGV_Pay.Rows.Count - 1)
+                                    {
+                                        Notadd = true;
+                                        DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
+                                        Notadd = false;
+                                        CheckInsertDGVBehidePay();
+                                    }
+                                }
                             }
                         }
+                        DM[CBYearSelection_Pay.SelectedIndex].RemoveAt(CBMonthSelection_Pay.SelectedIndex);
+                        CBMonthSelection_Pay.Items.RemoveAt(CBMonthSelection_Pay.SelectedIndex);
+                        ReadonlyDGVPay();
+                        CBList_Pay.Items.Clear();
+                        if (CBList_Pay.Items.Count != 0)
+                            CBList_Pay.SelectedIndex = 0;
+                        CBPayment_Pay.Enabled = true;
+                        CBPayment_Pay.SelectedIndex = 0;
+
+                        if (CBList_Pay.Items.Count <= 0)
+                        {
+                            CBList_Pay.Enabled = false;
+                            BListAdd_Pay.Enabled = false;
+                            TBAmount_Pay.Text = "0";
+                        }
+                        Summoney();
+                        if (CBYearSelection_Pay.Items.Count != 0)
+                        {
+                            if (CBMonthSelection_Pay.Items.Count != 0)
+                            {
+                                CBMonthSelection_Pay.SelectedIndex = 0;
+                            }
+                            else
+                            {
+                                DM.RemoveAt(CBYearSelection_Pay.SelectedIndex);
+                                CBYearSelection_Pay.Items.RemoveAt(CBYearSelection_Pay.SelectedIndex);
+                                if (CBYearSelection_Pay.Items.Count != 0)
+                                {
+                                    CBYearSelection_Pay.SelectedIndex = 0;
+                                    RemoveComboboxhAfterAdd();
+                                }
+                                else
+                                {
+                                    CBYearSelection_Pay.Enabled = false;
+                                    CBMonthSelection_Pay.Enabled = false;
+                                    //MessageBox.Show("ไม่พบรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("รายการในบิลล์นี้เยอะเกินไป โปรดจ่ายต่อในบิลล์ถัดไป","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                     }
                 }
             }
@@ -1364,58 +1371,65 @@ namespace BankTeacher.Bank.Pay
                 {
                     if (TBAmount_Pay.Text != "")
                     {
-                        if (Int32.TryParse(TBAmount_Pay.Text, out int x) && x > 0)
+                        if(DGV_Pay.Rows.Count <= 18)
                         {
-                            BankTeacher.Class.ComboBoxPay Loan = (CBList_Pay.SelectedItem as BankTeacher.Class.ComboBoxPay);
-                            String Time = CBYearSelection_Pay.Text + "/" + CBMonthSelection_Pay.Text;
-                            if (DGV_Pay.Rows.Count != 0)
+                            if (Int32.TryParse(TBAmount_Pay.Text, out int x) && x > 0)
                             {
-                                for (int y = 0; y < DGV_Pay.Rows.Count; y++)
+                                BankTeacher.Class.ComboBoxPay Loan = (CBList_Pay.SelectedItem as BankTeacher.Class.ComboBoxPay);
+                                String Time = CBYearSelection_Pay.Text + "/" + CBMonthSelection_Pay.Text;
+                                if (DGV_Pay.Rows.Count != 0)
                                 {
-                                    if (Time == DGV_Pay.Rows[y].Cells[0].Value.ToString() && CBList_Pay.Text == DGV_Pay.Rows[y].Cells[1].Value.ToString())
+                                    for (int y = 0; y < DGV_Pay.Rows.Count; y++)
                                     {
-                                        break;
+                                        if (Time == DGV_Pay.Rows[y].Cells[0].Value.ToString() && CBList_Pay.Text == DGV_Pay.Rows[y].Cells[1].Value.ToString())
+                                        {
+                                            break;
+                                        }
+                                        else if (y == DGV_Pay.Rows.Count - 1)
+                                        {
+                                            Notadd = true;
+                                            DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
+                                            Amount_payLoan = TBAmount_Pay.Text;
+                                            Notadd = false;
+                                            CheckInsertDGVBehidePay();
+                                            CBList_Pay.Items.RemoveAt(CBList_Pay.SelectedIndex);
+                                            ReadonlyDGVPay();
+                                            RemoveComboboxhAfterAdd();
+                                            CBPayment_Pay.SelectedIndex = 0;
+                                            CBPayment_Pay.Enabled = true;
+                                            break;
+                                        }
                                     }
-                                    else if (y == DGV_Pay.Rows.Count - 1)
-                                    {
-                                        Notadd = true;
-                                        DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
-                                        Amount_payLoan = TBAmount_Pay.Text;
-                                        Notadd = false;
-                                        CheckInsertDGVBehidePay();
-                                        CBList_Pay.Items.RemoveAt(CBList_Pay.SelectedIndex);
-                                        ReadonlyDGVPay();
-                                        RemoveComboboxhAfterAdd();
-                                        CBPayment_Pay.SelectedIndex = 0;
-                                        CBPayment_Pay.Enabled = true;
-                                        break;
-                                    }
+                                }
+                                else
+                                {
+                                    Notadd = true;
+                                    DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
+                                    Amount_payLoan = TBAmount_Pay.Text;
+                                    Notadd = false;
+                                    CheckInsertDGVBehidePay();
+                              
+                                    CBList_Pay.Items.RemoveAt(CBList_Pay.SelectedIndex);
+                                    ReadonlyDGVPay();
+                                    RemoveComboboxhAfterAdd();
+                                    CBPayment_Pay.SelectedIndex = 0;
+                                    CBPayment_Pay.Enabled = true;
                                 }
                             }
                             else
                             {
-                                Notadd = true;
-                                DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
-                                Amount_payLoan = TBAmount_Pay.Text;
-                                Notadd = false;
-                                CheckInsertDGVBehidePay();
-                              
-                                CBList_Pay.Items.RemoveAt(CBList_Pay.SelectedIndex);
-                                ReadonlyDGVPay();
-                                RemoveComboboxhAfterAdd();
-                                CBPayment_Pay.SelectedIndex = 0;
-                                CBPayment_Pay.Enabled = true;
+                                MessageBox.Show("โปรดระบุยอดเงินให้ถูกต้อง", "System", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
+                            Summoney();
+                            if (CBList_Pay.Items.Count != 0)
+                            {
+                                CBList_Pay.SelectedIndex = 0;
+                                CBList_Pay_SelectedIndexChanged(new object(), new EventArgs());
                             }
                         }
                         else
                         {
-                            MessageBox.Show("โปรดระบุยอดเงินให้ถูกต้อง", "System", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        }
-                        Summoney();
-                        if (CBList_Pay.Items.Count != 0)
-                        {
-                            CBList_Pay.SelectedIndex = 0;
-                            CBList_Pay_SelectedIndexChanged(new object(), new EventArgs());
+                            MessageBox.Show("รายการในบิลล์นี้เยอะเกินไป โปรดจ่ายต่อในบิลล์ถัดไป", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
                     else
@@ -1527,14 +1541,17 @@ namespace BankTeacher.Bank.Pay
                                 DataTable dt_chcek = Class.SQLConnection.InputSQLMSSQL("SELECT a.TeacherNo,a.LoanStatusNo \r\n " +
                                 "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
                                 "WHERE a.LoanNo = '{LoanNo}'".Replace("{LoanNo}",LoanNo));
-                            if (dt_chcek.Rows[0][1].ToString() == "3") 
+                            if(dt_chcek.Rows.Count != 0)
                             {
-                               DataTable dt = Class.SQLConnection.InputSQLMSSQL("SELECT a.TeacherNo, a.SavingAmount \r\n " +
-                                   "FROM EmployeeBank.dbo.tblShare as a \r\n " +
-                                  "WHERE a.TeacherNo = '{TeacherNo}'".Replace("{TeacherNo}", TBTeacherNo.Text));
-                                    Class.Print.PrintPreviewDialog.info_Savingtotel = dt.Rows[0][1].ToString();
+                                if (dt_chcek.Rows[0][1].ToString() == "3") 
+                                {
+                                   DataTable dt = Class.SQLConnection.InputSQLMSSQL("SELECT a.TeacherNo, a.SavingAmount \r\n " +
+                                       "FROM EmployeeBank.dbo.tblShare as a \r\n " +
+                                      "WHERE a.TeacherNo = '{TeacherNo}'".Replace("{TeacherNo}", TBTeacherNo.Text));
+                                        Class.Print.PrintPreviewDialog.info_Savingtotel = dt.Rows[0][1].ToString();
+                                }
+                                LoanNo = "";
                             }
-                            LoanNo = "";
                         }
                         Class.Print.PrintPreviewDialog.info_Billpay = TBTeacherBill.Text;
                         if(TBAmountRemain_LoanInfo.Text != "")
