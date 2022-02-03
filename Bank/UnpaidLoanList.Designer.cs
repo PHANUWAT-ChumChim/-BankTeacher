@@ -108,6 +108,7 @@ namespace BankTeacher.Bank
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4, 6, 4, 6);
             this.Name = "UnpaidLoanList";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "UnpaidLoanList";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.UnpaidLoanList_FormClosed);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.UnpaidLoanList_KeyDown);
