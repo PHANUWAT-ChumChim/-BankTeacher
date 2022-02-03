@@ -36,12 +36,6 @@ namespace BankTeacher.Bank.log
             this.RBSelectTeacherAdd = new System.Windows.Forms.RadioButton();
             this.RBday = new System.Windows.Forms.RadioButton();
             this.DGV = new System.Windows.Forms.DataGridView();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel2 = new System.Windows.Forms.Panel();
             this.LB1Id = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -50,6 +44,12 @@ namespace BankTeacher.Bank.log
             this.TBTeacherNo = new System.Windows.Forms.TextBox();
             this.TBTeacherName = new System.Windows.Forms.TextBox();
             this.DTP = new System.Windows.Forms.DateTimePicker();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
@@ -128,47 +128,6 @@ namespace BankTeacher.Bank.log
             this.DGV.RowHeadersVisible = false;
             this.DGV.Size = new System.Drawing.Size(851, 415);
             this.DGV.TabIndex = 94;
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "ชื่อ - สกุล ผู้ทำรายการ";
-            this.Column6.Name = "Column6";
-            this.Column6.ReadOnly = true;
-            this.Column6.Width = 165;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "รหัส";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.Width = 130;
-            // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "ชื่อ - สกุล";
-            this.Column5.Name = "Column5";
-            this.Column5.ReadOnly = true;
-            this.Column5.Width = 175;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "วันที่";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "จำนวนเงินเริ่มต้น";
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            this.Column4.Width = 130;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "สถานะ";
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            this.Column3.Width = 110;
             // 
             // panel2
             // 
@@ -268,6 +227,53 @@ namespace BankTeacher.Bank.log
             this.DTP.TabIndex = 0;
             this.DTP.ValueChanged += new System.EventHandler(this.DTP_ValueChanged);
             // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "ชื่อ - สกุล ผู้ทำรายการ";
+            this.Column6.Name = "Column6";
+            this.Column6.ReadOnly = true;
+            this.Column6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column6.Width = 165;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "รหัส";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column2.Width = 130;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "ชื่อ - สกุล";
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            this.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column5.Width = 175;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "วันที่";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "จำนวนเงินเริ่มต้น";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column4.Width = 130;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "สถานะ";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column3.Width = 110;
+            // 
             // AddMember_Logg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 28F);
@@ -305,12 +311,12 @@ namespace BankTeacher.Bank.log
         private System.Windows.Forms.TextBox TBTeacherName;
         private System.Windows.Forms.RadioButton RBSelectTeacherAdd;
         private System.Windows.Forms.DateTimePicker DTP;
+        private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.Panel panel3;
     }
 }
