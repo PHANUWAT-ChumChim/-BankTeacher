@@ -64,7 +64,7 @@ namespace BankTeacher.Bank.Pay
             this.PL_Form.Controls.Add(this.BExitForm);
             this.PL_Form.Controls.Add(this.TB_2);
             this.PL_Form.Location = new System.Drawing.Point(12, 13);
-            this.PL_Form.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.PL_Form.Margin = new System.Windows.Forms.Padding(2);
             this.PL_Form.Name = "PL_Form";
             this.PL_Form.Size = new System.Drawing.Size(876, 578);
             this.PL_Form.TabIndex = 100;
@@ -86,7 +86,7 @@ namespace BankTeacher.Bank.Pay
             this.TB_2.Controls.Add(this.TB5);
             this.TB_2.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TB_2.Location = new System.Drawing.Point(6, 2);
-            this.TB_2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TB_2.Margin = new System.Windows.Forms.Padding(2);
             this.TB_2.Name = "TB_2";
             this.TB_2.SelectedIndex = 0;
             this.TB_2.Size = new System.Drawing.Size(854, 484);
@@ -97,9 +97,9 @@ namespace BankTeacher.Bank.Pay
             this.TB5.Controls.Add(this.DGV_Bill);
             this.TB5.Controls.Add(this.panel16);
             this.TB5.Location = new System.Drawing.Point(4, 39);
-            this.TB5.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TB5.Margin = new System.Windows.Forms.Padding(2);
             this.TB5.Name = "TB5";
-            this.TB5.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.TB5.Padding = new System.Windows.Forms.Padding(2);
             this.TB5.Size = new System.Drawing.Size(846, 441);
             this.TB5.TabIndex = 5;
             this.TB5.Text = "ประวัติการยกเลิก";
@@ -142,7 +142,7 @@ namespace BankTeacher.Bank.Pay
             this.panel16.Controls.Add(this.LB5Ye);
             this.panel16.Controls.Add(this.CBYearSelection_Bill);
             this.panel16.Location = new System.Drawing.Point(4, 4);
-            this.panel16.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel16.Margin = new System.Windows.Forms.Padding(2);
             this.panel16.Name = "panel16";
             this.panel16.Size = new System.Drawing.Size(703, 59);
             this.panel16.TabIndex = 99;
@@ -153,7 +153,7 @@ namespace BankTeacher.Bank.Pay
             this.CB_DaySelection_Bill.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CB_DaySelection_Bill.FormattingEnabled = true;
             this.CB_DaySelection_Bill.Location = new System.Drawing.Point(388, 14);
-            this.CB_DaySelection_Bill.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CB_DaySelection_Bill.Margin = new System.Windows.Forms.Padding(2);
             this.CB_DaySelection_Bill.Name = "CB_DaySelection_Bill";
             this.CB_DaySelection_Bill.Size = new System.Drawing.Size(98, 33);
             this.CB_DaySelection_Bill.TabIndex = 104;
@@ -183,7 +183,7 @@ namespace BankTeacher.Bank.Pay
             "ใช้งาน",
             "ยกเลิก"});
             this.CB_Typebill.Location = new System.Drawing.Point(577, 15);
-            this.CB_Typebill.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CB_Typebill.Margin = new System.Windows.Forms.Padding(2);
             this.CB_Typebill.Name = "CB_Typebill";
             this.CB_Typebill.Size = new System.Drawing.Size(98, 33);
             this.CB_Typebill.TabIndex = 102;
@@ -209,7 +209,7 @@ namespace BankTeacher.Bank.Pay
             this.CBMonthSelection_Bill.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CBMonthSelection_Bill.FormattingEnabled = true;
             this.CBMonthSelection_Bill.Location = new System.Drawing.Point(221, 14);
-            this.CBMonthSelection_Bill.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CBMonthSelection_Bill.Margin = new System.Windows.Forms.Padding(2);
             this.CBMonthSelection_Bill.Name = "CBMonthSelection_Bill";
             this.CBMonthSelection_Bill.Size = new System.Drawing.Size(98, 33);
             this.CBMonthSelection_Bill.TabIndex = 101;
@@ -247,7 +247,7 @@ namespace BankTeacher.Bank.Pay
             this.CBYearSelection_Bill.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CBYearSelection_Bill.FormattingEnabled = true;
             this.CBYearSelection_Bill.Location = new System.Drawing.Point(53, 14);
-            this.CBYearSelection_Bill.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CBYearSelection_Bill.Margin = new System.Windows.Forms.Padding(2);
             this.CBYearSelection_Bill.Name = "CBYearSelection_Bill";
             this.CBYearSelection_Bill.Size = new System.Drawing.Size(78, 33);
             this.CBYearSelection_Bill.TabIndex = 84;
@@ -259,6 +259,7 @@ namespace BankTeacher.Bank.Pay
             this.Column3.MinimumWidth = 6;
             this.Column3.Name = "Column3";
             this.Column3.ReadOnly = true;
+            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Column3.Width = 200;
             // 
             // Column1
@@ -267,6 +268,7 @@ namespace BankTeacher.Bank.Pay
             this.Column1.MinimumWidth = 6;
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
+            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Column1.Width = 130;
             // 
             // Column2
@@ -275,6 +277,7 @@ namespace BankTeacher.Bank.Pay
             this.Column2.MinimumWidth = 6;
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
+            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Column2.Width = 125;
             // 
             // Column4
@@ -283,6 +286,7 @@ namespace BankTeacher.Bank.Pay
             this.Column4.MinimumWidth = 6;
             this.Column4.Name = "Column4";
             this.Column4.ReadOnly = true;
+            this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Column4.Width = 150;
             // 
             // Column5
@@ -292,6 +296,7 @@ namespace BankTeacher.Bank.Pay
             this.Column5.MinimumWidth = 6;
             this.Column5.Name = "Column5";
             this.Column5.ReadOnly = true;
+            this.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // Column6
             // 
@@ -299,6 +304,7 @@ namespace BankTeacher.Bank.Pay
             this.Column6.MinimumWidth = 6;
             this.Column6.Name = "Column6";
             this.Column6.ReadOnly = true;
+            this.Column6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Column6.Width = 125;
             // 
             // Billcancelhistory
@@ -310,7 +316,7 @@ namespace BankTeacher.Bank.Pay
             this.Controls.Add(this.PL_Form);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Billcancelhistory";
             this.Text = "Billcancelhistory";
             this.Load += new System.EventHandler(this.Billcancelhistory_Load);

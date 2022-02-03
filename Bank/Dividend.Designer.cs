@@ -35,13 +35,11 @@ namespace BankTeacher.Bank
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label11 = new System.Windows.Forms.Label();
             this.DGV = new System.Windows.Forms.DataGridView();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label12 = new System.Windows.Forms.Label();
             this.BSaveDividend = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.TBInterestNextYear = new System.Windows.Forms.TextBox();
             this.TBRemainInterest = new System.Windows.Forms.TextBox();
@@ -66,9 +64,11 @@ namespace BankTeacher.Bank
             this.label2 = new System.Windows.Forms.Label();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
@@ -153,47 +153,6 @@ namespace BankTeacher.Bank
             this.DGV.Size = new System.Drawing.Size(844, 208);
             this.DGV.TabIndex = 123;
             // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "ลำดับที่";
-            this.Column5.MinimumWidth = 6;
-            this.Column5.Name = "Column5";
-            this.Column5.ReadOnly = true;
-            this.Column5.Visible = false;
-            this.Column5.Width = 125;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "รหัส";
-            this.Column1.MinimumWidth = 6;
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Width = 150;
-            // 
-            // Column2
-            // 
-            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column2.HeaderText = "ชื่อ - สกุล";
-            this.Column2.MinimumWidth = 6;
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "จำนวนเงินในหุ้นสะสม";
-            this.Column3.MinimumWidth = 6;
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            this.Column3.Width = 175;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "จำนวนเงินปันผล";
-            this.Column4.MinimumWidth = 6;
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            this.Column4.Width = 175;
-            // 
             // label12
             // 
             this.label12.AutoSize = true;
@@ -214,6 +173,39 @@ namespace BankTeacher.Bank
             this.BSaveDividend.Text = "ยืนยันการปันผล";
             this.BSaveDividend.UseVisualStyleBackColor = true;
             this.BSaveDividend.Click += new System.EventHandler(this.BSaveDividend_Click);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label19.ForeColor = System.Drawing.Color.Red;
+            this.label19.Location = new System.Drawing.Point(229, 454);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(437, 28);
+            this.label19.TabIndex = 5;
+            this.label19.Text = "ถ้ายังมีรายการจ่ายกู้ค้างอยู่ในระบบจะทำการยกเลิกสัญญากู้อัตโนมัติ";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label18.ForeColor = System.Drawing.Color.Red;
+            this.label18.Location = new System.Drawing.Point(383, 426);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(283, 28);
+            this.label18.TabIndex = 5;
+            this.label18.Text = "และเมื่อปันผลแล้วจะไม่สามารถจ่ายเงินกู้ได้";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.label16.ForeColor = System.Drawing.Color.Red;
+            this.label16.Location = new System.Drawing.Point(240, 398);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(426, 28);
+            this.label16.TabIndex = 5;
+            this.label16.Text = "ทำให้คนจ่ายหุ้นสะสมที่จ่ายหลังปันผลแล้วจะไม่ได้รับเงินปันผลเพิ่ม";
             // 
             // label1
             // 
@@ -448,38 +440,51 @@ namespace BankTeacher.Bank
             // 
             this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
             // 
-            // label16
+            // Column5
             // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label16.ForeColor = System.Drawing.Color.Red;
-            this.label16.Location = new System.Drawing.Point(240, 398);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(426, 28);
-            this.label16.TabIndex = 5;
-            this.label16.Text = "ทำให้คนจ่ายหุ้นสะสมที่จ่ายหลังปันผลแล้วจะไม่ได้รับเงินปันผลเพิ่ม";
+            this.Column5.HeaderText = "ลำดับที่";
+            this.Column5.MinimumWidth = 6;
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            this.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column5.Visible = false;
+            this.Column5.Width = 125;
             // 
-            // label18
+            // Column1
             // 
-            this.label18.AutoSize = true;
-            this.label18.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label18.ForeColor = System.Drawing.Color.Red;
-            this.label18.Location = new System.Drawing.Point(383, 426);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(283, 28);
-            this.label18.TabIndex = 5;
-            this.label18.Text = "และเมื่อปันผลแล้วจะไม่สามารถจ่ายเงินกู้ได้";
+            this.Column1.HeaderText = "รหัส";
+            this.Column1.MinimumWidth = 6;
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column1.Width = 150;
             // 
-            // label19
+            // Column2
             // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.label19.ForeColor = System.Drawing.Color.Red;
-            this.label19.Location = new System.Drawing.Point(229, 454);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(437, 28);
-            this.label19.TabIndex = 5;
-            this.label19.Text = "ถ้ายังมีรายการจ่ายกู้ค้างอยู่ในระบบจะทำการยกเลิกสัญญากู้อัตโนมัติ";
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column2.HeaderText = "ชื่อ - สกุล";
+            this.Column2.MinimumWidth = 6;
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "จำนวนเงินในหุ้นสะสม";
+            this.Column3.MinimumWidth = 6;
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column3.Width = 175;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "จำนวนเงินปันผล";
+            this.Column4.MinimumWidth = 6;
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column4.Width = 175;
             // 
             // Dividend
             // 
@@ -540,13 +545,13 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Drawing.Printing.PrintDocument printDocument1;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label16;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label16;
     }
 }
