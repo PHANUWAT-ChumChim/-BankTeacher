@@ -270,6 +270,7 @@ namespace BankTeacher.Bank.Loan
                 }
 
                 MessageBox.Show("บันทึกข้อมูลเสร็จเรียบร้อยแล้ว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                tabControl1.SelectedIndex = 0;
                 if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                 {
                     printDocument1.Print();
@@ -870,7 +871,7 @@ namespace BankTeacher.Bank.Loan
         {
             //BankTeacher.Bank.Menu.
             DataTable MinLoan = Class.SQLConnection.InputSQLMSSQL(SQLDefault[11]);
-            UserOutCreditLimit = DialogResult.No;
+            //UserOutCreditLimit = DialogResult.No;
             int LimitAmount = 0;
             int Amount;
             String AmountLimit = LLoanAmount.Text.Remove(0, 1);
@@ -1304,6 +1305,7 @@ namespace BankTeacher.Bank.Loan
         private void TBLoanAmount_TextChanged(object sender, EventArgs e)
         {
             BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBLoanAmount);
+            UserOutCreditLimit = DialogResult.No;
         }
 
         private void BTPrint_Click(object sender, EventArgs e)

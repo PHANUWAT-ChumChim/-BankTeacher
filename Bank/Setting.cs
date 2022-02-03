@@ -132,17 +132,17 @@ namespace BankTeacher.Bank
         {
             if (e.KeyCode == Keys.Escape)
             {
-                if (TB_Max.Text != "" || TB_Min.Text != "" || TBPerShare.Text != "" || TBMinLoan.Text != "")
-                {
-                    TBMinLoan.Text = "";
-                    TBPerShare.Text = "";
-                    TB_Max.Text = "";
-                    TB_Min.Text = "";
-                }
-                else
-                {
-                    BExitForm_Click(new object(), new EventArgs());
-                }
+                BExitForm_Click(new object(), new EventArgs());
+                //if (TB_Max.Text != "" || TB_Min.Text != "" || TBPerShare.Text != "" || TBMinLoan.Text != "")
+                //{
+                //    TBMinLoan.Text = "";
+                //    TBPerShare.Text = "";
+                //    TB_Max.Text = "";
+                //    TB_Min.Text = "";
+                //}
+                //else
+                //{
+                //}
             }
         }
 

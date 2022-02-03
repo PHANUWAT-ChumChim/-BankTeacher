@@ -227,7 +227,7 @@ namespace BankTeacher.Bank.Pay
                 {
                     // Format yyyy-mm-dd EX: 2020-1-16
                     String today = (Convert.ToDateTime((Bank.Menu.Date[0] + '-' + Bank.Menu.Date[1] + '-' + Bank.Menu.Date[2]).ToString())).ToString("yyyy-MM-dd");
-                    if (today == TBBIllDate_Cancelbill.Text)
+                    if (today == TBBIllDate_Cancelbill.Text && TBNote.Text != "")
                     {
                         if (DGV_Cancelbill.Rows.Count != 0)
                         {
@@ -271,7 +271,12 @@ namespace BankTeacher.Bank.Pay
                             TBTeacherNO_Cancelbill.Focus();
                         }
                     }
-                    else
+                    else if(TBNote.Text == "")
+                    {
+                        MessageBox.Show("โปรดระบุหมายเหตุด้วยก่อนทำรายการ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TBNote.Focus();
+                    }
+                    else if(today != TBBIllDate_Cancelbill.Text)
                     {
                         DialogResult MSB = MessageBox.Show("ไม่สามารถยกเลิกได้เนื่องจาก\r\nบิลล์หมายเลขนี้คือบิลล์ที่เริ่มสมัคร\r\nคุณต้องการดำเนินการต่อหรือไม่", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                         if (MSB == DialogResult.Yes)
