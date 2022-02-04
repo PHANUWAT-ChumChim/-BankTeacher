@@ -202,13 +202,13 @@ namespace BankTeacher.Bank
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3});
-            this.DGV_Testter.Location = new System.Drawing.Point(33, 62);
+            this.DGV_Testter.Location = new System.Drawing.Point(14, 269);
             this.DGV_Testter.Margin = new System.Windows.Forms.Padding(2);
             this.DGV_Testter.Name = "DGV_Testter";
             this.DGV_Testter.RowHeadersVisible = false;
             this.DGV_Testter.RowHeadersWidth = 51;
             this.DGV_Testter.RowTemplate.Height = 24;
-            this.DGV_Testter.Size = new System.Drawing.Size(586, 129);
+            this.DGV_Testter.Size = new System.Drawing.Size(112, 32);
             this.DGV_Testter.TabIndex = 4;
             this.DGV_Testter.Visible = false;
             // 
