@@ -39,7 +39,7 @@ namespace BankTeacher.Bank.Pay
         /// <para>[4] Check if you have paid ( Saving ) INPUT: {TeacherNo} , {Month} , {Year} , {Date} </para>
         /// <para>[5] Check if you have paid ( Loan ) INPUT: {LoanNo} , {Month} , {Year} , {Date} </para>
         /// <para>[6] Check Loan INPUT: {TeacherNo} </para>
-        /// <para>[7] BPaySave Insert Bill INPUT: {TeacherNo} , {TeacherNoaddby}</para>
+        /// <para>[7] BPaySave Insert Bill INPUT: {TeacherNo} , {TeacherNoaddby} , {Date}</para>
         /// <para>[8]Insert BillDetails Use ForLoop INPUT: {BillNo},{TypeNo},{LoanNo},{Amount},{Month},{Year}</para>
         /// <para>[9]Update Guarantor and Loan (BSavePayLoop) INPUT: {LoanAmount}  {LoanNo} {TeacharNo} {Amount} </para>
         /// <para>[10]Update Saving+ (BSavePayLoop) INPUT: {TeacherNo}  {SavingAmount}</para>
@@ -157,11 +157,11 @@ namespace BankTeacher.Bank.Pay
           "FROM EmployeeBank.dbo.tblLoan  \r\n " +
           "WHERE TeacherNo = '{TeacherNo}' and LoanStatusNo = 2 ;"
            ,
-           //[7] BPaySave Insert Bill INPUT: {TeacherNo} , {TeacherNoaddby}
+           //[7] BPaySave Insert Bill INPUT: {TeacherNo} , {TeacherNoaddby}  , {Date}
           "DECLARE @BIllNO INT;  \r\n " +
           "           \r\n " +
           "INSERT INTO EmployeeBank.dbo.tblBill (TeacherNoAddBy,TeacherNo,DateAdd,Cancel)  \r\n " +
-          "VALUES('{TeacherNoaddby}','{TeacherNo}',CURRENT_TIMESTAMP,1);  \r\n " +
+          "VALUES('{TeacherNoaddby}','{TeacherNo}','{Date}',1);  \r\n " +
           "SET @BIllNO = SCOPE_IDENTITY();  \r\n " +
           "SELECT @BIllNO ;"
            ,
@@ -366,6 +366,9 @@ namespace BankTeacher.Bank.Pay
                 TBTeacherNo.Text = TeacherNoOtherForm;
                 TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
             }
+
+            DTPDate.Value = Convert.ToDateTime(Bank.Menu.Date[0] + "/" + Bank.Menu.Date[1] + "/" + Bank.Menu.Date[2]);
+            DTPDate.Enabled = Bank.Setting.CheckTimeBack;
         }
         //=============================================================================================
 
@@ -1484,9 +1487,12 @@ namespace BankTeacher.Bank.Pay
                 calculator.ShowDialog();
                 if (BankTeacher.Bank.Pay.Calculator.Return)
                 {
+                    String Date = DTPDate.Value.ToString("yyyy:MM:dd");
+                    Date = Date.Replace(":", "/");
                     DataSet dtBillNo = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[7]
                         .Replace("{TeacherNo}", TBTeacherNo.Text)
-                        .Replace("{TeacherNoaddby}", Class.UserInfo.TeacherNo));
+                        .Replace("{TeacherNoaddby}", Class.UserInfo.TeacherNo)
+                        .Replace("{{Date}" , Date));
                     String BillNo = dtBillNo.Tables[0].Rows[0][0].ToString();
                     for (int x = 0; x < DGV_Pay.Rows.Count; x++)
                     {
