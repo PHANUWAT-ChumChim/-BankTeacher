@@ -25,6 +25,7 @@ namespace BankTeacher.Bank
         public static Form Parent;
         public static String[] Date;
         public static String Monthname;
+        public static int StatusActivateButtonExceltoSQL = 0;
         public static String[] Month = { "มกราคม", "กุมภาพันธ์", "มีนาคม", "เมษายน", "พฤษภาคม", "มิถุนายน", "กรกฎาคม", "สิงหาคม", "กันยายน", "ตุลาคม", "พฤศจิกายน", "ธันวาคม" };
         DataTable dt;
         /// <summary> 
@@ -35,7 +36,7 @@ namespace BankTeacher.Bank
         private String[] SQLDefault = new String[]
         { 
              //[0]Check Setting INPUT: - 
-             "SELECT DateAmountChange , StartAmountMin , StartAmountMax,MinLoan , PerShare\r\n" +
+             "SELECT DateAmountChange , StartAmountMin , StartAmountMax,MinLoan , PerShare ,StatusUploadExceltoSQL\r\n" +
              "FROM EmployeeBank.dbo.tblSettingAmount;"
           ,
              //[1]Select Date Input :  -
@@ -57,6 +58,7 @@ namespace BankTeacher.Bank
                 startAmountMax = Convert.ToInt32(dt.Rows[0][2]);
                 MinLoan = Convert.ToInt32(dt.Rows[0][3]);
                 perShare = Convert.ToInt32(dt.Rows[0][4]);
+                StatusActivateButtonExceltoSQL = Convert.ToInt32(dt.Rows[0][5]);
             }
             catch
             {

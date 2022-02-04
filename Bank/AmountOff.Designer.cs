@@ -50,6 +50,11 @@ namespace BankTeacher.Bank
             this.CBTypePay = new System.Windows.Forms.ComboBox();
             this.BMaxWithDraw_AmountOff = new System.Windows.Forms.Button();
             this.DGVLoan = new System.Windows.Forms.DataGridView();
+            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BSaveAmountOff = new System.Windows.Forms.Button();
             this.TBWithDraw = new System.Windows.Forms.TextBox();
             this.TBCreditWithDraw = new System.Windows.Forms.TextBox();
@@ -94,11 +99,6 @@ namespace BankTeacher.Bank
             this.BSave = new System.Windows.Forms.Button();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
-            this.Column10 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -200,13 +200,13 @@ namespace BankTeacher.Bank
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3});
-            this.DGV_Testter.Location = new System.Drawing.Point(33, 62);
+            this.DGV_Testter.Location = new System.Drawing.Point(14, 269);
             this.DGV_Testter.Margin = new System.Windows.Forms.Padding(2);
             this.DGV_Testter.Name = "DGV_Testter";
             this.DGV_Testter.RowHeadersVisible = false;
             this.DGV_Testter.RowHeadersWidth = 51;
             this.DGV_Testter.RowTemplate.Height = 24;
-            this.DGV_Testter.Size = new System.Drawing.Size(586, 129);
+            this.DGV_Testter.Size = new System.Drawing.Size(112, 32);
             this.DGV_Testter.TabIndex = 4;
             this.DGV_Testter.Visible = false;
             // 
@@ -295,6 +295,47 @@ namespace BankTeacher.Bank
             this.DGVLoan.RowTemplate.Height = 24;
             this.DGVLoan.Size = new System.Drawing.Size(834, 190);
             this.DGVLoan.TabIndex = 2;
+            // 
+            // Column10
+            // 
+            this.Column10.HeaderText = "ลำดับที่";
+            this.Column10.MinimumWidth = 6;
+            this.Column10.Name = "Column10";
+            this.Column10.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column10.Visible = false;
+            this.Column10.Width = 125;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "เลขที่สัญญากู้";
+            this.Column1.MinimumWidth = 6;
+            this.Column1.Name = "Column1";
+            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column1.Width = 180;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "ชื่อผู้กู้";
+            this.Column2.MinimumWidth = 6;
+            this.Column2.Name = "Column2";
+            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column2.Width = 225;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "ยอดเงินค้ำ";
+            this.Column3.MinimumWidth = 6;
+            this.Column3.Name = "Column3";
+            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column3.Width = 225;
+            // 
+            // Column4
+            // 
+            this.Column4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column4.HeaderText = "สิ้นสุดวันที่(เดือน/ปี)";
+            this.Column4.MinimumWidth = 6;
+            this.Column4.Name = "Column4";
+            this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // BSaveAmountOff
             // 
@@ -849,47 +890,6 @@ namespace BankTeacher.Bank
             // printDocument1
             // 
             this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage_1);
-            // 
-            // Column10
-            // 
-            this.Column10.HeaderText = "ลำดับที่";
-            this.Column10.MinimumWidth = 6;
-            this.Column10.Name = "Column10";
-            this.Column10.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column10.Visible = false;
-            this.Column10.Width = 125;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "เลขที่สัญญากู้";
-            this.Column1.MinimumWidth = 6;
-            this.Column1.Name = "Column1";
-            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column1.Width = 180;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "ชื่อผู้กู้";
-            this.Column2.MinimumWidth = 6;
-            this.Column2.Name = "Column2";
-            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column2.Width = 225;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "ยอดเงินค้ำ";
-            this.Column3.MinimumWidth = 6;
-            this.Column3.Name = "Column3";
-            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column3.Width = 225;
-            // 
-            // Column4
-            // 
-            this.Column4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column4.HeaderText = "สิ้นสุดวันที่(เดือน/ปี)";
-            this.Column4.MinimumWidth = 6;
-            this.Column4.Name = "Column4";
-            this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // AmountOff
             // 
