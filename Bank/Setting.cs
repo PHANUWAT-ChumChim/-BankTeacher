@@ -14,6 +14,7 @@ namespace BankTeacher.Bank
 {
     public partial class Setting : Form
     {
+        public static bool CheckTimeBack;
         static int Min;
         static int Max;
         static bool chb;
@@ -41,11 +42,7 @@ namespace BankTeacher.Bank
             TB_Max.Text = BankTeacher.Bank.Menu.startAmountMax.ToString();
             TBPerShare.Text = BankTeacher.Bank.Menu.perShare.ToString();
             TBMinLoan.Text = BankTeacher.Bank.Menu.MinLoan.ToString();
-            if (BankTeacher.Bank.Menu.DateAmountChange == 1)
-            {
-                CHB_edittime.Checked = true;
-            }
-            chb = CHB_edittime.Checked;
+            CHB_edittime.Checked = CheckTimeBack;
             Min = Convert.ToInt32(TB_Min.Text);
             Max = Convert.ToInt32(TB_Max.Text);
             B_Save.Enabled = false;
@@ -133,16 +130,6 @@ namespace BankTeacher.Bank
             if (e.KeyCode == Keys.Escape)
             {
                 BExitForm_Click(new object(), new EventArgs());
-                //if (TB_Max.Text != "" || TB_Min.Text != "" || TBPerShare.Text != "" || TBMinLoan.Text != "")
-                //{
-                //    TBMinLoan.Text = "";
-                //    TBPerShare.Text = "";
-                //    TB_Max.Text = "";
-                //    TB_Min.Text = "";
-                //}
-                //else
-                //{
-                //}
             }
         }
 
@@ -164,6 +151,11 @@ namespace BankTeacher.Bank
         private void TBMinLoan_TextChanged(object sender, EventArgs e)
         {
             B_Save.Enabled = true;
+        }
+
+        private void CHB_edittime_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckTimeBack = CHB_edittime.Checked;
         }
     }
 }

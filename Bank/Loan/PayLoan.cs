@@ -34,10 +34,10 @@ namespace BankTeacher.Bank.Loan
         /// <para>[1] SELECT LOAN INPUT: {TeacherNo} </para>
         /// <para>[2] SELECT Detail Loan INPUT: {LoanNo}</para>
         /// <para>[3] Select Payment Name INPUT: - </para>
-        /// <para>[4] UPDATE Payment Loan INPUT: {LoanID} {TeacherNoPay} {PaymentNo}</para>
+        /// <para>[4] UPDATE Payment Loan INPUT: {LoanID} {TeacherNoPay} {PaymentNo}  {Date}</para>
         /// <para>[5] Chcek Lonapay INPUT : {TeacherNo} </para>
         /// <para>[6] BackPrint payLoan INPUT : {TeacherNo} {Year} </para>
-        /// <para>[7] INSERT File INPUT: {TeacherNo} , {PathFile} , {TeacherNoAddBy} </para>
+        /// <para>[7] INSERT File INPUT: {TeacherNo} , {PathFile} , {TeacherNoAddBy} {Date}</para>
         /// </summary>
         private String[] SQLDefault = 
         {
@@ -80,9 +80,9 @@ namespace BankTeacher.Bank.Loan
           "FROM EmployeeBank.dbo.tblBillDetailPayment \r\n " +
           "WHERE Status = 1 and BillDetailpaymentNo <> 3"
           ,
-          //[4] UPDATE Payment Loan INPUT: {LoanID} {TeacherNoPay} {PaymentNo}
+          //[4] UPDATE Payment Loan INPUT: {LoanID} {TeacherNoPay} {PaymentNo}  {Date}
           "UPDATE EmployeeBank.dbo.tblLoan \r\n " +
-          "SET PayDate = CURRENT_TIMESTAMP , TeacherNoPay = '{TeacherNoPay}', BillDetailPaymentNo = '{PaymentNo}' , LoanStatusNo = 2 \r\n " +
+          "SET PayDate = '{Date}' , TeacherNoPay = '{TeacherNoPay}', BillDetailPaymentNo = '{PaymentNo}' , LoanStatusNo = 2 \r\n " +
           "WHERE LoanNo = '{LoanID}'; "
           ,
           //[5] Chcek Lonapay INPUT : {TeacherNo}
@@ -99,9 +99,9 @@ namespace BankTeacher.Bank.Loan
           "LEFT JOIN EmployeeBank.dbo.tblBillDetailPayment f ON a.BillDetailPaymentNo = f.BillDetailPaymentNo \r\n " +
           "WHERE a.TeacherNo = '{TeacherNo}' AND YEAR(a.PayDate) = {Year} AND a.LoanStatusNo = 2"
            ,
-            //[7] INSERT File INPUT: {TeacherNo} , {PathFile} , {TeacherNoAddBy} 
+            //[7] INSERT File INPUT: {TeacherNo} , {PathFile} , {TeacherNoAddBy}  {Date}
            "INSERT INTO EmployeeBank.dbo.tblFile(TeacherNo,FiletypeNo,pathFile,TeacherAddBy,LoanID,DateAddFile,IsUse,TeacherRemoveFileBy,DateRemoveFile,StatusFileInSystem) \r\n " +
-          "VALUES('{TeacherNo}','3','{PathFile}','{TeacherNoAddBy}',{LoanID},CURRENT_TIMESTAMP,1,null,null,1) \r\n " +
+          "VALUES('{TeacherNo}','3','{PathFile}','{TeacherNoAddBy}',{LoanID},CAST('{Date}' as date),1,null,null,1) \r\n " +
           " \r\n " +
           "UPDATE EmployeeBank.dbo.tblLoan \r\n " +
           "SET DocStatusNo = 1 , DocUploadPath = '{PathFile}' \r\n"+
@@ -300,6 +300,8 @@ namespace BankTeacher.Bank.Loan
                             }
                             if (Yes)
                             {
+                                String Date = DTPDate.Value.ToString("yyyy:MM:dd");
+                                Date = Date.Replace(":", "/");
                                 BankTeacher.Class.ComboBoxPayment Payment = (CBPayment.SelectedItem as BankTeacher.Class.ComboBoxPayment);
                                 Class.SQLConnection.InputSQLMSSQL((SQLDefault[4] + "\r\n" + SQLDefault[7])
                                     .Replace("{LoanID}", DGV_PayLoan.Rows[0].Cells[1].Value.ToString())
@@ -307,7 +309,8 @@ namespace BankTeacher.Bank.Loan
                                     .Replace("{PaymentNo}", Payment.No)
                                     .Replace("{TeacherNo}",TBTeacherNo.Text)
                                     .Replace("{TeacherNoAddBy}",Class.UserInfo.TeacherNo)
-                                    .Replace("{PathFile}",FTP.HostplusPathFile+ $"Loan{DGV_PayLoan.Rows[0].Cells[1].Value.ToString()}.pdf"));
+                                    .Replace("{PathFile}",FTP.HostplusPathFile+ $"Loan{DGV_PayLoan.Rows[0].Cells[1].Value.ToString()}.pdf")
+                                    .Replace("{Date}" , Date));
 
                                 MessageBox.Show("ทำรายการสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 tabControl1.Enabled = false;
@@ -319,6 +322,7 @@ namespace BankTeacher.Bank.Loan
                                 Class.Print.PrintPreviewDialog.info_Payment = CBPayment.SelectedItem.ToString();
                                 Class.Print.PrintPreviewDialog.info_PayLoanBill = DGV_PayLoan.Rows[0].Cells[1].Value.ToString();
                                 Class.Print.PrintPreviewDialog.info_PayLoandate = Bank.Menu.Date_Time_SQL_Now.Rows[0][0].ToString();
+                                panel5.Visible = false;
                                 
 
                                 if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
@@ -404,6 +408,8 @@ namespace BankTeacher.Bank.Loan
                     PathFile = "";
                     Check = 0;
                     Checkmember(true);
+                    panel5.Visible = false;
+                    BTRemoveFile.Visible = false;
                 }
                 else if (!CheckStatusWorking)
                 {
@@ -424,6 +430,9 @@ namespace BankTeacher.Bank.Loan
                 panel7.Enabled = false;
                 tabControl1.Enabled = false;
             }
+
+            DTPDate.Value = Convert.ToDateTime(Bank.Menu.Date[0] + "/" + Bank.Menu.Date[1] + "/" + Bank.Menu.Date[2]);
+            DTPDate.Enabled = DTPDate.Enabled = Bank.Setting.CheckTimeBack;
         }
         private void panel7_VisibleChanged(object sender, EventArgs e)
         {
