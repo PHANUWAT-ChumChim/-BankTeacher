@@ -212,7 +212,10 @@ namespace BankTeacher.Bank
                         }
                         CByear.SelectedIndex = 0;
                         CByear.Text = BankTeacher.Bank.Menu.Date[0];
-                        panel7.Enabled = false;
+                        TBTeacherNo.Enabled = false;
+                        TBTeacherName.Enabled = false;
+                        TBTeacherBill.Enabled = false;
+                        BSearchTeacher.Enabled = true;
                         CByear.Enabled = true;
 //<<<<<<< PP
                         BTPrint.Enabled = true;

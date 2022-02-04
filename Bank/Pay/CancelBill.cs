@@ -354,7 +354,6 @@ namespace BankTeacher.Bank.Pay
         private void Checkmember(bool tf)
         {
             //TBTeacherNO_Cancelbill.Enabled = tf;
-            BSearchTeacher.Enabled = tf;
         }
 
         private void CancelBill_Load(object sender, EventArgs e)

@@ -142,7 +142,6 @@ namespace BankTeacher.Bank.Loan
         private void Checkmember(bool tf)
         {
             TBTeacherNo.Enabled = tf;
-            BSearchTeacher.Enabled = tf;
         }
 
         private void CBList_SelectedIndexChanged(object sender, EventArgs e)

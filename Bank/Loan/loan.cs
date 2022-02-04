@@ -847,7 +847,6 @@ namespace BankTeacher.Bank.Loan
         private void Checkmember(bool tf)
         {
             TBTeacherNo.Enabled = tf;
-            BSearchTeacher.Enabled = tf;
         }
         private void DGVGuarantor_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
         {

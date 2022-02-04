@@ -196,6 +196,7 @@ namespace BankTeacher.Bank.Add_Member
                     Check = true;
                     TBTeacherNo.Enabled = true;
                     Checkmember(false);
+                    BSearch.Enabled = true;
                     BSave.Enabled = true;
                 }
                 else
@@ -356,7 +357,7 @@ namespace BankTeacher.Bank.Add_Member
         private void Checkmember(bool tf)
         {
             TBTeacherNo.Enabled = tf;
-            BSearch.Enabled = tf;
+            //BSearch.Enabled = tf;
         }
 
         private void tabControl1_KeyDown(object sender, KeyEventArgs e)
