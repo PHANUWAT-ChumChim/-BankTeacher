@@ -1492,7 +1492,7 @@ namespace BankTeacher.Bank.Pay
                     DataSet dtBillNo = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[7]
                         .Replace("{TeacherNo}", TBTeacherNo.Text)
                         .Replace("{TeacherNoaddby}", Class.UserInfo.TeacherNo)
-                        .Replace("{{Date}" , Date));
+                        .Replace("{Date}" , Date));
                     String BillNo = dtBillNo.Tables[0].Rows[0][0].ToString();
                     for (int x = 0; x < DGV_Pay.Rows.Count; x++)
                     {
@@ -1585,7 +1585,7 @@ namespace BankTeacher.Bank.Pay
                     //info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
                     //info_datepay = DateTime.Today.Day.ToString() +'/'+ DateTime.Today.Month.ToString() +'/'+ DateTime.Today.Year.ToString();
                     TBTeacherNo.Enabled = false;
-                    BSearchTeacher.Enabled = false;
+                    BSearchTeacher.Enabled = true;
                     CBList_Pay.Enabled = false;
                     CBPayment_Pay.Enabled = false;
                     CBYearSelection_Pay.Enabled = false;
@@ -1594,7 +1594,6 @@ namespace BankTeacher.Bank.Pay
                     BSave_Pay.Enabled = false;
                     TBAmount_Pay.Enabled = false;
                     BAutoSelection.Enabled = false;
-                    tabControl1.Enabled = false;
                     CheckPay = true;
                     //ClearForm();
                     //TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
@@ -2643,7 +2642,6 @@ namespace BankTeacher.Bank.Pay
         private void Checkmember(bool tf)
         {
             TBTeacherNo.Enabled = tf;
-            BSearchTeacher.Enabled = tf;
         }
         private void TB_Bill_TextChanged(object sender, EventArgs e)
         {

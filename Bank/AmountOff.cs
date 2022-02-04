@@ -710,7 +710,6 @@ namespace BankTeacher.Bank
         private void Checkmember(bool tf)
         {
             TBTeacherNo.Enabled = tf;
-            BSearchTeacher.Enabled = tf;
         }
 
         private void AmountOff_KeyUp(object sender, KeyEventArgs e)

@@ -359,7 +359,6 @@ namespace BankTeacher.Bank.Add_Member
         private void Checkmember(bool tf)
         {
             TBTeacherNo_Reg.Enabled = tf;
-            BSearchTeacher_Reg.Enabled = tf;
         }
         private void BExitForm_Click(object sender, EventArgs e)
         {

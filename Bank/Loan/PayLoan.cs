@@ -225,7 +225,6 @@ namespace BankTeacher.Bank.Loan
         private void Checkmember(bool tf)
         {
             TBTeacherNo.Enabled = tf;
-            BTSearch.Enabled = tf;
         }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
