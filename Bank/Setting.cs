@@ -16,6 +16,7 @@ namespace BankTeacher.Bank
 {
     public partial class Setting : Form
     {
+        public static bool CheckTimeBack;
         static int Min;
         static int Max;
         static bool chb;
@@ -157,6 +158,7 @@ namespace BankTeacher.Bank
                 CHB_edittime.Checked = true;
             }
             chb = CHB_edittime.Checked;
+            CHB_edittime.Checked = CheckTimeBack;
             Min = Convert.ToInt32(TB_Min.Text);
             Max = Convert.ToInt32(TB_Max.Text);
             B_Save.Enabled = false;
@@ -241,6 +243,10 @@ namespace BankTeacher.Bank
 
         private void tabControl1_KeyDown(object sender, KeyEventArgs e)
         {
+            if (e.KeyCode == Keys.Escape)
+            {
+                BExitForm_Click(new object(), new EventArgs());
+            }
         }
 
         private void TB_Min_TextChanged(object sender, EventArgs e)
@@ -262,7 +268,6 @@ namespace BankTeacher.Bank
         {
             B_Save.Enabled = true;
         }
-
         private void Setting_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
@@ -529,6 +534,9 @@ namespace BankTeacher.Bank
                     }
                 }
             }
+        private void CHB_edittime_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckTimeBack = CHB_edittime.Checked;
         }
     }
 }

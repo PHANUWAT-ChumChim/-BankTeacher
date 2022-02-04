@@ -315,6 +315,7 @@ namespace BankTeacher.Bank
             this.CHB_edittime.TabIndex = 8;
             this.CHB_edittime.Text = "อณุญาตให้แก้ไขเวลา";
             this.CHB_edittime.UseVisualStyleBackColor = true;
+            this.CHB_edittime.CheckedChanged += new System.EventHandler(this.CHB_edittime_CheckedChanged);
             // 
             // BExitForm
             // 

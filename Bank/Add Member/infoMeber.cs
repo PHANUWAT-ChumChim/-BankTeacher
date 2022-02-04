@@ -157,7 +157,6 @@ namespace BankTeacher.Bank.Add_Member
         private void Checkmember(bool tf)
         {
             TBTeacherNo.Enabled = tf;
-            BSearchTeacher.Enabled = tf;
         }
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
