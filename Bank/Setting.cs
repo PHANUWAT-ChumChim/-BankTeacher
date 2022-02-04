@@ -130,7 +130,7 @@ namespace BankTeacher.Bank
             "UPDATE EmployeeBank.dbo.tblShare\r\n" +
             "SET SavingAmount = SavingAmount - {WithDraw}\r\n" +
             "WHERE ShareNo = @ShareNo; \r\n " +
-            
+
             "INSERT INTO EmployeeBank.dbo.tblShareWithdraw (TeacherNoAddBy,ShareNo,DateAdd,Amount,BillDetailPayMentNo)\r\n" +
             "VALUES ('{TeacherNoAddBy}', '{ShareNo}','{DateAdd}','{WithDraw}',{PayMent});"
 
@@ -487,7 +487,7 @@ namespace BankTeacher.Bank
                                         //WithDraw
                                         if (ds.Tables[2].Rows.Count != 0)
                                         {
-                                            for(int x = 0; x < ds.Tables[2].Rows.Count; x++)
+                                            for (int x = 0; x < ds.Tables[2].Rows.Count; x++)
                                             {
                                                 String TeacherID = "";
                                                 int WithDrawAmount = 0;
@@ -508,32 +508,33 @@ namespace BankTeacher.Bank
                                                     Payment = "โอน";
                                                 if (Payment.Contains("โอน"))
                                                     PaymentNo = 2;
-                                                        Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[5]
-                                                    .Replace("{WithDraw}", WithDrawAmount.ToString())
-                                                    .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
-                                                    .Replace("{PayMent}",PaymentNo.ToString())
-                                                    .Replace("{DateAdd}",DateAdd.ToString()));
+                                                Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[5]
+                                            .Replace("{WithDraw}", WithDrawAmount.ToString())
+                                            .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
+                                            .Replace("{PayMent}", PaymentNo.ToString())
+                                            .Replace("{DateAdd}", DateAdd.ToString()));
                                             }
                                         }
                                         Class.SQLConnection.InputSQLMSSQL(SQLDefault[6]);
                                         BExceltoSQL.Enabled = false;
-                                        MessageBox.Show("ส่งข้อมูลสำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                                        MessageBox.Show("ส่งข้อมูลสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
                                     }
                                 }
                                 catch
                                 {
-                                    MessageBox.Show("เกิดข้อผิดพลาด Format Excel ไม่ถูกต้องกรุณาลองอีกครั้ง","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                                    MessageBox.Show("เกิดข้อผิดพลาด Format Excel ไม่ถูกต้องกรุณาลองอีกครั้ง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 }
                             }
                             catch
                             {
-                                MessageBox.Show("กรุณาปิด Excel ก่อนทำรายการ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                                MessageBox.Show("กรุณาปิด Excel ก่อนทำรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             }
                         }
                     }
                 }
             }
+        }
         private void CHB_edittime_CheckedChanged(object sender, EventArgs e)
         {
             CheckTimeBack = CHB_edittime.Checked;
