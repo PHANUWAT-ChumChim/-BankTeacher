@@ -1076,9 +1076,9 @@ namespace BankTeacher.Class.Print
                             e.Graphics.DrawString("บาท", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - TextSize.Width, startTableY);
                             TextSize1 = e.Graphics.MeasureString($"{Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Amountotel_SUM.ToString("D")))}", Font(16, ThaiSarabun, FontStyle.Regular));
                             e.Graphics.DrawString($"{Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Amountotel_SUM.ToString("D")))}", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 100), startTableY);
-                            e.Graphics.DrawString($"รวมเป็นเเงิน", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 200), startTableY);
+                            e.Graphics.DrawString($"จำนวน", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 200), startTableY);
                             // กรอบๆ
-                            e.Graphics.DrawRectangle(PenBlack, Line2_x - (TextSize1.Width + TextSize.Width + 200), startTableY, Line2_x - (Line2_x - (TextSize1.Width + TextSize.Width + 200)), TextSize1.Height);
+                            e.Graphics.DrawRectangle(PenBlack, Line2_x - (TextSize1.Width + TextSize.Width + 196), startTableY, Line2_x - (Line2_x - (TextSize1.Width + TextSize.Width + 196)), TextSize1.Height);
                         }
                         TextSize = e.Graphics.MeasureString("_____________________________", Font(13, ThaiSarabun, FontStyle.Regular));
                         e.Graphics.DrawString("_____________________________", Font(13, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - TextSize.Width, startTableY + 50);
@@ -1182,15 +1182,15 @@ namespace BankTeacher.Class.Print
             college_english = DT.Rows[0][1].ToString(),
             college_address = DT.Rows[0][5].ToString();
             // ข้อมูลในตาราง
-            int all_paper, number = 16;
-            double b = (double)G.RowCount / number;
-            if (G.RowCount / number == 0)
+            int all_paper, Rows = 18;
+            double b = (double)G.RowCount / Rows;
+            if (G.RowCount / Rows == 0)
             {
                 all_paper = 1;
             }
             else if (b.ToString().Length > 2)
             {
-                all_paper = (G.RowCount / number) + 1;
+                all_paper = (G.RowCount / Rows) + 1;
             }
             else
             {
@@ -1249,7 +1249,7 @@ namespace BankTeacher.Class.Print
             // เพิ่มRowsเเละเก็บค่า
             int up = 0, get = 0; // ขนาดข้อความหัวข้อ
             int setcut = 20; // ขนาดการตัดข้อความ
-            if (Rows.Count == 0) // เช็คข้อมูลในList ว่าพบข้อมูลหรือไม่ถ้า ไม่ให้ทำการเก็บ material all
+            if (PrintPreviewDialog.Rows.Count == 0) // เช็คข้อมูลในList ว่าพบข้อมูลหรือไม่ถ้า ไม่ให้ทำการเก็บ material all
             {
                 for (int C = 0; C < G.Columns.Count; C++) // ลูป ข้อมูลตาราง
                 {
@@ -1260,7 +1260,7 @@ namespace BankTeacher.Class.Print
                             cells.Add(G.Rows[R].Cells[c].Value.ToString()); // เก็บ cells 
                         }
                         if (C == 0)
-                            Rows.Add(cells.ToArray()); // เก็บ cells ใน Rows  ข้อมูลรองที่ใช้ในการเช็ค (จำเป็น)
+                            PrintPreviewDialog.Rows.Add(cells.ToArray()); // เก็บ cells ใน Rows  ข้อมูลรองที่ใช้ในการเช็ค (จำเป็น)
                         cells.Clear();
                         // ========= ส่วนการทำงานหารายการที่ซ้ำกัน ========
                         if (C == 1) // ทำงานเเค่คครั้งเดียว
@@ -1273,15 +1273,15 @@ namespace BankTeacher.Class.Print
                                 {
                                     if (G.Rows[r].Cells[c].Value.ToString().Contains(Unicode)) // ถ้าเจอข้อความที่กำหนดใน cells เเล้วให้ทำการเก็บ ค่าทั้งหมด
                                     {
-                                        @string_Unicode += G.Rows[r].Cells[c].Value.ToString(); // ข้อความ // ข้อมูลรองที่ใช้ในการเช็ค (จำเป็น)
+                                        string_Unicode += G.Rows[r].Cells[c].Value.ToString(); // ข้อความ // ข้อมูลรองที่ใช้ในการเช็ค (จำเป็น)
                                         location_Unicode_Rows = r; // Rows // ข้อมูลรองที่ใช้ในการเช็ค (จำเป็น)
                                         location_Unicode_Cells = c; // Cells // ข้อมูลรองที่ใช้ในการเช็ค (จำเป็น)
                                         break;
                                     }
                                 }
-                                if (@string_Unicode != "") { break; }
+                                if (string_Unicode != "") { break; }
                             }
-                            if (@string_Unicode == "") { @string_Unicode = G.Rows[-1].Cells[-1].Value.ToString(); } // เเจ้งเตือน Error ไม่มี ยอดสรุป เเบบปริ้นนี้จำเป็นต้องอ้างอิงยอดสรุป
+                            if (string_Unicode == "") { string_Unicode = G.Rows[-1].Cells[-1].Value.ToString(); } // เเจ้งเตือน Error ไม่มี ยอดสรุป เเบบปริ้นนี้จำเป็นต้องอ้างอิงยอดสรุป
 
     
 
@@ -1309,9 +1309,9 @@ namespace BankTeacher.Class.Print
                                     sum += List_similar[0]; // เก็บค่า
                                     Number_round++;
                                     if(List_similar.Count() == 0) { not = true; }
-                                    if (sum >= 15) // ตรวจสอบว่าเกินขนาดหรือไม่ 18 คือขนาดทีRows ที่ไม่ควรเกินหน้ากระดาษ
+                                    if (sum >= Rows) // ตรวจสอบว่าเกินขนาดหรือไม่ 18 คือขนาดทีRows ที่ไม่ควรเกินหน้ากระดาษ
                                     {
-                                        if (sum > 15) // ถ้าขนาดไม่ พอ ดี ตามกำหนด ให้ตัด ขนาดที่เกินออกไป
+                                        if (sum > Rows) // ถ้าขนาดไม่ พอ ดี ตามกำหนด ให้ตัด ขนาดที่เกินออกไป
                                         {
                                             sum -= List_similar[0]; // ย้อนค่าคืน
                                             Number_round--;
@@ -1542,7 +1542,7 @@ namespace BankTeacher.Class.Print
             //วาด Rows กำลังทดสอบ
             // ตำเเหน่งที่วาด Rows เดียว
             int UP = 0;
-            float page_Y = page_y;
+            float page_Yreturn = page_y;
             bool CHECK = false;
             for (int R = 0; R < List_similar_page[0]; R++)
             {
@@ -1550,7 +1550,7 @@ namespace BankTeacher.Class.Print
                 location_y = page_y;
                 for (int c = 0; c < G.Rows[R].Cells.Count; c++)
                 {
-                    Size = e.Graphics.MeasureString($"{Rows[R][c]}", Font(18, ThaiSarabun, FontStyle.Regular));
+                    Size = e.Graphics.MeasureString($"{PrintPreviewDialog.Rows[R][c]}", Font(18, ThaiSarabun, FontStyle.Regular));
                     //Size = e.Graphics.MeasureString($"{G.Rows[R].Cells[c].Value}", Font(18, ThaiSarabun, FontStyle.Regular)); // เก็บค่าหัวตาราง
                     if (page_x + Size.Width > page_width && c == G.Rows[R].Cells.Count - 1) // ถ้า ระยะการวาด เกิน ขอบที่กำหนดให้ตัดเส้น
                     {
@@ -1568,7 +1568,7 @@ namespace BankTeacher.Class.Print
                     }
                     if (center)  // เป็นจริงให้ ตำเเหน่งกลาง
                     {
-                        Size = e.Graphics.MeasureString($"{Rows[R][c]}", Font(18, ThaiSarabun, FontStyle.Regular));
+                        Size = e.Graphics.MeasureString($"{PrintPreviewDialog.Rows[R][c]}", Font(18, ThaiSarabun, FontStyle.Regular));
                         //Size = e.Graphics.MeasureString($"{G.Rows[R].Cells[c].Value}", Font(18, ThaiSarabun, FontStyle.Regular));
                         Center_ = ((List_Text_Width[0][c] / 2) + (page_notovers / 2));
                         //Center += Center_ - (Size.Width / 2);
@@ -1585,12 +1585,12 @@ namespace BankTeacher.Class.Print
                     if (Rectanglef_width > 250f) // เช็คขนาดที่เกิน เเต่อาจจะได้เช็คเเค่ cells สุดท้าย ยังไม่เเน่ใจวาสควรมีมั้ย
                     {
                         Rectanglef_width = List_Text_Width[0][c];
-                        Size_2 = e.Graphics.MeasureString($"{Rows[R][c]}", Font(18, ThaiSarabun, FontStyle.Regular));
+                        Size_2 = e.Graphics.MeasureString($"{PrintPreviewDialog.Rows[R][c]}", Font(18, ThaiSarabun, FontStyle.Regular));
                         //Size_2 = e.Graphics.MeasureString($"{G.Rows[R].Cells[c].Value}", Font(18, ThaiSarabun, FontStyle.Regular),(int)Rectanglef_width); // เก็บขนาด
                     }
                     else // ใช้ปกติ
                     {
-                        Size_2 = e.Graphics.MeasureString($"{Rows[R][c]}", Font(18, ThaiSarabun, FontStyle.Regular));
+                        Size_2 = e.Graphics.MeasureString($"{PrintPreviewDialog.Rows[R][c]}", Font(18, ThaiSarabun, FontStyle.Regular));
                         //Size_2 = e.Graphics.MeasureString($"{G.Rows[R].Cells[c].Value}", Font(18, ThaiSarabun, FontStyle.Regular)); // เก็บขนาด
                     }
                     if (Size_2.Width > Rectanglef_width) // ถ้าขนาด ความยาวเกินกรอบให้ทำการเพิ่มระยะคววามยาว
@@ -1611,16 +1611,20 @@ namespace BankTeacher.Class.Print
                             ListOver_height.Add(Rectanglef_height); // เก็บค่าความยาว
                         }
                     }    
-                    if (Rows[R][c].ToString() == "") { CHECK = true; }
+                    if (PrintPreviewDialog.Rows[R][c].ToString() == "") { CHECK = true; }
+                    if(PrintPreviewDialog.Rows[R][c].ToString() == "417")
+                    {
+
+                    }
                     if (!CHECK) 
                     {
                         if (List_AloneOrNot_cells[UP][c]) // เช็คว่าตำเเหน่งเป็นจริงหรือไม่
                         {
-                            if (page_Y == page_y) // ขนาด กระดาษ ต้อง เหมือนเดิม
-                            { page_Y = page_y; } // เก็บค่าใหม่
-                            else { page_y = page_Y; } // ถ้าขนาดไม่เหมือนเดิมให้เปลี่ยนกลับ
-                            Size_2 = e.Graphics.MeasureString($"{Rows[R][c]}", Font(18, ThaiSarabun, FontStyle.Regular)); // เก็บขนาด
-                            Size_3 = e.Graphics.MeasureString($"{Rows[R][location_Unicode_Cells]}", Font(18, ThaiSarabun, FontStyle.Regular)); // เก็บขนาด
+                            if (page_Yreturn == page_y) // ขนาด กระดาษ ต้อง เหมือนเดิม
+                            { page_Yreturn = page_y; } // เก็บค่าใหม่
+                            else { page_y = page_Yreturn; } // ถ้าขนาดไม่เหมือนเดิมให้เปลี่ยนกลับ
+                            Size_2 = e.Graphics.MeasureString($"{PrintPreviewDialog.Rows[R][c]}", Font(18, ThaiSarabun, FontStyle.Regular)); // เก็บขนาด
+                            Size_3 = e.Graphics.MeasureString($"{PrintPreviewDialog.Rows[R][location_Unicode_Cells]}", Font(18, ThaiSarabun, FontStyle.Regular)); // เก็บขนาด
                             //var height = Size_3.Height * List_similar2[UP];
                             //var @as = height / 2;
                             //var tast = @as - (Size_2.Height / 2);
@@ -1629,7 +1633,7 @@ namespace BankTeacher.Class.Print
                             page_y = height;
                             //Test การวาดระยะ e.Graphics.DrawString($"|{a}", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(page_x, a, 200, 200)); // Test สำหรับผู้เเเก้ไข ชิดซ้าย
                         }
-                        else {  page_y = page_Y; } // เก็บค่าขนาดเดิม
+                        else {  page_y = page_Yreturn; } // เก็บค่าขนาดเดิม
                         if (c == G.Rows[R].Cells.Count - 1) // ถ้าระยะสุดท้าย ให้บวกเพิ่ม ตำเเหน่ง Rows
                         {
                             if (UP < List_AloneOrNot_cells.Count()-1)
@@ -1638,7 +1642,7 @@ namespace BankTeacher.Class.Print
                             }
                         }
                     }
-                    e.Graphics.DrawString($"{Rows[R][c]}", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Center, page_y, Rectanglef_width, Rectanglef_height)); // วาด หัวข้อความ
+                    e.Graphics.DrawString($"{PrintPreviewDialog.Rows[R][c]}", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Center, page_y, Rectanglef_width, Rectanglef_height)); // วาด หัวข้อความ
                     //e.Graphics.DrawString($"{G.Rows[R].Cells[c].Value}", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Center, page_y, Rectanglef_width, Rectanglef_height)); // วาด หัวข้อความ
                     // Test เช็คตำเเหน่งที่จะวาด
                     //e.Graphics.DrawRectangle(PenBlack, page_x, page_y, Rectanglef_width, Rectanglef_height); // Test กรอบ
@@ -1649,7 +1653,7 @@ namespace BankTeacher.Class.Print
                     page_x += List_Text_Width[0][c] + page_notovers; // บวกขนาดในรอบถัดไป
                     Center = page_x;
                     chcel_line = false;
-                    if (Rows[R][location_Unicode_Cells].Contains(Unicode)) //   if (Rows[R][location_Unicode_Cells] == string_Unicode)
+                    if (PrintPreviewDialog.Rows[R][location_Unicode_Cells].Contains(Unicode)) 
                     {
                         location_y2 = page_y;
                         // เส้นปิด Rows
@@ -1658,13 +1662,14 @@ namespace BankTeacher.Class.Print
                 }
                 page_x = 50; // Test ถ้าใช้งานจริงจะไม่ loop เเต่เป็นการบอกรายการใน Array เองว่าเป็นรายการอะไร
                 Center = 50;
+                page_y = page_Yreturn; // New คืนค่า
                 page_y += Class.Print.SetPrintMedtods.MaxValues(0, ListOver_height);
                 ListOver_height.Clear();
                 location_INDAX = page_y;
-                page_Y = page_y;
+                page_Yreturn = page_y;
                 CHECK = false;
                 // เส้นปิด Rows
-                if (Rows[R][location_Unicode_Cells].Contains(Unicode)) //   if (Rows[R][location_Unicode_Cells] == string_Unicode)
+                if (PrintPreviewDialog.Rows[R][location_Unicode_Cells].Contains(Unicode)) //   if (Rows[R][location_Unicode_Cells] == string_Unicode)
                 {
                     for(int line = 0; line < G.ColumnCount; line++)
                     {
@@ -1701,14 +1706,14 @@ namespace BankTeacher.Class.Print
             }
             for (int loop18 = 0; loop18 < List_similar_page[0]; loop18++) // สำหรับข้อมูลที่ มีรายการเเค่ 16 
             {
-                Rows.RemoveAt(0);
+                PrintPreviewDialog.Rows.RemoveAt(0);
                 if(loop18 == List_similar_page[0] - 1) // สำหรับข้อมูลที่ มีรายการเดียว  
                 {
                     List_similar_page.RemoveAt(0);
                     break;
                 }
             }
-            if(Rows.Count() != 0)
+            if(PrintPreviewDialog.Rows.Count() != 0)
             {
                 pagepaper++;
                 e.HasMorePages = true; // เปิดการวาดหน้าต่อไป เพราะ Rows ยังคงเหลืออยู่

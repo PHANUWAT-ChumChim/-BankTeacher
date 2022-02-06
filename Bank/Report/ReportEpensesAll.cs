@@ -51,6 +51,7 @@ namespace BankTeacher.Bank
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
+            
             DGV.Rows.Clear();
             CheckMember = false;
             String Year = DTP.Value.ToString("yyyy");
