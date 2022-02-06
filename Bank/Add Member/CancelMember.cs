@@ -132,7 +132,7 @@ namespace BankTeacher.Bank.Add_Member
            ,
            //[9] UPDATE Status File INPUT: {TeacherNoAddBy} {ID} {TeacherNo} {PathFile} 
            "UPDATE EmployeeBank.dbo.tblFile \r\n " +
-          "SET TeacherRemoveFileBy = '{TeacherNoAddBy}' , IsUse = 0 , DateRemoveFile = CURRENT_TIMESTAMP , StatusFileInSystem = 2 \r\n " +
+          "SET TeacherRemoveFileBy = '{TeacherNoAddBy}' , IsUse = 0 , DateRemoveFile = CURRENT_TIMESTAMP , StatusFileInSystem = 1 \r\n " +
           "WHERE ID = '{ID}' \r\n " +
           " \r\n " +
           "INSERT INTO EmployeeBank.dbo.tblFile(TeacherNo,FiletypeNo,pathFile,TeacherAddBy,LoanID,DateAddFile,IsUse,TeacherRemoveFileBy,DateRemoveFile,StatusFileInSystem) \r\n " +
@@ -196,6 +196,7 @@ namespace BankTeacher.Bank.Add_Member
                     Check = true;
                     TBTeacherNo.Enabled = true;
                     Checkmember(false);
+                    BSearch.Enabled = true;
                     BSave.Enabled = true;
                 }
                 else
@@ -356,7 +357,7 @@ namespace BankTeacher.Bank.Add_Member
         private void Checkmember(bool tf)
         {
             TBTeacherNo.Enabled = tf;
-            BSearch.Enabled = tf;
+            //BSearch.Enabled = tf;
         }
 
         private void tabControl1_KeyDown(object sender, KeyEventArgs e)

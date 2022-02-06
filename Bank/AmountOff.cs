@@ -36,7 +36,7 @@ namespace BankTeacher.Bank
         /// <para>[0] DGV SELECT LoanNo,RemainAmount,Name,EndDate INPUT: {TeacherNo}</para>
         /// <para>[1] SELECT TeacherNo,Name,SumRemainAmount,AmountCredit,SavingAmount,ShareNo INPUT: {TeacherNo}</para>
         /// <para>[2] UPDATE Share WithDraw INPUT: {ShareNo} , {WithDraw}</para>
-        /// <para>[3] INSERT ShareWithDraw INPUT: {TeacherNoAddBy} , {ShareNo} , {WithDraw} , {PayMent}</para>
+        /// <para>[3] INSERT ShareWithDraw INPUT: {TeacherNoAddBy} , {ShareNo} , {WithDraw} , {PayMent} , {Date} </para>
         /// <para>[4] Check BillDetailPayment INPUT:  </para>
         /// <para>[5] SELECT MEMBER INPUT: {Text}</para>
         /// <para>[6] SELECT ShareWithDraw INPUT: {Date}</para>
@@ -86,9 +86,9 @@ namespace BankTeacher.Bank
 
             ,
 
-            //[3] INSERT ShareWithDraw INPUT: {TeacherNoAddBy} , {ShareNo} , {WithDraw},{PayMent}
+            //[3] INSERT ShareWithDraw INPUT: {TeacherNoAddBy} , {ShareNo} , {WithDraw},{PayMent} , {Date}
             "INSERT INTO EmployeeBank.dbo.tblShareWithdraw (TeacherNoAddBy,ShareNo,DateAdd,Amount,BillDetailPayMentNo)\r\n" +
-            "VALUES ('{TeacherNoAddBy}', '{ShareNo}',CURRENT_TIMESTAMP,'{WithDraw}',{PayMent});"
+            "VALUES ('{TeacherNoAddBy}', '{ShareNo}','{Date}','{WithDraw}',{PayMent});"
 
             ,
 
@@ -209,6 +209,9 @@ namespace BankTeacher.Bank
                     cb[x].Items.Add(new BankTeacher.Class.ComboBoxPayment(dtPayment.Rows[a][0].ToString(),
                         dtPayment.Rows[a][1].ToString()));
             CBYear.Enabled = false;
+
+            DTPDate.Value = Convert.ToDateTime(Bank.Menu.Date[0] + "/" + Bank.Menu.Date[1] + "/" + Bank.Menu.Date[2]);
+            DTPDate.Enabled = DTPDate.Enabled = Bank.Setting.CheckTimeBack;
         }
 
         public void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
@@ -349,6 +352,8 @@ namespace BankTeacher.Bank
                 {
                     if (MessageBox.Show("ยืนยันการจ่าย", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
                     {
+                        String Date = DTPDate.Value.ToString("yyyy:MM:dd");
+                        Date = Date.Replace(":", "/");
                         DGV_Testter.Rows.Add(1,Bank.Menu.Date_Time_SQL_Now.Rows[0][0].ToString(), "ถอนหุ้นสะสม",TBWithDraw.Text);
                         Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[2] +
                     "\r\n" +
@@ -356,7 +361,8 @@ namespace BankTeacher.Bank
                     .Replace("{ShareNo}", TBShareNo.Text)
                     .Replace("{WithDraw}", TBWithDraw.Text)
                     .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
-                    .Replace("{PayMent}", Payment.No));
+                    .Replace("{PayMent}", Payment.No)
+                    .Replace("{Date}" , Date));
                         MessageBox.Show("บันทึกสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         Class.Print.PrintPreviewDialog.info_Amounoff = TBWithDraw.Text;
                         Class.Print.PrintPreviewDialog.info_Payment = CBTypePay.Items[CBTypePay.SelectedIndex].ToString();
@@ -704,7 +710,6 @@ namespace BankTeacher.Bank
         private void Checkmember(bool tf)
         {
             TBTeacherNo.Enabled = tf;
-            BSearchTeacher.Enabled = tf;
         }
 
         private void AmountOff_KeyUp(object sender, KeyEventArgs e)

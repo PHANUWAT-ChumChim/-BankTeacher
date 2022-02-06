@@ -17,6 +17,8 @@ namespace BankTeacher.Bank.Pay
             InitializeComponent();
         }
         bool CheckInputBill = false;
+        
+        String TeacherNo;
         /// <summary> 
         /// SQLDafault 
         /// <para>[0] Select Bill (CancelBill) INPUT: {BillNo}</para>
@@ -126,7 +128,7 @@ namespace BankTeacher.Bank.Pay
             LSumAmount_CancelBill.Text = "0";
             TBBIllDate_Cancelbill.Text = "";
             TBTeacherName_Cancelbill.Text = "";
-            TBTeacherNO_Cancelbill.Text = "";
+            TeacherNo = "";
             TBteacharnoby_billcancel.Text = "";
             //====================================================================
         }
@@ -135,7 +137,7 @@ namespace BankTeacher.Bank.Pay
         {
             if (e.KeyCode == Keys.Enter)
             {
-                TBTeacherNO_Cancelbill.Text = TBTeacherNO_Cancelbill.Text.Replace("t", "T");
+                //TBTeacherNO_Cancelbill.Text = TBTeacherNO_Cancelbill.Text.Replace("t", "T");
                 if (Int32.TryParse(TBBillNo_Cancelbill.Text, out int BillNo))
                 {
                     DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]
@@ -146,7 +148,7 @@ namespace BankTeacher.Bank.Pay
                         Clear();
                         TBNote.Enabled = true;
                         TBBIllDate_Cancelbill.Text = (Convert.ToDateTime(dt.Rows[0][2].ToString())).ToString("yyyy-MM-dd");
-                        TBTeacherNO_Cancelbill.Text = dt.Rows[0][0].ToString();
+                        TeacherNo = dt.Rows[0][0].ToString();
                         TBTeacherName_Cancelbill.Text = dt.Rows[0][1].ToString();
                         TBteacharnoby_billcancel.Text = dt.Rows[0][8].ToString();
                         DataTable DividendYear = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5]);
@@ -227,12 +229,14 @@ namespace BankTeacher.Bank.Pay
                 {
                     // Format yyyy-mm-dd EX: 2020-1-16
                     String today = (Convert.ToDateTime((Bank.Menu.Date[0] + '-' + Bank.Menu.Date[1] + '-' + Bank.Menu.Date[2]).ToString())).ToString("yyyy-MM-dd");
-                    if (today == TBBIllDate_Cancelbill.Text)
+                    if (today == TBBIllDate_Cancelbill.Text && TBNote.Text != "")
                     {
                         if (DGV_Cancelbill.Rows.Count != 0)
                         {
                             try
                             {
+                                String Date = DTPDate.Value.ToString("yyyy:MM:dd");
+                                Date = Date.Replace(":", "/");
                                 String Note = TBNote.Text;
                                 if (Note == "")
                                     Note = "-";
@@ -245,19 +249,19 @@ namespace BankTeacher.Bank.Pay
                                     if (DGV_Cancelbill.Rows[x].Cells[1].Value.ToString().Contains("หุ้น"))
                                     {
                                         Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
-                                            .Replace("{TeacherNo}", TBTeacherNO_Cancelbill.Text)
+                                            .Replace("{TeacherNo}", TeacherNo)
                                             .Replace("{Amount}", DGV_Cancelbill.Rows[x].Cells[2].Value.ToString())
                                             .Replace("{BillNo}", TBBillNo_Cancelbill.Text)
-                                            .Replace("{DateTime}", DateTime.Now.ToString()));
+                                            .Replace("{DateTime}", Date));
                                     }
                                     else if (DGV_Cancelbill.Rows[x].Cells[1].Value.ToString().Contains("กู้"))
                                     {
-                                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("{TeacharNo}", TBTeacherNO_Cancelbill.Text).Replace("{BillNo}", TBBillNo_Cancelbill.Text));
+                                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("{TeacharNo}", TeacherNo).Replace("{BillNo}", TBBillNo_Cancelbill.Text));
                                         Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
                                         .Replace("{LoanNo}", DGV_Cancelbill.Rows[x].Cells[3].Value.ToString())
                                         .Replace("{LoanAmount}", DGV_Cancelbill.Rows[x].Cells[2].Value.ToString())
                                          .Replace("{BillNo}", TBBillNo_Cancelbill.Text)
-                                        .Replace("{DateTime}", DateTime.Now.ToString()));
+                                        .Replace("{DateTime}", Date));
                                     }
                                 }
                                 MessageBox.Show("ยกเลิกบิลล์สำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Information);
@@ -268,10 +272,15 @@ namespace BankTeacher.Bank.Pay
                                 MessageBox.Show("ยกเลิกบิลล์ล้มเหลว","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                             }
                             ClearForm();
-                            TBTeacherNO_Cancelbill.Focus();
+                            //TBTeacherNO_Cancelbill.Focus();
                         }
                     }
-                    else
+                    else if(TBNote.Text == "")
+                    {
+                        MessageBox.Show("โปรดระบุหมายเหตุด้วยก่อนทำรายการ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        TBNote.Focus();
+                    }
+                    else if(today != TBBIllDate_Cancelbill.Text)
                     {
                         DialogResult MSB = MessageBox.Show("ไม่สามารถยกเลิกได้เนื่องจาก\r\nบิลล์หมายเลขนี้คือบิลล์ที่เริ่มสมัคร\r\nคุณต้องการดำเนินการต่อหรือไม่", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                         if (MSB == DialogResult.Yes)
@@ -333,7 +342,7 @@ namespace BankTeacher.Bank.Pay
         }
         private void ClearForm()
         {
-            TBTeacherNO_Cancelbill.Text = "";
+            TeacherNo = "";
             TBTeacherName_Cancelbill.Text = "";
             TBteacharnoby_billcancel.Text = "";
             TBBillNo_Cancelbill.Text = "";
@@ -344,8 +353,13 @@ namespace BankTeacher.Bank.Pay
         }
         private void Checkmember(bool tf)
         {
-            TBTeacherNO_Cancelbill.Enabled = tf;
-            BSearchTeacher.Enabled = tf;
+            //TBTeacherNO_Cancelbill.Enabled = tf;
+        }
+
+        private void CancelBill_Load(object sender, EventArgs e)
+        {
+            DTPDate.Value = Convert.ToDateTime(Bank.Menu.Date[0] + "/" + Bank.Menu.Date[1] + "/" + Bank.Menu.Date[2]);
+            DTPDate.Enabled = Bank.Setting.CheckTimeBack;
         }
     }
 }
