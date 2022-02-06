@@ -168,7 +168,6 @@ namespace BankTeacher.Bank.Add_Member
             }
             IN = new Bank.Search(SQLDefault[1]
                     .Replace("{TeacherNotLike}", NotLike));
-
             IN.ShowDialog();
             if (Bank.Search.Return[0] != "")
             {
@@ -179,12 +178,6 @@ namespace BankTeacher.Bank.Add_Member
         }
 
         String SavingAmountStart = "";
-
-        private void TBStartAmount_Leave(object sender, EventArgs e)
-        {
-            
-        }
-
         private void TBNameInfo_Leave(object sender, EventArgs e)
         {
             if (SavingAmountStart != TBStartAmount.Text)
@@ -315,7 +308,7 @@ namespace BankTeacher.Bank.Add_Member
                     PathFile = dialog.FileName;
                     if (PathFile != "")
                     {
-                        StatusEnableBT(false);
+                       StatusEnableBT(false);
                         CheckStatusWorking = true;
                         FTP.FTPSendFile(PathFile , $"Member_{TBTeacherNo.Text}.pdf");
                         if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)

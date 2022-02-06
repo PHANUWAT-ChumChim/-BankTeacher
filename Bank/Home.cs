@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -137,6 +138,8 @@ namespace BankTeacher.Bank
           "ORDER BY a.Fname; "
            ,
         };
+
+        public PrintPageEventHandler pdoc_PrintPage { get; private set; }
 
         public Home()
         {

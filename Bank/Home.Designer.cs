@@ -77,13 +77,8 @@ namespace BankTeacher.Bank
             this.panel7.Controls.Add(this.label2);
             this.panel7.Controls.Add(this.label1);
             this.panel7.Controls.Add(this.label12);
-//<<<<<<< PP
             this.panel7.Location = new System.Drawing.Point(8, 10);
             this.panel7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-//=======
-            //this.panel7.Location = new System.Drawing.Point(6, 8);
-            //this.panel7.Margin = new System.Windows.Forms.Padding(2);
-//>>>>>>> master
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(1133, 72);
             this.panel7.TabIndex = 65;
@@ -106,13 +101,8 @@ namespace BankTeacher.Bank
             // 
             this.TBTeacherBill.Enabled = false;
             this.TBTeacherBill.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-//<<<<<<< PP
             this.TBTeacherBill.Location = new System.Drawing.Point(787, 15);
             this.TBTeacherBill.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-//=======
-            //this.TBTeacherBill.Location = new System.Drawing.Point(590, 12);
-            //this.TBTeacherBill.Margin = new System.Windows.Forms.Padding(2);
-//>>>>>>> master
             this.TBTeacherBill.Name = "TBTeacherBill";
             this.TBTeacherBill.Size = new System.Drawing.Size(335, 43);
             this.TBTeacherBill.TabIndex = 84;
@@ -121,13 +111,8 @@ namespace BankTeacher.Bank
             // 
             this.TBTeacherName.Enabled = false;
             this.TBTeacherName.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-//<<<<<<< PP
             this.TBTeacherName.Location = new System.Drawing.Point(360, 15);
             this.TBTeacherName.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-//=======
-            //this.TBTeacherName.Location = new System.Drawing.Point(270, 12);
-            //this.TBTeacherName.Margin = new System.Windows.Forms.Padding(2);
-//>>>>>>> master
             this.TBTeacherName.Name = "TBTeacherName";
             this.TBTeacherName.Size = new System.Drawing.Size(320, 43);
             this.TBTeacherName.TabIndex = 83;
@@ -135,13 +120,8 @@ namespace BankTeacher.Bank
             // TBTeacherNo
             // 
             this.TBTeacherNo.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-//<<<<<<< PP
             this.TBTeacherNo.Location = new System.Drawing.Point(69, 12);
             this.TBTeacherNo.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-//=======
-            //this.TBTeacherNo.Location = new System.Drawing.Point(52, 10);
-            //this.TBTeacherNo.Margin = new System.Windows.Forms.Padding(2);
-//>>>>>>> master
             this.TBTeacherNo.MaxLength = 6;
             this.TBTeacherNo.Name = "TBTeacherNo";
             this.TBTeacherNo.Size = new System.Drawing.Size(153, 43);
@@ -204,13 +184,8 @@ namespace BankTeacher.Bank
             this.P1.Controls.Add(this.dataGridView3);
             this.P1.Controls.Add(this.panel7);
             this.P1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-//<<<<<<< PP
             this.P1.Location = new System.Drawing.Point(25, 42);
             this.P1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-//=======
-            //this.P1.Location = new System.Drawing.Point(19, 34);
-            //this.P1.Margin = new System.Windows.Forms.Padding(2);
-//>>>>>>> master
             this.P1.Name = "P1";
             this.P1.Size = new System.Drawing.Size(1157, 724);
             this.P1.TabIndex = 98;
@@ -222,13 +197,8 @@ namespace BankTeacher.Bank
             this.BTPrint.CausesValidation = false;
             this.BTPrint.Enabled = false;
             this.BTPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-//<<<<<<< PP
             this.BTPrint.Location = new System.Drawing.Point(1013, 96);
             this.BTPrint.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-//=======
-            //this.BTPrint.Location = new System.Drawing.Point(760, 78);
-            //this.BTPrint.Margin = new System.Windows.Forms.Padding(2);
-//>>>>>>> master
             this.BTPrint.Name = "BTPrint";
             this.BTPrint.Size = new System.Drawing.Size(127, 58);
             this.BTPrint.TabIndex = 106;
@@ -241,13 +211,8 @@ namespace BankTeacher.Bank
             this.panel16.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel16.Controls.Add(this.LB5Ye);
             this.panel16.Controls.Add(this.CByear);
-//<<<<<<< PP
             this.panel16.Location = new System.Drawing.Point(8, 89);
             this.panel16.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-//=======
-            //this.panel16.Location = new System.Drawing.Point(6, 72);
-            //this.panel16.Margin = new System.Windows.Forms.Padding(2);
-//>>>>>>> master
             this.panel16.Name = "panel16";
             this.panel16.Size = new System.Drawing.Size(223, 72);
             this.panel16.TabIndex = 99;
@@ -270,13 +235,8 @@ namespace BankTeacher.Bank
             this.CByear.Enabled = false;
             this.CByear.Font = new System.Drawing.Font("TH Sarabun New", 13.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.CByear.FormattingEnabled = true;
-//<<<<<<< PP
             this.CByear.Location = new System.Drawing.Point(44, 15);
             this.CByear.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-//=======
-            //this.CByear.Location = new System.Drawing.Point(33, 12);
-            //this.CByear.Margin = new System.Windows.Forms.Padding(2);
-//>>>>>>> master
             this.CByear.Name = "CByear";
             this.CByear.Size = new System.Drawing.Size(143, 39);
             this.CByear.TabIndex = 84;
@@ -300,13 +260,8 @@ namespace BankTeacher.Bank
             this.dataGridViewTextBoxColumn4,
             this.Column1});
             this.dataGridView3.GridColor = System.Drawing.SystemColors.ControlLightLight;
-//<<<<<<< PP
             this.dataGridView3.Location = new System.Drawing.Point(8, 166);
             this.dataGridView3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-//=======
-            //this.dataGridView3.Location = new System.Drawing.Point(6, 135);
-            //this.dataGridView3.Margin = new System.Windows.Forms.Padding(2);
-//>>>>>>> master
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.ReadOnly = true;
             dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -399,11 +354,7 @@ namespace BankTeacher.Bank
             this.ClientSize = new System.Drawing.Size(1205, 809);
             this.Controls.Add(this.P1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-//<<<<<<< PP
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-//=======
-            //this.Margin = new System.Windows.Forms.Padding(2);
-//>>>>>>> master
             this.Name = "Home";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Home";
