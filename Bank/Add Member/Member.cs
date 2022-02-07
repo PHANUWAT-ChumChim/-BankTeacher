@@ -23,6 +23,7 @@ namespace BankTeacher.Bank.Add_Member
         double Saving = 0;
         String PathFile = null;
         bool CheckStatusWorking = false;
+        bool CheckSave = false;
 
         //----------------------- index code -------------------- ////////
 
@@ -232,6 +233,7 @@ namespace BankTeacher.Bank.Add_Member
                             .Replace("{PathFile}",""));
                             MessageBox.Show("สมัครเสร็จสิ้น", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             CheckStatusWorking = false;
+                            CheckSave = true;
                         }
                         else
                         {
@@ -337,6 +339,7 @@ namespace BankTeacher.Bank.Add_Member
                         CheckBRegister = false;
                         Checkmember(false);
                         TBStartAmountShare_Reg.Enabled = true;
+                        CheckSave = false;
                     }
                 }
                 catch (Exception ex)
@@ -366,7 +369,7 @@ namespace BankTeacher.Bank.Add_Member
 
         private void Member_KeyDown(object sender, KeyEventArgs e)
         {
-            if ((e.KeyCode == Keys.Escape && !CheckStatusWorking))
+            if (e.KeyCode == Keys.Escape && !CheckStatusWorking || (CheckSave && e.KeyCode == Keys.Enter))
             {
                 if (TBTeacherNo_Reg.Text.Length != 0)
                 {
@@ -386,6 +389,7 @@ namespace BankTeacher.Bank.Add_Member
                     BTPrintfShare_Reg.Enabled = false;
                     LScan_Reg.ForeColor = Color.Red;
                     Checkmember(true);
+                    CheckSave = false;
                 }
                 else if(!CheckStatusWorking)
                 {

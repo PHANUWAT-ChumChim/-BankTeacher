@@ -28,6 +28,7 @@ namespace BankTeacher.Bank.Loan
         int StatusBoxFile = 0;
         String PathFile = "";
         bool CheckStatusWorking = false;
+        bool CheckSave = false;
         List<string[]> ItemList = new List<string[]>();
         /// <summary>
         /// <para>[0] SELECT MemberLona  INPUT: {Text}</para>
@@ -191,6 +192,7 @@ namespace BankTeacher.Bank.Loan
                         CBlistpayloan.Enabled = false;
                     }
                     Checkmember(false);
+                    CheckSave = false;
                 }
                 else
                 {
@@ -322,6 +324,7 @@ namespace BankTeacher.Bank.Loan
                                 Class.Print.PrintPreviewDialog.info_PayLoanBill = DGV_PayLoan.Rows[0].Cells[1].Value.ToString();
                                 Class.Print.PrintPreviewDialog.info_PayLoandate = Bank.Menu.Date_Time_SQL_Now.Rows[0][0].ToString();
                                 panel5.Visible = false;
+                                CheckSave = true;
                                 
 
                                 if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
@@ -388,7 +391,7 @@ namespace BankTeacher.Bank.Loan
 
         private void PayLoan_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape && !CheckStatusWorking)
+            if (e.KeyCode == Keys.Escape && !CheckStatusWorking || (CheckSave && e.KeyCode == Keys.Enter))
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
@@ -409,6 +412,7 @@ namespace BankTeacher.Bank.Loan
                     Checkmember(true);
                     panel5.Visible = false;
                     BTRemoveFile.Visible = false;
+                    CheckSave = false;
                 }
                 else if (!CheckStatusWorking)
                 {
