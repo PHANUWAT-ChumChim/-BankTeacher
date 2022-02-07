@@ -65,6 +65,8 @@ namespace BankTeacher.Bank
 
          };
 
+        bool CheckSave = false;
+
         private void CBYear_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (CBYear.SelectedIndex != -1)
@@ -97,6 +99,7 @@ namespace BankTeacher.Bank
                     }
 
                     BSaveCancelDividend.Enabled = true;
+                    CheckSave = false;
                 }
             }
             else
@@ -131,6 +134,7 @@ namespace BankTeacher.Bank
                     TB_RemainInterest.Text = "";
                     TB_SavingAmount.Text = "";
                     DGVReportDividend.Rows.Clear();
+                    CheckSave = true;
                     //DataTable dtYear = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]);
                     //CBYear.SelectedIndex = -1;
                     //CBYear.Items.Clear();
@@ -181,11 +185,12 @@ namespace BankTeacher.Bank
 
         private void CancelDividend_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
+            if (e.KeyCode == Keys.Escape || (e.KeyCode == Keys.Enter && CheckSave))
             {
                 if (CBYear.SelectedIndex != -1)
                 {
                     CBYear.SelectedIndex = -1;
+                    CheckSave = false;
                 }
                 else
                 {
@@ -196,7 +201,7 @@ namespace BankTeacher.Bank
 
         private void CancelDividend_Load(object sender, EventArgs e)
         {
-            DataTable dtYear = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]);
+             DataTable dtYear = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]);
             if(dtYear.Rows.Count != 0 && dtYear.Rows[0][0].ToString() != "")
                 for (int x = 0; x < dtYear.Rows.Count; x++)
                 {

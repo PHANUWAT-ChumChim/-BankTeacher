@@ -19,6 +19,7 @@ namespace BankTeacher.Bank.Add_Member
         bool CheckBRegister = false;
         bool CheckBCancel = false;
         double Saving = 0;
+        bool CheckSave = false;
 
         /// <summary>
         /// <para>[0] SELECT MEMBER INPUT: {Text}</para>
@@ -198,6 +199,7 @@ namespace BankTeacher.Bank.Add_Member
                     Checkmember(false);
                     BSearch.Enabled = true;
                     BSave.Enabled = true;
+                    CheckSave = false;
                 }
                 else
                 {
@@ -236,6 +238,7 @@ namespace BankTeacher.Bank.Add_Member
                             CheckBCancel = true;
                             Checkmember(true);
                             BSave.Enabled = false;
+                            CheckSave = true;
 
                             FTP.FTPMoveFileandRename($"Member_{TBTeacherNo.Text}.pdf", "CancelMember", Rename);
                             if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
@@ -329,7 +332,7 @@ namespace BankTeacher.Bank.Add_Member
 
         private void CancelMember_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Escape)
+            if(e.KeyCode == Keys.Escape || (e.KeyCode == Keys.Enter && CheckSave))
             {
                 if(TBTeacherNo.Text.Length != 0 || DGV_HistoryCancel.Rows.Count > 0 || CBYear_HistoryCancel.SelectedIndex != -1)
                 {
@@ -346,6 +349,7 @@ namespace BankTeacher.Bank.Add_Member
                     CBYear_HistoryCancel.Items.Clear();
                     DGV_HistoryCancel.Rows.Clear();
                     Checkmember(true);
+                    CheckSave = false;
                 }
                 else
                 {
