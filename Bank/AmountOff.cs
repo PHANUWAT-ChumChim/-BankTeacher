@@ -75,7 +75,7 @@ namespace BankTeacher.Bank
           "	FROM EmployeeBank.dbo.tblLoan as a \r\n " +
           "	LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo \r\n " +
           "	WHERE a.LoanStatusNo IN (1,2) and b.TeacherNo LIKE '%{TeacherNo}%') as e on a.TeacherNo = e.TeacherNo \r\n " +
-          "WHERE a.TeacherNo = '{TeacherNo}' \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}' and a.MemberStatusNo = 1 or (a.MemberStatusNo = 2 and d.SavingAmount != 0)\r\n " +
           "GROUP BY a.TeacherNo , d.ShareNo , d.SavingAmount ,c.PrefixName ,  b.Fname , b.Lname;"
            , 
 
@@ -87,8 +87,8 @@ namespace BankTeacher.Bank
             ,
 
             //[3] INSERT ShareWithDraw INPUT: {TeacherNoAddBy} , {ShareNo} , {WithDraw},{PayMent} , {Date}
-            "INSERT INTO EmployeeBank.dbo.tblShareWithdraw (TeacherNoAddBy,ShareNo,DateAdd,Amount,BillDetailPayMentNo)\r\n" +
-            "VALUES ('{TeacherNoAddBy}', '{ShareNo}','{Date}','{WithDraw}',{PayMent});"
+            "INSERT INTO EmployeeBank.dbo.tblShareWithdraw (TeacherNoAddBy,ShareNo,DateAdd,Amount,BillDetailPayMentNo,WithDrawTransactionDate)\r\n" +
+            "VALUES ('{TeacherNoAddBy}', '{ShareNo}','{Date}','{WithDraw}',{PayMent},CURRENT_TIMESTAMP);"
 
             ,
 
@@ -186,12 +186,14 @@ namespace BankTeacher.Bank
           "LEFT JOIN (SELECT TeacherNo   \r\n " +
           "FROM EmployeeBank.dbo.tblLoan    \r\n " +
           "WHERE LoanStatusNo = 1 or LoanStatusNo = 2 GROUP BY TeacherNo) as f on a.TeacherNo = f.TeacherNo    \r\n " +
-          "WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(c.PrefixName,'')+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1    \r\n " +
+          "WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(c.PrefixName,'')+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1 or (a.MemberStatusNo = 2 and e.SavingAmount != 0)\r\n " +
           "GROUP BY a.TeacherNo , CAST(ISNULL(c.PrefixName,'')+' '+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname ) as a     \r\n " +
           "WHERE RemainAmount IS NOT NULL {TeacherNoNotLike} \r\n " +
           "GROUP BY TeacherNo, Name, RemainAmount ,a.Fname  \r\n " +
           "ORDER BY a.Fname; "
            ,
+
+
         };
 
         int Check;

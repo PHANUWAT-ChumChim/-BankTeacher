@@ -107,7 +107,7 @@ namespace BankTeacher.Bank.Pay
             this.TB5.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TB5.Size = new System.Drawing.Size(1131, 547);
             this.TB5.TabIndex = 5;
-            this.TB5.Text = "รายละอียดบิลล";
+            this.TB5.Text = "รายละอียดบิล";
             this.TB5.UseVisualStyleBackColor = true;
             // 
             // DGV_Bill
@@ -205,7 +205,7 @@ namespace BankTeacher.Bank.Pay
             this.panel16.Location = new System.Drawing.Point(5, 5);
             this.panel16.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel16.Name = "panel16";
-            this.panel16.Size = new System.Drawing.Size(1491, 88);
+            this.panel16.Size = new System.Drawing.Size(1119, 72);
             this.panel16.TabIndex = 99;
             // 
             // BTPrint

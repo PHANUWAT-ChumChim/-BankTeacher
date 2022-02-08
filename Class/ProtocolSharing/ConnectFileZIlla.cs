@@ -381,6 +381,7 @@ namespace BankTeacher.Class.ProtocolSharing
                                 StatusReturn = false;
                                 StatusRunning = false;
                                 return;
+
                             }
                         }
                     }
@@ -403,9 +404,9 @@ namespace BankTeacher.Class.ProtocolSharing
                     String targetPath = PathFile.Replace(Location, Foldertarget) + filename;
                     if (!session.FileExists(PathFile + filename))
                     {
-                        MessageBox.Show("ไม่พบเอกสาร", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         StatusReturn = false;
                         StatusRunning = false;
+                        MessageBox.Show("ไม่พบเอกสาร", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
                     }
                     else
@@ -438,9 +439,9 @@ namespace BankTeacher.Class.ProtocolSharing
                         }
                         catch
                         {
-                            MessageBox.Show("เกิดข้อผิดพลาดโปรดลองใหม่อีกครั้ง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             StatusReturn = false;
                             StatusRunning = false;
+                            MessageBox.Show("เกิดข้อผิดพลาดโปรดลองใหม่อีกครั้ง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
                     }

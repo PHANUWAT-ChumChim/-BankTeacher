@@ -361,7 +361,7 @@ namespace BankTeacher.Bank.Loan
                     }
                     for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
                     {
-                        DGVGuarantor.Rows.Add(ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][1].ToString(), Percent[x], ds.Tables[0].Rows[x][9].ToString());
+                        DGVGuarantor.Rows.Add(ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][1].ToString(), ds.Tables[0].Rows[x][15].ToString());
                     }
                     TBLoanNo.Text = Loan.No;
                     BTOpenFile.Enabled = true;
@@ -426,6 +426,14 @@ namespace BankTeacher.Bank.Loan
                         }
 
                         DGVLoanDetail.Rows.Add(Num+1,$"{Year}/{Month}", Pay, Convert.ToInt32(Interest), StatusPay, SumInstallment);
+                        if (StatusPay.Contains("จ่ายแล้ว"))
+                        {
+                            DGVLoanDetail.Rows[DGVLoanDetail.Rows.Count - 1].Cells[4].Style.ForeColor = Color.Green;
+                        }
+                        else
+                        {
+                            DGVLoanDetail.Rows[DGVLoanDetail.Rows.Count - 1].Cells[4].Style.ForeColor = Color.Red;
+                        }
                         Month++;
                     }
                     // ------ ของของข้า
