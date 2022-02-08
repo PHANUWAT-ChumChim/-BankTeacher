@@ -289,7 +289,7 @@ namespace BankTeacher.Bank.Pay
                         if (MSB == DialogResult.Yes)
                         {
                             //ก็อบวางอันบนเช็คสิทธ์ ใส่ Permision
-                            MessageBox.Show("ขึ้นอยู่กับสิทธ์ของผู้ทำรายการ ");
+                            MessageBox.Show("ขึ้นอยู่กับสิทธ์ของผู้ทำรายการ ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                         }
                     }
                 }

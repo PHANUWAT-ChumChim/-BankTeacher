@@ -225,7 +225,7 @@ namespace BankTeacher.Bank.Pay
           "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo\r\n" +
           "LEFT JOIN EmployeeBank.dbo.tblBill as c on a.TeacherNo = c.TeacherNo\r\n" +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as d on c.BillNo = d.BillNo\r\n" +
-          "WHERE c.Cancel = 1 and (d.TypeNo = 1 or d.TypeNo = 3) and d.Mount <= 12 and d.Year = {Year} and a.TeacherNo LIKE '{TeacherNo}'\r\n" +
+          "WHERE c.Cancel = 1 and (d.TypeNo = 1 or d.TypeNo = 3) and d.Mount <= 12 and d.Year = {Year} and a.TeacherNo LIKE '{TeacherNo}'  and a.DateAdd <= c.DateAdd \r\n" +
           "GROUP BY a.TeacherNo , d.Amount , d.Mount , d.Year , a.StartAmount , CAST(a.DateAdd AS Date) , b.SavingAmount;\r\n" +
           "\r\n" +
              "DECLARE @Loan int = 0 \r\n" +
@@ -1659,7 +1659,7 @@ namespace BankTeacher.Bank.Pay
                 for (int a = Month; a <= 12; a++)
                 {
 
-                    DGV_ShareInfo.Rows.Add(a + "/" + CBYearSelection_ShareInfo.SelectedItem.ToString(), ds.Tables[1].Rows[0][0].ToString(), "ยังไม่ได้ชำระ");
+                    DGV_ShareInfo.Rows.Add(a + "/" + CBYearSelection_ShareInfo.SelectedItem.ToString(), BankTeacher.Bank.Menu.startAmountMin, "ยังไม่ได้ชำระ");
                     DGV_ShareInfo.Rows[a - Month].Cells[2].Style = new DataGridViewCellStyle { ForeColor = Color.Red };
                     bool Check = true;
                     for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
