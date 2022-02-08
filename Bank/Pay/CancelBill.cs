@@ -62,7 +62,7 @@ namespace BankTeacher.Bank.Pay
           "SET SavingAmount = @@SavingAmount - {Amount} \r\n " +
           "WHERE  TeacherNo = '{TeacherNo}' \r\n " +
           " UPDATE EmployeeBank.dbo.tblBill \r\n " +
-          "SET CancelDate = '{DateTime}' \r\n " +
+          "SET CancelDate = '{DateTime}' , CancelTransactionDate = CURRENT_TIMESTAMP \r\n " +
          "WHERE BillNo = '{BillNo}' "
            ,
            //[3] + RemainAmount In Guarantor (CancelBill) INPUT: {LoanNo} , {LoanAmount} {BillNo} {DateTime}
