@@ -29,17 +29,19 @@ namespace BankTeacher.Bank.Pay
         /// </summary>
         private void InitializeComponent()
         {
-//<<<<<<< P
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Billcancelhistory));
-//=======
-            //System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-//>>>>>>> master
             this.PL_Form = new System.Windows.Forms.Panel();
             this.BExitForm = new System.Windows.Forms.Button();
             this.TB_2 = new System.Windows.Forms.TabControl();
             this.TB5 = new System.Windows.Forms.TabPage();
             this.DGV_Bill = new System.Windows.Forms.DataGridView();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel16 = new System.Windows.Forms.Panel();
             this.BTPrint = new System.Windows.Forms.Button();
             this.CB_DaySelection_Bill = new System.Windows.Forms.ComboBox();
@@ -50,17 +52,8 @@ namespace BankTeacher.Bank.Pay
             this.LB5Mo = new System.Windows.Forms.Label();
             this.LB5Ye = new System.Windows.Forms.Label();
             this.CBYearSelection_Bill = new System.Windows.Forms.ComboBox();
-//<<<<<<< P
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-//=======
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-//>>>>>>> master
             this.PL_Form.SuspendLayout();
             this.TB_2.SuspendLayout();
             this.TB5.SuspendLayout();
@@ -113,7 +106,7 @@ namespace BankTeacher.Bank.Pay
             this.TB5.Padding = new System.Windows.Forms.Padding(2);
             this.TB5.Size = new System.Drawing.Size(846, 441);
             this.TB5.TabIndex = 5;
-            this.TB5.Text = "รายละอียดบิลล";
+            this.TB5.Text = "รายละอียดบิล";
             this.TB5.UseVisualStyleBackColor = true;
             // 
             // DGV_Bill
@@ -121,13 +114,8 @@ namespace BankTeacher.Bank.Pay
             this.DGV_Bill.AllowUserToAddRows = false;
             this.DGV_Bill.AllowUserToDeleteRows = false;
             this.DGV_Bill.AllowUserToResizeRows = false;
-//<<<<<<< P
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            this.DGV_Bill.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
-//=======
-            //dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            //this.DGV_Bill.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-//>>>>>>> master
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
+            this.DGV_Bill.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.DGV_Bill.BackgroundColor = System.Drawing.Color.White;
             this.DGV_Bill.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_Bill.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -156,7 +144,7 @@ namespace BankTeacher.Bank.Pay
             // 
             // Column1
             // 
-            this.Column1.HeaderText = "บิลล";
+            this.Column1.HeaderText = "บิล";
             this.Column1.MinimumWidth = 6;
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
@@ -215,11 +203,7 @@ namespace BankTeacher.Bank.Pay
             this.panel16.Location = new System.Drawing.Point(4, 4);
             this.panel16.Margin = new System.Windows.Forms.Padding(2);
             this.panel16.Name = "panel16";
-//<<<<<<< P
             this.panel16.Size = new System.Drawing.Size(1119, 72);
-//=======
-            //this.panel16.Size = new System.Drawing.Size(703, 59);
-//>>>>>>> master
             this.panel16.TabIndex = 99;
             // 
             // BTPrint
@@ -357,59 +341,6 @@ namespace BankTeacher.Bank.Pay
             this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
-            // Column3
-            // 
-            this.Column3.HeaderText = "ผู้ทำรายการ";
-            this.Column3.MinimumWidth = 6;
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column3.Width = 200;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "บิล";
-            this.Column1.MinimumWidth = 6;
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column1.Width = 130;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "วันที่";
-            this.Column2.MinimumWidth = 6;
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column2.Width = 125;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "รายการ";
-            this.Column4.MinimumWidth = 6;
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column4.Width = 150;
-            // 
-            // Column5
-            // 
-            this.Column5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column5.HeaderText = "เงิน";
-            this.Column5.MinimumWidth = 6;
-            this.Column5.Name = "Column5";
-            this.Column5.ReadOnly = true;
-            this.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "สถานะ";
-            this.Column6.MinimumWidth = 6;
-            this.Column6.Name = "Column6";
-            this.Column6.ReadOnly = true;
-            this.Column6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column6.Width = 125;
             // 
             // Billcancelhistory
             // 

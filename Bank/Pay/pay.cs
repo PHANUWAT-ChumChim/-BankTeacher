@@ -161,8 +161,8 @@ namespace BankTeacher.Bank.Pay
            //[7] BPaySave Insert Bill INPUT: {TeacherNo} , {TeacherNoaddby}  , {Date}
           "DECLARE @BIllNO INT;  \r\n " +
           "           \r\n " +
-          "INSERT INTO EmployeeBank.dbo.tblBill (TeacherNoAddBy,TeacherNo,DateAdd,Cancel)  \r\n " +
-          "VALUES('{TeacherNoaddby}','{TeacherNo}','{Date}',1);  \r\n " +
+          "INSERT INTO EmployeeBank.dbo.tblBill (TeacherNoAddBy,TeacherNo,DateAdd,Cancel,TransactionDate)  \r\n " +
+          "VALUES('{TeacherNoaddby}','{TeacherNo}','{Date}',1,CURRENT_TIMESTAMP);  \r\n " +
           "SET @BIllNO = SCOPE_IDENTITY();  \r\n " +
           "SELECT @BIllNO ;"
            ,

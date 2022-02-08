@@ -83,7 +83,7 @@ namespace BankTeacher.Bank.Loan
           ,
           //[4] UPDATE Payment Loan INPUT: {LoanID} {TeacherNoPay} {PaymentNo}  {Date}
           "UPDATE EmployeeBank.dbo.tblLoan \r\n " +
-          "SET PayDate = '{Date}' , TeacherNoPay = '{TeacherNoPay}', BillDetailPaymentNo = '{PaymentNo}' , LoanStatusNo = 2 \r\n " +
+          "SET PayDate = '{Date}' , TeacherNoPay = '{TeacherNoPay}', BillDetailPaymentNo = '{PaymentNo}' , LoanStatusNo = 2 , PayTransactionDate = CURRENT_TIMESTAMP\r\n " +
           "WHERE LoanNo = '{LoanID}'; "
           ,
           //[5] Chcek Lonapay INPUT : {TeacherNo}
