@@ -17,6 +17,7 @@ namespace BankTeacher.Bank.Pay
             InitializeComponent();
         }
         bool CheckInputBill = false;
+        bool CheckSave = false; 
         
         String TeacherNo;
         /// <summary> 
@@ -203,6 +204,7 @@ namespace BankTeacher.Bank.Pay
                             BSave_Cancelbill.Enabled = true;
                             CheckInputBill = true;
                             Checkmember(false);
+                            CheckSave = false;
                         }
                     }
                     else
@@ -266,6 +268,7 @@ namespace BankTeacher.Bank.Pay
                                 }
                                 MessageBox.Show("ยกเลิกบิลล์สำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Information);
                                 Checkmember(true);
+                                CheckSave = true;
                             }
                             catch
                             {
@@ -300,13 +303,14 @@ namespace BankTeacher.Bank.Pay
 
         private void CancelBill_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
+            if (e.KeyCode == Keys.Escape || (e.KeyCode == Keys.Enter && CheckSave))
             {
                 if (TBBillNo_Cancelbill.Text.Length != 0)
                 {
                     Clear();
                     TBBillNo_Cancelbill.Text = "";
                     Checkmember(true);
+                    CheckSave = false;
                 }
                 else
                 {

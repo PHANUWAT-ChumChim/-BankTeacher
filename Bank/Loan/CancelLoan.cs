@@ -13,6 +13,7 @@ namespace BankTeacher.Bank.Loan
     public partial class CancelLoan : Form
     {
         int Check = 0;
+        bool CheckSave = false;
 
         /// <summary>
         /// <para>[0] SELECT MemberLona  INPUT: {TeacherNo}</para>
@@ -118,6 +119,7 @@ namespace BankTeacher.Bank.Loan
                         CBlist.SelectedIndex = 0;
                     }
                     Checkmember(false);
+                    CheckSave = false;
                 }
                 else
                 {
@@ -189,6 +191,7 @@ namespace BankTeacher.Bank.Loan
                     TBTeacherName.Text = "";
                     CBlist.Items.Clear();
                     DGVCancelLoan.Rows.Clear();
+                    CheckSave = true;
                     Checkmember(true);
                 }
                 catch(Exception ex)
@@ -211,7 +214,7 @@ namespace BankTeacher.Bank.Loan
 
         private void CancelLoan_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
+            if (e.KeyCode == Keys.Escape || (CheckSave && e.KeyCode == Keys.Enter))
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
@@ -224,6 +227,7 @@ namespace BankTeacher.Bank.Loan
                     CBlist.Enabled = false;
                     Check = 0;
                     Checkmember(true);
+                    CheckSave = false;
                 }
                 else
                 {

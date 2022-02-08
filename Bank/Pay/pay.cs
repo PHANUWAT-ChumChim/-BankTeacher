@@ -27,6 +27,7 @@ namespace BankTeacher.Bank.Pay
         List<int> YearinCB = new List<int>();
         String[] StartLoan = new String[] { "Year", "Month" };
         public String TeacherNoOtherForm;
+        bool CheckSave = false;
         //----------------------- index code -------------------- ////////
 
 
@@ -759,7 +760,7 @@ namespace BankTeacher.Bank.Pay
                         }
                     }
                 }
-
+                CheckSave = false;
             }
         }
 
@@ -1593,6 +1594,7 @@ namespace BankTeacher.Bank.Pay
                     TBAmount_Pay.Enabled = false;
                     BAutoSelection.Enabled = false;
                     CheckPay = true;
+                    CheckSave = true;
                     //ClearForm();
                     //TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
                 }
@@ -2536,7 +2538,7 @@ namespace BankTeacher.Bank.Pay
 
         private void pay_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
+            if (e.KeyCode == Keys.Escape || (CheckSave && e.KeyCode == Keys.Enter) )
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
@@ -2551,6 +2553,7 @@ namespace BankTeacher.Bank.Pay
                     CBMonthSelection_Pay.Enabled = false;
                     CBList_Pay.Enabled = false;
                     Checkmember(true);
+                    CheckSave = false;
                     //RemoveClickEvent(CBYearSelection_BillInfo);
 
                 }

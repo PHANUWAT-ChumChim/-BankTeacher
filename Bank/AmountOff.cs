@@ -195,6 +195,7 @@ namespace BankTeacher.Bank
         };
 
         int Check;
+        bool CheckSave = false;
         public AmountOff()
         {
             InitializeComponent();
@@ -317,7 +318,8 @@ namespace BankTeacher.Bank
                 {
                     CBYear.Enabled = false;
                     DGVAmountOffHistory.Enabled = false;
-                }  
+                }
+                CheckSave = false;
             }
             else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
             {
@@ -377,6 +379,7 @@ namespace BankTeacher.Bank
                         TBTeacherNo.Text = "";
                         TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Back));
                     }
+                    CheckSave = true;
                 }
                 catch (Exception x)
                 {
@@ -579,7 +582,7 @@ namespace BankTeacher.Bank
 
         private void AmountOff_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
+            if (e.KeyCode == Keys.Escape || (CheckSave && e.KeyCode == Keys.Enter))
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
@@ -598,6 +601,7 @@ namespace BankTeacher.Bank
                     CBTypePay.SelectedIndex = -1;
                     CBTypePay.Enabled = false;
                     CBYear.Enabled = false;
+                    CheckSave = false;
                     //BSaveAmountOff.Enabled = false;
                     Check = 0;
                     Checkmember(true);

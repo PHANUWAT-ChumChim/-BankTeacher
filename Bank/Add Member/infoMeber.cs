@@ -118,6 +118,7 @@ namespace BankTeacher.Bank.Add_Member
 
         int StartAmount = 0;
         bool CheckStatusWorking = false;
+        bool CheckSave = false;
         private void infoMeber_SizeChanged(object sender, EventArgs e)
         {
             Class.FromSettingMedtod.ChangeSizePanal(this, PL);
@@ -129,7 +130,7 @@ namespace BankTeacher.Bank.Add_Member
         }
         private void infoMeber_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape && !CheckStatusWorking)
+            if (e.KeyCode == Keys.Escape || (e.KeyCode == Keys.Enter && CheckSave) && !CheckStatusWorking)
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
@@ -147,6 +148,7 @@ namespace BankTeacher.Bank.Add_Member
                     BTOpenFile.Enabled = false;
                     tabControl1.SelectedIndex = 0;
                     Checkmember(true);
+                    CheckSave = false;
                 }
                 else if(!CheckStatusWorking)
                 {
@@ -215,6 +217,7 @@ namespace BankTeacher.Bank.Add_Member
                     button1.Enabled = true;
                     tabControl1.Enabled = true;
                     Checkmember(false);
+                    CheckSave = false;
 
                     if (dsInfoMember.Tables[3].Rows.Count != 0)
                     {
@@ -266,6 +269,7 @@ namespace BankTeacher.Bank.Add_Member
 
                     MessageBox.Show("บันทึกการแก้ไขสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     BSaveEdit.Enabled = false;
+                    CheckSave = true;
                 }
             }
             catch (Exception ex)

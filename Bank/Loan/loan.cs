@@ -24,6 +24,7 @@ namespace BankTeacher.Bank.Loan
         public static int SelectIndexRowDelete;
         DialogResult CheckLimitLoan = DialogResult.No;
         bool CheckBReset = false;
+        bool CheckSave = false;
 
         //----------------------- index code -------------------- ////////
         public loan()
@@ -275,6 +276,7 @@ namespace BankTeacher.Bank.Loan
                 {
                     printDocument1.Print();
                 }
+                CheckSave = true;
                 TBLoanNo.Text = LoanNo;
                 BSave.Enabled = false;
                 label15.Visible = true;
@@ -548,6 +550,7 @@ namespace BankTeacher.Bank.Loan
                             DGVLoanDetail.Rows.Clear();
                             Check = 1;
                             Checkmember(false);
+                            CheckSave = false;
                         }
                         else
                         {
@@ -1422,7 +1425,7 @@ namespace BankTeacher.Bank.Loan
 
         private void loan_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
+            if (e.KeyCode == Keys.Escape || (CheckSave && e.KeyCode == Keys.Enter))
             {
                 if (TBTeacherNo.Text.Length != 0)
                 {
@@ -1447,6 +1450,7 @@ namespace BankTeacher.Bank.Loan
                     Check = 0;
                     tabControl1.SelectedIndex = 0;
                     TBTeacherNo.Focus();
+                    CheckSave = false;
                 }
                 else
                 {
