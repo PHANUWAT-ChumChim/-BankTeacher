@@ -187,85 +187,100 @@ namespace BankTeacher.Class.ProtocolSharing
 
             private void ThreadSendFile(String pathfile, String Changefilename)
             {
-                using (Session session = new Session())
+                var File = System.IO.File.Exists("WinSCP.exe");
+                if (File)
                 {
-                    // Connect
-                    session.Open(sessionOptions);
-
-                    if (!session.FileExists(PathFile + Changefilename))
+                    using (Session session = new Session())
                     {
-                        try
+                        // Connect
+                        session.Open(sessionOptions);
+
+                        if (!session.FileExists(PathFile + Changefilename))
                         {
-                            // Upload files
-                            TransferOptions transferOptions = new TransferOptions();
-                            transferOptions.TransferMode = TransferMode.Binary;
-
-                            TransferOperationResult transferResult;
-                            transferResult =
-                                session.PutFiles(pathfile, PathFile + Changefilename, false, transferOptions);
-
-                            // Throw on any error
-                            transferResult.Check();
-
-                            // Print results
-                            foreach (TransferEventArgs transfer in transferResult.Transfers)
+                            try
                             {
-                                Console.WriteLine($"Upload of {transfer.FileName} Succeeded");
-                            }
-                            StatusReturn = true;
-                            StatusRunning = false;
+                                // Upload files
+                                TransferOptions transferOptions = new TransferOptions();
+                                transferOptions.TransferMode = TransferMode.Binary;
 
-                        }
-                        catch (Exception ex)
-                        {
-                            if (ThreadConnected.ThreadState == System.Threading.ThreadState.Running)
-                            {
-                                Console.WriteLine($"Error -> {ex}");
+                                TransferOperationResult transferResult;
+                                transferResult =
+                                    session.PutFiles(pathfile, PathFile + Changefilename, false, transferOptions);
+
+                                // Throw on any error
+                                transferResult.Check();
+
+                                // Print results
+                                foreach (TransferEventArgs transfer in transferResult.Transfers)
+                                {
+                                    Console.WriteLine($"Upload of {transfer.FileName} Succeeded");
+                                }
+                                StatusReturn = true;
                                 StatusRunning = false;
-                                MessageBox.Show("อัพโหลดไฟล์ไม่สำเร็จกรุณาลองใหม่อีกครั้ง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
                             }
-                            StatusReturn = false;
+                            catch (Exception ex)
+                            {
+                                if (ThreadConnected.ThreadState == System.Threading.ThreadState.Running)
+                                {
+                                    Console.WriteLine($"Error -> {ex}");
+                                    StatusRunning = false;
+                                    MessageBox.Show("อัพโหลดไฟล์ไม่สำเร็จกรุณาลองใหม่อีกครั้ง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                }
+                                StatusReturn = false;
+                            }
                         }
-                    }
-                    else
-                    {
-                        StatusReturn = false;
-                        StatusRunning = false;
-                        MessageBox.Show("มีเอกสารอยู่ในระบบแล้วไม่สามารถอัพโหลดซ้ำได้", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        else
+                        {
+                            StatusReturn = false;
+                            StatusRunning = false;
+                            MessageBox.Show("มีเอกสารอยู่ในระบบแล้วไม่สามารถอัพโหลดซ้ำได้", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
                     }
                     return;
+                }
+                else
+                {
+                    MessageBox.Show(@"WinSCP.exe (ไม่พบไฟล์.exe ในการส่งเอกสารโปรด ติดต่อผู้ดูเเลโปรเเกรม)");
                 }
             }
 
             private void ThreadDeleteFile(String filename)
             {
-                using (Session session = new Session())
+                var File = System.IO.File.Exists("WinSCP.exe");
+                if (File)
                 {
-                    // Connect
-                    session.Open(sessionOptions);
-
-                    if (!session.FileExists(PathFile + filename))
+                    using (Session session = new Session())
                     {
-                        MessageBox.Show("ไม่พบไฟล์", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        StatusReturn = false;
-                        StatusRunning = false;
-                    }
-                    else
-                    {
-                        try
+                        // Connect
+                        session.Open(sessionOptions);
+                        if (!session.FileExists(PathFile + filename))
                         {
-                            session.RemoveFile(PathFile + filename);
-                            StatusReturn = true;
-                            StatusRunning = false;
-                        }
-                        catch
-                        {
+                            MessageBox.Show("ไม่พบไฟล์", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             StatusReturn = false;
                             StatusRunning = false;
-                            MessageBox.Show("เกิดข้อผิดพลาดโปรดลองใหม่อีกครั้ง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
+                        else
+                        {
+                            try
+                            {
+                                session.RemoveFile(PathFile + filename);
+                                StatusReturn = true;
+                                StatusRunning = false;
+                            }
+                            catch
+                            {
+                                StatusReturn = false;
+                                StatusRunning = false;
+                                MessageBox.Show("เกิดข้อผิดพลาดโปรดลองใหม่อีกครั้ง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
+                        }
+                        return;
                     }
-                    return;
+                }
+                else
+                {
+                    MessageBox.Show(@"WinSCP.exe (ไม่พบไฟล์.exe ในการส่งเอกสารโปรด ติดต่อผู้ดูเเลโปรเเกรม)");
                 }
             }
 
@@ -288,80 +303,100 @@ namespace BankTeacher.Class.ProtocolSharing
 
             private String DowloadFile(String filename)
             {
-                using (Session session = new Session())
+                var File = System.IO.File.Exists("WinSCP.exe");
+                if (File)
                 {
-                    // Connect
-                    session.Open(sessionOptions);
+                    using (Session session = new Session())
+                    {
+                        // Connect
+                        session.Open(sessionOptions);
 
-                    if (!session.FileExists(PathFile + filename))
-                    {
-                        MessageBox.Show("ไม่พบไฟล์", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        StatusReturn = false;
-                        StatusRunning = false;
-                        return null;
-                    }
-                    else
-                    {
-                        String ThisPcFilePath = "";
-                        if (Location.Contains("RegMember"))
-                            ThisPcFilePath = @"C:\BankTeacher\RegMember\" ;
-                        else if (Location.Contains("Loan"))
-                            ThisPcFilePath = @"C:\BankTeacher\Loan\" ;
-                        else if (Location.Contains("CancelMember"))
-                            ThisPcFilePath = @"C:\BankTeacher\CancelMember\" ;
-                        try
+                        if (!session.FileExists(PathFile + filename))
                         {
-                            session.GetFileToDirectory(PathFile + filename, ThisPcFilePath);
-                            return ThisPcFilePath;
-                        }
-                        catch(Exception e)
-                        {
+                            MessageBox.Show("ไม่พบไฟล์", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             StatusReturn = false;
                             StatusRunning = false;
-                            MessageBox.Show("เกิดข้อผิดพลาดโปรดลองใหม่อีกครั้ง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return null;
+                        }
+                        else
+                        {
+                            String ThisPcFilePath = "";
+                            if (Location.Contains("RegMember"))
+                                ThisPcFilePath = @"C:\BankTeacher\RegMember\";
+                            else if (Location.Contains("Loan"))
+                                ThisPcFilePath = @"C:\BankTeacher\Loan\";
+                            else if (Location.Contains("CancelMember"))
+                                ThisPcFilePath = @"C:\BankTeacher\CancelMember\";
+                            try
+                            {
+                                session.GetFileToDirectory(PathFile + filename, ThisPcFilePath);
+                                return ThisPcFilePath;
+                            }
+                            catch (Exception e)
+                            {
+                                StatusReturn = false;
+                                StatusRunning = false;
+                                MessageBox.Show("เกิดข้อผิดพลาดโปรดลองใหม่อีกครั้ง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return null;
+                            }
                         }
                     }
                 }
+                else
+                {
+                    MessageBox.Show(@"WinSCP.exe (ไม่พบไฟล์.exe ในการส่งเอกสารโปรด ติดต่อผู้ดูเเลโปรเเกรม)");
+                }
+                return null;
             }
 
             private void ThreadMoveLocationFIle(String filename, String Foldertarget)
             {
-                using (Session session = new Session())
+                var File = System.IO.File.Exists("WinSCP.exe");
+                if (File)
                 {
-                    // Connect
-                    session.Open(sessionOptions);
-                    String targetPath = PathFile.Replace(Location, Foldertarget) + filename;
-                    if (!session.FileExists(PathFile + filename))
+                    using (Session session = new Session())
                     {
-                        MessageBox.Show("ไม่พบไฟล์", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        StatusReturn = false;
-                        StatusRunning = false;
-                        return;
-                    }
-                    else
-                    {
-                        try
+                        // Connect
+                        session.Open(sessionOptions);
+                        String targetPath = PathFile.Replace(Location, Foldertarget) + filename;
+                        if (!session.FileExists(PathFile + filename))
                         {
-                            session.MoveFile(PathFile + filename, targetPath);
-                            StatusReturn = true;
-                            StatusRunning = false;
-                            return;
-                        }
-                        catch
-                        {
-                            MessageBox.Show("เกิดข้อผิดพลาดโปรดลองใหม่อีกครั้ง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("ไม่พบไฟล์", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             StatusReturn = false;
                             StatusRunning = false;
                             return;
                         }
+                        else
+                        {
+                            try
+                            {
+                                session.MoveFile(PathFile + filename, targetPath);
+                                StatusReturn = true;
+                                StatusRunning = false;
+                                return;
+                            }
+                            catch
+                            {
+                                MessageBox.Show("เกิดข้อผิดพลาดโปรดลองใหม่อีกครั้ง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                StatusReturn = false;
+                                StatusRunning = false;
+                                return;
+                            }
+                        }
                     }
+                }
+                else
+                {
+                    MessageBox.Show(@"WinSCP.exe (ไม่พบไฟล์.exe ในการส่งเอกสารโปรด ติดต่อผู้ดูเเลโปรเเกรม)");
                 }
             }
 
             private void ThreadMoveLocationFIleRename(String filename, String Foldertarget, String Rename)
             {
-                using (Session session = new Session())
+                var File = System.IO.File.Exists("WinSCP.exe");
+                if (File)
+                {
+                    using (Session session = new Session())
                 {
                     // Connect
                     session.Open(sessionOptions);
@@ -409,6 +444,11 @@ namespace BankTeacher.Class.ProtocolSharing
                             return;
                         }
                     }
+                }
+                }
+                else
+                {
+                    MessageBox.Show(@"WinSCP.exe (ไม่พบไฟล์.exe ในการส่งเอกสารโปรด ติดต่อผู้ดูเเลโปรเเกรม)");
                 }
             }
         }
