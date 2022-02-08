@@ -96,7 +96,7 @@ namespace BankTeacher.Bank.Add_Member
           "IF(@CountTeacher > 0) \r\n " +
           "BEGIN \r\n " +
           "UPDATE EmployeeBank.dbo.tblMember \r\n " +
-          "SET MemberStatusNo = 1 ,DateAdd = CURRENT_TIMESTAMP,DocStatusNo = 1,DocUploadPath = '{PathFile}' \r\n " +
+          "SET MemberStatusNo = 1 ,DateAdd = CURRENT_TIMESTAMP,DocStatusNo = 2,DocUploadPath = '{PathFile}' \r\n " +
           "WHERE TeacherNo = '{TeacherNo}'; \r\n " +
 
           "UPDATE EmployeeBank.dbo.tblShare \r\n " +
@@ -117,7 +117,7 @@ namespace BankTeacher.Bank.Add_Member
           "BEGIN \r\n " +
           " \r\n " +
           "INSERT INTO EmployeeBank.dbo.tblMember(TeacherNo, TeacherAddBy, StartAmount, DateAdd,DocStatusNo,DocUploadPath)  \r\n " +
-          "VALUES('{TeacherNo}','{TeacherNoAddBy}',{StartAmount},CURRENT_TIMESTAMP,1,'{PathFile}')   \r\n " +
+          "VALUES('{TeacherNo}','{TeacherNoAddBy}',{StartAmount},CURRENT_TIMESTAMP,2,'{PathFile}')   \r\n " +
 
           "INSERT INTO EmployeeBank.dbo.tblShare(TeacherNo, SavingAmount) \r\n " +
           "VALUES('{TeacherNo}',{StartAmount})  \r\n " +
@@ -234,6 +234,12 @@ namespace BankTeacher.Bank.Add_Member
                             MessageBox.Show("สมัครเสร็จสิ้น", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             CheckStatusWorking = false;
                             CheckSave = true;
+
+                            TBTeacherNo_Reg.Text = "";
+                            TBTeacherName_Reg.Text = "";
+                            CheckBRegister = false;
+                            Checkmember(true);
+                            Check = 0;
                         }
                         else
                         {
@@ -328,29 +334,23 @@ namespace BankTeacher.Bank.Add_Member
         {
             if (e.KeyCode == Keys.Enter)
             {
-                try
+                TBTeacherNo_Reg.Text = TBTeacherNo_Reg.Text.Replace("t", "T");
+                    DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[5].Replace("{Text}", TBTeacherNo_Reg.Text));
+                if(ds.Tables[0].Rows.Count != 0)
                 {
-                    TBTeacherNo_Reg.Text = TBTeacherNo_Reg.Text.Replace("t", "T");
-                        DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[5].Replace("{Text}", TBTeacherNo_Reg.Text));
-                    if(ds.Tables[0].Rows.Count != 0)
-                    {
-                        TBTeacherName_Reg.Text = ds.Tables[0].Rows[0][1].ToString();
-                        Check = 1;
-                        CheckBRegister = false;
-                        Checkmember(false);
-                        TBStartAmountShare_Reg.Enabled = true;
-                        CheckSave = false;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    BTPrintfShare_Reg.Enabled = false;
-                    BTOpenfile_Reg.Enabled = false;
-                    Console.WriteLine(ex);
+                    TBTeacherName_Reg.Text = ds.Tables[0].Rows[0][1].ToString();
+                    Check = 1;
+                    CheckBRegister = false;
+                    Checkmember(false);
+                    TBStartAmountShare_Reg.Enabled = true;
+                    CheckSave = false;
                 }
             }
             else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back && Check == 1)
             {
+                BTOpenfile_Reg.Enabled = false;
+                BTPrintfShare_Reg.Enabled = false;
+                BTdeletefile_Reg.Visible = false;
                 TBTeacherName_Reg.Text = "";
                 CheckBRegister = false;
                 Checkmember(true);
