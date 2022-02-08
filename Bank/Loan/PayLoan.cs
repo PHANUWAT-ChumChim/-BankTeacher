@@ -322,12 +322,8 @@ namespace BankTeacher.Bank.Loan
                                 Class.Print.PrintPreviewDialog.info_PayLoanBill = DGV_PayLoan.Rows[0].Cells[1].Value.ToString();
                                 Class.Print.PrintPreviewDialog.info_PayLoandate = Bank.Menu.Date_Time_SQL_Now.Rows[0][0].ToString();
                                 panel5.Visible = false;
-                                
-
-                                if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
-                                {
-                                    printDocument1.Print();
-                                }
+                                printDocument1.DocumentName = $"TeacherID{TBTeacherNo.Text}_LoanNo{DGV_PayLoan.Rows[0].Cells[1].Value.ToString()}";
+                                printDocument1.Print();
                             }
                             else
                             {

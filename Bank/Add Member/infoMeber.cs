@@ -294,17 +294,27 @@ namespace BankTeacher.Bank.Add_Member
                 printDocument1.Print();
             }
         }
+        System.Threading.Thread t1; 
+        bool a = true;
+        void t()
+        {
+           pictureBox1.Invoke((MethodInvoker)(() => pictureBox1.Visible = true));
+        }
         private void BTUploadFile_Click(object sender, EventArgs e)
         {
             String PathFile = null;
             DataTable dtChackStatusFile = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{TeacherNo}", TBTeacherNo.Text));
             if (dtChackStatusFile.Rows.Count == 0)
             {
+                t1 = new System.Threading.Thread(() => t());
+                t1.Start();
+                pictureBox1.Visible = true;
                 Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("RegMember");
                 OpenFileDialog dialog = new OpenFileDialog();
                 dialog.Filter = "pdf files(*.pdf)|*.pdf";
                 if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
+                    textBox1.Visible = true; 
                     PathFile = dialog.FileName;
                     if (PathFile != "")
                     {
@@ -322,9 +332,12 @@ namespace BankTeacher.Bank.Add_Member
                             label12.ForeColor = Color.Green;
                             MessageBox.Show("อัพโหลดเอกสารสำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                         }
+                        t1.Abort();
                         PathFile = "";
                         BTUploadFile_Reg.Enabled = true;
                         CheckStatusWorking = false;
+                        textBox1.Visible = false;
+                        pictureBox1.Visible = false; a = false;
                     }
                 }
             }

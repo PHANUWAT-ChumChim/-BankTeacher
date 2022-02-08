@@ -371,10 +371,8 @@ namespace BankTeacher.Bank
                         printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                         printDocument1.DefaultPageSettings.Landscape = true;
                         PinrtChcek = 1;
-                        if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
-                        {
-                            printDocument1.Print();
-                        }
+                        printDocument1.DocumentName = $"TeacherID{TBTeacherNo.Text}";
+                        printDocument1.Print();
                         PinrtChcek = 0;
                         TBTeacherNo.Text = "";
                         TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Back));
