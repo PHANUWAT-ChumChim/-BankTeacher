@@ -60,6 +60,8 @@ namespace BankTeacher.Bank.Add_Member
             this.label8 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.TB_Print = new System.Windows.Forms.TabPage();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel13 = new System.Windows.Forms.Panel();
             this.label14 = new System.Windows.Forms.Label();
             this.panel14 = new System.Windows.Forms.Panel();
@@ -95,6 +97,7 @@ namespace BankTeacher.Bank.Add_Member
             this.panel2.SuspendLayout();
             this.panel6.SuspendLayout();
             this.TB_Print.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel13.SuspendLayout();
             this.panel14.SuspendLayout();
             this.panel12.SuspendLayout();
@@ -474,6 +477,8 @@ namespace BankTeacher.Bank.Add_Member
             // 
             // TB_Print
             // 
+            this.TB_Print.Controls.Add(this.pictureBox1);
+            this.TB_Print.Controls.Add(this.textBox1);
             this.TB_Print.Controls.Add(this.panel13);
             this.TB_Print.Controls.Add(this.panel14);
             this.TB_Print.Controls.Add(this.panel12);
@@ -489,6 +494,28 @@ namespace BankTeacher.Bank.Add_Member
             this.TB_Print.TabIndex = 1;
             this.TB_Print.Text = "อัพโหลดเอกสาร";
             this.TB_Print.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(483, 59);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(306, 99);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 88;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Visible = false;
+            // 
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox1.Location = new System.Drawing.Point(483, 10);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(116, 43);
+            this.textBox1.TabIndex = 87;
+            this.textBox1.Text = "กำลังส่งไฟล์";
+            this.textBox1.Visible = false;
             // 
             // panel13
             // 
@@ -824,6 +851,8 @@ namespace BankTeacher.Bank.Add_Member
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.TB_Print.ResumeLayout(false);
+            this.TB_Print.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel13.ResumeLayout(false);
             this.panel13.PerformLayout();
             this.panel14.ResumeLayout(false);
@@ -898,5 +927,7 @@ namespace BankTeacher.Bank.Add_Member
         public System.Windows.Forms.Button BTOpenFile;
         public System.Windows.Forms.Button BTRemoveFile;
         public System.Windows.Forms.TextBox TBTeacherNo;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

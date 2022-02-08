@@ -376,12 +376,13 @@ namespace BankTeacher.Bank
             {
                 if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                 {
+
                     printDocument1.Print();
                 }
             }
             else
             {
-                MessageBox.Show("ไม่พบข้อมูล กรุณาเลือก เดือนปี ที่มีรายการในตาราง","ไฟล์",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                MessageBox.Show("ไม่พบข้อมูล กรุณาเลือก เดือนปี ที่มีรายการในตาราง", "ไฟล์", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

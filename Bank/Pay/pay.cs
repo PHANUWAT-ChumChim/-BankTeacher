@@ -1574,6 +1574,7 @@ namespace BankTeacher.Bank.Pay
                         CBLoanSelection_LoanInfo.SelectedIndex = CBLoanSelection_LoanInfo.SelectedIndex;
                         CBYearSelection_BillInfo.SelectedIndex = CBYearSelection_BillInfo.SelectedIndex;
                         Printbill = 1;
+                        printDocument1.DocumentName = $"TeacherID{TBTeacherNo.Text}_Bill{TBTeacherBill.Text}";
                         printDocument1.Print();
                         Printbill = 0;
                     //info_name = TBTeacherName.Text;
