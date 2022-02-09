@@ -253,7 +253,7 @@ namespace BankTeacher.Bank.Add_Member
                 }
                 else
                 {
-                    MessageBox.Show("ไม่สามารถสมัครสมาชิกได้เนื่องจาก \r\n ราคาหุ้นเริ่มต้นต่ำหรือสูงเกินไป \r\n โปรดแก้ไข ราคาหุ้นขั้นต่ำ หรือ สูงสุด ที่หน้าตั้งค่า", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show($"ไม่สามารถสมัครสมาชิกได้เนื่องจาก \r\n ราคาหุ้นเริ่มต้นต่ำหรือสูงเกินไป \r\n โปรดแก้ไข ราคาหุ้นขั้นต่ำ {BankTeacher.Bank.Menu.startAmountMin} หรือ สูงสุด {BankTeacher.Bank.Menu.startAmountMax}", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                
             }
@@ -273,6 +273,7 @@ namespace BankTeacher.Bank.Add_Member
         private void BTPrintfShare_Click(object sender, EventArgs e)
         {
             //printPreviewDialog1.Document = printDocument1;
+            printDocument1.Print();
             ToolStripButton b = new ToolStripButton();
             b.Image = Properties.Resources._10x10_Print;
             b.DisplayStyle = ToolStripItemDisplayStyle.Image;
