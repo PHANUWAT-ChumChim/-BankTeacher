@@ -28,7 +28,7 @@ namespace BankTeacher.Bank.Pay
         String[] StartLoan = new String[] { "Year", "Month" };
         public String TeacherNoOtherForm;
         bool CheckSave = false;
-        //----------------------- index code -------------------- ////////
+        //----------------------- index code -------------------- ///////
 
 
         /// <summary> 
