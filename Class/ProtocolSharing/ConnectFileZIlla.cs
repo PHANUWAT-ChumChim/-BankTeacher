@@ -47,7 +47,6 @@ namespace BankTeacher.Class.ProtocolSharing
                 HostplusPathFile = $@"//{sessionOptions.HostName}{PathFile}";
                 Location = location;
             }
-
             Thread ThreadConnected;
             public void FTPSendFile(String pathfile, String ChangeFilename)
             {

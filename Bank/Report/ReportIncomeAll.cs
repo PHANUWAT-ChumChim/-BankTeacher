@@ -108,7 +108,7 @@ namespace BankTeacher.Bank
                                 if (y == dtCheckBillDetail.Rows.Count - 1)
                                 {
                                     sumamountbill += AmountBill;
-                                    DGV_All.Rows.Add("","", "", "สรุปยอดบิลล์  ", "", "", AmountBill,"");
+                                    DGV_All.Rows.Add("","", "", "สรุปยอดบิล  ", "", "", AmountBill,"");
                                     DGV_All.Rows[DGV_All.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                                 }
 
@@ -118,7 +118,7 @@ namespace BankTeacher.Bank
                             if(y == dtCheckBillDetail.Rows.Count - 1)
                             {
                                 sumamountbill += AmountBill;
-                                DGV_All.Rows.Add("", "","", "สรุปยอดบิลล์  ", "", "", AmountBill,"");
+                                DGV_All.Rows.Add("", "","", "สรุปยอดบิล  ", "", "", AmountBill,"");
                                 DGV_All.Rows[DGV_All.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                             }
                         }

@@ -232,7 +232,7 @@ namespace BankTeacher.Bank.Pay
                     {
                         TypeBill = "ยกเลิก";
                     }
-                    DGV_Bill.Rows.Add(dt.Rows[0][1].ToString(), dt.Rows[0][0].ToString(), dt.Rows[0][2].ToString(), dt.Rows[0][3].ToString(), dt.Rows[0][5].ToString(), TypeBill);
+                    DGV_Bill.Rows.Add(dt.Rows[0][1].ToString(), dt.Rows[0][0].ToString(), Convert.ToDateTime(dt.Rows[0][2].ToString()).ToString("dd/MM/yyyy"), dt.Rows[0][3].ToString(), dt.Rows[0][5].ToString(), TypeBill);
                     AmountBill += Convert.ToInt32(DGV_Bill.Rows[0].Cells[4].Value.ToString());
                     PosHeader = DGV_Bill.Rows.Count - 1;
                     for (int Row = 1; Row < dt.Rows.Count; Row++)
@@ -252,7 +252,7 @@ namespace BankTeacher.Bank.Pay
                         }
                         else
                         {
-                            DGV_Bill.Rows.Add("", "", "", "สรุปรายการบิลล์  ", AmountBill, "");
+                            DGV_Bill.Rows.Add("", "", "", "สรุปรายการบิล  ", AmountBill, "");
                             DGV_Bill.Rows[DGV_Bill.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                             Amountall += AmountBill;
                             AmountBill = 0;
@@ -262,7 +262,7 @@ namespace BankTeacher.Bank.Pay
                         }
                     }
                     Amountall += AmountBill;
-                    DGV_Bill.Rows.Add("", "", "", "สรุปรายการบิลล์  ", AmountBill, "");
+                    DGV_Bill.Rows.Add("", "", "", "สรุปรายการบิล  ", AmountBill, "");
                     DGV_Bill.Rows[DGV_Bill.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                     DGV_Bill.Rows.Add("", "", "", "ยอดรวม  ", Amountall, "");
                     DGV_Bill.Rows[DGV_Bill.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Yellow;
