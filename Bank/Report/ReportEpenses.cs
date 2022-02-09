@@ -126,7 +126,7 @@ namespace BankTeacher.Bank
                         int AmountLoan = 0;
                         for(int x = 0; x < EpensesInfo.Tables[0].Rows.Count; x++)
                         {
-                            DGV.Rows.Add(x+1,EpensesInfo.Tables[0].Rows[x][1].ToString(),"รายการกู้ "+ EpensesInfo.Tables[0].Rows[x][2].ToString() , EpensesInfo.Tables[0].Rows[x][3], EpensesInfo.Tables[0].Rows[x][4]) ;
+                            DGV.Rows.Add(x+1,EpensesInfo.Tables[0].Rows[x][1].ToString(),"รายการกู้"+ EpensesInfo.Tables[0].Rows[x][2].ToString() , EpensesInfo.Tables[0].Rows[x][3], EpensesInfo.Tables[0].Rows[x][4]) ;
                             AmountLoan += Convert.ToInt32(EpensesInfo.Tables[0].Rows[x][4]);
                             SumAmount += Convert.ToInt32(EpensesInfo.Tables[0].Rows[x][4]);
                         }

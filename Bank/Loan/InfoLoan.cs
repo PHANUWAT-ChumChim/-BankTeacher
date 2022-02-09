@@ -488,7 +488,7 @@ namespace BankTeacher.Bank.Loan
             else
             {
                 Class.Print.PrintPreviewDialog.details = 1;
-                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Historyloanpay, tabControl1.SelectedTab.Text, this.AccessibilityObject.Name,checkBox_scrip.Checked,checkBox_copy.Checked, "A4",0);
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Historyloanpay, "เอกสารการจ่ายกู้", this.AccessibilityObject.Name,checkBox_scrip.Checked,checkBox_copy.Checked, "A4",0);
             }
             Class.Print.PrintPreviewDialog.details = 0;
         }
@@ -599,6 +599,7 @@ namespace BankTeacher.Bank.Loan
                     .Replace("{LoanNo}", TBLoanNo.Text));
                 if (dt.Rows.Count != 0)
                 {
+                    Cursor.Current = Cursors.WaitCursor;
                     CheckStatusWorking = true;
                     BankTeacher.Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("Loan");
                     BTOpenFile.Enabled = false;
@@ -613,6 +614,7 @@ namespace BankTeacher.Bank.Loan
                 else
                     MessageBox.Show("ไม่พบเอกสารในระบบโปรดอัพโหลดเอกสารก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            Cursor.Current = Cursors.Default;
         }
         String PathFile = "";
         private void BTOpenfile_Reg_Click(object sender, EventArgs e)
