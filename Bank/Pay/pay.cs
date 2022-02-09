@@ -2416,7 +2416,7 @@ namespace BankTeacher.Bank.Pay
         {
             if (CB_SelectPrint.SelectedIndex == 0 && Printbill != 1)
             {
-                Class.Print.PrintPreviewDialog.Detailspayment(e, DGV_BillInfo,"รายการ",AccessibilityObject.Name);
+                Class.Print.PrintPreviewDialog.Detailspayment(e, DGV_BillInfo,"รายละเอียดบิลรายบุลคล",AccessibilityObject.Name);
             }
             else if (CB_SelectPrint.SelectedIndex == 1 && Printbill != 1)
             {
