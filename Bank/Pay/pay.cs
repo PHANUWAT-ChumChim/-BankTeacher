@@ -88,7 +88,7 @@ namespace BankTeacher.Bank.Pay
           "FROM EmployeeBank.dbo.tblBill as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblMember as c on a.TeacherNo = c.TeacherNo\r\n"+
-          "WHERE a.TeacherNo = '{TeacherNo}' and a.Cancel = 1 and c.DateAdd <= a.DateAdd \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}' and a.Cancel = 1 and c.DateAdd <= a.TransactionDate \r\n " +
           "ORDER BY Maxdate DESC; "
            ,
            //[3] Count the Bill Year INPUT: {TeacherNo} , {Year}
@@ -110,7 +110,7 @@ namespace BankTeacher.Bank.Pay
           "(SELECT aa.TeacherNo  \r\n " +
           "FROM EmployeeBank.dbo.tblBill as aa     \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as bb on aa.BillNo = bb.BillNo     \r\n " +
-          "WHERE bb.Mount = '{Month}' and bb.Year = '{Year}' and (bb.TypeNo = 1 or bb.TypeNo = 3) and MemberStatusNo = 1 and DATEADD(YYYY,0,'{Date}') >= a.DateAdd  and aa.Cancel = 1 and aa.DateAdd >= a.DateAdd)   \r\n " +
+          "WHERE bb.Mount = '{Month}' and bb.Year = '{Year}' and (bb.TypeNo = 1 or bb.TypeNo = 3) and MemberStatusNo = 1 and DATEADD(YYYY,0,'{Date}') >= a.DateAdd  and aa.Cancel = 1 and aa.TransactionDate >= a.DateAdd)   \r\n " +
           "and a.TeacherNo = '{TeacherNo}' and (c.TypeNo = 1 or c.TypeNo = 3) and MemberStatusNo = 1 and b.Cancel = 1   and DATEADD(YYYY,0,'{Date}') >=  a.DateAdd \r\n " +
           "GROUP BY a.TeacherNo,f.TypeName, StartAmount   ;  "
            ,
@@ -225,7 +225,7 @@ namespace BankTeacher.Bank.Pay
           "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo\r\n" +
           "LEFT JOIN EmployeeBank.dbo.tblBill as c on a.TeacherNo = c.TeacherNo\r\n" +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as d on c.BillNo = d.BillNo\r\n" +
-          "WHERE c.Cancel = 1 and (d.TypeNo = 1 or d.TypeNo = 3) and d.Mount <= 12 and d.Year = {Year} and a.TeacherNo LIKE '{TeacherNo}'  and a.DateAdd <= c.DateAdd \r\n" +
+          "WHERE c.Cancel = 1 and (d.TypeNo = 1 or d.TypeNo = 3) and d.Mount <= 12 and d.Year = {Year} and a.TeacherNo LIKE '{TeacherNo}'  and a.DateAdd <= c.TransactionDate \r\n" +
           "GROUP BY a.TeacherNo , d.Amount , d.Mount , d.Year , a.StartAmount , CAST(a.DateAdd AS Date) , b.SavingAmount;\r\n" +
           "\r\n" +
              "DECLARE @Loan int = 0 \r\n" +
