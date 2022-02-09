@@ -215,12 +215,6 @@
     <Compile Include="Bank\log\UploadFile_Log.Designer.cs">
       <DependentUpon>UploadFile_Log.cs</DependentUpon>
     </Compile>
-    <Compile Include="Bank\Overdue.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Bank\Overdue.Designer.cs">
-      <DependentUpon>Overdue.cs</DependentUpon>
-    </Compile>
     <Compile Include="Bank\Pay\BillHistory.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -400,9 +394,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\log\UploadFile_Log.resx">
       <DependentUpon>UploadFile_Log.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Bank\Overdue.resx">
-      <DependentUpon>Overdue.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Pay\BillHistory.resx">
       <DependentUpon>BillHistory.cs</DependentUpon>
