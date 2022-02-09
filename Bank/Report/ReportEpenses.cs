@@ -214,7 +214,6 @@ namespace BankTeacher.Bank
             {
                 MessageBox.Show("ไม่พบรายการบิลล์ ในตาราง", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-           
         }
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
