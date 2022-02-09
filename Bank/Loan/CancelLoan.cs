@@ -157,7 +157,7 @@ namespace BankTeacher.Bank.Loan
                 if (dt.Rows.Count != 0)
                 {
                     TBTeacherName.Text = dt.Rows[0][0].ToString();
-                    DGVCancelLoan.Rows.Add(Loan.No, dt.Rows[0][1].ToString(), dt.Rows[0][0].ToString(), dt.Rows[0][3].ToString());
+                    DGVCancelLoan.Rows.Add(Loan.No, Convert.ToDateTime(dt.Rows[0][1].ToString()).ToString("dd/MM/yyyy"), dt.Rows[0][0].ToString(), dt.Rows[0][3].ToString());
                     for (int x = 1; x < dt.Rows.Count; x++)
                     {
                         DGVCancelLoan.Rows.Add("", "", dt.Rows[x][0].ToString(), dt.Rows[x][3].ToString());

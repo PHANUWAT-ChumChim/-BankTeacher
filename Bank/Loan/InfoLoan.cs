@@ -372,13 +372,13 @@ namespace BankTeacher.Bank.Loan
                     TBPayNo_Detail.Text = ds.Tables[0].Rows[0][6].ToString();
                     TBInterestRate_Detail.Text = ds.Tables[0].Rows[0][7].ToString();
                     TBLoanStatus.Text = ds.Tables[0].Rows[0][10].ToString();
-                    TBSavingAmount.Text = ds.Tables[0].Rows[0][2].ToString();
+                    TBSavingAmount.Text = Convert.ToDateTime(ds.Tables[0].Rows[0][2].ToString()).ToString("dd/MM/yyyy");
                     DGVLoanDetail.Rows.Clear();
                     TBTeacheraddbyNo.Text = ds.Tables[0].Rows[0][11].ToString();
                     TBTeacheraddbyname.Text = ds.Tables[0].Rows[0][12].ToString();
                     int Month = Convert.ToInt32(ds.Tables[0].Rows[0][4].ToString());
                     int Year = Convert.ToInt32(ds.Tables[0].Rows[0][5].ToString());
-                    TBSignUpDate_Detail.Text = ds.Tables[0].Rows[0][2].ToString();
+                    TBSignUpDate_Detail.Text = Convert.ToDateTime(ds.Tables[0].Rows[0][2].ToString()).ToString("dd/MM/yyyy");
                     DateTime FinishDate = Convert.ToDateTime(ds.Tables[0].Rows[0][13].ToString());
                     TBFinishYearPay_Detail.Text = FinishDate.ToString("yyyy");
                     TBFinishMonthPay_Detail.Text = FinishDate.ToString("MM");
@@ -461,7 +461,15 @@ namespace BankTeacher.Bank.Loan
                     Class.Print.PrintPreviewDialog.info_TeacherAdd = dt.Rows[0][4].ToString();
                     Class.Print.PrintPreviewDialog.info_Payment = dt.Rows[0][5].ToString();
                     string date = "";
-                    if(dt.Rows[0][1].ToString() == "") { date = "รอดำเนินการ"; } else { date = dt.Rows[0][1].ToString(); }
+                    if(dt.Rows[0][1].ToString() == "") 
+                    { 
+                        date = "รอดำเนินการ"; 
+                    } 
+                    else 
+                    { 
+                        date = Convert.ToDateTime(dt.Rows[0][1].ToString()).ToString("dd/MM/yyyy"); 
+                    }
+
                     for (int loop = 0; loop < dt.Rows.Count; loop++)
                     {
                         DGV_Historyloanpay.Rows.Add(dt.Rows[0][0].ToString(),date, dt.Rows[0][3].ToString(), dt.Rows[0][2].ToString());

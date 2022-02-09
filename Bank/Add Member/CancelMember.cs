@@ -291,7 +291,7 @@ namespace BankTeacher.Bank.Add_Member
             {
                 DGV_HistoryCancel.Rows.Clear();
                 for (int x = 0; x < dt.Rows.Count; x++)
-                    DGV_HistoryCancel.Rows.Add((Convert.ToDateTime(dt.Rows[x][0].ToString())).ToString("yyyy-MM-dd"), dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString());
+                    DGV_HistoryCancel.Rows.Add((Convert.ToDateTime(dt.Rows[x][0].ToString())).ToString("dd/MM/yyyy"), dt.Rows[x][1].ToString(), dt.Rows[x][2].ToString(), dt.Rows[x][3].ToString());
                 for (int x = 0; x < dt.Rows.Count; x++)
                 {
                     if (x % 2 == 1)
