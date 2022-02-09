@@ -239,8 +239,6 @@ namespace BankTeacher.Bank
         {
             BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
         }
-
-
         private void tabControl1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
@@ -248,7 +246,6 @@ namespace BankTeacher.Bank
                 BExitForm_Click(new object(), new EventArgs());
             }
         }
-
         private void TB_Min_TextChanged(object sender, EventArgs e)
         {
             B_Save.Enabled = true;
@@ -538,6 +535,24 @@ namespace BankTeacher.Bank
         private void CHB_edittime_CheckedChanged(object sender, EventArgs e)
         {
             CheckTimeBack = CHB_edittime.Checked;
+        }
+
+        private void Setting_KeyUp(object sender, KeyEventArgs e)
+        {
+            tabControl1.Select();
+            tabControl1.TabPages[tabControl1.SelectedIndex].Focus();
+            tabControl1.TabPages[tabControl1.SelectedIndex].CausesValidation = true;
+            if (e.KeyCode == Keys.Tab)
+            {
+                if (tabControl1.SelectedIndex == tabControl1.TabCount - 1)
+                {
+                    tabControl1.SelectedIndex = 0;
+                }
+                else
+                {
+                    tabControl1.SelectedIndex = tabControl1.SelectedIndex + 1;
+                }
+            }
         }
     }
 }

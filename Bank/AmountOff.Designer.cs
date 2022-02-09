@@ -461,13 +461,8 @@ namespace BankTeacher.Bank
             // TB_Bill
             // 
             this.TB_Bill.Enabled = false;
-//<<<<<<< P
-           // this.TB_Bill.Location = new System.Drawing.Point(493, 18);
-           // this.TB_Bill.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-//=======
-            this.TB_Bill.Location = new System.Drawing.Point(370, 15);
-            this.TB_Bill.Margin = new System.Windows.Forms.Padding(2);
-//>>>>>>> master
+            this.TB_Bill.Location = new System.Drawing.Point(493, 18);
+            this.TB_Bill.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TB_Bill.Name = "TB_Bill";
             this.TB_Bill.Size = new System.Drawing.Size(140, 43);
             this.TB_Bill.TabIndex = 122;
@@ -727,16 +722,10 @@ namespace BankTeacher.Bank
             // 
             this.DTPDate.CalendarFont = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DTPDate.Enabled = false;
-//<<<<<<< P
-           // this.DTPDate.Location = new System.Drawing.Point(875, 15);
-           // this.DTPDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-           // this.DTPDate.Name = "DTPDate";
-           // this.DTPDate.Size = new System.Drawing.Size(265, 43);
-//=======
-            this.DTPDate.Location = new System.Drawing.Point(656, 12);
+            this.DTPDate.Location = new System.Drawing.Point(875, 15);
+            this.DTPDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.DTPDate.Name = "DTPDate";
-            this.DTPDate.Size = new System.Drawing.Size(200, 36);
-//>>>>>>> master
+            this.DTPDate.Size = new System.Drawing.Size(265, 43);
             this.DTPDate.TabIndex = 114;
             // 
             // TBSavingAmount
@@ -777,16 +766,11 @@ namespace BankTeacher.Bank
             this.label10.BackColor = System.Drawing.Color.White;
             this.label10.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.Black;
-//<<<<<<< P
-          //  this.label10.Location = new System.Drawing.Point(731, 17);
-           // this.label10.Name = "label10";
-           // this.label10.Size = new System.Drawing.Size(134, 37);
-//=======
-            this.label10.Location = new System.Drawing.Point(548, 14);
-            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+
+            this.label10.Location = new System.Drawing.Point(731, 17);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(106, 30);
-//>>>>>>> master
+           this.label10.Size = new System.Drawing.Size(134, 37);
+
             this.label10.TabIndex = 88;
             this.label10.Text = "วันที่ทำรายการ";
             // 
