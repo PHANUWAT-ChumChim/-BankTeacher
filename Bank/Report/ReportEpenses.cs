@@ -219,11 +219,7 @@ namespace BankTeacher.Bank
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV, "รายการจ่าย", AccessibilityObject.Name,false,false, "A4", 1);
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
+            Class.Print.PrintPreviewDialog.Detailspayment(e, DGV, "รายการ : รายจ่ายระจำวัน", this.AccessibilityObject.Name);
         }
         private void Checkmember(bool tf)
         {

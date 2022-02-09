@@ -36,12 +36,6 @@ namespace BankTeacher.Bank.Pay
             this.TB_2 = new System.Windows.Forms.TabControl();
             this.TB5 = new System.Windows.Forms.TabPage();
             this.DGV_Bill = new System.Windows.Forms.DataGridView();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel16 = new System.Windows.Forms.Panel();
             this.BTPrint = new System.Windows.Forms.Button();
             this.CB_DaySelection_Bill = new System.Windows.Forms.ComboBox();
@@ -54,6 +48,12 @@ namespace BankTeacher.Bank.Pay
             this.CBYearSelection_Bill = new System.Windows.Forms.ComboBox();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PL_Form.SuspendLayout();
             this.TB_2.SuspendLayout();
             this.TB5.SuspendLayout();
@@ -79,7 +79,7 @@ namespace BankTeacher.Bank.Pay
             this.BExitForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BExitForm.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
             this.BExitForm.Location = new System.Drawing.Point(1040, 604);
-            this.BExitForm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BExitForm.Margin = new System.Windows.Forms.Padding(4);
             this.BExitForm.Name = "BExitForm";
             this.BExitForm.Size = new System.Drawing.Size(97, 81);
             this.BExitForm.TabIndex = 112;
@@ -127,67 +127,13 @@ namespace BankTeacher.Bank.Pay
             this.Column5,
             this.Column6});
             this.DGV_Bill.Location = new System.Drawing.Point(4, 99);
-            this.DGV_Bill.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.DGV_Bill.Margin = new System.Windows.Forms.Padding(4);
             this.DGV_Bill.Name = "DGV_Bill";
             this.DGV_Bill.ReadOnly = true;
             this.DGV_Bill.RowHeadersVisible = false;
             this.DGV_Bill.RowHeadersWidth = 51;
             this.DGV_Bill.Size = new System.Drawing.Size(1120, 437);
             this.DGV_Bill.TabIndex = 1;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "ผู้ทำรายการ";
-            this.Column3.MinimumWidth = 6;
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column3.Width = 200;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "บิล";
-            this.Column1.MinimumWidth = 6;
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column1.Width = 130;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "วันที่";
-            this.Column2.MinimumWidth = 6;
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column2.Width = 125;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "รายการ";
-            this.Column4.MinimumWidth = 6;
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column4.Width = 150;
-            // 
-            // Column5
-            // 
-            this.Column5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column5.HeaderText = "เงิน";
-            this.Column5.MinimumWidth = 6;
-            this.Column5.Name = "Column5";
-            this.Column5.ReadOnly = true;
-            this.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Column6
-            // 
-            this.Column6.HeaderText = "สถานะ";
-            this.Column6.MinimumWidth = 6;
-            this.Column6.Name = "Column6";
-            this.Column6.ReadOnly = true;
-            this.Column6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column6.Width = 125;
             // 
             // panel16
             // 
@@ -340,6 +286,59 @@ namespace BankTeacher.Bank.Pay
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
             // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "ผู้ทำรายการ";
+            this.Column3.MinimumWidth = 6;
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column3.Width = 200;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "บิล";
+            this.Column1.MinimumWidth = 6;
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "วันที่";
+            this.Column2.MinimumWidth = 6;
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column2.Width = 125;
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "รายการ";
+            this.Column4.MinimumWidth = 6;
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column4.Width = 150;
+            // 
+            // Column5
+            // 
+            this.Column5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column5.HeaderText = "เงิน";
+            this.Column5.MinimumWidth = 130;
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            this.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Column6
+            // 
+            this.Column6.HeaderText = "สถานะ";
+            this.Column6.MinimumWidth = 6;
+            this.Column6.Name = "Column6";
+            this.Column6.ReadOnly = true;
+            this.Column6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column6.Width = 80;
+            // 
             // Billcancelhistory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -381,14 +380,14 @@ namespace BankTeacher.Bank.Pay
         private System.Windows.Forms.Button BExitForm;
         private System.Windows.Forms.ComboBox CB_DaySelection_Bill;
         private System.Windows.Forms.Label LB_DAY;
+        private System.Windows.Forms.Button BTPrint;
+        private System.Drawing.Printing.PrintDocument printDocument1;
+        private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.Button BTPrint;
-        private System.Drawing.Printing.PrintDocument printDocument1;
-        private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
     }
 }

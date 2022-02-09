@@ -2416,7 +2416,7 @@ namespace BankTeacher.Bank.Pay
         {
             if (CB_SelectPrint.SelectedIndex == 0 && Printbill != 1)
             {
-                Class.Print.PrintPreviewDialog.Detailspayment(e, DGV_BillInfo,"รายการ");
+                Class.Print.PrintPreviewDialog.Detailspayment(e, DGV_BillInfo,"รายการ",AccessibilityObject.Name);
             }
             else if (CB_SelectPrint.SelectedIndex == 1 && Printbill != 1)
             {
@@ -2442,32 +2442,41 @@ namespace BankTeacher.Bank.Pay
         // คลิ๊กเพื่อปริ้นข้อมูลย้อนหลัง
         private void DGV_BillInfo_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            timer1.Stop(); P1_X.Visible = false; P2_X.Visible = false; P2_Y.Visible = false; P1_Y.Visible = false;
-            if (e.RowIndex != -1 && DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString() != "")
+            if(e.RowIndex != -1)
             {
-                TB_Bill.Text = DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString();
-                BTPrint.Enabled = true;
-                BTPrint.BackColor = Color.White;
-                Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
-                Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
-                Class.Print.PrintPreviewDialog.info_Savingtotel = TBToatalSaving_ShareInfo.Text;
-                Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
-                Class.Print.PrintPreviewDialog.info_Billpay = DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString();
-                DataTable dt_date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[16].Replace("{Bill}", DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString()));
-                Class.Print.PrintPreviewDialog.info_datepayShare = dt_date.Rows[0][1].ToString();
-                DGV_Tester.Rows.Clear();
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[15].Replace("{bill}", DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString()));
-                Class.Print.PrintPreviewDialog.info_TeacherAdd = dt.Rows[0][2].ToString();
-                Class.Print.PrintPreviewDialog.info_Payment = dt.Rows[0][6].ToString(); ;
-                for (int Row = 0; Row < dt.Rows.Count; Row++)
+                int Rows = e.RowIndex;
+                string Text = DGV_BillInfo.Rows[Rows].Cells[1].Value.ToString();
+                timer1.Stop(); P1_X.Visible = false; P2_X.Visible = false; P2_Y.Visible = false; P1_Y.Visible = false;
+                if (Text == "")
                 {
-                    DGV_Tester.Rows.Add(Row + 1, dt.Rows[Row][5].ToString(), dt.Rows[Row][4].ToString(), dt.Rows[Row][3]);
+                    do
+                    {
+                        Rows--;
+                        Text = DGV_BillInfo.Rows[Rows].Cells[1].Value.ToString();
+                    } while (Text == "");
                 }
-            }
-            else
-            {
-                BTPrint.BackColor = Color.Red;
-                DGV_Tester.Rows.Clear();
+                if (Text != "")
+                {
+                    DGV_BillInfo.CurrentCell = DGV_BillInfo[1,Rows];
+                    TB_Bill.Text = Text;
+                    BTPrint.Enabled = true;
+                    BTPrint.BackColor = Color.White;
+                    Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
+                    Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
+                    Class.Print.PrintPreviewDialog.info_Savingtotel = TBToatalSaving_ShareInfo.Text;
+                    Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
+                    Class.Print.PrintPreviewDialog.info_Billpay = DGV_BillInfo.Rows[Rows].Cells[1].Value.ToString();
+                    DataTable dt_date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[16].Replace("{Bill}", DGV_BillInfo.Rows[Rows].Cells[1].Value.ToString()));
+                    Class.Print.PrintPreviewDialog.info_datepayShare = dt_date.Rows[0][1].ToString();
+                    DGV_Tester.Rows.Clear();
+                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[15].Replace("{bill}", DGV_BillInfo.Rows[Rows].Cells[1].Value.ToString()));
+                    Class.Print.PrintPreviewDialog.info_TeacherAdd = dt.Rows[0][2].ToString();
+                    Class.Print.PrintPreviewDialog.info_Payment = dt.Rows[0][6].ToString(); ;
+                    for (int Row = 0; Row < dt.Rows.Count; Row++)
+                    {
+                        DGV_Tester.Rows.Add(Row + 1, dt.Rows[Row][5].ToString(), dt.Rows[Row][4].ToString(), dt.Rows[Row][3]);
+                    }
+                }
             }
         }
         // เปลี่ยนรูปเเบบตามต้นฉบับ

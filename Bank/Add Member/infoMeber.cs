@@ -219,7 +219,7 @@ namespace BankTeacher.Bank.Add_Member
                     Checkmember(false);
                     CheckSave = false;
 
-                    if (dsInfoMember.Tables[3].Rows.Count != 0)
+                    if (dsInfoMember.Tables[3].Rows[0][1] != "")
                     {
                         label12.Text = "อัพโหลดไฟล์เรียบร้อย";
                         label12.ForeColor = Color.Green;
@@ -308,10 +308,14 @@ namespace BankTeacher.Bank.Add_Member
         {
             String PathFile = null;
             DataTable dtChackStatusFile = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{TeacherNo}", TBTeacherNo.Text));
-            if (dtChackStatusFile.Rows.Count == 0)
+            if (dtChackStatusFile.Rows[0][1] == "")
             {
-                t1 = new System.Threading.Thread(() => t());
-                t1.Start();
+                using (Process myProcess = new Process())
+                {
+                    t1 = new System.Threading.Thread(() => t());
+                    t1.Start();
+                    ///this.BeginInvoke((Action)(() => MessageBox.Show("Hello")));
+                }
                 pictureBox1.Visible = true;
                 Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("RegMember");
                 OpenFileDialog dialog = new OpenFileDialog();

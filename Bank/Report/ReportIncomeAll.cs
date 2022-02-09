@@ -77,6 +77,7 @@ namespace BankTeacher.Bank
                 int Amountcash = 0;
                 int AmountTranfer = 0;
                 int AmountCradit = 0;
+                int sumamountbill = 0;
                 for (int x = 0; x < dtCheckBillInDay.Rows.Count; x++) 
                 {
                     int AmountBill = 0;
@@ -106,6 +107,7 @@ namespace BankTeacher.Bank
 
                                 if (y == dtCheckBillDetail.Rows.Count - 1)
                                 {
+                                    sumamountbill += AmountBill;
                                     DGV_All.Rows.Add("","", "", "สรุปยอดบิลล์  ", "", "", AmountBill,"");
                                     DGV_All.Rows[DGV_All.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                                 }
@@ -115,16 +117,23 @@ namespace BankTeacher.Bank
                             DGV_All.Rows.Add("", "", "", "", dtCheckBillDetail.Rows[y][1].ToString(), dtCheckBillDetail.Rows[y][2].ToString(), dtCheckBillDetail.Rows[y][3].ToString(),"");
                             if(y == dtCheckBillDetail.Rows.Count - 1)
                             {
+                                sumamountbill += AmountBill;
                                 DGV_All.Rows.Add("", "","", "สรุปยอดบิลล์  ", "", "", AmountBill,"");
                                 DGV_All.Rows[DGV_All.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                             }
                         }
                     }
                 }
+                DGV_All.Rows.Add("", "", "", "รวมนยอดบิลล์  ", "", "", sumamountbill, "");
+                DGV_All.Rows[DGV_All.Rows.Count-1].DefaultCellStyle.BackColor = Color.CornflowerBlue;
                 TBAmount_All.Text = SumAmount.ToString();
                 TBAmountCash_All.Text = Amountcash.ToString();
                 TBAmountTranfer_All.Text = AmountTranfer.ToString();
                 TBAmountCradit_All.Text = AmountCradit.ToString();
+                Class.Print.PrintPreviewDialog.info_Cash = Convert.ToDouble(TBAmountCash_All.Text).ToString("N0");
+                Class.Print.PrintPreviewDialog.info_Tranfer = Convert.ToDouble(TBAmountTranfer_All.Text).ToString("N0");
+                Class.Print.PrintPreviewDialog.info_Cradit = Convert.ToDouble(TBAmountCradit_All.Text).ToString("N0");
+                Class.Print.PrintPreviewDialog.info_SUMAmount = Convert.ToDouble(TBAmount_All.Text).ToString("N0");
             }
         }
         private void BExitForm_Click(object sender, EventArgs e)
@@ -147,7 +156,7 @@ namespace BankTeacher.Bank
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.Print.PrintPreviewDialog.Detailspayment(e, DGV_All, "รายการ");
+            Class.Print.PrintPreviewDialog.Detailspayment(e, DGV_All, "รายการ : รายรับประจำวัน",this.AccessibilityObject.Name);
         }
 
         private void BTPrint_Click(object sender, EventArgs e)
