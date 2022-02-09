@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace BankTeacher.Bank.Pay
 {
-    public partial class Billcancelhistory : Form
+    public partial class BillHistory : Form
     {
-        public Billcancelhistory()
+        public BillHistory()
         {
             InitializeComponent();
         }

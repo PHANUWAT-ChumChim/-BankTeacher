@@ -26,7 +26,7 @@ namespace BankTeacher.Bank.Pay
         /// <para>[1] Update Cancel Bill INPUT: {BillNo} {CancelBy} {Note}</para>
         /// <para>[2] Update Saving (CancelBill) INPUT: {TeacherNo} {Amount} {BillNo} {DateTime}</para>
         /// <para>[3] + RemainAmount In Guarantor (CancelBill) INPUT: {LoanNo} , {LoanAmount}</para>
-        /// <para>[4] Search All Bill in to day (CancelBill) INPUT: {BillNo} {today} {Text}</para>
+        /// <para>[4] Search All Bill in to day (CancelBill) INPUT: {BillNo} {today} {Text} {BillNoSelect} </para>
         /// <para>[5] Check Dividend Year INPUT: </para>
         /// <para>[6] Chcek LoanstatusNo INPUT : {TeacharNo} {BillNo} </para>
         /// </summary> 
@@ -77,14 +77,14 @@ namespace BankTeacher.Bank.Pay
           "SET CancelDate = '{DateTime}' \r\n " +
           "WHERE BillNo = '{BillNo}' "
             ,
-           //[4] Search All Bill in to day (CancelBill) INPUT: {today} {Text}
+           //[4] Search All Bill in to day (CancelBill) INPUT: {today} {Text} {BillNoSelect}
            "SELECT a.TeacherNo,CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255))as Name ,a.BillNo FROM EmployeeBank.dbo.tblBill as a   \r\n " +
           "  LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo   \r\n " +
           "  LEFT JOIN EmployeeBank.dbo.tblMember as c on a.TeacherNo = c.TeacherNo   \r\n " +
           "  LEFT JOIN Personal.dbo.tblTeacherHis as d on a.TeacherNo = d.TeacherNo   \r\n " +
           "  LEFT JOIN BaseData.dbo.tblPrefix as e on d.PrefixNo = e.PrefixNo   \r\n " +
           "  LEFT JOIN EmployeeBank.dbo.tblBillDetailType as f on b.TypeNo = f.TypeNo   \r\n " +
-          "  WHERE  (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255)) LIKE '%{Text}%' )and MemberStatusNo != 2 and Cancel = 1 and CAST(a.DateAdd as Date) Like '{today}%' and b.TypeNo != 3 \r\n " +
+          "  WHERE  (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255)) LIKE '%{Text}%' )and MemberStatusNo != 2 and Cancel = 1 and CAST(a.DateAdd as Date) Like '{today}%' and b.TypeNo != 3 and a.BillNo != '{BillNoSelect}' \r\n " +
           " GROUP BY a.TeacherNo,CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255)),a.BillNo"
             ,
             //[5] Check Dividend Year INPUT: 
@@ -266,7 +266,7 @@ namespace BankTeacher.Bank.Pay
                                         .Replace("{DateTime}", Date));
                                     }
                                 }
-                                MessageBox.Show("ยกเลิกบิลล์สำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                                MessageBox.Show("ยกเลิกบิลล์สำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 Checkmember(true);
                                 CheckSave = true;
                             }
@@ -335,7 +335,8 @@ namespace BankTeacher.Bank.Pay
             String todaySQLSelect = (Convert.ToDateTime((Year + '-' + Month + '-' + Day).ToString())).ToString("yyyy-MM-dd");
 
             Bank.Search IN = new Bank.Search(SQLDefault[4]
-                .Replace("{today}",todaySQLSelect),"เลขบิลล์");
+                .Replace("{today}",todaySQLSelect)
+                .Replace("{BillNoSelect}",TBBillNo_Cancelbill.Text),"เลขบิลล์");
             IN.ShowDialog();
             //ถ้า ID สมาชิกที่เลือกไม่เป็นว่างเปล่า ให้ ใส่ลงใน TBTeacherNo และ ไปทำ event Keydown ของ TBTeacherNo
             if (Bank.Search.Return[0] != "")
@@ -346,6 +347,8 @@ namespace BankTeacher.Bank.Pay
         }
         private void ClearForm()
         {
+
+            TBNote.Text = "";
             TeacherNo = "";
             TBTeacherName_Cancelbill.Text = "";
             TBteacharnoby_billcancel.Text = "";

@@ -200,7 +200,7 @@ namespace BankTeacher.Bank
 
         private void ประวตการยกเลกบลลToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Bank.Pay.Billcancelhistory Billcancelhistory = new Bank.Pay.Billcancelhistory();
+            Bank.Pay.BillHistory Billcancelhistory = new Bank.Pay.BillHistory();
             CloseFrom(Billcancelhistory);
         }
 

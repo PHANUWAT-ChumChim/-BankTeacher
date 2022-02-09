@@ -221,11 +221,11 @@
     <Compile Include="Bank\Overdue.Designer.cs">
       <DependentUpon>Overdue.cs</DependentUpon>
     </Compile>
-    <Compile Include="Bank\Pay\Billcancelhistory.cs">
+    <Compile Include="Bank\Pay\BillHistory.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Bank\Pay\Billcancelhistory.Designer.cs">
-      <DependentUpon>Billcancelhistory.cs</DependentUpon>
+    <Compile Include="Bank\Pay\BillHistory.Designer.cs">
+      <DependentUpon>BillHistory.cs</DependentUpon>
     </Compile>
     <Compile Include="Bank\Pay\Calculator.cs">
       <SubType>Form</SubType>
@@ -404,8 +404,8 @@
     <EmbeddedResource Include="Bank\Overdue.resx">
       <DependentUpon>Overdue.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Bank\Pay\Billcancelhistory.resx">
-      <DependentUpon>Billcancelhistory.cs</DependentUpon>
+    <EmbeddedResource Include="Bank\Pay\BillHistory.resx">
+      <DependentUpon>BillHistory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Pay\Calculator.resx">
       <DependentUpon>Calculator.cs</DependentUpon>

@@ -103,8 +103,8 @@ namespace BankTeacher.Bank.Add_Member
           "SET SavingAmount = '{StartAmount}' \r\n " +
           "WHERE TeacherNo = '{TeacherNo}'; \r\n " +
 
-          "INSERT INTO EmployeeBank.dbo.tblBill(TeacherNo, TeacherNoAddBy, DateAdd)  \r\n " +
-          "VALUES('{TeacherNo}','{TeacherNoAddBy}', CURRENT_TIMESTAMP)  \r\n " +
+          "INSERT INTO EmployeeBank.dbo.tblBill(TeacherNo, TeacherNoAddBy, DateAdd,TransactionDate)  \r\n " +
+          "VALUES('{TeacherNo}','{TeacherNoAddBy}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)  \r\n " +
 
           "SELECT @BillNo = SCOPE_IDENTITY();  \r\n " +
 
@@ -122,8 +122,8 @@ namespace BankTeacher.Bank.Add_Member
           "INSERT INTO EmployeeBank.dbo.tblShare(TeacherNo, SavingAmount) \r\n " +
           "VALUES('{TeacherNo}',{StartAmount})  \r\n " +
 
-          "INSERT INTO EmployeeBank.dbo.tblBill(TeacherNo, TeacherNoAddBy, DateAdd)  \r\n " +
-          "VALUES('{TeacherNo}','{TeacherNoAddBy}', CURRENT_TIMESTAMP)  \r\n " +
+          "INSERT INTO EmployeeBank.dbo.tblBill(TeacherNo, TeacherNoAddBy, DateAdd,TransactionDate)   \r\n " +
+          "VALUES('{TeacherNo}','{TeacherNoAddBy}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)  \r\n " +
 
           "SELECT @BillNo = SCOPE_IDENTITY();  \r\n " +
 

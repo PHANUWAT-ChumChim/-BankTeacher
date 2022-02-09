@@ -266,8 +266,8 @@ namespace BankTeacher.Bank
             // ประวตการยกเลกบลลToolStripMenuItem
             // 
             this.ประวตการยกเลกบลลToolStripMenuItem.Name = "ประวตการยกเลกบลลToolStripMenuItem";
-            this.ประวตการยกเลกบลลToolStripMenuItem.Size = new System.Drawing.Size(253, 36);
-            this.ประวตการยกเลกบลลToolStripMenuItem.Text = "6.3 ประวัติการยกเลิกบิลล์";
+            this.ประวตการยกเลกบลลToolStripMenuItem.Size = new System.Drawing.Size(216, 36);
+            this.ประวตการยกเลกบลลToolStripMenuItem.Text = "6.3 ประวัติบิล";
             this.ประวตการยกเลกบลลToolStripMenuItem.Click += new System.EventHandler(this.ประวตการยกเลกบลลToolStripMenuItem_Click);
             // 
             // ReprotDividend
