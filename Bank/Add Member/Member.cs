@@ -221,9 +221,6 @@ namespace BankTeacher.Bank.Add_Member
                             BSave_Reg.Enabled = false;
                             CheckBRegister = true;
                             Checkmember(true);
-                            BTdeletefile_Reg.Visible = false;
-                            BTPrintfShare_Reg.Enabled = true;
-                            BTOpenfile_Reg.Enabled = true;
                             TBStartAmountShare_Reg.Enabled = false;
                             Class.SQLConnection.InputSQLMSSQL(SQLDefault[3].Replace("{TeacherNo}", TBTeacherNo_Reg.Text)
                             .Replace("{TeacherNoAddBy}", BankTeacher.Class.UserInfo.TeacherNo)
@@ -320,8 +317,7 @@ namespace BankTeacher.Bank.Add_Member
                         Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
                             .Replace("{PathFile}", FTP.HostplusPathFile + $"Member_{TBTeacherNo_Reg.Text}.pdf")
                             .Replace("{TeacherNo}", TBTeacherNo_Reg.Text));
-                        MessageBox.Show("อัพโหลดเอกสารสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        BTdeletefile_Reg.Visible = true;
+                        MessageBox.Show("อัพโหลดเอกสารสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);    
                     }
                 }
                 PathFile = "";
@@ -349,9 +345,6 @@ namespace BankTeacher.Bank.Add_Member
             }
             else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back && Check == 1)
             {
-                BTOpenfile_Reg.Enabled = false;
-                BTPrintfShare_Reg.Enabled = false;
-                BTdeletefile_Reg.Visible = false;
                 TBTeacherName_Reg.Text = "";
                 CheckBRegister = false;
                 Checkmember(true);
@@ -374,7 +367,6 @@ namespace BankTeacher.Bank.Add_Member
             {
                 if (TBTeacherNo_Reg.Text.Length != 0)
                 {
-                    BTdeletefile_Reg.Visible = false;
                     TBTeacherNo_Reg.Text = "";
                     TBTeacherName_Reg.Text = "";
                     TBStartAmountShare_Reg.Text = BankTeacher.Bank.Menu.startAmountMin.ToString(); ;
@@ -385,10 +377,6 @@ namespace BankTeacher.Bank.Add_Member
                     Saving = 0;
                     // ไฟล์
                     StatusBoxFile = 0;
-                    BTOpenfile_Reg.Text = "อัพโหลดไฟล์";
-                    LScan_Reg.Text = "ยังไม่ได้อัพโหลดไฟล์";
-                    BTPrintfShare_Reg.Enabled = false;
-                    LScan_Reg.ForeColor = Color.Red;
                     Checkmember(true);
                     CheckSave = false;
                 }
@@ -396,20 +384,6 @@ namespace BankTeacher.Bank.Add_Member
                 {
                     BExitForm_Click(new object(), new EventArgs());
                 }
-            }
-        }
-        private void TBTeacherNo_Reg_TextChanged(object sender, EventArgs e)
-        {
-            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{TeacherNo}", TBTeacherNo_Reg.Text));
-            if (dt.Rows.Count != 0 && dt.Rows[0][0].ToString() == TBTeacherNo_Reg.Text)
-            {
-                label5.Text = "เอกสมัครสมาชิกย้อนหลัง";
-                BTPrintfShare_Reg.Enabled = true;
-            }
-            else
-            {
-                label5.Text = "เอกสารในการสมัครชิกสหกร์ครู";
-                BTPrintfShare_Reg.Enabled = false;
             }
         }
         private void TBTeacherNo_Reg_EnabledChanged(object sender, EventArgs e)
@@ -442,12 +416,9 @@ namespace BankTeacher.Bank.Add_Member
                         .Replace("{TeacherNo}", TBTeacherNo_Reg.Text)
                         .Replace("{PathFile}",""));
                     MessageBox.Show("ลบเอกสารสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    LScan_Reg.Text = "ยังไม่ได้อัพโหลดไฟล์";
-                    LScan_Reg.ForeColor = Color.Red;
                 }
                 CheckStatusWorking = false;
             }
-            BTdeletefile_Reg.Visible = false;
         }
 
         private void TBStartAmountShare_Reg_TextChanged(object sender, EventArgs e)

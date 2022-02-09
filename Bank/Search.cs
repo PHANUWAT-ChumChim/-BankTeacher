@@ -136,12 +136,54 @@ namespace BankTeacher.Bank
                 this.Close();
             }
         }
-
+        static int Rows = 0,Cell = 0;
         private void Search_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Escape)
+            if (e.KeyCode == Keys.Escape)
             {
                 this.Close();
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                if(Rows < DGV.RowCount-1)
+                {
+                    Rows++;
+                    DGV.CurrentCell = DGV[Cell, Rows];
+                }
+                else
+                {
+                    Rows = 0;
+                    DGV.CurrentCell = DGV[Cell,0];
+                }
+            }
+            else if (e.KeyCode == Keys.Up)
+            {
+                if(Rows > 0)
+                {
+                    Rows--;
+                    DGV.CurrentCell = DGV[Cell, Rows];
+                }
+                else
+                {
+                    Rows = DGV.RowCount - 1;
+                    DGV.CurrentCell = DGV[Cell,DGV.RowCount-1];
+                }
+            }
+            else if(e.KeyCode == Keys.Right)
+            {
+                if(Cell == 0)
+                {
+                    Cell++;
+                    DGV.CurrentCell = DGV[Cell, Rows];
+                }
+            }
+            else if(e.KeyCode == Keys.Left)
+            {
+                if(Cell == 1)
+                {
+                    Cell--;
+                    DGV.CurrentCell = DGV[Cell, Rows];
+                }
             }
         }
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
