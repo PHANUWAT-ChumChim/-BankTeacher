@@ -282,6 +282,7 @@ namespace BankTeacher.Bank
             // DGVLoan
             // 
             this.DGVLoan.AllowUserToAddRows = false;
+            this.DGVLoan.AllowUserToDeleteRows = false;
             this.DGVLoan.AllowUserToResizeColumns = false;
             this.DGVLoan.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVLoan.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -293,6 +294,7 @@ namespace BankTeacher.Bank
             this.DGVLoan.Location = new System.Drawing.Point(19, 18);
             this.DGVLoan.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.DGVLoan.Name = "DGVLoan";
+            this.DGVLoan.ReadOnly = true;
             this.DGVLoan.RowHeadersVisible = false;
             this.DGVLoan.RowHeadersWidth = 51;
             this.DGVLoan.RowTemplate.Height = 24;
@@ -304,6 +306,7 @@ namespace BankTeacher.Bank
             this.Column10.HeaderText = "ลำดับที่";
             this.Column10.MinimumWidth = 6;
             this.Column10.Name = "Column10";
+            this.Column10.ReadOnly = true;
             this.Column10.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Column10.Visible = false;
             this.Column10.Width = 125;
@@ -313,6 +316,7 @@ namespace BankTeacher.Bank
             this.Column1.HeaderText = "เลขที่สัญญากู้";
             this.Column1.MinimumWidth = 6;
             this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
             this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Column1.Width = 180;
             // 
@@ -321,6 +325,7 @@ namespace BankTeacher.Bank
             this.Column2.HeaderText = "ชื่อผู้กู้";
             this.Column2.MinimumWidth = 6;
             this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
             this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Column2.Width = 225;
             // 
@@ -329,6 +334,7 @@ namespace BankTeacher.Bank
             this.Column3.HeaderText = "ยอดเงินค้ำ";
             this.Column3.MinimumWidth = 6;
             this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
             this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.Column3.Width = 225;
             // 
@@ -338,6 +344,7 @@ namespace BankTeacher.Bank
             this.Column4.HeaderText = "สิ้นสุดวันที่(เดือน/ปี)";
             this.Column4.MinimumWidth = 6;
             this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
             this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // BSaveAmountOff
@@ -454,8 +461,13 @@ namespace BankTeacher.Bank
             // TB_Bill
             // 
             this.TB_Bill.Enabled = false;
-            this.TB_Bill.Location = new System.Drawing.Point(493, 18);
-            this.TB_Bill.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+//<<<<<<< P
+           // this.TB_Bill.Location = new System.Drawing.Point(493, 18);
+           // this.TB_Bill.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+//=======
+            this.TB_Bill.Location = new System.Drawing.Point(370, 15);
+            this.TB_Bill.Margin = new System.Windows.Forms.Padding(2);
+//>>>>>>> master
             this.TB_Bill.Name = "TB_Bill";
             this.TB_Bill.Size = new System.Drawing.Size(140, 43);
             this.TB_Bill.TabIndex = 122;
@@ -715,10 +727,16 @@ namespace BankTeacher.Bank
             // 
             this.DTPDate.CalendarFont = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DTPDate.Enabled = false;
-            this.DTPDate.Location = new System.Drawing.Point(875, 15);
-            this.DTPDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+//<<<<<<< P
+           // this.DTPDate.Location = new System.Drawing.Point(875, 15);
+           // this.DTPDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+           // this.DTPDate.Name = "DTPDate";
+           // this.DTPDate.Size = new System.Drawing.Size(265, 43);
+//=======
+            this.DTPDate.Location = new System.Drawing.Point(656, 12);
             this.DTPDate.Name = "DTPDate";
-            this.DTPDate.Size = new System.Drawing.Size(265, 43);
+            this.DTPDate.Size = new System.Drawing.Size(200, 36);
+//>>>>>>> master
             this.DTPDate.TabIndex = 114;
             // 
             // TBSavingAmount
@@ -759,9 +777,16 @@ namespace BankTeacher.Bank
             this.label10.BackColor = System.Drawing.Color.White;
             this.label10.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.Black;
-            this.label10.Location = new System.Drawing.Point(731, 17);
+//<<<<<<< P
+          //  this.label10.Location = new System.Drawing.Point(731, 17);
+           // this.label10.Name = "label10";
+           // this.label10.Size = new System.Drawing.Size(134, 37);
+//=======
+            this.label10.Location = new System.Drawing.Point(548, 14);
+            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(134, 37);
+            this.label10.Size = new System.Drawing.Size(106, 30);
+//>>>>>>> master
             this.label10.TabIndex = 88;
             this.label10.Text = "วันที่ทำรายการ";
             // 

@@ -62,7 +62,7 @@ namespace BankTeacher.Bank.Pay
           "SET SavingAmount = @@SavingAmount - {Amount} \r\n " +
           "WHERE  TeacherNo = '{TeacherNo}' \r\n " +
           " UPDATE EmployeeBank.dbo.tblBill \r\n " +
-          "SET CancelDate = '{DateTime}' \r\n " +
+          "SET CancelDate = '{DateTime}' , CancelTransactionDate = CURRENT_TIMESTAMP \r\n " +
          "WHERE BillNo = '{BillNo}' "
            ,
            //[3] + RemainAmount In Guarantor (CancelBill) INPUT: {LoanNo} , {LoanAmount} {BillNo} {DateTime}
@@ -289,7 +289,7 @@ namespace BankTeacher.Bank.Pay
                         if (MSB == DialogResult.Yes)
                         {
                             //ก็อบวางอันบนเช็คสิทธ์ ใส่ Permision
-                            MessageBox.Show("ขึ้นอยู่กับสิทธ์ของผู้ทำรายการ ");
+                            MessageBox.Show("ขึ้นอยู่กับสิทธ์ของผู้ทำรายการ ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                         }
                     }
                 }
