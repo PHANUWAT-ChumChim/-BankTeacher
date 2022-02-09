@@ -133,8 +133,8 @@ namespace BankTeacher.Bank.Add_Member
           "END; \r\n " +
 
 
-           "INSERT INTO EmployeeBank.dbo.tblFile(TeacherNo , FiletypeNo , pathFile ,TeacherAddBy,LoanID,DateAddFile,IsUse , TeacherRemoveFileBy ,DateRemoveFile, StatusFileInSystem) \r\n " +
-          "VALUES ('{TeacherNo}',1,'{PathFile}','{TeacherNoAddBy}',null,CURRENT_TIMESTAMP,1,null,null,2);"
+          "--INSERT INTO EmployeeBank.dbo.tblFile(TeacherNo , FiletypeNo , pathFile ,TeacherAddBy,LoanID,DateAddFile,IsUse , TeacherRemoveFileBy ,DateRemoveFile, StatusFileInSystem) \r\n " +
+          "--VALUES ('{TeacherNo}',1,'{PathFile}','{TeacherNoAddBy}',null,CURRENT_TIMESTAMP,1,null,null,2);"
           ,
           //[4] Print info_Member  INPUT : {TeacherNo}
           "SELECT a.TeacherNo,a.TeacherAddBy,CAST(c.PrefixName+' '+b.Fname+' '+b.Lname as nvarchar),a.StartAmount,a.DateAdd  \r\n " +

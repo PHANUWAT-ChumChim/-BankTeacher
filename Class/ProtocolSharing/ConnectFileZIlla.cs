@@ -241,7 +241,7 @@ namespace BankTeacher.Class.ProtocolSharing
                 }
                 else
                 {
-                    MessageBox.Show(@"WinSCP.exe (ไม่พบไฟล์.exe ในการส่งเอกสารโปรด ติดต่อผู้ดูเเลโปรเเกรม)");
+                    MessageBox.Show("ไม่สามารถส่งไฟล์ได่เนื่องจากไฟล์ในโปรแกรมไม่สมบูรณ์ \n Not Found WinSCP.exe","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                 }
             }
 
