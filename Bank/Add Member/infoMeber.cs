@@ -309,21 +309,14 @@ namespace BankTeacher.Bank.Add_Member
                 printDocument1.Print();
             }
         }
-        System.Threading.Thread t1; 
-        bool a = true;
-        void t()
-        {
-           pictureBox1.Invoke((MethodInvoker)(() => pictureBox1.Visible = true));
-        }
         private void SendFIle(String PathFile)
         {
-            pictureBox1.Visible = true;
             Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("RegMember");
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Filter = "pdf files(*.pdf)|*.pdf";
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                textBox1.Visible = true;
+                Cursor.Current = Cursors.WaitCursor;
                 PathFile = dialog.FileName;
                 if (PathFile != "")
                 {
@@ -344,8 +337,7 @@ namespace BankTeacher.Bank.Add_Member
                     PathFile = "";
                     BTUploadFile_Reg.Enabled = true;
                     CheckStatusWorking = false;
-                    textBox1.Visible = false;
-                    pictureBox1.Visible = false; a = false;
+                    Cursor.Current = Cursors.Default;
                 }
             }
         }
@@ -357,12 +349,7 @@ namespace BankTeacher.Bank.Add_Member
             {
                 if (dtChackStatusFile.Rows[0][1].ToString() == "")
                 {
-                    using (Process myProcess = new Process())
-                    {
-                        t1 = new System.Threading.Thread(() => t());
-                        t1.Start();
-                        ///this.BeginInvoke((Action)(() => MessageBox.Show("Hello")));
-                    }
+                    ///this.BeginInvoke((Action)(() => MessageBox.Show("Hello")));
                     SendFIle(PathFile);
                 }
                 else

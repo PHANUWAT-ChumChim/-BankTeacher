@@ -60,8 +60,6 @@ namespace BankTeacher.Bank.Add_Member
             this.label8 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.TB_Print = new System.Windows.Forms.TabPage();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel13 = new System.Windows.Forms.Panel();
             this.label14 = new System.Windows.Forms.Label();
             this.panel14 = new System.Windows.Forms.Panel();
@@ -97,7 +95,6 @@ namespace BankTeacher.Bank.Add_Member
             this.panel2.SuspendLayout();
             this.panel6.SuspendLayout();
             this.TB_Print.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel13.SuspendLayout();
             this.panel14.SuspendLayout();
             this.panel12.SuspendLayout();
@@ -126,7 +123,7 @@ namespace BankTeacher.Bank.Add_Member
             this.BExitForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BExitForm.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
             this.BExitForm.Location = new System.Drawing.Point(1053, 651);
-            this.BExitForm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BExitForm.Margin = new System.Windows.Forms.Padding(4);
             this.BExitForm.Name = "BExitForm";
             this.BExitForm.Size = new System.Drawing.Size(97, 81);
             this.BExitForm.TabIndex = 80;
@@ -169,7 +166,7 @@ namespace BankTeacher.Bank.Add_Member
             this.BSaveEdit.BackColor = System.Drawing.Color.White;
             this.BSaveEdit.Enabled = false;
             this.BSaveEdit.Location = new System.Drawing.Point(875, 383);
-            this.BSaveEdit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BSaveEdit.Margin = new System.Windows.Forms.Padding(4);
             this.BSaveEdit.Name = "BSaveEdit";
             this.BSaveEdit.Size = new System.Drawing.Size(223, 74);
             this.BSaveEdit.TabIndex = 80;
@@ -350,7 +347,7 @@ namespace BankTeacher.Bank.Add_Member
             this.checkBox_scrip.AutoSize = true;
             this.checkBox_scrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.checkBox_scrip.Location = new System.Drawing.Point(15, 162);
-            this.checkBox_scrip.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.checkBox_scrip.Margin = new System.Windows.Forms.Padding(4);
             this.checkBox_scrip.Name = "checkBox_scrip";
             this.checkBox_scrip.Size = new System.Drawing.Size(171, 41);
             this.checkBox_scrip.TabIndex = 120;
@@ -362,7 +359,7 @@ namespace BankTeacher.Bank.Add_Member
             this.checkBox_copy.AutoSize = true;
             this.checkBox_copy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.checkBox_copy.Location = new System.Drawing.Point(15, 212);
-            this.checkBox_copy.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.checkBox_copy.Margin = new System.Windows.Forms.Padding(4);
             this.checkBox_copy.Name = "checkBox_copy";
             this.checkBox_copy.Size = new System.Drawing.Size(162, 41);
             this.checkBox_copy.TabIndex = 121;
@@ -472,8 +469,6 @@ namespace BankTeacher.Bank.Add_Member
             // 
             // TB_Print
             // 
-            this.TB_Print.Controls.Add(this.pictureBox1);
-            this.TB_Print.Controls.Add(this.textBox1);
             this.TB_Print.Controls.Add(this.panel13);
             this.TB_Print.Controls.Add(this.panel14);
             this.TB_Print.Controls.Add(this.panel12);
@@ -489,30 +484,6 @@ namespace BankTeacher.Bank.Add_Member
             this.TB_Print.TabIndex = 1;
             this.TB_Print.Text = "อัพโหลดเอกสาร";
             this.TB_Print.UseVisualStyleBackColor = true;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(644, 73);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(408, 122);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 88;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Visible = false;
-            // 
-            // textBox1
-            // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.HighlightText;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.Location = new System.Drawing.Point(644, 12);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(154, 43);
-            this.textBox1.TabIndex = 87;
-            this.textBox1.Text = "กำลังส่งไฟล์";
-            this.textBox1.Visible = false;
             // 
             // panel13
             // 
@@ -844,8 +815,6 @@ namespace BankTeacher.Bank.Add_Member
             this.panel6.ResumeLayout(false);
             this.panel6.PerformLayout();
             this.TB_Print.ResumeLayout(false);
-            this.TB_Print.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel13.ResumeLayout(false);
             this.panel13.PerformLayout();
             this.panel14.ResumeLayout(false);
@@ -920,7 +889,5 @@ namespace BankTeacher.Bank.Add_Member
         public System.Windows.Forms.Button BTOpenFile;
         public System.Windows.Forms.Button BTRemoveFile;
         public System.Windows.Forms.TextBox TBTeacherNo;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

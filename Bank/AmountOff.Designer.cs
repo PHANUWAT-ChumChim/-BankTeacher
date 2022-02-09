@@ -32,10 +32,10 @@ namespace BankTeacher.Bank
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AmountOff));
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AmountOff));
             this.panel1 = new System.Windows.Forms.Panel();
             this.BExitForm = new System.Windows.Forms.Button();
             this.BExit = new System.Windows.Forms.Button();
@@ -78,10 +78,6 @@ namespace BankTeacher.Bank
             this.CBYear = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.DGVAmountOffHistory = new System.Windows.Forms.DataGridView();
-            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel7 = new System.Windows.Forms.Panel();
             this.DTPDate = new System.Windows.Forms.DateTimePicker();
             this.TBSavingAmount = new System.Windows.Forms.TextBox();
@@ -101,6 +97,10 @@ namespace BankTeacher.Bank
             this.BSave = new System.Windows.Forms.Button();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.Column8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -136,7 +136,7 @@ namespace BankTeacher.Bank
             this.BExitForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BExitForm.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
             this.BExitForm.Location = new System.Drawing.Point(1061, 655);
-            this.BExitForm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BExitForm.Margin = new System.Windows.Forms.Padding(4);
             this.BExitForm.Name = "BExitForm";
             this.BExitForm.Size = new System.Drawing.Size(97, 81);
             this.BExitForm.TabIndex = 114;
@@ -271,7 +271,7 @@ namespace BankTeacher.Bank
             // 
             this.BMaxWithDraw_AmountOff.Enabled = false;
             this.BMaxWithDraw_AmountOff.Location = new System.Drawing.Point(989, 316);
-            this.BMaxWithDraw_AmountOff.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BMaxWithDraw_AmountOff.Margin = new System.Windows.Forms.Padding(4);
             this.BMaxWithDraw_AmountOff.Name = "BMaxWithDraw_AmountOff";
             this.BMaxWithDraw_AmountOff.Size = new System.Drawing.Size(133, 44);
             this.BMaxWithDraw_AmountOff.TabIndex = 3;
@@ -454,9 +454,9 @@ namespace BankTeacher.Bank
             this.label9.ForeColor = System.Drawing.Color.Black;
             this.label9.Location = new System.Drawing.Point(405, 21);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(80, 37);
+            this.label9.Size = new System.Drawing.Size(69, 37);
             this.label9.TabIndex = 123;
-            this.label9.Text = "เลขบิลล์";
+            this.label9.Text = "เลขบิล";
             // 
             // TB_Bill
             // 
@@ -474,7 +474,7 @@ namespace BankTeacher.Bank
             this.checkBox_scrip.AutoSize = true;
             this.checkBox_scrip.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.checkBox_scrip.Location = new System.Drawing.Point(973, 4);
-            this.checkBox_scrip.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.checkBox_scrip.Margin = new System.Windows.Forms.Padding(4);
             this.checkBox_scrip.Name = "checkBox_scrip";
             this.checkBox_scrip.Size = new System.Drawing.Size(171, 41);
             this.checkBox_scrip.TabIndex = 120;
@@ -486,7 +486,7 @@ namespace BankTeacher.Bank
             this.checkBox_copy.AutoSize = true;
             this.checkBox_copy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.checkBox_copy.Location = new System.Drawing.Point(973, 38);
-            this.checkBox_copy.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.checkBox_copy.Margin = new System.Windows.Forms.Padding(4);
             this.checkBox_copy.Name = "checkBox_copy";
             this.checkBox_copy.Size = new System.Drawing.Size(162, 41);
             this.checkBox_copy.TabIndex = 121;
@@ -654,45 +654,6 @@ namespace BankTeacher.Bank
             this.DGVAmountOffHistory.TabIndex = 2;
             this.DGVAmountOffHistory.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGVAmountOffHistory_CellClick);
             // 
-            // Column8
-            // 
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column8.DefaultCellStyle = dataGridViewCellStyle3;
-            this.Column8.HeaderText = "ลำดับที่";
-            this.Column8.MinimumWidth = 6;
-            this.Column8.Name = "Column8";
-            this.Column8.ReadOnly = true;
-            this.Column8.Visible = false;
-            this.Column8.Width = 125;
-            // 
-            // Column9
-            // 
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column9.DefaultCellStyle = dataGridViewCellStyle4;
-            this.Column9.HeaderText = "เลขบิลล์";
-            this.Column9.MinimumWidth = 6;
-            this.Column9.Name = "Column9";
-            this.Column9.ReadOnly = true;
-            this.Column9.Width = 250;
-            // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "วันที่";
-            this.Column5.MinimumWidth = 6;
-            this.Column5.Name = "Column5";
-            this.Column5.ReadOnly = true;
-            this.Column5.Width = 250;
-            // 
-            // Column6
-            // 
-            this.Column6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.Column6.DefaultCellStyle = dataGridViewCellStyle5;
-            this.Column6.HeaderText = "จำนวนเงิน";
-            this.Column6.MinimumWidth = 6;
-            this.Column6.Name = "Column6";
-            this.Column6.ReadOnly = true;
-            // 
             // panel7
             // 
             this.panel7.BackColor = System.Drawing.Color.White;
@@ -723,7 +684,7 @@ namespace BankTeacher.Bank
             this.DTPDate.CalendarFont = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DTPDate.Enabled = false;
             this.DTPDate.Location = new System.Drawing.Point(875, 15);
-            this.DTPDate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.DTPDate.Margin = new System.Windows.Forms.Padding(4);
             this.DTPDate.Name = "DTPDate";
             this.DTPDate.Size = new System.Drawing.Size(265, 43);
             this.DTPDate.TabIndex = 114;
@@ -766,11 +727,9 @@ namespace BankTeacher.Bank
             this.label10.BackColor = System.Drawing.Color.White;
             this.label10.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.Black;
-
             this.label10.Location = new System.Drawing.Point(731, 17);
             this.label10.Name = "label10";
-           this.label10.Size = new System.Drawing.Size(134, 37);
-
+            this.label10.Size = new System.Drawing.Size(134, 37);
             this.label10.TabIndex = 88;
             this.label10.Text = "วันที่ทำรายการ";
             // 
@@ -916,6 +875,45 @@ namespace BankTeacher.Bank
             // 
             this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage_1);
             // 
+            // Column8
+            // 
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column8.DefaultCellStyle = dataGridViewCellStyle3;
+            this.Column8.HeaderText = "ลำดับที่";
+            this.Column8.MinimumWidth = 6;
+            this.Column8.Name = "Column8";
+            this.Column8.ReadOnly = true;
+            this.Column8.Visible = false;
+            this.Column8.Width = 125;
+            // 
+            // Column9
+            // 
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column9.DefaultCellStyle = dataGridViewCellStyle4;
+            this.Column9.HeaderText = "เลขบิล";
+            this.Column9.MinimumWidth = 6;
+            this.Column9.Name = "Column9";
+            this.Column9.ReadOnly = true;
+            this.Column9.Width = 250;
+            // 
+            // Column5
+            // 
+            this.Column5.HeaderText = "วันที่";
+            this.Column5.MinimumWidth = 6;
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            this.Column5.Width = 250;
+            // 
+            // Column6
+            // 
+            this.Column6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
+            this.Column6.DefaultCellStyle = dataGridViewCellStyle5;
+            this.Column6.HeaderText = "จำนวนเงิน";
+            this.Column6.MinimumWidth = 6;
+            this.Column6.Name = "Column6";
+            this.Column6.ReadOnly = true;
+            // 
             // AmountOff
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1002,10 +1000,6 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label LBalance_AmountOff;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
         private System.Windows.Forms.CheckBox checkBox_scrip;
         private System.Windows.Forms.CheckBox checkBox_copy;
         private System.Windows.Forms.Label label9;
@@ -1020,5 +1014,9 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DateTimePicker DTPDate;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column8;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
     }
 }

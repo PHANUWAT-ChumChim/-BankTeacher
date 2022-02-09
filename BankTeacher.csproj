@@ -131,6 +131,12 @@
     <Compile Include="Bank\Dividend.Designer.cs">
       <DependentUpon>Dividend.cs</DependentUpon>
     </Compile>
+    <Compile Include="Bank\LoadWorking.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bank\LoadWorking.Designer.cs">
+      <DependentUpon>LoadWorking.cs</DependentUpon>
+    </Compile>
     <Compile Include="Bank\Loan\CancelLoan.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -352,6 +358,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Dividend.resx">
       <DependentUpon>Dividend.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bank\LoadWorking.resx">
+      <DependentUpon>LoadWorking.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Loan\CancelLoan.resx">
       <DependentUpon>CancelLoan.cs</DependentUpon>
