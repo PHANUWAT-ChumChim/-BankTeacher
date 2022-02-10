@@ -239,7 +239,6 @@ namespace BankTeacher.Bank.Loan
                         break;
                     }
                 }
-
             }
             String AmountLimit = LLoanAmount.Text.Remove(0, 1);
             AmountLimit = AmountLimit.Remove(AmountLimit.Length - 1);
