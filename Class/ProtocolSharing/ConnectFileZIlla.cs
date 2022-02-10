@@ -41,6 +41,10 @@ namespace BankTeacher.Class.ProtocolSharing
 
             public FileZillaConnection(String location)
             {
+                System.IO.Directory.CreateDirectory(@"C:\BankTeacher\RegMember\");
+                System.IO.Directory.CreateDirectory(@"C:\BankTeacher\Loan\");
+                System.IO.Directory.CreateDirectory(@"C:\BankTeacher\CancelMember\");
+
                 StatusReturn = false;
                 PathFile = this.networkPath = $"/{Folder}/{location}/";
                 this.networkPath = $@"ftp://{sessionOptions.HostName}/{Folder}/{location}/";
