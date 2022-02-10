@@ -326,6 +326,9 @@ namespace BankTeacher.Bank.Loan
                     info_GuarantrN.Clear();
                     info_GuarantrPercent.Clear();
                     info_GuarantRemains.Clear();
+                    BTRemoveFile.Enabled = true;
+                    BTUploadFile.Enabled = true;
+                    BTOpenFile.Enabled = true;
                     for (int loopPS = 0; loopPS < ds.Tables[0].Rows.Count; loopPS++)
                     {
                         info_Sum += Convert.ToSingle(ds.Tables[0].Rows[loopPS][9].ToString());
@@ -463,7 +466,10 @@ namespace BankTeacher.Bank.Loan
                     string date = "";
                     if(dt.Rows[0][1].ToString() == "") 
                     { 
-                        date = "รอดำเนินการ"; 
+                        date = "รอดำเนินการ";
+                        BTUploadFile.Enabled = false;
+                        BTRemoveFile.Enabled = false;
+                        BTOpenFile.Enabled = false;
                     } 
                     else 
                     { 

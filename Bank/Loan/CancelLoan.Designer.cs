@@ -37,6 +37,10 @@ namespace BankTeacher.Bank.Loan
             this.panel1 = new System.Windows.Forms.Panel();
             this.BExitForm = new System.Windows.Forms.Button();
             this.DGVCancelLoan = new System.Windows.Forms.DataGridView();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel7 = new System.Windows.Forms.Panel();
             this.TBTeacherName = new System.Windows.Forms.TextBox();
             this.LB2Ne = new System.Windows.Forms.Label();
@@ -45,10 +49,6 @@ namespace BankTeacher.Bank.Loan
             this.CBStatus = new System.Windows.Forms.ComboBox();
             this.BSave = new System.Windows.Forms.Button();
             this.panel16 = new System.Windows.Forms.Panel();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGVCancelLoan)).BeginInit();
             this.panel7.SuspendLayout();
@@ -147,6 +147,8 @@ namespace BankTeacher.Bank.Loan
             // 
             this.DGVCancelLoan.AllowUserToAddRows = false;
             this.DGVCancelLoan.AllowUserToDeleteRows = false;
+            this.DGVCancelLoan.AllowUserToResizeColumns = false;
+            this.DGVCancelLoan.AllowUserToResizeRows = false;
             this.DGVCancelLoan.BackgroundColor = System.Drawing.Color.White;
             this.DGVCancelLoan.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGVCancelLoan.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -162,6 +164,42 @@ namespace BankTeacher.Bank.Loan
             this.DGVCancelLoan.Size = new System.Drawing.Size(824, 313);
             this.DGVCancelLoan.TabIndex = 100;
             this.DGVCancelLoan.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DGVCancelLoan_MouseClick);
+            // 
+            // Column4
+            // 
+            this.Column4.HeaderText = "เลขสัญญากู้";
+            this.Column4.MinimumWidth = 6;
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column4.Width = 130;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "วันที่สมัครกู้";
+            this.Column1.MinimumWidth = 6;
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column1.Width = 150;
+            // 
+            // Column2
+            // 
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column2.HeaderText = "ชื่อ - สกุล";
+            this.Column2.MinimumWidth = 6;
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "ยอดเงินค้ำ";
+            this.Column3.MinimumWidth = 6;
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column3.Width = 200;
             // 
             // panel7
             // 
@@ -260,42 +298,6 @@ namespace BankTeacher.Bank.Loan
             this.panel16.Name = "panel16";
             this.panel16.Size = new System.Drawing.Size(251, 59);
             this.panel16.TabIndex = 99;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "เลขสัญญากู้";
-            this.Column4.MinimumWidth = 6;
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            this.Column4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column4.Width = 130;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "วันที่สมัครกู้";
-            this.Column1.MinimumWidth = 6;
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column1.Width = 150;
-            // 
-            // Column2
-            // 
-            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column2.HeaderText = "ชื่อ - สกุล";
-            this.Column2.MinimumWidth = 6;
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "ยอดเงินค้ำ";
-            this.Column3.MinimumWidth = 6;
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column3.Width = 200;
             // 
             // CancelLoan
             // 
