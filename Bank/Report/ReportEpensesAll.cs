@@ -51,7 +51,6 @@ namespace BankTeacher.Bank
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
-            
             DGV.Rows.Clear();
             CheckMember = false;
             String Year = DTP.Value.ToString("yyyy");
@@ -94,7 +93,7 @@ namespace BankTeacher.Bank
                         AmountSaving += Convert.ToInt32(EpensesInfo.Tables[1].Rows[x][3]);
                         SumAmount += Convert.ToInt32(EpensesInfo.Tables[1].Rows[x][3]);
                     }
-                    DGV.Rows.Add("","", "สรุปรายการถอนหุ้นสะสม  ", "", "", AmountSaving.ToString());
+                    DGV.Rows.Add("","", "สรุปรายการถอน  ", "", "", AmountSaving.ToString());
                     DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                     TBAmountWithDraw.Text = AmountSaving.ToString();
                 }
@@ -117,6 +116,9 @@ namespace BankTeacher.Bank
                 DGV.Rows.Add("","", "รวมรายการทั้งหมด  ", "", "",SumAmount.ToString());
                 DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.CornflowerBlue;
                 BTPrint.Enabled = true;
+                Class.Print.PrintPreviewDialog.info_SUMAmount = Convert.ToDouble(TBAmount.Text).ToString("N0");
+                Class.Print.PrintPreviewDialog.info_Cash = Convert.ToDouble(TBAmountLoan.Text).ToString("N0");
+                Class.Print.PrintPreviewDialog.info_Cradit = Convert.ToDouble(TBAmountWithDraw.Text).ToString("N0");
             }
         }
 
@@ -156,7 +158,7 @@ namespace BankTeacher.Bank
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             ///Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV, "รายการจ่าย", AccessibilityObject.Name,false,false, "A4", 1);
-            Class.Print.PrintPreviewDialog.Detailspayment(e,DGV,"รายการ");
+            Class.Print.PrintPreviewDialog.Detailspayment(e,DGV,"รายการ",AccessibilityObject.Name);
         }
     }
 }

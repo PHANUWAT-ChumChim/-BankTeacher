@@ -41,13 +41,16 @@ namespace BankTeacher.Class.ProtocolSharing
 
             public FileZillaConnection(String location)
             {
+                System.IO.Directory.CreateDirectory(@"C:\BankTeacher\RegMember\");
+                System.IO.Directory.CreateDirectory(@"C:\BankTeacher\Loan\");
+                System.IO.Directory.CreateDirectory(@"C:\BankTeacher\CancelMember\");
+
                 StatusReturn = false;
                 PathFile = this.networkPath = $"/{Folder}/{location}/";
                 this.networkPath = $@"ftp://{sessionOptions.HostName}/{Folder}/{location}/";
                 HostplusPathFile = $@"//{sessionOptions.HostName}{PathFile}";
                 Location = location;
             }
-
             Thread ThreadConnected;
             public void FTPSendFile(String pathfile, String ChangeFilename)
             {
@@ -241,7 +244,7 @@ namespace BankTeacher.Class.ProtocolSharing
                 }
                 else
                 {
-                    MessageBox.Show(@"WinSCP.exe (ไม่พบไฟล์.exe ในการส่งเอกสารโปรด ติดต่อผู้ดูเเลโปรเเกรม)");
+                    MessageBox.Show("ไม่สามารถส่งไฟล์ได่เนื่องจากไฟล์ในโปรแกรมไม่สมบูรณ์ \n Not Found WinSCP.exe","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                 }
             }
 

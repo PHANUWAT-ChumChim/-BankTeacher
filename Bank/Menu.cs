@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,7 +16,7 @@ namespace BankTeacher.Bank
     public partial class Menu : Form
     {
         //============================== Time Servers SQL ========================================
-        public static DataTable Date_Time_SQL_Now = Class.SQLConnection.InputSQLMSSQL("SELECT CAST(GETDATE() as date) as date,YEAR(GETDATE()) as Year,MONTH(GETDATE()) as Month, CAST(GETDATE() as time) as Time;");
+        public static DataTable Date_Time_SQL_Now = Class.SQLConnection.InputSQLMSSQL("SELECT FORMAT (getdate(), 'dd-MM-yy') as date,YEAR(GETDATE()) as Year,MONTH(GETDATE()) as Month, CAST(GETDATE() as time) as Time;");
         public static int MenuEnabled;
         public static int startAmountMin;
         public static int startAmountMax;
@@ -44,26 +46,51 @@ namespace BankTeacher.Bank
           ,
 
         };
+        Thread ThreadWorkingAlive;
         public Menu()
         {
             InitializeComponent();
             try
             {
-                Date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]).Rows[0][0].ToString().Split('-');
-                BankTeacher.Bank.Menu.Monthname = Month[Convert.ToInt32(BankTeacher.Bank.Menu.Date[1]) - 1];
                 Class.UserInfo.SetTeacherInformation("T43005", "Manit Hodkuntod", "1");
-                dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]);
-                DateAmountChange = Convert.ToInt32(dt.Rows[0][0]);
-                startAmountMin = Convert.ToInt32(dt.Rows[0][1]);
-                startAmountMax = Convert.ToInt32(dt.Rows[0][2]);
-                MinLoan = Convert.ToInt32(dt.Rows[0][3]);
-                perShare = Convert.ToInt32(dt.Rows[0][4]);
-                StatusActivateButtonExceltoSQL = Convert.ToInt32(dt.Rows[0][5]);
+                ThreadWorkingAlive = new Thread(() => ReloadData());
+                ThreadWorkingAlive.Start();
             }
             catch
             {
                 MessageBox.Show("โปรดทำการเชื่อมฐานข้อมูล", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning); this.Enabled = false; 
             }
+        }
+        Thread THREADWorking;
+        private void ReloadData()
+        {
+            ThreadReloadData();
+            Stopwatch time = new Stopwatch();
+            time.Start();
+            int Round = 1;
+            //Relaod ข้อมูลทุก 10 นาที
+            while (true)
+            {
+                if(time.ElapsedMilliseconds >= 600000 * Round)
+                {
+                    THREADWorking = new Thread(() => ThreadReloadData());
+                    THREADWorking.Start();
+                    THREADWorking.Abort();
+                    Round++;
+                }
+            }
+        }
+        private void ThreadReloadData()
+        {
+            Date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]).Rows[0][0].ToString().Split('-');
+            BankTeacher.Bank.Menu.Monthname = Month[Convert.ToInt32(BankTeacher.Bank.Menu.Date[1]) - 1];
+            dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]);
+            DateAmountChange = Convert.ToInt32(dt.Rows[0][0]);
+            startAmountMin = Convert.ToInt32(dt.Rows[0][1]);
+            startAmountMax = Convert.ToInt32(dt.Rows[0][2]);
+            MinLoan = Convert.ToInt32(dt.Rows[0][3]);
+            perShare = Convert.ToInt32(dt.Rows[0][4]);
+            StatusActivateButtonExceltoSQL = Convert.ToInt32(dt.Rows[0][5]);
         }
         public void CloseFrom(Form F)
         {
@@ -200,7 +227,7 @@ namespace BankTeacher.Bank
 
         private void ประวตการยกเลกบลลToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Bank.Pay.Billcancelhistory Billcancelhistory = new Bank.Pay.Billcancelhistory();
+            Bank.Pay.BillHistory Billcancelhistory = new Bank.Pay.BillHistory();
             CloseFrom(Billcancelhistory);
         }
 

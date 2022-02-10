@@ -109,7 +109,7 @@ namespace BankTeacher.Bank.Loan
            //[3] for printback  INPUT : {TeacherNo} {LoanNo}
          "SELECT a.TeacherNo,CAST(ISNULL(d.PrefixName+' ','')+Fname +' '+ Lname as NVARCHAR)AS Name,LoanAmount , \r\n " +
          "CAST(cNo + ' หมู่ ' + cMu + 'ซอย  ' + cSoi + ' ถนน' + cRoad + ' ตำบล' +  TumBonName + ' อำเภอ'  + AmphurName + ' จังหวัด ' + JangWatLongName + ' รหัสไปรสณี ' + ZipCode as NVARCHAR(255)) AS ADDRESS, \r\n " +
-         "MonthPay , YearPay , PayNo , InterestRate \r\n " +
+         "MonthPay-1 as month ,IIF(PayNo/12 > 0,(YearPay+1)+543,YearPay+543) as year, PayNo , InterestRate,CAST(CAST(DAY(DateAdd) as nvarchar)+'/'+CAST(MONTH(DateAdd) as nvarchar)+'/'+CAST(YEAR(DateAdd)+543 as nvarchar) as nvarchar)  as Date \r\n " +
          "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
          "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo \r\n " +
          "LEFT JOIN Personal.dbo.tblTeacherHis as c ON b.TeacherNo = c.TeacherNo \r\n " +
@@ -326,6 +326,9 @@ namespace BankTeacher.Bank.Loan
                     info_GuarantrN.Clear();
                     info_GuarantrPercent.Clear();
                     info_GuarantRemains.Clear();
+                    BTRemoveFile.Enabled = true;
+                    BTUploadFile.Enabled = true;
+                    BTOpenFile.Enabled = true;
                     for (int loopPS = 0; loopPS < ds.Tables[0].Rows.Count; loopPS++)
                     {
                         info_Sum += Convert.ToSingle(ds.Tables[0].Rows[loopPS][9].ToString());
@@ -372,13 +375,13 @@ namespace BankTeacher.Bank.Loan
                     TBPayNo_Detail.Text = ds.Tables[0].Rows[0][6].ToString();
                     TBInterestRate_Detail.Text = ds.Tables[0].Rows[0][7].ToString();
                     TBLoanStatus.Text = ds.Tables[0].Rows[0][10].ToString();
-                    TBSavingAmount.Text = ds.Tables[0].Rows[0][2].ToString();
+                    TBSavingAmount.Text = Convert.ToDateTime(ds.Tables[0].Rows[0][2].ToString()).ToString("dd/MM/yyyy");
                     DGVLoanDetail.Rows.Clear();
                     TBTeacheraddbyNo.Text = ds.Tables[0].Rows[0][11].ToString();
                     TBTeacheraddbyname.Text = ds.Tables[0].Rows[0][12].ToString();
                     int Month = Convert.ToInt32(ds.Tables[0].Rows[0][4].ToString());
                     int Year = Convert.ToInt32(ds.Tables[0].Rows[0][5].ToString());
-                    TBSignUpDate_Detail.Text = ds.Tables[0].Rows[0][2].ToString();
+                    TBSignUpDate_Detail.Text = Convert.ToDateTime(ds.Tables[0].Rows[0][2].ToString()).ToString("dd/MM/yyyy");
                     DateTime FinishDate = Convert.ToDateTime(ds.Tables[0].Rows[0][13].ToString());
                     TBFinishYearPay_Detail.Text = FinishDate.ToString("yyyy");
                     TBFinishMonthPay_Detail.Text = FinishDate.ToString("MM");
@@ -461,7 +464,18 @@ namespace BankTeacher.Bank.Loan
                     Class.Print.PrintPreviewDialog.info_TeacherAdd = dt.Rows[0][4].ToString();
                     Class.Print.PrintPreviewDialog.info_Payment = dt.Rows[0][5].ToString();
                     string date = "";
-                    if(dt.Rows[0][1].ToString() == "") { date = "รอดำเนินการ"; } else { date = dt.Rows[0][1].ToString(); }
+                    if(dt.Rows[0][1].ToString() == "") 
+                    { 
+                        date = "รอดำเนินการ";
+                        BTUploadFile.Enabled = false;
+                        BTRemoveFile.Enabled = false;
+                        BTOpenFile.Enabled = false;
+                    } 
+                    else 
+                    { 
+                        date = Convert.ToDateTime(dt.Rows[0][1].ToString()).ToString("dd/MM/yyyy"); 
+                    }
+
                     for (int loop = 0; loop < dt.Rows.Count; loop++)
                     {
                         DGV_Historyloanpay.Rows.Add(dt.Rows[0][0].ToString(),date, dt.Rows[0][3].ToString(), dt.Rows[0][2].ToString());
@@ -488,7 +502,7 @@ namespace BankTeacher.Bank.Loan
             else
             {
                 Class.Print.PrintPreviewDialog.details = 1;
-                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Historyloanpay, tabControl1.SelectedTab.Text, this.AccessibilityObject.Name,checkBox_scrip.Checked,checkBox_copy.Checked, "A4",0);
+                Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Historyloanpay, "เอกสารการจ่ายกู้", this.AccessibilityObject.Name,checkBox_scrip.Checked,checkBox_copy.Checked, "A4",0);
             }
             Class.Print.PrintPreviewDialog.details = 0;
         }
@@ -599,6 +613,7 @@ namespace BankTeacher.Bank.Loan
                     .Replace("{LoanNo}", TBLoanNo.Text));
                 if (dt.Rows.Count != 0)
                 {
+                    Cursor.Current = Cursors.WaitCursor;
                     CheckStatusWorking = true;
                     BankTeacher.Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("Loan");
                     BTOpenFile.Enabled = false;
@@ -613,6 +628,7 @@ namespace BankTeacher.Bank.Loan
                 else
                     MessageBox.Show("ไม่พบเอกสารในระบบโปรดอัพโหลดเอกสารก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            Cursor.Current = Cursors.Default;
         }
         String PathFile = "";
         private void BTOpenfile_Reg_Click(object sender, EventArgs e)

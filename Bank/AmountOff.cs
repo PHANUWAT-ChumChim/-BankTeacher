@@ -226,6 +226,8 @@ namespace BankTeacher.Bank
                 DGVAmountOffHistory.Enabled = false;
                 tabControl1.SelectedIndex = 0;
                 tabControl1.Enabled = true;
+                DTPDate.Value = Convert.ToDateTime(Bank.Menu.Date[0] + "/" + Bank.Menu.Date[1] + "/" + Bank.Menu.Date[2]);
+                DTPDate.Enabled = Bank.Setting.CheckTimeBack;
                 DGVAmountOffHistory.Rows.Clear();
                 CBYear.Items.Clear();
                 DGVLoan.Rows.Clear();
@@ -267,7 +269,7 @@ namespace BankTeacher.Bank
                     for (int Num = 0; Num < ds.Tables[1].Rows.Count; Num++)
                     {
                         Credit = ds.Tables[1].Rows[Num][1].ToString().Split('.');
-                        DGVLoan.Rows.Add(Num+1,ds.Tables[1].Rows[Num][0].ToString(), ds.Tables[1].Rows[Num][2].ToString(), Credit[0], ds.Tables[1].Rows[Num][3].ToString());
+                        DGVLoan.Rows.Add(Num+1,ds.Tables[1].Rows[Num][0].ToString(), ds.Tables[1].Rows[Num][2].ToString(), Credit[0], Convert.ToDateTime(ds.Tables[1].Rows[Num][3].ToString()).ToString("dd/MM/yyyy"));
                     }
                     if (DGVLoan.Rows.Count != 0)
                     {

@@ -51,7 +51,7 @@ namespace BankTeacher.Bank
                     }
                     catch
                     {
-                            DGV.Rows.Add(dt.Rows[x][0], dt.Rows[x][1], dt.Rows[x][2].ToString());
+                        DGV.Rows.Add(dt.Rows[x][0], dt.Rows[x][1], dt.Rows[x][2].ToString());
                     }
                 }
                 else
@@ -69,7 +69,8 @@ namespace BankTeacher.Bank
         {
             DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLCODE
                 .Replace("{Text}", TBSearch.Text));
-            if (DGV.Rows.Count != 0) { DGV.Rows.Clear(); }
+            if (DGV.Rows.Count != 0)
+                DGV.Rows.Clear(); 
             for (int x = 0; x < dt.Rows.Count; x++)
             {
                 if (HaveCollumn3)
@@ -111,21 +112,21 @@ namespace BankTeacher.Bank
             {
                 if(DGV.Rows.Count != 0)
                 {
-                    try
+                    if (DGV.Rows[0].Cells.Count == 3)
                     {
                         Return = new String[]
                         {
-                            DGV.Rows[0].Cells[0].Value.ToString(),
-                            DGV.Rows[0].Cells[1].Value.ToString(),
-                            DGV.Rows[0].Cells[2].Value.ToString(),
+                            DGV.Rows[DGV.CurrentRow.Index].Cells[0].Value.ToString(),
+                            DGV.Rows[DGV.CurrentRow.Index].Cells[1].Value.ToString(),
+                            DGV.Rows[DGV.CurrentRow.Index].Cells[2].Value.ToString(),
                         };
                     }
-                    catch
+                    else
                     {
                         Return = new String[]
                         {
-                            DGV.Rows[0].Cells[0].Value.ToString(),
-                            DGV.Rows[0].Cells[1].Value.ToString(),
+                            DGV.Rows[DGV.CurrentRow.Index].Cells[0].Value.ToString(),
+                            DGV.Rows[DGV.CurrentRow.Index].Cells[1].Value.ToString(),
                         };
                     }
                     this.Dispose();
@@ -136,12 +137,61 @@ namespace BankTeacher.Bank
                 this.Close();
             }
         }
-
+        static int Rows = 0,Cell = 0;
         private void Search_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Escape)
+            if (e.KeyCode == Keys.Escape)
             {
                 this.Close();
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                if (Rows < DGV.RowCount - 1)
+                {
+                    Rows++;
+                    DGV.CurrentCell = DGV[Cell, Rows];
+                }
+                else
+                {
+                    Rows = 0;
+                    DGV.CurrentCell = DGV[Cell, 0];
+                }
+            }
+            else if (e.KeyCode == Keys.Up)
+            {
+                if (Rows > 0)
+                {
+                    Rows--;
+                    DGV.CurrentCell = DGV[Cell, Rows];
+                }
+                else
+                {
+                    Rows = DGV.RowCount - 1;
+                    DGV.CurrentCell = DGV[Cell, DGV.RowCount - 1];
+                }
+            }
+            else if (e.KeyCode == Keys.Enter)
+            {
+                if(DGV.Rows.Count != 0)
+                {
+                    if(DGV.Rows[0].Cells.Count == 3)
+                    {
+                        Return = new String[]
+                        {
+                            DGV.Rows[DGV.CurrentRow.Index].Cells[0].Value.ToString(),
+                            DGV.Rows[DGV.CurrentRow.Index].Cells[1].Value.ToString(),
+                            DGV.Rows[DGV.CurrentRow.Index].Cells[2].Value.ToString(),
+                        };
+                    }
+                    else
+                    {
+                        Return = new String[]
+                        {
+                            DGV.Rows[DGV.CurrentRow.Index].Cells[0].Value.ToString(),
+                            DGV.Rows[DGV.CurrentRow.Index].Cells[1].Value.ToString(),
+                        };
+                    }
+                }
             }
         }
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)

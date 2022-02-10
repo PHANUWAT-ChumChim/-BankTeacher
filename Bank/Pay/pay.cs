@@ -88,7 +88,7 @@ namespace BankTeacher.Bank.Pay
           "FROM EmployeeBank.dbo.tblBill as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblMember as c on a.TeacherNo = c.TeacherNo\r\n"+
-          "WHERE a.TeacherNo = '{TeacherNo}' and a.Cancel = 1 and c.DateAdd <= a.DateAdd \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}' and a.Cancel = 1 and c.DateAdd <= a.TransactionDate \r\n " +
           "ORDER BY Maxdate DESC; "
            ,
            //[3] Count the Bill Year INPUT: {TeacherNo} , {Year}
@@ -110,7 +110,7 @@ namespace BankTeacher.Bank.Pay
           "(SELECT aa.TeacherNo  \r\n " +
           "FROM EmployeeBank.dbo.tblBill as aa     \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as bb on aa.BillNo = bb.BillNo     \r\n " +
-          "WHERE bb.Mount = '{Month}' and bb.Year = '{Year}' and (bb.TypeNo = 1 or bb.TypeNo = 3) and MemberStatusNo = 1 and DATEADD(YYYY,0,'{Date}') >= a.DateAdd  and aa.Cancel = 1 and aa.DateAdd >= a.DateAdd)   \r\n " +
+          "WHERE bb.Mount = '{Month}' and bb.Year = '{Year}' and (bb.TypeNo = 1 or bb.TypeNo = 3) and MemberStatusNo = 1 and DATEADD(YYYY,0,'{Date}') >= a.DateAdd  and aa.Cancel = 1 and aa.TransactionDate >= a.DateAdd)   \r\n " +
           "and a.TeacherNo = '{TeacherNo}' and (c.TypeNo = 1 or c.TypeNo = 3) and MemberStatusNo = 1 and b.Cancel = 1   and DATEADD(YYYY,0,'{Date}') >=  a.DateAdd \r\n " +
           "GROUP BY a.TeacherNo,f.TypeName, StartAmount   ;  "
            ,
@@ -225,7 +225,7 @@ namespace BankTeacher.Bank.Pay
           "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo\r\n" +
           "LEFT JOIN EmployeeBank.dbo.tblBill as c on a.TeacherNo = c.TeacherNo\r\n" +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as d on c.BillNo = d.BillNo\r\n" +
-          "WHERE c.Cancel = 1 and (d.TypeNo = 1 or d.TypeNo = 3) and d.Mount <= 12 and d.Year = {Year} and a.TeacherNo LIKE '{TeacherNo}'\r\n" +
+          "WHERE c.Cancel = 1 and (d.TypeNo = 1 or d.TypeNo = 3) and d.Mount <= 12 and d.Year = {Year} and a.TeacherNo LIKE '{TeacherNo}'  and a.DateAdd <= c.TransactionDate \r\n" +
           "GROUP BY a.TeacherNo , d.Amount , d.Mount , d.Year , a.StartAmount , CAST(a.DateAdd AS Date) , b.SavingAmount;\r\n" +
           "\r\n" +
              "DECLARE @Loan int = 0 \r\n" +
@@ -593,7 +593,7 @@ namespace BankTeacher.Bank.Pay
                                 {
                                     //เช็คว่าเดือนนี้จ่ายกู้รึยัง 
                                     DataSet PayLoanCheck = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[5]
-                                            .Replace("{Month}", (Monthloop).ToString())
+                                            .Replace("{Month}", (Monthloop).ToString())                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
                                             .Replace("{Year}", CBYearSelection_Pay.Items[Yearloop].ToString())
                                             .Replace("{LoanNo}", Loan[y].ToString())
                                             .Replace("{Date}", (Convert.ToDateTime(CBYearSelection_Pay.Items[Yearloop].ToString() + "-" + Monthloop.ToString() + "-" + DateTime.DaysInMonth(Convert.ToInt32(CBYearSelection_Pay.Items[Yearloop].ToString()), Convert.ToInt32(Monthloop)))).ToString("yyyy-MM-dd")));
@@ -1659,7 +1659,7 @@ namespace BankTeacher.Bank.Pay
                 for (int a = Month; a <= 12; a++)
                 {
 
-                    DGV_ShareInfo.Rows.Add(a + "/" + CBYearSelection_ShareInfo.SelectedItem.ToString(), ds.Tables[1].Rows[0][0].ToString(), "ยังไม่ได้ชำระ");
+                    DGV_ShareInfo.Rows.Add(a + "/" + CBYearSelection_ShareInfo.SelectedItem.ToString(), BankTeacher.Bank.Menu.startAmountMin, "ยังไม่ได้ชำระ");
                     DGV_ShareInfo.Rows[a - Month].Cells[2].Style = new DataGridViewCellStyle { ForeColor = Color.Red };
                     bool Check = true;
                     for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
@@ -2416,7 +2416,7 @@ namespace BankTeacher.Bank.Pay
         {
             if (CB_SelectPrint.SelectedIndex == 0 && Printbill != 1)
             {
-                Class.Print.PrintPreviewDialog.Detailspayment(e, DGV_BillInfo,"รายการ");
+                Class.Print.PrintPreviewDialog.Detailspayment(e, DGV_BillInfo,"รายละเอียดบิลรายบุลคล",AccessibilityObject.Name);
             }
             else if (CB_SelectPrint.SelectedIndex == 1 && Printbill != 1)
             {
@@ -2442,32 +2442,41 @@ namespace BankTeacher.Bank.Pay
         // คลิ๊กเพื่อปริ้นข้อมูลย้อนหลัง
         private void DGV_BillInfo_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            timer1.Stop(); P1_X.Visible = false; P2_X.Visible = false; P2_Y.Visible = false; P1_Y.Visible = false;
-            if (e.RowIndex != -1 && DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString() != "")
+            if(e.RowIndex != -1)
             {
-                TB_Bill.Text = DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString();
-                BTPrint.Enabled = true;
-                BTPrint.BackColor = Color.White;
-                Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
-                Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
-                Class.Print.PrintPreviewDialog.info_Savingtotel = TBToatalSaving_ShareInfo.Text;
-                Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
-                Class.Print.PrintPreviewDialog.info_Billpay = DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString();
-                DataTable dt_date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[16].Replace("{Bill}", DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString()));
-                Class.Print.PrintPreviewDialog.info_datepayShare = dt_date.Rows[0][1].ToString();
-                DGV_Tester.Rows.Clear();
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[15].Replace("{bill}", DGV_BillInfo.Rows[e.RowIndex].Cells[1].Value.ToString()));
-                Class.Print.PrintPreviewDialog.info_TeacherAdd = dt.Rows[0][2].ToString();
-                Class.Print.PrintPreviewDialog.info_Payment = dt.Rows[0][6].ToString(); ;
-                for (int Row = 0; Row < dt.Rows.Count; Row++)
+                int Rows = e.RowIndex;
+                string Text = DGV_BillInfo.Rows[Rows].Cells[1].Value.ToString();
+                timer1.Stop(); P1_X.Visible = false; P2_X.Visible = false; P2_Y.Visible = false; P1_Y.Visible = false;
+                if (Text == "")
                 {
-                    DGV_Tester.Rows.Add(Row + 1, dt.Rows[Row][5].ToString(), dt.Rows[Row][4].ToString(), dt.Rows[Row][3]);
+                    do
+                    {
+                        Rows--;
+                        Text = DGV_BillInfo.Rows[Rows].Cells[1].Value.ToString();
+                    } while (Text == "");
                 }
-            }
-            else
-            {
-                BTPrint.BackColor = Color.Red;
-                DGV_Tester.Rows.Clear();
+                if (Text != "")
+                {
+                    DGV_BillInfo.CurrentCell = DGV_BillInfo[1,Rows];
+                    TB_Bill.Text = Text;
+                    BTPrint.Enabled = true;
+                    BTPrint.BackColor = Color.White;
+                    Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
+                    Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
+                    Class.Print.PrintPreviewDialog.info_Savingtotel = TBToatalSaving_ShareInfo.Text;
+                    Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
+                    Class.Print.PrintPreviewDialog.info_Billpay = DGV_BillInfo.Rows[Rows].Cells[1].Value.ToString();
+                    DataTable dt_date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[16].Replace("{Bill}", DGV_BillInfo.Rows[Rows].Cells[1].Value.ToString()));
+                    Class.Print.PrintPreviewDialog.info_datepayShare = dt_date.Rows[0][1].ToString();
+                    DGV_Tester.Rows.Clear();
+                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[15].Replace("{bill}", DGV_BillInfo.Rows[Rows].Cells[1].Value.ToString()));
+                    Class.Print.PrintPreviewDialog.info_TeacherAdd = dt.Rows[0][2].ToString();
+                    Class.Print.PrintPreviewDialog.info_Payment = dt.Rows[0][6].ToString(); ;
+                    for (int Row = 0; Row < dt.Rows.Count; Row++)
+                    {
+                        DGV_Tester.Rows.Add(Row + 1, dt.Rows[Row][5].ToString(), dt.Rows[Row][4].ToString(), dt.Rows[Row][3]);
+                    }
+                }
             }
         }
         // เปลี่ยนรูปเเบบตามต้นฉบับ

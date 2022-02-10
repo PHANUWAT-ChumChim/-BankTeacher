@@ -163,7 +163,7 @@ namespace BankTeacher.Bank
 
                                             if (y == dtCheckBillDetail.Rows.Count - 1)
                                             {
-                                                DGV_one.Rows.Add("","", "", "สรุปยอดบิลล์", "", AmountBill, "");
+                                                DGV_one.Rows.Add("","", "", "สรุปยอดบิล  ", "", AmountBill, "");
                                                 DGV_one.Rows[DGV_one.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                                             }
                                             continue;
@@ -171,7 +171,7 @@ namespace BankTeacher.Bank
                                         DGV_one.Rows.Add("","", "", dtCheckBillDetail.Rows[y][1].ToString(), dtCheckBillDetail.Rows[y][2].ToString(), dtCheckBillDetail.Rows[y][3].ToString(),"");
                                         if (y == dtCheckBillDetail.Rows.Count - 1)
                                         {
-                                            DGV_one.Rows.Add("","", "", "สรุปยอดบิลล์", "", AmountBill, "");
+                                            DGV_one.Rows.Add("","", "", "สรุปยอดบิล  ", "", AmountBill, "");
                                             DGV_one.Rows[DGV_one.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                                         }
 
@@ -273,7 +273,7 @@ namespace BankTeacher.Bank
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_one, "รายการบิลล์", AccessibilityObject.Name,false,false, "A4", 1);
+            Class.Print.PrintPreviewDialog.Detailspayment(e, DGV_one, "รายการ : รายจ่ายระจำวัน", this.AccessibilityObject.Name);
         }
     }
 }

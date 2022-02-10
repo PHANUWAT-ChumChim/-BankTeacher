@@ -126,7 +126,7 @@ namespace BankTeacher.Bank
                         int AmountLoan = 0;
                         for(int x = 0; x < EpensesInfo.Tables[0].Rows.Count; x++)
                         {
-                            DGV.Rows.Add(x+1,EpensesInfo.Tables[0].Rows[x][1].ToString(),"รายการกู้ "+ EpensesInfo.Tables[0].Rows[x][2].ToString() , EpensesInfo.Tables[0].Rows[x][3], EpensesInfo.Tables[0].Rows[x][4]) ;
+                            DGV.Rows.Add(x+1,EpensesInfo.Tables[0].Rows[x][1].ToString(),"รายการกู้"+ EpensesInfo.Tables[0].Rows[x][2].ToString() , EpensesInfo.Tables[0].Rows[x][3], EpensesInfo.Tables[0].Rows[x][4]) ;
                             AmountLoan += Convert.ToInt32(EpensesInfo.Tables[0].Rows[x][4]);
                             SumAmount += Convert.ToInt32(EpensesInfo.Tables[0].Rows[x][4]);
                         }
@@ -214,16 +214,11 @@ namespace BankTeacher.Bank
             {
                 MessageBox.Show("ไม่พบรายการบิลล์ ในตาราง", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-           
         }
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV, "รายการจ่าย", AccessibilityObject.Name,false,false, "A4", 1);
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
+            Class.Print.PrintPreviewDialog.Detailspayment(e, DGV, "รายการ : รายจ่ายระจำวัน", this.AccessibilityObject.Name);
         }
         private void Checkmember(bool tf)
         {

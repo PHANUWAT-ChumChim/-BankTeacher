@@ -116,7 +116,7 @@ namespace BankTeacher.Bank
             // 
             this.Menu_CanCelBill.Name = "Menu_CanCelBill";
             this.Menu_CanCelBill.Size = new System.Drawing.Size(190, 34);
-            this.Menu_CanCelBill.Text = "2.2 ยกเลิกบิลล์";
+            this.Menu_CanCelBill.Text = "2.2 ยกเลิกบิล";
             this.Menu_CanCelBill.Click += new System.EventHandler(this.Menu_CanCelBill_Click);
             // 
             // Menu_Loan
@@ -135,28 +135,28 @@ namespace BankTeacher.Bank
             // Menubar_MerberLoan
             // 
             this.Menubar_MerberLoan.Name = "Menubar_MerberLoan";
-            this.Menubar_MerberLoan.Size = new System.Drawing.Size(165, 34);
+            this.Menubar_MerberLoan.Size = new System.Drawing.Size(180, 34);
             this.Menubar_MerberLoan.Text = "3. 1 สมัครกู้";
             this.Menubar_MerberLoan.Click += new System.EventHandler(this.Menubar_MerberLoan_Click);
             // 
             // Menubar_payLoan
             // 
             this.Menubar_payLoan.Name = "Menubar_payLoan";
-            this.Menubar_payLoan.Size = new System.Drawing.Size(165, 34);
+            this.Menubar_payLoan.Size = new System.Drawing.Size(180, 34);
             this.Menubar_payLoan.Text = "3.2 จ่ายกู้";
             this.Menubar_payLoan.Click += new System.EventHandler(this.Menubar_Click);
             // 
             // Menubar_infoLoan
             // 
             this.Menubar_infoLoan.Name = "Menubar_infoLoan";
-            this.Menubar_infoLoan.Size = new System.Drawing.Size(165, 34);
+            this.Menubar_infoLoan.Size = new System.Drawing.Size(180, 34);
             this.Menubar_infoLoan.Text = "3.3 ดูข้อมุลกู้";
             this.Menubar_infoLoan.Click += new System.EventHandler(this.Menubar_infoLoan_Click);
             // 
             // Cancel
             // 
             this.Cancel.Name = "Cancel";
-            this.Cancel.Size = new System.Drawing.Size(165, 34);
+            this.Cancel.Size = new System.Drawing.Size(180, 34);
             this.Cancel.Text = "3.4 ยกเลิกกู้";
             this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
             // 
@@ -223,7 +223,7 @@ namespace BankTeacher.Bank
             this.MenuOneIncome,
             this.MenuAllIncome});
             this.MenuReportExpenses.Name = "MenuReportExpenses";
-            this.MenuReportExpenses.Size = new System.Drawing.Size(253, 36);
+            this.MenuReportExpenses.Size = new System.Drawing.Size(216, 36);
             this.MenuReportExpenses.Text = "6.1 รายงานรายรับ";
             // 
             // MenuOneIncome
@@ -246,7 +246,7 @@ namespace BankTeacher.Bank
             this.MenuOneEpenses,
             this.MenuAllEpenses});
             this.MenuReportIncome.Name = "MenuReportIncome";
-            this.MenuReportIncome.Size = new System.Drawing.Size(253, 36);
+            this.MenuReportIncome.Size = new System.Drawing.Size(216, 36);
             this.MenuReportIncome.Text = "6.2 รายงานรายจ่าย";
             // 
             // MenuOneEpenses
@@ -266,14 +266,14 @@ namespace BankTeacher.Bank
             // ประวตการยกเลกบลลToolStripMenuItem
             // 
             this.ประวตการยกเลกบลลToolStripMenuItem.Name = "ประวตการยกเลกบลลToolStripMenuItem";
-            this.ประวตการยกเลกบลลToolStripMenuItem.Size = new System.Drawing.Size(253, 36);
-            this.ประวตการยกเลกบลลToolStripMenuItem.Text = "6.3 ประวัติการยกเลิกบิลล์";
+            this.ประวตการยกเลกบลลToolStripMenuItem.Size = new System.Drawing.Size(216, 36);
+            this.ประวตการยกเลกบลลToolStripMenuItem.Text = "6.3 รายงานยอดบิล";
             this.ประวตการยกเลกบลลToolStripMenuItem.Click += new System.EventHandler(this.ประวตการยกเลกบลลToolStripMenuItem_Click);
             // 
             // ReprotDividend
             // 
             this.ReprotDividend.Name = "ReprotDividend";
-            this.ReprotDividend.Size = new System.Drawing.Size(253, 36);
+            this.ReprotDividend.Size = new System.Drawing.Size(216, 36);
             this.ReprotDividend.Text = "6.4 รายงานปันผล";
             this.ReprotDividend.Click += new System.EventHandler(this.ReprotDividend_Click);
             // 
@@ -334,7 +334,7 @@ namespace BankTeacher.Bank
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Menu";
             this.Text = "หน้าเเรก";
             this.Load += new System.EventHandler(this.Menu_Load_1);

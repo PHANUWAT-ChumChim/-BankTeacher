@@ -77,7 +77,7 @@ namespace BankTeacher.Bank.Add_Member
           "WHERE TeacherNo = '{TeacherNo}';"
            ,
            //[3]  Select Detail Memner INPUT: {TeacherNo} 
-         "SELECT a.TeacherNo ,CAST(ISNULL(b.PrefixName+' ','')+a.Fname +' '+ a.Lname as NVARCHAR)AS Name,f.TeacherAddBy,CAST(ISNULL(b.PrefixName+' ','')+h.Fname +' '+ h.Lname as NVARCHAR) as NameTadd,a.IdNo, IIF(a.cNo != null,a.cNo,'-'),IIF(CAST(a.cMu as nvarchar) != null,a.cMu,'-'),IIF(CAST(c.TumBonName as nvarchar) != null,c.TumBonName,'-'),IIF(CAST(d.AmPhurName as nvarchar) != null,d.AmPhurName,'-'),IIF(CAST(e.JangWatLongName as nvarchar) != null,e.JangWatLongName,'-'),a.TelMobile,f.StartAmount  \r\n " +
+          "SELECT a.TeacherNo ,CAST(ISNULL(b.PrefixName+' ','')+a.Fname +' '+ a.Lname as NVARCHAR)AS Name,f.TeacherAddBy,CAST(ISNULL(b.PrefixName+' ','')+h.Fname +' '+ h.Lname as NVARCHAR) as NameTadd,a.IdNo, ISNULL(IIF(a.cNo = '','-',a.cNo),'-') as cNo,ISNULL(IIF(CAST(a.cMu as nvarchar) = '','-',CAST(a.cMu as nvarchar)),'-') as cMu ,ISNULL(IIF(CAST(c.TumBonName as nvarchar) = '','-',CAST(c.TumBonName as nvarchar)),'-') as TumBonName,ISNULL(IIF(CAST(d.AmPhurName as nvarchar) = '','-',CAST(d.AmPhurName as nvarchar)),'-') as AmPhurName,ISNULL(IIF(CAST(e.JangWatLongName as nvarchar) = '','-',CAST(e.JangWatLongName as nvarchar)),'-') as JangWatLongName,ISNULL(IIF(a.TelMobile = '','-',a.TelMobile),'-'),f.StartAmount   \r\n " +
           "FROM Personal.dbo.tblTeacherHis as a \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as b ON a.PrefixNo = b.PrefixNo  \r\n " +
           "LEFT JOIN BaseData.dbo.tblTumBon as c on a.cTumBonNo = c.TumBonNo \r\n " +
@@ -219,12 +219,22 @@ namespace BankTeacher.Bank.Add_Member
                     Checkmember(false);
                     CheckSave = false;
 
-                    if (dsInfoMember.Tables[3].Rows.Count != 0)
+                    if(dsInfoMember.Tables[3].Rows.Count != 0)
                     {
-                        label12.Text = "อัพโหลดไฟล์เรียบร้อย";
-                        label12.ForeColor = Color.Green;
-                        BTOpenFile.Enabled = true;
-                        BTRemoveFile.Enabled = true;
+                        if (dsInfoMember.Tables[3].Rows[0][1].ToString() != "")
+                        {
+                            label12.Text = "อัพโหลดไฟล์เรียบร้อย";
+                            label12.ForeColor = Color.Green;
+                            BTOpenFile.Enabled = true;
+                            BTRemoveFile.Enabled = true;
+                        }
+                        else
+                        {
+                            label12.Text = "ยังไม่ได้อัพโหลดไฟล์";
+                            label12.ForeColor = Color.Red;
+                            BTOpenFile.Enabled = false;
+                            BTRemoveFile.Enabled = false;
+                        }
                     }
                     else
                     {
@@ -233,6 +243,7 @@ namespace BankTeacher.Bank.Add_Member
                         BTOpenFile.Enabled = false;
                         BTRemoveFile.Enabled = false;
                     }
+
 
                 }
             }
@@ -298,56 +309,57 @@ namespace BankTeacher.Bank.Add_Member
                 printDocument1.Print();
             }
         }
-        System.Threading.Thread t1; 
-        bool a = true;
-        void t()
+        private void SendFIle(String PathFile)
         {
-           pictureBox1.Invoke((MethodInvoker)(() => pictureBox1.Visible = true));
+            Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("RegMember");
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "pdf files(*.pdf)|*.pdf";
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Cursor.Current = Cursors.WaitCursor;
+                PathFile = dialog.FileName;
+                if (PathFile != "")
+                {
+                    StatusEnableBT(false);
+                    CheckStatusWorking = true;
+                    FTP.FTPSendFile(PathFile, $"Member_{TBTeacherNo.Text}.pdf");
+                    if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
+                    {
+                        StatusEnableBT(true);
+                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[5]
+                            .Replace("{TeacherNo}", TBTeacherNo.Text)
+                            .Replace("{PathFile}", FTP.HostplusPathFile + $"Member_{TBTeacherNo.Text}.pdf")
+                            .Replace("{TeacherAddBy}", BankTeacher.Class.UserInfo.TeacherNo));
+                        label12.Text = "อัพโหลดไฟล์เรียบร้อย";
+                        label12.ForeColor = Color.Green;
+                        MessageBox.Show("อัพโหลดเอกสารสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    PathFile = "";
+                    BTUploadFile_Reg.Enabled = true;
+                    CheckStatusWorking = false;
+                    Cursor.Current = Cursors.Default;
+                }
+            }
         }
         private void BTUploadFile_Click(object sender, EventArgs e)
         {
             String PathFile = null;
             DataTable dtChackStatusFile = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{TeacherNo}", TBTeacherNo.Text));
-            if (dtChackStatusFile.Rows.Count == 0)
+            if(dtChackStatusFile.Rows.Count != 0)
             {
-                t1 = new System.Threading.Thread(() => t());
-                t1.Start();
-                pictureBox1.Visible = true;
-                Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("RegMember");
-                OpenFileDialog dialog = new OpenFileDialog();
-                dialog.Filter = "pdf files(*.pdf)|*.pdf";
-                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                if (dtChackStatusFile.Rows[0][1].ToString() == "")
                 {
-                    textBox1.Visible = true; 
-                    PathFile = dialog.FileName;
-                    if (PathFile != "")
-                    {
-                       StatusEnableBT(false);
-                        CheckStatusWorking = true;
-                        FTP.FTPSendFile(PathFile , $"Member_{TBTeacherNo.Text}.pdf");
-                        if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
-                        {
-                            StatusEnableBT(true);
-                            Class.SQLConnection.InputSQLMSSQL(SQLDefault[5]
-                                .Replace("{TeacherNo}",TBTeacherNo.Text)
-                                .Replace("{PathFile}",FTP.HostplusPathFile+ $"Member_{TBTeacherNo.Text}.pdf")
-                                .Replace("{TeacherAddBy}",BankTeacher.Class.UserInfo.TeacherNo));
-                            label12.Text = "อัพโหลดไฟล์เรียบร้อย";
-                            label12.ForeColor = Color.Green;
-                            MessageBox.Show("อัพโหลดเอกสารสำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
-                        }
-                        t1.Abort();
-                        PathFile = "";
-                        BTUploadFile_Reg.Enabled = true;
-                        CheckStatusWorking = false;
-                        textBox1.Visible = false;
-                        pictureBox1.Visible = false; a = false;
-                    }
+                    ///this.BeginInvoke((Action)(() => MessageBox.Show("Hello")));
+                    SendFIle(PathFile);
+                }
+                else
+                {
+                    MessageBox.Show("ทำการอัพโหลดเอกสารแล้ว ไม่สามารถดำเนินการส่งเอกสารซ้ำได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else
             {
-                MessageBox.Show("ทำการอัพโหลดเอกสารแล้ว ไม่สามารถดำเนินการส่งเอกสารซ้ำได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                SendFIle(PathFile);
             }
         }
         private void BTOpenFile_Click(object sender, EventArgs e)
@@ -391,7 +403,7 @@ namespace BankTeacher.Bank.Add_Member
                         .Replace("{TeacherRemoveBy}" , BankTeacher.Class.UserInfo.TeacherNo)
                         .Replace("{ID}", dt.Rows[0][0].ToString())
                         .Replace("{TeacherNo}", TBTeacherNo.Text));
-                    MessageBox.Show("ลบเอกสารสำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                    MessageBox.Show("ลบเอกสารสำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Information);
                     label12.Text = "ยังไม่ได้อัพโหลดไฟล์";
                     label12.ForeColor = Color.Red;
                     BTOpenFile.Enabled = false;
@@ -422,7 +434,6 @@ namespace BankTeacher.Bank.Add_Member
         {
             //TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.K));
         }
-
         private void infoMeber_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Tab)
@@ -437,7 +448,6 @@ namespace BankTeacher.Bank.Add_Member
                 }
             }
         }
-
         private void TBStartAmount_TextChanged(object sender, EventArgs e)
         {
             BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBSavingAmount);

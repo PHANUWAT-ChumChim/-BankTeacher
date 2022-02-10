@@ -1,7 +1,7 @@
 ﻿
 namespace BankTeacher.Bank.Pay
 {
-    partial class Billcancelhistory
+    partial class BillHistory
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@ namespace BankTeacher.Bank.Pay
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Billcancelhistory));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BillHistory));
             this.PL_Form = new System.Windows.Forms.Panel();
             this.BExitForm = new System.Windows.Forms.Button();
             this.TB_2 = new System.Windows.Forms.TabControl();
@@ -107,7 +107,7 @@ namespace BankTeacher.Bank.Pay
             this.TB5.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.TB5.Size = new System.Drawing.Size(1131, 547);
             this.TB5.TabIndex = 5;
-            this.TB5.Text = "รายละอียดบิล";
+            this.TB5.Text = "รายละเอียดบิล";
             this.TB5.UseVisualStyleBackColor = true;
             // 
             // DGV_Bill
@@ -126,7 +126,7 @@ namespace BankTeacher.Bank.Pay
             this.Column4,
             this.Column5,
             this.Column6});
-            this.DGV_Bill.Location = new System.Drawing.Point(4, 99);
+            this.DGV_Bill.Location = new System.Drawing.Point(4, 98);
             this.DGV_Bill.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.DGV_Bill.Name = "DGV_Bill";
             this.DGV_Bill.ReadOnly = true;
@@ -151,7 +151,7 @@ namespace BankTeacher.Bank.Pay
             this.Column1.Name = "Column1";
             this.Column1.ReadOnly = true;
             this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column1.Width = 130;
+            this.Column1.Width = 125;
             // 
             // Column2
             // 
@@ -175,7 +175,7 @@ namespace BankTeacher.Bank.Pay
             // 
             this.Column5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Column5.HeaderText = "เงิน";
-            this.Column5.MinimumWidth = 6;
+            this.Column5.MinimumWidth = 130;
             this.Column5.Name = "Column5";
             this.Column5.ReadOnly = true;
             this.Column5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
@@ -187,7 +187,7 @@ namespace BankTeacher.Bank.Pay
             this.Column6.Name = "Column6";
             this.Column6.ReadOnly = true;
             this.Column6.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column6.Width = 125;
+            this.Column6.Width = 80;
             // 
             // panel16
             // 
@@ -215,7 +215,7 @@ namespace BankTeacher.Bank.Pay
             this.BTPrint.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BTPrint.CausesValidation = false;
             this.BTPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTPrint.Location = new System.Drawing.Point(990, 4);
+            this.BTPrint.Location = new System.Drawing.Point(989, 4);
             this.BTPrint.Margin = new System.Windows.Forms.Padding(5, 2, 5, 2);
             this.BTPrint.Name = "BTPrint";
             this.BTPrint.Size = new System.Drawing.Size(127, 66);
@@ -340,7 +340,7 @@ namespace BankTeacher.Bank.Pay
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
             // 
-            // Billcancelhistory
+            // BillHistory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -350,8 +350,8 @@ namespace BankTeacher.Bank.Pay
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.Name = "Billcancelhistory";
-            this.Text = "Billcancelhistory";
+            this.Name = "BillHistory";
+            this.Text = "BilHistory";
             this.Load += new System.EventHandler(this.Billcancelhistory_Load);
             this.SizeChanged += new System.EventHandler(this.Billcancelhistory_SizeChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Billcancelhistory_KeyDown);
@@ -381,14 +381,14 @@ namespace BankTeacher.Bank.Pay
         private System.Windows.Forms.Button BExitForm;
         private System.Windows.Forms.ComboBox CB_DaySelection_Bill;
         private System.Windows.Forms.Label LB_DAY;
+        private System.Windows.Forms.Button BTPrint;
+        private System.Drawing.Printing.PrintDocument printDocument1;
+        private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.Button BTPrint;
-        private System.Drawing.Printing.PrintDocument printDocument1;
-        private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
     }
 }

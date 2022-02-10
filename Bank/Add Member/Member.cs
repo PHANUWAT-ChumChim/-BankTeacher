@@ -96,15 +96,15 @@ namespace BankTeacher.Bank.Add_Member
           "IF(@CountTeacher > 0) \r\n " +
           "BEGIN \r\n " +
           "UPDATE EmployeeBank.dbo.tblMember \r\n " +
-          "SET MemberStatusNo = 1 ,DateAdd = CURRENT_TIMESTAMP,DocStatusNo = 1,DocUploadPath = '{PathFile}' \r\n " +
+          "SET MemberStatusNo = 1 ,DateAdd = CURRENT_TIMESTAMP,DocStatusNo = 2,DocUploadPath = '{PathFile}' \r\n " +
           "WHERE TeacherNo = '{TeacherNo}'; \r\n " +
 
           "UPDATE EmployeeBank.dbo.tblShare \r\n " +
           "SET SavingAmount = '{StartAmount}' \r\n " +
           "WHERE TeacherNo = '{TeacherNo}'; \r\n " +
 
-          "INSERT INTO EmployeeBank.dbo.tblBill(TeacherNo, TeacherNoAddBy, DateAdd , TransactionDate)  \r\n " +
-          "VALUES('{TeacherNo}','{TeacherNoAddBy}', CURRENT_TIMESTAMP , CURRENT_TIMESTAMP)  \r\n " +
+          "INSERT INTO EmployeeBank.dbo.tblBill(TeacherNo, TeacherNoAddBy, DateAdd,TransactionDate)   \r\n " +
+          "VALUES('{TeacherNo}','{TeacherNoAddBy}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)  \r\n " +
 
           "SELECT @BillNo = SCOPE_IDENTITY();  \r\n " +
 
@@ -117,13 +117,13 @@ namespace BankTeacher.Bank.Add_Member
           "BEGIN \r\n " +
           " \r\n " +
           "INSERT INTO EmployeeBank.dbo.tblMember(TeacherNo, TeacherAddBy, StartAmount, DateAdd,DocStatusNo,DocUploadPath)  \r\n " +
-          "VALUES('{TeacherNo}','{TeacherNoAddBy}',{StartAmount},CURRENT_TIMESTAMP,1,'{PathFile}')   \r\n " +
+          "VALUES('{TeacherNo}','{TeacherNoAddBy}',{StartAmount},CURRENT_TIMESTAMP,2,'{PathFile}')   \r\n " +
 
           "INSERT INTO EmployeeBank.dbo.tblShare(TeacherNo, SavingAmount) \r\n " +
           "VALUES('{TeacherNo}',{StartAmount})  \r\n " +
 
-          "INSERT INTO EmployeeBank.dbo.tblBill(TeacherNo, TeacherNoAddBy, DateAdd)  \r\n " +
-          "VALUES('{TeacherNo}','{TeacherNoAddBy}', CURRENT_TIMESTAMP)  \r\n " +
+          "INSERT INTO EmployeeBank.dbo.tblBill(TeacherNo, TeacherNoAddBy, DateAdd,TransactionDate)   \r\n " +
+          "VALUES('{TeacherNo}','{TeacherNoAddBy}', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)  \r\n " +
 
           "SELECT @BillNo = SCOPE_IDENTITY();  \r\n " +
 
@@ -133,8 +133,8 @@ namespace BankTeacher.Bank.Add_Member
           "END; \r\n " +
 
 
-           "INSERT INTO EmployeeBank.dbo.tblFile(TeacherNo , FiletypeNo , pathFile ,TeacherAddBy,LoanID,DateAddFile,IsUse , TeacherRemoveFileBy ,DateRemoveFile, StatusFileInSystem) \r\n " +
-          "VALUES ('{TeacherNo}',1,'{PathFile}','{TeacherNoAddBy}',null,CURRENT_TIMESTAMP,1,null,null,2);"
+          "--INSERT INTO EmployeeBank.dbo.tblFile(TeacherNo , FiletypeNo , pathFile ,TeacherAddBy,LoanID,DateAddFile,IsUse , TeacherRemoveFileBy ,DateRemoveFile, StatusFileInSystem) \r\n " +
+          "--VALUES ('{TeacherNo}',1,'{PathFile}','{TeacherNoAddBy}',null,CURRENT_TIMESTAMP,1,null,null,2);"
           ,
           //[4] Print info_Member  INPUT : {TeacherNo}
           "SELECT a.TeacherNo,a.TeacherAddBy,CAST(c.PrefixName+' '+b.Fname+' '+b.Lname as nvarchar),a.StartAmount,a.DateAdd  \r\n " +
@@ -221,9 +221,6 @@ namespace BankTeacher.Bank.Add_Member
                             BSave_Reg.Enabled = false;
                             CheckBRegister = true;
                             Checkmember(true);
-                            BTdeletefile_Reg.Visible = false;
-                            BTPrintfShare_Reg.Enabled = true;
-                            BTOpenfile_Reg.Enabled = true;
                             TBStartAmountShare_Reg.Enabled = false;
                             Class.SQLConnection.InputSQLMSSQL(SQLDefault[3].Replace("{TeacherNo}", TBTeacherNo_Reg.Text)
                             .Replace("{TeacherNoAddBy}", BankTeacher.Class.UserInfo.TeacherNo)
@@ -234,6 +231,12 @@ namespace BankTeacher.Bank.Add_Member
                             MessageBox.Show("สมัครเสร็จสิ้น", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             CheckStatusWorking = false;
                             CheckSave = true;
+
+                            TBTeacherNo_Reg.Text = "";
+                            TBTeacherName_Reg.Text = "";
+                            CheckBRegister = false;
+                            Checkmember(true);
+                            Check = 0;
                         }
                         else
                         {
@@ -247,7 +250,7 @@ namespace BankTeacher.Bank.Add_Member
                 }
                 else
                 {
-                    MessageBox.Show("ไม่สามารถสมัครสมาชิกได้เนื่องจาก \r\n ราคาหุ้นเริ่มต้นต่ำหรือสูงเกินไป \r\n โปรดแก้ไข ราคาหุ้นขั้นต่ำ หรือ สูงสุด ที่หน้าตั้งค่า", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show($"ไม่สามารถสมัครสมาชิกได้เนื่องจาก \r\n ราคาหุ้นเริ่มต้นต่ำหรือสูงเกินไป \r\n โปรดแก้ไข ราคาหุ้นขั้นต่ำ {BankTeacher.Bank.Menu.startAmountMin} หรือ สูงสุด {BankTeacher.Bank.Menu.startAmountMax}", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                
             }
@@ -267,6 +270,7 @@ namespace BankTeacher.Bank.Add_Member
         private void BTPrintfShare_Click(object sender, EventArgs e)
         {
             //printPreviewDialog1.Document = printDocument1;
+            printDocument1.Print();
             ToolStripButton b = new ToolStripButton();
             b.Image = Properties.Resources._10x10_Print;
             b.DisplayStyle = ToolStripItemDisplayStyle.Image;
@@ -313,8 +317,7 @@ namespace BankTeacher.Bank.Add_Member
                         Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
                             .Replace("{PathFile}", FTP.HostplusPathFile + $"Member_{TBTeacherNo_Reg.Text}.pdf")
                             .Replace("{TeacherNo}", TBTeacherNo_Reg.Text));
-                        MessageBox.Show("อัพโหลดเอกสารสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        BTdeletefile_Reg.Visible = true;
+                        MessageBox.Show("อัพโหลดเอกสารสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);    
                     }
                 }
                 PathFile = "";
@@ -328,25 +331,16 @@ namespace BankTeacher.Bank.Add_Member
         {
             if (e.KeyCode == Keys.Enter)
             {
-                try
+                TBTeacherNo_Reg.Text = TBTeacherNo_Reg.Text.Replace("t", "T");
+                    DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[5].Replace("{Text}", TBTeacherNo_Reg.Text));
+                if(ds.Tables[0].Rows.Count != 0)
                 {
-                    TBTeacherNo_Reg.Text = TBTeacherNo_Reg.Text.Replace("t", "T");
-                        DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[5].Replace("{Text}", TBTeacherNo_Reg.Text));
-                    if(ds.Tables[0].Rows.Count != 0)
-                    {
-                        TBTeacherName_Reg.Text = ds.Tables[0].Rows[0][1].ToString();
-                        Check = 1;
-                        CheckBRegister = false;
-                        Checkmember(false);
-                        TBStartAmountShare_Reg.Enabled = true;
-                        CheckSave = false;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    BTPrintfShare_Reg.Enabled = false;
-                    BTOpenfile_Reg.Enabled = false;
-                    Console.WriteLine(ex);
+                    TBTeacherName_Reg.Text = ds.Tables[0].Rows[0][1].ToString();
+                    Check = 1;
+                    CheckBRegister = false;
+                    Checkmember(false);
+                    TBStartAmountShare_Reg.Enabled = true;
+                    CheckSave = false;
                 }
             }
             else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back && Check == 1)
@@ -373,7 +367,6 @@ namespace BankTeacher.Bank.Add_Member
             {
                 if (TBTeacherNo_Reg.Text.Length != 0)
                 {
-                    BTdeletefile_Reg.Visible = false;
                     TBTeacherNo_Reg.Text = "";
                     TBTeacherName_Reg.Text = "";
                     TBStartAmountShare_Reg.Text = BankTeacher.Bank.Menu.startAmountMin.ToString(); ;
@@ -384,10 +377,6 @@ namespace BankTeacher.Bank.Add_Member
                     Saving = 0;
                     // ไฟล์
                     StatusBoxFile = 0;
-                    BTOpenfile_Reg.Text = "อัพโหลดไฟล์";
-                    LScan_Reg.Text = "ยังไม่ได้อัพโหลดไฟล์";
-                    BTPrintfShare_Reg.Enabled = false;
-                    LScan_Reg.ForeColor = Color.Red;
                     Checkmember(true);
                     CheckSave = false;
                 }
@@ -395,20 +384,6 @@ namespace BankTeacher.Bank.Add_Member
                 {
                     BExitForm_Click(new object(), new EventArgs());
                 }
-            }
-        }
-        private void TBTeacherNo_Reg_TextChanged(object sender, EventArgs e)
-        {
-            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4].Replace("{TeacherNo}", TBTeacherNo_Reg.Text));
-            if (dt.Rows.Count != 0 && dt.Rows[0][0].ToString() == TBTeacherNo_Reg.Text)
-            {
-                label5.Text = "เอกสมัครสมาชิกย้อนหลัง";
-                BTPrintfShare_Reg.Enabled = true;
-            }
-            else
-            {
-                label5.Text = "เอกสารในการสมัครชิกสหกร์ครู";
-                BTPrintfShare_Reg.Enabled = false;
             }
         }
         private void TBTeacherNo_Reg_EnabledChanged(object sender, EventArgs e)
@@ -441,12 +416,9 @@ namespace BankTeacher.Bank.Add_Member
                         .Replace("{TeacherNo}", TBTeacherNo_Reg.Text)
                         .Replace("{PathFile}",""));
                     MessageBox.Show("ลบเอกสารสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    LScan_Reg.Text = "ยังไม่ได้อัพโหลดไฟล์";
-                    LScan_Reg.ForeColor = Color.Red;
                 }
                 CheckStatusWorking = false;
             }
-            BTdeletefile_Reg.Visible = false;
         }
 
         private void TBStartAmountShare_Reg_TextChanged(object sender, EventArgs e)

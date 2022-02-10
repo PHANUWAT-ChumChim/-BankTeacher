@@ -32,7 +32,8 @@ namespace BankTeacher.Bank
         /// <para>[3]INSERT Guarantor INPUT: {LoanNo},{TeacherNo},{Amount},{RemainsAmount}</para>
         /// <para>[4] UPDATE Payment Loan INPUT: {LoanID} {TeacherNoPay} {PaymentNo} {PayDate}</para>
         /// <para>[5] UPDATE Share WithDraw and INSERT WithDraw History INPUT: {WithDraw} , {PayMent} {TeacherNoAddBy} {DateAdd}</para>
-        /// <para>[6] Set StatusButton = false INPUT: </para>
+        /// <para>[7] Set StatusButton = false INPUT: </para>
+        /// <para>[8]Edit DateAmountChange INPUT: {DateAmountChange} </para>
         /// </summary>
         private static String[] SQLDefault = new String[]
         { 
@@ -126,7 +127,7 @@ namespace BankTeacher.Bank
              " \r\n " +
              "SET @ShareNo = (SELECT ShareNo FROM EmployeeBank.dbo.tblMember as a LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo WHERE a.TeacherNo = '{TeacherNo}')"
              ,
-
+            //[6]
             "UPDATE EmployeeBank.dbo.tblShare\r\n" +
             "SET SavingAmount = SavingAmount - {WithDraw}\r\n" +
             "WHERE ShareNo = @ShareNo; \r\n " +
@@ -135,11 +136,13 @@ namespace BankTeacher.Bank
             "VALUES ('{TeacherNoAddBy}', '{ShareNo}','{DateAdd}','{WithDraw}',{PayMent});"
 
             ,
-            //[6] Set StatusButton = false INPUT: 
+            //[7] Set StatusButton = false INPUT: 
            "UPDATE EmployeeBank.dbo.tblSettingAmount \r\n " +
           "SET StatusUploadExceltoSQL = 1;"
            ,
-
+           //[8]Edit DateAmountChange INPUT: {DateAmountChange} 
+             "UPDATE EmployeeBank.dbo.tblSettingAmount \r\n" +
+             "SET DateAmountChange = {DateAmountChange};\r\n"
         };
         public Setting()
         {
@@ -239,8 +242,6 @@ namespace BankTeacher.Bank
         {
             BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
         }
-
-
         private void tabControl1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Escape)
@@ -248,7 +249,6 @@ namespace BankTeacher.Bank
                 BExitForm_Click(new object(), new EventArgs());
             }
         }
-
         private void TB_Min_TextChanged(object sender, EventArgs e)
         {
             B_Save.Enabled = true;
@@ -538,6 +538,29 @@ namespace BankTeacher.Bank
         private void CHB_edittime_CheckedChanged(object sender, EventArgs e)
         {
             CheckTimeBack = CHB_edittime.Checked;
+            int Checked = 0;
+            if (CHB_edittime.Checked == true)
+                Checked = 1;
+            BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
+                .Replace("{DateAmountChange}", Checked.ToString()));
+        }
+
+        private void Setting_KeyUp(object sender, KeyEventArgs e)
+        {
+            tabControl1.Select();
+            tabControl1.TabPages[tabControl1.SelectedIndex].Focus();
+            tabControl1.TabPages[tabControl1.SelectedIndex].CausesValidation = true;
+            if (e.KeyCode == Keys.Tab)
+            {
+                if (tabControl1.SelectedIndex == tabControl1.TabCount - 1)
+                {
+                    tabControl1.SelectedIndex = 0;
+                }
+                else
+                {
+                    tabControl1.SelectedIndex = tabControl1.SelectedIndex + 1;
+                }
+            }
         }
     }
 }
