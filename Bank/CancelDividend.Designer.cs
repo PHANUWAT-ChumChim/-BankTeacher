@@ -323,6 +323,7 @@ namespace BankTeacher.Bank
             this.LRemainInterest.Size = new System.Drawing.Size(24, 32);
             this.LRemainInterest.TabIndex = 101;
             this.LRemainInterest.Text = "0";
+            this.LRemainInterest.Visible = false;
             // 
             // label11
             // 
@@ -354,6 +355,7 @@ namespace BankTeacher.Bank
             this.LDividendAmount.Size = new System.Drawing.Size(24, 32);
             this.LDividendAmount.TabIndex = 101;
             this.LDividendAmount.Text = "0";
+            this.LDividendAmount.Visible = false;
             // 
             // LInterestNextYear
             // 
@@ -365,6 +367,7 @@ namespace BankTeacher.Bank
             this.LInterestNextYear.Size = new System.Drawing.Size(24, 32);
             this.LInterestNextYear.TabIndex = 101;
             this.LInterestNextYear.Text = "0";
+            this.LInterestNextYear.Visible = false;
             // 
             // LDividendPerShare
             // 
@@ -376,6 +379,7 @@ namespace BankTeacher.Bank
             this.LDividendPerShare.Size = new System.Drawing.Size(24, 32);
             this.LDividendPerShare.TabIndex = 101;
             this.LDividendPerShare.Text = "0";
+            this.LDividendPerShare.Visible = false;
             // 
             // LSavingAmount
             // 
@@ -387,6 +391,7 @@ namespace BankTeacher.Bank
             this.LSavingAmount.Size = new System.Drawing.Size(24, 32);
             this.LSavingAmount.TabIndex = 101;
             this.LSavingAmount.Text = "0";
+            this.LSavingAmount.Visible = false;
             // 
             // LInterestAmount
             // 
@@ -398,6 +403,7 @@ namespace BankTeacher.Bank
             this.LInterestAmount.Size = new System.Drawing.Size(24, 32);
             this.LInterestAmount.TabIndex = 101;
             this.LInterestAmount.Text = "0";
+            this.LInterestAmount.Visible = false;
             // 
             // label3
             // 

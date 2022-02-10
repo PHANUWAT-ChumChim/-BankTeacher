@@ -159,6 +159,8 @@ namespace BankTeacher.Bank.Loan
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text));
                 if (dt.Rows.Count != 0)
                 {
+                    DTPDate.Value = Convert.ToDateTime(Bank.Menu.Date[0] + "/" + Bank.Menu.Date[1] + "/" + Bank.Menu.Date[2]);
+                    DTPDate.Enabled = Bank.Setting.CheckTimeBack;
                     TBTeacherName.Text = dt.Rows[0][1].ToString();
                     CBlistpayloan.Enabled = true;
                     CBlistpayloan.Items.Clear();

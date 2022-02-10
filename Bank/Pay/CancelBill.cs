@@ -324,6 +324,8 @@ namespace BankTeacher.Bank.Pay
             String Year = Bank.Menu.Date[0];
             String Month = Bank.Menu.Date[1];
             String Day = Bank.Menu.Date[2];
+            DTPDate.Value = Convert.ToDateTime(Bank.Menu.Date[0] + "/" + Bank.Menu.Date[1] + "/" + Bank.Menu.Date[2]);
+            DTPDate.Enabled = Bank.Setting.CheckTimeBack;
             if (Convert.ToInt32(Month) < 10)
             {
                 Month = "0" + Convert.ToInt32(Month);

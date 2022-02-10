@@ -224,6 +224,8 @@ namespace BankTeacher.Bank
                 DGVAmountOffHistory.Enabled = false;
                 tabControl1.SelectedIndex = 0;
                 tabControl1.Enabled = true;
+                DTPDate.Value = Convert.ToDateTime(Bank.Menu.Date[0] + "/" + Bank.Menu.Date[1] + "/" + Bank.Menu.Date[2]);
+                DTPDate.Enabled = Bank.Setting.CheckTimeBack;
                 DGVAmountOffHistory.Rows.Clear();
                 CBYear.Items.Clear();
                 DGVLoan.Rows.Clear();
