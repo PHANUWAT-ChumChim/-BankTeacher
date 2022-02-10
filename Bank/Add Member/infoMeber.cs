@@ -77,7 +77,7 @@ namespace BankTeacher.Bank.Add_Member
           "WHERE TeacherNo = '{TeacherNo}';"
            ,
            //[3]  Select Detail Memner INPUT: {TeacherNo} 
-         "SELECT a.TeacherNo ,CAST(ISNULL(b.PrefixName+' ','')+a.Fname +' '+ a.Lname as NVARCHAR)AS Name,f.TeacherAddBy,CAST(ISNULL(b.PrefixName+' ','')+h.Fname +' '+ h.Lname as NVARCHAR) as NameTadd,a.IdNo, IIF(a.cNo != null,a.cNo,'-'),IIF(CAST(a.cMu as nvarchar) != null,a.cMu,'-'),IIF(CAST(c.TumBonName as nvarchar) != null,c.TumBonName,'-'),IIF(CAST(d.AmPhurName as nvarchar) != null,d.AmPhurName,'-'),IIF(CAST(e.JangWatLongName as nvarchar) != null,e.JangWatLongName,'-'),a.TelMobile,f.StartAmount  \r\n " +
+          "SELECT a.TeacherNo ,CAST(ISNULL(b.PrefixName+' ','')+a.Fname +' '+ a.Lname as NVARCHAR)AS Name,f.TeacherAddBy,CAST(ISNULL(b.PrefixName+' ','')+h.Fname +' '+ h.Lname as NVARCHAR) as NameTadd,a.IdNo, ISNULL(IIF(a.cNo = '','-',a.cNo),'-') as cNo,ISNULL(IIF(CAST(a.cMu as nvarchar) = '','-',CAST(a.cMu as nvarchar)),'-') as cMu ,ISNULL(IIF(CAST(c.TumBonName as nvarchar) = '','-',CAST(c.TumBonName as nvarchar)),'-') as TumBonName,ISNULL(IIF(CAST(d.AmPhurName as nvarchar) = '','-',CAST(d.AmPhurName as nvarchar)),'-') as AmPhurName,ISNULL(IIF(CAST(e.JangWatLongName as nvarchar) = '','-',CAST(e.JangWatLongName as nvarchar)),'-') as JangWatLongName,ISNULL(IIF(a.TelMobile = '','-',a.TelMobile),'-'),f.StartAmount   \r\n " +
           "FROM Personal.dbo.tblTeacherHis as a \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as b ON a.PrefixNo = b.PrefixNo  \r\n " +
           "LEFT JOIN BaseData.dbo.tblTumBon as c on a.cTumBonNo = c.TumBonNo \r\n " +
@@ -434,7 +434,6 @@ namespace BankTeacher.Bank.Add_Member
         {
             //TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.K));
         }
-
         private void infoMeber_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Tab)
@@ -449,7 +448,6 @@ namespace BankTeacher.Bank.Add_Member
                 }
             }
         }
-
         private void TBStartAmount_TextChanged(object sender, EventArgs e)
         {
             BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBSavingAmount);
