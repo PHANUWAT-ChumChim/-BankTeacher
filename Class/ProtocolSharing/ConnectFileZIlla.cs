@@ -244,6 +244,7 @@ namespace BankTeacher.Class.ProtocolSharing
                 }
                 else
                 {
+                    StatusReturn = false;
                     MessageBox.Show("ไม่สามารถส่งไฟล์ได่เนื่องจากไฟล์ในโปรแกรมไม่สมบูรณ์ \n Not Found WinSCP.exe","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                 }
             }
@@ -283,6 +284,7 @@ namespace BankTeacher.Class.ProtocolSharing
                 }
                 else
                 {
+                    StatusReturn = false;
                     MessageBox.Show(@"WinSCP.exe (ไม่พบไฟล์.exe ในการส่งเอกสารโปรด ติดต่อผู้ดูเเลโปรเเกรม)");
                 }
             }
@@ -347,6 +349,7 @@ namespace BankTeacher.Class.ProtocolSharing
                 }
                 else
                 {
+                    StatusReturn = false;
                     MessageBox.Show(@"WinSCP.exe (ไม่พบไฟล์.exe ในการส่งเอกสารโปรด ติดต่อผู้ดูเเลโปรเเกรม)");
                 }
                 return null;
@@ -391,6 +394,7 @@ namespace BankTeacher.Class.ProtocolSharing
                 }
                 else
                 {
+                    StatusReturn = false;
                     MessageBox.Show(@"WinSCP.exe (ไม่พบไฟล์.exe ในการส่งเอกสารโปรด ติดต่อผู้ดูเเลโปรเเกรม)");
                 }
             }
@@ -452,6 +456,7 @@ namespace BankTeacher.Class.ProtocolSharing
                 }
                 else
                 {
+                    StatusReturn = false;
                     MessageBox.Show(@"WinSCP.exe (ไม่พบไฟล์.exe ในการส่งเอกสารโปรด ติดต่อผู้ดูเเลโปรเเกรม)");
                 }
             }
