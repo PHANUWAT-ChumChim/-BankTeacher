@@ -317,7 +317,7 @@ namespace BankTeacher.Class.Print
                     }
                     if (PayNo == 12)
                         PayNo--;
-                    LimitMonthPay = BankTeacher.Bank.Menu.Month[PayNo].ToString() + " พ.ศ. " + (Yearpay + (Convert.ToInt32(Year) - Yearpay)).ToString();
+                    LimitMonthPay = BankTeacher.Bank.Menu.Month[PayNo].ToString() + " พ.ศ. " + Convert.ToInt32(dt.Rows[0][5].ToString());
                     //LimitMonthPay = example.Bank.Menu.Monthname.ToString() + " พ.ศ. " + (Yearpay + 543).ToString();
                 }
                 //----------------------
@@ -331,7 +331,7 @@ namespace BankTeacher.Class.Print
                     Class.Print.SetPrintMedtods.CenterRight(e, "สมาชิกเลขที่ " + TeacherNo, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), XP, XD);
                     Class.Print.SetPrintMedtods.Center(e, Y + (SpacePerRow * CurrentRows++), "สัญญากู้ยืมเงินสวัสดิการพนักงาน", THsarabun30, BrushBlack);
                     Class.Print.SetPrintMedtods.CenterRight(e, "เขียนที่ " + School, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++) + 10, XP, XD);
-                    Class.Print.SetPrintMedtods.CenterRight(e, "วันที่ " + Day + " " + Month + " " + Year, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), XP, XD);
+                    Class.Print.SetPrintMedtods.CenterRight(e, $"วันที่ {dt.Rows[0][8].ToString()} ", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), XP, XD);
                     CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "       สัญญาฉบับนี้ทำขึ้นมาระหว่างผู้เเทน" + School +
                     $" ( {Lender} ) {DT.Rows[0][6].ToString()} ซึ่งต่อไปในสัญญานี้เรียกว่า '" + School + "' ฝ่ายหนึ่งกับ " + Borrower, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 750f, 200, false);
                     Class.Print.SetPrintMedtods.CenterLeft(e, Borroweraddress, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), XP, XD);
