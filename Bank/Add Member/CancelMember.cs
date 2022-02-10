@@ -32,6 +32,8 @@ namespace BankTeacher.Bank.Add_Member
         /// <para>[7] Count Cancel Member File INPUT: {TeacherNo}</para>
         /// <para>[8] Chcek flie Regmember INPUT : {TeacherNo}</para>
         /// <para>[9] UPDATE Status File INPUT: {TeacherNoAddBy} {ID} {TeacherNo} {PathFile} </para>
+        /// <para>[11] if HE is Guarantor Get Amount & SavingAmount if(His Loan Get SumAmount & SavingAmount) INPUT: {TeacherNo} </para>
+        /// <para>[12] Get Teacher's LoanNo INPUT: {TeacherNo} </para>
         /// </summary>
         private String[] SQLDefault = new string[]
         {
@@ -140,6 +142,58 @@ namespace BankTeacher.Bank.Add_Member
           "VALUES('{TeacherNo}','2','{PathFile}','{TeacherNoAddBy}',null,CURRENT_TIMESTAMP,1,null,null,1)"
            ,
 
+           //[10] Get SavingAmount & Get GuarantorAmount INPUT: {TeacherNo}
+           "SELECT b.SavingAmount , ISNULL(c.Amount , 0) as LoanAmount \r\n " +
+          "FROM EmployeeBank.dbo.tblMember as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo \r\n " +
+          "LEFT JOIN (SELECT SUM(b.Amount) as Amount , a.TeacherNo \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}' and a.LoanStatusNo = 2 \r\n " +
+          "GROUP BY a.TeacherNo) as c on a.TeacherNo = c.TeacherNo \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}';"
+           ,
+
+           //[11] if (HE is Guarantor Get Amount & SavingAmount) if(His Loan Get SumAmount & SavingAmount) INPUT: {TeacherNo}
+           "DECLARE @YourLoan int; \r\n " +
+          " \r\n " +
+          "SELECT @YourLoan = COUNT(a.LoanNo) \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}' and a.LoanStatusNo = 2 \r\n " +
+          " \r\n " +
+          "IF(@YourLoan > 0) \r\n " +
+          "BEGIN  \r\n " +
+          "	SELECT ISNULL(c.Amount , 0) as LoanAmount , b.SavingAmount   \r\n " +
+          "	FROM EmployeeBank.dbo.tblMember as a \r\n " +
+          "	LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo \r\n " +
+          "	LEFT JOIN (SELECT SUM(b.Amount) as Amount , a.TeacherNo \r\n " +
+          "	FROM EmployeeBank.dbo.tblLoan as a \r\n " +
+          "	LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo \r\n " +
+          "	WHERE a.TeacherNo = '{TeacherNo}'  \r\n " +
+          "	and a.LoanStatusNo = 2 \r\n " +
+          "	GROUP BY a.TeacherNo) as c on a.TeacherNo = c.TeacherNo \r\n " +
+          "	WHERE a.TeacherNo = '{TeacherNo}'; \r\n " +
+          "END \r\n " +
+          "ELSE \r\n " +
+          "BEGIN \r\n " +
+          "	SELECT (b.Amount) as Amount , c.SavingAmount \r\n " +
+          "	FROM EmployeeBank.dbo.tblLoan as a \r\n " +
+          "	LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo \r\n " +
+          "	LEFT JOIN EmployeeBank.dbo.tblShare as c on b.TeacherNo = c.TeacherNo \r\n " +
+          "	WHERE b.TeacherNo = '{TeacherNo}' and a.LoanStatusNo = 2 \r\n " +
+          "	GROUP BY (b.Amount) , c.SavingAmount \r\n " +
+          "END;" +
+            "\r\n" +
+            "SELECT @YourLoan;"
+           ,
+
+           //[12] Get Teacher's LoanNo INPUT: {TeacherNo} 
+           "SELECT a.LoanNo \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}' and a.LoanStatusNo = 2"
+           ,
+
+
         };
         public CancelMember()
         {
@@ -195,7 +249,7 @@ namespace BankTeacher.Bank.Add_Member
                     TBTeacherName.Text = ds.Tables[0].Rows[0][1].ToString();
                     Saving = Convert.ToDouble(ds.Tables[0].Rows[0][2].ToString());
                     Check = true;
-                    TBTeacherNo.Enabled = true;
+                    TBTeacherNo.Enabled = false;
                     Checkmember(false);
                     BSearch.Enabled = true;
                     BSave.Enabled = true;
@@ -225,7 +279,78 @@ namespace BankTeacher.Bank.Add_Member
                     BankTeacher.Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("RegMember");
                     DataSet ds = Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[2]+ "\r\n\r\n" + SQLDefault[7] + "\r\n\r\n" + SQLDefault[8])
                     .Replace("{TeacherNo}", TBTeacherNo.Text));
-                    if (Convert.ToInt32(ds.Tables[0].Rows[0][0].ToString()) < 1)
+
+                    DataSet dsLoanLoanAmount = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[11]
+                        .Replace("{TeacherNo}", TBTeacherNo.Text));
+                    
+                    if(dsLoanLoanAmount.Tables[0].Rows.Count != 0 && Convert.ToInt32(dsLoanLoanAmount.Tables[0].Rows[0][1].ToString()) >= Convert.ToInt32(dsLoanLoanAmount.Tables[0].Rows[0][0]))
+                    {
+                        if(Convert.ToInt32(dsLoanLoanAmount.Tables[1].Rows[0][0]) != 0  && MessageBox.Show("มียอดกู้อยู่ในระบบ และคุณสามารถปิดยอดกู้ตอนนี้ได้เลย\r\n โดยใช้เงินเก็บสะสมของคุณ ต้องการจะปิดยอดกู้เลยหรือไม่","แจ้งเตือน",MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == DialogResult.Yes)
+                        {
+                            Bank.Add_Member.CancelMemberCloseTheLoan FCloseLoan = new CancelMemberCloseTheLoan();
+                            DataTable dtGetLoanNo = Class.SQLConnection.InputSQLMSSQL(SQLDefault[12]
+                                .Replace("{TeacherNo}", TBTeacherNo.Text));
+                            if(dtGetLoanNo.Rows.Count != 0)
+                            {
+                                FCloseLoan.Show();
+                                FCloseLoan.TeacherNo = TBTeacherNo.Text;
+                                for (int a = 0; a < dtGetLoanNo.Rows.Count; a++)
+                                {
+                                    FCloseLoan.CBLoanNo.Items.Add(dtGetLoanNo.Rows[a][0]);
+                                }
+                                FCloseLoan.CBLoanNo.SelectedIndex = 0;
+                                FCloseLoan.TBTeacherName.Text = TBTeacherName.Text;
+                                this.Enabled = false;
+                                this.Hide();
+                            }
+
+                        }
+                        else if(Convert.ToInt32(dsLoanLoanAmount.Tables[1].Rows[0][0]) == 0 && MessageBox.Show("คุณมียอดค้ำกู้อยู่ในระบบ และคุณสามารถจ่ายยอดค้ำกู้ได้เลย \r\n" +
+                            "โดยใช้เงินเก็บสะสมของคุณในระบบ และสามารถขอคืนเงินเก็บสะสมได้ในภายหลัง ต้องการจ่ายยอดค้ำเลยหรือไม่" , "แจ้งเตือน" , MessageBoxButtons.YesNo ,MessageBoxIcon.Warning) == DialogResult.Yes)
+                        {
+                            if (ds.Tables[2].Rows.Count != 0)
+                            {
+                                String Rename = $"Member_{TBTeacherNo.Text}.pdf";
+                                if (ds.Tables[1].Rows.Count != 0)
+                                {
+                                    Rename = Rename.Replace(".pdf", $"_{ds.Tables[1].Rows[0][0].ToString()}.pdf");
+                                }
+
+                                
+
+                                FTP.FTPMoveFileandRename($"Member_{TBTeacherNo.Text}.pdf", "CancelMember", Rename);
+                                if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
+                                {
+                                    Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[1] + "\r\n" + SQLDefault[9])
+                                    .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
+                                    .Replace("{TeacherNo}", TBTeacherNo.Text)
+                                    .Replace("{Note}", TBNote.Text)
+                                    .Replace("{DocStatusNo}", "1")
+                                    .Replace("{PathFile}", FTP.HostplusPathFile + Rename.Replace("RegMember", "CancelMember"))
+                                    .Replace("{ID}", ds.Tables[2].Rows[0][0].ToString()));
+                                    MessageBox.Show("ยกเลิกผู้ใช้สำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    CheckSave = true;
+                                    CheckBCancel = true;
+                                    Checkmember(true);
+                                    BSave.Enabled = false;
+                                }
+
+                            }
+                            else
+                                MessageBox.Show("กรุณาส่งเอกสารสมัครสมาชิก เพื่อยืนยันการสมัคร", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                    else if (dsLoanLoanAmount.Tables[0].Rows.Count != 0 && Convert.ToInt32(dsLoanLoanAmount.Tables[1].Rows[0][0]) != 0)
+                    {
+                        MessageBox.Show("มียอดกู้อยู่ในระบบไม่สามารถยกเลิกสมาชิกได้ และเงินสะสมไม่พอที่จะชำระ \r\n" +
+                            "ต้องชำระกู้ให้หมดก่อน ถึงจะยกเลิกสมาชิกได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else if (dsLoanLoanAmount.Tables[0].Rows.Count != 0 && Convert.ToInt32(dsLoanLoanAmount.Tables[1].Rows[0][0]) == 0)
+                    {
+                        MessageBox.Show("มียอดค้ำกู้อยู่ในระบบไม่สามารถยกเลิกสมาชิกได้ และเงินสะสมไม่พอที่จะวางเงินค้ำประกัน \r\n" +
+                            "ต้องรอผู้กู้ชำระกู้ให้หมดก่อน", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else if (Convert.ToInt32(ds.Tables[0].Rows[0][0].ToString()) < 1)
                     {
                         if (ds.Tables[2].Rows.Count != 0)
                         {
@@ -235,10 +360,7 @@ namespace BankTeacher.Bank.Add_Member
                                 Rename = Rename.Replace(".pdf", $"_{ds.Tables[1].Rows[0][0].ToString()}.pdf");
                             }
 
-                            CheckBCancel = true;
-                            Checkmember(true);
-                            BSave.Enabled = false;
-                            CheckSave = true;
+                            
 
                             FTP.FTPMoveFileandRename($"Member_{TBTeacherNo.Text}.pdf", "CancelMember", Rename);
                             if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
@@ -248,9 +370,13 @@ namespace BankTeacher.Bank.Add_Member
                                 .Replace("{TeacherNo}", TBTeacherNo.Text)
                                 .Replace("{Note}", TBNote.Text)
                                 .Replace("{DocStatusNo}", "1")
-                                .Replace("{PathFile}", FTP.HostplusPathFile+Rename .Replace("RegMember", "CancelMember"))
-                                .Replace("{ID}",ds.Tables[2].Rows[0][0].ToString()));
+                                .Replace("{PathFile}", FTP.HostplusPathFile + Rename.Replace("RegMember", "CancelMember"))
+                                .Replace("{ID}", ds.Tables[2].Rows[0][0].ToString()));
                                 MessageBox.Show("ยกเลิกผู้ใช้สำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                CheckSave = true;
+                                CheckBCancel = true;
+                                Checkmember(true);
+                                BSave.Enabled = false;
                             }
 
                         }

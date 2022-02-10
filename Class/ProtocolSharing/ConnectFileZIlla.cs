@@ -384,6 +384,7 @@ namespace BankTeacher.Class.ProtocolSharing
                                 StatusReturn = false;
                                 StatusRunning = false;
                                 return;
+
                             }
                         }
                     }

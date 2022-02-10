@@ -806,7 +806,7 @@ namespace BankTeacher.Bank.Loan
                     }
                     IN = new Bank.Search(SQLDefault[10]
                            .Replace("{TeacherNoNotLike}", NotLike)
-                           .Replace("{RemainAmount}", $"RemainAmount > {Bank.Menu.MinLoan}"), "หุ้นสะสม");
+                           .Replace("{RemainAmount}", $"RemainAmount >= {Bank.Menu.MinLoan}"), "หุ้นสะสม");
                     
                     IN.ShowDialog();
                     if (Bank.Search.Return[0] != "")

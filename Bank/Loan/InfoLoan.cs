@@ -364,7 +364,7 @@ namespace BankTeacher.Bank.Loan
                     }
                     for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
                     {
-                        DGVGuarantor.Rows.Add(ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][1].ToString(), ds.Tables[0].Rows[x][9].ToString());
+                        DGVGuarantor.Rows.Add(ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][1].ToString(), ds.Tables[0].Rows[x][15].ToString());
                     }
                     TBLoanNo.Text = Loan.No;
                     BTOpenFile.Enabled = true;

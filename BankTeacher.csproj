@@ -107,6 +107,12 @@
     <Compile Include="Bank\Add Member\CancelMember.Designer.cs">
       <DependentUpon>CancelMember.cs</DependentUpon>
     </Compile>
+    <Compile Include="Bank\Add Member\CancelMemberCloseTheLoan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bank\Add Member\CancelMemberCloseTheLoan.Designer.cs">
+      <DependentUpon>CancelMemberCloseTheLoan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Bank\Add Member\infoMeber.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -340,6 +346,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Bank\Add Member\CancelMember.resx">
       <DependentUpon>CancelMember.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bank\Add Member\CancelMemberCloseTheLoan.resx">
+      <DependentUpon>CancelMemberCloseTheLoan.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Add Member\infoMeber.resx">
       <DependentUpon>infoMeber.cs</DependentUpon>
