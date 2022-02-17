@@ -57,7 +57,7 @@ namespace BankTeacher.Bank
             "LEFT JOIN EmployeeBank.dbo.tblLoan as b on a.LoanNo = b.LoanNo\r\n" +
             "LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo\r\n" +
             "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo\r\n" +
-            "WHERE a.TeacherNo = '{TeacherNo}' and a.RemainsAmount > 0 and LoanStatusNo = 2\r\n" +
+            "WHERE a.TeacherNo = '{TeacherNo}' and a.RemainsAmount > 0 \r\n" +
             "GROUP BY a.LoanNo , a.RemainsAmount, CAST(ISNULL(d.PrefixName+' ','') + c.Fname + ' ' + c.Lname AS NVARCHAR),\r\n" +
             "DATEADD(MONTH,b.PayNo,CAST(CAST(CAST(b.YearPay as nvarchar) +'/' + CAST(b.MonthPay AS nvarchar) + '/05' AS nvarchar) AS date));"
 
