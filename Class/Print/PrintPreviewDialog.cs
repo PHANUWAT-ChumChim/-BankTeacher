@@ -529,7 +529,7 @@ namespace BankTeacher.Class.Print
                 //e.Graphics.DrawString($"วันที่ออกใบ {Bank.Pay.pay.info_datepay}", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - Size.Width, 50);
                 //e.Graphics.DrawString($"วันที่ออกใบ {DateTime.Now.Day}/{DateTime.Now.Month}/{DateTime.Now.Year}", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - Size.Width, 50);
                 // ================================================================ เวลาที่เอกสารถูกปริ้น ===================================================================
-                if(TextForm != "InfoLoan" && TextForm != "Home")
+                if(TextForm != "InfoLoan")
                 {
                     // เลขหน้า
                     int all_paper, number;
@@ -1648,10 +1648,6 @@ namespace BankTeacher.Class.Print
                         }
                     }    
                     if (PrintPreviewDialog.Rows[R][c].ToString() == "") { CHECK = true; }
-                    if(PrintPreviewDialog.Rows[R][c].ToString() == "417")
-                    {
-
-                    }
                     if (!CHECK) 
                     {
                         if (List_AloneOrNot_cells[UP][c]) // เช็คว่าตำเเหน่งเป็นจริงหรือไม่
@@ -1678,7 +1674,15 @@ namespace BankTeacher.Class.Print
                             }
                         }
                     }
-                    e.Graphics.DrawString($"{PrintPreviewDialog.Rows[R][c]}", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Center, page_y, Rectanglef_width, Rectanglef_height)); // วาด หัวข้อความ
+                    var N = int.TryParse(PrintPreviewDialog.Rows[R][c],out _);
+                    if(N == false)
+                    {
+                        e.Graphics.DrawString($"{PrintPreviewDialog.Rows[R][c]}", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Center, page_y, Rectanglef_width, Rectanglef_height)); // วาด หัวข้อความ
+                    }
+                    else
+                    {
+                        e.Graphics.DrawString($"{Convert.ToInt32(PrintPreviewDialog.Rows[R][c]).ToString("N0")}", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Center, page_y, Rectanglef_width, Rectanglef_height)); // วาด หัวข้อความ
+                    }
                     //e.Graphics.DrawString($"{G.Rows[R].Cells[c].Value}", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Center, page_y, Rectanglef_width, Rectanglef_height)); // วาด หัวข้อความ
                     // Test เช็คตำเเหน่งที่จะวาด
                     //e.Graphics.DrawRectangle(PenBlack, page_x, page_y, Rectanglef_width, Rectanglef_height); // Test กรอบ
@@ -1693,6 +1697,11 @@ namespace BankTeacher.Class.Print
                     {
                         location_y2 = page_y;
                         // เส้นปิด Rows
+                        e.Graphics.DrawLine(PenBlack, page_width, page_y, Line_x, page_y);
+                    }
+                    else if (TextForm == "ReportEpenses" && !PrintPreviewDialog.Rows[R][location_Unicode_Cells].Contains(Unicode))
+                    {
+                        location_y2 = page_y;
                         e.Graphics.DrawLine(PenBlack, page_width, page_y, Line_x, page_y);
                     }
                 }

@@ -143,7 +143,7 @@ namespace BankTeacher.Bank
                             AmountSaving += Convert.ToInt32(EpensesInfo.Tables[1].Rows[x][3]);
                             SumAmount += Convert.ToInt32(EpensesInfo.Tables[1].Rows[x][3]);
                         }
-                        DGV.Rows.Add("","", "สรุปรายการถอนหุ้นสะสม  ", "", AmountSaving.ToString());
+                        DGV.Rows.Add("","", "สรุปรายการถอน  ", "", AmountSaving.ToString());
                         DGV.Rows[DGV.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                         TBAmountWithDraw.Text = AmountSaving.ToString();
                     }
