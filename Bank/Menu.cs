@@ -73,9 +73,7 @@ namespace BankTeacher.Bank
             {
                 if(time.ElapsedMilliseconds >= 60000 * Round)
                 {
-                    THREADWorking = new Thread(() => ThreadReloadData());
-                    THREADWorking.Start();
-                    THREADWorking.Abort();
+                    ThreadReloadData();
                     Round++;
                 }
             }
