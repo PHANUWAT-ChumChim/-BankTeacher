@@ -186,12 +186,14 @@ namespace BankTeacher.Bank
           "LEFT JOIN (SELECT TeacherNo   \r\n " +
           "FROM EmployeeBank.dbo.tblLoan    \r\n " +
           "WHERE LoanStatusNo = 1 or LoanStatusNo = 2 GROUP BY TeacherNo) as f on a.TeacherNo = f.TeacherNo    \r\n " +
-          "WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(c.PrefixName,'')+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1    \r\n " +
+          "WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(c.PrefixName,'')+' '+[Fname] +' '+ [Lname] as NVARCHAR) LIKE '%{Text}%') and a.MemberStatusNo = 1 or (a.MemberStatusNo = 2 and e.SavingAmount != 0)\r\n " +
           "GROUP BY a.TeacherNo , CAST(ISNULL(c.PrefixName,'')+' '+Fname +' '+ Lname as NVARCHAR), e.SavingAmount, Fname ) as a     \r\n " +
           "WHERE RemainAmount IS NOT NULL {TeacherNoNotLike} \r\n " +
           "GROUP BY TeacherNo, Name, RemainAmount ,a.Fname  \r\n " +
           "ORDER BY a.Fname; "
            ,
+
+
         };
 
         int Check;

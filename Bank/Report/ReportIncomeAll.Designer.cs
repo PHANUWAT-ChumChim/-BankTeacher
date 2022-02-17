@@ -105,6 +105,7 @@ namespace BankTeacher.Bank
             this.BExitForm.Size = new System.Drawing.Size(115, 62);
             this.BExitForm.TabIndex = 118;
             this.BExitForm.UseVisualStyleBackColor = true;
+            this.BExitForm.Click += new System.EventHandler(this.BExitForm_Click_1);
             // 
             // DGV_All
             // 

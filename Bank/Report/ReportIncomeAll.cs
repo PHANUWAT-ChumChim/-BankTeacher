@@ -171,5 +171,10 @@ namespace BankTeacher.Bank
             else
                  MessageBox.Show("ไม่พบรายการบิลล์ ในตาราง", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
+
+        private void BExitForm_Click_1(object sender, EventArgs e)
+        {
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
     }
 }

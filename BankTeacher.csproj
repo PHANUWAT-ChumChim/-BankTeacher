@@ -107,6 +107,12 @@
     <Compile Include="Bank\Add Member\CancelMember.Designer.cs">
       <DependentUpon>CancelMember.cs</DependentUpon>
     </Compile>
+    <Compile Include="Bank\Add Member\CancelMemberCloseTheLoan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bank\Add Member\CancelMemberCloseTheLoan.Designer.cs">
+      <DependentUpon>CancelMemberCloseTheLoan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Bank\Add Member\infoMeber.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,12 +136,6 @@
     </Compile>
     <Compile Include="Bank\Dividend.Designer.cs">
       <DependentUpon>Dividend.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Bank\LoadWorking.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Bank\LoadWorking.Designer.cs">
-      <DependentUpon>LoadWorking.cs</DependentUpon>
     </Compile>
     <Compile Include="Bank\Loan\CancelLoan.cs">
       <SubType>Form</SubType>
@@ -347,6 +347,9 @@
     <EmbeddedResource Include="Bank\Add Member\CancelMember.resx">
       <DependentUpon>CancelMember.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Bank\Add Member\CancelMemberCloseTheLoan.resx">
+      <DependentUpon>CancelMemberCloseTheLoan.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Bank\Add Member\infoMeber.resx">
       <DependentUpon>infoMeber.cs</DependentUpon>
     </EmbeddedResource>
@@ -358,9 +361,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Dividend.resx">
       <DependentUpon>Dividend.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Bank\LoadWorking.resx">
-      <DependentUpon>LoadWorking.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Loan\CancelLoan.resx">
       <DependentUpon>CancelLoan.cs</DependentUpon>

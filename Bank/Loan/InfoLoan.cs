@@ -109,7 +109,7 @@ namespace BankTeacher.Bank.Loan
            //[3] for printback  INPUT : {TeacherNo} {LoanNo}
          "SELECT a.TeacherNo,CAST(ISNULL(d.PrefixName+' ','')+Fname +' '+ Lname as NVARCHAR)AS Name,LoanAmount , \r\n " +
          "CAST(cNo + ' หมู่ ' + cMu + 'ซอย  ' + cSoi + ' ถนน' + cRoad + ' ตำบล' +  TumBonName + ' อำเภอ'  + AmphurName + ' จังหวัด ' + JangWatLongName + ' รหัสไปรสณี ' + ZipCode as NVARCHAR(255)) AS ADDRESS, \r\n " +
-         "MonthPay , YearPay , PayNo , InterestRate \r\n " +
+         "MonthPay-1 as month ,IIF(PayNo/12 > 0,(YearPay+1)+543,YearPay+543) as year, PayNo , InterestRate,CAST(CAST(DAY(DateAdd) as nvarchar)+'/'+CAST(MONTH(DateAdd) as nvarchar)+'/'+CAST(YEAR(DateAdd)+543 as nvarchar) as nvarchar)  as Date \r\n " +
          "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
          "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo \r\n " +
          "LEFT JOIN Personal.dbo.tblTeacherHis as c ON b.TeacherNo = c.TeacherNo \r\n " +
@@ -364,7 +364,7 @@ namespace BankTeacher.Bank.Loan
                     }
                     for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
                     {
-                        DGVGuarantor.Rows.Add(ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][1].ToString(), ds.Tables[0].Rows[x][9].ToString());
+                        DGVGuarantor.Rows.Add(ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][1].ToString(), ds.Tables[0].Rows[x][15].ToString());
                     }
                     TBLoanNo.Text = Loan.No;
                     BTOpenFile.Enabled = true;
