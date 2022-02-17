@@ -160,7 +160,6 @@ namespace BankTeacher.Bank.Loan
                 if (dt.Rows.Count != 0)
                 {
                     DTPDate.Value = Convert.ToDateTime(Bank.Menu.Date[0] + "/" + Bank.Menu.Date[1] + "/" + Bank.Menu.Date[2]);
-                    DTPDate.Enabled = Bank.Setting.CheckTimeBack;
                     TBTeacherName.Text = dt.Rows[0][1].ToString();
                     CBlistpayloan.Enabled = true;
                     CBlistpayloan.Items.Clear();
@@ -436,7 +435,10 @@ namespace BankTeacher.Bank.Loan
             }
 
             DTPDate.Value = Convert.ToDateTime(Bank.Menu.Date[0] + "/" + Bank.Menu.Date[1] + "/" + Bank.Menu.Date[2]);
-            DTPDate.Enabled = DTPDate.Enabled = Bank.Setting.CheckTimeBack;
+            if (BankTeacher.Bank.Menu.DateAmountChange == 1)
+                DTPDate.Enabled = true;
+            else
+                DTPDate.Enabled = false;
         }
         private void panel7_VisibleChanged(object sender, EventArgs e)
         {

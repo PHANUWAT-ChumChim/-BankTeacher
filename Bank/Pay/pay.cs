@@ -369,7 +369,10 @@ namespace BankTeacher.Bank.Pay
             }
 
             DTPDate.Value = Convert.ToDateTime(Bank.Menu.Date[0] + "/" + Bank.Menu.Date[1] + "/" + Bank.Menu.Date[2]);
-            DTPDate.Enabled = Bank.Setting.CheckTimeBack;
+            if (BankTeacher.Bank.Menu.DateAmountChange == 1)
+                DTPDate.Enabled = true;
+            else
+                DTPDate.Enabled = false;
         }
         //=============================================================================================
 

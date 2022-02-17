@@ -16,7 +16,6 @@ namespace BankTeacher.Bank
 {
     public partial class Setting : Form
     {
-        public static bool CheckTimeBack;
         static int Min;
         static int Max;
         static bool chb;
@@ -161,7 +160,6 @@ namespace BankTeacher.Bank
                 CHB_edittime.Checked = true;
             }
             chb = CHB_edittime.Checked;
-            CHB_edittime.Checked = CheckTimeBack;
             Min = Convert.ToInt32(TB_Min.Text);
             Max = Convert.ToInt32(TB_Max.Text);
             B_Save.Enabled = false;
@@ -537,12 +535,12 @@ namespace BankTeacher.Bank
         }
         private void CHB_edittime_CheckedChanged(object sender, EventArgs e)
         {
-            CheckTimeBack = CHB_edittime.Checked;
             int Checked = 0;
             if (CHB_edittime.Checked == true)
                 Checked = 1;
             BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
                 .Replace("{DateAmountChange}", Checked.ToString()));
+            BankTeacher.Bank.Menu.DateAmountChange = Checked;
         }
 
         private void Setting_KeyUp(object sender, KeyEventArgs e)

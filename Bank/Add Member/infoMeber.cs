@@ -42,13 +42,13 @@ namespace BankTeacher.Bank.Add_Member
           "	LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherAddBy = b.TeacherNo \r\n " +
           "	LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo \r\n " +
           "	GROUP BY a.TeacherAddBy, CAST(ISNULL(c.PrefixNameFull , '') + b.Fname + ' ' + b.Lname as NVARCHAR)) as f on a.TeacherAddBy = f.TeacherAddBy \r\n " +
-          "WHERE a.TeacherNo = '{TeacherNo}' and a.MemberStatusNo = 1  \r\n"+
+          "WHERE a.TeacherNo = '{TeacherNo}' and a.MemberStatusNo = 1  \r\n\r\n"+
 
            "SELECT COUNT(b.BillNo)  \r\n " +
           "FROM EmployeeBank.dbo.tblMember as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBill as b on a.TeacherNo = b.TeacherNo \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as c on b.BillNo = c.BillNo \r\n " +
-          "WHERE a.TeacherNo = '{TeacherNo}' and c.TypeNo !=3 \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}' and c.TypeNo !=3 and b.Cancel != 2\r\n " +
           " \r\n " +
           "SELECT COUNT(c.WithDrawNo) \r\n " +
           "FROM EmployeeBank.dbo.tblMember as a \r\n " +
@@ -182,11 +182,11 @@ namespace BankTeacher.Bank.Add_Member
         String SavingAmountStart = "";
         private void TBNameInfo_Leave(object sender, EventArgs e)
         {
-            if (SavingAmountStart != TBStartAmount.Text)
-            {
-                BSaveEdit.Enabled = true;
-                SavingAmountStart = Convert.ToInt32(SavingAmountStart) - Convert.ToInt32(TBStartAmount.Text) + "";
-            }
+            //if (SavingAmountStart != TBStartAmount.Text)
+            //{
+            //    BSaveEdit.Enabled = true;
+            //    SavingAmountStart = Convert.ToInt32(SavingAmountStart) - Convert.ToInt32(TBStartAmount.Text) + "";
+            //}
         }
 
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
@@ -201,7 +201,6 @@ namespace BankTeacher.Bank.Add_Member
                     .Replace("{TeacherNo}", TBTeacherNo.Text));
                 if (dsInfoMember.Tables[0].Rows.Count != 0 && dsInfoMember.Tables[1].Rows.Count != 0 && dsInfoMember.Tables[2].Rows.Count != 0)
                 {
-                    //
                     TBTeacherName.Text = dsInfoMember.Tables[0].Rows[0][0].ToString();
                     TBNameInfo.Text = dsInfoMember.Tables[0].Rows[0][0].ToString();
                     TBTeacherAddByName.Text = dsInfoMember.Tables[0].Rows[0][1].ToString();
@@ -212,8 +211,11 @@ namespace BankTeacher.Bank.Add_Member
                     SavingAmountStart = dsInfoMember.Tables[0].Rows[0][4].ToString();
                     StartAmount = Convert.ToInt32(dsInfoMember.Tables[0].Rows[0][4].ToString());
 
-                    if (Convert.ToInt32(dsInfoMember.Tables[1].Rows[0][0].ToString()) == 0 && Convert.ToInt32(dsInfoMember.Tables[2].Rows[0][0].ToString()) == 0)
+                    if (Convert.ToInt32(dsInfoMember.Tables[1].Rows[0][0].ToString()) == 0 && Convert.ToInt32(dsInfoMember.Tables[2].Rows[0][0].ToString()) == 0 && TBStartAmount.Text == TBSavingAmount.Text)
+                    {
                         TBStartAmount.Enabled = true;
+                        BSaveEdit.Enabled = true;
+                    }
                     button1.Enabled = true;
                     tabControl1.Enabled = true;
                     Checkmember(false);
@@ -424,10 +426,12 @@ namespace BankTeacher.Bank.Add_Member
             if(TBStartAmount.Enabled == true)
             {
                 TBStartAmount.Enabled = false;
+                BSaveEdit.Enabled = false;
             }
             else
             {
                 TBStartAmount.Enabled = true;
+                BSaveEdit.Enabled = true;
             }
         }
         private void Rewifi(object sender, EventArgs e)
@@ -452,7 +456,7 @@ namespace BankTeacher.Bank.Add_Member
         {
             BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBSavingAmount);
 
-            if (SavingAmountStart != TBStartAmount.Text)
+            if (SavingAmountStart != TBStartAmount.Text && TBStartAmount.Enabled == true)
             {
                 BSaveEdit.Enabled = true;
             }
