@@ -75,8 +75,8 @@ namespace BankTeacher.Bank
           "LEFT JOIN (SELECT b.TeacherNo , b.RemainsAmount \r\n " +
           "	FROM EmployeeBank.dbo.tblLoan as a \r\n " +
           "	LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo \r\n " +
-          "	WHERE a.LoanStatusNo IN (1,2) and b.TeacherNo LIKE '%{TeacherNo}%') as e on a.TeacherNo = e.TeacherNo \r\n " +
-          "WHERE a.TeacherNo = '{TeacherNo}' and a.MemberStatusNo = 1 or (a.MemberStatusNo = 2 and d.SavingAmount != 0)\r\n " +
+          "	WHERE a.LoanStatusNo = 2 and b.TeacherNo = '{TeacherNo}') as e on a.TeacherNo = e.TeacherNo \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}' \r\n " +
           "GROUP BY a.TeacherNo , d.ShareNo , d.SavingAmount ,c.PrefixName ,  b.Fname , b.Lname;"
            , 
 
