@@ -280,7 +280,7 @@ namespace BankTeacher.Bank.Add_Member
                     .Replace("{TeacherNo}", TBTeacherNo.Text));
                     Checkmember(true);
 
-                    MessageBox.Show("บันทึกการแก้ไขสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("บันทึกการแก้ไขสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     BSaveEdit.Enabled = false;
                     CheckSave = true;
                 }

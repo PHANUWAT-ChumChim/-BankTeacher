@@ -38,7 +38,11 @@ namespace BankTeacher.Bank
           "DELETE \r\n"+
           "FROM EmployeeBank.dbo.tblDividend; \r\n"+
           "DELETE \r\n"+
-          "FROM EmployeeBank.dbo.tblBillDetail; "
+          "FROM EmployeeBank.dbo.tblBillDetail; \r\n"+
+          "DELETE \r\n"+
+          "FROM EmployeeBank.dbo.tblFile; \r\n"+
+          "DELETE \r\n"+
+          "FROM EmployeeBank.dbo.tblDividendDetail; \r\n"
           ,
 
          };
@@ -57,13 +61,9 @@ namespace BankTeacher.Bank
         {
             while (true)
             {
-                if (MessageBox.Show("จะไปจริงหรอ", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
+                if (MessageBox.Show("จะไปจริงหรอ ไม่ดีม้างงงง", "เข้าจริงอะ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
                 {
                     break;
-                }
-                else
-                {
-                    this.Close();
                 }
             }
                 
