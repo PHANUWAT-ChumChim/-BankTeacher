@@ -32,8 +32,8 @@ namespace BankTeacher.Bank.Add_Member
         /// <para>[7] Count Cancel Member File INPUT: {TeacherNo}</para>
         /// <para>[8] Chcek flie Regmember INPUT : {TeacherNo}</para>
         /// <para>[9] UPDATE Status File INPUT: {TeacherNoAddBy} {ID} {TeacherNo} {PathFile} </para>
+        /// <para>[10] Get SavingAmount & Get GuarantorAmount INPUT: {TeacherNo}INPUT: {TeacherNo}</para>
         /// <para>[11] if HE is Guarantor Get Amount & SavingAmount if(His Loan Get SumAmount & SavingAmount) INPUT: {TeacherNo} </para>
-        /// <para>[12] Get Teacher's LoanNo INPUT: {TeacherNo} </para>
         /// </summary>
         private String[] SQLDefault = new string[]
         {
@@ -140,6 +140,11 @@ namespace BankTeacher.Bank.Add_Member
           " \r\n " +
           "INSERT INTO EmployeeBank.dbo.tblFile(TeacherNo,FiletypeNo,pathFile,TeacherAddBy,LoanID,DateAddFile,IsUse,TeacherRemoveFileBy,DateRemoveFile,StatusFileInSystem) \r\n " +
           "VALUES('{TeacherNo}','2','{PathFile}','{TeacherNoAddBy}',null,CURRENT_TIMESTAMP,1,null,null,1)"
+           ,
+           //[10] Update End Loan if not received money (LoanStatus = 1) INPUT: {TeacherNo}
+           "UPDATE EmployeeBank.dbo.tblLoan \r\n " +
+          "SET LoanStatusNo = 4 \r\n " +
+          "WHERE TeacherNo = '{TeacherNo}' and LoanStatusNo = 1"
            ,
 
            //[10] Get SavingAmount & Get GuarantorAmount INPUT: {TeacherNo}
@@ -365,7 +370,7 @@ namespace BankTeacher.Bank.Add_Member
                             FTP.FTPMoveFileandRename($"Member_{TBTeacherNo.Text}.pdf", "CancelMember", Rename);
                             if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
                             {
-                                Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[1] + "\r\n" + SQLDefault[9])
+                                Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[1] + "\r\n" + SQLDefault[9] + "\r\n" + SQLDefault[10])
                                 .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
                                 .Replace("{TeacherNo}", TBTeacherNo.Text)
                                 .Replace("{Note}", TBNote.Text)

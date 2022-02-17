@@ -57,7 +57,7 @@ namespace BankTeacher.Bank
             "LEFT JOIN EmployeeBank.dbo.tblLoan as b on a.LoanNo = b.LoanNo\r\n" +
             "LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo\r\n" +
             "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo\r\n" +
-            "WHERE a.TeacherNo = '{TeacherNo}' and a.RemainsAmount > 0\r\n" +
+            "WHERE a.TeacherNo = '{TeacherNo}' and a.RemainsAmount > 0 and LoanStatusNo = 2\r\n" +
             "GROUP BY a.LoanNo , a.RemainsAmount, CAST(ISNULL(d.PrefixName+' ','') + c.Fname + ' ' + c.Lname AS NVARCHAR),\r\n" +
             "DATEADD(MONTH,b.PayNo,CAST(CAST(CAST(b.YearPay as nvarchar) +'/' + CAST(b.MonthPay AS nvarchar) + '/05' AS nvarchar) AS date));"
 
@@ -74,8 +74,8 @@ namespace BankTeacher.Bank
           "LEFT JOIN (SELECT b.TeacherNo , b.RemainsAmount \r\n " +
           "	FROM EmployeeBank.dbo.tblLoan as a \r\n " +
           "	LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo \r\n " +
-          "	WHERE a.LoanStatusNo IN (1,2) and b.TeacherNo LIKE '%{TeacherNo}%') as e on a.TeacherNo = e.TeacherNo \r\n " +
-          "WHERE a.TeacherNo = '{TeacherNo}' and a.MemberStatusNo = 1 or (a.MemberStatusNo = 2 and d.SavingAmount != 0)\r\n " +
+          "	WHERE a.LoanStatusNo = 2 and b.TeacherNo = '{TeacherNo}') as e on a.TeacherNo = e.TeacherNo \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}' \r\n " +
           "GROUP BY a.TeacherNo , d.ShareNo , d.SavingAmount ,c.PrefixName ,  b.Fname , b.Lname;"
            , 
 
