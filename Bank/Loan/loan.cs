@@ -185,11 +185,6 @@ namespace BankTeacher.Bank.Loan
 
             ,
 
-           //[11] Get MinLoan INPUT: -
-           "SELECT MinLoan \r\n " +
-          "FROM EmployeeBank.dbo.tblSettingAmount;"
-           ,
-
         };
 
         //----------------------- PullSQLDate -------------------- ////////
@@ -872,7 +867,6 @@ namespace BankTeacher.Bank.Loan
         private void TBLoanAmount_Leave(object sender, EventArgs e)
         {
             //BankTeacher.Bank.Menu.
-            DataTable MinLoan = Class.SQLConnection.InputSQLMSSQL(SQLDefault[11]);
             //UserOutCreditLimit = DialogResult.No;
             int LimitAmount = 0;
             int Amount;
@@ -881,7 +875,7 @@ namespace BankTeacher.Bank.Loan
             bool Check = int.TryParse(AmountLimit, out LimitAmount);
             if (DGVGuarantor.Rows.Count != 0)
             {
-                if (int.TryParse(TBLoanAmount.Text, out Amount) && (Check) && Amount >= Convert.ToInt32(MinLoan.Rows[0][0].ToString()))
+                if (int.TryParse(TBLoanAmount.Text, out Amount) && (Check) && Amount >= Convert.ToInt32(BankTeacher.Bank.Menu.MinLoan))
                 {
                     if (Amount > LimitAmount && UserOutCreditLimit == DialogResult.No && CheckBReset == false)
                     {
@@ -906,9 +900,9 @@ namespace BankTeacher.Bank.Loan
                     else if (Amount < LimitAmount && UserOutCreditLimit == DialogResult.Yes)
                         UserOutCreditLimit = DialogResult.No;
                 }
-                else if (Amount < Convert.ToInt32(MinLoan.Rows[0][0]) && TBLoanAmount.Text != "")
+                else if (Amount < Convert.ToInt32(BankTeacher.Bank.Menu.MinLoan) && TBLoanAmount.Text != "")
                 {
-                    MessageBox.Show($"เงินกู้ขั้นต่ำต้องมากกว่าหรือเท่ากับ {MinLoan.Rows[0][0]}", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show($"เงินกู้ขั้นต่ำต้องมากกว่าหรือเท่ากับ {BankTeacher.Bank.Menu.MinLoan}", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     TBLoanAmount.Text = "";
                     TBLoanAmount.Focus();
                 }
