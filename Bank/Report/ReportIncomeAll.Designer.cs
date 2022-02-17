@@ -91,7 +91,7 @@ namespace BankTeacher.Bank
             this.panel1.Location = new System.Drawing.Point(13, 13);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(892, 665);
+            this.panel1.Size = new System.Drawing.Size(897, 665);
             this.panel1.TabIndex = 2;
             // 
             // BExitForm
@@ -134,14 +134,14 @@ namespace BankTeacher.Bank
             this.dataGridViewTextBoxColumn9,
             this.dataGridViewTextBoxColumn10});
             this.DGV_All.GridColor = System.Drawing.SystemColors.Control;
-            this.DGV_All.Location = new System.Drawing.Point(8, 219);
+            this.DGV_All.Location = new System.Drawing.Point(20, 219);
             this.DGV_All.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.DGV_All.Name = "DGV_All";
             this.DGV_All.ReadOnly = true;
             this.DGV_All.RowHeadersVisible = false;
             this.DGV_All.RowHeadersWidth = 51;
             this.DGV_All.RowTemplate.Height = 24;
-            this.DGV_All.Size = new System.Drawing.Size(881, 354);
+            this.DGV_All.Size = new System.Drawing.Size(861, 354);
             this.DGV_All.TabIndex = 8;
             // 
             // Column2
@@ -220,11 +220,12 @@ namespace BankTeacher.Bank
             // 
             this.DTP.CalendarFont = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DTP.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DTP.Location = new System.Drawing.Point(8, 11);
+            this.DTP.Location = new System.Drawing.Point(20, 13);
             this.DTP.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.DTP.Name = "DTP";
             this.DTP.Size = new System.Drawing.Size(279, 36);
             this.DTP.TabIndex = 7;
+            this.DTP.ValueChanged += new System.EventHandler(this.DTP_ValueChanged);
             // 
             // panel4
             // 
@@ -239,16 +240,16 @@ namespace BankTeacher.Bank
             this.panel4.Controls.Add(this.TBAmountCash_All);
             this.panel4.Controls.Add(this.TBAmountTranfer_All);
             this.panel4.Controls.Add(this.label3);
-            this.panel4.Location = new System.Drawing.Point(8, 71);
+            this.panel4.Location = new System.Drawing.Point(20, 71);
             this.panel4.Margin = new System.Windows.Forms.Padding(4);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(880, 142);
+            this.panel4.Size = new System.Drawing.Size(861, 142);
             this.panel4.TabIndex = 122;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(515, 11);
+            this.label1.Location = new System.Drawing.Point(530, 11);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(115, 30);
             this.label1.TabIndex = 4;
@@ -257,7 +258,7 @@ namespace BankTeacher.Bank
             // TBAmount_All
             // 
             this.TBAmount_All.Enabled = false;
-            this.TBAmount_All.Location = new System.Drawing.Point(513, 70);
+            this.TBAmount_All.Location = new System.Drawing.Point(528, 70);
             this.TBAmount_All.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.TBAmount_All.Name = "TBAmount_All";
             this.TBAmount_All.Size = new System.Drawing.Size(189, 36);
@@ -271,17 +272,18 @@ namespace BankTeacher.Bank
             this.BTPrint.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BTPrint.CausesValidation = false;
             this.BTPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTPrint.Location = new System.Drawing.Point(778, 70);
+            this.BTPrint.Location = new System.Drawing.Point(756, 70);
             this.BTPrint.Margin = new System.Windows.Forms.Padding(5, 2, 5, 2);
             this.BTPrint.Name = "BTPrint";
             this.BTPrint.Size = new System.Drawing.Size(93, 53);
             this.BTPrint.TabIndex = 120;
             this.BTPrint.UseVisualStyleBackColor = false;
+            this.BTPrint.Click += new System.EventHandler(this.BTPrint_Click_1);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(318, 11);
+            this.label4.Location = new System.Drawing.Point(333, 11);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(139, 30);
             this.label4.TabIndex = 4;
@@ -290,7 +292,7 @@ namespace BankTeacher.Bank
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(791, 20);
+            this.label5.Location = new System.Drawing.Point(769, 20);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 30);
             this.label5.TabIndex = 123;
@@ -299,7 +301,7 @@ namespace BankTeacher.Bank
             // TBAmountCradit_All
             // 
             this.TBAmountCradit_All.Enabled = false;
-            this.TBAmountCradit_All.Location = new System.Drawing.Point(325, 70);
+            this.TBAmountCradit_All.Location = new System.Drawing.Point(340, 70);
             this.TBAmountCradit_All.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.TBAmountCradit_All.Name = "TBAmountCradit_All";
             this.TBAmountCradit_All.Size = new System.Drawing.Size(141, 36);
@@ -309,7 +311,7 @@ namespace BankTeacher.Bank
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 11);
+            this.label2.Location = new System.Drawing.Point(18, 11);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(90, 30);
             this.label2.TabIndex = 4;
@@ -318,7 +320,7 @@ namespace BankTeacher.Bank
             // TBAmountCash_All
             // 
             this.TBAmountCash_All.Enabled = false;
-            this.TBAmountCash_All.Location = new System.Drawing.Point(3, 70);
+            this.TBAmountCash_All.Location = new System.Drawing.Point(18, 70);
             this.TBAmountCash_All.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.TBAmountCash_All.Name = "TBAmountCash_All";
             this.TBAmountCash_All.Size = new System.Drawing.Size(141, 36);
@@ -328,7 +330,7 @@ namespace BankTeacher.Bank
             // TBAmountTranfer_All
             // 
             this.TBAmountTranfer_All.Enabled = false;
-            this.TBAmountTranfer_All.Location = new System.Drawing.Point(165, 70);
+            this.TBAmountTranfer_All.Location = new System.Drawing.Point(180, 70);
             this.TBAmountTranfer_All.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.TBAmountTranfer_All.Name = "TBAmountTranfer_All";
             this.TBAmountTranfer_All.Size = new System.Drawing.Size(141, 36);
@@ -338,7 +340,7 @@ namespace BankTeacher.Bank
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(169, 11);
+            this.label3.Location = new System.Drawing.Point(184, 11);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(96, 30);
             this.label3.TabIndex = 4;
@@ -349,7 +351,7 @@ namespace BankTeacher.Bank
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(962, 691);
+            this.ClientSize = new System.Drawing.Size(987, 691);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
