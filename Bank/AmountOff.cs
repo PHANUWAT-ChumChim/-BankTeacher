@@ -214,7 +214,10 @@ namespace BankTeacher.Bank
             CBYear.Enabled = false;
 
             DTPDate.Value = Convert.ToDateTime(Bank.Menu.Date[0] + "/" + Bank.Menu.Date[1] + "/" + Bank.Menu.Date[2]);
-            DTPDate.Enabled = DTPDate.Enabled = Bank.Setting.CheckTimeBack;
+            if (BankTeacher.Bank.Menu.DateAmountChange == 1)
+                DTPDate.Enabled = true;
+            else
+                DTPDate.Enabled = false;
         }
 
         public void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
@@ -227,7 +230,6 @@ namespace BankTeacher.Bank
                 tabControl1.SelectedIndex = 0;
                 tabControl1.Enabled = true;
                 DTPDate.Value = Convert.ToDateTime(Bank.Menu.Date[0] + "/" + Bank.Menu.Date[1] + "/" + Bank.Menu.Date[2]);
-                DTPDate.Enabled = Bank.Setting.CheckTimeBack;
                 DGVAmountOffHistory.Rows.Clear();
                 CBYear.Items.Clear();
                 DGVLoan.Rows.Clear();

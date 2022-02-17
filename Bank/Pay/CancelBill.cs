@@ -86,7 +86,6 @@ namespace BankTeacher.Bank.Pay
           "  LEFT JOIN BaseData.dbo.tblPrefix as e on d.PrefixNo = e.PrefixNo   \r\n " +
           "  LEFT JOIN EmployeeBank.dbo.tblBillDetailType as f on b.TypeNo = f.TypeNo   \r\n " +
           "  WHERE  (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255)) LIKE '%{Text}%' )and MemberStatusNo != 2 and Cancel = 1 and CAST(a.DateAdd as DATE) >= DATEADD(DAY,-7,CAST(GETDATE() as DATE)) and b.TypeNo != 3 \r\n " +
-          "  WHERE  (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255)) LIKE '%{Text}%' )and MemberStatusNo != 2 and Cancel = 1 and CAST(a.DateAdd as Date) Like '{today}%' and b.TypeNo != 3 and a.BillNo != '{BillNoSelect}' \r\n " +
           " GROUP BY a.TeacherNo,CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255)),a.BillNo"
             ,
             //[5] Check Dividend Year INPUT: 
@@ -338,11 +337,9 @@ namespace BankTeacher.Bank.Pay
 
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
-            String Year = Bank.Menu.Date[0];
-            String Month = Bank.Menu.Date[1];
-            String Day = Bank.Menu.Date[2];
-            DTPDate.Value = Convert.ToDateTime(Bank.Menu.Date[0] + "/" + Bank.Menu.Date[1] + "/" + Bank.Menu.Date[2]);
-            DTPDate.Enabled = Bank.Setting.CheckTimeBack;
+            String Year = DTPDate.Value.ToString("yyyy");
+            String Month = DTPDate.Value.ToString("MM");
+            String Day = DTPDate.Value.ToString("dd");
             if (Convert.ToInt32(Month) < 10)
             {
                 Month = "0" + Convert.ToInt32(Month);
@@ -384,7 +381,10 @@ namespace BankTeacher.Bank.Pay
         private void CancelBill_Load(object sender, EventArgs e)
         {
             DTPDate.Value = Convert.ToDateTime(Bank.Menu.Date[0] + "/" + Bank.Menu.Date[1] + "/" + Bank.Menu.Date[2]);
-            DTPDate.Enabled = Bank.Setting.CheckTimeBack;
+            if (BankTeacher.Bank.Menu.DateAmountChange == 1)
+                DTPDate.Enabled = true;
+            else
+                DTPDate.Enabled = false;
         }
     }
 }
