@@ -64,7 +64,6 @@ namespace BankTeacher.Bank.Pay
             // PL_Form
             // 
             this.PL_Form.BackColor = System.Drawing.Color.White;
-            this.PL_Form.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PL_Form.Controls.Add(this.BExitForm);
             this.PL_Form.Controls.Add(this.TB_2);
             this.PL_Form.Location = new System.Drawing.Point(16, 16);
@@ -79,7 +78,7 @@ namespace BankTeacher.Bank.Pay
             this.BExitForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.BExitForm.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
             this.BExitForm.Location = new System.Drawing.Point(1040, 604);
-            this.BExitForm.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BExitForm.Margin = new System.Windows.Forms.Padding(4);
             this.BExitForm.Name = "BExitForm";
             this.BExitForm.Size = new System.Drawing.Size(97, 81);
             this.BExitForm.TabIndex = 112;
@@ -127,7 +126,7 @@ namespace BankTeacher.Bank.Pay
             this.Column5,
             this.Column6});
             this.DGV_Bill.Location = new System.Drawing.Point(4, 98);
-            this.DGV_Bill.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.DGV_Bill.Margin = new System.Windows.Forms.Padding(4);
             this.DGV_Bill.Name = "DGV_Bill";
             this.DGV_Bill.ReadOnly = true;
             this.DGV_Bill.RowHeadersVisible = false;

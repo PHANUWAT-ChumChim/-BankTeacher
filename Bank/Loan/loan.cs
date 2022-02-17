@@ -113,7 +113,7 @@ namespace BankTeacher.Bank.Loan
             //[5] Detail Loan Print  INPUT: TeacherNo
             "SELECT a.TeacherNo,CAST(ISNULL(d.PrefixName+' ','')+Fname +' '+ Lname as NVARCHAR)AS Name,LoanAmount , \r\n " +
             "CAST(cNo + ' หมู่ ' + cMu + 'ซอย  ' + cSoi + ' ถนน' + cRoad + ' ตำบล' +  TumBonName + ' อำเภอ'  + AmphurName + ' จังหวัด ' + JangWatLongName + ' รหัสไปรสณี ' + ZipCode as NVARCHAR(255)) AS ADDRESS, \r\n " +
-            "MonthPay , YearPay , PayNo , InterestRate \r\n " +
+            "MonthPay-1 as month ,IIF(PayNo/12 > 0,(YearPay+1)+543,YearPay+543) as year, PayNo , InterestRate,CAST(CAST(DAY(DateAdd) as nvarchar)+'/'+CAST(MONTH(DateAdd) as nvarchar)+'/'+CAST(YEAR(DateAdd)+543 as nvarchar) as nvarchar)  as Date \r\n " +
             "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
             "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo \r\n " +
             "LEFT JOIN Personal.dbo.tblTeacherHis as c ON b.TeacherNo = c.TeacherNo \r\n " +
@@ -121,7 +121,7 @@ namespace BankTeacher.Bank.Loan
             "LEFT JOIN BaseData.dbo.tblTumBon as e on c.cTumBonNo = e.TumBonNo \r\n " +
             "LEFT JOIN BaseData.dbo.tblAmphur as f on c.cAmPhurNo = f.AmphurNo \r\n " +
             "LEFT JOIN BaseData.dbo.tblJangWat as g on c.cJangWatNo = g.JangWatNo \r\n " +
-            "WHERE a.TeacherNo = '{TeacherNo}' "
+            "WHERE a.TeacherNo = '{TeacherNo}' ORDER BY Date DESC"
             ,
              //[6] SELECT MemberLona  INPUT: {TeacherNo}
             "SELECT a.TeacherNo,CAST(ISNULL(c.PrefixName+' ','')+b.Fname+' '+b.Lname as NVARCHAR),d.StartAmount  \r\n "+
@@ -844,7 +844,6 @@ namespace BankTeacher.Bank.Loan
             }
             int LoanAmount = Convert.ToInt32(CreditLoanAmount - CreditLoanAmount * (Convert.ToDouble(TBInterestRate.Text) / 100));
             LLoanAmount.Text = "(" + LoanAmount.ToString() + ")";
-
         }
         private void Checkmember(bool tf)
         {

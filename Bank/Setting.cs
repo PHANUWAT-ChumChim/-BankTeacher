@@ -547,9 +547,6 @@ namespace BankTeacher.Bank
 
         private void Setting_KeyUp(object sender, KeyEventArgs e)
         {
-            tabControl1.Select();
-            tabControl1.TabPages[tabControl1.SelectedIndex].Focus();
-            tabControl1.TabPages[tabControl1.SelectedIndex].CausesValidation = true;
             if (e.KeyCode == Keys.Tab)
             {
                 if (tabControl1.SelectedIndex == tabControl1.TabCount - 1)

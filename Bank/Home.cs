@@ -388,6 +388,7 @@ namespace BankTeacher.Bank
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
+            Class.Print.PrintPreviewDialog.details = 1;
             DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[7]
                 .Replace("{TeacherNo}", TBTeacherNo.Text));
             Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;

@@ -2509,21 +2509,12 @@ namespace BankTeacher.Bank.Pay
         }
         private void BTPrint_Click(object sender, EventArgs e)
         {
-            if (CB_SelectPrint.SelectedIndex == 0)
+            if(DGV_BillInfo.RowCount != 0)
             {
-                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("Letter", 850, 1100);
-                printDocument1.DefaultPageSettings.Landscape = false;
-                if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                if (CB_SelectPrint.SelectedIndex == 0)
                 {
-                    printDocument1.Print();
-                }
-            }
-            else
-            {
-                if (DGV_Tester.Rows.Count != 0)
-                {
-                    printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
-                    printDocument1.DefaultPageSettings.Landscape = true;
+                    printDocument1.DefaultPageSettings.PaperSize = new PaperSize("Letter", 850, 1100);
+                    printDocument1.DefaultPageSettings.Landscape = false;
                     if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                     {
                         printDocument1.Print();
@@ -2531,12 +2522,28 @@ namespace BankTeacher.Bank.Pay
                 }
                 else
                 {
-                    P1_Y.Size = new Size(5, LINE);
-                    P2_Y.Size = new Size(5, LINE);
-                    P2_X.Location = new Point(2, 106 + LINE);
-                    P1_X.Visible = true; P2_X.Visible = true; P2_Y.Visible = true; P1_Y.Visible = true;
-                    timer1.Start(); MessageBox.Show("โปรดเลือกรายการในตาราง สำหรับ การปริ้นเออกสารย้อนหลัง \r\n หรือ กรอกเลขบิลล์ในช่อง เลขบิลล์ให้ถูกต้อง", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (DGV_Tester.Rows.Count != 0)
+                    {
+                        printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+                        printDocument1.DefaultPageSettings.Landscape = true;
+                        if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                        {
+                            printDocument1.Print();
+                        }
+                    }
+                    else
+                    {
+                        P1_Y.Size = new Size(5, LINE);
+                        P2_Y.Size = new Size(5, LINE);
+                        P2_X.Location = new Point(2, 106 + LINE);
+                        P1_X.Visible = true; P2_X.Visible = true; P2_Y.Visible = true; P1_Y.Visible = true;
+                        timer1.Start(); MessageBox.Show("โปรดเลือกรายการในตาราง สำหรับ การปริ้นเออกสารย้อนหลัง \r\n หรือ กรอกเลขบิลล์ในช่อง เลขบิลล์ให้ถูกต้อง", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
+            }
+            else
+            {
+                MessageBox.Show("ไม่พบรายการในตาราง", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 

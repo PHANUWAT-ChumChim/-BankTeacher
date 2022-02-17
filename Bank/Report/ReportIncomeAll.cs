@@ -44,10 +44,10 @@ namespace BankTeacher.Bank
         public ReportIncomeAll()
         {
             InitializeComponent();
-            dateTimePicker1_ValueChanged(new object(), new EventArgs());
+            DTP_ValueChanged(new object(), new EventArgs());
         }
 
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
+        private void DTP_ValueChanged(object sender, EventArgs e)
         {
             TBAmountCash_All.Text = "0";
             TBAmountCradit_All.Text = "0";
@@ -68,9 +68,9 @@ namespace BankTeacher.Bank
             DGV_All.Rows.Clear();
             //ภาพรวม
             DataTable dtCheckBillInDay = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]
-                .Replace("{Date}" , Year+'-'+Month+'-'+Day)
-                .Replace("{TeacherNoAddBy}",""));
-            if(dtCheckBillInDay.Rows.Count != 0)
+                .Replace("{Date}", Year + '-' + Month + '-' + Day)
+                .Replace("{TeacherNoAddBy}", ""));
+            if (dtCheckBillInDay.Rows.Count != 0)
             {
                 int DGVPosition = -1;
                 int SumAmount = 0;
@@ -78,15 +78,15 @@ namespace BankTeacher.Bank
                 int AmountTranfer = 0;
                 int AmountCradit = 0;
                 int sumamountbill = 0;
-                for (int x = 0; x < dtCheckBillInDay.Rows.Count; x++) 
+                for (int x = 0; x < dtCheckBillInDay.Rows.Count; x++)
                 {
                     int AmountBill = 0;
-                    DGV_All.Rows.Add(x+1,dtCheckBillInDay.Rows[x][0].ToString(), dtCheckBillInDay.Rows[x][2].ToString(), dtCheckBillInDay.Rows[x][1].ToString());
-                    DGVPosition = DGV_All.Rows.Count - 1 ;
+                    DGV_All.Rows.Add(x + 1, dtCheckBillInDay.Rows[x][0].ToString(), dtCheckBillInDay.Rows[x][2].ToString(), dtCheckBillInDay.Rows[x][1].ToString());
+                    DGVPosition = DGV_All.Rows.Count - 1;
 
                     DataTable dtCheckBillDetail = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
                         .Replace("{BillNo}", dtCheckBillInDay.Rows[x][0].ToString()));
-                    if(dtCheckBillDetail.Rows.Count != 0)
+                    if (dtCheckBillDetail.Rows.Count != 0)
                     {
                         for (int y = 0; y < dtCheckBillDetail.Rows.Count; y++)
                         {
@@ -97,7 +97,7 @@ namespace BankTeacher.Bank
                             else if (dtCheckBillDetail.Rows[y][2].ToString().Contains("โอน"))
                                 AmountTranfer += Convert.ToInt32(dtCheckBillDetail.Rows[y][3]);
                             else if (dtCheckBillDetail.Rows[y][2].ToString().Contains("เครดิต"))
-                                    AmountCradit += Convert.ToInt32(dtCheckBillDetail.Rows[y][3]);
+                                AmountCradit += Convert.ToInt32(dtCheckBillDetail.Rows[y][3]);
 
                             if (y == 0)
                             {
@@ -108,24 +108,24 @@ namespace BankTeacher.Bank
                                 if (y == dtCheckBillDetail.Rows.Count - 1)
                                 {
                                     sumamountbill += AmountBill;
-                                    DGV_All.Rows.Add("","", "", "สรุปยอดบิล  ", "", "", AmountBill,"");
+                                    DGV_All.Rows.Add("", "", "", "สรุปยอดบิล  ", "", "", AmountBill, "");
                                     DGV_All.Rows[DGV_All.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                                 }
 
                                 continue;
                             }
-                            DGV_All.Rows.Add("", "", "", "", dtCheckBillDetail.Rows[y][1].ToString(), dtCheckBillDetail.Rows[y][2].ToString(), dtCheckBillDetail.Rows[y][3].ToString(),"");
-                            if(y == dtCheckBillDetail.Rows.Count - 1)
+                            DGV_All.Rows.Add("", "", "", "", dtCheckBillDetail.Rows[y][1].ToString(), dtCheckBillDetail.Rows[y][2].ToString(), dtCheckBillDetail.Rows[y][3].ToString(), "");
+                            if (y == dtCheckBillDetail.Rows.Count - 1)
                             {
                                 sumamountbill += AmountBill;
-                                DGV_All.Rows.Add("", "","", "สรุปยอดบิล  ", "", "", AmountBill,"");
+                                DGV_All.Rows.Add("", "", "", "สรุปยอดบิล  ", "", "", AmountBill, "");
                                 DGV_All.Rows[DGV_All.Rows.Count - 1].DefaultCellStyle.BackColor = Color.Cornsilk;
                             }
                         }
                     }
                 }
                 DGV_All.Rows.Add("", "", "", "รวมนยอดบิลล์  ", "", "", sumamountbill, "");
-                DGV_All.Rows[DGV_All.Rows.Count-1].DefaultCellStyle.BackColor = Color.CornflowerBlue;
+                DGV_All.Rows[DGV_All.Rows.Count - 1].DefaultCellStyle.BackColor = Color.CornflowerBlue;
                 TBAmount_All.Text = SumAmount.ToString();
                 TBAmountCash_All.Text = Amountcash.ToString();
                 TBAmountTranfer_All.Text = AmountTranfer.ToString();
@@ -159,9 +159,14 @@ namespace BankTeacher.Bank
             Class.Print.PrintPreviewDialog.Detailspayment(e, DGV_All, "รายการ : รายรับประจำวัน",this.AccessibilityObject.Name);
         }
 
-        private void BTPrint_Click(object sender, EventArgs e)
+        private void BExitForm_Click_1(object sender, EventArgs e)
         {
-            if(DGV_All.Rows.Count != 0)
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
+
+        private void BTPrint_Click_1(object sender, EventArgs e)
+        {
+            if (DGV_All.Rows.Count != 0)
             {
                 if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
                 {
@@ -169,12 +174,7 @@ namespace BankTeacher.Bank
                 }
             }
             else
-                 MessageBox.Show("ไม่พบรายการบิลล์ ในตาราง", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        }
-
-        private void BExitForm_Click_1(object sender, EventArgs e)
-        {
-            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+                MessageBox.Show("ไม่พบรายการบิลล์ ในตาราง", "การเเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
     }
 }
