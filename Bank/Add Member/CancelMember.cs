@@ -32,8 +32,10 @@ namespace BankTeacher.Bank.Add_Member
         /// <para>[7] Count Cancel Member File INPUT: {TeacherNo}</para>
         /// <para>[8] Chcek flie Regmember INPUT : {TeacherNo}</para>
         /// <para>[9] UPDATE Status File INPUT: {TeacherNoAddBy} {ID} {TeacherNo} {PathFile} </para>
-        /// <para>[11] if HE is Guarantor Get Amount & SavingAmount if(His Loan Get SumAmount & SavingAmount) INPUT: {TeacherNo} </para>
+        /// <para>[10] Get SavingAmount and Get GuarantorAmount INPUT: {TeacherNo}INPUT: {TeacherNo}</para>
+        /// <para>[11] if HE is Guarantor Get Amount and SavingAmount if(His Loan Get SumAmount and SavingAmount) INPUT: {TeacherNo} </para>
         /// <para>[12] Get Teacher's LoanNo INPUT: {TeacherNo} </para>
+        /// <para>[13] Update End Loan if not received money (LoanStatus = 1) INPUT: {TeacherNo}</para>
         /// </summary>
         private String[] SQLDefault = new string[]
         {
@@ -192,7 +194,12 @@ namespace BankTeacher.Bank.Add_Member
           "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
           "WHERE a.TeacherNo = '{TeacherNo}' and a.LoanStatusNo = 2"
            ,
-
+           
+           //[13] Update End Loan if not received money (LoanStatus = 1) INPUT: {TeacherNo}
+           "UPDATE EmployeeBank.dbo.tblLoan \r\n " +
+          "SET LoanStatusNo = 4 \r\n " +
+          "WHERE TeacherNo = '{TeacherNo}' and LoanStatusNo = 1"
+           ,
 
         };
         public CancelMember()
@@ -321,7 +328,7 @@ namespace BankTeacher.Bank.Add_Member
                                 FTP.FTPMoveFileandRename($"Member_{TBTeacherNo.Text}.pdf", "CancelMember", Rename);
                                 if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
                                 {
-                                    Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[1] + "\r\n" + SQLDefault[9])
+                                    Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[1] + "\r\n" + SQLDefault[9] + "\r\n" + SQLDefault[13])
                                     .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
                                     .Replace("{TeacherNo}", TBTeacherNo.Text)
                                     .Replace("{Note}", TBNote.Text)
@@ -365,7 +372,7 @@ namespace BankTeacher.Bank.Add_Member
                             FTP.FTPMoveFileandRename($"Member_{TBTeacherNo.Text}.pdf", "CancelMember", Rename);
                             if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
                             {
-                                Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[1] + "\r\n" + SQLDefault[9])
+                                Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[1] + "\r\n" + SQLDefault[9] + "\r\n" + SQLDefault[13])
                                 .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
                                 .Replace("{TeacherNo}", TBTeacherNo.Text)
                                 .Replace("{Note}", TBNote.Text)

@@ -51,18 +51,19 @@ namespace BankTeacher.Bank
         String[] SQLDefault = new String[]
         {
             //[0] DGV SELECT LoanNo,RemainAmount,Name,EndDate INPUT: {TeacherNo}
-            "SELECT a.LoanNo , a.RemainsAmount  , CAST(ISNULL(d.PrefixName+' ','') + c.Fname + ' ' + c.Lname AS NVARCHAR) AS NAME,\r\n" +
-            "DATEADD(MONTH,b.PayNo,CAST(CAST(CAST(b.YearPay as nvarchar) +'/' + CAST(b.MonthPay AS nvarchar) + '/05' AS nvarchar) AS date)) as DateEnd\r\n" +
-            "FROM EmployeeBank.dbo.tblGuarantor as a\r\n" +
-            "LEFT JOIN EmployeeBank.dbo.tblLoan as b on a.LoanNo = b.LoanNo\r\n" +
-            "LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo\r\n" +
-            "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo\r\n" +
-            "WHERE a.TeacherNo = '{TeacherNo}' and a.RemainsAmount > 0\r\n" +
-            "GROUP BY a.LoanNo , a.RemainsAmount, CAST(ISNULL(d.PrefixName+' ','') + c.Fname + ' ' + c.Lname AS NVARCHAR),\r\n" +
-            "DATEADD(MONTH,b.PayNo,CAST(CAST(CAST(b.YearPay as nvarchar) +'/' + CAST(b.MonthPay AS nvarchar) + '/05' AS nvarchar) AS date));"
+           " \r\n " +
+          "SELECT a.LoanNo , a.RemainsAmount  , CAST(ISNULL(d.PrefixName+' ','') + c.Fname + ' ' + c.Lname AS NVARCHAR) AS NAME, \r\n " +
+          "DATEADD(MONTH,b.PayNo,CAST(CAST(CAST(b.YearPay as nvarchar) +'/' + CAST(b.MonthPay AS nvarchar) + '/05' AS nvarchar) AS date)) as DateEnd , e.LoanStatusName \r\n " +
+          "FROM EmployeeBank.dbo.tblGuarantor as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblLoan as b on a.LoanNo = b.LoanNo \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblLoanStatus as e on b.LoanStatusNo = e.LoanStatusNo \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}' and a.RemainsAmount > 0 \r\n " +
+          "GROUP BY a.LoanNo , a.RemainsAmount, CAST(ISNULL(d.PrefixName+' ','') + c.Fname + ' ' + c.Lname AS NVARCHAR), \r\n " +
+          "DATEADD(MONTH,b.PayNo,CAST(CAST(CAST(b.YearPay as nvarchar) +'/' + CAST(b.MonthPay AS nvarchar) + '/05' AS nvarchar) AS date)) , e.LoanStatusName;"
+           ,
 
-
-            ,
 
             //[1] SELECT Name ,ShareNo ,SavingAmount ,CreditSupport , WithDrawSavingAmount INPUT: {TeacherNo}
            "SELECT CAST(ISNULL(c.PrefixName+' ','') + b.Fname + ' ' + b.Lname AS NVARCHAR) AS NAME , d.ShareNo , d.SavingAmount, \r\n " +
@@ -74,8 +75,8 @@ namespace BankTeacher.Bank
           "LEFT JOIN (SELECT b.TeacherNo , b.RemainsAmount \r\n " +
           "	FROM EmployeeBank.dbo.tblLoan as a \r\n " +
           "	LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo \r\n " +
-          "	WHERE a.LoanStatusNo IN (1,2) and b.TeacherNo LIKE '%{TeacherNo}%') as e on a.TeacherNo = e.TeacherNo \r\n " +
-          "WHERE a.TeacherNo = '{TeacherNo}' and a.MemberStatusNo = 1 or (a.MemberStatusNo = 2 and d.SavingAmount != 0)\r\n " +
+          "	WHERE a.LoanStatusNo = 2 and b.TeacherNo = '{TeacherNo}') as e on a.TeacherNo = e.TeacherNo \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}' \r\n " +
           "GROUP BY a.TeacherNo , d.ShareNo , d.SavingAmount ,c.PrefixName ,  b.Fname , b.Lname;"
            , 
 
@@ -214,7 +215,10 @@ namespace BankTeacher.Bank
             CBYear.Enabled = false;
 
             DTPDate.Value = Convert.ToDateTime(Bank.Menu.Date[0] + "/" + Bank.Menu.Date[1] + "/" + Bank.Menu.Date[2]);
-            DTPDate.Enabled = DTPDate.Enabled = Bank.Setting.CheckTimeBack;
+            if (BankTeacher.Bank.Menu.DateAmountChange == 1)
+                DTPDate.Enabled = true;
+            else
+                DTPDate.Enabled = false;
         }
 
         public void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
@@ -227,7 +231,6 @@ namespace BankTeacher.Bank
                 tabControl1.SelectedIndex = 0;
                 tabControl1.Enabled = true;
                 DTPDate.Value = Convert.ToDateTime(Bank.Menu.Date[0] + "/" + Bank.Menu.Date[1] + "/" + Bank.Menu.Date[2]);
-                DTPDate.Enabled = Bank.Setting.CheckTimeBack;
                 DGVAmountOffHistory.Rows.Clear();
                 CBYear.Items.Clear();
                 DGVLoan.Rows.Clear();
@@ -269,7 +272,7 @@ namespace BankTeacher.Bank
                     for (int Num = 0; Num < ds.Tables[1].Rows.Count; Num++)
                     {
                         Credit = ds.Tables[1].Rows[Num][1].ToString().Split('.');
-                        DGVLoan.Rows.Add(Num+1,ds.Tables[1].Rows[Num][0].ToString(), ds.Tables[1].Rows[Num][2].ToString(), Credit[0], Convert.ToDateTime(ds.Tables[1].Rows[Num][3].ToString()).ToString("dd/MM/yyyy"));
+                        DGVLoan.Rows.Add(Num+1,ds.Tables[1].Rows[Num][0].ToString(), ds.Tables[1].Rows[Num][2].ToString(), Credit[0], Convert.ToDateTime(ds.Tables[1].Rows[Num][3].ToString()).ToString("dd/MM/yyyy") , ds.Tables[1].Rows[Num][4]);
                     }
                     if (DGVLoan.Rows.Count != 0)
                     {

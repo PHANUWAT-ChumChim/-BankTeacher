@@ -68,10 +68,10 @@ namespace BankTeacher.Bank
             Stopwatch time = new Stopwatch();
             time.Start();
             int Round = 1;
-            //Relaod ข้อมูลทุก 10 นาที
+            //Relaod ข้อมูลทุก 1 นาที
             while (true)
             {
-                if(time.ElapsedMilliseconds >= 600000 * Round)
+                if(time.ElapsedMilliseconds >= 60000 * Round)
                 {
                     THREADWorking = new Thread(() => ThreadReloadData());
                     THREADWorking.Start();

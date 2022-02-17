@@ -230,7 +230,7 @@ namespace BankTeacher.Bank.Pay
           "\r\n" +
              "DECLARE @Loan int = 0 \r\n" +
              "set @Loan = (select IIF(Sum(a.RemainsAmount) != 0,Sum(a.RemainsAmount),0) From EmployeeBank.dbo.tblGuarantor as a \r\n" +
-             "where a.TeacherNo = '{TeacherNo}') \r\n" +
+             "where a.TeacherNo = '{TeacherNo}' ) \r\n" +
 
           "SELECT a.StartAmount , b.SavingAmount-@Loan, CAST(a.DateAdd as date)\r\n" +
           "FROM EmployeeBank.dbo.tblMember as a\r\n" +
@@ -369,7 +369,10 @@ namespace BankTeacher.Bank.Pay
             }
 
             DTPDate.Value = Convert.ToDateTime(Bank.Menu.Date[0] + "/" + Bank.Menu.Date[1] + "/" + Bank.Menu.Date[2]);
-            DTPDate.Enabled = Bank.Setting.CheckTimeBack;
+            if (BankTeacher.Bank.Menu.DateAmountChange == 1)
+                DTPDate.Enabled = true;
+            else
+                DTPDate.Enabled = false;
         }
         //=============================================================================================
 
