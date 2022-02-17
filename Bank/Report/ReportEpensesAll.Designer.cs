@@ -109,7 +109,7 @@ namespace BankTeacher.Bank
             this.dataGridViewTextBoxColumn6,
             this.dataGridViewTextBoxColumn7});
             this.DGV.GridColor = System.Drawing.SystemColors.Control;
-            this.DGV.Location = new System.Drawing.Point(18, 180);
+            this.DGV.Location = new System.Drawing.Point(9, 180);
             this.DGV.Name = "DGV";
             this.DGV.ReadOnly = true;
             this.DGV.RowHeadersVisible = false;
