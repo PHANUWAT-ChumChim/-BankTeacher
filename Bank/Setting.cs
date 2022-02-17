@@ -69,8 +69,8 @@ namespace BankTeacher.Bank
           "				SET SavingAmount = '{StartAmount}' \r\n " +
           "				WHERE TeacherNo = '{TeacherNo}'; \r\n " +
           " \r\n " +
-          "				INSERT INTO EmployeeBank.dbo.tblBill(TeacherNo, TeacherNoAddBy, DateAdd)  \r\n " +
-          "				VALUES('{TeacherNo}','{TeacherNoAddBy}', '{DateReg}')  \r\n " +
+          "				INSERT INTO EmployeeBank.dbo.tblBill(TeacherNo, TeacherNoAddBy, DateAdd , TransactionDate)  \r\n " +
+          "				VALUES('{TeacherNo}','{TeacherNoAddBy}', '{DateReg}', CURRENT_TIMESTAMP)  \r\n " +
           " \r\n " +
           "				SELECT @BillNo = SCOPE_IDENTITY();  \r\n " +
           " \r\n " +
@@ -88,8 +88,8 @@ namespace BankTeacher.Bank
           "				INSERT INTO EmployeeBank.dbo.tblShare(TeacherNo, SavingAmount) \r\n " +
           "				VALUES('{TeacherNo}',{StartAmount})  \r\n " +
           " \r\n " +
-          "				INSERT INTO EmployeeBank.dbo.tblBill(TeacherNo, TeacherNoAddBy, DateAdd)  \r\n " +
-          "				VALUES('{TeacherNo}','{TeacherNoAddBy}', '{DateReg}')  \r\n " +
+          "				INSERT INTO EmployeeBank.dbo.tblBill(TeacherNo, TeacherNoAddBy, DateAdd,TransactionDate)  \r\n " +
+          "				VALUES('{TeacherNo}','{TeacherNoAddBy}', '{DateReg}',CURRENT_TIMESTAMP)  \r\n " +
           " \r\n " +
           "				SELECT @BillNo = SCOPE_IDENTITY();  \r\n " +
           " \r\n " +
