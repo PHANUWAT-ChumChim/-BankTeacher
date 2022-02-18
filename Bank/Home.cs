@@ -46,7 +46,7 @@ namespace BankTeacher.Bank
           "LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBill as c on a.TeacherNo = c.TeacherNo  \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as d on c.BillNo = d.BillNo  \r\n " +
-          "WHERE c.Cancel = 1 and d.TypeNo = 1 and d.Mount <= 12 and d.Year = {Year} and a.TeacherNo = '{TeacherNo}'  \r\n " +
+          "WHERE c.Cancel = 1 and (d.TypeNo = 1 or d.TypeNo = 3) and d.Mount <= 12 and d.Year = {Year} and a.TeacherNo = '{TeacherNo}'  \r\n " +
           "GROUP BY a.TeacherNo , d.Amount , d.Mount , d.Year , a.StartAmount , CAST(a.DateAdd AS Date) , b.SavingAmount  \r\n " +
           "ORDER BY d.Mount; \r\n " +
           " \r\n " +
@@ -220,10 +220,7 @@ namespace BankTeacher.Bank
                         TBTeacherBill.Enabled = false;
                         BSearchTeacher.Enabled = true;
                         CByear.Enabled = true;
-//<<<<<<< PP
                         BTPrint.Enabled = true;
-//=======
-//>>>>>>> master
                     }
                     else
                     {
@@ -361,12 +358,12 @@ namespace BankTeacher.Bank
             }
             for(int x = 0; x < dataGridView3.Rows.Count; x++)
             {
-                if (dataGridView3.Rows[x].Cells[3].Value.ToString() == "ค้างชำระ")
+                if (dataGridView3.Rows[x].Cells[4].Value.ToString() == "ค้างชำระ")
                 {
-                    dataGridView3.Rows[x].Cells[3].Style = new DataGridViewCellStyle { ForeColor = Color.Red };
+                    dataGridView3.Rows[x].Cells[4].Style = new DataGridViewCellStyle { ForeColor = Color.Red };
                 }
                 else
-                    dataGridView3.Rows[x].Cells[3].Style = new DataGridViewCellStyle { ForeColor = Color.Green };
+                    dataGridView3.Rows[x].Cells[4].Style = new DataGridViewCellStyle { ForeColor = Color.Green };
             }
             this.Focus();
         }
