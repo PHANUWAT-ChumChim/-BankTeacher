@@ -228,7 +228,7 @@ namespace BankTeacher.Bank.Loan
                 if (Double.TryParse(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString(), out Double CreditPercent))
                 {
                     SumPercentGuarantor += Convert.ToInt32(CreditPercent);
-                    if(CreditPercent <= 0)
+                    if(CreditPercent < 0)
                     {
                         CheckMinus = false;
                         break;
@@ -237,10 +237,11 @@ namespace BankTeacher.Bank.Loan
             }
             String AmountLimit = LLoanAmount.Text.Remove(0, 1);
             AmountLimit = AmountLimit.Remove(AmountLimit.Length - 1);
+            DialogResult LoanConfirmSave = MessageBox.Show("ยืนยันการบันทึกหรือไม่", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             if (TBTeacherNo.Text != "" && CBPayMonth.SelectedIndex != -1 && CBPayYear.SelectedIndex != -1 &&
                 TBLoanAmount.Text != "" && TBPayNo.Text != "" && TBInterestRate.Text != "" && (DGVGuarantor.Rows.Count <= 4 && DGVGuarantor.Rows.Count != 0) && ((int.Parse(TBLoanAmount.Text) <= int.Parse(AmountLimit)) || UserOutCreditLimit == DialogResult.Yes) &&
-                Convert.ToInt32(LLackAmount.Text) == 0 && Convert.ToInt32(LOutCredit.Text) == 0 && Int32.TryParse(TBLoanAmount.Text, out int x ) && x >= BankTeacher.Bank.Menu.MinLoan && CheckMinus == true
-                && MessageBox.Show("ยืนยันการบันทึกหรือไม่","ระบบ",MessageBoxButtons.YesNo,MessageBoxIcon.Information) == DialogResult.Yes)
+                Convert.ToInt32(LLackAmount.Text) == 0 && Convert.ToInt32(LOutCredit.Text) == 0 /*&& Int32.TryParse(TBLoanAmount.Text, out int x )*/ && Convert.ToInt32(TBLoanAmount.Text) >= BankTeacher.Bank.Menu.MinLoan && CheckMinus == true
+                && LoanConfirmSave == DialogResult.Yes)
             {
 
                 DataSet dt = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[3]
@@ -300,13 +301,17 @@ namespace BankTeacher.Bank.Loan
                 tabControl1.SelectedIndex = 1;
                 TBInterestRate.Focus();
             }
-            else if(TBPayNo.Text == "" || Int32.TryParse(TBPayNo.Text,out int PayNo))
+            else if(TBPayNo.Text == "" || Int32.TryParse(TBPayNo.Text,out int PayNo) == false)
             {
                 MessageBox.Show("กรอกจำนวนงวดไม่ถูกต้อง", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 tabControl1.SelectedIndex = 1;
                 TBPayNo.Focus();
             }
-            else
+            else if (!CheckMinus)
+            {
+                MessageBox.Show("ยอดเงินค้ำไม่ถูกต้อง", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else if(LoanConfirmSave != DialogResult.No)
             {
                 MessageBox.Show("กรอกข้อมูลไม่ถูกต้อง", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
@@ -678,7 +683,11 @@ namespace BankTeacher.Bank.Loan
         // อีเว้นตัวเลข ในTB
         private void TBInterestRate_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if ((!Char.IsNumber(e.KeyChar)) && (!Char.IsControl(e.KeyChar)) && (e.KeyChar != '.'))
+            if(Double.TryParse(TBInterestRate.Text , out double Interest) && Interest >= 0 && e.KeyChar == '.')
+            {
+                e.Handled = false;
+            }
+            else if ((!Char.IsNumber(e.KeyChar)) && (!Char.IsControl(e.KeyChar)) /*&& (e.KeyChar != '.')*/)
             {
                 e.Handled = true;
             }
@@ -1537,7 +1546,7 @@ namespace BankTeacher.Bank.Loan
 
         private void TBInterestRate_TextChanged(object sender, EventArgs e)
         {
-            BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBInterestRate);
+            //BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBInterestRate);
         }
 
         private void BExitForm_Click(object sender, EventArgs e)

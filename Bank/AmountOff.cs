@@ -268,11 +268,26 @@ namespace BankTeacher.Bank
                     Check = 1;
                     Checkmember(false);
                     CBTypePay.SelectedIndex = 0;
+                    int SumCredit = 0;
 
                     for (int Num = 0; Num < ds.Tables[1].Rows.Count; Num++)
                     {
                         Credit = ds.Tables[1].Rows[Num][1].ToString().Split('.');
                         DGVLoan.Rows.Add(Num+1,ds.Tables[1].Rows[Num][0].ToString(), ds.Tables[1].Rows[Num][2].ToString(), Credit[0], Convert.ToDateTime(ds.Tables[1].Rows[Num][3].ToString()).ToString("dd/MM/yyyy") , ds.Tables[1].Rows[Num][4]);
+                        SumCredit += Convert.ToInt32(Credit[0]);
+                    }
+                    TBCreditSystem.Text = SumCredit.ToString();
+                    if(SumCredit >= Convert.ToInt32(TBSavingAmount.Text))
+                    {
+                        BMaxWithDraw_AmountOff.Enabled = false;
+                        BSave.Enabled = false;
+                        TBWithDraw.Enabled = false;
+                    }
+                    else
+                    {
+                        BMaxWithDraw_AmountOff.Enabled = true;
+                        BSave.Enabled = true;
+                        TBWithDraw.Enabled = true;
                     }
                     if (DGVLoan.Rows.Count != 0)
                     {
