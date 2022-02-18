@@ -554,6 +554,7 @@ namespace BankTeacher.Bank.Loan
                         else
                         {
                             TBTeacherNo.Text = "";
+                            TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Delete));
                         }
                     }
                     else if (RemainAmount == DialogResult.Yes)
@@ -577,10 +578,15 @@ namespace BankTeacher.Bank.Loan
                         tabControl1.SelectedIndex = 0;
                         TBGuarantorNo.Focus();
                         Check = 1;
+                        Checkmember(false);
+                        CheckSave = false;
 
                     }
                     else if (RemainAmount == DialogResult.No)
+                    {
                         TBTeacherNo.Text = "";
+                        TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Delete));
+                    }
                 }
                 else
                 {
