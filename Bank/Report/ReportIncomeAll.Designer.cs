@@ -225,7 +225,7 @@ namespace BankTeacher.Bank
             this.DTP.Name = "DTP";
             this.DTP.Size = new System.Drawing.Size(279, 36);
             this.DTP.TabIndex = 7;
-            this.DTP.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
+            this.DTP.ValueChanged += new System.EventHandler(this.DTP_ValueChanged);
             // 
             // panel4
             // 

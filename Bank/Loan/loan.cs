@@ -535,10 +535,11 @@ namespace BankTeacher.Bank.Loan
                             String[] Credit = new string[] { };
                             Credit = dt.Rows[0][2].ToString().Split('.');
                             // float Percent = 100 / DGVGuarantor.Rows.Count;
-                            // ======= Tab 1 Clear ===============
+                            // ======= Tab 1 Clear ==============0=
                             TBLoanAmount.Text = "";
                             TBSavingAmount.Text = Credit[0];
                             TBGuarantorNo.Focus();
+                            DGVGuarantorCredit.Rows.Clear();
                             DGVGuarantor.Rows.Clear();
                             DGVGuarantor.Rows.Add(dt.Rows[0][0], dt.Rows[0][1], Credit[0]);
                             // ======= Tab 2 Clear ===============
@@ -646,6 +647,8 @@ namespace BankTeacher.Bank.Loan
                         String[] Num = new string[] { };
                         Num = dtRemainAmount.Rows[0][2].ToString().Split('.');
                         DGVGuarantor.Rows.Add(dtRemainAmount.Rows[0][0].ToString(),dtRemainAmount.Rows[0][1].ToString(),Convert.ToInt32(Num[0]));
+                        if(TBLoanAmount.Text != "" && TBInterestRate.Text != "" && TBPayNo.Text != "")
+                            TBLoanAmount_Leave(sender, new EventArgs());
                     }
                     else
                     {

@@ -80,7 +80,7 @@ namespace BankTeacher.Bank.Loan
           " a.PayDate,MonthPay,YearPay,PayNo,InterestRate,LoanAmount,b.Amount,g.LoanStatusName   \r\n " +
           " ,TeacherNoAddBy, CAST(ISNULL(f.PrefixNameFull , '') + e.Fname + ' ' + e.Lname AS NVARCHAR) AS NameTeacherAddby   \r\n " +
           " , DATEADD(MONTH,a.PayNo-1,CAST(CAST(a.YearPay as varchar) + '/' + CAST(a.MonthPay as varchar) +'/01' as date)) as FinishDate \r\n " +
-          " , (a.InterestRate / 100) * a.LoanAmount as Interest  \r\n " +
+          " , ROUND((a.InterestRate / 100) * a.LoanAmount, 0) as Interest  \r\n " +
           " ,ROUND(((a.InterestRate / 100) * a.LoanAmount) + a.LoanAmount,0) as TotalLoanAmount,b.RemainsAmount  \r\n " +
           " FROM EmployeeBank.dbo.tblLoan as a    \r\n " +
           " LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo   \r\n " +
@@ -373,7 +373,7 @@ namespace BankTeacher.Bank.Loan
                     TBMonthPay_Detail.Text = ds.Tables[0].Rows[0][4].ToString();
                     TBTotalAmount_Detail.Text = ds.Tables[0].Rows[0][15].ToString();
                     TBPayNo_Detail.Text = ds.Tables[0].Rows[0][6].ToString();
-                    TBInterestRate_Detail.Text = ds.Tables[0].Rows[0][7].ToString();
+                    TBInterestRate_Detail.Text = ds.Tables[0].Rows[0][14].ToString();
                     TBLoanStatus.Text = ds.Tables[0].Rows[0][10].ToString();
                     TBSavingAmount.Text = Convert.ToDateTime(ds.Tables[0].Rows[0][2].ToString()).ToString("dd/MM/yyyy");
                     DGVLoanDetail.Rows.Clear();
@@ -390,7 +390,7 @@ namespace BankTeacher.Bank.Loan
                     TBInterest_Detail.Text = ds.Tables[0].Rows[0][14].ToString();
                     DGVLoanDetail.Rows.Clear();
 
-                    Double Interest = Convert.ToDouble(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString())) * (Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100) / Convert.ToDouble(ds.Tables[0].Rows[0][6].ToString());
+                    Double Interest = Convert.ToDouble(ds.Tables[0].Rows[0][14].ToString()) / Convert.ToInt32(ds.Tables[0].Rows[0][6].ToString());/*Convert.ToDouble(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString())) * (Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100) / Convert.ToDouble(ds.Tables[0].Rows[0][6].ToString());*/
 
                     int Pay = Convert.ToInt32(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) / Convert.ToInt32(ds.Tables[0].Rows[0][6].ToString()));
                     //int Pay = Convert.ToInt32(Convert.ToInt32(ds.Tables[0].Rows[0][8].ToString()) / Convert.ToInt32(ds.Tables[0].Rows[0][6].ToString()));
@@ -406,7 +406,7 @@ namespace BankTeacher.Bank.Loan
                         }
                         if (Num == Convert.ToInt32(ds.Tables[0].Rows[0][6].ToString()) - 1)
                         {
-                            Interest = Convert.ToInt32((Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) * (Convert.ToDouble(TBInterestRate_Detail.Text) / 100)) - (Convert.ToInt32(Interest) * Num));
+                            Interest = Convert.ToInt32(ds.Tables[0].Rows[0][14].ToString()) - (Convert.ToInt32(Interest) * Num);
                             Pay = Pay * Num;
                             Pay = Convert.ToInt32(ds.Tables[0].Rows[0][8].ToString()) - Pay;
                             SumInstallment = Convert.ToInt32(Pay + Interest);
