@@ -282,12 +282,14 @@ namespace BankTeacher.Bank
                         BMaxWithDraw_AmountOff.Enabled = false;
                         BSave.Enabled = false;
                         TBWithDraw.Enabled = false;
+                        TBCreditWithDraw.Text = "0";
                     }
                     else
                     {
                         BMaxWithDraw_AmountOff.Enabled = true;
                         BSave.Enabled = true;
                         TBWithDraw.Enabled = true;
+                        TBCreditWithDraw.Text = (Convert.ToInt32(TBSavingAmount.Text) - SumCredit).ToString();
                     }
                     if (DGVLoan.Rows.Count != 0)
                     {
