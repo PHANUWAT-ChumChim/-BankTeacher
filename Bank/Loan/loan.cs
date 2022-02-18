@@ -121,7 +121,7 @@ namespace BankTeacher.Bank.Loan
             "LEFT JOIN BaseData.dbo.tblTumBon as e on c.cTumBonNo = e.TumBonNo \r\n " +
             "LEFT JOIN BaseData.dbo.tblAmphur as f on c.cAmPhurNo = f.AmphurNo \r\n " +
             "LEFT JOIN BaseData.dbo.tblJangWat as g on c.cJangWatNo = g.JangWatNo \r\n " +
-            "WHERE a.TeacherNo = '{TeacherNo}' ORDER BY Date DESC"
+            "WHERE a.TeacherNo = '{TeacherNo}' ORDER BY a.DateAdd DESC"
             ,
              //[6] SELECT MemberLona  INPUT: {TeacherNo}
             "SELECT a.TeacherNo,CAST(ISNULL(c.PrefixName+' ','')+b.Fname+' '+b.Lname as NVARCHAR),d.StartAmount  \r\n "+

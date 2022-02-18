@@ -343,7 +343,7 @@ namespace BankTeacher.Class.Print
                         "จำนวนดังกล่าวจาก" + School + "ไปถูกต้องครบถ้วนเเล้วในขณะทำสัญญากู้ยืมเงินฉบังนี้", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 750f, 200, false);
                     // เงื่อนไข 2
                     CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, "   ข้อ 2. หนักงานครู จะชำระหนี้เงินกู้ยืมตาม ข้อ 1. ของสัญญานี้คืนให้เเก่วิทยาลัยสหกรณ์ครู \r\n" +
-                        $"{School} โดยผ่อนชำระเป็นรายเดือนในจำนวนไม่ต่ำกว่าเดือนละ  {PayMin} บาท  ({NumToBath(PayMin)}) ในวันที่พนักงานครูรับเงินค่าจ้างจาก  {School}" +
+                        $"{School} โดยผ่อนชำระเป็นรายเดือนในจำนวนไม่ต่ำกว่าเดือนละ {PayMin} บาท ({NumToBath(PayMin)}) ในวันที่พนักงานครูรับเงินค่าจ้างจาก  {School}" +
                         "เเละส่งให้สหกรณ์ก่อนวันที่ 3 ของเดือน ติดต่อกันจนกว่าจะชำระหนี้เงินกู้ยืมครบถ้วน เเละจะต้องชำระคืน" +
                         "ให้เสร็จสิ้นภายในเดือน " + LimitMonthPay, THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 750f, 200, false);
                     // เงื่อนไข 3
@@ -368,7 +368,6 @@ namespace BankTeacher.Class.Print
                     string NameLoan = $"ลงชื่อ ................................................ ผู้กู้ยืม\r\n" +
                                       "    (" + Borrower + ")";
                     // เเก้ใหม่ตามจำนวนคนที่ค้ำ
-                    int round = 0;
                     for (int around = 0; around < Rowscount; around++)
                     {
                         if(around == 0)
@@ -377,8 +376,8 @@ namespace BankTeacher.Class.Print
                         }
                         else
                         {
-                            CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, $"ลงชื่อ ................................................ ผู้ค้ำประกัน {round + 1} ({dt.Rows[round][1].ToString()})\r\n" +
-                                            "      ( " + dt.Rows[round++][1].ToString() + " )", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 350f, 70, false);
+                            CurrentRows += Class.Print.SetPrintMedtods.Centerset(e, $"ลงชื่อ ................................................ ผู้ค้ำประกัน {around} ({dt.Rows[around][1].ToString()})\r\n" +
+                                            "      ( " + dt.Rows[around][1].ToString() + " )", THsarabun18, BrushBlack, X, Y + (SpacePerRow * CurrentRows++), 350f, 70, false);
                         }
                     }
                     Class.Print.SetPrintMedtods.Center(e, Y + (SpacePerRow * CurrentRows++), "ลงชื่อรับเงิน ................................................................................................ วันที่ " + Day + " " + Month + " " + Year, THsarabun18, BrushBlack);
