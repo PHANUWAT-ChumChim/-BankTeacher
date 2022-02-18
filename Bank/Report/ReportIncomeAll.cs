@@ -159,11 +159,6 @@ namespace BankTeacher.Bank
             Class.Print.PrintPreviewDialog.Detailspayment(e, DGV_All, "รายการ : รายรับประจำวัน",this.AccessibilityObject.Name);
         }
 
-        private void BExitForm_Click_1(object sender, EventArgs e)
-        {
-            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
-        }
-
         private void BTPrint_Click_1(object sender, EventArgs e)
         {
             if (DGV_All.Rows.Count != 0)

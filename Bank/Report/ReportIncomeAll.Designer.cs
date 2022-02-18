@@ -105,7 +105,7 @@ namespace BankTeacher.Bank
             this.BExitForm.Size = new System.Drawing.Size(115, 62);
             this.BExitForm.TabIndex = 118;
             this.BExitForm.UseVisualStyleBackColor = true;
-            this.BExitForm.Click += new System.EventHandler(this.BExitForm_Click_1);
+            this.BExitForm.Click += new System.EventHandler(this.BExitForm_Click);
             // 
             // DGV_All
             // 
@@ -225,7 +225,7 @@ namespace BankTeacher.Bank
             this.DTP.Name = "DTP";
             this.DTP.Size = new System.Drawing.Size(279, 36);
             this.DTP.TabIndex = 7;
-            this.DTP.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
+            this.DTP.ValueChanged += new System.EventHandler(this.DTP_ValueChanged);
             // 
             // panel4
             // 
