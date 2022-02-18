@@ -36,6 +36,8 @@ namespace BankTeacher.Bank.Add_Member
         /// <para>[11] if HE is Guarantor Get Amount and SavingAmount if(His Loan Get SumAmount and SavingAmount) INPUT: {TeacherNo} </para>
         /// <para>[12] Get Teacher's LoanNo INPUT: {TeacherNo} </para>
         /// <para>[13] Update End Loan if not received money (LoanStatus = 1) INPUT: {TeacherNo}</para>
+        /// <para>[14] Chcek flie INPUT : {TeacherNo}</para>
+        /// <para>[15] Insert File INPUT : {TeacharNo} {PathFile} {PathFile} {TeacherAddBy}</para>
         /// </summary>
         private String[] SQLDefault = new string[]
         {
@@ -200,7 +202,22 @@ namespace BankTeacher.Bank.Add_Member
           "SET LoanStatusNo = 4 \r\n " +
           "WHERE TeacherNo = '{TeacherNo}' and LoanStatusNo = 1"
            ,
-
+          //[14] Chcek flie INPUT : {TeacherNo}
+           "SELECT c.ID , c.pathFile\r\n " +
+          " FROM EmployeeBank.dbo.tblMember as a   \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblDocStatus as b on a.DocStatusNo = b.DocStatusNo   \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblFile as c on a.TeacherNo = c.TeacherNo \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblStatusFileInSystem as d on c.StatusFileInSystem = d.ID \r\n " +
+          " WHERE a.TeacherNo = '{TeacherNo}' and c.IsUse = 1 and FiletypeNo = 1 and StatusFileInSystem = 2"
+           ,
+           //[15] Insert File INPUT : {TeacharNo} {PathFile} {PathFile} {TeacherAddBy}
+           "INSERT INTO EmployeeBank.dbo.tblFile(TeacherNo , FiletypeNo , pathFile ,TeacherAddBy,LoanID,DateAddFile,IsUse , TeacherRemoveFileBy ,DateRemoveFile, StatusFileInSystem) \r\n " +
+          "VALUES ('{TeacherNo}',1,'{PathFile}','{TeacherAddBy}',null,CURRENT_TIMESTAMP,1,null,null,2); \r\n " +
+          " \r\n " +
+          "UPDATE EmployeeBank.dbo.tblMember \r\n " +
+          "SET DocStatusNo = 1 , DocUploadPath = '{PathFile}'\r\n"+
+          "WHERE TeacherNo = '{TeacherNo}'"
+           ,
         };
         public CancelMember()
         {
@@ -230,7 +247,7 @@ namespace BankTeacher.Bank.Add_Member
             try
             {
                 Bank.Search IN = new Bank.Search(SQLDefault[6]
-                    .Replace("{TeacherNoNotLike}", $"and a.TeacherNo NOT LIKE '{TBTeacherNo.Text}'"), "หุ้นสะสม");
+                    .Replace("{TeacherNoNotLike}", $"and a.TeacherNo NOT LIKE '{TBTeacherNo.Text}'"));
                 IN.ShowDialog();
                 if (Bank.Search.Return[0] != "")
                 {
@@ -261,6 +278,7 @@ namespace BankTeacher.Bank.Add_Member
                     BSearch.Enabled = true;
                     BSave.Enabled = true;
                     CheckSave = false;
+                    BTUploadFIle.Visible = false;
                 }
                 else
                 {
@@ -273,6 +291,7 @@ namespace BankTeacher.Bank.Add_Member
                 CheckBCancel = false;
                 Check = false;
                 Checkmember(true);
+                BTUploadFIle.Visible = false;
             }
         }
 
@@ -340,11 +359,16 @@ namespace BankTeacher.Bank.Add_Member
                                     CheckBCancel = true;
                                     Checkmember(true);
                                     BSave.Enabled = false;
+                                    BTUploadFIle.Visible = false;
+                                    TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Delete));
                                 }
 
                             }
                             else
+                            {
                                 MessageBox.Show("กรุณาส่งเอกสารสมัครสมาชิก เพื่อยืนยันการสมัคร", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                BTUploadFIle.Visible = true;
+                            }
                         }
                     }
                     else if (dsLoanLoanAmount.Tables[0].Rows.Count != 0 && Convert.ToInt32(dsLoanLoanAmount.Tables[1].Rows[0][0]) != 0)
@@ -384,11 +408,16 @@ namespace BankTeacher.Bank.Add_Member
                                 CheckBCancel = true;
                                 Checkmember(true);
                                 BSave.Enabled = false;
+                                TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Delete));
                             }
 
                         }
                         else
-                            MessageBox.Show("ไม่พบเอกสารสมัครสมาชิก \n กรุณาส่งเอกสารก่อนทำรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning); 
+                        {   
+                            MessageBox.Show("ไม่พบเอกสารสมัครสมาชิก \n กรุณาส่งเอกสารก่อนทำรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            BTUploadFIle.Visible = true;
+
+                        }
                     }
                     else
                     {
@@ -522,6 +551,73 @@ namespace BankTeacher.Bank.Add_Member
                 {
                     tabControl1.SelectedIndex = tabControl1.SelectedIndex + 1;
                 }
+            }
+        }
+
+        private void BTUploadFIle_Click(object sender, EventArgs e)
+        {
+            String PathFile = null;
+            DataTable dtChackStatusFile = Class.SQLConnection.InputSQLMSSQL(SQLDefault[14].Replace("{TeacherNo}", TBTeacherNo.Text));
+            if (dtChackStatusFile.Rows.Count != 0)
+            {
+                if (dtChackStatusFile.Rows[0][1].ToString() == "")
+                {
+                    Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("RegMember");
+                    OpenFileDialog dialog = new OpenFileDialog();
+                    dialog.Filter = "pdf files(*.pdf)|*.pdf";
+                    if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        Cursor.Current = Cursors.WaitCursor;
+                        PathFile = dialog.FileName;
+                        if (PathFile != "")
+                        {
+                            FTP.FTPSendFile(PathFile, $"Member_{TBTeacherNo.Text}.pdf");
+                            if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
+                            {
+                                Class.SQLConnection.InputSQLMSSQL(SQLDefault[15]
+                                    .Replace("{TeacherNo}", TBTeacherNo.Text)
+                                    .Replace("{PathFile}", FTP.HostplusPathFile + $"Member_{TBTeacherNo.Text}.pdf")
+                                    .Replace("{TeacherAddBy}", BankTeacher.Class.UserInfo.TeacherNo));
+                                MessageBox.Show("อัพโหลดเอกสารสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                            PathFile = "";
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("ทำการอัพโหลดเอกสารแล้ว ไม่สามารถดำเนินการส่งเอกสารซ้ำได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    BTUploadFIle.Visible = false;
+                }
+            }
+            else
+            {
+                Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("RegMember");
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Filter = "pdf files(*.pdf)|*.pdf";
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    Cursor.Current = Cursors.WaitCursor;
+                    PathFile = dialog.FileName;
+                    if (PathFile != "")
+                    {
+                        FTP.FTPSendFile(PathFile, $"Member_{TBTeacherNo.Text}.pdf");
+                        if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
+                        {
+                            Class.SQLConnection.InputSQLMSSQL(SQLDefault[15]
+                                .Replace("{TeacherNo}", TBTeacherNo.Text)
+                                .Replace("{PathFile}", FTP.HostplusPathFile + $"Member_{TBTeacherNo.Text}.pdf")
+                                .Replace("{TeacherAddBy}", BankTeacher.Class.UserInfo.TeacherNo));
+                            MessageBox.Show("อัพโหลดเอกสารสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        PathFile = "";
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("ทำการอัพโหลดเอกสารแล้ว ไม่สามารถดำเนินการส่งเอกสารซ้ำได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                BTUploadFIle.Visible = false;
             }
         }
     }
