@@ -70,7 +70,7 @@ namespace BankTeacher.Bank.Loan
           "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo   \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as c on a.TeacherNo = c.TeacherNo  \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo  \r\n " +
-          "WHERE a.TeacherNo = '{TeacherNo}' and LoanStatusNo != 4   \r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}' and LoanStatusNo != 4 and LoanStatusNo != 3   \r\n " +
           "GROUP BY a.LoanNo , CAST(ISNULL(d.PrefixNameFull , '') + Fname + ' ' + Lname AS NVARCHAR) \r\n " +
           "ORDER BY a.LoanNo  "
            ,
@@ -364,7 +364,7 @@ namespace BankTeacher.Bank.Loan
                     }
                     for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
                     {
-                        DGVGuarantor.Rows.Add(ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][1].ToString(), ds.Tables[0].Rows[x][15].ToString());
+                        DGVGuarantor.Rows.Add(ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][1].ToString(), ds.Tables[0].Rows[x][16].ToString());
                     }
                     TBLoanNo.Text = Loan.No;
                     BTOpenFile.Enabled = true;
