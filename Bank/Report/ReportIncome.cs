@@ -254,7 +254,6 @@ namespace BankTeacher.Bank
         private void Checkmember(bool tf)
         {
             TBTeacherNo.Enabled = tf;
-            BSearchTeacher.Enabled = tf;
         }
         private void BTPrint_Click(object sender, EventArgs e)
         {

@@ -223,7 +223,6 @@ namespace BankTeacher.Bank
         private void Checkmember(bool tf)
         {
             TBTeacherNo.Enabled = tf;
-            BSearchTeacher.Enabled = tf;
         }
     }
 }
