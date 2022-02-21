@@ -419,6 +419,7 @@ namespace BankTeacher.Bank.Add_Member
             this.TBStartAmount.Size = new System.Drawing.Size(188, 43);
             this.TBStartAmount.TabIndex = 87;
             this.TBStartAmount.TextChanged += new System.EventHandler(this.TBStartAmount_TextChanged);
+            this.TBStartAmount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TBStartAmount_KeyPress);
             // 
             // TBDateAdd
             // 
