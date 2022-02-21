@@ -75,13 +75,20 @@ namespace BankTeacher.Bank
                 }
                 TB_SavingAmount.Text = SumSavingAmount.ToString();
                 TB_DividendAmount.Text = SumDividendAmount.ToString();
-                TB_InterestAmount.Text = dsReport.Tables[0].Rows[0][3].ToString();
+                TB_InterestAmount.Text = Convert.ToDouble(dsReport.Tables[0].Rows[0][3]).ToString("N2");
                 TB_InterestNextYear.Text = dsReport.Tables[0].Rows[0][4].ToString();
                 TB_DividendPerShare.Text = dsReport.Tables[0].Rows[0][5].ToString();
 
                 if (dsReport.Tables[1].Rows.Count != 0)
                     TB_RemainInterest.Text = dsReport.Tables[1].Rows[0][0].ToString();
                 else { TB_RemainInterest.Text = "0"; }
+
+                Class.Print.PrintPreviewDialog.info_RemainInterest = TB_RemainInterest.Text;
+                Class.Print.PrintPreviewDialog.info_SavingAmount = TB_SavingAmount.Text;
+                Class.Print.PrintPreviewDialog.info_DividendPerShare = TB_DividendPerShare.Text;
+                Class.Print.PrintPreviewDialog.info_InterestAmount = TB_InterestAmount.Text;
+                Class.Print.PrintPreviewDialog.info_InterestNextYear = TB_InterestNextYear.Text;
+                Class.Print.PrintPreviewDialog.info_DividendAmount = TB_DividendAmount.Text;
             }
         }
 

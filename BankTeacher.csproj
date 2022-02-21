@@ -553,6 +553,9 @@
   <ItemGroup>
     <None Include="Resources\no-internet.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\information.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\WinSCP.5.19.5\build\WinSCP.targets" Condition="Exists('packages\WinSCP.5.19.5\build\WinSCP.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

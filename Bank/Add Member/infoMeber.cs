@@ -269,26 +269,37 @@ namespace BankTeacher.Bank.Add_Member
 
         private void BSaveEdit_Click(object sender, EventArgs e)
         {
-            try
+            if(Convert.ToInt32(TBStartAmount.Text) >= Bank.Menu.startAmountMin)
             {
-                if (MessageBox.Show("ยืนยันการเปลี่ยนแปลง", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                try
                 {
-                    int DifferenceAmount = StartAmount - Convert.ToInt32(TBStartAmount.Text);
-                    StartAmount = StartAmount - DifferenceAmount;
-                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
-                    .Replace("{Amount}", StartAmount.ToString())
-                    .Replace("{TeacherNo}", TBTeacherNo.Text));
-                    Checkmember(true);
+                    if (MessageBox.Show("ยืนยันการเปลี่ยนแปลง", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    {
+                        int DifferenceAmount = StartAmount - Convert.ToInt32(TBStartAmount.Text);
+                        StartAmount = StartAmount - DifferenceAmount;
+                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
+                        .Replace("{Amount}", StartAmount.ToString())
+                        .Replace("{TeacherNo}", TBTeacherNo.Text));
+                        Checkmember(true);
 
-                    MessageBox.Show("บันทึกการแก้ไขสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    BSaveEdit.Enabled = false;
-                    CheckSave = true;
+                        MessageBox.Show("บันทึกการแก้ไขสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        BSaveEdit.Enabled = false;
+                        CheckSave = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"--------------------------{ex}----------------------------");
+                    MessageBox.Show("การบันทึกล้มเหลว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
-            catch (Exception ex)
+            else
             {
-                Console.WriteLine($"--------------------------{ex}----------------------------");
-                MessageBox.Show("การบันทึกล้มเหลว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+               var M =  MessageBox.Show($"ยอดขั้นต่ำหุ้นสะสมต้องมากกว่า {Bank.Menu.startAmountMin} คุณต้องการเปลี่ยนยอด {Bank.Menu.startAmountMin} หรือ ไม่", "เเจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if(M == DialogResult.Yes)
+                {
+                    TBStartAmount.Text = Bank.Menu.startAmountMin.ToString();
+                }
             }
 
         }
@@ -459,6 +470,14 @@ namespace BankTeacher.Bank.Add_Member
             if (SavingAmountStart != TBStartAmount.Text && TBStartAmount.Enabled == true)
             {
                 BSaveEdit.Enabled = true;
+            }
+        }
+
+        private void TBStartAmount_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if ((!Char.IsNumber(e.KeyChar)) && (!Char.IsControl(e.KeyChar)))
+            {
+                e.Handled = true;
             }
         }
     }

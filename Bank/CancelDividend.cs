@@ -86,7 +86,7 @@ namespace BankTeacher.Bank
                     }
                     TB_SavingAmount.Text = SumSavingAmount.ToString();
                     TB_DividendAmount.Text = SumDividendAmount.ToString();
-                    TB_InterestAmount.Text = dsReport.Tables[0].Rows[0][3].ToString();
+                    TB_InterestAmount.Text = Convert.ToDouble(dsReport.Tables[0].Rows[0][3]).ToString("N2");
                     TB_InterestNextYear.Text = dsReport.Tables[0].Rows[0][4].ToString();
                     TB_DividendPerShare.Text = dsReport.Tables[0].Rows[0][5].ToString();
                     if(dsReport.Tables[1].Rows.Count != 0)
