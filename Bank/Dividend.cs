@@ -95,7 +95,7 @@ namespace BankTeacher.Bank
           " \r\n " +
           "UPDATE EmployeeBank.dbo.tblLoan  \r\n " +
           " SET LoanStatusNo = 4  \r\n " +
-          " WHERE LoanStatusNo = 1;"
+          " WHERE LoanStatusNo = 1 and YearPay = {Year};"
            ,
 
            //[1] Table[0]Select StartYear and Table[1]Select EndYear INPUT: -
@@ -239,19 +239,24 @@ namespace BankTeacher.Bank
            ,
 
            //[5] Get TeacherList Unpaid INPUT: {Year}
-           "SELECT a.LoanNo , a.TeacherNo ,CAST(ISNULL(c.PrefixNameFull , '') + b.Fname + ' ' + b.Lname as NVARCHAR(255))  \r\n " +
-          " FROM EmployeeBank.dbo.tblLoan as a  \r\n " +
-          " LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo  \r\n " +
-          " LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo  \r\n " +
-          " WHERE a.LoanNo NOT IN (SELECT a.LoanNo  \r\n " +
-          " FROM EmployeeBank.dbo.tblLoan as a   \r\n " +
-          " LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.LoanNo = b.LoanNo  \r\n " +
-          " LEFT JOIN EmployeeBank.dbo.tblBill as c on b.BillNo = c.BillNo  \r\n " +
-          " WHERE (b.Mount = 12 and b.Year = {Year} and c.Cancel = 1 and b.TypeNo = 2)  \r\n " +
-          " GROUP BY a.LoanNo) and a.LoanStatusNo = 2 \r\n " +
-          " ORDER BY b.Fname"
+           "SELECT a.LoanNo , a.TeacherNo ,CAST(ISNULL(e.PrefixNameFull , '') + d.Fname + ' ' + d.Lname as NVARCHAR(255)) , \r\n " +
+          "CASE  \r\n " +
+          "	WHEN a.PayNo - 1 + a.MonthPay <= 12 THEN a.LoanAmount - ISNULL(SUM(b.Amount) , 0) \r\n " +
+          "	ELSE (13 - a.MonthPay) * (ROUND(ROUND((a.InterestRate / 100) * a.LoanAmount , 0) / a.PayNo , 0) + ROUND((a.LoanAmount / a.PayNo) , 0)) - ISNULL(SUM(b.Amount) , 0) \r\n " +
+          "END as RemainLoanAmountInYear \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.LoanNo = b.LoanNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBill as c on b.BillNo = c.BillNo \r\n " +
+          "LEFT JOIN Personal.dbo.tblTeacherHis as d on a.TeacherNo = d.TeacherNo \r\n " +
+          "LEFT JOIN BaseData.dbo.tblPrefix as e on d.PrefixNo = e.PrefixNo \r\n " +
+          "WHERE c.Cancel = 1 and a.LoanNo IN (SELECT a.LoanNo  \r\n " +
+          "FROM EmployeeBank.dbo.tblLoan as a    \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.LoanNo = b.LoanNo   \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblBill as c on b.BillNo = c.BillNo   \r\n " +
+          "WHERE ((b.Mount < 12 and b.Year = {Year} and c.Cancel = 1 and b.TypeNo = 2) or a.LoanStatusNo = 2) and a.LoanStatusNo = 2 and a.YearPay = {Year} \r\n " +
+          "GROUP BY a.LoanNo) or a.LoanStatusNo = 2 and a.YearPay = {Year} \r\n " +
+          "GROUP BY a.LoanNo , a.PayNo , a.MonthPay , a.LoanAmount , a.InterestRate, a.TeacherNo  ,CAST(ISNULL(e.PrefixNameFull , '') + d.Fname + ' ' + d.Lname as NVARCHAR(255))"
            ,
-
 
 
          };
@@ -356,7 +361,7 @@ namespace BankTeacher.Bank
                         UnpaidLoan.FDividend = this;
                         for (int a = 0; a < dtUnpaid.Rows.Count; a++)
                         {
-                            UnpaidLoan.DGV.Rows.Add(dtUnpaid.Rows[a][0], dtUnpaid.Rows[a][1], dtUnpaid.Rows[a][2]);
+                            UnpaidLoan.DGV.Rows.Add(dtUnpaid.Rows[a][0], dtUnpaid.Rows[a][1], dtUnpaid.Rows[a][2] ,dtUnpaid.Rows[a][3]);
                         }
                         UnpaidLoan.Focus();
                     }
