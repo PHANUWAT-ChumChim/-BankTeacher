@@ -137,9 +137,13 @@ namespace BankTeacher.Bank.Loan
             "DELETE FROM EmployeeBank.dbo.tblGuarantor\r\n"
             ,
             //[8] Check Dividend Year INPUT: 
-           "SELECT TOP 1 ISNULL(MAX(a.Year) + 1 , 0) \r\n " +
-          "FROM EmployeeBank.dbo.tblDividend as a  \r\n " +
-          "WHERE a.Cancel = 1 ;"
+           "SELECT TOP 1  \r\n " +
+          "CASE WHEN ISNULL(MAX(a.Year) + 1 , 0) = 0 THEN YEAR(GETDATE()) \r\n " +
+          "	ELSE ISNULL(MAX(a.Year) + 1 , 0) \r\n " +
+          "END \r\n " +
+          " FROM EmployeeBank.dbo.tblDividend as a   \r\n " +
+          " WHERE a.Cancel = 1 ;"
+
            ,
 
            //[9] BSearch Teacher INPUT: {Text}  {TeacherNoNotLike}
@@ -192,13 +196,14 @@ namespace BankTeacher.Bank.Loan
         int Month;
         private void Loan_Load(object sender, EventArgs e)
         {
-            int Year = Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]);
+            //int Year = Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]);
             Month = Convert.ToInt32(BankTeacher.Bank.Menu.Date[1]);
 
             DataSet DividendCheckYear = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[8]);
-            if (Year == Convert.ToInt32(DividendCheckYear.Tables[0].Rows[0][0].ToString()))
+            int Year = Convert.ToInt32(DividendCheckYear.Tables[0].Rows[0][0].ToString());
+            if (Year > Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]))
             {
-                Year++;
+                //Year++;
                 Month = 1;
             }
 
@@ -310,6 +315,7 @@ namespace BankTeacher.Bank.Loan
             else if (!CheckMinus)
             {
                 MessageBox.Show("ยอดเงินค้ำไม่ถูกต้อง", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tabControl1.SelectedIndex = 2;
             }
             else if(LoanConfirmSave != DialogResult.No)
             {
@@ -886,6 +892,7 @@ namespace BankTeacher.Bank.Loan
             //UserOutCreditLimit = DialogResult.No;
             int LimitAmount = 0;
             int Amount;
+            bool CheckInt = int.TryParse(TBLoanAmount.Text, out Amount);
             String AmountLimit = LLoanAmount.Text.Remove(0, 1);
             AmountLimit = AmountLimit.Remove(AmountLimit.Length - 1);
             bool Check = int.TryParse(AmountLimit, out LimitAmount);
@@ -893,6 +900,8 @@ namespace BankTeacher.Bank.Loan
             {
                 if (int.TryParse(TBLoanAmount.Text, out Amount) && (Check) && Amount >= Convert.ToInt32(BankTeacher.Bank.Menu.MinLoan))
                 {
+                    //if (Amount <= LimitAmount && Convert.ToInt32(TBSavingAmount.Text) < 0)
+                    //    UserOutCreditLimit = DialogResult.Yes;
                     if (Amount > LimitAmount && UserOutCreditLimit == DialogResult.No && CheckBReset == false)
                     {
                         //Class.FromSettingMedtod.Eb(Bank.Menu.)
@@ -935,8 +944,106 @@ namespace BankTeacher.Bank.Loan
 
             bool CheckNum = Double.TryParse(TBLoanAmount.Text, out Double LoanAmount);
             LoanAmount = LoanAmount * Convert.ToDouble((Convert.ToDouble(TBInterestRate.Text) / 100)) + LoanAmount;
-            LTotal.Text = LoanAmount.ToString();
-            if (Int32.TryParse(TBLoanAmount.Text, out int x) && x >= BankTeacher.Bank.Menu.MinLoan && ((UserOutCreditLimit != DialogResult.No) || Convert.ToInt32(TBLoanAmount.Text) <= LimitAmount) || CheckBReset == true)
+            LTotal.Text = Convert.ToInt32(LoanAmount).ToString();
+
+            if((CheckInt || CheckBReset) && Amount > LimitAmount && UserOutCreditLimit == DialogResult.Yes && Amount >= BankTeacher.Bank.Menu.MinLoan)
+            {
+                int SumGuarantorAmount = 0;
+                for(int a = 0; a < DGVGuarantorCredit.Rows.Count; a++)
+                {
+                    if(Convert.ToInt32(DGVGuarantorCredit.Rows[a].Cells[4].Value) > 0)
+                    {
+                        DGVGuarantorCredit.Rows[a].Cells[3].Value = DGVGuarantorCredit.Rows[a].Cells[4].Value;
+                        DGVGuarantorCredit.Rows[a].Cells[2].Value = Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[a].Cells[3].Value) * 100 / Convert.ToDouble(LTotal.Text));
+                    }
+                    else
+                    {
+                        DGVGuarantorCredit.Rows[a].Cells[3].Value = 0;
+                        DGVGuarantorCredit.Rows[a].Cells[2].Value = 0;
+                    }
+                    SumGuarantorAmount += Convert.ToInt32(DGVGuarantorCredit.Rows[a].Cells[3].Value);
+                }
+                SumGuarantorAmount = Convert.ToInt32(LTotal.Text) - SumGuarantorAmount;
+                DGVGuarantorCredit.Rows[0].Cells[3].Value = Convert.ToInt32(DGVGuarantorCredit.Rows[0].Cells[3].Value) + SumGuarantorAmount;
+                DGVGuarantorCredit.Rows[0].Cells[2].Value = Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[0].Cells[3].Value) * 100 / Convert.ToDouble(LTotal.Text));
+            }
+            else if (CheckInt && Amount <= LimitAmount && Convert.ToInt32(TBSavingAmount.Text) <= 0 && Amount >= BankTeacher.Bank.Menu.MinLoan)
+            {
+                //int SumPercent = 0;
+                int PerGuarantor = Convert.ToInt32(LoanAmount / (DGVGuarantorCredit.Rows.Count - 1));
+                //int SumAmount = 0;
+                bool CheckSumTime = false;
+                if (CheckBReset)
+                {
+                    for(int r = 0; r < DGVGuarantorCredit.Rows.Count; r++)
+                    {
+                        DGVGuarantorCredit.Rows[r].Cells[3].Value = 0;
+                        DGVGuarantorCredit.Rows[r].Cells[2].Value = 0;
+                    }
+                }
+                for (int a = 0; PerGuarantor > 0; a++)
+                {
+                    if (a == DGVGuarantorCredit.Rows.Count)
+                    {
+                        int SumAmount = 0;
+                        a = 0;
+                        CheckSumTime = true;
+                        for(int x = 0; x < DGVGuarantorCredit.Rows.Count; x++)
+                        {
+                            SumAmount += Convert.ToInt32(DGVGuarantorCredit.Rows[x].Cells[3].Value);
+                        }
+                        PerGuarantor = Convert.ToInt32(LTotal.Text) - SumAmount;
+                    }
+                    else
+                    {
+                        if (Convert.ToInt32(DGVGuarantorCredit.Rows[a].Cells[4].Value) <= 0)
+                        {
+                            DGVGuarantorCredit.Rows[a].Cells[3].Value = 0;
+                            DGVGuarantorCredit.Rows[a].Cells[2].Value = 0;
+                        }
+                        else if (Convert.ToInt32(DGVGuarantorCredit.Rows[a].Cells[4].Value) > 0 && Convert.ToInt32(DGVGuarantorCredit.Rows[a].Cells[4].Value) - Convert.ToInt32(DGVGuarantorCredit.Rows[a].Cells[3].Value) >= PerGuarantor)
+                        {
+                            DGVGuarantorCredit.Rows[a].Cells[3].Value = Convert.ToInt32(DGVGuarantorCredit.Rows[a].Cells[3].Value) + PerGuarantor;
+                            DGVGuarantorCredit.Rows[a].Cells[2].Value = Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[a].Cells[3].Value) * 100 / Convert.ToDouble(LTotal.Text));
+                            if (CheckSumTime)
+                                PerGuarantor = 0;
+                        }
+                        else if (Convert.ToInt32(DGVGuarantorCredit.Rows[a].Cells[4].Value) > 0 && Convert.ToInt32(DGVGuarantorCredit.Rows[a].Cells[4].Value) - Convert.ToInt32(DGVGuarantorCredit.Rows[a].Cells[3].Value) < PerGuarantor)
+                        {
+                            DGVGuarantorCredit.Rows[a].Cells[3].Value = Convert.ToInt32(DGVGuarantorCredit.Rows[a].Cells[3].Value) + (Convert.ToInt32(DGVGuarantorCredit.Rows[a].Cells[4].Value) - Convert.ToInt32(DGVGuarantorCredit.Rows[a].Cells[3].Value));
+                            DGVGuarantorCredit.Rows[a].Cells[2].Value = Convert.ToInt32(Convert.ToDouble(DGVGuarantorCredit.Rows[a].Cells[3].Value) * 100 / Convert.ToDouble(LTotal.Text));
+                            if (CheckSumTime)
+                            {
+                                PerGuarantor -= Convert.ToInt32(DGVGuarantorCredit.Rows[a].Cells[4].Value) - Convert.ToInt32(DGVGuarantorCredit.Rows[a].Cells[3].Value);
+                            }
+                        }
+                    }
+                    
+
+                    //if (a == 0)
+                    //{
+                    //    DGVGuarantorCredit.Rows[a].Cells[2].Value = 50;
+                    //    DGVGuarantorCredit.Rows[a].Cells[3].Value = Convert.ToInt32(Convert.ToInt32(DGVGuarantorCredit.Rows[a].Cells[2].Value) * Convert.ToInt32(LTotal.Text) / 100);
+                    //}
+                    //else if (a < DGVGuarantorCredit.Rows.Count - 1)
+                    //{
+                    //    DGVGuarantorCredit.Rows[a].Cells[2].Value = Convert.ToInt32(50 / (DGVGuarantorCredit.Rows.Count - 1));
+                    //    DGVGuarantorCredit.Rows[a].Cells[3].Value = Convert.ToInt32(Convert.ToInt32(DGVGuarantorCredit.Rows[a].Cells[2].Value) * Convert.ToInt32(LTotal.Text) / 100);
+                    //}
+                    //else if (a == DGVGuarantorCredit.Rows.Count - 1)
+                    //{
+                    //    DGVGuarantorCredit.Rows[a].Cells[2].Value = 100 - SumPercent;
+                    //    DGVGuarantorCredit.Rows[a].Cells[3].Value = Convert.ToInt32(LTotal.Text) - SumAmount;
+                    //}
+                    //SumPercent += Convert.ToInt32(DGVGuarantorCredit.Rows[a].Cells[2].Value);
+                    //SumAmount += Convert.ToInt32(DGVGuarantorCredit.Rows[a].Cells[3].Value);
+                }
+                UserOutCreditLimit = DialogResult.Yes;
+                BCalculate_Click(sender, new EventArgs());
+                //BCalculate_Click(sender, new EventArgs());
+                //UserOutCreditLimit = DialogResult.No;
+            }
+            else if (Int32.TryParse(TBLoanAmount.Text, out int x) && x >= BankTeacher.Bank.Menu.MinLoan && ((UserOutCreditLimit != DialogResult.No) || Convert.ToInt32(TBLoanAmount.Text) <= LimitAmount) || CheckBReset == true)
             {
                 if (CheckNum == true && DGVGuarantor.Rows.Count > 0)
                 {
