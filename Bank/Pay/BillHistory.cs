@@ -301,7 +301,7 @@ namespace BankTeacher.Bank.Pay
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             //var a = printDocument1.PrinterSettings.PrintToFile = true;
-            Class.Print.PrintPreviewDialog.Detailspayment(e, DGV_Bill, "รสยการ",this.AccessibilityObject.Name);
+            Class.Print.PrintPreviewDialog.Detailspayment(e, DGV_Bill, "รายการงานบิลรายรวม",this.AccessibilityObject.Name);
         }
 
         private void BExitForm_Click(object sender, EventArgs e)
