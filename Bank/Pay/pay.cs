@@ -1666,6 +1666,7 @@ namespace BankTeacher.Bank.Pay
                         CBLoanSelection_LoanInfo.SelectedIndex = 0;
                     //ClearForm();
                     //TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
+                    TBTeacherNo_KeyDown(sender,new KeyEventArgs(Keys.Enter)); // Reinfo
                 }
                 else if (!(BankTeacher.Bank.Pay.Calculator.Return))
                 {

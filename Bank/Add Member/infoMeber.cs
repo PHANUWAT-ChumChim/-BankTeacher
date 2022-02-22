@@ -26,6 +26,7 @@ namespace BankTeacher.Bank.Add_Member
         /// <para>[4] Chcek flie INPUT : {TeacherNo}</para>
         /// <para>[5] Insert File INPUT : {TeacharNo} {PathFile} {PathFile} {TeacherAddBy}</para>
         /// <para>[6] Update Status RemoveFile INPUT: {TeacherRemoveBy} , {ID} , {TeacherNo} </para>
+        /// <para>[7]  Update ChargeAmount  INPUT: {Amount} , {TeacherNo} </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -111,6 +112,14 @@ namespace BankTeacher.Bank.Add_Member
           "UPDATE EmployeeBank.dbo.tblMember \r\n " +
           "SET DocStatusNo = 2 , DocUploadPath = '' \r\n " +
           "WHERE TeacherNo = '{TeacherNo}'"
+           ,
+           //[7] Update ChargeAmount  INPUT: {Amount} , {TeacherNo} 
+           "update EmployeeBank.dbo.tblBillDetail \r\n " +
+           "set Amount = '{Amount}' \r\n " +
+           "from EmployeeBank.dbo.tblBillDetail as a \r\n " +
+                "inner join EmployeeBank.dbo.tblBill s on \r\n " +
+                   "a.BillNo = s.BillNo \r\n " +
+            "WHERE s.TeacherNo = '{TeacherNo}' AND a.TypeNo = 3"
            ,
 
 
@@ -266,44 +275,110 @@ namespace BankTeacher.Bank.Add_Member
                 Checkmember(true);
             }
         }
-
+        static int mb = 0;
         private void BSaveEdit_Click(object sender, EventArgs e)
         {
-            if(Convert.ToInt32(TBStartAmount.Text) >= Bank.Menu.startAmountMin)
+            if (int.TryParse(TBStartAmount.Text, out _))
             {
-                try
+                if (Convert.ToInt32(TBStartAmount.Text) >= Bank.Menu.startAmountMin && Convert.ToInt32(TBStartAmount.Text) <= Bank.Menu.startAmountMax)
                 {
-                    if (MessageBox.Show("ยืนยันการเปลี่ยนแปลง", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    try
                     {
-                        int DifferenceAmount = StartAmount - Convert.ToInt32(TBStartAmount.Text);
-                        StartAmount = StartAmount - DifferenceAmount;
-                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
-                        .Replace("{Amount}", StartAmount.ToString())
-                        .Replace("{TeacherNo}", TBTeacherNo.Text));
-                        Checkmember(true);
+                        if(Convert.ToInt32(TBStartAmount.Text) != StartAmount)
+                        {
+                            if(Convert.ToInt32(TBStartAmount.Text) > StartAmount)
+                            {
+                                if (mb == 0)
+                                {
+                                    var MB = MessageBox.Show("โปรดทราบว่าการเเก้ไขหุ้นสะสมในแบบฟอร์มนี้จะไม่ออกบิลให้เเก่ท่าน ท่านสามารถออกบิลเองได้ในแบบฟอร์มหน้าจ่าย คุณต้องการให้กล่องข้อความนี้เเจ้งเตือนอีกครั้งใช่หรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                                    if (MB == DialogResult.No)
+                                    {
+                                        mb++;
+                                    }
+                                }
+                                if (MessageBox.Show("ยืนยันการเปลี่ยนแปลง", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                                {
+                                    int PayShare = 0;
+                                    if (StartAmount >= Convert.ToInt32(TBStartAmount.Text))
+                                    {
+                                        PayShare = StartAmount - Convert.ToInt32(TBStartAmount.Text);
+                                    }
+                                    else
+                                    {
+                                        PayShare = Convert.ToInt32(TBStartAmount.Text) - StartAmount;
+                                    }
+                                    BankTeacher.Bank.Pay.Calculator calculator = new BankTeacher.Bank.Pay.Calculator(Convert.ToInt32(PayShare));
+                                    calculator.ShowDialog();
+                                    if (BankTeacher.Bank.Pay.Calculator.Return)
+                                    {
+                                        int DifferenceAmount = StartAmount - Convert.ToInt32(TBStartAmount.Text);
+                                        Class.SQLConnection.InputSQLMSSQL("INSERT INTO EmployeeBank.dbo.tblLogChangeAmount (TeacharNo,TeacharAddby,DateAdd,OldAmount,NewAmount) \r\n" +
+                                      "VALUES ('{TeacharNo}','{TeacharAddby}',GETDATE(),'{OldAmount}','{NewAmount}')"
+                                      .Replace("{TeacharNo}", TBTeacherNo.Text)
+                                      .Replace("{TeacharAddby}", Class.UserInfo.TeacherNo)
+                                      .Replace("{OldAmount}", StartAmount.ToString())
+                                      .Replace("{NewAmount}", TBStartAmount.Text));
 
-                        MessageBox.Show("บันทึกการแก้ไขสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        BSaveEdit.Enabled = false;
-                        CheckSave = true;
+                                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[7]
+                                            .Replace("{Amount}", TBStartAmount.Text)
+                                            .Replace("{TeacherNo}", TBTeacherNo.Text));
+
+                                        StartAmount = StartAmount - DifferenceAmount;
+                                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
+                                        .Replace("{Amount}", StartAmount.ToString())
+                                        .Replace("{TeacherNo}", TBTeacherNo.Text));
+                                        Checkmember(true);
+
+                                        MessageBox.Show("บันทึกการแก้ไขสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        BSaveEdit.Enabled = false;
+                                        CheckSave = true;
+                                        TBSavingAmount.Text = TBStartAmount.Text;
+                                    }
+                                    else
+                                    {
+                                        TBStartAmount.Text = StartAmount.ToString();
+                                        MessageBox.Show("การเเก้ไขถูกยกเลิก", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                TBStartAmount.Text = StartAmount.ToString();
+                                MessageBox.Show("ยอดที่เปลี่ยนต้องไม่น้อยกว่ายอดเดิม ถ้าหากผู้ใช้ต้องการลดยอดลงสามารถลดยอดได้ที่หน้าถอนหุ้นสะสสม", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("ยอดหุ้นสะสมไม่ได้เปลี่ยนแปลง", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"--------------------------{ex}----------------------------");
+                        MessageBox.Show("การบันทึกล้มเหลว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
-                catch (Exception ex)
+                else
                 {
-                    Console.WriteLine($"--------------------------{ex}----------------------------");
-                    MessageBox.Show("การบันทึกล้มเหลว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    string Message = "",Amount = "";
+                    if(Convert.ToInt32(TBStartAmount.Text) < Bank.Menu.startAmountMin)
+                    {
+                        Message = $"ยอดขั้นต่ำหุ้นสะสมต้องมากกว่า {Bank.Menu.startAmountMin.ToString("N0")} คุณต้องการเปลี่ยนยอด {Bank.Menu.startAmountMin.ToString("N0")} หรือ ไม่";
+                        Amount = Bank.Menu.startAmountMin.ToString();
+                    }
+                    else if (Convert.ToInt32(TBStartAmount.Text) > Bank.Menu.startAmountMax)
+                    {
+                        Message = $"ยอดขั้นสูงสุดหุ้นสะสมต้องน้อยกว่า {Bank.Menu.startAmountMax.ToString("N0")} คุณต้องการเปลี่ยนยอด {Bank.Menu.startAmountMax.ToString("N0")} หรือ ไม่";
+                        Amount = Bank.Menu.startAmountMax.ToString();
+                    }
+                    var M = MessageBox.Show(Message, "เเจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    if (M == DialogResult.Yes)
+                    {
+                        TBStartAmount.Text = Amount;
+                    }
                 }
             }
-            else
-            {
-               var M =  MessageBox.Show($"ยอดขั้นต่ำหุ้นสะสมต้องมากกว่า {Bank.Menu.startAmountMin} คุณต้องการเปลี่ยนยอด {Bank.Menu.startAmountMin} หรือ ไม่", "เเจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                if(M == DialogResult.Yes)
-                {
-                    TBStartAmount.Text = Bank.Menu.startAmountMin.ToString();
-                }
-            }
-
         }
-
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             BankTeacher.Class.Print.PrintPreviewDialog.PrintMember(e, SQLDefault[3], BankTeacher.Bank.Menu.Date[2], BankTeacher.Bank.Menu.Monthname, (Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + 543).ToString(), TBTeacherNo.Text, TBTeacherName.Text, checkBox_scrip.Checked, checkBox_copy.Checked);

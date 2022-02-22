@@ -1690,15 +1690,7 @@ namespace BankTeacher.Class.Print
                             }
                         }
                     }
-                    var N = int.TryParse(PrintPreviewDialog.Rows[R][c],out _);
-                    if(N == false)
-                    {
-                        e.Graphics.DrawString($"{PrintPreviewDialog.Rows[R][c]}", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Center, page_y, Rectanglef_width, Rectanglef_height)); // วาด หัวข้อความ
-                    }
-                    else
-                    {
-                        e.Graphics.DrawString($"{Convert.ToInt32(PrintPreviewDialog.Rows[R][c]).ToString("N0")}", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Center, page_y, Rectanglef_width, Rectanglef_height)); // วาด หัวข้อความ
-                    }
+                    e.Graphics.DrawString($"{PrintPreviewDialog.Rows[R][c]}", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Center, page_y, Rectanglef_width, Rectanglef_height)); // วาด หัวข้อความ
                     //e.Graphics.DrawString($"{G.Rows[R].Cells[c].Value}", Font(18, ThaiSarabun, FontStyle.Regular), BrushBlack, new RectangleF(Center, page_y, Rectanglef_width, Rectanglef_height)); // วาด หัวข้อความ
                     // Test เช็คตำเเหน่งที่จะวาด
                     //e.Graphics.DrawRectangle(PenBlack, page_x, page_y, Rectanglef_width, Rectanglef_height); // Test กรอบ
@@ -1739,7 +1731,7 @@ namespace BankTeacher.Class.Print
                         e.Graphics.DrawLine(PenBlack, locationline[line], location_y, locationline[line], location_y2);
                     }
                     // เส้นปิด Rows
-                    e.Graphics.DrawLine(PenBlack, page_width, page_y, Line_x, page_y);
+                    e.Graphics.DrawLine(PenBlack, page_width, page_y, Line_x, page_y); // สำหรับปิดยอดเงิน
                     chcel_line = true;
                 }
             }
