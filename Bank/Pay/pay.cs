@@ -2819,7 +2819,16 @@ namespace BankTeacher.Bank.Pay
 
         private void TBAmount_Pay_TextChanged(object sender, EventArgs e)
         {
-            BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBAmount_Pay);
+            if (int.TryParse(TBAmount_Pay.Text,out _))
+            if(Convert.ToInt32(TBAmount_Pay.Text) <= 100000)
+            {
+                BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBAmount_Pay);
+            }
+            else
+            {
+                TBAmount_Pay.Text = $"{Bank.Menu.startAmountMax}";
+                MessageBox.Show("ยอดที่ฝากได้สุดสุง ตั้งเเต่ 1-1000000 บาท เป็นต้นไป");
+            }
         }
 
         private void DTPDate_ValueChanged(object sender, EventArgs e)

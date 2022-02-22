@@ -54,14 +54,8 @@ namespace BankTeacher.Bank
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.LRemainInterest = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.LDividendAmount = new System.Windows.Forms.Label();
-            this.LInterestNextYear = new System.Windows.Forms.Label();
-            this.LDividendPerShare = new System.Windows.Forms.Label();
-            this.LSavingAmount = new System.Windows.Forms.Label();
-            this.LInterestAmount = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.DGVReportDividend = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -96,14 +90,8 @@ namespace BankTeacher.Bank
             this.panel1.Controls.Add(this.label7);
             this.panel1.Controls.Add(this.label6);
             this.panel1.Controls.Add(this.label4);
-            this.panel1.Controls.Add(this.LRemainInterest);
             this.panel1.Controls.Add(this.label11);
             this.panel1.Controls.Add(this.label2);
-            this.panel1.Controls.Add(this.LDividendAmount);
-            this.panel1.Controls.Add(this.LInterestNextYear);
-            this.panel1.Controls.Add(this.LDividendPerShare);
-            this.panel1.Controls.Add(this.LSavingAmount);
-            this.panel1.Controls.Add(this.LInterestAmount);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.DGVReportDividend);
             this.panel1.Location = new System.Drawing.Point(42, 14);
@@ -117,7 +105,7 @@ namespace BankTeacher.Bank
             this.label15.ForeColor = System.Drawing.Color.Red;
             this.label15.Location = new System.Drawing.Point(423, 508);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(243, 28);
+            this.label15.Size = new System.Drawing.Size(312, 36);
             this.label15.TabIndex = 128;
             this.label15.Text = "สามารถยกเลิกได้แค่ปีที่ปันผลล่าสุดเท่านั้น";
             // 
@@ -127,7 +115,7 @@ namespace BankTeacher.Bank
             this.label14.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label14.Location = new System.Drawing.Point(822, 185);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(43, 32);
+            this.label14.Size = new System.Drawing.Size(52, 40);
             this.label14.TabIndex = 127;
             this.label14.Text = "บาท";
             // 
@@ -137,7 +125,7 @@ namespace BankTeacher.Bank
             this.label13.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label13.Location = new System.Drawing.Point(822, 134);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(43, 32);
+            this.label13.Size = new System.Drawing.Size(52, 40);
             this.label13.TabIndex = 126;
             this.label13.Text = "บาท";
             // 
@@ -147,7 +135,7 @@ namespace BankTeacher.Bank
             this.label10.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label10.Location = new System.Drawing.Point(822, 86);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(43, 32);
+            this.label10.Size = new System.Drawing.Size(52, 40);
             this.label10.TabIndex = 125;
             this.label10.Text = "บาท";
             // 
@@ -157,7 +145,7 @@ namespace BankTeacher.Bank
             this.label9.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label9.Location = new System.Drawing.Point(422, 185);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(43, 32);
+            this.label9.Size = new System.Drawing.Size(52, 40);
             this.label9.TabIndex = 124;
             this.label9.Text = "บาท";
             // 
@@ -167,7 +155,7 @@ namespace BankTeacher.Bank
             this.label8.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label8.Location = new System.Drawing.Point(422, 134);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(43, 32);
+            this.label8.Size = new System.Drawing.Size(52, 40);
             this.label8.TabIndex = 123;
             this.label8.Text = "บาท";
             // 
@@ -177,7 +165,7 @@ namespace BankTeacher.Bank
             this.label12.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label12.Location = new System.Drawing.Point(422, 86);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(43, 32);
+            this.label12.Size = new System.Drawing.Size(52, 40);
             this.label12.TabIndex = 122;
             this.label12.Text = "บาท";
             // 
@@ -186,7 +174,7 @@ namespace BankTeacher.Bank
             this.TB_DividendAmount.Enabled = false;
             this.TB_DividendAmount.Location = new System.Drawing.Point(686, 183);
             this.TB_DividendAmount.Name = "TB_DividendAmount";
-            this.TB_DividendAmount.Size = new System.Drawing.Size(135, 35);
+            this.TB_DividendAmount.Size = new System.Drawing.Size(135, 42);
             this.TB_DividendAmount.TabIndex = 121;
             // 
             // TB_DividendPerShare
@@ -194,7 +182,7 @@ namespace BankTeacher.Bank
             this.TB_DividendPerShare.Enabled = false;
             this.TB_DividendPerShare.Location = new System.Drawing.Point(686, 132);
             this.TB_DividendPerShare.Name = "TB_DividendPerShare";
-            this.TB_DividendPerShare.Size = new System.Drawing.Size(135, 35);
+            this.TB_DividendPerShare.Size = new System.Drawing.Size(135, 42);
             this.TB_DividendPerShare.TabIndex = 120;
             // 
             // TB_InterestNextYear
@@ -202,7 +190,7 @@ namespace BankTeacher.Bank
             this.TB_InterestNextYear.Enabled = false;
             this.TB_InterestNextYear.Location = new System.Drawing.Point(686, 81);
             this.TB_InterestNextYear.Name = "TB_InterestNextYear";
-            this.TB_InterestNextYear.Size = new System.Drawing.Size(135, 35);
+            this.TB_InterestNextYear.Size = new System.Drawing.Size(135, 42);
             this.TB_InterestNextYear.TabIndex = 119;
             // 
             // TB_SavingAmount
@@ -210,7 +198,7 @@ namespace BankTeacher.Bank
             this.TB_SavingAmount.Enabled = false;
             this.TB_SavingAmount.Location = new System.Drawing.Point(281, 183);
             this.TB_SavingAmount.Name = "TB_SavingAmount";
-            this.TB_SavingAmount.Size = new System.Drawing.Size(135, 35);
+            this.TB_SavingAmount.Size = new System.Drawing.Size(135, 42);
             this.TB_SavingAmount.TabIndex = 118;
             // 
             // TB_InterestAmount
@@ -218,7 +206,7 @@ namespace BankTeacher.Bank
             this.TB_InterestAmount.Enabled = false;
             this.TB_InterestAmount.Location = new System.Drawing.Point(281, 132);
             this.TB_InterestAmount.Name = "TB_InterestAmount";
-            this.TB_InterestAmount.Size = new System.Drawing.Size(135, 35);
+            this.TB_InterestAmount.Size = new System.Drawing.Size(135, 42);
             this.TB_InterestAmount.TabIndex = 117;
             // 
             // TB_RemainInterest
@@ -226,7 +214,7 @@ namespace BankTeacher.Bank
             this.TB_RemainInterest.Enabled = false;
             this.TB_RemainInterest.Location = new System.Drawing.Point(281, 84);
             this.TB_RemainInterest.Name = "TB_RemainInterest";
-            this.TB_RemainInterest.Size = new System.Drawing.Size(135, 35);
+            this.TB_RemainInterest.Size = new System.Drawing.Size(135, 42);
             this.TB_RemainInterest.TabIndex = 116;
             // 
             // label1
@@ -235,7 +223,7 @@ namespace BankTeacher.Bank
             this.label1.ForeColor = System.Drawing.Color.Red;
             this.label1.Location = new System.Drawing.Point(290, 27);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(221, 28);
+            this.label1.Size = new System.Drawing.Size(283, 36);
             this.label1.TabIndex = 115;
             this.label1.Text = "รายการภายในปี ปันผลยังไม่มีรายการ";
             this.label1.Visible = false;
@@ -269,7 +257,7 @@ namespace BankTeacher.Bank
             this.CBYear.FormattingEnabled = true;
             this.CBYear.Location = new System.Drawing.Point(102, 21);
             this.CBYear.Name = "CBYear";
-            this.CBYear.Size = new System.Drawing.Size(182, 36);
+            this.CBYear.Size = new System.Drawing.Size(182, 42);
             this.CBYear.TabIndex = 102;
             this.CBYear.SelectedIndexChanged += new System.EventHandler(this.CBYear_SelectedIndexChanged);
             // 
@@ -279,7 +267,7 @@ namespace BankTeacher.Bank
             this.label5.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label5.Location = new System.Drawing.Point(489, 185);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(129, 32);
+            this.label5.Size = new System.Drawing.Size(163, 40);
             this.label5.TabIndex = 98;
             this.label5.Text = "จำนวนเงินปันผล :";
             // 
@@ -289,7 +277,7 @@ namespace BankTeacher.Bank
             this.label7.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label7.Location = new System.Drawing.Point(489, 134);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(132, 32);
+            this.label7.Size = new System.Drawing.Size(169, 40);
             this.label7.TabIndex = 98;
             this.label7.Text = "ปันผลเฉลี่ยต่อหุ้น :";
             // 
@@ -299,7 +287,7 @@ namespace BankTeacher.Bank
             this.label6.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label6.Location = new System.Drawing.Point(489, 83);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(153, 32);
+            this.label6.Size = new System.Drawing.Size(191, 40);
             this.label6.TabIndex = 99;
             this.label6.Text = "ดอกเบี้ยไว้จ่ายปีหน้า :";
             // 
@@ -309,21 +297,9 @@ namespace BankTeacher.Bank
             this.label4.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label4.Location = new System.Drawing.Point(12, 185);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(103, 32);
+            this.label4.Size = new System.Drawing.Size(129, 40);
             this.label4.TabIndex = 100;
             this.label4.Text = "เงินหุ้นสะสม :";
-            // 
-            // LRemainInterest
-            // 
-            this.LRemainInterest.AutoSize = true;
-            this.LRemainInterest.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.LRemainInterest.ForeColor = System.Drawing.Color.Black;
-            this.LRemainInterest.Location = new System.Drawing.Point(579, 13);
-            this.LRemainInterest.Name = "LRemainInterest";
-            this.LRemainInterest.Size = new System.Drawing.Size(24, 32);
-            this.LRemainInterest.TabIndex = 101;
-            this.LRemainInterest.Text = "0";
-            this.LRemainInterest.Visible = false;
             // 
             // label11
             // 
@@ -331,7 +307,7 @@ namespace BankTeacher.Bank
             this.label11.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label11.Location = new System.Drawing.Point(24, 24);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(57, 32);
+            this.label11.Size = new System.Drawing.Size(72, 40);
             this.label11.TabIndex = 101;
             this.label11.Text = "เลือกปี";
             // 
@@ -341,69 +317,9 @@ namespace BankTeacher.Bank
             this.label2.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label2.Location = new System.Drawing.Point(12, 86);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(215, 32);
+            this.label2.Size = new System.Drawing.Size(272, 40);
             this.label2.TabIndex = 101;
             this.label2.Text = "ดอกเบี้ยคงเหลือจากปี่ที่ผ่านมา :";
-            // 
-            // LDividendAmount
-            // 
-            this.LDividendAmount.AutoSize = true;
-            this.LDividendAmount.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.LDividendAmount.ForeColor = System.Drawing.Color.Black;
-            this.LDividendAmount.Location = new System.Drawing.Point(764, 13);
-            this.LDividendAmount.Name = "LDividendAmount";
-            this.LDividendAmount.Size = new System.Drawing.Size(24, 32);
-            this.LDividendAmount.TabIndex = 101;
-            this.LDividendAmount.Text = "0";
-            this.LDividendAmount.Visible = false;
-            // 
-            // LInterestNextYear
-            // 
-            this.LInterestNextYear.AutoSize = true;
-            this.LInterestNextYear.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.LInterestNextYear.ForeColor = System.Drawing.Color.Black;
-            this.LInterestNextYear.Location = new System.Drawing.Point(681, 13);
-            this.LInterestNextYear.Name = "LInterestNextYear";
-            this.LInterestNextYear.Size = new System.Drawing.Size(24, 32);
-            this.LInterestNextYear.TabIndex = 101;
-            this.LInterestNextYear.Text = "0";
-            this.LInterestNextYear.Visible = false;
-            // 
-            // LDividendPerShare
-            // 
-            this.LDividendPerShare.AutoSize = true;
-            this.LDividendPerShare.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.LDividendPerShare.ForeColor = System.Drawing.Color.Black;
-            this.LDividendPerShare.Location = new System.Drawing.Point(730, 13);
-            this.LDividendPerShare.Name = "LDividendPerShare";
-            this.LDividendPerShare.Size = new System.Drawing.Size(24, 32);
-            this.LDividendPerShare.TabIndex = 101;
-            this.LDividendPerShare.Text = "0";
-            this.LDividendPerShare.Visible = false;
-            // 
-            // LSavingAmount
-            // 
-            this.LSavingAmount.AutoSize = true;
-            this.LSavingAmount.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.LSavingAmount.ForeColor = System.Drawing.Color.Black;
-            this.LSavingAmount.Location = new System.Drawing.Point(647, 13);
-            this.LSavingAmount.Name = "LSavingAmount";
-            this.LSavingAmount.Size = new System.Drawing.Size(24, 32);
-            this.LSavingAmount.TabIndex = 101;
-            this.LSavingAmount.Text = "0";
-            this.LSavingAmount.Visible = false;
-            // 
-            // LInterestAmount
-            // 
-            this.LInterestAmount.AutoSize = true;
-            this.LInterestAmount.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
-            this.LInterestAmount.ForeColor = System.Drawing.Color.Black;
-            this.LInterestAmount.Location = new System.Drawing.Point(613, 13);
-            this.LInterestAmount.Name = "LInterestAmount";
-            this.LInterestAmount.Size = new System.Drawing.Size(24, 32);
-            this.LInterestAmount.TabIndex = 101;
-            this.LInterestAmount.Text = "0";
-            this.LInterestAmount.Visible = false;
             // 
             // label3
             // 
@@ -411,7 +327,7 @@ namespace BankTeacher.Bank
             this.label3.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.label3.Location = new System.Drawing.Point(12, 134);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(120, 32);
+            this.label3.Size = new System.Drawing.Size(151, 40);
             this.label3.TabIndex = 101;
             this.label3.Text = "จำนวนดอกเบี้ย :";
             // 
@@ -488,7 +404,7 @@ namespace BankTeacher.Bank
             // 
             // CancelDividend
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 28F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 34F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(962, 665);
@@ -518,14 +434,8 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label LRemainInterest;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label LDividendAmount;
-        private System.Windows.Forms.Label LInterestNextYear;
-        private System.Windows.Forms.Label LDividendPerShare;
-        private System.Windows.Forms.Label LSavingAmount;
-        private System.Windows.Forms.Label LInterestAmount;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DataGridView DGVReportDividend;
         private System.Windows.Forms.Button BExitForm;

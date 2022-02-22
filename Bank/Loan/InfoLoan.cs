@@ -36,7 +36,7 @@ namespace BankTeacher.Bank.Loan
         public static int how_many_laps;
         /// <summary>
         /// <para>[0] SELECT MemberLonn  INPUT: {TeacherNo}</para>
-        /// <para>[1] SELECT LOAN INPUT: {TeacherNo} </para>
+        /// <para>[1] SELECT LOAN INPUT: {TeacherNo} {LoanStatusNo} {mark} </para>
         /// <para>[2] SELECT Detail Loan INPUT: {LoanID} </para>
         /// <para>[3] for printback  INPUT : {TeacherNo} {LoanNo} </para>
         /// <para>[4] BackPrint payLoan INPUT : {TeacherNo} {LoanNo}</para>
@@ -51,7 +51,6 @@ namespace BankTeacher.Bank.Loan
           "FROM(SELECT a.TeacherNo, CAST(ISNULL(c.PrefixName+' ','') + Fname + ' ' + Lname AS nvarchar)AS NAME,SavingAmount,Fname  \r\n " +
           "FROM (SELECT TeacherNo \r\n " +
           "FROM EmployeeBank.dbo.tblLoan \r\n " +
-          "WHERE LoanStatusNo = 1 or LoanStatusNo = 2 \r\n " +
           "GROUP BY TeacherNo) as a   \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo   \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo   \r\n " +
@@ -64,15 +63,15 @@ namespace BankTeacher.Bank.Loan
            
 
                 ,
-          //[1] SELECT LOAN INPUT: {TeacherNo} : 
-           "SELECT a.LoanNo , CAST(ISNULL(d.PrefixNameFull , '') + Fname + ' ' + Lname AS NVARCHAR)  \r\n " +
+          //[1] SELECT LOAN INPUT: {TeacherNo} {LoanStatusNo} {mark}: 
+           "SELECT a.LoanNo , CAST(ISNULL(d.PrefixNameFull , '') + Fname + ' ' + Lname AS NVARCHAR),a.LoanStatusNo   \r\n " +
           "FROM EmployeeBank.dbo.tblLoan as a   \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo   \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as c on a.TeacherNo = c.TeacherNo  \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo  \r\n " +
-          "WHERE a.TeacherNo = '{TeacherNo}' and LoanStatusNo != 4   \r\n " +
-          "GROUP BY a.LoanNo , CAST(ISNULL(d.PrefixNameFull , '') + Fname + ' ' + Lname AS NVARCHAR) \r\n " +
-          "ORDER BY a.LoanNo  "
+          "WHERE a.TeacherNo = '{TeacherNo}' AND a.LoanStatusNo {mark} '{LoanStatusNo}'\r\n " +
+          "GROUP BY a.LoanNo , CAST(ISNULL(d.PrefixNameFull , '') + Fname + ' ' + Lname AS NVARCHAR),a.LoanStatusNo  \r\n " +
+          "ORDER BY a.LoanNo DESC "
            ,
 
           //[2] SELECT Detail Loan INPUT: {LoanID}
@@ -80,7 +79,7 @@ namespace BankTeacher.Bank.Loan
           " a.PayDate,MonthPay,YearPay,PayNo,InterestRate,LoanAmount,b.Amount,g.LoanStatusName   \r\n " +
           " ,TeacherNoAddBy, CAST(ISNULL(f.PrefixNameFull , '') + e.Fname + ' ' + e.Lname AS NVARCHAR) AS NameTeacherAddby   \r\n " +
           " , DATEADD(MONTH,a.PayNo-1,CAST(CAST(a.YearPay as varchar) + '/' + CAST(a.MonthPay as varchar) +'/01' as date)) as FinishDate \r\n " +
-          " , (a.InterestRate / 100) * a.LoanAmount as Interest  \r\n " +
+          " , ROUND((a.InterestRate / 100) * a.LoanAmount, 0) as Interest  \r\n " +
           " ,ROUND(((a.InterestRate / 100) * a.LoanAmount) + a.LoanAmount,0) as TotalLoanAmount,b.RemainsAmount  \r\n " +
           " FROM EmployeeBank.dbo.tblLoan as a    \r\n " +
           " LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo   \r\n " +
@@ -175,28 +174,29 @@ namespace BankTeacher.Bank.Loan
 
                 IN = new Bank.Search(SQLDefault[0]);
                 IN.ShowDialog();
-                CB_LoanNo.Enabled = true;
-                CB_LoanNo.Items.Clear();
-                Check = 1;
-                //Checkmember(false);
-                CB_LoanNo.Items.Clear();
-                CB_LoanNo.SelectedIndex = -1;
-                TBTeacherName.Text = "";
-                TBYearPay_Detail.Text = "";
-                TBMonthPay_Detail.Text = "";
-                TBTotalAmount_Detail.Text = "";
-                TBPayNo_Detail.Text = "";
-                TBLoanStatus.Text = "";
-                TBLoanNo.Text = "";
-                TBSavingAmount.Text = "";
-                DGVGuarantor.Rows.Clear();
-                DGVLoanDetail.Rows.Clear();
                 //ComboBox[] cb = new ComboBox[] { CB_LoanNo };
                 //DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
                 //    .Replace("{TeacherNo}", TBTeacherNo.Text));
                 //for (int x = 0; x < dt.Rows.Count; x++)
-                if(Bank.Search.Return[0] != "")
+                if (Bank.Search.Return[0] != "")
                 {
+                    CB_LoanNo.Enabled = true;
+                    CB_LoanNo.Items.Clear();
+                    Check = 1;
+                    //Checkmember(false);
+                    CB_LoanNo.Items.Clear();
+                    CB_LoanNo.SelectedIndex = -1;
+                    TBTeacherName.Text = "";
+                    TBYearPay_Detail.Text = "";
+                    TBMonthPay_Detail.Text = "";
+                    TBTotalAmount_Detail.Text = "";
+                    TBPayNo_Detail.Text = "";
+                    TBLoanStatus.Text = "";
+                    TBLoanNo.Text = "";
+                    TBSavingAmount.Text = "";
+                    DGVGuarantor.Rows.Clear();
+                    DGVLoanDetail.Rows.Clear();
+
                     TBTeacherNo.Text = Bank.Search.Return[0];
                     TBTeacherName.Text = Bank.Search.Return[1];
                     TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
@@ -216,6 +216,7 @@ namespace BankTeacher.Bank.Loan
                 TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
                 tabControl1.SelectedIndex = 0;
                 CB_LoanNo.Enabled = true;
+                TB_Statusloan.Enabled = true;
                 CB_LoanNo.Items.Clear();
                 Check = 1;
                 CB_LoanNo.Items.Clear();
@@ -226,7 +227,7 @@ namespace BankTeacher.Bank.Loan
                 TBSavingAmount.Text = "";
                 DGVGuarantor.Rows.Clear();
                 DGVLoanDetail.Rows.Clear();
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text));
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text).Replace("{LoanStatusNo}", Stastus).Replace("{mark}", Mark));
                 if (dt.Rows.Count != 0)
                 {
                     TBTeacherName.Text = dt.Rows[0][1].ToString();
@@ -239,7 +240,7 @@ namespace BankTeacher.Bank.Loan
                     {
                         for (int aa = 0; aa < cb.Length; aa++)
                         {
-                            cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment("รายการกู้ " + dt.Rows[x][0].ToString(), dt.Rows[x][0].ToString()));
+                            cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment($"รายการกู้" + dt.Rows[x][0].ToString(), dt.Rows[x][0].ToString()));
                         }
                     }
                     CB_LoanNo.SelectedIndex = 0;
@@ -262,7 +263,41 @@ namespace BankTeacher.Bank.Loan
                 }
                 else
                 {
-                    MessageBox.Show("รหัสผู้ใช้ไม่ถูกต้อง", "System", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    DataTable dt2 = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text).Replace("{LoanStatusNo}", Stastus).Replace("{mark}", "="));
+                    if(dt2.Rows.Count != 0)
+                    {
+                        TB_Statusloan.Text = "รายการกู้ปัจุบัน";
+                        TBTeacherName.Text = dt2.Rows[0][1].ToString();
+                        CB_LoanNo.Enabled = true;
+                        tabControl1.Enabled = true;
+                        CB_LoanNo.Items.Clear();
+                        Check = 1;
+                        ComboBox[] cb = new ComboBox[] { CB_LoanNo };
+                        for (int x = 0; x < dt2.Rows.Count; x++)
+                        {
+                            for (int aa = 0; aa < cb.Length; aa++)
+                            {
+                                cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment($"รายการกู้" + dt2.Rows[x][0].ToString(), dt2.Rows[x][0].ToString()));
+                            }
+                        }
+                        CB_LoanNo.SelectedIndex = 0;
+                        Checkmember(false);
+                        if (CB_LoanNo.Items.Count == 1)
+                            CB_LoanNo.SelectedIndex = 0;
+                        DataTable dt_ChcekFile = Class.SQLConnection.InputSQLMSSQL("SELECT a.LoanNo,a.DocStatusNo,a.DocUploadPath \r\n" +
+                        "FROM EmployeeBank.dbo.tblLoan as a \r\n" +
+                        "WHERE a.LoanNo = '{LoanNo}'".Replace("{LoanNo}", TBLoanNo.Text));
+                        if (dt_ChcekFile.Rows[0][1].ToString() == "2")
+                        {
+                            LB_Flie.Text = "กรุณาอัพโหลดเอกสาร";
+                            LB_Flie.ForeColor = Color.Red;
+                        }
+                        else
+                        {
+                            LB_Flie.Text = "อัพโหลดเอกสารสำเร็จ";
+                            LB_Flie.ForeColor = Color.Green;
+                        }
+                    }
                 }
 
             }
@@ -274,10 +309,7 @@ namespace BankTeacher.Bank.Loan
                     CB_LoanNo.SelectedIndex = -1;
                     TBTeacherName.Text = "";
                     DGVGuarantor.Rows.Clear();
-
                     CB_LoanNo.Enabled = false;
-
-                    //comboBox1.Enabled = false;
                     BTOpenFile.Enabled = false;
                     BTUploadFile.Enabled = false;
                     Checkmember(true);
@@ -302,6 +334,37 @@ namespace BankTeacher.Bank.Loan
                     PathFile = "";
 
                 }
+            }
+        }
+        static string Stastus = "3",Mark = "!=";
+        private void TB_Statusloan_Click(object sender, EventArgs e)
+        {
+            if (Mark == "!=")
+            {
+                TB_Statusloan.Text = "รายการกู้ปัจุบัน";
+                Mark = "=";
+            }
+            else
+            {
+                TB_Statusloan.Text = "รายการที่ปิดกู้";
+                Mark = "!=";
+            }
+            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text).Replace("{LoanStatusNo}", Stastus).Replace("{mark}",Mark));
+            if (dt.Rows.Count != 0)
+            {
+                TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+            }
+            else
+            {
+                if (Mark == "!=")
+                {
+                    TB_Statusloan.Text = "รายการกู้ปัจุบัน";
+                }
+                else
+                {
+                    TB_Statusloan.Text = "รายการที่ปิดกู้";
+                }
+                MessageBox.Show($"ไม่พบ{TB_Statusloan.Text}", "ข้อมูลกู้", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         private void Checkmember(bool tf)
@@ -364,7 +427,7 @@ namespace BankTeacher.Bank.Loan
                     }
                     for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
                     {
-                        DGVGuarantor.Rows.Add(ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][1].ToString(), ds.Tables[0].Rows[x][15].ToString());
+                        DGVGuarantor.Rows.Add(ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][1].ToString(),Convert.ToDouble(ds.Tables[0].Rows[x][16]).ToString("N2"));
                     }
                     TBLoanNo.Text = Loan.No;
                     BTOpenFile.Enabled = true;
@@ -373,7 +436,7 @@ namespace BankTeacher.Bank.Loan
                     TBMonthPay_Detail.Text = ds.Tables[0].Rows[0][4].ToString();
                     TBTotalAmount_Detail.Text = ds.Tables[0].Rows[0][15].ToString();
                     TBPayNo_Detail.Text = ds.Tables[0].Rows[0][6].ToString();
-                    TBInterestRate_Detail.Text = ds.Tables[0].Rows[0][7].ToString();
+                    TBInterestRate_Detail.Text = ds.Tables[0].Rows[0][14].ToString();
                     TBLoanStatus.Text = ds.Tables[0].Rows[0][10].ToString();
                     TBSavingAmount.Text = Convert.ToDateTime(ds.Tables[0].Rows[0][2].ToString()).ToString("dd/MM/yyyy");
                     DGVLoanDetail.Rows.Clear();
@@ -390,7 +453,7 @@ namespace BankTeacher.Bank.Loan
                     TBInterest_Detail.Text = ds.Tables[0].Rows[0][14].ToString();
                     DGVLoanDetail.Rows.Clear();
 
-                    Double Interest = Convert.ToDouble(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString())) * (Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100) / Convert.ToDouble(ds.Tables[0].Rows[0][6].ToString());
+                    Double Interest = Convert.ToDouble(ds.Tables[0].Rows[0][14].ToString()) / Convert.ToInt32(ds.Tables[0].Rows[0][6].ToString());/*Convert.ToDouble(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString())) * (Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100) / Convert.ToDouble(ds.Tables[0].Rows[0][6].ToString());*/
 
                     int Pay = Convert.ToInt32(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) / Convert.ToInt32(ds.Tables[0].Rows[0][6].ToString()));
                     //int Pay = Convert.ToInt32(Convert.ToInt32(ds.Tables[0].Rows[0][8].ToString()) / Convert.ToInt32(ds.Tables[0].Rows[0][6].ToString()));
@@ -406,7 +469,7 @@ namespace BankTeacher.Bank.Loan
                         }
                         if (Num == Convert.ToInt32(ds.Tables[0].Rows[0][6].ToString()) - 1)
                         {
-                            Interest = Convert.ToInt32((Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) * (Convert.ToDouble(TBInterestRate_Detail.Text) / 100)) - (Convert.ToInt32(Interest) * Num));
+                            Interest = Convert.ToInt32(ds.Tables[0].Rows[0][14].ToString()) - (Convert.ToInt32(Interest) * Num);
                             Pay = Pay * Num;
                             Pay = Convert.ToInt32(ds.Tables[0].Rows[0][8].ToString()) - Pay;
                             SumInstallment = Convert.ToInt32(Pay + Interest);

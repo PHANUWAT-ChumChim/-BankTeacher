@@ -231,7 +231,8 @@ namespace BankTeacher.Bank.Add_Member
                             MessageBox.Show("สมัครเสร็จสิ้น", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             CheckStatusWorking = false;
                             CheckSave = true;
-
+                            printDocument1.DocumentName = $"TeacherID{TBTeacherNo_Reg.Text}";
+                            printDocument1.Print();
                             TBTeacherNo_Reg.Text = "";
                             TBTeacherName_Reg.Text = "";
                             CheckBRegister = false;
