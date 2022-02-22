@@ -117,7 +117,8 @@ namespace BankTeacher.Bank.Pay
            //[5] Check if you have paid ( Loan ) INPUT: {LoanNo} , {Month} , {Year} , {Date} 
            "  SELECT a.TeacherNo, \r\n " +
           "  ROUND(Convert(float, ( (g.InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0)  AS PayLoan, \r\n " +
-          "  ROUND((LoanAmount  + Convert(float , (InterestRate / 100) * LoanAmount)) - (ROUND(Convert(float, ( (InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0)) * (PayNo -1),0)AS LastPay \r\n " +
+          "  ROUND((LoanAmount  + Convert(float , (InterestRate / 100) * LoanAmount)) - (ROUND(Convert(float, ( (InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0)) * (PayNo -1),0)AS LastPay, \r\n " +
+             "ROUND((LoanAmount  + Convert(float , (InterestRate / 100) * LoanAmount)) - (ROUND(Convert(float, ( (InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0)) * (PayNo -1) + ROUND((InterestRate / 100) * LoanAmount,0),0) AS Latepayment \r\n"+
           "  FROM EmployeeBank.dbo.tblMember as a    \r\n " +
           "  LEFT JOIN EmployeeBank.dbo.tblBill as b on a.TeacherNo = b.TeacherNo   \r\n " +
           "  LEFT JOIN EmployeeBank.dbo.tblBillDetail as c on b.BillNo = c.BillNo   \r\n " +
@@ -138,12 +139,14 @@ namespace BankTeacher.Bank.Pay
           "   and b.Cancel = 1  \r\n " +
           "  GROUP BY  a.TeacherNo, \r\n " +
           "  ROUND(Convert(float, ( (g.InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0) , \r\n " +
-          "  (LoanAmount  + Convert(float , (InterestRate / 100) * LoanAmount)) - (ROUND(Convert(float, ( (InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0)) * (PayNo -1)  \r\n " +
+          "  (LoanAmount  + Convert(float , (InterestRate / 100) * LoanAmount)) - (ROUND(Convert(float, ( (InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0)) * (PayNo -1) , \r\n " +
+             "ROUND((LoanAmount  + Convert(float , (InterestRate / 100) * LoanAmount)) - (ROUND(Convert(float, ( (InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0)) * (PayNo -1) + ROUND((InterestRate / 100) * LoanAmount,0),0) \r\n"+
           " \r\n " +
           "  SELECT LoanNo ,MonthPay , YearPay , PayNo,  \r\n " +
           "   ROUND(Convert(float, ( (InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float ,  LoanAmount / PayNo),0) AS PayLoan , \r\n " +
           "	ROUND((LoanAmount  + Convert(float , (InterestRate / 100) * LoanAmount)) - (ROUND(Convert(float, ( (InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0)) * (PayNo -1),0) AS LastPay,  \r\n " +
-          "    EOMONTH(DATEADD(MONTH,PayNo-1,CAST(CAST(CAST(YearPay as nvarchar) +'/' + CAST(MonthPay AS nvarchar) + '/05' AS nvarchar) AS date))) AS EndLoan \r\n " +
+          "    EOMONTH(DATEADD(MONTH,PayNo-1,CAST(CAST(CAST(YearPay as nvarchar) +'/' + CAST(MonthPay AS nvarchar) + '/05' AS nvarchar) AS date))) AS EndLoan ,\r\n " +
+          "ROUND((LoanAmount  + Convert(float , (InterestRate / 100) * LoanAmount)) - (ROUND(Convert(float, ( (InterestRate / 100) * LoanAmount)/ PayNo) ,0) + ROUND(Convert(float , LoanAmount / PayNo),0)) * (PayNo -1) + ROUND((InterestRate / 100) * LoanAmount,0),0) AS Latepayment \r\n"+
           "   FROM EmployeeBank.dbo.tblLoan \r\n " +
           "   WHERE LoanNo = {LoanNo} and LoanStatusNo = 2 ;  \r\n " +
           " \r\n " +
@@ -1088,7 +1091,10 @@ namespace BankTeacher.Bank.Pay
                                     //หากเป็นจ่ายกู้เดือนสุดท้าย 
                                     if (DateLoan == Convert.ToDateTime(CBYearSelection_Pay.Text + '-' + CBMonthSelection_Pay.Text + '-' + DateTime.DaysInMonth(Convert.ToInt32(CBYearSelection_Pay.Text), Convert.ToInt32(CBMonthSelection_Pay.Text)).ToString()))
                                     {
+                                        if(DTPDate.Value <= DateLoan )
                                             Balance = Convert.ToInt32(dsLoan.Tables[0].Rows[0][2].ToString());
+                                        else
+                                            Balance = Convert.ToInt32(dsLoan.Tables[0].Rows[0][3].ToString());
                                     }
                                     //หากเงื่อนไขบนไม่เป็นจริง หรือก็คือ เป็นเดือนปกติ ที่ไม่ใช่เดือนสุดท้ายของการกู้
                                     else
@@ -1287,7 +1293,7 @@ namespace BankTeacher.Bank.Pay
                         TBAmount_Pay.Text = "0";
                     BListAdd_Pay.Enabled = true;
                 }
-                else if (Status.Type.Contains("สะสม"))
+                else if (Status.Type.Contains("หุ้นสะสม"))
                 {
                     TBAmount_Pay.Text = "500";
                     TBAmount_Pay.Enabled = true;
@@ -1351,7 +1357,13 @@ namespace BankTeacher.Bank.Pay
         private void DGV_Pay_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             if (Int32.TryParse(DGV_Pay.Rows[e.RowIndex].Cells[2].Value.ToString(), out int Amount))
-                Summoney();
+                if (Amount >= BankTeacher.Bank.Menu.startAmountMin)
+                    Summoney();
+                else
+                {
+                    DGV_Pay.Rows[e.RowIndex].Cells[2].Value = "500";
+                    MessageBox.Show($"จำนวนเงินที่ระบุต่ำเกินไป ขั้นต่ำในการจ่ายอยู่ที่ {BankTeacher.Bank.Menu.startAmountMin} บาท. \r\n", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             DGV_Printbypoon.Rows[e.RowIndex].Cells[3].Value = Amount;
         }
         //Can only Type Numbers in textbox Amount
@@ -1382,45 +1394,95 @@ namespace BankTeacher.Bank.Pay
                         {
                             if (Int32.TryParse(TBAmount_Pay.Text, out int x) && x > 0)
                             {
-                                BankTeacher.Class.ComboBoxPay Loan = (CBList_Pay.SelectedItem as BankTeacher.Class.ComboBoxPay);
-                                String Time = CBYearSelection_Pay.Text + "/" + CBMonthSelection_Pay.Text;
-                                if (DGV_Pay.Rows.Count != 0)
+                                if(x >= BankTeacher.Bank.Menu.startAmountMin && CBList_Pay.Items[CBList_Pay.SelectedIndex].ToString().Contains("หุ้นสะสม"))
                                 {
-                                    for (int y = 0; y < DGV_Pay.Rows.Count; y++)
+                                    BankTeacher.Class.ComboBoxPay Loan = (CBList_Pay.SelectedItem as BankTeacher.Class.ComboBoxPay);
+                                    String Time = CBYearSelection_Pay.Text + "/" + CBMonthSelection_Pay.Text;
+                                    if (DGV_Pay.Rows.Count != 0)
                                     {
-                                        if (Time == DGV_Pay.Rows[y].Cells[0].Value.ToString() && CBList_Pay.Text == DGV_Pay.Rows[y].Cells[1].Value.ToString())
+                                        for (int y = 0; y < DGV_Pay.Rows.Count; y++)
                                         {
-                                            break;
-                                        }
-                                        else if (y == DGV_Pay.Rows.Count - 1)
-                                        {
-                                            Notadd = true;
-                                            DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
-                                            Amount_payLoan = TBAmount_Pay.Text;
-                                            Notadd = false;
-                                            CheckInsertDGVBehidePay();
-                                            CBList_Pay.Items.RemoveAt(CBList_Pay.SelectedIndex);
-                                            ReadonlyDGVPay();
-                                            RemoveComboboxhAfterAdd();
-                                            CBPayment_Pay.SelectedIndex = 0;
-                                            CBPayment_Pay.Enabled = true;
-                                            break;
+                                            if (Time == DGV_Pay.Rows[y].Cells[0].Value.ToString() && CBList_Pay.Text == DGV_Pay.Rows[y].Cells[1].Value.ToString())
+                                            {
+                                                break;
+                                            }
+                                            else if (y == DGV_Pay.Rows.Count - 1)
+                                            {
+                                                Notadd = true;
+                                                DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
+                                                Amount_payLoan = TBAmount_Pay.Text;
+                                                Notadd = false;
+                                                CheckInsertDGVBehidePay();
+                                                CBList_Pay.Items.RemoveAt(CBList_Pay.SelectedIndex);
+                                                ReadonlyDGVPay();
+                                                RemoveComboboxhAfterAdd();
+                                                CBPayment_Pay.SelectedIndex = 0;
+                                                CBPayment_Pay.Enabled = true;
+                                                break;
+                                            }
                                         }
                                     }
+                                    else 
+                                    {
+                                        Notadd = true;
+                                        DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
+                                        Amount_payLoan = TBAmount_Pay.Text;
+                                        Notadd = false;
+                                        CheckInsertDGVBehidePay();
+                              
+                                        CBList_Pay.Items.RemoveAt(CBList_Pay.SelectedIndex);
+                                        ReadonlyDGVPay();
+                                        RemoveComboboxhAfterAdd();
+                                        CBPayment_Pay.SelectedIndex = 0;
+                                        CBPayment_Pay.Enabled = true;
+                                    }
+                                }
+                                else if(x < BankTeacher.Bank.Menu.startAmountMin && CBList_Pay.Items[CBList_Pay.SelectedIndex].ToString().Contains("หุ้นสะสม"))
+                                {
+                                    MessageBox.Show($"จำนวนเงินที่ระบุต่ำเกินไป ขั้นต่ำในการจ่ายอยู่ที่ {BankTeacher.Bank.Menu.startAmountMin} บาท. \r\n","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                                 }
                                 else
                                 {
-                                    Notadd = true;
-                                    DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
-                                    Amount_payLoan = TBAmount_Pay.Text;
-                                    Notadd = false;
-                                    CheckInsertDGVBehidePay();
-                              
-                                    CBList_Pay.Items.RemoveAt(CBList_Pay.SelectedIndex);
-                                    ReadonlyDGVPay();
-                                    RemoveComboboxhAfterAdd();
-                                    CBPayment_Pay.SelectedIndex = 0;
-                                    CBPayment_Pay.Enabled = true;
+                                    BankTeacher.Class.ComboBoxPay Loan = (CBList_Pay.SelectedItem as BankTeacher.Class.ComboBoxPay);
+                                    String Time = CBYearSelection_Pay.Text + "/" + CBMonthSelection_Pay.Text;
+                                    if (DGV_Pay.Rows.Count != 0)
+                                    {
+                                        for (int y = 0; y < DGV_Pay.Rows.Count; y++)
+                                        {
+                                            if (Time == DGV_Pay.Rows[y].Cells[0].Value.ToString() && CBList_Pay.Text == DGV_Pay.Rows[y].Cells[1].Value.ToString())
+                                            {
+                                                break;
+                                            }
+                                            else if (y == DGV_Pay.Rows.Count - 1)
+                                            {
+                                                Notadd = true;
+                                                DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
+                                                Amount_payLoan = TBAmount_Pay.Text;
+                                                Notadd = false;
+                                                CheckInsertDGVBehidePay();
+                                                CBList_Pay.Items.RemoveAt(CBList_Pay.SelectedIndex);
+                                                ReadonlyDGVPay();
+                                                RemoveComboboxhAfterAdd();
+                                                CBPayment_Pay.SelectedIndex = 0;
+                                                CBPayment_Pay.Enabled = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Notadd = true;
+                                        DGV_Pay.Rows.Add(Time, CBList_Pay.Text, TBAmount_Pay.Text, Loan.No, CBYearSelection_Pay.Text, CBMonthSelection_Pay.Text);
+                                        Amount_payLoan = TBAmount_Pay.Text;
+                                        Notadd = false;
+                                        CheckInsertDGVBehidePay();
+
+                                        CBList_Pay.Items.RemoveAt(CBList_Pay.SelectedIndex);
+                                        ReadonlyDGVPay();
+                                        RemoveComboboxhAfterAdd();
+                                        CBPayment_Pay.SelectedIndex = 0;
+                                        CBPayment_Pay.Enabled = true;
+                                    }
                                 }
                             }
                             else
@@ -1598,6 +1660,10 @@ namespace BankTeacher.Bank.Pay
                     BAutoSelection.Enabled = false;
                     CheckPay = true;
                     CheckSave = true;
+                    if (CBYearSelection_BillInfo.Items.Count != 0)
+                        CBYearSelection_Pay.SelectedIndex = CBYearSelection_Pay.SelectedIndex;
+                    if (CBLoanSelection_LoanInfo.Items.Count != 0)
+                        CBLoanSelection_LoanInfo.SelectedIndex = 0;
                     //ClearForm();
                     //TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
                 }
@@ -2763,6 +2829,13 @@ namespace BankTeacher.Bank.Pay
                 TBAmount_Pay.Text = $"{Bank.Menu.startAmountMax}";
                 MessageBox.Show("ยอดที่ฝากได้สุดสุง ตั้งเเต่ 1-1000000 บาท เป็นต้นไป");
             }
+        }
+
+        private void DTPDate_ValueChanged(object sender, EventArgs e)
+        {
+            if (CBMonthSelection_Pay.Enabled)
+                if (CBMonthSelection_Pay.Items.Count != 0)
+                    CBMonthSelection_Pay_SelectedIndexChanged(new object() , new EventArgs());
         }
         //===============================================================================================
     }
