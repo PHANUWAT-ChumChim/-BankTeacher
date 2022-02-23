@@ -1863,10 +1863,10 @@ namespace BankTeacher.Bank.Pay
                     {
                         RemainAmount += Convert.ToInt32(Convert.ToDouble(ds.Tables[0].Rows[x][9].ToString()));
                     }
-                    TBTotal__LoanInfo.Text = Math.Ceiling(Convert.ToDouble(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) + (Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) * Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100))).ToString();
-                    TBAmountRemain_LoanInfo.Text = RemainAmount.ToString();
-                    TBInteresrt_LoanInfo.Text = Math.Ceiling(Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100 * Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString())).ToString();
                     Double Interest = CheckDecimalAndPlusOne(Convert.ToDouble(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString())) * (Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100));
+                    TBTotal__LoanInfo.Text = (Convert.ToDouble(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) + (Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) * Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100)).ToString());
+                    TBAmountRemain_LoanInfo.Text = RemainAmount.ToString();
+                    TBInteresrt_LoanInfo.Text = Interest.ToString();
                     TBStartAmount_LoanInfo.Text = Convert.ToInt32(ds.Tables[0].Rows[0][8].ToString()).ToString();
                     TBInstallment_LoanInfo.Text = ds.Tables[0].Rows[0][6].ToString();
 
