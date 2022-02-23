@@ -75,19 +75,22 @@ namespace BankTeacher.Bank.Loan
            ,
 
           //[2] SELECT Detail Loan INPUT: {LoanID}
-           "SELECT b.TeacherNo , CAST(ISNULL(d.PrefixNameFull , '') + c.Fname + ' ' + c.Lname AS NVARCHAR) AS NameTeacher,CAST(DateAdd as date) as SignUpdate,  \r\n " +
-          " a.PayDate,MonthPay,YearPay,PayNo,InterestRate,LoanAmount,b.Amount,g.LoanStatusName   \r\n " +
-          " ,TeacherNoAddBy, CAST(ISNULL(f.PrefixNameFull , '') + e.Fname + ' ' + e.Lname AS NVARCHAR) AS NameTeacherAddby   \r\n " +
-          " , DATEADD(MONTH,a.PayNo-1,CAST(CAST(a.YearPay as varchar) + '/' + CAST(a.MonthPay as varchar) +'/01' as date)) as FinishDate \r\n " +
-          " , ROUND((a.InterestRate / 100) * a.LoanAmount, 0) as Interest  \r\n " +
-          " ,ROUND(((a.InterestRate / 100) * a.LoanAmount) + a.LoanAmount,0) as TotalLoanAmount,b.RemainsAmount  \r\n " +
-          " FROM EmployeeBank.dbo.tblLoan as a    \r\n " +
-          " LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo   \r\n " +
-          " LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo    \r\n " +
-          " LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo     \r\n " +
-          " LEFT JOIN Personal.dbo.tblTeacherHis as e on a.TeacherNoAddBy = e.TeacherNo   \r\n " +
-          " LEFT JOIN BaseData.dbo.tblPrefix as f on e.PrefixNo = f.PrefixNo     \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblLoanStatus as g on a.LoanStatusNo = g.LoanStatusNo \r\n" + 
+           "SELECT b.TeacherNo , CAST(ISNULL(d.PrefixNameFull , '') + c.Fname + ' ' + c.Lname AS NVARCHAR) AS NameTeacher,CAST(DateAdd as date) as SignUpdate,   \r\n " +
+          "  a.PayDate,MonthPay,YearPay,PayNo,InterestRate,LoanAmount,b.Amount,g.LoanStatusName    \r\n " +
+          "  ,TeacherNoAddBy, CAST(ISNULL(f.PrefixNameFull , '') + e.Fname + ' ' + e.Lname AS NVARCHAR) AS NameTeacherAddby    \r\n " +
+          "  , DATEADD(MONTH,a.PayNo-1,CAST(CAST(a.YearPay as varchar) + '/' + CAST(a.MonthPay as varchar) +'/01' as date)) as FinishDate  \r\n " +
+          "  , CASE \r\n " +
+          "	WHEN (a.InterestRate / 100) * a.LoanAmount > ROUND((a.InterestRate / 100) * a.LoanAmount, 0 , 1) THEN ROUND((a.InterestRate / 100) * a.LoanAmount, 0 , 1) + 1 \r\n " +
+          "	ELSE (a.InterestRate / 100) * a.LoanAmount \r\n " +
+          "	END as Interest \r\n " +
+          "  ,ROUND(((a.InterestRate / 100) * a.LoanAmount) + a.LoanAmount,0) as TotalLoanAmount,b.RemainsAmount   \r\n " +
+          "  FROM EmployeeBank.dbo.tblLoan as a     \r\n " +
+          "  LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo    \r\n " +
+          "  LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo     \r\n " +
+          "  LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo      \r\n " +
+          "  LEFT JOIN Personal.dbo.tblTeacherHis as e on a.TeacherNoAddBy = e.TeacherNo    \r\n " +
+          "  LEFT JOIN BaseData.dbo.tblPrefix as f on e.PrefixNo = f.PrefixNo      \r\n " +
+          " LEFT JOIN EmployeeBank.dbo.tblLoanStatus as g on a.LoanStatusNo = g.LoanStatusNo  \r\n " +
           " WHERE a.LoanNo = '{LoanID}' and a.LoanStatusNo != 4 ;  \r\n " +
           "   \r\n " +
           " SELECT Concat(b.Mount , '/' , Year)  \r\n " +
@@ -434,9 +437,9 @@ namespace BankTeacher.Bank.Loan
                     BTUploadFile.Enabled = true;
                     TBYearPay_Detail.Text = ds.Tables[0].Rows[0][5].ToString();
                     TBMonthPay_Detail.Text = ds.Tables[0].Rows[0][4].ToString();
-                    TBTotalAmount_Detail.Text = ds.Tables[0].Rows[0][15].ToString();
+                    TBTotalAmount_Detail.Text = (Convert.ToInt32(ds.Tables[0].Rows[0][8].ToString()) + Convert.ToInt32(ds.Tables[0].Rows[0][14].ToString())).ToString();
                     TBPayNo_Detail.Text = ds.Tables[0].Rows[0][6].ToString();
-                    TBInterestRate_Detail.Text = ds.Tables[0].Rows[0][14].ToString();
+                    TBInterestRate_Detail.Text = ds.Tables[0].Rows[0][7].ToString();
                     TBLoanStatus.Text = ds.Tables[0].Rows[0][10].ToString();
                     TBSavingAmount.Text = Convert.ToDateTime(ds.Tables[0].Rows[0][2].ToString()).ToString("dd/MM/yyyy");
                     DGVLoanDetail.Rows.Clear();
