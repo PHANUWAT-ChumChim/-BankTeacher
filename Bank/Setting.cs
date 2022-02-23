@@ -11,6 +11,7 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using ExcelDataReader;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace BankTeacher.Bank
 {
@@ -556,6 +557,42 @@ namespace BankTeacher.Bank
                     tabControl1.SelectedIndex = tabControl1.SelectedIndex + 1;
                 }
             }
+        }
+        public static void MakeFileOutOfAStream(string stream, string filePath)
+        {
+            using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
+            {
+                CopyStream(GetStream(stream), fs);
+            }
+        }
+
+        static void CopyStream(Stream input, Stream output)
+        {
+            byte[] buffer = new byte[1024];
+            int read;
+            while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+            {
+                output.Write(buffer, 0, read);
+            }
+        }
+        static Stream GetStream(string stream)
+        {
+            return Assembly.GetExecutingAssembly().GetManifestResourceStream(stream);
+
+        }
+        private void DowloadFIleExcel_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Excel 97-2003 Workbook|*.xlsx|Excel Workbook|*.xls";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                File.WriteAllBytes(saveFileDialog.FileName, BankTeacher.Properties.Resources.Excel_Input_Data);
+                //if (saveFileDialog.FileName != string.Empty)
+                //{
+                //        MakeFileOutOfAStream(BankTeacher.Properties.Resources.Excel_Input_Data.ToString(), saveFileDialog.FileName);
+                //}
+            }
+
         }
     }
 }

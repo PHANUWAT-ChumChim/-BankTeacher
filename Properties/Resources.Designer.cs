@@ -22,7 +22,7 @@ namespace BankTeacher.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace BankTeacher.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BankTeacher.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace BankTeacher.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _10x10_Print {
+        public static System.Drawing.Bitmap _10x10_Print {
             get {
                 object obj = ResourceManager.GetObject("_10x10_Print", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -73,7 +73,7 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _64x64_gear {
+        public static System.Drawing.Bitmap _64x64_gear {
             get {
                 object obj = ResourceManager.GetObject("_64x64_gear", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -83,7 +83,7 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _64x64_home {
+        public static System.Drawing.Bitmap _64x64_home {
             get {
                 object obj = ResourceManager.GetObject("_64x64_home", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -93,7 +93,7 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _64x64_IceZ {
+        public static System.Drawing.Bitmap _64x64_IceZ {
             get {
                 object obj = ResourceManager.GetObject("_64x64_IceZ", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -103,7 +103,7 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _64x64_information {
+        public static System.Drawing.Bitmap _64x64_information {
             get {
                 object obj = ResourceManager.GetObject("_64x64_information", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -113,7 +113,7 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _64x64_magnifying_glass {
+        public static System.Drawing.Bitmap _64x64_magnifying_glass {
             get {
                 object obj = ResourceManager.GetObject("_64x64_magnifying_glass", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -123,7 +123,7 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _64x64_money_bag {
+        public static System.Drawing.Bitmap _64x64_money_bag {
             get {
                 object obj = ResourceManager.GetObject("_64x64_money_bag", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -133,7 +133,7 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _64x64_money_bag__1_ {
+        public static System.Drawing.Bitmap _64x64_money_bag__1_ {
             get {
                 object obj = ResourceManager.GetObject("_64x64_money_bag__1_", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -143,7 +143,7 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _64x64_no_internet {
+        public static System.Drawing.Bitmap _64x64_no_internet {
             get {
                 object obj = ResourceManager.GetObject("_64x64_no_internet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -153,7 +153,7 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _64x64_Reports {
+        public static System.Drawing.Bitmap _64x64_Reports {
             get {
                 object obj = ResourceManager.GetObject("_64x64_Reports", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -163,7 +163,7 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _64x64_TLC {
+        public static System.Drawing.Bitmap _64x64_TLC {
             get {
                 object obj = ResourceManager.GetObject("_64x64_TLC", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -173,7 +173,7 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _64x64_user {
+        public static System.Drawing.Bitmap _64x64_user {
             get {
                 object obj = ResourceManager.GetObject("_64x64_user", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -183,7 +183,7 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _64x64_wallet {
+        public static System.Drawing.Bitmap _64x64_wallet {
             get {
                 object obj = ResourceManager.GetObject("_64x64_wallet", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -193,7 +193,7 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap dividends {
+        public static System.Drawing.Bitmap dividends {
             get {
                 object obj = ResourceManager.GetObject("dividends", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -201,9 +201,19 @@ namespace BankTeacher.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        public static byte[] Excel_Input_Data {
+            get {
+                object obj = ResourceManager.GetObject("Excel Input Data", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap logout {
+        public static System.Drawing.Bitmap logout {
             get {
                 object obj = ResourceManager.GetObject("logout", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -213,7 +223,7 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Report_2 {
+        public static System.Drawing.Bitmap Report_2 {
             get {
                 object obj = ResourceManager.GetObject("Report 2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -223,7 +233,7 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Reports1 {
+        public static System.Drawing.Bitmap Reports1 {
             get {
                 object obj = ResourceManager.GetObject("Reports1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
