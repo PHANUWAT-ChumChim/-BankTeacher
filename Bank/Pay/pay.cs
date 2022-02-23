@@ -2356,6 +2356,8 @@ namespace BankTeacher.Bank.Pay
         {
             CBLoanlist.Items.Clear();
             DGV_Loanlist.Rows.Clear();
+            CBMonth_Loanlist.Items.Clear();
+            CBYear_Loanlist.Items.Clear();
             TBAmount_Loanlist.Text = "0";
             CBLoanlist.Enabled = false;
             CBMonth_Loanlist.Enabled = false;
@@ -3333,6 +3335,7 @@ namespace BankTeacher.Bank.Pay
                     CBPayment_Loanlist.Enabled = false;
                     BTAddlist_Loanlist.Enabled = false;
 
+                    CheckSave = true;
                     TBTeacherNo.Enabled = false;
                     BSearchTeacher.Enabled = true;
                     CBList_Pay.Enabled = false;
