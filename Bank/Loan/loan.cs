@@ -334,7 +334,7 @@ namespace BankTeacher.Bank.Loan
                     int Month = int.Parse(CBPayMonth.Text),
                         Year = int.Parse(CBPayYear.Text);
 
-                    Double Interest = (Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)) / Convert.ToDouble(TBPayNo.Text);
+                    Double Interest = CheckDecimalAndPlusOne(Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)) / Convert.ToDouble(TBPayNo.Text);
 
                     int Pay = Convert.ToInt32(TBLoanAmount.Text) / Convert.ToInt32(TBPayNo.Text);
                     int SumInstallment = Convert.ToInt32(Pay + Interest);
@@ -861,7 +861,8 @@ namespace BankTeacher.Bank.Loan
             {
                 CreditLoanAmount += int.Parse(DGVGuarantor.Rows[Count].Cells[2].Value.ToString());
             }
-            int LoanAmount = Convert.ToInt32(CreditLoanAmount - CreditLoanAmount * (Convert.ToDouble(TBInterestRate.Text) / 100));
+            int Interest = CheckDecimalAndPlusOne(CreditLoanAmount * (Convert.ToDouble(TBInterestRate.Text) / 100));
+            int LoanAmount = Convert.ToInt32(CreditLoanAmount) - Interest;
             LLoanAmount.Text = "(" + LoanAmount.ToString() + ")";
         }
         private void Checkmember(bool tf)
@@ -943,8 +944,12 @@ namespace BankTeacher.Bank.Loan
 
 
             bool CheckNum = Double.TryParse(TBLoanAmount.Text, out Double LoanAmount);
-            LoanAmount = LoanAmount * Convert.ToDouble((Convert.ToDouble(TBInterestRate.Text) / 100)) + LoanAmount;
-            LTotal.Text = Convert.ToInt32(LoanAmount).ToString();
+            if (CheckNum)
+            {
+                LoanAmount = LoanAmount * Convert.ToDouble((Convert.ToDouble(TBInterestRate.Text) / 100));
+                LoanAmount = CheckDecimalAndPlusOne(LoanAmount) + Convert.ToDouble(TBLoanAmount.Text);
+            }
+            LTotal.Text = LoanAmount.ToString();
 
             if((CheckInt || CheckBReset) && Amount > LimitAmount && UserOutCreditLimit == DialogResult.Yes && Amount >= BankTeacher.Bank.Menu.MinLoan)
             {
@@ -1141,7 +1146,8 @@ namespace BankTeacher.Bank.Loan
             int NumCell = 0;
             if (TBLoanAmount.Text != "" && TBInterestRate.Text != "" && TBPayNo.Text != "" )
             {
-                Double Total = (Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100) + Convert.ToDouble(TBLoanAmount.Text));
+                //Double Total = (Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100) + Convert.ToDouble(TBLoanAmount.Text));
+                Double Total = Convert.ToDouble(LTotal.Text);
                 bool Check;
                 if (DGVGuarantorCredit.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
                 {
@@ -1409,7 +1415,15 @@ namespace BankTeacher.Bank.Loan
                 //Double aa = (Convert.ToDouble(TBInterestRate.Text) / 100);
                 if(Double.TryParse(TBInterestRate.Text , out Double Interestrate) && Interestrate > 0)
                 {
-                    int LoanAmount = Convert.ToInt32(CreditLoanAmount - CreditLoanAmount * (Interestrate / 100));
+                    Double NumDouble = CreditLoanAmount * (Interestrate / 100);
+                    int Interest = CheckDecimalAndPlusOne(NumDouble);
+                    //String[] Check = Interest.ToString().Split('.');
+                    //int Number = 0;
+                    //if(Interest % Convert.ToDouble(Check[0]) != 0)
+                    //{
+                    //    Number = Convert.ToInt32(Check[0]) + 1;
+                    //}
+                    Double LoanAmount = CreditLoanAmount - Interest;
                     LLoanAmount.Text = "(" + LoanAmount + ")";
                     LTotal.Text = "" + LoanAmount;
 
@@ -1501,7 +1515,8 @@ namespace BankTeacher.Bank.Loan
                     SumCredit += Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString());
                 }
                 Double Difference = Convert.ToDouble(TBLoanAmount.Text) + (Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)) - SumCredit;
-                Double Interest = (Convert.ToDouble(Convert.ToDouble(TBInterestRate.Text) / 100)) * Convert.ToDouble(TBLoanAmount.Text) + Convert.ToDouble(TBLoanAmount.Text);
+                //Double Interest = (Convert.ToDouble(Convert.ToDouble(TBInterestRate.Text) / 100)) * Convert.ToDouble(TBLoanAmount.Text) + Convert.ToDouble(TBLoanAmount.Text);
+                Double Interest = Convert.ToDouble(LTotal.Text);
 
                 int SumAmountCredit = 0;
                 for (int Num = 0; Num < DGVGuarantorCredit.Rows.Count; Num++)
@@ -1668,6 +1683,19 @@ namespace BankTeacher.Bank.Loan
         private void BExitForm_Click(object sender, EventArgs e)
         {
             BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+        }
+
+        public int CheckDecimalAndPlusOne(Double NumDouble)
+        {
+            String[] Check = NumDouble.ToString().Split('.');
+            if(NumDouble % Convert.ToDouble(NumDouble) != 0)
+            {
+                return Convert.ToInt32(Check[0]) + 1;
+            }
+            else
+            {
+                return Convert.ToInt32(Check[0]);
+            }
         }
     }
 }

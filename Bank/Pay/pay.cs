@@ -1750,7 +1750,18 @@ namespace BankTeacher.Bank.Pay
         }
         //==============================================================================================
 
-
+        public int CheckDecimalAndPlusOne(Double NumDouble)
+        {
+            String[] Check = NumDouble.ToString().Split('.');
+            if (NumDouble % Convert.ToDouble(NumDouble) != 0)
+            {
+                return Convert.ToInt32(Check[0]) + 1;
+            }
+            else
+            {
+                return Convert.ToInt32(Check[0]);
+            }
+        }
         //============================== tabpage 3 (Loaninfo) ============================================
         //Select Loan
         private void CBLoanSelection_LoanInfo_SelectedIndexChanged(object sender, EventArgs e)
@@ -1767,17 +1778,17 @@ namespace BankTeacher.Bank.Pay
                     {
                         RemainAmount += Convert.ToInt32(Convert.ToDouble(ds.Tables[0].Rows[x][9].ToString()));
                     }
-
+                    Double Interest = CheckDecimalAndPlusOne(Convert.ToDouble(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString())) * (Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100));
                     TBTotal__LoanInfo.Text = (Convert.ToDouble(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) + (Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) * Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100)).ToString());
                     TBAmountRemain_LoanInfo.Text = RemainAmount.ToString();
-                    TBInteresrt_LoanInfo.Text = Convert.ToInt32(Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100 * Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString())).ToString();
+                    TBInteresrt_LoanInfo.Text = Interest.ToString();
                     TBStartAmount_LoanInfo.Text = Convert.ToInt32(ds.Tables[0].Rows[0][8].ToString()).ToString();
                     TBInstallment_LoanInfo.Text = ds.Tables[0].Rows[0][6].ToString();
 
                     int Month = Convert.ToInt32(ds.Tables[0].Rows[0][4].ToString());
                     int Year = Convert.ToInt32(ds.Tables[0].Rows[0][5].ToString());
 
-                    Double Interest = Convert.ToDouble(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString())) * (Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100) / Convert.ToDouble(ds.Tables[0].Rows[0][6].ToString());
+                    Interest = Interest / Convert.ToDouble(ds.Tables[0].Rows[0][6].ToString());
 
                     int Pay = Convert.ToInt32(Convert.ToInt32(ds.Tables[0].Rows[0][8].ToString()) / Convert.ToInt32(ds.Tables[0].Rows[0][6].ToString()));
                     int SumInstallment = Convert.ToInt32(Pay + Interest);
