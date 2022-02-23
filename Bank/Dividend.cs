@@ -239,11 +239,16 @@ namespace BankTeacher.Bank
            ,
 
            //[5] Get TeacherList Unpaid INPUT: {Year}
-           "SELECT a.LoanNo , a.TeacherNo ,CAST(ISNULL(e.PrefixNameFull , '') + d.Fname + ' ' + d.Lname as NVARCHAR(255)) , \r\n " +
+           "SELECT a.LoanNo , a.TeacherNo , a.Name, \r\n " +
           "CASE  \r\n " +
-          "	WHEN a.PayNo - 1 + a.MonthPay <= 12 THEN a.LoanAmount - ISNULL(SUM(b.Amount) , 0) \r\n " +
-          "	ELSE (13 - a.MonthPay) * (ROUND(ROUND((a.InterestRate / 100) * a.LoanAmount , 0) / a.PayNo , 0) + ROUND((a.LoanAmount / a.PayNo) , 0)) - ISNULL(SUM(b.Amount) , 0) \r\n " +
-          "END as RemainLoanAmountInYear \r\n " +
+          "	WHEN a.PayNo - 1 + a.MonthPay <= 12 THEN LoanAmount - a.Amount \r\n " +
+          "	ELSE (13 - a.MonthPay) * (ROUND(ROUND((a.InterestRate / 100) * a.LoanAmount , 0) / a.PayNo , 0) + ROUND((a.LoanAmount / a.PayNo) , 0)) - a.Amount \r\n " +
+          "END as RemainLoanAmountInYear  \r\n " +
+          "FROM(SELECT a.LoanNo , a.TeacherNo ,CAST(ISNULL(e.PrefixNameFull , '') + d.Fname + ' ' + d.Lname as NVARCHAR(255)) as Name  \r\n " +
+          ", CASE  \r\n " +
+          "	WHEN ROUND((a.InterestRate / 100) * a.LoanAmount , 0 , 1) < (a.InterestRate / 100) * a.LoanAmount THEN ROUND((a.InterestRate / 100) * a.LoanAmount , 0 , 1) + 1 \r\n " +
+          "	ELSE (a.InterestRate / 100) * a.LoanAmount \r\n " +
+          "	END as Interest , a.PayNo , a.MonthPay , a.LoanAmount , ISNULL(SUM(b.Amount) , 0) as Amount , a.InterestRate \r\n " +
           "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.LoanNo = b.LoanNo \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblBill as c on b.BillNo = c.BillNo \r\n " +
@@ -255,8 +260,9 @@ namespace BankTeacher.Bank
           "LEFT JOIN EmployeeBank.dbo.tblBill as c on b.BillNo = c.BillNo   \r\n " +
           "WHERE ((b.Mount < 12 and b.Year = {Year} and c.Cancel = 1 and b.TypeNo = 2) or a.LoanStatusNo = 2) and a.LoanStatusNo = 2 and a.YearPay = {Year} \r\n " +
           "GROUP BY a.LoanNo) or a.LoanStatusNo = 2 and a.YearPay = {Year} \r\n " +
-          "GROUP BY a.LoanNo , a.PayNo , a.MonthPay , a.LoanAmount , a.InterestRate, a.TeacherNo  ,CAST(ISNULL(e.PrefixNameFull , '') + d.Fname + ' ' + d.Lname as NVARCHAR(255))"
+          "GROUP BY a.LoanNo , a.PayNo , a.MonthPay , a.LoanAmount , a.InterestRate, a.TeacherNo  ,CAST(ISNULL(e.PrefixNameFull , '') + d.Fname + ' ' + d.Lname as NVARCHAR(255))) as a"
            ,
+
 
 
          };
