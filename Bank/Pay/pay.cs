@@ -836,6 +836,8 @@ namespace BankTeacher.Bank.Pay
                     }
                     else
                     {
+                        pictureBox1.Visible = true;
+                        tabControl1.TabPages.Remove(tabPage5);
                         CBLoanlist.Enabled = false;
                     }
 
@@ -3230,6 +3232,8 @@ namespace BankTeacher.Bank.Pay
                     CBPayment_Loanlist.Enabled = true;
                     BTSave_Loanlist.Enabled = true;
                 }
+                Num++;
+                DGV_PayLoan.Rows.Add(Num,DGV_Loanlist.Rows[e.RowIndex].Cells[0].Value, CBLoanlist.Text, DGV_Loanlist.Rows[e.RowIndex].Cells[2].Value);
             }
         }
 
@@ -3241,11 +3245,23 @@ namespace BankTeacher.Bank.Pay
                 CBPayment_Loanlist.SelectedIndex = -1;
                 BTSave_Loanlist.Enabled = false;
             }
+            if(DGV_PayLoan.RowCount != 0)
+            {
+                DGV_PayLoan.Rows.RemoveAt(e.RowIndex);
+                DGV_PayLoan.Rows.Clear();
+                Num--;
+                for (int r = 0; r < DGV_Loanlist.RowCount; r++)
+                {
+                    DGV_PayLoan.Rows.Add(r + 1, DGV_Loanlist.Rows[r].Cells[0].Value.ToString(),
+                         DGV_Loanlist.Rows[r].Cells[1].Value.ToString(), DGV_Loanlist.Rows[r].Cells[2].Value.ToString());
+                }
+            }
         }
 
         private void BTClear_Loanlist_Click(object sender, EventArgs e)
         {
-            if(CBLoanlist.SelectedIndex != -1)
+            Num = 0;
+            if (CBLoanlist.SelectedIndex != -1)
                 CBLoanlist_SelectedIndexChanged(new object(), new EventArgs());
         }
         private void SumPriceLoanlist()
@@ -3304,7 +3320,7 @@ namespace BankTeacher.Bank.Pay
                                 .Replace("{Amount}", Amount_Loan.ToString()));
                         }
                     }
-
+                    printDocument2.Print();
                     MessageBox.Show("ชำระสำเร็จ", "แจ้งเตือนการขำระ", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     TBTeacherNo.Enabled = false;
@@ -3337,6 +3353,11 @@ namespace BankTeacher.Bank.Pay
                     MessageBox.Show("การชำระล้มเหลว", "การเเจ้งเตือนการชำระ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
+        }
+
+        private void printDocument2_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_PayLoan, "ใบเสร็จรับเงินการจ่ายกู้", this.AccessibilityObject.Name, true, true, "A5", 0);
         }
         //===============================================================================================
     }
