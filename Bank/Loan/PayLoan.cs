@@ -396,6 +396,7 @@ namespace BankTeacher.Bank.Loan
                 if (TBTeacherNo.Text.Length != 0)
                 {
                     TBTeacherNo.Text = "";
+                    CBlistpayloan.DroppedDown = false;
                     CBlistpayloan.Items.Clear();
                     CBlistpayloan.SelectedIndex = -1;
                     TBTeacherName.Text = "";

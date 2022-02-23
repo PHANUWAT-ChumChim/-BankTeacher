@@ -155,7 +155,6 @@ namespace BankTeacher.Bank.Add_Member
 
                         for (int a = 0; a < DGV_Pay.Rows.Count; a++)
                         {
-                            //{BillNo}, {LoanNo} , {Amount} , {Month} , {Year}
                             Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
                                 .Replace("{BillNo}", dtBillNo.Rows[0][0].ToString())
                                 .Replace("{LoanNo}", CBLoanNo.SelectedItem.ToString())
