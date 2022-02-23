@@ -140,8 +140,8 @@ namespace BankTeacher.Bank.Add_Member
                 .Replace("{TeacherNo}", TeacherNo));
                 if (Convert.ToInt32(dtSavingAmount.Rows[0][0].ToString()) >= Convert.ToInt32(LBalance_Pay.Text))
                 {
-                    try
-                    {
+                    //try
+                    //{
                         Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
                             .Replace("{Amount}", LBalance_Pay.Text)
                             .Replace("{TeacherNo}", TeacherNo));
@@ -166,12 +166,16 @@ namespace BankTeacher.Bank.Add_Member
                         MessageBox.Show("ทำรายการสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         CheckSave = true;
                         CBLoanNo.Items.RemoveAt(CBLoanNo.SelectedIndex);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("การบันทึกล้มเหลว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        Console.WriteLine($"--------------------------{ex}---------------------------");
-                    }
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    MessageBox.Show("การบันทึกล้มเหลว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    //    Console.WriteLine($"--------------------------{ex}---------------------------");
+                    //}
+                }
+                else
+                {
+                    MessageBox.Show("ยอดเงินไม่เพียงพอ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             
@@ -179,16 +183,32 @@ namespace BankTeacher.Bank.Add_Member
 
         private void BExitForm_Click(object sender, EventArgs e)
         {
-            for(int a = 0; a < Application.OpenForms.Count; a++)
+            FormCollection fc = Application.OpenForms;
+            if (fc.Count > 2)
             {
-                if(Application.OpenForms[a].Name == "CancelMember")
+                foreach (Form f in fc)
                 {
-                    Application.OpenForms[a].Enabled = true;
-                    Application.OpenForms[a].Show();
-                    CBLoanNo.DroppedDown = false;
-                    this.Close();
+                    if (f.Name == "Menu")
+                    {
+                        f.Enabled = true;
+                        f.Show();
+                        break;
+                    }
                 }
+                this.Close();
             }
+            else
+                BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+            //for (int a = 0; a < Application.OpenForms.Count; a++)
+            //{
+            //    if (Application.OpenForms[a].Name == "CancelMember")
+            //    {
+            //        Application.OpenForms[a].Enabled = true;
+            //        Application.OpenForms[a].Show();
+            //        CBLoanNo.DroppedDown = false;
+            //        this.Close();
+            //    }
+            //}
         }
 
         private void CancelMemberCloseTheLoan_KeyDown(object sender, KeyEventArgs e)

@@ -296,6 +296,7 @@ namespace BankTeacher.Bank
             this.DGV.RowHeadersVisible = false;
             this.DGV.RowHeadersWidth = 51;
             this.DGV.RowTemplate.Height = 24;
+            this.DGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGV.Size = new System.Drawing.Size(869, 325);
             this.DGV.TabIndex = 6;
             // 

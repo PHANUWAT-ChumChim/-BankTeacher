@@ -1750,6 +1750,7 @@ namespace BankTeacher.Bank.Pay
                         CBLoanSelection_LoanInfo.SelectedIndex = 0;
                     //ClearForm();
                     //TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
+                    TBTeacherNo_KeyDown(sender,new KeyEventArgs(Keys.Enter)); // Reinfo
                 }
                 else if (!(BankTeacher.Bank.Pay.Calculator.Return))
                 {
@@ -1834,7 +1835,18 @@ namespace BankTeacher.Bank.Pay
         }
         //==============================================================================================
 
-
+        public int CheckDecimalAndPlusOne(Double NumDouble)
+        {
+            String[] Check = NumDouble.ToString().Split('.');
+            if (NumDouble % Convert.ToDouble(NumDouble) != 0)
+            {
+                return Convert.ToInt32(Check[0]) + 1;
+            }
+            else
+            {
+                return Convert.ToInt32(Check[0]);
+            }
+        }
         //============================== tabpage 3 (Loaninfo) ============================================
         //Select Loan
         private void CBLoanSelection_LoanInfo_SelectedIndexChanged(object sender, EventArgs e)
@@ -1851,17 +1863,17 @@ namespace BankTeacher.Bank.Pay
                     {
                         RemainAmount += Convert.ToInt32(Convert.ToDouble(ds.Tables[0].Rows[x][9].ToString()));
                     }
-
                     TBTotal__LoanInfo.Text = Math.Ceiling(Convert.ToDouble(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) + (Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) * Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100))).ToString();
                     TBAmountRemain_LoanInfo.Text = RemainAmount.ToString();
                     TBInteresrt_LoanInfo.Text = Math.Ceiling(Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100 * Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString())).ToString();
+                    Double Interest = CheckDecimalAndPlusOne(Convert.ToDouble(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString())) * (Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100));
                     TBStartAmount_LoanInfo.Text = Convert.ToInt32(ds.Tables[0].Rows[0][8].ToString()).ToString();
                     TBInstallment_LoanInfo.Text = ds.Tables[0].Rows[0][6].ToString();
 
                     int Month = Convert.ToInt32(ds.Tables[0].Rows[0][4].ToString());
                     int Year = Convert.ToInt32(ds.Tables[0].Rows[0][5].ToString());
 
-                    Double Interest = Convert.ToDouble(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString())) * (Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100) / Convert.ToDouble(ds.Tables[0].Rows[0][6].ToString());
+                    Interest = Interest / Convert.ToDouble(ds.Tables[0].Rows[0][6].ToString());
 
                     int Pay = Convert.ToInt32(Convert.ToInt32(ds.Tables[0].Rows[0][8].ToString()) / Convert.ToInt32(ds.Tables[0].Rows[0][6].ToString()));
                     int SumInstallment = Convert.ToInt32(Pay + Interest);
@@ -2791,7 +2803,16 @@ namespace BankTeacher.Bank.Pay
 
         private void TBAmount_Pay_TextChanged(object sender, EventArgs e)
         {
-            BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBAmount_Pay);
+            if (int.TryParse(TBAmount_Pay.Text,out _))
+            if(Convert.ToInt32(TBAmount_Pay.Text) <= 100000)
+            {
+                BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBAmount_Pay);
+            }
+            else
+            {
+                TBAmount_Pay.Text = $"{Bank.Menu.startAmountMax}";
+                MessageBox.Show("ยอดที่ฝากได้สุดสุง ตั้งเเต่ 1-1000000 บาท เป็นต้นไป");
+            }
         }
 
         private void DTPDate_ValueChanged(object sender, EventArgs e)

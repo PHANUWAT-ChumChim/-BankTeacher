@@ -103,6 +103,16 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap _64x64_information {
+            get {
+                object obj = ResourceManager.GetObject("_64x64_information", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap _64x64_magnifying_glass {
             get {
                 object obj = ResourceManager.GetObject("_64x64_magnifying_glass", resourceCulture);
