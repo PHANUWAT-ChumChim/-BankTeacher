@@ -45,8 +45,8 @@ namespace BankTeacher.Bank.Add_Member
            //[1] Save Bill & Get BillNo INPUT: {TeacherNoAddBy}  {TeacherNo}
            "DECLARE @BIllNO INT;   \r\n " +
           " \r\n " +
-          "INSERT INTO EmployeeBank.dbo.tblBill (TeacherNoAddBy,TeacherNo,DateAdd,Cancel,TransactionDate)  \r\n " +
-          "VALUES('{TeacherNoAddBy}','{TeacherNo}',CAST(CURRENT_TIMESTAMP as DATE),1,CURRENT_TIMESTAMP); \r\n " +
+          "INSERT INTO EmployeeBank.dbo.tblBill (TeacherNoAddBy,TeacherNo,TeacherNoPay,DateAdd,Cancel,TransactionDate)  \r\n " +
+          "VALUES('{TeacherNoAddBy}','{TeacherNo}','{TeacherNo}',CAST(CURRENT_TIMESTAMP as DATE),1,CURRENT_TIMESTAMP); \r\n " +
           "SET @BIllNO = SCOPE_IDENTITY();  \r\n " +
           " \r\n " +
           "SELECT @BIllNO ;"
@@ -69,7 +69,7 @@ namespace BankTeacher.Bank.Add_Member
            ,
            //[5] Update Guarantor Amount INPUT: {LoanNo}
            "UPDATE EmployeeBank.dbo.tblGuarantor \r\n " +
-           "SET Amount = 0 \r\n " +
+           "SET RemainsAmount = 0 \r\n " +
            "WHERE LoanNo = {LoanNo}"
              ,
          };
@@ -134,7 +134,7 @@ namespace BankTeacher.Bank.Add_Member
 
         private void BSave_Click(object sender, EventArgs e)
         {
-            if(MessageBox.Show("การจ่ายจะหักเงินเก็บสะสมจากระบบ ยืนยันการจ่ายหรือไม่" , "แต้งเตือน" , MessageBoxButtons.YesNo , MessageBoxIcon.Warning) == DialogResult.Yes)
+            if(MessageBox.Show("การจ่ายจะหักเงินเก็บสะสมจากระบบ ยืนยันการจ่ายหรือไม่" , "ระบบ" , MessageBoxButtons.YesNo , MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 DataTable dtSavingAmount = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4]
                 .Replace("{TeacherNo}", TeacherNo));
@@ -150,7 +150,7 @@ namespace BankTeacher.Bank.Add_Member
                             .Replace("{LoanNo}", CBLoanNo.SelectedItem.ToString()));
 
                         DataTable dtBillNo = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
-                            .Replace("{TeacherNoAddBy", Class.UserInfo.TeacherNo)
+                            .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
                             .Replace("{TeacherNo}", TeacherNo));
 
                         for (int a = 0; a < DGV_Pay.Rows.Count; a++)

@@ -23,7 +23,7 @@ namespace BankTeacher.Bank
            //[0] Select all bill in Day INPUT: {Date} {TeacherNoAddBy}
            "SELECT a.BillNo ,  CAST(ISNULL(d.PrefixName ,'') + c.Fname + ' ' +c.Lname  as nvarchar ) as TeacherName ,  CAST(ISNULL(f.PrefixName ,'') + e.Fname + ' ' +e.Lname  as nvarchar ) as TeacherMakebillName   \r\n " +
           "FROM EmployeeBank.dbo.tblBill as a \r\n " +
-          "LEFT JOIN EmployeeBank.dbo.tblMember as b on a.TeacherNo = b.TeacherNo \r\n " +
+          "LEFT JOIN EmployeeBank.dbo.tblMember as b on a.TeacherNoPay = b.TeacherNo \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as c on b.TeacherNo = c.TeacherNo \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as e on a.TeacherNoAddBy = e.TeacherNo \r\n " +
