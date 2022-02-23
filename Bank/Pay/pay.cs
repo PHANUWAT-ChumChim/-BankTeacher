@@ -2880,7 +2880,8 @@ namespace BankTeacher.Bank.Pay
                             DGV_Loanlist.Rows[x].Cells[2].Value = Paylate_Loanlist;
                         else
                             DGV_Loanlist.Rows[x].Cells[2].Value = LastofMonthPrice_Loanlist;
-                      // SumPriceLoanlist();
+                      
+                        SumPriceLoanlist();
                     }
                 }
             }
@@ -3210,7 +3211,7 @@ namespace BankTeacher.Bank.Pay
                         DGV_Loanlist.Rows.Add(Time, $"รายการกู้ ( {Ll.LoanID} )", TBAmount_Loanlist.Text, Ll.LoanID.ToString(), CBYear_Loanlist.SelectedItem, CBMonth_Loanlist.SelectedItem);
                         TBAmount_Loanlist.Text = "0";
                         RemvoeCBLoanlist();
-                        //SumPriceLoanlist();
+                        SumPriceLoanlist();
                         if (DMLoanlist.Count == 0)
                         {
                             CBMonth_Loanlist.Enabled = false;
@@ -3358,7 +3359,7 @@ namespace BankTeacher.Bank.Pay
                     CBYear_Loanlist_SelectedIndexChanged(new object(), new EventArgs());
                 }
             }
-            //SumPriceLoanlist();
+            SumPriceLoanlist();
             CBYear_Loanlist.Enabled = true;
             CBMonthSelection_Pay.Enabled = true;
             SelectIndexRow = -1;
@@ -3410,112 +3411,111 @@ namespace BankTeacher.Bank.Pay
                     DTPDate.Enabled = Checked;
                 }
             }
+        }
 
-            //private void BTClear_Loanlist_Click(object sender, EventArgs e)
-            //{
-            //    Num = 0;
-            //    if (CBLoanlist.SelectedIndex != -1)
-            //        CBLoanlist_SelectedIndexChanged(new object(), new EventArgs());
-            //}
-            //private void SumPriceLoanlist()
-            //{
-            //    int Amount = 0;
-            //    for (int x = 0; x < DGV_Loanlist.Rows.Count; x++)
-            //    {
-            //        Amount += Convert.ToInt32(DGV_Loanlist.Rows[x].Cells[2].Value.ToString());
-            //    }
-            //    LBSum_Loanlist.Text = Amount.ToString();
-            //}
+        private void BTClear_Loanlist_Click_1(object sender, EventArgs e)
+        {
+            Num = 0;
+            if (CBLoanlist.SelectedIndex != -1)
+                CBLoanlist_SelectedIndexChanged(new object(), new EventArgs());
+        }
+        private void SumPriceLoanlist()
+        {
+            int Amount = 0;
+            for (int x = 0; x < DGV_Loanlist.Rows.Count; x++)
+            {
+                Amount += Convert.ToInt32(DGV_Loanlist.Rows[x].Cells[2].Value.ToString());
+            }
+            LBSum_Loanlist.Text = Amount.ToString();
+        }
 
-            //private void BTSave_Loanlist_Click(object sender, EventArgs e)
-            //{
-            //    Class.loanlist Ll = (CBLoanlist.SelectedItem as Class.loanlist);
+        private void BTSave_Loanlist_Click(object sender, EventArgs e)
+        {
+            Class.loanlist Ll = (CBLoanlist.SelectedItem as Class.loanlist);
 
-            //    BankTeacher.Class.ComboBoxPayment Payment = (CBPayment_Pay.SelectedItem as BankTeacher.Class.ComboBoxPayment);
-            //    if (DGV_Loanlist.Rows.Count != 0)
-            //    {
-            //        TBTeacherBill.Text = Class.SQLConnection.InputSQLMSSQL(SQLDefault[11]).Rows[0][0].ToString();
-            //        int Balance = Convert.ToInt32(LBSum_Loanlist.Text);
-            //        BankTeacher.Bank.Pay.Calculator calculator = new BankTeacher.Bank.Pay.Calculator(Balance);
-            //        calculator.ShowDialog();
-            //        if (BankTeacher.Bank.Pay.Calculator.Return)
-            //        {
-            //            String Date = DTPDate.Value.ToString("yyyy:MM:dd");
-            //            Date = Date.Replace(":", "/");
-            //            String BillNo = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[22]
-            //                .Replace("{TeacherNoPay}", TBTeacherNo.Text)
-            //                .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
-            //                .Replace("{Date}", Date)
-            //                .Replace("{LoanNo}", Ll.LoanID)).Tables[0].Rows[0][0].ToString();
-            //            for (int x = 0; x < DGV_Loanlist.Rows.Count; x++)
-            //            {
-            //                if (DGV_Loanlist.Rows[x].Cells[1].Value.ToString().Contains("กู้"))
-            //                {
-            //                    DataTable dt_InterestRate = Class.SQLConnection.InputSQLMSSQL(
-            //                    "SELECT a.LoanNo, a.TeacherNo, a.LoanAmount, ROUND(CAST(a.InterestRate / 100 * a.LoanAmount as float), 0) as InterestRate,a.PayNo \r\n" +
-            //                    "FROM EmployeeBank.dbo.tblLoan as a \r\n" +
-            //                    "WHERE a.LoanNo = '{LoanNo}'".Replace("{LoanNo}", DGV_Loanlist.Rows[x].Cells[3].Value.ToString()));
-            //                    var Amount_Loan = dt_InterestRate.Rows[0][3].ToString();
-            //                    LoanNo = DGV_Loanlist.Rows[x].Cells[3].Value.ToString();
-            //                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
-            //                    .Replace("{BillNo}", BillNo)
-            //                    .Replace("{TypeNo}", "2")
-            //                    .Replace("{LoanNo}", DGV_Loanlist.Rows[x].Cells[3].Value.ToString())
-            //                    .Replace("{Amount}", DGV_Loanlist.Rows[x].Cells[2].Value.ToString())
-            //                    .Replace("{Month}", DGV_Loanlist.Rows[x].Cells[5].Value.ToString())
-            //                    .Replace("{Year}", DGV_Loanlist.Rows[x].Cells[4].Value.ToString())
-            //                    .Replace("{BillDetailPaymentNo}", (CBPayment_Pay.SelectedIndex + 1).ToString()));
+            BankTeacher.Class.ComboBoxPayment Payment = (CBPayment_Pay.SelectedItem as BankTeacher.Class.ComboBoxPayment);
+            if (DGV_Loanlist.Rows.Count != 0)
+            {
+                TBTeacherBill.Text = Class.SQLConnection.InputSQLMSSQL(SQLDefault[11]).Rows[0][0].ToString();
+                int Balance = Convert.ToInt32(LBSum_Loanlist.Text);
+                BankTeacher.Bank.Pay.Calculator calculator = new BankTeacher.Bank.Pay.Calculator(Balance);
+                calculator.ShowDialog();
+                if (BankTeacher.Bank.Pay.Calculator.Return)
+                {
+                    String Date = DTPDate.Value.ToString("yyyy:MM:dd");
+                    Date = Date.Replace(":", "/");
+                    String BillNo = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[22]
+                        .Replace("{TeacherNoPay}", TBTeacherNo.Text)
+                        .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
+                        .Replace("{Date}", Date)
+                        .Replace("{LoanNo}", Ll.LoanID)).Tables[0].Rows[0][0].ToString();
+                    for (int x = 0; x < DGV_Loanlist.Rows.Count; x++)
+                    {
+                        if (DGV_Loanlist.Rows[x].Cells[1].Value.ToString().Contains("กู้"))
+                        {
+                            DataTable dt_InterestRate = Class.SQLConnection.InputSQLMSSQL(
+                            "SELECT a.LoanNo, a.TeacherNo, a.LoanAmount, ROUND(CAST(a.InterestRate / 100 * a.LoanAmount as float), 0) as InterestRate,a.PayNo \r\n" +
+                            "FROM EmployeeBank.dbo.tblLoan as a \r\n" +
+                            "WHERE a.LoanNo = '{LoanNo}'".Replace("{LoanNo}", DGV_Loanlist.Rows[x].Cells[3].Value.ToString()));
+                            var Amount_Loan = dt_InterestRate.Rows[0][3].ToString();
+                            LoanNo = DGV_Loanlist.Rows[x].Cells[3].Value.ToString();
+                            Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
+                            .Replace("{BillNo}", BillNo)
+                            .Replace("{TypeNo}", "2")
+                            .Replace("{LoanNo}", DGV_Loanlist.Rows[x].Cells[3].Value.ToString())
+                            .Replace("{Amount}", DGV_Loanlist.Rows[x].Cells[2].Value.ToString())
+                            .Replace("{Month}", DGV_Loanlist.Rows[x].Cells[5].Value.ToString())
+                            .Replace("{Year}", DGV_Loanlist.Rows[x].Cells[4].Value.ToString())
+                            .Replace("{BillDetailPaymentNo}", (CBPayment_Pay.SelectedIndex + 1).ToString()));
 
-            //                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[9]
-            //                        .Replace("{LoanNo}", DGV_Loanlist.Rows[x].Cells[3].Value.ToString())
-            //                        .Replace("{LoanAmount}", DGV_Loanlist.Rows[x].Cells[2].Value.ToString())
-            //                        .Replace("{TeacherNo}", TBTeacherNo.Text)
-            //                        .Replace("{Amount}", Amount_Loan.ToString()));
-            //                }
-            //            }
-            //            printDocument2.Print();
-            //            MessageBox.Show("ชำระสำเร็จ", "แจ้งเตือนการขำระ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            Class.SQLConnection.InputSQLMSSQL(SQLDefault[9]
+                                .Replace("{LoanNo}", DGV_Loanlist.Rows[x].Cells[3].Value.ToString())
+                                .Replace("{LoanAmount}", DGV_Loanlist.Rows[x].Cells[2].Value.ToString())
+                                .Replace("{TeacherNo}", TBTeacherNo.Text)
+                                .Replace("{Amount}", Amount_Loan.ToString()));
+                        }
+                    }
+                    printDocument2.Print();
+                    MessageBox.Show("ชำระสำเร็จ", "แจ้งเตือนการขำระ", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-            //            TBTeacherNo.Enabled = false;
-            //            BSearchTeacher.Enabled = true;
-            //            CBLoanlist.Enabled = false;
-            //            CBMonth_Loanlist.Enabled = false;
-            //            CBYear_Loanlist.Enabled = false;
-            //            BTSave_Loanlist.Enabled = false;
-            //            CBPayment_Loanlist.Enabled = false;
-            //            BTAddlist_Loanlist.Enabled = false;
+                    TBTeacherNo.Enabled = false;
+                    BSearchTeacher.Enabled = true;
+                    CBLoanlist.Enabled = false;
+                    CBMonth_Loanlist.Enabled = false;
+                    CBYear_Loanlist.Enabled = false;
+                    BTSave_Loanlist.Enabled = false;
+                    CBPayment_Loanlist.Enabled = false;
+                    BTAddlist_Loanlist.Enabled = false;
 
-            //            CheckSave = true;
-            //            TBTeacherNo.Enabled = false;
-            //            BSearchTeacher.Enabled = true;
-            //            CBList_Pay.Enabled = false;
-            //            CBPayment_Pay.Enabled = false;
-            //            CBYearSelection_Pay.Enabled = false;
-            //            CBMonthSelection_Pay.Enabled = false;
-            //            BListAdd_Pay.Enabled = false;
-            //            BSave_Pay.Enabled = false;
-            //            TBAmount_Pay.Enabled = false;
-            //            BAutoSelection.Enabled = false;
+                    CheckSave = true;
+                    TBTeacherNo.Enabled = false;
+                    BSearchTeacher.Enabled = true;
+                    CBList_Pay.Enabled = false;
+                    CBPayment_Pay.Enabled = false;
+                    CBYearSelection_Pay.Enabled = false;
+                    CBMonthSelection_Pay.Enabled = false;
+                    BListAdd_Pay.Enabled = false;
+                    BSave_Pay.Enabled = false;
+                    TBAmount_Pay.Enabled = false;
+                    BAutoSelection.Enabled = false;
 
-            //            if (CBLoanSelection_LoanInfo.Items.Count != 0)
-            //                CBLoanSelection_LoanInfo_SelectedIndexChanged(new object(), new EventArgs());
-            //            if (CBYearSelection_BillInfo.Items.Count != 0)
-            //                CBYearSelection_Pay.SelectedIndex = CBYearSelection_Pay.SelectedIndex;
-            //            if (CBLoanSelection_LoanInfo.Items.Count != 0)
-            //                CBLoanSelection_LoanInfo.SelectedIndex = 0;
-            //        }
-            //        else if (!(BankTeacher.Bank.Pay.Calculator.Return))
-            //        {
-            //            MessageBox.Show("การชำระล้มเหลว", "การเเจ้งเตือนการชำระ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //        }
-            //    }
-            //}
+                    if (CBLoanSelection_LoanInfo.Items.Count != 0)
+                        CBLoanSelection_LoanInfo_SelectedIndexChanged(new object(), new EventArgs());
+                    if (CBYearSelection_BillInfo.Items.Count != 0)
+                        CBYearSelection_Pay.SelectedIndex = CBYearSelection_Pay.SelectedIndex;
+                    if (CBLoanSelection_LoanInfo.Items.Count != 0)
+                        CBLoanSelection_LoanInfo.SelectedIndex = 0;
+                }
+                else if (!(BankTeacher.Bank.Pay.Calculator.Return))
+                {
+                    MessageBox.Show("การชำระล้มเหลว", "การเเจ้งเตือนการชำระ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
 
-            //private void printDocument2_PrintPage(object sender, PrintPageEventArgs e)
-            //{
-            //    Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_PayLoan, "ใบเสร็จรับเงินการจ่ายกู้", this.AccessibilityObject.Name, true, true, "A5", 0);
-            //}
-            //===============================================================================================
+        private void printDocument2_PrintPage_1(object sender, PrintPageEventArgs e)
+        {
+            Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_PayLoan, "ใบเสร็จรับเงินการจ่ายกู้", this.AccessibilityObject.Name, true, true, "A5", 0);
         }
     }
 }
