@@ -412,7 +412,7 @@ namespace BankTeacher.Bank.Loan
                     for (int looPS1 = 0; looPS1 < Amount.Count; looPS1++)
                     {
                         Double Percent = Amount[looPS1] / info_Sum * 100;
-                        Double ppp = Convert.ToDouble(Convert.ToInt32(Percent)) + 0.5;
+                        //Double ppp = Convert.ToDouble(Convert.ToInt32(Percent)) + 0.5;
                         if (Math.Round(Percent, 0) > Convert.ToDouble(Convert.ToInt32(Percent)) + 0.5)
                         {
                             Percent += 1;

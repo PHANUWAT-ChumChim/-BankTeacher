@@ -170,7 +170,7 @@ namespace BankTeacher.Bank.Add_Member
           "	SELECT ISNULL(c.Amount , 0) as LoanAmount , b.SavingAmount   \r\n " +
           "	FROM EmployeeBank.dbo.tblMember as a \r\n " +
           "	LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo \r\n " +
-          "	LEFT JOIN (SELECT SUM(b.Amount) as Amount , a.TeacherNo \r\n " +
+          "	LEFT JOIN (SELECT SUM(b.RemainsAmount) as Amount , a.TeacherNo \r\n " +
           "	FROM EmployeeBank.dbo.tblLoan as a \r\n " +
           "	LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo \r\n " +
           "	WHERE a.TeacherNo = '{TeacherNo}'  \r\n " +
@@ -279,6 +279,7 @@ namespace BankTeacher.Bank.Add_Member
                     BSave.Enabled = true;
                     CheckSave = false;
                     BTUploadFIle.Visible = false;
+                    TBNote.Text = "";
                 }
                 else
                 {
