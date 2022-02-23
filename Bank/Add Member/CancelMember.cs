@@ -326,8 +326,17 @@ namespace BankTeacher.Bank.Add_Member
                                 }
                                 FCloseLoan.CBLoanNo.SelectedIndex = 0;
                                 FCloseLoan.TBTeacherName.Text = TBTeacherName.Text;
-                                this.Enabled = false;
-                                this.Hide();
+                                //this.Enabled = false;
+                                //this.Hide();
+                                foreach (Form f in Application.OpenForms)
+                                {
+                                    if (f.Name == "Menu")
+                                    {
+                                        f.Enabled = false;
+                                        f.Hide();
+                                        break;
+                                    }
+                                }
                             }
 
                         }

@@ -359,10 +359,12 @@ namespace BankTeacher.Bank.Loan
                 if (Mark == "!=")
                 {
                     TB_Statusloan.Text = "รายการกู้ปัจุบัน";
+                    Mark = "=";
                 }
                 else
                 {
                     TB_Statusloan.Text = "รายการที่ปิดกู้";
+                    Mark = "!=";
                 }
                 MessageBox.Show($"ไม่พบ{TB_Statusloan.Text}", "ข้อมูลกู้", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -427,7 +429,7 @@ namespace BankTeacher.Bank.Loan
                     }
                     for (int x = 0; x < ds.Tables[0].Rows.Count; x++)
                     {
-                        DGVGuarantor.Rows.Add(ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][1].ToString(),Convert.ToDouble(ds.Tables[0].Rows[x][16]).ToString("N2"));
+                        DGVGuarantor.Rows.Add(ds.Tables[0].Rows[x][0].ToString(), ds.Tables[0].Rows[x][1].ToString(),Convert.ToDouble(ds.Tables[0].Rows[x][16]).ToString("N0"));
                     }
                     TBLoanNo.Text = Loan.No;
                     BTOpenFile.Enabled = true;
