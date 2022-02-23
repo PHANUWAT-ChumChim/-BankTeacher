@@ -269,14 +269,8 @@ namespace BankTeacher.Bank
 
         private void Dividend_Load(object sender, EventArgs e)
         {
-//<<<<<<< POON_File
-            //DataSet dsStartYear = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]+"\r\n"+SQLDefault[4]);
-            //String ddd = dsStartYear.Tables[0].Rows[0][0].ToString();
-            //if (dsStartYear.Tables[0].Rows[0][0].ToString() != "NULL")
-//=======
             DataSet dsStartYear = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]+"\r\n");
             if(dsStartYear.Tables[0].Rows[0][0].ToString() != "")
-//>>>>>>> master
             {
                 for(int x = 0; x < dsStartYear.Tables[0].Rows.Count; x++)
                 {
@@ -284,11 +278,7 @@ namespace BankTeacher.Bank
                 }
                 CBYearDividend.Enabled = true;
             }
-//<<<<<<< POON_File
-            //else if (dsStartYear.Tables[1].Rows[0][0].ToString() != "NULL")
-//=======
             if(dsStartYear.Tables[1].Rows[0][0].ToString() != "")
-//>>>>>>> master
             {
                 for(int x = 0; x < dsStartYear.Tables[1].Rows.Count; x++)
                 {
@@ -296,20 +286,6 @@ namespace BankTeacher.Bank
                 }
                 CBYearDividend.Enabled = true;
             }
-            //if (CBYearDividend.Items.Count != 0)
-            //{
-            //    for (int x = 0; x < CBYearDividend.Items.Count; x++)
-            //    {
-            //        for (int y = 0; y < CBYearDividend.Items.Count; y++)
-            //        {
-            //            if (dsStartYear.Tables[1].Rows[x][0].ToString() == CBYearDividend.Items[y].ToString())
-            //            {
-            //                CBYearDividend.Items.RemoveAt(y);
-            //                break;
-            //            }
-            //        }
-            //    }
-            //}
             if (CBYearDividend.Items.Count == 0)
             {
                 CBYearDividend.Enabled = false;
@@ -384,13 +360,7 @@ namespace BankTeacher.Bank
         {
             if (CBYearDividend.SelectedIndex != -1)
             {
-//<<<<<<< POON_File
-                //DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[3].Replace("{Year}",CBYearDividend.SelectedItem.ToString())+
-                   // "\r\n"+
-                    //SQLDefault[4]);
-//=======
                 DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[3].Replace("{Year}",CBYearDividend.Items[CBYearDividend.SelectedIndex].ToString()));
-//>>>>>>> master
                 if(ds.Tables[0].Rows.Count != 0)
                 {
                     DGV.Rows.Clear();

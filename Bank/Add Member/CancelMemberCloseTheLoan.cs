@@ -45,8 +45,8 @@ namespace BankTeacher.Bank.Add_Member
            //[1] Save Bill & Get BillNo INPUT: {TeacherNoAddBy}  {TeacherNo}
            "DECLARE @BIllNO INT;   \r\n " +
           " \r\n " +
-          "INSERT INTO EmployeeBank.dbo.tblBill (TeacherNoAddBy,TeacherNo,DateAdd,Cancel,TransactionDate)  \r\n " +
-          "VALUES('{TeacherNoAddBy}','{TeacherNo}',CAST(CURRENT_TIMESTAMP as DATE),1,CURRENT_TIMESTAMP); \r\n " +
+          "INSERT INTO EmployeeBank.dbo.tblBill (TeacherNoAddBy,TeacherNo,TeacherNoPay,DateAdd,Cancel,TransactionDate)  \r\n " +
+          "VALUES('{TeacherNoAddBy}','{TeacherNo}','{TeacherNo}',CAST(CURRENT_TIMESTAMP as DATE),1,CURRENT_TIMESTAMP); \r\n " +
           "SET @BIllNO = SCOPE_IDENTITY();  \r\n " +
           " \r\n " +
           "SELECT @BIllNO ;"
@@ -69,7 +69,7 @@ namespace BankTeacher.Bank.Add_Member
            ,
            //[5] Update Guarantor Amount INPUT: {LoanNo}
            "UPDATE EmployeeBank.dbo.tblGuarantor \r\n " +
-           "SET Amount = 0 \r\n " +
+           "SET RemainsAmount = 0 \r\n " +
            "WHERE LoanNo = {LoanNo}"
              ,
          };
@@ -134,14 +134,14 @@ namespace BankTeacher.Bank.Add_Member
 
         private void BSave_Click(object sender, EventArgs e)
         {
-            if(MessageBox.Show("การจ่ายจะหักเงินเก็บสะสมจากระบบ ยืนยันการจ่ายหรือไม่" , "แต้งเตือน" , MessageBoxButtons.YesNo , MessageBoxIcon.Warning) == DialogResult.Yes)
+            if(MessageBox.Show("การจ่ายจะหักเงินเก็บสะสมจากระบบ ยืนยันการจ่ายหรือไม่" , "ระบบ" , MessageBoxButtons.YesNo , MessageBoxIcon.Warning) == DialogResult.Yes)
             {
                 DataTable dtSavingAmount = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4]
                 .Replace("{TeacherNo}", TeacherNo));
                 if (Convert.ToInt32(dtSavingAmount.Rows[0][0].ToString()) >= Convert.ToInt32(LBalance_Pay.Text))
                 {
-                    try
-                    {
+                    //try
+                    //{
                         Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
                             .Replace("{Amount}", LBalance_Pay.Text)
                             .Replace("{TeacherNo}", TeacherNo));
@@ -150,7 +150,7 @@ namespace BankTeacher.Bank.Add_Member
                             .Replace("{LoanNo}", CBLoanNo.SelectedItem.ToString()));
 
                         DataTable dtBillNo = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
-                            .Replace("{TeacherNoAddBy", Class.UserInfo.TeacherNo)
+                            .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
                             .Replace("{TeacherNo}", TeacherNo));
 
                         for (int a = 0; a < DGV_Pay.Rows.Count; a++)
@@ -166,12 +166,16 @@ namespace BankTeacher.Bank.Add_Member
                         MessageBox.Show("ทำรายการสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         CheckSave = true;
                         CBLoanNo.Items.RemoveAt(CBLoanNo.SelectedIndex);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("การบันทึกล้มเหลว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        Console.WriteLine($"--------------------------{ex}---------------------------");
-                    }
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    MessageBox.Show("การบันทึกล้มเหลว", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    //    Console.WriteLine($"--------------------------{ex}---------------------------");
+                    //}
+                }
+                else
+                {
+                    MessageBox.Show("ยอดเงินไม่เพียงพอ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             
@@ -179,16 +183,32 @@ namespace BankTeacher.Bank.Add_Member
 
         private void BExitForm_Click(object sender, EventArgs e)
         {
-            for(int a = 0; a < Application.OpenForms.Count; a++)
+            FormCollection fc = Application.OpenForms;
+            if (fc.Count > 2)
             {
-                if(Application.OpenForms[a].Name == "CancelMember")
+                foreach (Form f in fc)
                 {
-                    Application.OpenForms[a].Enabled = true;
-                    Application.OpenForms[a].Show();
-                    CBLoanNo.DroppedDown = false;
-                    this.Close();
+                    if (f.Name == "Menu")
+                    {
+                        f.Enabled = true;
+                        f.Show();
+                        break;
+                    }
                 }
+                this.Close();
             }
+            else
+                BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+            //for (int a = 0; a < Application.OpenForms.Count; a++)
+            //{
+            //    if (Application.OpenForms[a].Name == "CancelMember")
+            //    {
+            //        Application.OpenForms[a].Enabled = true;
+            //        Application.OpenForms[a].Show();
+            //        CBLoanNo.DroppedDown = false;
+            //        this.Close();
+            //    }
+            //}
         }
 
         private void CancelMemberCloseTheLoan_KeyDown(object sender, KeyEventArgs e)

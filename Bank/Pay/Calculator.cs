@@ -76,5 +76,16 @@ namespace BankTeacher.Bank.Pay
                     TBTON.ForeColor = System.Drawing.Color.Black;
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Return = true;
+            this.Close();
+        }
     }
 }

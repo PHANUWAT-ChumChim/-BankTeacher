@@ -141,6 +141,7 @@ namespace BankTeacher.Bank
             this.DGV_All.RowHeadersVisible = false;
             this.DGV_All.RowHeadersWidth = 51;
             this.DGV_All.RowTemplate.Height = 24;
+            this.DGV_All.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGV_All.Size = new System.Drawing.Size(861, 354);
             this.DGV_All.TabIndex = 8;
             // 
@@ -223,7 +224,7 @@ namespace BankTeacher.Bank
             this.DTP.Location = new System.Drawing.Point(20, 13);
             this.DTP.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.DTP.Name = "DTP";
-            this.DTP.Size = new System.Drawing.Size(279, 36);
+            this.DTP.Size = new System.Drawing.Size(279, 43);
             this.DTP.TabIndex = 7;
             this.DTP.ValueChanged += new System.EventHandler(this.DTP_ValueChanged);
             // 
@@ -251,7 +252,7 @@ namespace BankTeacher.Bank
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(530, 11);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(115, 30);
+            this.label1.Size = new System.Drawing.Size(153, 37);
             this.label1.TabIndex = 4;
             this.label1.Text = "จำนวนเงินทั้งหมด";
             // 
@@ -261,7 +262,7 @@ namespace BankTeacher.Bank
             this.TBAmount_All.Location = new System.Drawing.Point(528, 70);
             this.TBAmount_All.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.TBAmount_All.Name = "TBAmount_All";
-            this.TBAmount_All.Size = new System.Drawing.Size(189, 36);
+            this.TBAmount_All.Size = new System.Drawing.Size(189, 43);
             this.TBAmount_All.TabIndex = 5;
             this.TBAmount_All.Text = "0";
             // 
@@ -285,7 +286,7 @@ namespace BankTeacher.Bank
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(333, 11);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(139, 30);
+            this.label4.Size = new System.Drawing.Size(177, 37);
             this.label4.TabIndex = 4;
             this.label4.Text = "จำนวนเงินบัตรเครดิต";
             // 
@@ -294,7 +295,7 @@ namespace BankTeacher.Bank
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(769, 20);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(53, 30);
+            this.label5.Size = new System.Drawing.Size(67, 37);
             this.label5.TabIndex = 123;
             this.label5.Text = "Print :";
             // 
@@ -304,7 +305,7 @@ namespace BankTeacher.Bank
             this.TBAmountCradit_All.Location = new System.Drawing.Point(340, 70);
             this.TBAmountCradit_All.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.TBAmountCradit_All.Name = "TBAmountCradit_All";
-            this.TBAmountCradit_All.Size = new System.Drawing.Size(141, 36);
+            this.TBAmountCradit_All.Size = new System.Drawing.Size(141, 43);
             this.TBAmountCradit_All.TabIndex = 5;
             this.TBAmountCradit_All.Text = "0";
             // 
@@ -313,7 +314,7 @@ namespace BankTeacher.Bank
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(18, 11);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(90, 30);
+            this.label2.Size = new System.Drawing.Size(119, 37);
             this.label2.TabIndex = 4;
             this.label2.Text = "จำนวนเงินสด";
             // 
@@ -323,7 +324,7 @@ namespace BankTeacher.Bank
             this.TBAmountCash_All.Location = new System.Drawing.Point(18, 70);
             this.TBAmountCash_All.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.TBAmountCash_All.Name = "TBAmountCash_All";
-            this.TBAmountCash_All.Size = new System.Drawing.Size(141, 36);
+            this.TBAmountCash_All.Size = new System.Drawing.Size(141, 43);
             this.TBAmountCash_All.TabIndex = 5;
             this.TBAmountCash_All.Text = "0";
             // 
@@ -333,7 +334,7 @@ namespace BankTeacher.Bank
             this.TBAmountTranfer_All.Location = new System.Drawing.Point(180, 70);
             this.TBAmountTranfer_All.Margin = new System.Windows.Forms.Padding(3, 1, 3, 1);
             this.TBAmountTranfer_All.Name = "TBAmountTranfer_All";
-            this.TBAmountTranfer_All.Size = new System.Drawing.Size(141, 36);
+            this.TBAmountTranfer_All.Size = new System.Drawing.Size(141, 43);
             this.TBAmountTranfer_All.TabIndex = 5;
             this.TBAmountTranfer_All.Text = "0";
             // 
@@ -342,13 +343,13 @@ namespace BankTeacher.Bank
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(184, 11);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(96, 30);
+            this.label3.Size = new System.Drawing.Size(127, 37);
             this.label3.TabIndex = 4;
             this.label3.Text = "จำนวนเงินโอน";
             // 
             // ReportIncomeAll
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 30F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 36F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(987, 691);

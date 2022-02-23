@@ -45,6 +45,20 @@ namespace BankTeacher.Class
             return Name;
         }
     }
+    class loanlist
+    {
+        public String Loanlistname { get; set; }
+        public String LoanID { get; set; }
+        public loanlist(String loanlistname , String loanid)
+        {
+            Loanlistname = loanlistname;
+            LoanID = loanid;
+        }
+        public override string ToString()
+        {
+            return Loanlistname;
+        }
+    }
     class PathFile
     {
         public static string File {get;set;}
