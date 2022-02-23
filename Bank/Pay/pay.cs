@@ -1748,6 +1748,10 @@ namespace BankTeacher.Bank.Pay
                         CBYearSelection_Pay.SelectedIndex = CBYearSelection_Pay.SelectedIndex;
                     if (CBLoanSelection_LoanInfo.Items.Count != 0)
                         CBLoanSelection_LoanInfo.SelectedIndex = 0;
+                    if(CBLoanSelection_LoanInfo.Items.Count != 0)
+                        CBLoanSelection_LoanInfo_SelectedIndexChanged(new object(), new EventArgs());
+                    if(CBYearSelection_ShareInfo.Items.Count != 0 )
+                        CBYearSelection_ShareInfo_SelectedIndexChanged(new object(), new EventArgs());
                     //ClearForm();
                     //TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
                     TBTeacherNo_KeyDown(sender,new KeyEventArgs(Keys.Enter)); // Reinfo
@@ -2348,7 +2352,18 @@ namespace BankTeacher.Bank.Pay
             LBalance_BillInfo.Text = "0";
             //====================================================================
         }
-
+        private void Cleartabpage5()
+        {
+            CBLoanlist.Items.Clear();
+            DGV_Loanlist.Rows.Clear();
+            TBAmount_Loanlist.Text = "0";
+            CBLoanlist.Enabled = false;
+            CBMonth_Loanlist.Enabled = false;
+            CBYear_Loanlist.Enabled = false;
+            BTSave_Loanlist.Enabled = false;
+            CBPayment_Loanlist.Enabled = false;
+            BTAddlist_Loanlist.Enabled = false;
+        }
         //Clear all tab (all Form)
         private void ClearForm()
         {
@@ -2356,6 +2371,7 @@ namespace BankTeacher.Bank.Pay
             Cleartabpage2();
             Cleartabpage3();
             Cleartabpage4();
+            Cleartabpage5();
         }
 
         private void CBPapersize_SelectedIndexChanged(object sender, EventArgs e)
@@ -2623,6 +2639,7 @@ namespace BankTeacher.Bank.Pay
                     CBList_Pay.Enabled = false;
                     TBTeacherNo.Enabled = true;
                     CheckSave = false;
+
                     //RemoveClickEvent(CBYearSelection_BillInfo);
 
                 }
@@ -3327,6 +3344,8 @@ namespace BankTeacher.Bank.Pay
                     TBAmount_Pay.Enabled = false;
                     BAutoSelection.Enabled = false;
 
+                    if(CBLoanSelection_LoanInfo.Items.Count != 0)
+                        CBLoanSelection_LoanInfo_SelectedIndexChanged(new object(), new EventArgs());
                     if (CBYearSelection_BillInfo.Items.Count != 0)
                         CBYearSelection_Pay.SelectedIndex = CBYearSelection_Pay.SelectedIndex;
                     if (CBLoanSelection_LoanInfo.Items.Count != 0)
