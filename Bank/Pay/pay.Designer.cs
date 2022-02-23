@@ -1119,7 +1119,7 @@ namespace BankTeacher.Bank.Pay
             this.BTClear_Loanlist.TabIndex = 98;
             this.BTClear_Loanlist.Text = "ล้าง";
             this.BTClear_Loanlist.UseVisualStyleBackColor = false;
-            this.BTClear_Loanlist.Click += new System.EventHandler(this.BTClear_Loanlist_Click);
+//            this.BTClear_Loanlist.Click += new System.EventHandler(this.BTClear_Loanlist_Click);
             // 
             // panel12
             // 
@@ -1274,7 +1274,7 @@ namespace BankTeacher.Bank.Pay
             this.BTSave_Loanlist.TabIndex = 94;
             this.BTSave_Loanlist.Text = "บันทึก";
             this.BTSave_Loanlist.UseVisualStyleBackColor = false;
-            this.BTSave_Loanlist.Click += new System.EventHandler(this.BTSave_Loanlist_Click);
+           // this.BTSave_Loanlist.Click += new System.EventHandler(this.BTSave_Loanlist_Click);
             // 
             // label34
             // 
@@ -2527,7 +2527,7 @@ namespace BankTeacher.Bank.Pay
             // 
             // printDocument2
             // 
-            this.printDocument2.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument2_PrintPage);
+           // this.printDocument2.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument2_PrintPage);
             // 
             // pictureBox1
             // 
