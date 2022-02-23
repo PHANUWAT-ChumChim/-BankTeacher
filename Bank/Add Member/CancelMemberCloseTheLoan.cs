@@ -20,6 +20,7 @@ namespace BankTeacher.Bank.Add_Member
         /// <para>[3] Update Saving Amount & Guarantor Amount INPUT: {Amount} {TeacherNo} {LoanNo} </para>
         /// <para>[4] Get SavingAmount INPUT: {TeacherNo} </para>
         /// <para>[5] Update Guarantor Amount INPUT: {LoanNo} </para>
+        /// <para>[6] Update CancelMember INPUT: {TeacherNo} </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -43,13 +44,13 @@ namespace BankTeacher.Bank.Add_Member
            ,
 
            //[1] Save Bill & Get BillNo INPUT: {TeacherNoAddBy}  {TeacherNo}
-           "DECLARE @BIllNO INT;   \r\n " +
+           "--DECLARE @BIllNO INT;   \r\n " +
           " \r\n " +
           "INSERT INTO EmployeeBank.dbo.tblBill (TeacherNoAddBy,TeacherNo,TeacherNoPay,DateAdd,Cancel,TransactionDate)  \r\n " +
           "VALUES('{TeacherNoAddBy}','{TeacherNo}','{TeacherNo}',CAST(CURRENT_TIMESTAMP as DATE),1,CURRENT_TIMESTAMP); \r\n " +
-          "SET @BIllNO = SCOPE_IDENTITY();  \r\n " +
+          "--SET @BIllNO = SCOPE_IDENTITY();  \r\n " +
           " \r\n " +
-          "SELECT @BIllNO ;"
+          "SELECT SCOPE_IDENTITY() ;"
            ,
 
            //[2] Insert BillDetail (Loop) INPUT:  {BillNo}, {LoanNo} , {Amount} , {Month} , {Year}
@@ -67,11 +68,23 @@ namespace BankTeacher.Bank.Add_Member
           "FROM EmployeeBank.dbo.tblShare as a \r\n " +
           "WHERE a.TeacherNo = '{TeacherNo}'"
            ,
-           //[5] Update Guarantor Amount INPUT: {LoanNo}
+           //[5] Update Guarantor Amount and LoanStatusNo INPUT: {LoanNo}
            "UPDATE EmployeeBank.dbo.tblGuarantor \r\n " +
            "SET RemainsAmount = 0 \r\n " +
+           "WHERE LoanNo = {LoanNo} \r\n" +
+           "\r\n " +
+           "UPDATE EmployeeBank.dbo.tblLoan \r\n " +
+           "SET LoanStatusNo = 3 \r\n " +
            "WHERE LoanNo = {LoanNo}"
+
              ,
+
+           //[6] Update CancelMember INPUT: {TeacherNo}
+           "UPDATE EmployeeBank.dbo.tblMember \r\n " +
+          "SET MemberStatusNo = 2 \r\n " +
+          "WHERE TeacherNo = '{TeacherNo}'"
+           ,
+
          };
         public CancelMemberCloseTheLoan()
         {
@@ -142,30 +155,33 @@ namespace BankTeacher.Bank.Add_Member
                 {
                     //try
                     //{
-                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
-                            .Replace("{Amount}", LBalance_Pay.Text)
-                            .Replace("{TeacherNo}", TeacherNo));
+                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
+                        .Replace("{Amount}", LBalance_Pay.Text)
+                        .Replace("{TeacherNo}", TeacherNo));
 
-                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[5]
-                            .Replace("{LoanNo}", CBLoanNo.SelectedItem.ToString()));
+                    Class.SQLConnection.InputSQLMSSQL(SQLDefault[5]
+                        .Replace("{LoanNo}", CBLoanNo.SelectedItem.ToString()));
 
-                        DataTable dtBillNo = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
-                            .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
-                            .Replace("{TeacherNo}", TeacherNo));
+                    DataSet dtBillNo = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[1]
+                        .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
+                        .Replace("{TeacherNo}", TeacherNo));
 
-                        for (int a = 0; a < DGV_Pay.Rows.Count; a++)
-                        {
-                            //{BillNo}, {LoanNo} , {Amount} , {Month} , {Year}
-                            Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
-                                .Replace("{BillNo}", dtBillNo.Rows[0][0].ToString())
-                                .Replace("{LoanNo}", CBLoanNo.SelectedItem.ToString())
-                                .Replace("{Amount}", DGV_Pay.Rows[a].Cells[2].Value.ToString())
-                                .Replace("{Month}", DGV_Pay.Rows[a].Cells[3].Value.ToString())
-                                .Replace("{Year}", DGV_Pay.Rows[a].Cells[4].Value.ToString()));
-                        }
-                        MessageBox.Show("ทำรายการสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        CheckSave = true;
-                        CBLoanNo.Items.RemoveAt(CBLoanNo.SelectedIndex);
+                    for (int a = 0; a < DGV_Pay.Rows.Count; a++)
+                    {
+                        //{BillNo}, {LoanNo} , {Amount} , {Month} , {Year}
+                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
+                            .Replace("{BillNo}", dtBillNo.Tables[0].Rows[0][0].ToString())
+                            .Replace("{LoanNo}", CBLoanNo.SelectedItem.ToString())
+                            .Replace("{Amount}", DGV_Pay.Rows[a].Cells[2].Value.ToString())
+                            .Replace("{Month}", DGV_Pay.Rows[a].Cells[3].Value.ToString())
+                            .Replace("{Year}", DGV_Pay.Rows[a].Cells[4].Value.ToString()));
+                    }
+
+                    MessageBox.Show("ทำรายการสำเร็จ", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    CheckSave = true;
+                    BSave.Enabled = false;
+                    CBLoanNo.Enabled = false;
+                    CBLoanNo.Items.RemoveAt(CBLoanNo.SelectedIndex);
                     //}
                     //catch (Exception ex)
                     //{
