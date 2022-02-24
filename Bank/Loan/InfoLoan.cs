@@ -173,44 +173,35 @@ namespace BankTeacher.Bank.Loan
         private void BSearchTeacher_Click(object sender, EventArgs e)
         {
             Bank.Search IN;
-            try
+            IN = new Bank.Search(SQLDefault[0]
+                .Replace("{TeacherNotLike}",TBTeacherNo.Text));
+            IN.ShowDialog();
+            //ComboBox[] cb = new ComboBox[] { CB_LoanNo };
+            //DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
+            //    .Replace("{TeacherNo}", TBTeacherNo.Text));
+            //for (int x = 0; x < dt.Rows.Count; x++)
+            if (Bank.Search.Return[0] != "")
             {
+                CB_LoanNo.Enabled = true;
+                CB_LoanNo.Items.Clear();
+                Check = 1;
+                //Checkmember(false);
+                CB_LoanNo.Items.Clear();
+                CB_LoanNo.SelectedIndex = -1;
+                TBTeacherName.Text = "";
+                TBYearPay_Detail.Text = "";
+                TBMonthPay_Detail.Text = "";
+                TBTotalAmount_Detail.Text = "";
+                TBPayNo_Detail.Text = "";
+                TBLoanStatus.Text = "";
+                TBLoanNo.Text = "";
+                TBSavingAmount.Text = "";
+                DGVGuarantor.Rows.Clear();
+                DGVLoanDetail.Rows.Clear();
 
-                IN = new Bank.Search(SQLDefault[0]
-                    .Replace("{TeacherNotLike}",TBTeacherNo.Text));
-                IN.ShowDialog();
-                //ComboBox[] cb = new ComboBox[] { CB_LoanNo };
-                //DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
-                //    .Replace("{TeacherNo}", TBTeacherNo.Text));
-                //for (int x = 0; x < dt.Rows.Count; x++)
-                if (Bank.Search.Return[0] != "")
-                {
-                    CB_LoanNo.Enabled = true;
-                    CB_LoanNo.Items.Clear();
-                    Check = 1;
-                    //Checkmember(false);
-                    CB_LoanNo.Items.Clear();
-                    CB_LoanNo.SelectedIndex = -1;
-                    TBTeacherName.Text = "";
-                    TBYearPay_Detail.Text = "";
-                    TBMonthPay_Detail.Text = "";
-                    TBTotalAmount_Detail.Text = "";
-                    TBPayNo_Detail.Text = "";
-                    TBLoanStatus.Text = "";
-                    TBLoanNo.Text = "";
-                    TBSavingAmount.Text = "";
-                    DGVGuarantor.Rows.Clear();
-                    DGVLoanDetail.Rows.Clear();
-
-                    TBTeacherNo.Text = Bank.Search.Return[0];
-                    TBTeacherName.Text = Bank.Search.Return[1];
-                    TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
-                }
-
-            }
-            catch (Exception x)
-            {
-                Console.WriteLine(x);
+                TBTeacherNo.Text = Bank.Search.Return[0];
+                TBTeacherName.Text = Bank.Search.Return[1];
+                TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
             }
         }
 
