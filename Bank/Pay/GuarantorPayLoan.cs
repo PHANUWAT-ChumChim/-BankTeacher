@@ -216,6 +216,12 @@ namespace BankTeacher.Bank.Pay
                 for (int x = 0; x < cbb.Length; x++)
                     cbb[x].Items.Add(new BankTeacher.Class.ComboBoxPayment(dtt.Rows[a][0].ToString(),
                         dtt.Rows[a][1].ToString()));
+
+            DTPDate.Value = Convert.ToDateTime(Bank.Menu.Date[0] + "/" + Bank.Menu.Date[1] + "/" + Bank.Menu.Date[2]);
+            if (BankTeacher.Bank.Menu.DateAmountChange == 1)
+                DTPDate.Enabled = true;
+            else
+                DTPDate.Enabled = false;
         }
         //==================================Header===================================================
         //SearchButton
