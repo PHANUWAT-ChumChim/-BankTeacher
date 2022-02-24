@@ -536,6 +536,15 @@ namespace BankTeacher.Bank.Pay
                                 }
                             }
                         }
+                        for(int CY = 0; CY < DMLoanlist.Count; CY++)
+                        {
+                            if(DMLoanlist[CY].Count == 0)
+                            {
+                                DMLoanlist.RemoveAt(CY);
+                                YearInCBLoanlist.RemoveAt(CY);
+                                CBYear_Loanlist.Items.RemoveAt(CY);
+                            }
+                        }
                     }
                     if (CBYear_Loanlist.Items.Count != 0)
                     {
