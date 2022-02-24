@@ -239,6 +239,12 @@
     <Compile Include="Bank\Pay\CancelBill.Designer.cs">
       <DependentUpon>CancelBill.cs</DependentUpon>
     </Compile>
+    <Compile Include="Bank\Pay\GuarantorPayLoan.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Bank\Pay\GuarantorPayLoan.Designer.cs">
+      <DependentUpon>GuarantorPayLoan.cs</DependentUpon>
+    </Compile>
     <Compile Include="Bank\Report\Report.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -412,6 +418,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Pay\CancelBill.resx">
       <DependentUpon>CancelBill.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bank\Pay\GuarantorPayLoan.resx">
+      <DependentUpon>GuarantorPayLoan.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Report\Report.resx">
       <DependentUpon>Report.cs</DependentUpon>

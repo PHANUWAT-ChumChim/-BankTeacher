@@ -33,6 +33,7 @@ namespace BankTeacher.Bank
             this.Menu_Home = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Pay = new System.Windows.Forms.ToolStripMenuItem();
             this.Manu_pay = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menu_GuarantorPayLoan = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_CanCelBill = new System.Windows.Forms.ToolStripMenuItem();
             this.Menu_Loan = new System.Windows.Forms.ToolStripMenuItem();
             this.Menubar_MerberLoan = new System.Windows.Forms.ToolStripMenuItem();
@@ -98,6 +99,7 @@ namespace BankTeacher.Bank
             // 
             this.Menu_Pay.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.Manu_pay,
+            this.Menu_GuarantorPayLoan,
             this.Menu_CanCelBill});
             this.Menu_Pay.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Menu_Pay.Image = global::BankTeacher.Properties.Resources._64x64_wallet;
@@ -112,11 +114,18 @@ namespace BankTeacher.Bank
             this.Manu_pay.Text = "2.1 จ่าย สะสม/กู้";
             this.Manu_pay.Click += new System.EventHandler(this.Manu_pay_Click);
             // 
+            // Menu_GuarantorPayLoan
+            // 
+            this.Menu_GuarantorPayLoan.Name = "Menu_GuarantorPayLoan";
+            this.Menu_GuarantorPayLoan.Size = new System.Drawing.Size(190, 34);
+            this.Menu_GuarantorPayLoan.Text = "2.2 จ่ายกู้คนค้ำ";
+            this.Menu_GuarantorPayLoan.Click += new System.EventHandler(this.Menu_GuarantorPayLoan_Click);
+            // 
             // Menu_CanCelBill
             // 
             this.Menu_CanCelBill.Name = "Menu_CanCelBill";
             this.Menu_CanCelBill.Size = new System.Drawing.Size(190, 34);
-            this.Menu_CanCelBill.Text = "2.2 ยกเลิกบิล";
+            this.Menu_CanCelBill.Text = "2.3 ยกเลิกบิล";
             this.Menu_CanCelBill.Click += new System.EventHandler(this.Menu_CanCelBill_Click);
             // 
             // Menu_Loan
@@ -135,28 +144,28 @@ namespace BankTeacher.Bank
             // Menubar_MerberLoan
             // 
             this.Menubar_MerberLoan.Name = "Menubar_MerberLoan";
-            this.Menubar_MerberLoan.Size = new System.Drawing.Size(180, 34);
+            this.Menubar_MerberLoan.Size = new System.Drawing.Size(165, 34);
             this.Menubar_MerberLoan.Text = "3. 1 สมัครกู้";
             this.Menubar_MerberLoan.Click += new System.EventHandler(this.Menubar_MerberLoan_Click);
             // 
             // Menubar_payLoan
             // 
             this.Menubar_payLoan.Name = "Menubar_payLoan";
-            this.Menubar_payLoan.Size = new System.Drawing.Size(180, 34);
+            this.Menubar_payLoan.Size = new System.Drawing.Size(165, 34);
             this.Menubar_payLoan.Text = "3.2 จ่ายกู้";
             this.Menubar_payLoan.Click += new System.EventHandler(this.Menubar_Click);
             // 
             // Menubar_infoLoan
             // 
             this.Menubar_infoLoan.Name = "Menubar_infoLoan";
-            this.Menubar_infoLoan.Size = new System.Drawing.Size(180, 34);
+            this.Menubar_infoLoan.Size = new System.Drawing.Size(165, 34);
             this.Menubar_infoLoan.Text = "3.3 ดูข้อมุลกู้";
             this.Menubar_infoLoan.Click += new System.EventHandler(this.Menubar_infoLoan_Click);
             // 
             // Cancel
             // 
             this.Cancel.Name = "Cancel";
-            this.Cancel.Size = new System.Drawing.Size(180, 34);
+            this.Cancel.Size = new System.Drawing.Size(165, 34);
             this.Cancel.Text = "3.4 ยกเลิกกู้";
             this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
             // 
@@ -334,7 +343,7 @@ namespace BankTeacher.Bank
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Menu";
             this.Text = "หน้าเเรก";
             this.Load += new System.EventHandler(this.Menu_Load_1);
@@ -377,5 +386,6 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.ToolStripMenuItem Dividend;
         private System.Windows.Forms.ToolStripMenuItem DevidendYear;
         private System.Windows.Forms.ToolStripMenuItem CancelDevind;
+        private System.Windows.Forms.ToolStripMenuItem Menu_GuarantorPayLoan;
     }
 }
