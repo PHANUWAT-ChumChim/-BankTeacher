@@ -771,6 +771,14 @@ namespace BankTeacher.Bank.Pay
                                 CBYear_Loanlist.Items.Add(Year);
                                 break;
                             }
+                            else if(x == YearInCBLoanlist.Count - 1)
+                            {
+                                DMLoanlist.Add(new List<int>());
+                                DMLoanlist[x+1].Add(Convert.ToInt32(Month));
+                                YearInCBLoanlist.Add(Convert.ToInt32(Year));
+                                CBYear_Loanlist.Items.Add(Year);
+                                break;
+                            }
                         }
                     }
                 }

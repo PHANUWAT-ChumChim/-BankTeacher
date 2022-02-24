@@ -144,28 +144,28 @@ namespace BankTeacher.Bank
             // Menubar_MerberLoan
             // 
             this.Menubar_MerberLoan.Name = "Menubar_MerberLoan";
-            this.Menubar_MerberLoan.Size = new System.Drawing.Size(165, 34);
-            this.Menubar_MerberLoan.Text = "3. 1 สมัครกู้";
+            this.Menubar_MerberLoan.Size = new System.Drawing.Size(180, 34);
+            this.Menubar_MerberLoan.Text = "3.1 สมัครกู้";
             this.Menubar_MerberLoan.Click += new System.EventHandler(this.Menubar_MerberLoan_Click);
             // 
             // Menubar_payLoan
             // 
             this.Menubar_payLoan.Name = "Menubar_payLoan";
-            this.Menubar_payLoan.Size = new System.Drawing.Size(165, 34);
+            this.Menubar_payLoan.Size = new System.Drawing.Size(180, 34);
             this.Menubar_payLoan.Text = "3.2 จ่ายกู้";
             this.Menubar_payLoan.Click += new System.EventHandler(this.Menubar_Click);
             // 
             // Menubar_infoLoan
             // 
             this.Menubar_infoLoan.Name = "Menubar_infoLoan";
-            this.Menubar_infoLoan.Size = new System.Drawing.Size(165, 34);
+            this.Menubar_infoLoan.Size = new System.Drawing.Size(180, 34);
             this.Menubar_infoLoan.Text = "3.3 ดูข้อมุลกู้";
             this.Menubar_infoLoan.Click += new System.EventHandler(this.Menubar_infoLoan_Click);
             // 
             // Cancel
             // 
             this.Cancel.Name = "Cancel";
-            this.Cancel.Size = new System.Drawing.Size(165, 34);
+            this.Cancel.Size = new System.Drawing.Size(180, 34);
             this.Cancel.Text = "3.4 ยกเลิกกู้";
             this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
             // 

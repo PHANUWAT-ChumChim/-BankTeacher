@@ -586,10 +586,6 @@ namespace BankTeacher.Bank
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 File.WriteAllBytes(saveFileDialog.FileName, BankTeacher.Properties.Resources.Format_Excel_Input_Data);
-                //if (saveFileDialog.FileName != string.Empty)
-                //{
-                //        MakeFileOutOfAStream(BankTeacher.Properties.Resources.Excel_Input_Data.ToString(), saveFileDialog.FileName);
-                //}
             }
 
         }
