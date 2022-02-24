@@ -212,9 +212,13 @@ namespace BankTeacher.Bank.Loan
                 TBTeacherNo.Text = TBTeacherNo.Text.Replace("t", "T");
                 tabControl1.SelectedIndex = 0;
                 CB_LoanNo.Enabled = true;
-                TB_Statusloan.Enabled = true;
                 CB_LoanNo.Items.Clear();
                 Check = 1;
+                C = 0;
+                CK_OpenLoan.Enabled = true;
+                CK_CloseLoan.Enabled = true;
+                CK_OpenLoan.Checked = false;
+                CK_CloseLoan.Checked = false;
                 CB_LoanNo.Items.Clear();
                 CB_LoanNo.SelectedIndex = -1;
                 TBTeacherName.Text = "";
@@ -223,10 +227,20 @@ namespace BankTeacher.Bank.Loan
                 TBSavingAmount.Text = "";
                 DGVGuarantor.Rows.Clear();
                 DGVLoanDetail.Rows.Clear();
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text).Replace("{LoanStatusNo}", Stastus).Replace("{mark}", Mark));
-                if (dt.Rows.Count != 0)
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text).Replace("{LoanStatusNo}", "3").Replace("{mark}", Mark));
+                if(dt.Rows.Count != 0)
                 {
-                    TB_Statusloan.Text = "รายการที่ปิดกู้";
+                    CK_OpenLoan.Checked = true;
+                    CK_OpenLoan.Enabled = false;
+                }
+                else
+                {
+                    CK_CloseLoan.Checked = true;
+                    CK_CloseLoan.Enabled = false;
+                }
+                C = 1;
+                if (dt.Rows.Count != 0 )
+                {
                     TBTeacherName.Text = dt.Rows[0][1].ToString();
                     CB_LoanNo.Enabled = true;
                     tabControl1.Enabled = true;
@@ -260,10 +274,9 @@ namespace BankTeacher.Bank.Loan
                 }
                 else
                 {
-                    DataTable dt2 = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text).Replace("{LoanStatusNo}", Stastus).Replace("{mark}", "="));
-                    if(dt2.Rows.Count != 0)
+                    DataTable dt2 = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text).Replace("{LoanStatusNo}", "3").Replace("{mark}", "="));
+                    if (dt2.Rows.Count != 0 )
                     {
-                        TB_Statusloan.Text = "รายการกู้ปัจุบัน";
                         TBTeacherName.Text = dt2.Rows[0][1].ToString();
                         CB_LoanNo.Enabled = true;
                         tabControl1.Enabled = true;
@@ -333,37 +346,89 @@ namespace BankTeacher.Bank.Loan
                 }
             }
         }
-        string Stastus = "3",Mark = "!=";
-        private void TB_Statusloan_Click(object sender, EventArgs e)
+        static string  Mark = "!=";
+        static int C = 0;
+        private void CK_OpenLoan_CheckedChanged(object sender, EventArgs e)
         {
-            if (Mark == "!=")
+            if(C != 0)
             {
-                TB_Statusloan.Text = "รายการกู้ปัจุบัน";
-                Mark = "=";
+                if (CK_OpenLoan.Checked) // เปิดกู้ต้อง ตื๊กออยู่
+                {
+                    CK_CloseLoan.Enabled = true; // เปิดการกด ปิดกู้
+                    CK_CloseLoan.Checked = false; // ปิดการตื๊ก
+                    CK_OpenLoan.Enabled = false; // ปิดการกด
+                    Mark = "!=";
+                    CheckBox(sender, e); // ส่งค่า
+                }
             }
-            else
+        }
+        private void CK_CloseLoan_CheckedChanged(object sender, EventArgs e)
+        {
+            if (C != 0)
             {
-                TB_Statusloan.Text = "รายการที่ปิดกู้";
-                Mark = "!=";
+                if (CK_CloseLoan.Checked)  // ปิดกู้ต้อง ตื๊กออยู่
+                {
+                    CK_OpenLoan.Enabled = true; // เปิดการกด เปิดกู้
+                    CK_OpenLoan.Checked = false; // ปิดการตื๊ก
+                    CK_CloseLoan.Enabled = false; // ปิดการกด
+                    Mark = "=";
+                    CheckBox(sender, e);
+                }
             }
-            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text).Replace("{LoanStatusNo}", Stastus).Replace("{mark}",Mark));
+        }
+        void CheckBox(object sender, EventArgs e)
+        {
+            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text).Replace("{LoanStatusNo}", "3").Replace("{mark}", Mark));
             if (dt.Rows.Count != 0)
             {
-                TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+                if (dt.Rows.Count != 0)
+                {
+                    TBTeacherName.Text = dt.Rows[0][1].ToString();
+                    CB_LoanNo.Enabled = true;
+                    tabControl1.Enabled = true;
+                    CB_LoanNo.Items.Clear();
+                    Check = 1;
+                    ComboBox[] cb = new ComboBox[] { CB_LoanNo };
+                    for (int x = 0; x < dt.Rows.Count; x++)
+                    {
+                        for (int aa = 0; aa < cb.Length; aa++)
+                        {
+                            cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment($"รายการกู้" + dt.Rows[x][0].ToString(), dt.Rows[x][0].ToString()));
+                        }
+                    }
+                    CB_LoanNo.SelectedIndex = 0;
+                    Checkmember(false);
+                    if (CB_LoanNo.Items.Count == 1)
+                        CB_LoanNo.SelectedIndex = 0;
+                    DataTable dt_ChcekFile = Class.SQLConnection.InputSQLMSSQL("SELECT a.LoanNo,a.DocStatusNo,a.DocUploadPath \r\n" +
+                    "FROM EmployeeBank.dbo.tblLoan as a \r\n" +
+                    "WHERE a.LoanNo = '{LoanNo}'".Replace("{LoanNo}", TBLoanNo.Text));
+                    if (dt_ChcekFile.Rows[0][1].ToString() == "2")
+                    {
+                        LB_Flie.Text = "กรุณาอัพโหลดเอกสาร";
+                        LB_Flie.ForeColor = Color.Red;
+                    }
+                    else
+                    {
+                        LB_Flie.Text = "อัพโหลดเอกสารสำเร็จ";
+                        LB_Flie.ForeColor = Color.Green;
+                    }
+                }
             }
             else
             {
+                string Text = "";
                 if (Mark == "!=")
                 {
-                    TB_Statusloan.Text = "รายการกู้ปัจุบัน";
-                    Mark = "=";
+                    CK_CloseLoan.Checked = true;
+                    Text = "รายการกู้ปัจจุบัน";
                 }
                 else
                 {
-                    TB_Statusloan.Text = "รายการที่ปิดกู้";
-                    Mark = "!=";
+                    CK_OpenLoan.Checked = true;
+                    Text = "รายการปิดกู้";
                 }
-                MessageBox.Show($"ไม่พบ{TB_Statusloan.Text}", "ข้อมูลกู้", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show($"ไม่พบ{Text}", "ข้อมูลกู้", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
         private void Checkmember(bool tf)
@@ -457,8 +522,7 @@ namespace BankTeacher.Bank.Loan
                     DGVLoanDetail.Rows.Clear();
 
                     Double Interest = Convert.ToDouble(ds.Tables[0].Rows[0][14].ToString()) / Convert.ToInt32(ds.Tables[0].Rows[0][6].ToString());/*Convert.ToDouble(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString())) * (Convert.ToDouble(ds.Tables[0].Rows[0][7].ToString()) / 100) / Convert.ToDouble(ds.Tables[0].Rows[0][6].ToString());*/
-
-                    int Pay = Convert.ToInt32(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) / Convert.ToInt32(ds.Tables[0].Rows[0][6].ToString()));
+                    int Pay = Convert.ToInt32(Math.Floor(Convert.ToDouble(ds.Tables[0].Rows[0][8].ToString()) / Convert.ToInt32(ds.Tables[0].Rows[0][6].ToString())));
                     //int Pay = Convert.ToInt32(Convert.ToInt32(ds.Tables[0].Rows[0][8].ToString()) / Convert.ToInt32(ds.Tables[0].Rows[0][6].ToString()));
                     int SumInstallment = Convert.ToInt32(Pay + Interest);
                     String StatusPay = "";
@@ -796,7 +860,6 @@ namespace BankTeacher.Bank.Loan
             else
                 MessageBox.Show("ไม่สามารถลบได้เนื่องจากไม่มีเอกสารอยู่ในระบบ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
         }
-
         private void InfoLoan_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Tab)
