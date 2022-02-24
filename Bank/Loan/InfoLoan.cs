@@ -35,7 +35,7 @@ namespace BankTeacher.Bank.Loan
         // รอบ
         public static int how_many_laps;
         /// <summary>
-        /// <para>[0] SELECT MemberLonn  INPUT: {TeacherNo}</para>
+        /// <para>[0] SELECT MemberLonn  INPUT: {Text} {TeacherNotLike} </para>
         /// <para>[1] SELECT LOAN INPUT: {TeacherNo} {LoanStatusNo} {mark} </para>
         /// <para>[2] SELECT Detail Loan INPUT: {LoanID} </para>
         /// <para>[3] for printback  INPUT : {TeacherNo} {LoanNo} </para>
@@ -46,7 +46,7 @@ namespace BankTeacher.Bank.Loan
         /// </summary>
         private String[] SQLDefault =
         {
-             //[0] SELECT MemberLonn  INPUT: {Text}
+             //[0] SELECT MemberLonn  INPUT: {Text} {TeacherNotLike}
            "SELECT TOP(20) TeacherNo , NAME  \r\n " +
           "FROM(SELECT a.TeacherNo, CAST(ISNULL(c.PrefixName+' ','') + Fname + ' ' + Lname AS nvarchar)AS NAME,SavingAmount,Fname  \r\n " +
           "FROM (SELECT TeacherNo \r\n " +
@@ -59,7 +59,7 @@ namespace BankTeacher.Bank.Loan
           "LEFT JOIN EmployeeBank.dbo.tblMember as e on b.TeacherNo = e.TeacherNo  \r\n " +
           "WHERE (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(c.PrefixName+' ','') + Fname + ' ' + Lname AS nvarchar) LIKE '%{Text}%') and MemberStatusNo = 1 \r\n " +
           "GROUP BY a.TeacherNo,CAST(ISNULL(c.PrefixName+' ','')+Fname+' '+Lname as NVARCHAR),d.SavingAmount ,Fname ) AS A    \r\n " +
-          "WHERE a.TeacherNo LIKE '%%' or Fname LIKE '%%'   \r\n " +
+          "WHERE (a.TeacherNo LIKE '%%' or Fname LIKE '%%' )and a.TeacherNo != '{TeacherNotLike}'   \r\n " +
           "ORDER BY Fname;   "
            
 
@@ -176,7 +176,8 @@ namespace BankTeacher.Bank.Loan
             try
             {
 
-                IN = new Bank.Search(SQLDefault[0]);
+                IN = new Bank.Search(SQLDefault[0]
+                    .Replace("{TeacherNotLike}",TBTeacherNo.Text));
                 IN.ShowDialog();
                 //ComboBox[] cb = new ComboBox[] { CB_LoanNo };
                 //DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
@@ -282,7 +283,7 @@ namespace BankTeacher.Bank.Loan
                         {
                             for (int aa = 0; aa < cb.Length; aa++)
                             {
-                                cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment($"รายการกู้" + dt2.Rows[x][0].ToString(), dt2.Rows[x][0].ToString()));
+                                cb[aa].Items.Add(new BankTeacher.Class.ComboBoxPayment("รายการกู้" + dt2.Rows[x][0].ToString(), dt2.Rows[x][0].ToString()));
                             }
                         }
                         CB_LoanNo.SelectedIndex = 0;
@@ -341,7 +342,7 @@ namespace BankTeacher.Bank.Loan
                 }
             }
         }
-        static string Stastus = "3",Mark = "!=";
+        string Stastus = "3",Mark = "!=";
         private void TB_Statusloan_Click(object sender, EventArgs e)
         {
             if (Mark == "!=")
