@@ -290,13 +290,13 @@ namespace BankTeacher.Bank.Add_Member
                             {
                                 if (mb == 0)
                                 {
-                                    var MB = MessageBox.Show("โปรดทราบว่าการเเก้ไขหุ้นสะสมในแบบฟอร์มนี้จะไม่ออกบิลให้เเก่ท่าน ท่านสามารถออกบิลเองได้ในแบบฟอร์มหน้าจ่าย คุณต้องการให้กล่องข้อความนี้เเจ้งเตือนอีกครั้งใช่หรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                                    var MB = MessageBox.Show("โปรดทราบว่าการเเก้ไขหุ้นสะสมในแบบฟอร์มนี้จะไม่ออกบิลให้เเก่ท่าน ท่านสามารถออกบิลเองได้ในแบบฟอร์มหน้าจ่าย เเละต้องชำระค่าสมัครเพื่มตามจำนวนที่กล่าวมา คุณต้องการให้กล่องข้อความนี้เเจ้งเตือนอีกครั้งใช่หรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                                     if (MB == DialogResult.No)
                                     {
                                         mb++;
                                     }
                                 }
-                                if (MessageBox.Show("ยืนยันการเปลี่ยนแปลง", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                                if (MessageBox.Show("ยืนยันการเปลี่ยนแปลงยอดสมัคร", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                                 {
                                     int PayShare = 0;
                                     if (StartAmount >= Convert.ToInt32(TBStartAmount.Text))
