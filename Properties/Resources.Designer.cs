@@ -203,9 +203,9 @@ namespace BankTeacher.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        public static byte[] Excel_Input_Data {
+        public static byte[] Format_Excel_Input_Data {
             get {
-                object obj = ResourceManager.GetObject("Excel Input Data", resourceCulture);
+                object obj = ResourceManager.GetObject("Format_Excel_Input_Data", resourceCulture);
                 return ((byte[])(obj));
             }
         }

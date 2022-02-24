@@ -169,7 +169,7 @@
   <data name="_64x64_information" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\information.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Excel Input Data" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Input Form.xlsx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Format_Excel_Input_Data" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Format Excel Input Data.xlsx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

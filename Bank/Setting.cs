@@ -585,7 +585,7 @@ namespace BankTeacher.Bank
             saveFileDialog.Filter = "Excel 97-2003 Workbook|*.xlsx|Excel Workbook|*.xls";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                File.WriteAllBytes(saveFileDialog.FileName, BankTeacher.Properties.Resources.Excel_Input_Data);
+                File.WriteAllBytes(saveFileDialog.FileName, BankTeacher.Properties.Resources.Format_Excel_Input_Data);
                 //if (saveFileDialog.FileName != string.Empty)
                 //{
                 //        MakeFileOutOfAStream(BankTeacher.Properties.Resources.Excel_Input_Data.ToString(), saveFileDialog.FileName);
