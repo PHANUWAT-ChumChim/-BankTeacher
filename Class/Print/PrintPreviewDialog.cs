@@ -534,33 +534,38 @@ namespace BankTeacher.Class.Print
                 //e.Graphics.DrawString($"วันที่ออกใบ {Bank.Pay.pay.info_datepay}", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - Size.Width, 50);
                 //e.Graphics.DrawString($"วันที่ออกใบ {DateTime.Now.Day}/{DateTime.Now.Month}/{DateTime.Now.Year}", FonT(16, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - Size.Width, 50);
                 // ================================================================ เวลาที่เอกสารถูกปริ้น ===================================================================
-                if(TextForm != "InfoLoan")
-                {
-                    // เลขหน้า
-                    int all_paper, number;
-                    if (details == 1) 
-                    { 
-                        number = 18; 
-                    } else 
-                    { 
-                        number = 4; 
-                    }
-                    double b = (double)G.RowCount / number;
-                    if (G.RowCount / number == 0)
-                    { 
-                        all_paper = 1; 
-                    }
-                    else if (b.ToString().Length > 2) 
-                    { 
-                        all_paper = (G.RowCount / number) + 1;
-                    }
-                    else 
-                    { 
-                        all_paper = 1; 
-                    }
-                    Size = e.Graphics.MeasureString($"หน้า {pagepaper}/{all_paper.ToString()} ", Font(16, ThaiSarabun, FontStyle.Bold));
-                    e.Graphics.DrawString($"หน้า {pagepaper}/{all_paper.ToString()} ", Font(16, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - Size.Width, 30);
+               
+                // เลขหน้า
+                int all_paper, number;
+                if (details == 1) 
+                { 
+                    number = 18; 
+                } else 
+                { 
+                    number = 4; 
                 }
+                double b = (double)G.RowCount / number;
+                if (G.RowCount / number == 0)
+                { 
+                    all_paper = 1; 
+                }
+                else if (b.ToString().Length > 2) 
+                { 
+                    all_paper = (G.RowCount / number) + 1;
+                }
+                else 
+                { 
+                    all_paper = (int)b; 
+                }
+                if (Bank.Loan.InfoLoan.how_many_laps >= 3)
+                {
+                    all_paper += 1;
+                    details = 0;
+                }
+                else { details = 0; }
+                Size = e.Graphics.MeasureString($"หน้า {pagepaper}/{all_paper.ToString()} ", Font(16, ThaiSarabun, FontStyle.Bold));
+                e.Graphics.DrawString($"หน้า {pagepaper}/{all_paper.ToString()} ", Font(16, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - Size.Width, 30);
+                
                 // เเบบพิมพ์ชื่อ วิทยาลัยเทคโนโลยีเเหลมฉบัง Thai
                 TextX += imageX;
                 e.Graphics.DrawString(TLC, Font(16, ThaiSarabun, FontStyle.Bold), BrushBlack, new RectangleF(TextX+10, TextY, 700, 100));
@@ -665,6 +670,7 @@ namespace BankTeacher.Class.Print
                                 // เว้นระยะตัวหนังสือกัวกรอบ
                                 TextY += 10;
                             }
+                            page_length -= 50;
                         }
                         if (Bank.Loan.InfoLoan.how_many_laps > 0)
                         {
@@ -1019,7 +1025,7 @@ namespace BankTeacher.Class.Print
                             }
                         }
                     }
-                    if (startTableY > page_length)
+                    if (startTableY >= page_length)
                         break;
                 }
             }
