@@ -60,6 +60,8 @@ namespace BankTeacher.Bank.Loan
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.panel7 = new System.Windows.Forms.Panel();
+            this.DTPDate = new System.Windows.Forms.DateTimePicker();
+            this.label10 = new System.Windows.Forms.Label();
             this.BTSearch = new System.Windows.Forms.Button();
             this.TBTeacherName = new System.Windows.Forms.TextBox();
             this.TBTeacherNo = new System.Windows.Forms.TextBox();
@@ -70,8 +72,6 @@ namespace BankTeacher.Bank.Loan
             this.BSave = new System.Windows.Forms.Button();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
-            this.DTPDate = new System.Windows.Forms.DateTimePicker();
-            this.label10 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -478,6 +478,28 @@ namespace BankTeacher.Bank.Loan
             this.panel7.TabIndex = 63;
             this.panel7.VisibleChanged += new System.EventHandler(this.panel7_VisibleChanged);
             // 
+            // DTPDate
+            // 
+            this.DTPDate.CalendarFont = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DTPDate.Enabled = false;
+            this.DTPDate.Location = new System.Drawing.Point(656, 12);
+            this.DTPDate.Name = "DTPDate";
+            this.DTPDate.Size = new System.Drawing.Size(200, 36);
+            this.DTPDate.TabIndex = 116;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.BackColor = System.Drawing.Color.White;
+            this.label10.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.ForeColor = System.Drawing.Color.Black;
+            this.label10.Location = new System.Drawing.Point(549, 15);
+            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(106, 30);
+            this.label10.TabIndex = 115;
+            this.label10.Text = "วันที่ทำรายการ";
+            // 
             // BTSearch
             // 
             this.BTSearch.BackColor = System.Drawing.Color.White;
@@ -587,28 +609,6 @@ namespace BankTeacher.Bank.Loan
             // printDocument1
             // 
             this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
-            // 
-            // DTPDate
-            // 
-            this.DTPDate.CalendarFont = new System.Drawing.Font("TH Sarabun New", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DTPDate.Enabled = false;
-            this.DTPDate.Location = new System.Drawing.Point(656, 12);
-            this.DTPDate.Name = "DTPDate";
-            this.DTPDate.Size = new System.Drawing.Size(200, 36);
-            this.DTPDate.TabIndex = 116;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.BackColor = System.Drawing.Color.White;
-            this.label10.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.ForeColor = System.Drawing.Color.Black;
-            this.label10.Location = new System.Drawing.Point(549, 15);
-            this.label10.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(106, 30);
-            this.label10.TabIndex = 115;
-            this.label10.Text = "วันที่ทำรายการ";
             // 
             // PayLoan
             // 

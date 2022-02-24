@@ -947,8 +947,10 @@ namespace BankTeacher.Bank.Loan
             if (CheckNum)
             {
                 LoanAmount = LoanAmount * Convert.ToDouble((Convert.ToDouble(TBInterestRate.Text) / 100));
-                LoanAmount = CheckDecimalAndPlusOne(LoanAmount) + Convert.ToDouble(TBLoanAmount.Text);
+                int Interest = CheckDecimalAndPlusOne(LoanAmount);
+                LoanAmount = Interest + Convert.ToDouble(TBLoanAmount.Text);
             }
+            String aa = LoanAmount.ToString();
             LTotal.Text = LoanAmount.ToString();
 
             if((CheckInt || CheckBReset) && Amount > LimitAmount && UserOutCreditLimit == DialogResult.Yes && Amount >= BankTeacher.Bank.Menu.MinLoan)
@@ -1024,7 +1026,6 @@ namespace BankTeacher.Bank.Loan
                         }
                     }
                     
-
                     //if (a == 0)
                     //{
                     //    DGVGuarantorCredit.Rows[a].Cells[2].Value = 50;
@@ -1110,7 +1111,7 @@ namespace BankTeacher.Bank.Loan
                                 }
                             }
                         }
-                        LTotal.Text = "" + Convert.ToInt32(Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(Convert.ToDouble(TBInterestRate.Text) / 100)) + Convert.ToDouble(TBLoanAmount.Text));
+                        //LTotal.Text = "" + Convert.ToInt32(Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(Convert.ToDouble(TBInterestRate.Text) / 100)) + Convert.ToDouble(TBLoanAmount.Text));
                         BCalculate_Click(sender, new EventArgs());
                     }
                     else if (DGVGuarantor.Rows.Count < 1)
@@ -1688,13 +1689,15 @@ namespace BankTeacher.Bank.Loan
         public int CheckDecimalAndPlusOne(Double NumDouble)
         {
             String[] Check = NumDouble.ToString().Split('.');
-            if(NumDouble > Convert.ToDouble(Check[0]))
+            int NumReturn = Convert.ToInt32(Check[0]);
+            if (NumDouble > Convert.ToDouble(Check[0]))
             {
-                return Convert.ToInt32(Check[0]) + 1;
+                NumReturn++;
+                return NumReturn;
             }
             else
             {
-                return Convert.ToInt32(Check[0]);
+                return NumReturn;
             }
         }
     }
