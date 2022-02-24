@@ -71,7 +71,7 @@ namespace BankTeacher.Bank
           "				WHERE TeacherNo = '{TeacherNo}'; \r\n " +
           " \r\n " +
           "				INSERT INTO EmployeeBank.dbo.tblBill(TeacherNo, TeacherNoAddBy,TeacherNoPay, DateAdd , TransactionDate)  \r\n " +
-          "				VALUES('{TeacherNo}','{TeacherNoAddBy}','{TeacherNo}, '{DateReg}', CURRENT_TIMESTAMP)  \r\n " +
+          "				VALUES('{TeacherNo}','{TeacherNoAddBy}','{TeacherNo}', '{DateReg}', CURRENT_TIMESTAMP)  \r\n " +
           " \r\n " +
           "				SELECT @BillNo = SCOPE_IDENTITY();  \r\n " +
           " \r\n " +
@@ -90,7 +90,7 @@ namespace BankTeacher.Bank
           "				VALUES('{TeacherNo}',{StartAmount})  \r\n " +
           " \r\n " +
           "				INSERT INTO EmployeeBank.dbo.tblBill(TeacherNo, TeacherNoAddBy,TeacherNoPay, DateAdd,TransactionDate)  \r\n " +
-          "				VALUES('{TeacherNo}','{TeacherNoAddBy}','{TeacherNo}, '{DateReg}',CURRENT_TIMESTAMP)  \r\n " +
+          "				VALUES('{TeacherNo}','{TeacherNoAddBy}','{TeacherNo}', '{DateReg}',CURRENT_TIMESTAMP)  \r\n " +
           " \r\n " +
           "				SELECT @BillNo = SCOPE_IDENTITY();  \r\n " +
           " \r\n " +
@@ -125,9 +125,8 @@ namespace BankTeacher.Bank
             //[5] UPDATE Share WithDraw & INSERT WithDraw History INPUT:  {WithDraw} , {PayMent} {TeacherNoAddBy} {DateAdd}
             "DECLARE @ShareNo INT; \r\n " +
              " \r\n " +
-             "SET @ShareNo = (SELECT ShareNo FROM EmployeeBank.dbo.tblMember as a LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo WHERE a.TeacherNo = '{TeacherNo}')"
-             ,
-            //[6]
+             "SET @ShareNo = (SELECT ShareNo FROM EmployeeBank.dbo.tblMember as a LEFT JOIN EmployeeBank.dbo.tblShare as b on a.TeacherNo = b.TeacherNo WHERE a.TeacherNo = '{TeacherNo}') \r\n"+
+             
             "UPDATE EmployeeBank.dbo.tblShare\r\n" +
             "SET SavingAmount = SavingAmount - {WithDraw}\r\n" +
             "WHERE ShareNo = @ShareNo; \r\n " +
@@ -136,11 +135,11 @@ namespace BankTeacher.Bank
             "VALUES ('{TeacherNoAddBy}', '{ShareNo}','{DateAdd}','{WithDraw}',{PayMent});"
 
             ,
-            //[7] Set StatusButton = false INPUT: 
+            //[6] Set StatusButton = false INPUT: 
            "UPDATE EmployeeBank.dbo.tblSettingAmount \r\n " +
           "SET StatusUploadExceltoSQL = 1;"
            ,
-           //[8]Edit DateAmountChange INPUT: {DateAmountChange} 
+           //[7]Edit DateAmountChange INPUT: {DateAmountChange} 
              "UPDATE EmployeeBank.dbo.tblSettingAmount \r\n" +
              "SET DateAmountChange = {DateAmountChange};\r\n"
         };
@@ -513,23 +512,23 @@ namespace BankTeacher.Bank
                                             .Replace("{PayMent}", PaymentNo.ToString())
                                             .Replace("{DateAdd}", DateAdd.ToString()));
                                             }
+                                         Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[6]
                                         }
-                                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[6]);
                                         BExceltoSQL.Enabled = false;
-                                        MessageBox.Show("ส่งข้อมูลสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                        MessageBox.Show("ส่งข้อมูลสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                                     }
-                                }
-                                catch
-                                {
-                                    MessageBox.Show("เกิดข้อผิดพลาด Format Excel ไม่ถูกต้องกรุณาลองอีกครั้ง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                }
-                            }
-                            catch
-                            {
-                                MessageBox.Show("กรุณาปิด Excel ก่อนทำรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            }
                         }
+                                catch
+                        {
+                            MessageBox.Show("เกิดข้อผิดพลาด Format Excel ไม่ถูกต้องกรุณาลองอีกครั้ง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        }
+                    }
+                            catch
+                    {
+                        MessageBox.Show("กรุณาปิด Excel ก่อนทำรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
                     }
                 }
             }
@@ -539,7 +538,7 @@ namespace BankTeacher.Bank
             int Checked = 0;
             if (CHB_edittime.Checked == true)
                 Checked = 1;
-            BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
+            BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[7]
                 .Replace("{DateAmountChange}", Checked.ToString()));
             BankTeacher.Bank.Menu.DateAmountChange = Checked;
         }
