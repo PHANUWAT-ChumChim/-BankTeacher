@@ -347,6 +347,7 @@ namespace BankTeacher.Class.Print
             int up = 1;
             string getRemove = GetNumber.ToString();
             string getNum = "";
+            string symbol = "";
             for (int loop = 0; loop < GetNumber.ToString().Length; loop++)
             {
                 getNum = getRemove.Remove(0, 1);
@@ -355,6 +356,10 @@ namespace BankTeacher.Class.Print
                 if (isNumeric)
                 {
                     Sort.Add(getRemove);
+                }
+                else if (getRemove == "-")
+                {
+                    symbol = getRemove;
                 }
                 getRemove = getNum;
             }
@@ -369,8 +374,10 @@ namespace BankTeacher.Class.Print
                 else
                     Number += Sort[Sort.Count() - (loop + 1)];
             }
+
             char[] charArray = Number.ToCharArray();
             Array.Reverse(charArray);
+            getNum = symbol;
             for (int loop = 0; loop < charArray.Count(); loop++)
             {
                 getNum += charArray[loop];

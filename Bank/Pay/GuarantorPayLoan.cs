@@ -51,8 +51,8 @@ namespace BankTeacher.Bank.Pay
           "WHERE LoanStatusNo = 2 and MemberStatusNo = 1 and a.TeacherNo = '{TeacherNo}' \r\n " +
           "GROUP BY a.TeacherNo , CAST(ISNULL(e.PrefixName,'')+d.Fname + ' ' + Lname as nvarchar(255))"
            ,
-           //[2] Find a Loan list as a Teacher Guarantor INPUT: {TeacherNo}
-           "SELECT CAST('รายการกู้ : ( ' + CAST(a.LoanNo as nvarchar(255)) + ' ) ' + CAST(b.YearPay as nvarchar(10)) + ' / ' +CAST( b.MonthPay as nvarchar(10)) as nvarchar(255)), a.LoanNo \r\n " +
+           //[2] Find a Loan list as a Teacher Guarantor INPUT: {TeacherNo}  CAST('รายการกู้ : ( ' + CAST(a.LoanNo as nvarchar(255)) + ' ) ' + CAST(b.YearPay as nvarchar(10)) + ' / ' +CAST( b.MonthPay as nvarchar(10)) as nvarchar(255))
+           "SELECT CAST('รายการกู้ : ( ' + CAST(a.LoanNo as nvarchar(255)) + ' ) ' as nvarchar(255)), a.LoanNo \r\n " +
           "FROM EmployeeBank.dbo.tblGuarantor as a \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblLoan as b on a.LoanNo = b.LoanNo \r\n " +
           "LEFT JOIN EmployeeBank.dbo.tblMember as c on a.TeacherNo = c.TeacherNo \r\n " +
@@ -187,7 +187,7 @@ namespace BankTeacher.Bank.Pay
         int Paylate_Loanlist = 0;
         int[] Endloan_loanlist = { 1999, 1 };
         int SelectIndexRow = -1;
-        static int NumPrint = 1;
+        static int NumPrint = 0;
         public GuarantorPayLoan()
         {
             InitializeComponent();
@@ -921,7 +921,27 @@ namespace BankTeacher.Bank.Pay
                                 .Replace("{Amount}", Amount_Loan.ToString()));
                         }
                     }
-                    printDocument2.Print();
+                    DataTable dt = Class.SQLConnection.InputSQLMSSQL("SELECT a.TeacherNo, a.SavingAmount,SUM(b.RemainsAmount) \r\n" +
+                    "FROM EmployeeBank.dbo.tblShare as a \r\n" +
+                    "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.TeacherNo = b.TeacherNo \r\n" +
+                    "WHERE a.TeacherNo = '{TeacherNo}' \r\n".Replace("{TeacherNo}", TBTeacherNo.Text) +
+                    "GROUP BY  a.TeacherNo, a.SavingAmount");
+                    printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+                    printDocument1.DefaultPageSettings.Landscape = true;
+                    Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(Convert.ToInt32(dt.Rows[0][1]) - Convert.ToInt32(dt.Rows[0][2])).ToString("N0");
+                    Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = Convert.ToInt32(dt.Rows[0][2]).ToString("N0");
+                    Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
+                    Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
+                    Class.Print.PrintPreviewDialog.info_TeacherAdd = Class.UserInfo.TeacherName;
+                    Class.Print.PrintPreviewDialog.info_datepayShare = DateTime.Today.Day.ToString() + '/' + DateTime.Today.Month.ToString() + '/' + DateTime.Today.Year.ToString();
+                    Class.Print.PrintPreviewDialog.info_Payment = CBPayment_Loanlist.Items[CBPayment_Loanlist.SelectedIndex].ToString();
+                    Class.Print.PrintPreviewDialog.info_Billpay = TBTeacherBill.Text;
+                    if (printPreviewDialog1.ShowDialog() == DialogResult.OK)
+                    {
+                        printDocument1.Print();
+                    }
+                  
+                    // printDocument1.Print();
                     MessageBox.Show("ชำระสำเร็จ", "แจ้งเตือนการขำระ", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     TBTeacherNo.Enabled = false;
