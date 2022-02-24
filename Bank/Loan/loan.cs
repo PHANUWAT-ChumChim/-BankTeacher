@@ -1688,7 +1688,7 @@ namespace BankTeacher.Bank.Loan
         public int CheckDecimalAndPlusOne(Double NumDouble)
         {
             String[] Check = NumDouble.ToString().Split('.');
-            if(NumDouble % Convert.ToDouble(NumDouble) != 0)
+            if(NumDouble > Convert.ToDouble(Check[0]))
             {
                 return Convert.ToInt32(Check[0]) + 1;
             }
