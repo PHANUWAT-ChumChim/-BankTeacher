@@ -51,6 +51,7 @@ namespace BankTeacher.Bank.Loan
           "FROM(SELECT a.TeacherNo, CAST(ISNULL(c.PrefixName+' ','') + Fname + ' ' + Lname AS nvarchar)AS NAME,SavingAmount,Fname  \r\n " +
           "FROM (SELECT TeacherNo \r\n " +
           "FROM EmployeeBank.dbo.tblLoan \r\n " +
+          "WHERE LoanStatusNo != 4 \r\n " +
           "GROUP BY TeacherNo) as a   \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNo = b.TeacherNo   \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo   \r\n " +
@@ -69,7 +70,7 @@ namespace BankTeacher.Bank.Loan
           "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo   \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as c on a.TeacherNo = c.TeacherNo  \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as d on c.PrefixNo = d.PrefixNo  \r\n " +
-          "WHERE a.TeacherNo = '{TeacherNo}' AND a.LoanStatusNo {mark} '{LoanStatusNo}'\r\n " +
+          "WHERE a.TeacherNo = '{TeacherNo}' AND a.LoanStatusNo {mark} '{LoanStatusNo}' AND a.LoanStatusNo != 4 \r\n " +
           "GROUP BY a.LoanNo , CAST(ISNULL(d.PrefixNameFull , '') + Fname + ' ' + Lname AS NVARCHAR),a.LoanStatusNo  \r\n " +
           "ORDER BY a.LoanNo DESC "
            ,
@@ -111,7 +112,7 @@ namespace BankTeacher.Bank.Loan
            //[3] for printback  INPUT : {TeacherNo} {LoanNo}
          "SELECT a.TeacherNo,CAST(ISNULL(d.PrefixName+' ','')+Fname +' '+ Lname as NVARCHAR)AS Name,LoanAmount , \r\n " +
          "CAST(cNo + ' หมู่ ' + cMu + 'ซอย  ' + cSoi + ' ถนน' + cRoad + ' ตำบล' +  TumBonName + ' อำเภอ'  + AmphurName + ' จังหวัด ' + JangWatLongName + ' รหัสไปรสณี ' + ZipCode as NVARCHAR(255)) AS ADDRESS, \r\n " +
-         "MonthPay-1 as month ,IIF(PayNo/12 > 0,(YearPay+1)+543,YearPay+543) as year, PayNo , InterestRate,CAST(CAST(DAY(DateAdd) as nvarchar)+'/'+CAST(MONTH(DateAdd) as nvarchar)+'/'+CAST(YEAR(DateAdd)+543 as nvarchar) as nvarchar)  as Date \r\n " +
+         "MonthPay-1 as month ,IIF(PayNo/12 > 0,(YearPay+PayNo/12)+543,YearPay+543) as year, PayNo , InterestRate,CAST(CAST(DAY(DateAdd) as nvarchar)+'/'+CAST(MONTH(DateAdd) as nvarchar)+'/'+CAST(YEAR(DateAdd)+543 as nvarchar) as nvarchar)  as Date \r\n " +
          "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
          "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.LoanNo = b.LoanNo \r\n " +
          "LEFT JOIN Personal.dbo.tblTeacherHis as c ON b.TeacherNo = c.TeacherNo \r\n " +
@@ -233,6 +234,7 @@ namespace BankTeacher.Bank.Loan
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text).Replace("{LoanStatusNo}", Stastus).Replace("{mark}", Mark));
                 if (dt.Rows.Count != 0)
                 {
+                    TB_Statusloan.Text = "รายการที่ปิดกู้";
                     TBTeacherName.Text = dt.Rows[0][1].ToString();
                     CB_LoanNo.Enabled = true;
                     tabControl1.Enabled = true;
@@ -411,7 +413,11 @@ namespace BankTeacher.Bank.Loan
                     }
                     for (int looPS1 = 0; looPS1 < Amount.Count; looPS1++)
                     {
-                        Double Percent = Amount[looPS1] / info_Sum * 100;
+                        Double Percent = 0;
+                        if (info_Sum != 0)
+                        {
+                             Percent = Amount[looPS1] / info_Sum * 100;
+                        }
                         //Double ppp = Convert.ToDouble(Convert.ToInt32(Percent)) + 0.5;
                         if (Math.Round(Percent, 0) > Convert.ToDouble(Convert.ToInt32(Percent)) + 0.5)
                         {
@@ -559,6 +565,7 @@ namespace BankTeacher.Bank.Loan
         {
             if(CB_SelectPrint.SelectedIndex == 0)
             {
+                Class.Print.PrintPreviewDialog.details = 1;
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGVLoanDetail, tabControl1.SelectedTab.Text, this.AccessibilityObject.Name,false,false,"A4", 1);
             }
             else if(CB_SelectPrint.SelectedIndex == 1)
@@ -589,7 +596,7 @@ namespace BankTeacher.Bank.Loan
                 }
                 else
                 {
-                    MessageBox.Show("เกิดข้อผิดพลาดโปรดลองใหม่อีกครั้งภายหลัง", "เเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("เกิดข้อผิดพลาดโปรดลองตรวจสอบขัอมูลในตาราง", "เเจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             else if(CB_SelectPrint.SelectedIndex == 1)
