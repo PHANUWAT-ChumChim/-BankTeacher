@@ -334,7 +334,9 @@ namespace BankTeacher.Bank.Loan
                     int Month = int.Parse(CBPayMonth.Text),
                         Year = int.Parse(CBPayYear.Text);
 
-                    Double Interest = CheckDecimalAndPlusOne(Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)) / Convert.ToDouble(TBPayNo.Text);
+                    Double Inter = Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100);
+                    Inter = CheckDecimalAndPlusOne(Inter);
+                    Double Interest = Inter / Convert.ToDouble(TBPayNo.Text);
 
                     int Pay = Convert.ToInt32(TBLoanAmount.Text) / Convert.ToInt32(TBPayNo.Text);
                     int SumInstallment = Convert.ToInt32(Pay + Interest);
@@ -349,18 +351,17 @@ namespace BankTeacher.Bank.Loan
                             Year++;
                         }
                         
-                        if(SumCheckInterest > Convert.ToInt32((Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100))))
+                        if(SumCheckInterest > Inter)
                         {
-                            Interest = SumCheckInterest - Convert.ToInt32((Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)));
+                            Interest = SumCheckInterest - Convert.ToInt32(Inter);
                         }
-                        else if (SumCheckInterest == Convert.ToInt32((Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100))))
+                        else if (SumCheckInterest == Inter)
                         {
                             Interest = 0;
                         }
                         if (Num == Convert.ToInt32(TBPayNo.Text) - 1)
                         {
-                            //Interest = Convert.ToInt32((Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)) - (Convert.ToInt32(Interest) * Num));
-                            Interest =(Convert.ToInt32((Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)))) - SumCheckInterest;
+                            Interest = Inter - SumCheckInterest;
                             Pay = Pay * Num;
                             Pay = Convert.ToInt32(TBLoanAmount.Text) - Pay;
                             SumInstallment = Convert.ToInt32(Pay + Interest);
@@ -1515,7 +1516,9 @@ namespace BankTeacher.Bank.Loan
                 {
                     SumCredit += Convert.ToDouble(DGVGuarantorCredit.Rows[Num].Cells[3].Value.ToString());
                 }
-                Double Difference = Convert.ToDouble(TBLoanAmount.Text) + (Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100)) - SumCredit;
+                Double Inter = Convert.ToDouble(TBLoanAmount.Text) * (Convert.ToDouble(TBInterestRate.Text) / 100);
+                Inter = CheckDecimalAndPlusOne(Inter);
+                Double Difference = Convert.ToDouble(TBLoanAmount.Text) + (Inter) - SumCredit;
                 //Double Interest = (Convert.ToDouble(Convert.ToDouble(TBInterestRate.Text) / 100)) * Convert.ToDouble(TBLoanAmount.Text) + Convert.ToDouble(TBLoanAmount.Text);
                 Double Interest = Convert.ToDouble(LTotal.Text);
 
