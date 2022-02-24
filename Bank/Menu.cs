@@ -80,9 +80,9 @@ namespace BankTeacher.Bank
         }
         private void ThreadReloadData()
         {
-            Date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]).Rows[0][0].ToString().Split('-');
+            Date = Class.SQLConnection.InputSQLMSSQLV2ForThread(SQLDefault[1]).Rows[0][0].ToString().Split('-');
             BankTeacher.Bank.Menu.Monthname = Month[Convert.ToInt32(BankTeacher.Bank.Menu.Date[1]) - 1];
-            dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]);
+            dt = Class.SQLConnection.InputSQLMSSQLV2ForThread(SQLDefault[0]);
             DateAmountChange = Convert.ToInt32(dt.Rows[0][0]);
             startAmountMin = Convert.ToInt32(dt.Rows[0][1]);
             startAmountMax = Convert.ToInt32(dt.Rows[0][2]);

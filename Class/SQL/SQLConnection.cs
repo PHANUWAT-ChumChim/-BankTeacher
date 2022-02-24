@@ -41,5 +41,15 @@ namespace BankTeacher.Class
               da.Fill(dt);
             return dt;
         }
+        public static DataTable InputSQLMSSQLV2ForThread(string SQLCode)
+        {
+            DataTable dt = new DataTable();
+            if (con.State == ConnectionState.Closed)
+                con.Open();
+            System.Data.OleDb.OleDbDataAdapter da = new System.Data.OleDb.OleDbDataAdapter(SQLCode, con);
+            con.Close();
+            da.Fill(dt);
+            return dt;
+        }
     }
 }
