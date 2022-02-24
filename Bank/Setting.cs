@@ -512,7 +512,7 @@ namespace BankTeacher.Bank
                                             .Replace("{PayMent}", PaymentNo.ToString())
                                             .Replace("{DateAdd}", DateAdd.ToString()));
                                             }
-                                         Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[6]
+                                            Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[6]);
                                         }
                                         BExceltoSQL.Enabled = false;
                                         MessageBox.Show("ส่งข้อมูลสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
