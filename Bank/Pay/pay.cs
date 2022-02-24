@@ -1617,31 +1617,38 @@ namespace BankTeacher.Bank.Pay
                     Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
                     Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
                     Class.Print.PrintPreviewDialog.info_TeacherAdd = Class.UserInfo.TeacherName;
-                    if (LBalance_Pay.Text != "")
-                    {
-                        if (Convert.ToInt32(TBToatalSaving_ShareInfo.Text) > 0) { Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(Convert.ToInt32(TBToatalSaving_ShareInfo.Text) + Convert.ToInt32(LBalance_Pay.Text)).ToString(); }
-                        else { Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(Convert.ToInt32(TBToatalSaving_ShareInfo.Text) + Convert.ToInt32(LBalance_Pay.Text)).ToString(); }
-                        DataTable dt_chcek = Class.SQLConnection.InputSQLMSSQL("SELECT a.TeacherNo,a.LoanStatusNo \r\n " +
-                        "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
-                        "WHERE a.LoanNo = '{LoanNo}'".Replace("{LoanNo}", LoanNo));
-                        if (dt_chcek.Rows.Count != 0)
-                        {
-                            if (dt_chcek.Rows[0][1].ToString() == "3")
-                            {
-                                DataTable dt = Class.SQLConnection.InputSQLMSSQL("SELECT a.TeacherNo, a.SavingAmount \r\n " +
-                                    "FROM EmployeeBank.dbo.tblShare as a \r\n " +
-                                   "WHERE a.TeacherNo = '{TeacherNo}'".Replace("{TeacherNo}", TBTeacherNo.Text));
-                                Class.Print.PrintPreviewDialog.info_Savingtotel = dt.Rows[0][1].ToString();
-                            }
-                            LoanNo = "";
-                        }
-                    }
-                    Class.Print.PrintPreviewDialog.info_Billpay = TBTeacherBill.Text;
-                    if (TBAmountRemain_LoanInfo.Text != "")
-                    {
-                        Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = Convert.ToInt32(Convert.ToInt32(Amount_payLoan) - Convert.ToInt32(TBAmountRemain_LoanInfo.Text)).ToString();
-                    }
-                    else { Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = ""; }
+                    //if (LBalance_Pay.Text != "")
+                    //{
+                    //    if (Convert.ToInt32(TBToatalSaving_ShareInfo.Text) > 0) { Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(Convert.ToInt32(TBToatalSaving_ShareInfo.Text) + Convert.ToInt32(LBalance_Pay.Text)).ToString(); }
+                    //    else { Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(Convert.ToInt32(TBToatalSaving_ShareInfo.Text) + Convert.ToInt32(LBalance_Pay.Text)).ToString(); }
+                    //    DataTable dt_chcek = Class.SQLConnection.InputSQLMSSQL("SELECT a.TeacherNo,a.LoanStatusNo \r\n " +
+                    //    "FROM EmployeeBank.dbo.tblLoan as a \r\n " +
+                    //    "WHERE a.LoanNo = '{LoanNo}'".Replace("{LoanNo}", LoanNo));
+                    //    if (dt_chcek.Rows.Count != 0)
+                    //    {
+                    //        if (dt_chcek.Rows[0][1].ToString() == "3")
+                    //        {
+                    //            DataTable dt = Class.SQLConnection.InputSQLMSSQL("SELECT a.TeacherNo, a.SavingAmount \r\n " +
+                    //                "FROM EmployeeBank.dbo.tblShare as a \r\n " +
+                    //               "WHERE a.TeacherNo = '{TeacherNo}'".Replace("{TeacherNo}", TBTeacherNo.Text));
+                    //            Class.Print.PrintPreviewDialog.info_Savingtotel = dt.Rows[0][1].ToString();
+                    //        }
+                    //        LoanNo = "";
+                    //    }
+                    //}
+                    //Class.Print.PrintPreviewDialog.info_Billpay = TBTeacherBill.Text;
+                    //if (TBAmountRemain_LoanInfo.Text != "")
+                    //{
+                    //    Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = Convert.ToInt32(Convert.ToInt32(Amount_payLoan) - Convert.ToInt32(TBAmountRemain_LoanInfo.Text)).ToString();
+                    //}
+                    //else { Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = ""; }
+                    DataTable dt = Class.SQLConnection.InputSQLMSSQL("SELECT a.TeacherNo, a.SavingAmount,SUM(b.RemainsAmount) \r\n" +
+                   "FROM EmployeeBank.dbo.tblShare as a \r\n" +
+                   "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.TeacherNo = b.TeacherNo \r\n" +
+                   "WHERE a.TeacherNo = '{TeacherNo}' \r\n".Replace("{TeacherNo}", TBTeacherNo.Text) +
+                   "GROUP BY  a.TeacherNo, a.SavingAmount");                    
+                    Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(dt.Rows[0][1]).ToString("N0");
+                    Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = Convert.ToInt32(dt.Rows[0][2]).ToString("N0");
                     Class.Print.PrintPreviewDialog.info_datepayShare = DateTime.Today.Day.ToString() + '/' + DateTime.Today.Month.ToString() + '/' + DateTime.Today.Year.ToString();
                     printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                     printDocument1.DefaultPageSettings.Landscape = true;
@@ -2458,7 +2465,13 @@ namespace BankTeacher.Bank.Pay
                     Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
                     Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
                     Class.Print.PrintPreviewDialog.info_Savingtotel = TBToatalSaving_ShareInfo.Text;
-                    Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
+                    //Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = TBAmountRemain_LoanInfo.Text;
+                    DataTable dt_infoAmount = Class.SQLConnection.InputSQLMSSQL("SELECT a.TeacherNo, a.SavingAmount,SUM(b.RemainsAmount) \r\n" +
+                    "FROM EmployeeBank.dbo.tblShare as a \r\n" +
+                    "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.TeacherNo = b.TeacherNo \r\n" +
+                    "WHERE a.TeacherNo = '{TeacherNo}' \r\n".Replace("{TeacherNo}", TBTeacherNo.Text) +
+                    "GROUP BY  a.TeacherNo, a.SavingAmount");
+                    Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = Convert.ToInt32(dt_infoAmount.Rows[0][2]).ToString("N0");
                     Class.Print.PrintPreviewDialog.info_Billpay = DGV_BillInfo.Rows[Rows].Cells[1].Value.ToString();
                     DataTable dt_date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[16].Replace("{Bill}", DGV_BillInfo.Rows[Rows].Cells[1].Value.ToString()));
                     Class.Print.PrintPreviewDialog.info_datepayShare = dt_date.Rows[0][1].ToString();

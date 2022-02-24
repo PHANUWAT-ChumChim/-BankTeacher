@@ -610,7 +610,7 @@ namespace BankTeacher.Class.Print
                 {
                     Class.Print.SetPrintMedtods.Box(e, "เริ่ม", "สิ้นสุด", Bank.Loan.InfoLoan.info_startdate, Bank.Loan.InfoLoan.info_duedate, Box_SizeX, Box_SizeY, location_Box, Line2_x);
                 }
-                else if (TextForm == "pay" && details != 1)
+                else if (TextForm == "pay" || TextForm == "GuarantorPayLoan" && details != 1)
                 {
                     Class.Print.SetPrintMedtods.Box(e, "เลขบิลล์", "จ่ายวันที่",info_Billpay,info_datepayShare, Box_SizeX, Box_SizeY, location_Box, Line2_x);
                 }
@@ -678,12 +678,12 @@ namespace BankTeacher.Class.Print
                             e.Graphics.DrawRectangle(PenBlack, 50, start, Line2_x - 50, end + 5);
                         }
                     }
-                    else if (TextForm == "pay" && details != 1)
+                    else if (TextForm == "pay" || TextForm == "GuarantorPayLoan" && details != 1)
                     {
                         string Remain;
                         if (info_Lona_AmountRemain != "")
                         {
-                            Remain = $"ยอดกู้คงเหลือ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_Lona_AmountRemain))}";
+                            Remain = $"ยอดกู้คงเหลือทั้งหมด : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_Lona_AmountRemain))}";
                         }
                         else
                         {
