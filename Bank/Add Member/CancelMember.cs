@@ -435,7 +435,8 @@ namespace BankTeacher.Bank.Add_Member
                         {
                             AmountOff FAmountOff = new AmountOff();
                             Menu FMenu = new Menu();
-                            FAmountOff.FormBorderStyle = FormBorderStyle.None;
+                            FAmountOff.FormBorderStyle = FormBorderStyle.Sizable;
+                            //FAmountOff.Size = new Size(895, 794);
                             FAmountOff.Show();
                             FAmountOff.TBTeacherNo.Text = TBTeacherNo.Text;
                             FAmountOff.TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));

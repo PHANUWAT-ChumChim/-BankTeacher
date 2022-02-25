@@ -247,5 +247,15 @@ namespace BankTeacher.Bank.Add_Member
                 }
             }
         }
+
+        private void DGV_Pay_KeyDown(object sender, KeyEventArgs e)
+        {
+            CancelMemberCloseTheLoan_KeyDown(sender, new KeyEventArgs(Keys.Escape));
+        }
+
+        private void CBLoanNo_KeyDown(object sender, KeyEventArgs e)
+        {
+            CancelMemberCloseTheLoan_KeyDown(sender, new KeyEventArgs(Keys.Escape));
+        }
     }
 }
