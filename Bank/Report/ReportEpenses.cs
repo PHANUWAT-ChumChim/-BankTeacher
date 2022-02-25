@@ -15,7 +15,7 @@ namespace BankTeacher.Bank
         /// <summary> 
         /// SQLDefault 
         /// <para>[0] Report Epenses Info(Loan and ShareWithdraw) INPUT: {TeacherNo} , {Date} </para> 
-        /// <para>[1] Select TeacherAdd INPUT: {Text} {Date}</para>
+        /// <para>[1] Select TeacherAdd INPUT: {Text} {Date} {TeacherNoNotLike}</para>
         /// </summary> 
         private String[] SQLDefault = new String[]
          { 
@@ -39,11 +39,11 @@ namespace BankTeacher.Bank
           "LEFT JOIN BaseData.dbo.tblPrefix as g on f.PrefixNo = g.PrefixNo \r\n " +
           "WHERE CAST(DateAdd  as date) LIKE '{Date}%' and f.TeacherNo = '{TeacherNo}' and f.IsUse = 1"
            ,
-           //[1] Select TeacherAdd INPUT: {Text} {Date}
+           //[1] Select TeacherAdd INPUT: {Text} {Date} {TeacherNoNotLike}
            "SELECT a.TeacherNo, CAST(ISNULL(b.PrefixName , '') + ' ' + a.Fname + ' ' + a.LName as nvarchar) \r\n " +
           " FROM Personal.dbo.tblTeacherHis as a  \r\n " +
           " LEFT JOIN BaseData.dbo.tblPrefix as b on a.PrefixNo = b.PrefixNo  \r\n " +
-          " WHERE (a.TeacherNo IN (SELECT TeacherNoAddBy FROM EmployeeBank.dbo.tblLoan WHERE CAST(PayDate as date) LIKE  '%{Date}%') or a.TeacherNo IN (SELECT TeacherNoAddBy FROM EmployeeBank.dbo.tblShareWithdraw WHERE CAST(DateAdd as Date) LIKE '%{Date}%')) and (a.TeacherNo LIKE '%{Text}%'  or  CAST(ISNULL(b.PrefixName , '') + ' ' + a.Fname + ' ' + a.LName as nvarchar) LIKE '%{Text}%') \r\n " +
+          " WHERE (a.TeacherNo IN (SELECT TeacherNoAddBy FROM EmployeeBank.dbo.tblLoan WHERE CAST(PayDate as date) LIKE  '%{Date}%') or a.TeacherNo IN (SELECT TeacherNoAddBy FROM EmployeeBank.dbo.tblShareWithdraw WHERE CAST(DateAdd as Date) LIKE '%{Date}%')) and (a.TeacherNo LIKE '%{Text}%'  or  CAST(ISNULL(b.PrefixName , '') + ' ' + a.Fname + ' ' + a.LName as nvarchar) LIKE '%{Text}%')  and a.TeacherNo != '{TeacherNoNotLike}'\r\n " +
           " GROUP BY a.TeacherNo , CAST(ISNULL(b.PrefixName , '') + ' ' + a.Fname + ' ' + a.LName as nvarchar)"
 
            ,
@@ -80,7 +80,8 @@ namespace BankTeacher.Bank
                 Day = "0" + Convert.ToInt32(Day);
             }
             Bank.Search IN = new Bank.Search(SQLDefault[1]
-                .Replace("{Date}", (Convert.ToDateTime(Year + '-' + Month + '-' + Day)).ToString("yyyy-MM-dd")),"");
+                .Replace("{Date}", (Convert.ToDateTime(Year + '-' + Month + '-' + Day)).ToString("yyyy-MM-dd")
+                .Replace("{TeacherNoNotLike}",TBTeacherNo.Text)));
             IN.ShowDialog();
             if (Bank.Search.Return[0] != "")
             {

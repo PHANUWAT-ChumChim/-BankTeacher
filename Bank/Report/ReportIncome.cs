@@ -44,7 +44,7 @@ namespace BankTeacher.Bank
           "FROM EmployeeBank.dbo.tblBill as a \r\n " +
           "LEFT JOIN Personal.dbo.tblTeacherHis as b on a.TeacherNoAddBy = b.TeacherNo \r\n " +
           "LEFT JOIN BaseData.dbo.tblPrefix as c on b.PrefixNo = c.PrefixNo \r\n " +
-          "WHERE (Cancel = 1 and b.IsUse = 1 and Cast(a.DateAdd as date) Like '%{Date}%') and (a.TeacherNoAddBy LIKE '%{Text}%' or CAST(ISNULL(c.PrefixName,'') + b.FName + ' ' + b.LName as nvarchar)  LIKE '%{Text}%')   \r\n " +
+          "WHERE (Cancel = 1 and b.IsUse = 1 and Cast(a.DateAdd as date) Like '%{Date}%') and (a.TeacherNoAddBy LIKE '%{Text}%' or CAST(ISNULL(c.PrefixName,'') + b.FName + ' ' + b.LName as nvarchar)  LIKE '%{Text}%') and a.TeacherNoAddBy != '{TeacherNoNotLike}'   \r\n " +
           "GROUP BY TeacherNoAddBy,CAST(ISNULL(c.PrefixName,'') +' '+ b.FName + ' ' + b.LName as nvarchar) "
            ,
            //[3] SELECT TeacherAddBill (Enter) INPUT: {TeacherNo} {Date}
@@ -90,7 +90,8 @@ namespace BankTeacher.Bank
                 Day = "0" + Convert.ToInt32(Day);
             }
             Bank.Search IN = new Bank.Search(SQLDefault[2]
-                .Replace("{Date}", Year + '-' + Month + '-' + Day),"");
+                .Replace("{Date}", Year + '-' + Month + '-' + Day)
+                .Replace("{TeacherNoNotLike}",TBTeacherNo.Text));
             IN.ShowDialog();
             if (Bank.Search.Return[0] != "")
             {

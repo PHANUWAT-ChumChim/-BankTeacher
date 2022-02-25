@@ -31,7 +31,7 @@ namespace BankTeacher.Bank.Loan
         bool CheckSave = false;
         List<string[]> ItemList = new List<string[]>();
         /// <summary>
-        /// <para>[0] SELECT MemberLona  INPUT: {Text}</para>
+        /// <para>[0] SELECT MemberLoan  INPUT: {Text} {TeacherNoNotLike}</para>
         /// <para>[1] SELECT LOAN INPUT: {TeacherNo} </para>
         /// <para>[2] SELECT Detail Loan INPUT: {LoanNo}</para>
         /// <para>[3] Select Payment Name INPUT: - </para>
@@ -42,7 +42,7 @@ namespace BankTeacher.Bank.Loan
         /// </summary>
         private String[] SQLDefault = 
         {
-          //[0] SELECT MemberLona  INPUT: {Text} 
+          //[0] SELECT MemberLoan  INPUT: {Text}  {TeacherNoNotLike}
           " SELECT TOP(20) TeacherNo , NAME  \r\n" +
           " FROM(   \r\n " +
           " SELECT a.TeacherNo, CAST(ISNULL(c.PrefixName+' ','') + Fname + ' ' + Lname AS nvarchar)AS NAME,SavingAmount,Fname ,LoanStatusNo \r\n " +
@@ -52,7 +52,7 @@ namespace BankTeacher.Bank.Loan
           " LEFT JOIN EmployeeBank.dbo.tblShare as d on a.TeacherNo = d.TeacherNo  \r\n " +
           " WHERE a.LoanStatusNo = 1 \r\n " +
           " GROUP BY a.TeacherNo,CAST(ISNULL(c.PrefixName+' ','')+Fname+' '+Lname as NVARCHAR),d.SavingAmount ,Fname , LoanStatusNo) AS A   \r\n " +
-          " WHERE a.TeacherNo LIKE '%{Text}%' or Fname LIKE '%{Text}%'  \r\n " +
+          " WHERE (a.TeacherNo LIKE '%{Text}%' or Fname LIKE '%{Text}%') and a.TeacherNo != '{TeacherNoNotLike}'  \r\n " +
           " ORDER BY Fname;   "
           ,
           //[1] SELECT LOAN INPUT: {TeacherNo}
@@ -126,7 +126,8 @@ namespace BankTeacher.Bank.Loan
             try
             {
                 StatusBoxFile = 0;
-                IN = new Bank.Search(SQLDefault[0]);
+                IN = new Bank.Search(SQLDefault[0]
+                    .Replace("{TeacherNoNotLike}",TBTeacherNo.Text));
                 IN.ShowDialog();
                 
                 if(Bank.Search.Return[0] != "")
