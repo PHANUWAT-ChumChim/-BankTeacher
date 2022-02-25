@@ -148,7 +148,6 @@ namespace BankTeacher.Bank.Loan
 
         private void CBList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //DGV.Rows.Clear();
             if(CBlist.SelectedIndex != -1)
             {
                 DGVCancelLoan.Rows.Clear();
