@@ -176,10 +176,6 @@ namespace BankTeacher.Bank.Loan
             IN = new Bank.Search(SQLDefault[0]
                 .Replace("{TeacherNotLike}",TBTeacherNo.Text));
             IN.ShowDialog();
-            //ComboBox[] cb = new ComboBox[] { CB_LoanNo };
-            //DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
-            //    .Replace("{TeacherNo}", TBTeacherNo.Text));
-            //for (int x = 0; x < dt.Rows.Count; x++)
             if (Bank.Search.Return[0] != "")
             {
                 CB_LoanNo.Enabled = true;
@@ -378,7 +374,10 @@ namespace BankTeacher.Bank.Loan
         }
         void CheckBox(object sender, EventArgs e)
         {
-            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo.Text).Replace("{LoanStatusNo}", "3").Replace("{mark}", Mark));
+            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
+                .Replace("{TeacherNo}", TBTeacherNo.Text)
+                .Replace("{LoanStatusNo}", "3")
+                .Replace("{mark}", Mark));
             if (dt.Rows.Count != 0)
             {
                 if (dt.Rows.Count != 0)

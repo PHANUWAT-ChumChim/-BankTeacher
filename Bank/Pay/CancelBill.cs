@@ -19,17 +19,17 @@ namespace BankTeacher.Bank.Pay
         bool CheckInputBill = false;
         bool CheckSave = false; 
         
-        String TeacherNo;
         /// <summary> 
         /// SQLDafault 
         /// <para>[0] Select Bill (CancelBill) INPUT: {BillNo}</para>
         /// <para>[1] Update Cancel Bill INPUT: {BillNo} {CancelBy} {Note}</para>
         /// <para>[2] Update Saving (CancelBill) INPUT: {TeacherNo} {Amount} {BillNo} {DateTime}</para>
-        /// <para>[3] + RemainAmount In Guarantor (CancelBill) INPUT: {LoanNo} , {LoanAmount}</para>
-        /// <para>[4] Search All Bill in to day (CancelBill) INPUT: {BillNo} {today} {Text} {BillNoSelect}</para>
+        /// <para>[3] plus RemainAmount In Guarantor (CancelBill) INPUT: {LoanNo} , {LoanAmount}</para>
+        /// <para>[4] Search TeacherNo (CancelBill) INPUT: {BillNo} {today} {Text} {BillNoSelect}</para>
         /// <para>[5] Check Dividend Year INPUT: </para>
         /// <para>[6] Chcek LoanstatusNo INPUT : {TeacharNo} {BillNo} </para>
         /// <para>[7] Check TypeNo 0 = true , 1 = false INPUT: {BillNo}INPUT: {BillNo} </para>
+        /// <para>[8] Search Bill INPUT: {TeacherNo} </para>
         /// </summary> 
         private String[] SQLDefault = new String[]
         {
@@ -78,15 +78,16 @@ namespace BankTeacher.Bank.Pay
           "SET CancelDate = '{DateTime}' \r\n " +
           "WHERE BillNo = '{BillNo}' "
             ,
-           //[4] Search All Bill in to day (CancelBill) INPUT: {today} {Text} {BillNoSelect}
-           "SELECT a.TeacherNo,CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255))as Name ,a.BillNo FROM EmployeeBank.dbo.tblBill as a   \r\n " +
+           //[4] Search All TeacherNo in to day (CancelBill) INPUT: {today} {Text}
+           "SELECT a.TeacherNo,CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255))as Name\r\n " + 
+          "FROM EmployeeBank.dbo.tblBill as a   \r\n " +
           "  LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo   \r\n " +
           "  LEFT JOIN EmployeeBank.dbo.tblMember as c on a.TeacherNo = c.TeacherNo   \r\n " +
           "  LEFT JOIN Personal.dbo.tblTeacherHis as d on a.TeacherNo = d.TeacherNo   \r\n " +
           "  LEFT JOIN BaseData.dbo.tblPrefix as e on d.PrefixNo = e.PrefixNo   \r\n " +
           "  LEFT JOIN EmployeeBank.dbo.tblBillDetailType as f on b.TypeNo = f.TypeNo   \r\n " +
-          "  WHERE  (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255)) LIKE '%{Text}%' )and MemberStatusNo != 2 and Cancel = 1 and CAST(a.DateAdd as DATE) >= DATEADD(DAY,-7,CAST(GETDATE() as DATE)) and b.TypeNo != 3 \r\n " +
-          " GROUP BY a.TeacherNo,CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255)),a.BillNo"
+          "  WHERE  (a.TeacherNo LIKE '%{Text}%' or CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255)) LIKE '%{Text}%' )and MemberStatusNo != 2 and Cancel = 1 and CAST(a.DateAdd as DATE) >= DATEADD(DAY,-7,CAST(GETDATE() as DATE)) and b.TypeNo != 3 and a.TeacherNo != '{TeacherNoNotLike}'\r\n " +
+          " GROUP BY a.TeacherNo,CAST(ISNULL(e.PrefixName,'') + d. Fname + ' ' + d.LName as nvarchar(255))"
             ,
             //[5] Check Dividend Year INPUT: 
             "SELECT Year\r\n " +
@@ -120,6 +121,15 @@ namespace BankTeacher.Bank.Pay
            
 
            ,
+           //[8] Search Bill INPUT: {TeacherNo} 
+           "SELECT a.BillNo \r\n " +
+          " FROM EmployeeBank.dbo.tblBill as a    \r\n " +
+          "   LEFT JOIN EmployeeBank.dbo.tblBillDetail as b on a.BillNo = b.BillNo    \r\n " +
+          "   LEFT JOIN EmployeeBank.dbo.tblMember as c on a.TeacherNo = c.TeacherNo    \r\n " +
+          "   LEFT JOIN EmployeeBank.dbo.tblBillDetailType as f on b.TypeNo = f.TypeNo    \r\n " +
+          "   WHERE a.TeacherNo = '{TeacherNo}' and  MemberStatusNo != 2 and Cancel = 1 and CAST(a.DateAdd as DATE) >= DATEADD(DAY,-7,CAST(GETDATE() as DATE)) and b.TypeNo != 3  \r\n " +
+          "  GROUP BY a.BillNo"
+           ,
 
         };
 
@@ -137,8 +147,6 @@ namespace BankTeacher.Bank.Pay
             DGV_Cancelbill.Rows.Clear();
             LSumAmount_CancelBill.Text = "0";
             TBBIllDate_Cancelbill.Text = "";
-            TBTeacherName_Cancelbill.Text = "";
-            TeacherNo = "";
             TBteacharnoby_billcancel.Text = "";
             //====================================================================
         }
@@ -147,81 +155,24 @@ namespace BankTeacher.Bank.Pay
         {
             if (e.KeyCode == Keys.Enter)
             {
-                //TBTeacherNO_Cancelbill.Text = TBTeacherNO_Cancelbill.Text.Replace("t", "T");
-                if (Int32.TryParse(TBBillNo_Cancelbill.Text, out int BillNo))
+                CBBill.Items.Clear();
+                TBTeaacherNo.Text = TBTeaacherNo.Text.Replace("t", "T");
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
+                    .Replace("{TeacherNo}",TBTeaacherNo.Text));
+                if(dt.Rows.Count != 0)
                 {
-                    DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]
-                        .Replace("{BillNo}", BillNo.ToString())
-                        .Replace("{today}",""));
-                    if (dt.Rows.Count != 0)
+                    for(int x=  0;  x < dt.Rows.Count; x++)
                     {
-                        Clear();
-                        TBNote.Enabled = true;
-                        TBBIllDate_Cancelbill.Text = (Convert.ToDateTime(dt.Rows[0][2].ToString())).ToString("yyyy-MM-dd");
-                        TeacherNo = dt.Rows[0][0].ToString();
-                        TBTeacherName_Cancelbill.Text = dt.Rows[0][1].ToString();
-                        TBteacharnoby_billcancel.Text = dt.Rows[0][8].ToString();
-                        DataTable DividendYear = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5]);
-                        if(DividendYear.Rows.Count != 0)
-                        {
-                            for(int xy = 0; xy < DividendYear.Rows.Count; xy++)
-                            {
-                                if (DividendYear.Rows[0][0].ToString().Contains((Convert.ToDateTime(dt.Rows[xy][2].ToString())).ToString("yyyy")))
-                                {
-                                    MessageBox.Show("ไม่สามารถยกเลิกบิลล์หมายเลขนี้ได้เนื่องจากมีการปันผลไปแล้ว" ,"ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
-                                    Clear();
-                                    break;
-                                }
-                                else if(xy == DividendYear.Rows.Count - 1)
-                                {
-                                    int Amount = 0;
-                                    for (int x = 0; x < dt.Rows.Count; x++)
-                                    {
-                                        if (dt.Rows[x][5].ToString().Contains("หุ้น"))
-                                            DGV_Cancelbill.Rows.Add(dt.Rows[x][3].ToString() + '/' + dt.Rows[x][4].ToString(), "หุ้นสะสม", dt.Rows[x][7].ToString(), '-', dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
-                                        else
-                                            DGV_Cancelbill.Rows.Add(dt.Rows[x][3].ToString() + '/' + dt.Rows[x][4].ToString(), "รายการกู้ " + dt.Rows[x][6].ToString(), dt.Rows[x][7].ToString(), dt.Rows[x][6].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
-                                        Amount = Amount + Convert.ToInt32(dt.Rows[x][7].ToString());
-                                        if (x % 2 == 1)
-                                        {
-                                            DGV_Cancelbill.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
-                                        }
-                                    }
-                                    LSumAmount_CancelBill.Text = Amount.ToString();
-                                    BSave_Cancelbill.Enabled = true;
-                                    CheckInputBill = true;
-                                }
-
-                            }
-                        }
-                        else
-                        {
-                            int Amount = 0;
-                            for (int x = 0; x < dt.Rows.Count; x++)
-                            {
-                                if (dt.Rows[x][5].ToString().Contains("หุ้น"))
-                                    DGV_Cancelbill.Rows.Add(dt.Rows[x][3].ToString() + '/' + dt.Rows[x][4].ToString(), "หุ้นสะสม", dt.Rows[x][7].ToString(), '-', dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
-                                else
-                                    DGV_Cancelbill.Rows.Add(dt.Rows[x][3].ToString() + '/' + dt.Rows[x][4].ToString(), "รายการกู้ " + dt.Rows[x][6].ToString(), dt.Rows[x][7].ToString(), dt.Rows[x][6].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
-                                Amount = Amount + Convert.ToInt32(dt.Rows[x][7].ToString());
-                                if (x % 2 == 1)
-                                {
-                                    DGV_Cancelbill.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
-                                }
-                            }
-                            LSumAmount_CancelBill.Text = Amount.ToString();
-                            BSave_Cancelbill.Enabled = true;
-                            CheckInputBill = true;
-                            Checkmember(false);
-                            CheckSave = false;
-                        }
-                        TBBillNo_Cancelbill.Enabled = false;
-                        BSave_Cancelbill.Enabled = true;
+                        CBBill.Items.Add(dt.Rows[x][0].ToString());
                     }
-                    else
-                    {
-                        MessageBox.Show("ไม่พบหมายเลขบิลล์นี้ \r\n หรือ รายการบิลล์ถูกยกเลิกไปแล้ว", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
+                    CBBill.Enabled = true;
+                    CBBill.SelectedIndex = 0; 
+                }
+                else
+                {
+                    CBBill.SelectedIndex = -1;
+                    CBBill.Enabled = false;
+                    CBBill.Items.Clear();
                 }
             }
             else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
@@ -229,13 +180,14 @@ namespace BankTeacher.Bank.Pay
                 CheckInputBill = false;
                 BSave_Cancelbill.Enabled = false;
                 Clear();
-                Checkmember(false);
+                CBBill.Enabled = false;
+                CBBill.Items.Clear();
             }
         }
 
         private void BSave_Cancelbill_Click(object sender, EventArgs e)
         {
-            if (TBBillNo_Cancelbill.Text != "")
+            if (TBTeaacherNo.Text != "")
             {
                DialogResult dr = MessageBox.Show("ยืนยันการยกเลิกบิลล์", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                 if(dr == DialogResult.Yes)
@@ -243,7 +195,7 @@ namespace BankTeacher.Bank.Pay
                     // Format yyyy-mm-dd EX: 2020-1-16
                     String today = (Convert.ToDateTime((Bank.Menu.Date[0] + '-' + Bank.Menu.Date[1] + '-' + Bank.Menu.Date[2]).ToString())).ToString("yyyy-MM-dd");
 
-                    DataTable dtCheckTypeBill = Class.SQLConnection.InputSQLMSSQL(SQLDefault[7].Replace("{BillNo}", TBBillNo_Cancelbill.Text));
+                    DataTable dtCheckTypeBill = Class.SQLConnection.InputSQLMSSQL(SQLDefault[7].Replace("{BillNo}", CBBill.SelectedItem.ToString()));
 
                     if (dtCheckTypeBill.Rows[0][0].ToString() == "0" && TBNote.Text != "")
                     {
@@ -257,7 +209,7 @@ namespace BankTeacher.Bank.Pay
                                 if (Note == "")
                                     Note = "-";
                                 Class.SQLConnection.InputSQLMSSQL(SQLDefault[1]
-                                    .Replace("{BillNo}", TBBillNo_Cancelbill.Text)
+                                    .Replace("{BillNo}", CBBill.SelectedItem.ToString())
                                     .Replace("{CancelBy}" , BankTeacher.Class.UserInfo.TeacherNo)
                                     .Replace("{Note}", Note) );
                                 for (int x = 0; x < DGV_Cancelbill.Rows.Count; x++)
@@ -265,24 +217,26 @@ namespace BankTeacher.Bank.Pay
                                     if (DGV_Cancelbill.Rows[x].Cells[1].Value.ToString().Contains("หุ้น"))
                                     {
                                         Class.SQLConnection.InputSQLMSSQL(SQLDefault[2]
-                                            .Replace("{TeacherNo}", TeacherNo)
+                                            .Replace("{TeacherNo}", TBTeaacherNo.Text)
                                             .Replace("{Amount}", DGV_Cancelbill.Rows[x].Cells[2].Value.ToString())
-                                            .Replace("{BillNo}", TBBillNo_Cancelbill.Text)
+                                            .Replace("{BillNo}", CBBill.SelectedItem.ToString())
                                             .Replace("{DateTime}", Date));
                                     }
                                     else if (DGV_Cancelbill.Rows[x].Cells[1].Value.ToString().Contains("กู้"))
                                     {
-                                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("{TeacharNo}", TeacherNo).Replace("{BillNo}", TBBillNo_Cancelbill.Text));
+                                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[6].Replace("{TeacharNo}", TBTeaacherNo.Text)
+                                            .Replace("{BillNo}", CBBill.SelectedItem.ToString()));
                                         Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
                                         .Replace("{LoanNo}", DGV_Cancelbill.Rows[x].Cells[3].Value.ToString())
                                         .Replace("{LoanAmount}", DGV_Cancelbill.Rows[x].Cells[2].Value.ToString())
-                                         .Replace("{BillNo}", TBBillNo_Cancelbill.Text)
+                                         .Replace("{BillNo}", CBBill.SelectedItem.ToString())
                                         .Replace("{DateTime}", Date));
                                     }
                                 }
                                 MessageBox.Show("ยกเลิกบิลล์สำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Information);
-                                Checkmember(true);
                                 CheckSave = true;
+                                CBBill.Enabled = false;
+                                CBBill.Items.Clear();
                                 BSave_Cancelbill.Enabled = false;
                             }
                             catch
@@ -320,13 +274,14 @@ namespace BankTeacher.Bank.Pay
         {
             if (e.KeyCode == Keys.Escape || (e.KeyCode == Keys.Enter && CheckSave))
             {
-                if (TBBillNo_Cancelbill.Text.Length != 0)
+                if (TBTeaacherNo.Text.Length != 0)
                 {
                     Clear();
-                    TBBillNo_Cancelbill.Text = "";
-                    Checkmember(true);
+                    TBTeaacherNo.Text = "";
+                    CBBill.Enabled = false;
+                    CBBill.Items.Clear();
                     CheckSave = false;
-                    TBBillNo_Cancelbill.Enabled = true;
+                    TBTeaacherNo.Enabled = true;
                 }
                 else
                 {
@@ -352,30 +307,26 @@ namespace BankTeacher.Bank.Pay
 
             Bank.Search IN = new Bank.Search(SQLDefault[4]
                 .Replace("{today}", todaySQLSelect)
-                .Replace("{BillNoSelect}", TBBillNo_Cancelbill.Text), "เลขบิลล์");
+                .Replace("{TeacherNoNotLike}",TBTeaacherNo.Text));
             IN.ShowDialog();
             //ถ้า ID สมาชิกที่เลือกไม่เป็นว่างเปล่า ให้ ใส่ลงใน TBTeacherNo และ ไปทำ event Keydown ของ TBTeacherNo
             if (Bank.Search.Return[0] != "")
             {
-                TBBillNo_Cancelbill.Text = Bank.Search.Return[2];
+                TBTeaacherNo.Text = Bank.Search.Return[0];
+                TBTeacherName_Cancelbill.Text = Bank.Search.Return[1];
                 TBBillNo_Cancelbill_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
             }
         }
         private void ClearForm()
         {
             TBNote.Text = "";
-            TeacherNo = "";
             TBTeacherName_Cancelbill.Text = "";
             TBteacharnoby_billcancel.Text = "";
-            TBBillNo_Cancelbill.Text = "";
+            TBTeaacherNo.Text = "";
             TBBIllDate_Cancelbill.Text = "";
             LSumAmount_CancelBill.Text = "0";
             BSave_Cancelbill.Enabled = false;
             DGV_Cancelbill.Rows.Clear();
-        }
-        private void Checkmember(bool tf)
-        {
-            //TBTeacherNO_Cancelbill.Enabled = tf;
         }
 
         private void CancelBill_Load(object sender, EventArgs e)
@@ -385,6 +336,79 @@ namespace BankTeacher.Bank.Pay
                 DTPDate.Enabled = true;
             else
                 DTPDate.Enabled = false;
+        }
+
+        private void CBBill_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[0]
+                .Replace("{BillNo}", CBBill.SelectedItem.ToString())
+                .Replace("{today}", ""));
+            if (dt.Rows.Count != 0)
+            {
+                Clear();
+                TBNote.Enabled = true;
+                TBBIllDate_Cancelbill.Text = (Convert.ToDateTime(dt.Rows[0][2].ToString())).ToString("yyyy-MM-dd");
+                TBteacharnoby_billcancel.Text = dt.Rows[0][8].ToString();
+                DataTable DividendYear = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5]);
+                if (DividendYear.Rows.Count != 0)
+                {
+                    for (int xy = 0; xy < DividendYear.Rows.Count; xy++)
+                    {
+                        if (DividendYear.Rows[0][0].ToString().Contains((Convert.ToDateTime(dt.Rows[xy][2].ToString())).ToString("yyyy")))
+                        {
+                            MessageBox.Show("ไม่สามารถยกเลิกบิลล์หมายเลขนี้ได้เนื่องจากมีการปันผลไปแล้ว", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            Clear();
+                            break;
+                        }
+                        else if (xy == DividendYear.Rows.Count - 1)
+                        {
+                            int Amount = 0;
+                            for (int x = 0; x < dt.Rows.Count; x++)
+                            {
+                                if (dt.Rows[x][5].ToString().Contains("หุ้น"))
+                                    DGV_Cancelbill.Rows.Add(dt.Rows[x][3].ToString() + '/' + dt.Rows[x][4].ToString(), "หุ้นสะสม", dt.Rows[x][7].ToString(), '-', dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
+                                else
+                                    DGV_Cancelbill.Rows.Add(dt.Rows[x][3].ToString() + '/' + dt.Rows[x][4].ToString(), "รายการกู้ " + dt.Rows[x][6].ToString(), dt.Rows[x][7].ToString(), dt.Rows[x][6].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
+                                Amount = Amount + Convert.ToInt32(dt.Rows[x][7].ToString());
+                                if (x % 2 == 1)
+                                {
+                                    DGV_Cancelbill.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
+                                }
+                            }
+                            LSumAmount_CancelBill.Text = Amount.ToString();
+                            BSave_Cancelbill.Enabled = true;
+                            CheckInputBill = true;
+                        }
+
+                    }
+                }
+                else
+                {
+                    int Amount = 0;
+                    for (int x = 0; x < dt.Rows.Count; x++)
+                    {
+                        if (dt.Rows[x][5].ToString().Contains("หุ้น"))
+                            DGV_Cancelbill.Rows.Add(dt.Rows[x][3].ToString() + '/' + dt.Rows[x][4].ToString(), "หุ้นสะสม", dt.Rows[x][7].ToString(), '-', dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
+                        else
+                            DGV_Cancelbill.Rows.Add(dt.Rows[x][3].ToString() + '/' + dt.Rows[x][4].ToString(), "รายการกู้ " + dt.Rows[x][6].ToString(), dt.Rows[x][7].ToString(), dt.Rows[x][6].ToString(), dt.Rows[x][4].ToString(), dt.Rows[x][3].ToString());
+                        Amount = Amount + Convert.ToInt32(dt.Rows[x][7].ToString());
+                        if (x % 2 == 1)
+                        {
+                            DGV_Cancelbill.Rows[x].DefaultCellStyle.BackColor = Color.AliceBlue;
+                        }
+                    }
+                    LSumAmount_CancelBill.Text = Amount.ToString();
+                    BSave_Cancelbill.Enabled = true;
+                    CheckInputBill = true;
+                    CheckSave = false;
+                }
+                TBTeaacherNo.Enabled = false;
+                BSave_Cancelbill.Enabled = true;
+            }
+            else
+            {
+                MessageBox.Show("ไม่พบหมายเลขบิลล์นี้ \r\n หรือ รายการบิลล์ถูกยกเลิกไปแล้ว", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }
