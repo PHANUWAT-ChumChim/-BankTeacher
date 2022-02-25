@@ -416,6 +416,7 @@ namespace BankTeacher.Bank.Add_Member
                                 MessageBox.Show("ยกเลิกผู้ใช้สำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 CheckSave = true;
                                 CheckBCancel = true;
+                                TBNote.Text = "";
                                 Checkmember(true);
                                 BSave.Enabled = false;
                                 TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Delete));
