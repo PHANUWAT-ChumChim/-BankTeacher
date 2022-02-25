@@ -100,9 +100,9 @@ namespace BankTeacher.Bank.Loan
           " LEFT JOIN EmployeeBank.dbo.tblBill as c on b.BillNo = c.BillNo  \r\n " +
           " WHERE a.LoanNo = '{LoanID}' and TypeNo = '2' and Cancel != 0;  \r\n" +
           " \r\n" +
-          "SELECT ROUND((b.LoanAmount / 100) * b.InterestRate + b.LoanAmount,0) as LoanAmount  \r\n" +
+          "SELECT CEILING((b.LoanAmount / 100) * b.InterestRate + b.LoanAmount) as LoanAmount  \r\n" +
           ",SUM(a.RemainsAmount) as totelLoan  \r\n" +
-          ",IIF(LoanAmount != SUM(a.RemainsAmount),ROUND((b.LoanAmount / 100) * b.InterestRate + b.LoanAmount,0)-SUM(a.RemainsAmount),SUM(a.RemainsAmount)) AS TotelpayLoan  \r\n" +
+          ",IIF(LoanAmount != SUM(a.RemainsAmount),CEILING((b.LoanAmount / 100) * b.InterestRate + b.LoanAmount)-SUM(a.RemainsAmount),SUM(a.RemainsAmount)) AS TotelpayLoan  \r\n" +
           ",ROUND(((b.LoanAmount / 100) * b.InterestRate + b.LoanAmount) / b.PayNo,0) as payall  \r\n" +
           "FROM EmployeeBank.dbo.tblGuarantor as a  \r\n" +
           "LEFT JOIN EmployeeBank.dbo.tblLoan as b on a.LoanNo = b.LoanNo  \r\n" +
@@ -572,10 +572,10 @@ namespace BankTeacher.Bank.Loan
                     info_name = TBTeacherName.Text;
                     info_id = TBTeacherNo.Text;
                     info_Loanid = TBLoanNo.Text;
-                    info_Sum =  Convert.ToInt32(ds.Tables[2].Rows[0][0].ToString());
+                    info_Sum = (float)Convert.ToDouble(TBLoanAmount_Deatail.Text);
                     info_Loanpayall = ds.Tables[2].Rows[0][2].ToString();
-                    info_startdate = ds.Tables[0].Rows[0][2].ToString();
-                    info_duedate = ds.Tables[0].Rows[0][13].ToString();
+                    info_startdate = Convert.ToDateTime(ds.Tables[0].Rows[0][2].ToString()).ToString("dd/MM/yyyy");
+                    info_duedate = Convert.ToDateTime(ds.Tables[0].Rows[0][13].ToString()).ToString("dd/MM/yyyy");
                     info_totelLoan = ds.Tables[2].Rows[0][1].ToString();
                     // ตารางที่ 3
                     //TB_LoanAmount.Text = ds.Tables[2].Rows[0][0].ToString();
@@ -596,9 +596,9 @@ namespace BankTeacher.Bank.Loan
                     if(dt.Rows[0][1].ToString() == "") 
                     { 
                         date = "รอดำเนินการ";
-                        BTUploadFile.Enabled = false;
-                        BTRemoveFile.Enabled = false;
-                        BTOpenFile.Enabled = false;
+                        //BTUploadFile.Enabled = false;
+                        //BTRemoveFile.Enabled = false;
+                        //BTOpenFile.Enabled = false;
                     } 
                     else 
                     { 
@@ -631,7 +631,7 @@ namespace BankTeacher.Bank.Loan
             }
             else
             {
-                Class.Print.PrintPreviewDialog.details = 1;
+                Class.Print.PrintPreviewDialog.details = 2;
                 Class.Print.PrintPreviewDialog.PrintReportGrid(e, DGV_Historyloanpay, "เอกสารการจ่ายกู้", this.AccessibilityObject.Name,checkBox_scrip.Checked,checkBox_copy.Checked, "A4",0);
             }
             Class.Print.PrintPreviewDialog.details = 0;

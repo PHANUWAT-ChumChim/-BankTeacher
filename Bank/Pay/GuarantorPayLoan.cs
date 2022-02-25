@@ -938,7 +938,10 @@ namespace BankTeacher.Bank.Pay
                     printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                     printDocument1.DefaultPageSettings.Landscape = true;
                     Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(Convert.ToInt32(dt.Rows[0][1]) - Convert.ToInt32(dt.Rows[0][2])).ToString("N0");
-                    Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = Convert.ToInt32(dt.Rows[0][2]).ToString("N0");
+                    if(dt.Rows[0][2].ToString() != "")
+                    {
+                        Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = Convert.ToInt32(dt.Rows[0][2]).ToString("N0");
+                    }
                     Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
                     Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
                     Class.Print.PrintPreviewDialog.info_TeacherAdd = Class.UserInfo.TeacherName;
