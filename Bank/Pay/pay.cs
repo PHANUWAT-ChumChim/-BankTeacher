@@ -1648,7 +1648,11 @@ namespace BankTeacher.Bank.Pay
                    "WHERE a.TeacherNo = '{TeacherNo}' \r\n".Replace("{TeacherNo}", TBTeacherNo.Text) +
                    "GROUP BY  a.TeacherNo, a.SavingAmount");                    
                     Class.Print.PrintPreviewDialog.info_Savingtotel = Convert.ToInt32(dt.Rows[0][1]).ToString("N0");
-                    Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = Convert.ToInt32(dt.Rows[0][2]).ToString("N0");
+                    if (dt.Rows[0][2].ToString() != "")
+                    {
+                        Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = Convert.ToInt32(dt.Rows[0][2]).ToString("N0");
+
+                    }
                     Class.Print.PrintPreviewDialog.info_datepayShare = DateTime.Today.Day.ToString() + '/' + DateTime.Today.Month.ToString() + '/' + DateTime.Today.Year.ToString();
                     printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                     printDocument1.DefaultPageSettings.Landscape = true;
@@ -2471,7 +2475,10 @@ namespace BankTeacher.Bank.Pay
                     "LEFT JOIN EmployeeBank.dbo.tblGuarantor as b on a.TeacherNo = b.TeacherNo \r\n" +
                     "WHERE a.TeacherNo = '{TeacherNo}' \r\n".Replace("{TeacherNo}", TBTeacherNo.Text) +
                     "GROUP BY  a.TeacherNo, a.SavingAmount");
-                    Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = Convert.ToInt32(dt_infoAmount.Rows[0][2]).ToString("N0");
+                    if(dt_infoAmount.Rows[0][2].ToString() != "")
+                    {
+                        Class.Print.PrintPreviewDialog.info_Lona_AmountRemain = Convert.ToInt32(dt_infoAmount.Rows[0][2]).ToString("N0");
+                    }
                     Class.Print.PrintPreviewDialog.info_Billpay = DGV_BillInfo.Rows[Rows].Cells[1].Value.ToString();
                     DataTable dt_date = Class.SQLConnection.InputSQLMSSQL(SQLDefault[16].Replace("{Bill}", DGV_BillInfo.Rows[Rows].Cells[1].Value.ToString()));
                     Class.Print.PrintPreviewDialog.info_datepayShare = dt_date.Rows[0][1].ToString();

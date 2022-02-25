@@ -560,9 +560,7 @@ namespace BankTeacher.Class.Print
                 if (Bank.Loan.InfoLoan.how_many_laps >= 3)
                 {
                     all_paper += 1;
-                    details = 0;
                 }
-                else { details = 0; }
                 Size = e.Graphics.MeasureString($"หน้า {pagepaper}/{all_paper.ToString()} ", Font(16, ThaiSarabun, FontStyle.Bold));
                 e.Graphics.DrawString($"หน้า {pagepaper}/{all_paper.ToString()} ", Font(16, ThaiSarabun, FontStyle.Bold), BrushBlack, Line2_x - Size.Width, 30);
                 
@@ -626,7 +624,7 @@ namespace BankTeacher.Class.Print
                 if (onetimestartColumns == 0)
                 {
                     //========================================================= Check Form for Print ตวรจสอบข้อความที่จะปริ้นในหน้านั้นๆ
-                    if (TextForm == "InfoLoan" && details != 1)
+                    if (TextForm == "InfoLoan" && details == 1)
                     {
                         string infomember = $"ชื่อ-นามสกุล : {Bank.Loan.InfoLoan.info_name}            รหัสประจำตัว : {Bank.Loan.InfoLoan.info_id}            เลขที่สัญญากู้ : {Bank.Loan.InfoLoan.info_Loanid}\r\n" +
                                            $"ยอดเงินค้ำ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Convert.ToDouble(Bank.Loan.InfoLoan.Amount[0])))} บาท                      เปอร์เซ็นต์ค้ำ : {Bank.Loan.InfoLoan.Percent[0]}%\r\n" +
@@ -683,14 +681,14 @@ namespace BankTeacher.Class.Print
                         string Remain;
                         if (info_Lona_AmountRemain != "")
                         {
-                            Remain = $"ยอดกู้คงเหลือทั้งหมด : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_Lona_AmountRemain))}";
+                            Remain = $"ยอดกู้คงเหลือทั้งหมด : {info_Lona_AmountRemain}";
                         }
                         else
                         {
                             Remain = "";
                         }
                         string infopay = $"ชื่อ-นามสกุล : {info_name}            รหัสประจำตัว : {info_id}           \r\n" +
-                                         $"หุ้นสะสมทั้งหมดก่อนเเละหลัง : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_Savingtotel))}            {Remain}        ";
+                                         $"หุ้นสะสมทั้งหมดก่อนเเละหลัง : {info_Savingtotel}            {Remain}        ";
                         // กรอบ อร่อยต้อง Rectangle
                         Size = e.Graphics.MeasureString(infopay, Font(18, ThaiSarabun, FontStyle.Regular));
                         //// กรอบ
