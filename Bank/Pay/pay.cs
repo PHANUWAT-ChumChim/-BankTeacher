@@ -1368,8 +1368,13 @@ namespace BankTeacher.Bank.Pay
         private void DGV_Pay_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
             if (Int32.TryParse(DGV_Pay.Rows[e.RowIndex].Cells[2].Value.ToString(), out int Amount))
-                if (Amount >= BankTeacher.Bank.Menu.startAmountMin)
+                if (Amount >= BankTeacher.Bank.Menu.startAmountMin && Amount <= BankTeacher.Bank.Menu.startAmountMax)
                     Summoney();
+                else if (Amount > BankTeacher.Bank.Menu.startAmountMax)
+                {
+                    DGV_Pay.Rows[e.RowIndex].Cells[2].Value = "500";
+                    MessageBox.Show($"จำนวนเงินที่ระบุเกินกำหนด ขั้นสูงในการจ่ายอยู่ที่ {BankTeacher.Bank.Menu.startAmountMax} บาท. \r\n", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
                 else
                 {
                     DGV_Pay.Rows[e.RowIndex].Cells[2].Value = "500";
@@ -1405,7 +1410,7 @@ namespace BankTeacher.Bank.Pay
                         {
                             if (Int32.TryParse(TBAmount_Pay.Text, out int x) && x > 0)
                             {
-                                if (x >= BankTeacher.Bank.Menu.startAmountMin && CBList_Pay.Items[CBList_Pay.SelectedIndex].ToString().Contains("หุ้นสะสม"))
+                                if (x >= BankTeacher.Bank.Menu.startAmountMin && x <= BankTeacher.Bank.Menu.startAmountMax  && CBList_Pay.Items[CBList_Pay.SelectedIndex].ToString().Contains("หุ้นสะสม"))
                                 {
                                     BankTeacher.Class.ComboBoxPay Loan = (CBList_Pay.SelectedItem as BankTeacher.Class.ComboBoxPay);
                                     String Time = CBYearSelection_Pay.Text + "/" + CBMonthSelection_Pay.Text;
@@ -1451,6 +1456,10 @@ namespace BankTeacher.Bank.Pay
                                 else if (x < BankTeacher.Bank.Menu.startAmountMin && CBList_Pay.Items[CBList_Pay.SelectedIndex].ToString().Contains("หุ้นสะสม"))
                                 {
                                     MessageBox.Show($"จำนวนเงินที่ระบุต่ำเกินไป ขั้นต่ำในการจ่ายอยู่ที่ {BankTeacher.Bank.Menu.startAmountMin} บาท. \r\n", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                }
+                                else if (x > BankTeacher.Bank.Menu.startAmountMax && CBList_Pay.Items[CBList_Pay.SelectedIndex].ToString().Contains("หุ้นสะสม"))
+                                {
+                                    MessageBox.Show($"จำนวนเงินที่ระบุเกินกำหนด ขั้นสูงสุดในการจ่ายอยู่ที่ {BankTeacher.Bank.Menu.startAmountMax} บาท. \r\n", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                                 }
                                 else
                                 {
@@ -1654,6 +1663,7 @@ namespace BankTeacher.Bank.Pay
 
                     }
                     Class.Print.PrintPreviewDialog.info_datepayShare = DateTime.Today.Day.ToString() + '/' + DateTime.Today.Month.ToString() + '/' + DateTime.Today.Year.ToString();
+                    Class.Print.PrintPreviewDialog.info_Billpay = TBTeacherBill.Text;
                     printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
                     printDocument1.DefaultPageSettings.Landscape = true;
                     Class.Print.PrintPreviewDialog.info_Payment = CBPayment_Pay.Items[CBPayment_Pay.SelectedIndex].ToString();
@@ -2769,24 +2779,9 @@ namespace BankTeacher.Bank.Pay
                 }
             }
         }
-
-        private void CBYearSelection_BillInfo_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
         private void TBAmount_Pay_TextChanged(object sender, EventArgs e)
         {
-            if (int.TryParse(TBAmount_Pay.Text, out _))
-                if (Convert.ToInt32(TBAmount_Pay.Text) <= 100000)
-                {
-                    BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBAmount_Pay);
-                }
-                else
-                {
-                    TBAmount_Pay.Text = $"{Bank.Menu.startAmountMax}";
-                    MessageBox.Show("ยอดที่ฝากได้สุดสุง ตั้งเเต่ 1-1000000 บาท เป็นต้นไป");
-                }
+            BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBAmount_Pay);
         }
 
         private void DTPDate_ValueChanged(object sender, EventArgs e)

@@ -16,7 +16,7 @@ namespace BankTeacher.Bank
     public partial class Menu : Form
     {
         //============================== Time Servers SQL ========================================
-        public static DataTable Date_Time_SQL_Now = Class.SQLConnection.InputSQLMSSQL("SELECT FORMAT (getdate(), 'dd-MM-yy') as date,YEAR(GETDATE()) as Year,MONTH(GETDATE()) as Month, CAST(GETDATE() as time) as Time;");
+        public static DataTable Date_Time_SQL_Now = Class.SQLConnection.InputSQLMSSQL("SELECT FORMAT (getdate(), 'dd-MM-yyyy') as date,YEAR(GETDATE()) as Year,MONTH(GETDATE()) as Month, CAST(GETDATE() as time) as Time;");
         public static int MenuEnabled;
         public static int startAmountMin;
         public static int startAmountMax;
