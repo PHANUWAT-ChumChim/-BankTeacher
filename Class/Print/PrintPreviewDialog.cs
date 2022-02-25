@@ -606,7 +606,7 @@ namespace BankTeacher.Class.Print
                 // =========================================================== ตารางบอก หลายการข้อมูล (กล่อง) ============================================
                 if (TextForm == "InfoLoan")
                 {
-                    Class.Print.SetPrintMedtods.Box(e, "เริ่ม", "สิ้นสุด",Convert.ToDateTime(Bank.Loan.InfoLoan.info_startdate).ToString("dd/MM/yyyy"),Convert.ToDateTime(Bank.Loan.InfoLoan.info_duedate).ToString("dd/MM/yyyy"), Box_SizeX, Box_SizeY, location_Box, Line2_x);
+                    Class.Print.SetPrintMedtods.Box(e, "เริ่ม", "สิ้นสุด",Bank.Loan.InfoLoan.info_startdate,Bank.Loan.InfoLoan.info_duedate, Box_SizeX, Box_SizeY, location_Box, Line2_x);
                 }
                 else if (TextForm == "pay" || TextForm == "GuarantorPayLoan" && details != 1)
                 {
@@ -628,7 +628,7 @@ namespace BankTeacher.Class.Print
                     {
                         string infomember = $"ชื่อ-นามสกุล : {Bank.Loan.InfoLoan.info_name}            รหัสประจำตัว : {Bank.Loan.InfoLoan.info_id}            เลขที่สัญญากู้ : {Bank.Loan.InfoLoan.info_Loanid}\r\n" +
                                            $"ยอดเงินค้ำ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Convert.ToDouble(Bank.Loan.InfoLoan.Amount[0])))} บาท                      เปอร์เซ็นต์ค้ำ : {Bank.Loan.InfoLoan.Percent[0]}%\r\n" +
-                                           $"ยอดที่กู้ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Convert.ToDouble(Bank.Loan.InfoLoan.info_Sum)))} บาท                   ยอดคงเหลือ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Convert.ToDouble(Bank.Loan.InfoLoan.info_totelLoan)))} บาท                   ยอดที่ชำระ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Convert.ToDouble(Bank.Loan.InfoLoan.info_Loanpayall)))}";
+                                           $"ยอดที่กู้ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Convert.ToDouble(Bank.Loan.InfoLoan.info_Sum)))} บาท                   ยอดรวมคงหลือรวมดอกเบี้ย : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Convert.ToDouble(Bank.Loan.InfoLoan.info_totelLoan)))} บาท                   ยอดที่ชำระ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Convert.ToDouble(Bank.Loan.InfoLoan.info_Loanpayall)))}";
                         // กรอบ อร่อยต้อง Rectangle พูดอีกอย่างคือ ขนาดข้อความ
                         Size = e.Graphics.MeasureString(infomember, Font(18, ThaiSarabun, FontStyle.Regular));
                         // กรอบ
