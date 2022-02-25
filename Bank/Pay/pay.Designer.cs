@@ -1636,7 +1636,6 @@ namespace BankTeacher.Bank.Pay
             this.CBYearSelection_BillInfo.Size = new System.Drawing.Size(192, 39);
             this.CBYearSelection_BillInfo.TabIndex = 84;
             this.CBYearSelection_BillInfo.SelectedIndexChanged += new System.EventHandler(this.CBYearSelect_BillInfo_SelectedIndexChanged);
-            this.CBYearSelection_BillInfo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.CBYearSelection_BillInfo_KeyDown);
             // 
             // panel4
             // 

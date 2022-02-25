@@ -606,19 +606,19 @@ namespace BankTeacher.Class.Print
                 // =========================================================== ตารางบอก หลายการข้อมูล (กล่อง) ============================================
                 if (TextForm == "InfoLoan")
                 {
-                    Class.Print.SetPrintMedtods.Box(e, "เริ่ม", "สิ้นสุด", Bank.Loan.InfoLoan.info_startdate, Bank.Loan.InfoLoan.info_duedate, Box_SizeX, Box_SizeY, location_Box, Line2_x);
+                    Class.Print.SetPrintMedtods.Box(e, "เริ่ม", "สิ้นสุด",Convert.ToDateTime(Bank.Loan.InfoLoan.info_startdate).ToString("dd/MM/yyyy"),Convert.ToDateTime(Bank.Loan.InfoLoan.info_duedate).ToString("dd/MM/yyyy"), Box_SizeX, Box_SizeY, location_Box, Line2_x);
                 }
                 else if (TextForm == "pay" || TextForm == "GuarantorPayLoan" && details != 1)
                 {
-                    Class.Print.SetPrintMedtods.Box(e, "เลขบิลล์", "จ่ายวันที่",info_Billpay,info_datepayShare, Box_SizeX, Box_SizeY, location_Box, Line2_x);
+                    Class.Print.SetPrintMedtods.Box(e, "เลขบิลล์", "จ่ายวันที่",info_Billpay,Convert.ToDateTime(info_datepayShare).ToString("dd/MM/yyyy"), Box_SizeX, Box_SizeY, location_Box, Line2_x);
                 }
                 else if(TextForm == "AmountOff" && details != 1)
                 {
-                    Class.Print.SetPrintMedtods.Box(e, "เลขบิลล์", "จ่ายวันที่",info_BillAmounoff,info_datepayAmounoff, Box_SizeX, Box_SizeY, location_Box, Line2_x);       
+                    Class.Print.SetPrintMedtods.Box(e, "เลขบิลล์", "จ่ายวันที่",info_BillAmounoff,Convert.ToDateTime(info_datepayAmounoff).ToString("dd/MM/yyyy"), Box_SizeX, Box_SizeY, location_Box, Line2_x);       
                 }
                 else if(TextForm == "PayLoan")
                 {
-                    Class.Print.SetPrintMedtods.Box(e, "เลขบิลล์", "จ่ายวันที่",info_PayLoanBill,info_PayLoandate, Box_SizeX, Box_SizeY, location_Box, Line2_x);
+                    Class.Print.SetPrintMedtods.Box(e, "เลขบิลล์", "จ่ายวันที่",info_PayLoanBill,Convert.ToDateTime(info_PayLoandate).ToString("dd/MM/yyyy"), Box_SizeX, Box_SizeY, location_Box, Line2_x);
                 }
                 // ======================== เปิดการวาด Columns รอบเดียว ======================
                 if (onetimestartColumns == 0)
