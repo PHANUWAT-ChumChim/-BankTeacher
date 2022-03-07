@@ -275,5 +275,11 @@ namespace BankTeacher.Bank
             BankTeacher.Bank.Pay.GuarantorPayLoan GPL = new BankTeacher.Bank.Pay.GuarantorPayLoan();
             CloseFrom(GPL);
         }
+
+        private void Menu_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            System.Diagnostics.Process.GetCurrentProcess().Kill();
+            Application.Exit();
+        }
     }
 }

@@ -41,9 +41,9 @@ namespace BankTeacher.Class.ProtocolSharing
 
             public FileZillaConnection(String location)
             {
-                System.IO.Directory.CreateDirectory(@"C:\BankTeacher\RegMember\");
-                System.IO.Directory.CreateDirectory(@"C:\BankTeacher\Loan\");
-                System.IO.Directory.CreateDirectory(@"C:\BankTeacher\CancelMember\");
+                System.IO.Directory.CreateDirectory(@"C:\Project\BankTeacher\RegMember\");
+                System.IO.Directory.CreateDirectory(@"C:\Project\BankTeacher\Loan\");
+                System.IO.Directory.CreateDirectory(@"C:\Project\BankTeacher\CancelMember\");
 
                 StatusReturn = false;
                 PathFile = this.networkPath = $"/{Folder}/{location}/";
@@ -327,11 +327,11 @@ namespace BankTeacher.Class.ProtocolSharing
                         {
                             String ThisPcFilePath = "";
                             if (Location.Contains("RegMember"))
-                                ThisPcFilePath = @"C:\BankTeacher\RegMember\";
+                                ThisPcFilePath = @"C:\Project\BankTeacher\RegMember\";
                             else if (Location.Contains("Loan"))
-                                ThisPcFilePath = @"C:\BankTeacher\Loan\";
+                                ThisPcFilePath = @"C:\Project\BankTeacher\Loan\";
                             else if (Location.Contains("CancelMember"))
-                                ThisPcFilePath = @"C:\BankTeacher\CancelMember\";
+                                ThisPcFilePath = @"C:\Project\BankTeacher\CancelMember\";
                             try
                             {
                                 session.GetFileToDirectory(PathFile + filename, ThisPcFilePath);
@@ -422,11 +422,11 @@ namespace BankTeacher.Class.ProtocolSharing
                         {
                             String ThisPcFilePath = "";
                             if (Foldertarget.Contains("RegMember"))
-                                ThisPcFilePath = @"C:\BankTeacher\RegMember\";
+                                ThisPcFilePath = @"C:\Project\BankTeacher\RegMember\";
                             else if (Foldertarget.Contains("Loan"))
-                                ThisPcFilePath = @"C:\BankTeacher\Loan\";
+                                ThisPcFilePath = @"C:\Project\BankTeacher\Loan\";
                             else if (Foldertarget.Contains("CancelMember"))
-                                ThisPcFilePath = @"C:\BankTeacher\CancelMember\";
+                                ThisPcFilePath = @"C:\Project\BankTeacher\CancelMember\";
 
                             TransferOptions transferOptions = new TransferOptions();
                             transferOptions.TransferMode = TransferMode.Binary;
