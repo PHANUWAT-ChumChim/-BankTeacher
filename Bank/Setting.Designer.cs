@@ -30,6 +30,7 @@ namespace BankTeacher.Bank
         private void InitializeComponent()
         {
             this.P1 = new System.Windows.Forms.Panel();
+            this.BExitForm = new System.Windows.Forms.Button();
             this.LBsetting = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -51,26 +52,49 @@ namespace BankTeacher.Bank
             this.button1 = new System.Windows.Forms.Button();
             this.CHB_edittime = new System.Windows.Forms.CheckBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.BExceltoSQL = new System.Windows.Forms.Button();
             this.DowloadFIleExcel = new System.Windows.Forms.Button();
-            this.BExitForm = new System.Windows.Forms.Button();
+            this.BExceltoSQL = new System.Windows.Forms.Button();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.ServerGif = new System.Windows.Forms.PictureBox();
+            this.DBGif = new System.Windows.Forms.PictureBox();
+            this.BT_Check2 = new System.Windows.Forms.Button();
+            this.BT_Check1 = new System.Windows.Forms.Button();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.P1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.ตั้งการเเก้ไขเวลา.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ServerGif)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DBGif)).BeginInit();
             this.SuspendLayout();
             // 
             // P1
             // 
             this.P1.BackColor = System.Drawing.Color.White;
+            this.P1.Controls.Add(this.BExitForm);
             this.P1.Controls.Add(this.LBsetting);
             this.P1.Controls.Add(this.tabControl1);
             this.P1.Location = new System.Drawing.Point(157, 54);
-            this.P1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.P1.Margin = new System.Windows.Forms.Padding(2);
             this.P1.Name = "P1";
-            this.P1.Size = new System.Drawing.Size(549, 534);
+            this.P1.Size = new System.Drawing.Size(621, 534);
             this.P1.TabIndex = 99;
+            // 
+            // BExitForm
+            // 
+            this.BExitForm.BackgroundImage = global::BankTeacher.Properties.Resources.logout;
+            this.BExitForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BExitForm.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.BExitForm.Location = new System.Drawing.Point(537, 444);
+            this.BExitForm.Name = "BExitForm";
+            this.BExitForm.Size = new System.Drawing.Size(73, 66);
+            this.BExitForm.TabIndex = 100;
+            this.BExitForm.TabStop = false;
+            this.BExitForm.UseVisualStyleBackColor = true;
+            this.BExitForm.Click += new System.EventHandler(this.BExitForm_Click);
             // 
             // LBsetting
             // 
@@ -88,9 +112,10 @@ namespace BankTeacher.Bank
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.ตั้งการเเก้ไขเวลา);
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tabControl1.Location = new System.Drawing.Point(24, 75);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(508, 435);
@@ -114,9 +139,9 @@ namespace BankTeacher.Bank
             this.tabPage2.Controls.Add(this.TB_Max);
             this.tabPage2.Controls.Add(this.TB_Min);
             this.tabPage2.Location = new System.Drawing.Point(4, 39);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(2);
             this.tabPage2.Size = new System.Drawing.Size(500, 392);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "หุ้น";
@@ -290,9 +315,9 @@ namespace BankTeacher.Bank
             this.ตั้งการเเก้ไขเวลา.Controls.Add(this.button1);
             this.ตั้งการเเก้ไขเวลา.Controls.Add(this.CHB_edittime);
             this.ตั้งการเเก้ไขเวลา.Location = new System.Drawing.Point(4, 39);
-            this.ตั้งการเเก้ไขเวลา.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ตั้งการเเก้ไขเวลา.Margin = new System.Windows.Forms.Padding(2);
             this.ตั้งการเเก้ไขเวลา.Name = "ตั้งการเเก้ไขเวลา";
-            this.ตั้งการเเก้ไขเวลา.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ตั้งการเเก้ไขเวลา.Padding = new System.Windows.Forms.Padding(2);
             this.ตั้งการเเก้ไขเวลา.Size = new System.Drawing.Size(500, 392);
             this.ตั้งการเเก้ไขเวลา.TabIndex = 2;
             this.ตั้งการเเก้ไขเวลา.Text = "ตั้งค่าขั้นสูง";
@@ -302,7 +327,7 @@ namespace BankTeacher.Bank
             // 
             this.button1.BackColor = System.Drawing.Color.Red;
             this.button1.Location = new System.Drawing.Point(18, 316);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(134, 58);
             this.button1.TabIndex = 16;
@@ -315,8 +340,8 @@ namespace BankTeacher.Bank
             // 
             this.CHB_edittime.AutoSize = true;
             this.CHB_edittime.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CHB_edittime.Location = new System.Drawing.Point(18, 16);
-            this.CHB_edittime.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.CHB_edittime.Location = new System.Drawing.Point(18, 22);
+            this.CHB_edittime.Margin = new System.Windows.Forms.Padding(2);
             this.CHB_edittime.Name = "CHB_edittime";
             this.CHB_edittime.Size = new System.Drawing.Size(152, 34);
             this.CHB_edittime.TabIndex = 8;
@@ -336,6 +361,17 @@ namespace BankTeacher.Bank
             this.tabPage1.Text = "นำข้อมูลเข้า";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // DowloadFIleExcel
+            // 
+            this.DowloadFIleExcel.Location = new System.Drawing.Point(12, 13);
+            this.DowloadFIleExcel.Name = "DowloadFIleExcel";
+            this.DowloadFIleExcel.Size = new System.Drawing.Size(270, 44);
+            this.DowloadFIleExcel.TabIndex = 0;
+            this.DowloadFIleExcel.TabStop = false;
+            this.DowloadFIleExcel.Text = "ดาวโหลดแบบฟอร์ม Excel นำเข้าข้อมูล";
+            this.DowloadFIleExcel.UseVisualStyleBackColor = true;
+            this.DowloadFIleExcel.Click += new System.EventHandler(this.DowloadFIleExcel_Click);
+            // 
             // BExceltoSQL
             // 
             this.BExceltoSQL.Enabled = false;
@@ -348,29 +384,77 @@ namespace BankTeacher.Bank
             this.BExceltoSQL.UseVisualStyleBackColor = true;
             this.BExceltoSQL.Click += new System.EventHandler(this.BExceltoSQL_Click);
             // 
-            // DowloadFIleExcel
+            // tabPage3
             // 
-            this.DowloadFIleExcel.Location = new System.Drawing.Point(12, 13);
-            this.DowloadFIleExcel.Name = "DowloadFIleExcel";
-            this.DowloadFIleExcel.Size = new System.Drawing.Size(270, 44);
-            this.DowloadFIleExcel.TabIndex = 0;
-            this.DowloadFIleExcel.TabStop = false;
-            this.DowloadFIleExcel.Text = "ดาวโหลดแบบฟอร์ม Excel นำเข้าข้อมูล";
-            this.DowloadFIleExcel.UseVisualStyleBackColor = true;
-            this.DowloadFIleExcel.Click += new System.EventHandler(this.DowloadFIleExcel_Click);
+            this.tabPage3.BackColor = System.Drawing.Color.White;
+            this.tabPage3.Controls.Add(this.ServerGif);
+            this.tabPage3.Controls.Add(this.DBGif);
+            this.tabPage3.Controls.Add(this.BT_Check2);
+            this.tabPage3.Controls.Add(this.BT_Check1);
+            this.tabPage3.Controls.Add(this.label10);
+            this.tabPage3.Controls.Add(this.label9);
+            this.tabPage3.Location = new System.Drawing.Point(4, 39);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(500, 392);
+            this.tabPage3.TabIndex = 4;
+            this.tabPage3.Text = "ตรวจสอยการเชื่อมต่อ";
             // 
-            // BExitForm
+            // ServerGif
             // 
-            this.BExitForm.BackgroundImage = global::BankTeacher.Properties.Resources.logout;
-            this.BExitForm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BExitForm.ImageAlign = System.Drawing.ContentAlignment.TopLeft;
-            this.BExitForm.Location = new System.Drawing.Point(787, 544);
-            this.BExitForm.Name = "BExitForm";
-            this.BExitForm.Size = new System.Drawing.Size(73, 66);
-            this.BExitForm.TabIndex = 100;
-            this.BExitForm.TabStop = false;
-            this.BExitForm.UseVisualStyleBackColor = true;
-            this.BExitForm.Click += new System.EventHandler(this.BExitForm_Click);
+            this.ServerGif.Location = new System.Drawing.Point(313, 86);
+            this.ServerGif.Name = "ServerGif";
+            this.ServerGif.Size = new System.Drawing.Size(90, 46);
+            this.ServerGif.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.ServerGif.TabIndex = 5;
+            this.ServerGif.TabStop = false;
+            // 
+            // DBGif
+            // 
+            this.DBGif.Location = new System.Drawing.Point(313, 27);
+            this.DBGif.Name = "DBGif";
+            this.DBGif.Size = new System.Drawing.Size(90, 46);
+            this.DBGif.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.DBGif.TabIndex = 4;
+            this.DBGif.TabStop = false;
+            // 
+            // BT_Check2
+            // 
+            this.BT_Check2.Location = new System.Drawing.Point(132, 86);
+            this.BT_Check2.Name = "BT_Check2";
+            this.BT_Check2.Size = new System.Drawing.Size(175, 46);
+            this.BT_Check2.TabIndex = 3;
+            this.BT_Check2.Text = "Check";
+            this.BT_Check2.UseVisualStyleBackColor = true;
+            this.BT_Check2.Click += new System.EventHandler(this.BT_Check2_Click);
+            // 
+            // BT_Check1
+            // 
+            this.BT_Check1.Location = new System.Drawing.Point(132, 27);
+            this.BT_Check1.Name = "BT_Check1";
+            this.BT_Check1.Size = new System.Drawing.Size(175, 46);
+            this.BT_Check1.TabIndex = 2;
+            this.BT_Check1.Text = "Check";
+            this.BT_Check1.UseVisualStyleBackColor = true;
+            this.BT_Check1.Click += new System.EventHandler(this.BT_Check1_Click);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(7, 94);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(119, 30);
+            this.label10.TabIndex = 1;
+            this.label10.Text = "ServerSendFile";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(7, 35);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(82, 30);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "Database";
             // 
             // Setting
             // 
@@ -378,14 +462,14 @@ namespace BankTeacher.Bank
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(914, 642);
-            this.Controls.Add(this.BExitForm);
             this.Controls.Add(this.P1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Setting";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Setting";
+            this.SizeChanged += new System.EventHandler(this.Setting_SizeChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Setting_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Setting_KeyUp);
             this.P1.ResumeLayout(false);
@@ -396,6 +480,10 @@ namespace BankTeacher.Bank
             this.ตั้งการเเก้ไขเวลา.ResumeLayout(false);
             this.ตั้งการเเก้ไขเวลา.PerformLayout();
             this.tabPage1.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ServerGif)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DBGif)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -427,5 +515,12 @@ namespace BankTeacher.Bank
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Button BExceltoSQL;
         private System.Windows.Forms.Button DowloadFIleExcel;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.PictureBox DBGif;
+        private System.Windows.Forms.Button BT_Check2;
+        private System.Windows.Forms.Button BT_Check1;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.PictureBox ServerGif;
     }
 }

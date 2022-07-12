@@ -285,7 +285,7 @@ namespace BankTeacher.Class.Print
             // เส้น
             e.Graphics.DrawRectangle(pen, x, y, SizeSUM.Width, SizeSUM.Height);
             // ตัวเลข
-            e.Graphics.DrawString($"{comma(sum).ToString()} บาท", Class.Print.PrintPreviewDialog.Font(18, "TH Sarabun New", FontStyle.Bold), B, ((Sizepaper - 50) - SizeSUM.Width) / 2 + SizeSUM.Width, y);
+            e.Graphics.DrawString($"{sum.ToString("N0")} บาท", Class.Print.PrintPreviewDialog.Font(18, "TH Sarabun New", FontStyle.Bold), B, ((Sizepaper - 50) - SizeSUM.Width) / 2 + SizeSUM.Width, y);
             // เส้น
             e.Graphics.DrawRectangle(pen, SizeSUM.Width + x, y, (Sizepaper-50) - SizeSUM.Width, SizeSUM.Height);
         }

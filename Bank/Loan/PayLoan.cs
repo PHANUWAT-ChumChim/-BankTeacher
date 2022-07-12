@@ -279,86 +279,66 @@ namespace BankTeacher.Bank.Loan
         {
             BankTeacher.Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("Loan");
             DialogResult SaveCheck = MessageBox.Show("ยืนยันการจ่ายเงิน", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-            if (SaveCheck == DialogResult.Yes && CBPayment.SelectedIndex != -1)
-            {
-                try
-                {
-                    if (PathFile != "" && PathFile != null)
-                    {
-                        StatusEnableForm(false);
-                        CheckStatusWorking = true;
-                        FTP.FTPSendFile(PathFile, $"Loan{DGV_PayLoan.Rows[0].Cells[1].Value.ToString()}.pdf");
-                        if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
-                        {
-                            bool Yes = true;
-                            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text));
-                            if(dt.Rows.Count > 0)
-                            {
-                                DialogResult Dr = MessageBox.Show("มีรายการ กู้ อยู่ในระบบอยู่เเล้วคุณต้องการทำรายการเพิ่มหรือไม่", "กู้", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                                if(Dr == DialogResult.Yes)
-                                {
-                                    Yes = true;
-                                }
-                                else { Yes = false; }
-                            }
-                            if (Yes)
-                            {
-                                String Date = DTPDate.Value.ToString("yyyy:MM:dd");
-                                Date = Date.Replace(":", "/");
-                                BankTeacher.Class.ComboBoxPayment Payment = (CBPayment.SelectedItem as BankTeacher.Class.ComboBoxPayment);
-                                Class.SQLConnection.InputSQLMSSQL((SQLDefault[4] + "\r\n" + SQLDefault[7])
-                                    .Replace("{LoanID}", DGV_PayLoan.Rows[0].Cells[1].Value.ToString())
-                                    .Replace("{TeacherNoPay}", Class.UserInfo.TeacherNo)
-                                    .Replace("{PaymentNo}", Payment.No)
-                                    .Replace("{TeacherNo}",TBTeacherNo.Text)
-                                    .Replace("{TeacherNoAddBy}",Class.UserInfo.TeacherNo)
-                                    .Replace("{PathFile}",FTP.HostplusPathFile+ $"Loan{DGV_PayLoan.Rows[0].Cells[1].Value.ToString()}.pdf")
-                                    .Replace("{Date}" , Date));
-
-                                MessageBox.Show("ทำรายการสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                tabControl1.Enabled = false;
-                                printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
-                                printDocument1.DefaultPageSettings.Landscape = true;
-                                Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
-                                Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
-                                Class.Print.PrintPreviewDialog.info_TeacherAdd = Class.UserInfo.TeacherName;
-                                Class.Print.PrintPreviewDialog.info_Payment = CBPayment.SelectedItem.ToString();
-                                Class.Print.PrintPreviewDialog.info_PayLoanBill = DGV_PayLoan.Rows[0].Cells[1].Value.ToString();
-                                Class.Print.PrintPreviewDialog.info_PayLoandate = Bank.Menu.Date_Time_SQL_Now.Rows[0][0].ToString();
-                                panel5.Visible = false;
-                                printDocument1.DocumentName = $"TeacherID{TBTeacherNo.Text}_LoanNo{DGV_PayLoan.Rows[0].Cells[1].Value.ToString()}";
-                                printDocument1.Print();
-                                CheckSave = true;
-                                
-
-
-                            }
-                            else
-                            {
-                                MessageBox.Show("รายการได้ถูกยกเลิกเรียบร้อย", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                StatusEnableForm(true);
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("ทำรายการล้มเหลวโปรดลองใหม่อีกครั้ง","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
-                            StatusEnableForm(true);
-                        }
-                        PathFile = "";
-                        CheckStatusWorking = false;
-                    }
-                    else
-                    {
-                        MessageBox.Show("ทำรายการไม่สำเร็จ โปรดเลือกเอกสารก่อนทำรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }
-                catch
-                {
-                    MessageBox.Show("ทำรายการไม่สำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
+            if (SaveCheck == DialogResult.No)
+                return;
             else if (CBPayment.SelectedIndex == -1)
                 MessageBox.Show("ทำรายการไม่สำเร็จ โปรดระบุช่องทางการจ่ายเงิน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+          
+            if (PathFile == "" && PathFile == null)
+            {
+                MessageBox.Show("ทำรายการไม่สำเร็จ โปรดเลือกเอกสารก่อนทำรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            Cursor.Current = Cursors.WaitCursor;
+            StatusEnableForm(false);
+            CheckStatusWorking = true;
+            FTP.FTPSendFile(PathFile, $"Loan{DGV_PayLoan.Rows[0].Cells[1].Value.ToString()}.pdf");
+            if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn)
+            {
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[5].Replace("{TeacherNo}", TBTeacherNo.Text));
+                if(dt.Rows.Count > 0)
+                {
+                    if (MessageBox.Show("มีรายการ กู้ อยู่ในระบบอยู่เเล้วคุณต้องการทำรายการเพิ่มหรือไม่", "กู้", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.No)
+                    {
+                        StatusEnableForm(true);
+                        return;
+                    }
+                    String Date = DTPDate.Value.ToString("yyyy:MM:dd");
+                    Date = Date.Replace(":", "/");
+                    BankTeacher.Class.ComboBoxPayment Payment = (CBPayment.SelectedItem as BankTeacher.Class.ComboBoxPayment);
+                    Class.SQLConnection.InputSQLMSSQL((SQLDefault[4] + "\r\n" + SQLDefault[7])
+                        .Replace("{LoanID}", DGV_PayLoan.Rows[0].Cells[1].Value.ToString())
+                        .Replace("{TeacherNoPay}", Class.UserInfo.TeacherNo)
+                        .Replace("{PaymentNo}", Payment.No)
+                        .Replace("{TeacherNo}", TBTeacherNo.Text)
+                        .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
+                        .Replace("{PathFile}", FTP.HostplusPathFile + $"Loan{DGV_PayLoan.Rows[0].Cells[1].Value.ToString()}.pdf")
+                        .Replace("{Date}", Date));
+
+                    MessageBox.Show("ทำรายการสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    tabControl1.Enabled = false;
+                    printDocument1.DefaultPageSettings.PaperSize = new PaperSize("A4", 595, 842);
+                    printDocument1.DefaultPageSettings.Landscape = true;
+                    Class.Print.PrintPreviewDialog.info_id = TBTeacherNo.Text;
+                    Class.Print.PrintPreviewDialog.info_name = TBTeacherName.Text;
+                    Class.Print.PrintPreviewDialog.info_TeacherAdd = Class.UserInfo.TeacherName;
+                    Class.Print.PrintPreviewDialog.info_Payment = CBPayment.SelectedItem.ToString();
+                    Class.Print.PrintPreviewDialog.info_PayLoanBill = DGV_PayLoan.Rows[0].Cells[1].Value.ToString();
+                    Class.Print.PrintPreviewDialog.info_PayLoandate = Bank.Menu.Date_Time_SQL_Now.Rows[0][0].ToString();
+                    panel5.Visible = false;
+                    printDocument1.DocumentName = $"TeacherID{TBTeacherNo.Text}_LoanNo{DGV_PayLoan.Rows[0].Cells[1].Value.ToString()}";
+                    printDocument1.Print();
+                    CheckSave = true;
+                }
+            }
+            else
+            {
+                MessageBox.Show("ทำรายการล้มเหลวโปรดลองใหม่อีกครั้ง","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                StatusEnableForm(true);
+            }
+            PathFile = "";
+            CheckStatusWorking = false;
+            Cursor.Current = Cursors.Default;
         }
         private void BTOpenfile_Click(object sender, EventArgs e)
         {

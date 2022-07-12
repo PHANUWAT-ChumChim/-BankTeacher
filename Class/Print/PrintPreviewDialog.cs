@@ -59,7 +59,7 @@ namespace BankTeacher.Class.Print
         "FROM BaseData.dbo.tblSchoolInfo;");
         // ข้อมูลรายการ
         private static DataTable DT_ListType = Class.SQLConnection.InputSQLMSSQL("SELECT  TypeNo,TypeName FROM EmployeeBank.dbo.tblBillDetailType");
-        static Font THsarabun30 = new Font("TH Sarabun New", 30, FontStyle.Bold);
+        static Font THsarabun30 = new Font("", 30, FontStyle.Bold);
         static Font THsarabun18 = new Font("TH Sarabun New", 18, FontStyle.Bold);
         static Font THsarabun16 = new Font("TH Sarabun New", 16, FontStyle.Bold);
         static Font THsarabun14 = new Font("TH Sarabun New", 14, FontStyle.Bold);
@@ -145,8 +145,8 @@ namespace BankTeacher.Class.Print
 
             // ส่วนหัว
 
-            Class.Print.SetPrintMedtods.Center(e, Y + (SpacePerRow * CurrentRows++), "ใบสมัครสมาชิกสหกรณ์ครู", THsarabun30, BrushBlack);
-            Class.Print.SetPrintMedtods.Center(e, Y + (SpacePerRow * CurrentRows++), $"{DT.Rows[0][0].ToString()}", THsarabun30, BrushBlack);
+            Class.Print.SetPrintMedtods.Center(e, Y + (SpacePerRow * CurrentRows++), "ใบสมัครสมาชิกสหกรณ์ครู", THsarabun18, BrushBlack);
+            Class.Print.SetPrintMedtods.Center(e, Y + (SpacePerRow * CurrentRows++), $"{DT.Rows[0][0].ToString()}", THsarabun18, BrushBlack);
             // วันที่
             string MemberID = "สมาชิกเลขที่ " + dt.Rows[0][0].ToString();
             string School = $"{DT.Rows[0][0].ToString()}";
@@ -610,7 +610,7 @@ namespace BankTeacher.Class.Print
                 }
                 else if (TextForm == "pay" || TextForm == "GuarantorPayLoan" && details != 1)
                 {
-                    Class.Print.SetPrintMedtods.Box(e, "เลขบิลล์", "จ่ายวันที่",info_Billpay,Convert.ToDateTime(info_datepayShare).ToString("dd/MM/yyyy"), Box_SizeX, Box_SizeY, location_Box, Line2_x);
+                    Class.Print.SetPrintMedtods.Box(e, "เลขบิลล์", "จ่ายวันที่",info_Billpay,info_datepayShare, Box_SizeX, Box_SizeY, location_Box, Line2_x);
                 }
                 else if(TextForm == "AmountOff" && details != 1)
                 {
@@ -627,8 +627,8 @@ namespace BankTeacher.Class.Print
                     if (TextForm == "InfoLoan" && details == 1)
                     {
                         string infomember = $"ชื่อ-นามสกุล : {Bank.Loan.InfoLoan.info_name}            รหัสประจำตัว : {Bank.Loan.InfoLoan.info_id}            เลขที่สัญญากู้ : {Bank.Loan.InfoLoan.info_Loanid}\r\n" +
-                                           $"ยอดเงินค้ำ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Convert.ToDouble(Bank.Loan.InfoLoan.Amount[0])))} บาท                      เปอร์เซ็นต์ค้ำ : {Bank.Loan.InfoLoan.Percent[0]}%\r\n" +
-                                           $"ยอดที่กู้ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Convert.ToDouble(Bank.Loan.InfoLoan.info_Sum)))} บาท                   ยอดรวมคงหลือรวมดอกเบี้ย : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Convert.ToDouble(Bank.Loan.InfoLoan.info_totelLoan)))} บาท                   ยอดที่ชำระ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Convert.ToDouble(Bank.Loan.InfoLoan.info_Loanpayall)))}";
+                                           $"ยอดเงินค้ำ : {Convert.ToInt32(Convert.ToDouble(Bank.Loan.InfoLoan.Amount[0])).ToString("N0")} บาท                      เปอร์เซ็นต์ค้ำ : {Bank.Loan.InfoLoan.Percent[0]}%\r\n" +
+                                           $"ยอดที่กู้ : {Convert.ToInt32(Convert.ToDouble(Bank.Loan.InfoLoan.info_Sum)).ToString("N0")} บาท                   ยอดรวมคงหลือรวมดอกเบี้ย : {Convert.ToInt32(Convert.ToDouble(Bank.Loan.InfoLoan.info_totelLoan)).ToString("N0")} บาท                   ยอดที่ชำระ : {Convert.ToInt32(Convert.ToDouble(Bank.Loan.InfoLoan.info_Loanpayall)).ToString("N0")}";
                         // กรอบ อร่อยต้อง Rectangle พูดอีกอย่างคือ ขนาดข้อความ
                         Size = e.Graphics.MeasureString(infomember, Font(18, ThaiSarabun, FontStyle.Regular));
                         // กรอบ
@@ -653,7 +653,7 @@ namespace BankTeacher.Class.Print
                         for (int Grt = 0; Grt < Bank.Loan.InfoLoan.how_many_laps; Grt++)
                         {
                             string infoGuarantor = $"ชื่อ-นามสกุล : {Bank.Loan.InfoLoan.info_GuarantrN[Grt]}            ยอดค้ำ : {Bank.Loan.InfoLoan.info_GuarantRemains[Grt]}\r\n" +
-                                                   $"ยอดเงินค้ำ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Bank.Loan.InfoLoan.info_GuarantrAmount[Grt]))} บาท                      เปอร์เซ็นต์ค้ำ : {Bank.Loan.InfoLoan.info_GuarantrPercent[Grt]}%";
+                                                   $"ยอดเงินค้ำ : {Convert.ToInt32(Bank.Loan.InfoLoan.info_GuarantrAmount[Grt]).ToString("N0")} บาท                      เปอร์เซ็นต์ค้ำ : {Bank.Loan.InfoLoan.info_GuarantrPercent[Grt]}%";
                             Size = e.Graphics.MeasureString(infoGuarantor, Font(16, ThaiSarabun, FontStyle.Regular));
                             Size1 = e.Graphics.MeasureString("infoGuarantor", Font(16, ThaiSarabun, FontStyle.Regular));
                             result = calculate_distance(e, infoGuarantor, Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, 50, TextY + 5, 700, 300, Line2_x, Size1.Height);
@@ -679,16 +679,17 @@ namespace BankTeacher.Class.Print
                     else if (TextForm == "pay" || TextForm == "GuarantorPayLoan" && details != 1)
                     {
                         string Remain;
-                        if (info_Lona_AmountRemain != "")
-                        {
+                        if (info_Lona_AmountRemain != "" 
+                            && info_Lona_AmountRemain  != "0" 
+                            && info_Lona_AmountRemain != null 
+                            && int.TryParse(info_Lona_AmountRemain,out _)){ 
                             Remain = $"ยอดกู้คงเหลือทั้งหมด : {info_Lona_AmountRemain}";
                         }
                         else
-                        {
                             Remain = "";
-                        }
+
                         string infopay = $"ชื่อ-นามสกุล : {info_name}            รหัสประจำตัว : {info_id}           \r\n" +
-                                         $"หุ้นสะสมทั้งหมดก่อนเเละหลัง : {info_Savingtotel}            {Remain}        ";
+                                         $"หุ้นสะสมทั้งหมดก่อนเเละหลัง : {Convert.ToInt32(info_Savingtotel).ToString("N0")}            {Remain}        ";
                         // กรอบ อร่อยต้อง Rectangle
                         Size = e.Graphics.MeasureString(infopay, Font(18, ThaiSarabun, FontStyle.Regular));
                         //// กรอบ
@@ -703,14 +704,14 @@ namespace BankTeacher.Class.Print
                         string Remain;
                         if (info_Lona_AmountRemain != "0")
                         {
-                            Remain = $"ยอดกู้คงเหลือ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_Lona_AmountRemain))}";
+                            Remain = $"ยอดกู้คงเหลือ : {Convert.ToInt32(info_Lona_AmountRemain).ToString("N0")}";
                         }
                         else
                         {
                             Remain = "";
                         }
                         string infoHome = $"ชื่อ-นามสกุล : {info_name}            รหัสประจำตัว : {info_id}           \r\n" +
-                                         $"หุ้นสะสมทั้งหมด : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_Savingtotel))}            {Remain}        ";
+                                         $"หุ้นสะสมทั้งหมด : {Convert.ToInt32(info_Savingtotel).ToString("N0")}            {Remain}        ";
 
                         Size = e.Graphics.MeasureString(infoHome, Font(18, ThaiSarabun, FontStyle.Regular));
                         //// กรอบ
@@ -723,8 +724,8 @@ namespace BankTeacher.Class.Print
                     else if (TextForm == "AmountOff" && details != 1)
                     {
                         string infoAmountoff = $"ชื่อ-นามสกุล : {info_name}            รหัสประจำตัว : {info_id}            เลขที่หุ้นสะสม : {info_ShareNo}\r\n" +
-                                           $"ยอดเงินสะสมทั้งหมด : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_Savingtotel))} บาท          ยอดเงินที่ถอนออกได้ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_canbeAmounoff))} บาท           สถานะ : {info_Loanstatus}\r\n" +
-                                           $"ยอดที่ถอนออก : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_Amounoff))} บาท                      ยอดเงินค้ำในระบบ : {Class.Print.SetPrintMedtods.comma(Convert.ToInt32(info_Amounoffinsystem))}";
+                                           $"ยอดเงินสะสมทั้งหมด : {Convert.ToInt32(info_Savingtotel).ToString("N0")} บาท          ยอดเงินที่ถอนออกได้ : {Convert.ToInt32(info_canbeAmounoff).ToString("N0")} บาท           สถานะ : {info_Loanstatus}\r\n" +
+                                           $"ยอดที่ถอนออก : {Convert.ToInt32(info_Amounoff).ToString("N0")} บาท                      ยอดเงินค้ำในระบบ : {Convert.ToInt32(info_Amounoffinsystem).ToString("N0")}";
                         Size = e.Graphics.MeasureString(infoAmountoff, Font(18, ThaiSarabun, FontStyle.Regular));
                         //// กรอบ
                         //e.Graphics.DrawRectangle(PenBlack, 50, TextY, x2 - 50, Size.Height - 20 + 5);
@@ -1082,12 +1083,12 @@ namespace BankTeacher.Class.Print
                                 e.Graphics.DrawString("บาท", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - TextSize.Width, startTableY);
                                 if (Bath == 0)
                                 {
-                                    e.Graphics.DrawString($"{Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Amountotel_Pay.ToString("D")))}", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 100), startTableY);
+                                    e.Graphics.DrawString($"{Convert.ToInt32(Amountotel_Pay.ToString("N0"))}", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 100), startTableY);
                                     e.Graphics.DrawString($"หุ้นสะสม", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 200), startTableY);
                                 }
                                 else
                                 {
-                                    e.Graphics.DrawString($"{Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Amountotel_Loan.ToString("D")))}", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 100), startTableY);
+                                    e.Graphics.DrawString($"{Convert.ToInt32(Amountotel_Loan.ToString("N0"))}", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 100), startTableY);
                                     e.Graphics.DrawString($"กู้", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 200), startTableY);
                                 }
                                 // เน้นช๊อกโก็เเลต บวก บัพเฟอร์ ที่ เเสนอร่่อย เนื้อ ครีมเน้นๆ ต้อง  DrawRectangle
@@ -1096,8 +1097,8 @@ namespace BankTeacher.Class.Print
                             }
                             TextSize = e.Graphics.MeasureString("บาท", Font(16, ThaiSarabun, FontStyle.Regular));
                             e.Graphics.DrawString("บาท", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - TextSize.Width, startTableY);
-                            TextSize1 = e.Graphics.MeasureString($"{Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Amountotel_SUM.ToString("D")))}", Font(16, ThaiSarabun, FontStyle.Regular));
-                            e.Graphics.DrawString($"{Class.Print.SetPrintMedtods.comma(Convert.ToInt32(Amountotel_SUM.ToString("D")))}", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 100), startTableY);
+                            TextSize1 = e.Graphics.MeasureString($"{Convert.ToInt32(Amountotel_SUM.ToString("N0"))}", Font(16, ThaiSarabun, FontStyle.Regular));
+                            e.Graphics.DrawString($"{Convert.ToInt32(Amountotel_SUM.ToString("N0"))}", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 100), startTableY);
                             e.Graphics.DrawString($"จำนวน", Font(16, ThaiSarabun, FontStyle.Regular), BrushBlack, Line2_x - (TextSize1.Width + TextSize.Width + 200), startTableY);
                             // กรอบๆ
                             e.Graphics.DrawRectangle(PenBlack, Line2_x - (TextSize1.Width + TextSize.Width + 196), startTableY, Line2_x - (Line2_x - (TextSize1.Width + TextSize.Width + 196)), TextSize1.Height);

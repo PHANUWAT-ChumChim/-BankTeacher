@@ -779,6 +779,7 @@ namespace BankTeacher.Bank.Loan
                     }
                     if (PathFile != "" && PathFile != null)
                     {
+                        Cursor.Current = Cursors.WaitCursor;
                         BTOpenFile.Enabled = false;
                         BTRemoveFile.Enabled = false;
                         BTUploadFile.Enabled = false;
@@ -796,6 +797,7 @@ namespace BankTeacher.Bank.Loan
                             LB_Flie.ForeColor = Color.Green;
                             MessageBox.Show("อัพโหลดเอกสารสำเร็จ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Information);
                         }
+                        Cursor.Current = Cursors.Default;
                         PathFile = "";
                         CheckStatusWorking = false;
                         BTOpenFile.Enabled = true;

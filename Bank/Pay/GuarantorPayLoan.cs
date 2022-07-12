@@ -177,7 +177,7 @@ namespace BankTeacher.Bank.Pay
            "SELECT Convert(nvarchar(50) , Name) , BillDetailpaymentNo  \r\n " +
           "FROM EmployeeBank.dbo.tblBillDetailPayment \r\n " +
           "WHERE Status = 1 "
-         };
+        };
         bool CheckSave = false; 
         List<List<int>> DMLoanlist = new List<List<int>>();
         List<int> YearInCBLoanlist = new List<int>();
@@ -191,20 +191,12 @@ namespace BankTeacher.Bank.Pay
         public GuarantorPayLoan()
         {
             InitializeComponent();
-            Font F = new Font("TH Sarabun New", 16, FontStyle.Regular);
-
-            var paperSize = printDocument1.PrinterSettings.PaperSizes.Cast<System.Drawing.Printing.PaperSize>().FirstOrDefault(e => e.PaperName == "A5");
-            printDocument1.PrinterSettings.DefaultPageSettings.PaperSize = paperSize;
         }
-
         //ChangeSizeForm
         private void Menuf_SizeChanged(object sender, EventArgs e)
         {
-            int x = this.Width / 2 - panel1.Size.Width / 2;
-            int y = this.Height / 2 - panel1.Size.Height / 2;
-            panel1.Location = new Point(x, y);
+            Class.FromSettingMedtod.ChangeSizePanal(this,panel1);
         }
-
         //Load Form
         private void GuarantorPayLoan_Load(object sender, EventArgs e)
         {

@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Drawing.Drawing2D;
 using System.IO;
 using ExcelDataReader;
 using System.Diagnostics;
-using System.Reflection;
+using System.Data.OleDb;
+using System.Threading;
+using WinSCP;
 
 namespace BankTeacher.Bank
 {
@@ -20,10 +16,7 @@ namespace BankTeacher.Bank
         static int Min;
         static int Max;
         static bool chb;
-        static Font FontSetting;
         String Key = "";
-
-
         /// <summary>
         /// SQLDafault
         /// <para>[0]Edit Setting INPUT: {DateAmountChange} {StartAmountMin} {StartAmountMax} {PerShare}</para>
@@ -149,10 +142,15 @@ namespace BankTeacher.Bank
             Console.WriteLine("==================Open Setting Form======================");
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            // Pay:Minimum
             TB_Min.Text = BankTeacher.Bank.Menu.startAmountMin.ToString();
+            // Pay:Miximum
             TB_Max.Text = BankTeacher.Bank.Menu.startAmountMax.ToString();
+            // Rate : Loan
             TBPerShare.Text = BankTeacher.Bank.Menu.perShare.ToString();
+            // Loan:Minimum
             TBMinLoan.Text = BankTeacher.Bank.Menu.MinLoan.ToString();
+
             if (BankTeacher.Bank.Menu.StatusActivateButtonExceltoSQL.ToString() == "0")
                 BExceltoSQL.Enabled = true;
             if (BankTeacher.Bank.Menu.DateAmountChange == 1)
@@ -164,7 +162,10 @@ namespace BankTeacher.Bank
             Max = Convert.ToInt32(TB_Max.Text);
             B_Save.Enabled = false;
         }
-
+        private void Setting_SizeChanged(object sender, EventArgs e)
+        {
+            Class.FromSettingMedtod.ChangeSizePanal(this, P1);
+        }
 
         private void TB_Min_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -557,28 +558,6 @@ namespace BankTeacher.Bank
                 }
             }
         }
-        public static void MakeFileOutOfAStream(string stream, string filePath)
-        {
-            using (FileStream fs = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite))
-            {
-                CopyStream(GetStream(stream), fs);
-            }
-        }
-
-        static void CopyStream(Stream input, Stream output)
-        {
-            byte[] buffer = new byte[1024];
-            int read;
-            while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-            {
-                output.Write(buffer, 0, read);
-            }
-        }
-        static Stream GetStream(string stream)
-        {
-            return Assembly.GetExecutingAssembly().GetManifestResourceStream(stream);
-
-        }
         private void DowloadFIleExcel_Click(object sender, EventArgs e)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -588,6 +567,86 @@ namespace BankTeacher.Bank
                 File.WriteAllBytes(saveFileDialog.FileName, BankTeacher.Properties.Resources.Format_Excel_Input_Data);
             }
 
+        }
+
+        private void BT_Check1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                OleDbConnection con = new OleDbConnection($"Provider=SQLOLEDB; \r\n" +
+                $"Data Source={Class.SQLConnection.Data_Source}; \r\n" +
+                $"Initial Catalog={Class.SQLConnection.Initial_Catalog}; \r\n" +
+                $"User ID= {Class.SQLConnection.User_ID} ;Password= {Class.SQLConnection.Password}; \r\n" +
+                "IntegratedSecurity=true; \r\n" +
+                "Encrypt=True;TrustServerCertificate=True; \r\n" +
+                "CharacterSet=SQL_Latin1_General_CP1_CI_AS;");
+                con.Open();
+                con.Close();
+                DBGif.Image = global::BankTeacher.Properties.Resources._64x64_IceZ;
+            }
+            catch
+            {
+                DBGif.Image = global::BankTeacher.Properties.Resources._64x64_no_internet;
+                MessageBox.Show("Error Connection DB","Error",MessageBoxButtons.OK,MessageBoxIcon.Error);
+            }
+        }
+        private void BT_Check2_Click(object sender, EventArgs e)
+        {
+            BT_Check2.Enabled = false;
+            BT_Check2.Text = "Wait";
+            Task.Run(() => { Run(); });
+        }
+        void Run()
+        {
+            Thread FileZilla = new Thread(ConnecFTP);
+            FileZilla.Start();
+            Stopwatch time = new Stopwatch();
+            time.Start();
+            while (true)
+            {
+                if (NetworkConnection)
+                {
+                    this.Invoke(new MethodInvoker(() =>{
+                        BT_Check2.Enabled = true;
+                        BT_Check2.Text = "Check";
+                    }));
+                    return;
+                }
+                   
+                if (time.ElapsedMilliseconds >= 2000)
+                {
+                    FileZilla.Abort();
+                    this.Invoke(new MethodInvoker(() => {
+                        BT_Check2.Enabled = true;
+                        BT_Check2.Text = "Check";
+                    }));
+                    ServerGif.Image = global::BankTeacher.Properties.Resources._64x64_no_internet;
+                    MessageBox.Show("Error Connection FileZilla", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    break;
+                }
+            }
+        }
+        bool NetworkConnection = false;
+        void ConnecFTP()
+        {
+            WinSCP.Session session = new Session();
+            if (!System.IO.File.Exists("WinSCP.exe"))
+            {
+                ServerGif.Image = global::BankTeacher.Properties.Resources._64x64_no_internet;
+                MessageBox.Show("Not Found WinSCP.exe", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            try
+            {
+                session.Open(Class.ProtocolSharing.FileZilla.FileZillaConnection.sessionOptions);
+                NetworkConnection = true;
+                ServerGif.Image = global::BankTeacher.Properties.Resources._64x64_IceZ;
+            }
+            catch
+            {
+                // Not Connection 
+            }
+            
         }
     }
 }

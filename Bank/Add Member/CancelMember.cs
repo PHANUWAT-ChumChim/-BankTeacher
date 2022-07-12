@@ -13,15 +13,29 @@ namespace BankTeacher.Bank.Add_Member
 {
     public partial class CancelMember : Form
     {
-        bool Check = false;
-        int StatusBoxFile = 0;
-        String imgeLocation = "";
-        bool CheckBRegister = false;
-        bool CheckBCancel = false;
-        double Saving = 0;
         bool CheckSave = false;
-
-        /// <summary>
+        public CancelMember()
+        {
+            InitializeComponent();
+            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4]);
+            if (dt.Rows.Count != 0)
+            {
+                for (int x = 0; x < dt.Rows.Count; x++)
+                {
+                    CBYear_HistoryCancel.Items.Add(dt.Rows[x][0].ToString());
+                }
+                if (CBYear_HistoryCancel.Items.Count != 0)
+                    CBYear_HistoryCancel.SelectedIndex = 0;
+                else
+                    CBYear_HistoryCancel.Enabled = false;
+            }
+            Relaodcancelmember();
+        }
+        private void CancelMember_SizeChanged_1(object sender, EventArgs e)
+        {
+            Class.FromSettingMedtod.ChangeSizePanal(this, panel1);
+        }
+        /// </summary>
         /// <para>[0] SELECT MEMBER INPUT: {Text}</para>
         /// <para>[1] Change Status Member INPUT: {TeacherNoAddBy} {TeacherNo} {Note} {DocStatusNo} {DocUploadPath} {Status}</para>
         /// <para>[2] SELECT Check SavingAmount INPUT: {TeacherNo}</para>
@@ -102,7 +116,6 @@ namespace BankTeacher.Bank.Add_Member
             "ORDER BY a.TeacherNo; "
 
             ,
-
             //[6] Search Member and SavingAmount - RemainAmount in Guarantor INPUT: {TeacherNoNotLike}  {Text}
            "SELECT TOP(20)TeacherNo, Name, RemainAmount  \r\n " +
           "FROM (SELECT a.TeacherNo , CAST(ISNULL(c.PrefixName,'')+' '+Fname +' '+ Lname as NVARCHAR)AS Name,     \r\n " +
@@ -145,7 +158,6 @@ namespace BankTeacher.Bank.Add_Member
           "INSERT INTO EmployeeBank.dbo.tblFile(TeacherNo,FiletypeNo,pathFile,TeacherAddBy,LoanID,DateAddFile,IsUse,TeacherRemoveFileBy,DateRemoveFile,StatusFileInSystem) \r\n " +
           "VALUES('{TeacherNo}','2','{PathFile}','{TeacherNoAddBy}',null,CURRENT_TIMESTAMP,1,null,null,1)"
            ,
-
            //[10] Get SavingAmount & Get GuarantorAmount INPUT: {TeacherNo}
            "SELECT b.SavingAmount , ISNULL(c.Amount , 0) as LoanAmount \r\n " +
           "FROM EmployeeBank.dbo.tblMember as a \r\n " +
@@ -157,7 +169,6 @@ namespace BankTeacher.Bank.Add_Member
           "GROUP BY a.TeacherNo) as c on a.TeacherNo = c.TeacherNo \r\n " +
           "WHERE a.TeacherNo = '{TeacherNo}';"
            ,
-
            //[11] if (HE is Guarantor Get Amount & SavingAmount) if(His Loan Get SumAmount & SavingAmount) INPUT: {TeacherNo}
            "DECLARE @YourLoan int; \r\n " +
           " \r\n " +
@@ -219,46 +230,16 @@ namespace BankTeacher.Bank.Add_Member
           "WHERE TeacherNo = '{TeacherNo}'"
            ,
         };
-        public CancelMember()
+        private void BTSearch_Click(object sender, EventArgs e)
         {
-            InitializeComponent();
-            DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[4]);
-            if(dt.Rows.Count != 0)
-            {
-                for (int x = 0; x < dt.Rows.Count; x++)
-                {
-                    CBYear_HistoryCancel.Items.Add(dt.Rows[x][0].ToString());
-                }
-                if (CBYear_HistoryCancel.Items.Count != 0)
-                    CBYear_HistoryCancel.SelectedIndex = 0;
-                else
-                    CBYear_HistoryCancel.Enabled = false;
-            }
-            Relaodcancelmember();
-            //tabControl1 = tabControl1a;
-        }
-        private void CancelMember_SizeChanged_1(object sender, EventArgs e)
-        {
-            Class.FromSettingMedtod.ChangeSizePanal(this,panel1);
-        }
-
-        private void BSearch_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Bank.Search IN = new Bank.Search(SQLDefault[6]
+            Bank.Search IN = new Bank.Search(SQLDefault[6]
                     .Replace("{TeacherNoNotLike}", $"and a.TeacherNo NOT LIKE '{TBTeacherNo.Text}'"));
-                IN.ShowDialog();
-                if (Bank.Search.Return[0] != "")
-                {
-                    TBTeacherNo.Text = Bank.Search.Return[0];
-                    TBTeacherName.Text = Bank.Search.Return[1];
-                    TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
-                }
-            }
-            catch (Exception x)
+            IN.ShowDialog();
+            if (Bank.Search.Return[0] != "")
             {
-                Console.WriteLine(x);
+                TBTeacherNo.Text = Bank.Search.Return[0];
+                TBTeacherName.Text = Bank.Search.Return[1];
+                TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Enter));
             }
         }
 
@@ -271,193 +252,170 @@ namespace BankTeacher.Bank.Add_Member
                 if(ds.Tables[0].Rows.Count != 0)
                 {
                     TBTeacherName.Text = ds.Tables[0].Rows[0][1].ToString();
-                    Saving = Convert.ToDouble(ds.Tables[0].Rows[0][2].ToString());
-                    Check = true;
                     TBTeacherNo.Enabled = false;
                     Checkmember(false);
-                    BSearch.Enabled = true;
-                    BSave.Enabled = true;
+                    BTSearch.Enabled = true;
+                    BTSave.Enabled = true;
                     CheckSave = false;
                     BTUploadFIle.Visible = false;
                     TBNote.Text = "";
                 }
                 else
                 {
-                    MessageBox.Show("ไม่พยรายชื่อ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                    MessageBox.Show("ไม่พบรายชื่อในระบบ","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
                 }
             }
-            else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back && Check)
+            else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
             {
-                TBTeacherName.Text = "";
-                CheckBCancel = false;
-                Check = false;
+                TBTeacherName.Clear();
                 Checkmember(true);
                 BTUploadFIle.Visible = false;
             }
         }
-
-        private void BSave_Click(object sender, EventArgs e)
+        private void BTSave_Click(object sender, EventArgs e)
         {
-            if (TBTeacherName.Text != "")
+            if (TBNote.Text == "")
             {
-                
-                if (TBNote.Text != "")
+                MessageBox.Show("กรุณากรอก ข้อมูลที่หมายเหตุให้เรียบร้อย", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            BankTeacher.Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("RegMember");
+            DataSet ds = Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[2] + "\r\n\r\n" + SQLDefault[7] + "\r\n\r\n" + SQLDefault[8])
+            .Replace("{TeacherNo}", TBTeacherNo.Text));
+
+            DataSet dsLoanLoanAmount = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[11]
+                .Replace("{TeacherNo}", TBTeacherNo.Text));
+
+            if (dsLoanLoanAmount.Tables[0].Rows.Count != 0 && Convert.ToInt32(dsLoanLoanAmount.Tables[0].Rows[0][1].ToString()) >= Convert.ToInt32(dsLoanLoanAmount.Tables[0].Rows[0][0]))
+            {
+                if (Convert.ToInt32(dsLoanLoanAmount.Tables[1].Rows[0][0]) != 0 && MessageBox.Show("มียอดกู้อยู่ในระบบ และคุณสามารถปิดยอดกู้ตอนนี้ได้เลย\r\n โดยใช้เงินเก็บสะสมของคุณ ต้องการจะปิดยอดกู้ก่อนหรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
-                    BankTeacher.Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("RegMember");
-                    DataSet ds = Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[2]+ "\r\n\r\n" + SQLDefault[7] + "\r\n\r\n" + SQLDefault[8])
-                    .Replace("{TeacherNo}", TBTeacherNo.Text));
-
-                    DataSet dsLoanLoanAmount = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[11]
+                    Bank.Add_Member.CancelMemberCloseTheLoan FCloseLoan = new CancelMemberCloseTheLoan();
+                    DataTable dtGetLoanNo = Class.SQLConnection.InputSQLMSSQL(SQLDefault[12]
                         .Replace("{TeacherNo}", TBTeacherNo.Text));
-                    
-                    if(dsLoanLoanAmount.Tables[0].Rows.Count != 0 && Convert.ToInt32(dsLoanLoanAmount.Tables[0].Rows[0][1].ToString()) >= Convert.ToInt32(dsLoanLoanAmount.Tables[0].Rows[0][0]))
+                    if (dtGetLoanNo.Rows.Count != 0)
                     {
-                        if(Convert.ToInt32(dsLoanLoanAmount.Tables[1].Rows[0][0]) != 0  && MessageBox.Show("มียอดกู้อยู่ในระบบ และคุณสามารถปิดยอดกู้ตอนนี้ได้เลย\r\n โดยใช้เงินเก็บสะสมของคุณ ต้องการจะปิดยอดกู้เลยหรือไม่","แจ้งเตือน",MessageBoxButtons.YesNo,MessageBoxIcon.Warning) == DialogResult.Yes)
+                        FCloseLoan.ShowDialog();
+                        FCloseLoan.TeacherNo = TBTeacherNo.Text;
+                        for (int a = 0; a < dtGetLoanNo.Rows.Count; a++)
                         {
-                            Bank.Add_Member.CancelMemberCloseTheLoan FCloseLoan = new CancelMemberCloseTheLoan();
-                            DataTable dtGetLoanNo = Class.SQLConnection.InputSQLMSSQL(SQLDefault[12]
-                                .Replace("{TeacherNo}", TBTeacherNo.Text));
-                            if(dtGetLoanNo.Rows.Count != 0)
-                            {
-                                FCloseLoan.Show();
-                                FCloseLoan.TeacherNo = TBTeacherNo.Text;
-                                for (int a = 0; a < dtGetLoanNo.Rows.Count; a++)
-                                {
-                                    FCloseLoan.CBLoanNo.Items.Add(dtGetLoanNo.Rows[a][0]);
-                                }
-                                FCloseLoan.CBLoanNo.SelectedIndex = 0;
-                                FCloseLoan.TBTeacherName.Text = TBTeacherName.Text;
-                                //this.Enabled = false;
-                                //this.Hide();
-                                foreach (Form f in Application.OpenForms)
-                                {
-                                    if (f.Name == "Menu")
-                                    {
-                                        f.Enabled = false;
-                                        f.Hide();
-                                        break;
-                                    }
-                                }
-                            }
-
+                            FCloseLoan.CBLoanNo.Items.Add(dtGetLoanNo.Rows[a][0]);
                         }
-                        else if(Convert.ToInt32(dsLoanLoanAmount.Tables[1].Rows[0][0]) == 0 && MessageBox.Show("คุณมียอดค้ำกู้อยู่ในระบบ และคุณสามารถจ่ายยอดค้ำกู้ได้เลย \r\n" +
-                            "โดยใช้เงินเก็บสะสมของคุณในระบบ และสามารถขอคืนเงินเก็บสะสมได้ในภายหลัง ต้องการจ่ายยอดค้ำเลยหรือไม่" , "แจ้งเตือน" , MessageBoxButtons.YesNo ,MessageBoxIcon.Warning) == DialogResult.Yes)
+                        FCloseLoan.CBLoanNo.SelectedIndex = 0;
+                        FCloseLoan.TBTeacherName.Text = TBTeacherName.Text;
+                        foreach (Form f in Application.OpenForms)
                         {
-                            if (ds.Tables[2].Rows.Count != 0)
+                            if (f.Name == "Menu")
                             {
-                                String Rename = $"Member_{TBTeacherNo.Text}.pdf";
-                                if (ds.Tables[1].Rows.Count != 0)
-                                {
-                                    Rename = Rename.Replace(".pdf", $"_{ds.Tables[1].Rows[0][0].ToString()}.pdf");
-                                }
-
-                                
-
-                                FTP.FTPMoveFileandRename($"Member_{TBTeacherNo.Text}.pdf", "CancelMember", Rename);
-                                if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
-                                {
-                                    Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[1] + "\r\n" + SQLDefault[9] + "\r\n" + SQLDefault[13])
-                                    .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
-                                    .Replace("{TeacherNo}", TBTeacherNo.Text)
-                                    .Replace("{Note}", TBNote.Text)
-                                    .Replace("{DocStatusNo}", "1")
-                                    .Replace("{PathFile}", FTP.HostplusPathFile + Rename.Replace("RegMember", "CancelMember"))
-                                    .Replace("{ID}", ds.Tables[2].Rows[0][0].ToString()));
-                                    MessageBox.Show("ยกเลิกผู้ใช้สำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    CheckSave = true;
-                                    CheckBCancel = true;
-                                    Checkmember(true);
-                                    BSave.Enabled = false;
-                                    BTUploadFIle.Visible = false;
-                                    TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Delete));
-                                }
-
-                            }
-                            else
-                            {
-                                MessageBox.Show("กรุณาส่งเอกสารสมัครสมาชิก เพื่อยืนยันการสมัคร", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                BTUploadFIle.Visible = true;
-                            }
-                        }
-                    }
-                    else if (dsLoanLoanAmount.Tables[0].Rows.Count != 0 && Convert.ToInt32(dsLoanLoanAmount.Tables[1].Rows[0][0]) != 0)
-                    {
-                        MessageBox.Show("มียอดกู้อยู่ในระบบไม่สามารถยกเลิกสมาชิกได้ และเงินสะสมไม่พอที่จะชำระ \r\n" +
-                            "ต้องชำระกู้ให้หมดก่อน ถึงจะยกเลิกสมาชิกได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else if (dsLoanLoanAmount.Tables[0].Rows.Count != 0 && Convert.ToInt32(dsLoanLoanAmount.Tables[1].Rows[0][0]) == 0)
-                    {
-                        MessageBox.Show("มียอดค้ำกู้อยู่ในระบบไม่สามารถยกเลิกสมาชิกได้ และเงินสะสมไม่พอที่จะวางเงินค้ำประกัน \r\n" +
-                            "ต้องรอผู้กู้ชำระกู้ให้หมดก่อน", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else if (Convert.ToInt32(ds.Tables[0].Rows[0][0].ToString()) < 1)
-                    {
-                        if (ds.Tables[2].Rows.Count != 0)
-                        {
-                            String Rename = $"Member_{TBTeacherNo.Text}.pdf";
-                            if (ds.Tables[1].Rows.Count != 0)
-                            {
-                                Rename = Rename.Replace(".pdf", $"_{ds.Tables[1].Rows[0][0].ToString()}.pdf");
-                            }
-
-                            
-
-                            FTP.FTPMoveFileandRename($"Member_{TBTeacherNo.Text}.pdf", "CancelMember", Rename);
-                            if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
-                            {
-                                Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[1] + "\r\n" + SQLDefault[9] + "\r\n" + SQLDefault[13])
-                                .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
-                                .Replace("{TeacherNo}", TBTeacherNo.Text)
-                                .Replace("{Note}", TBNote.Text)
-                                .Replace("{DocStatusNo}", "1")
-                                .Replace("{PathFile}", FTP.HostplusPathFile + Rename.Replace("RegMember", "CancelMember"))
-                                .Replace("{ID}", ds.Tables[2].Rows[0][0].ToString()));
-                                MessageBox.Show("ยกเลิกผู้ใช้สำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                CheckSave = true;
-                                CheckBCancel = true;
-                                TBNote.Text = "";
-                                Checkmember(true);
-                                BSave.Enabled = false;
-                                TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Delete));
-                            }
-
-                        }
-                        else
-                        {   
-                            MessageBox.Show("ไม่พบเอกสารสมัครสมาชิก \n กรุณาส่งเอกสารก่อนทำรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            BTUploadFIle.Visible = true;
-
-                        }
-                    }
-                    else
-                    {
-                        if ((MessageBox.Show("ยอดเงินคงเหลือของท่านยังอยู่ในระบบ \r\n กรุณาถอนเงินออกจากระบบก่อนทำรายการ", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes))
-                        {
-                            AmountOff FAmountOff = new AmountOff();
-                            Menu FMenu = new Menu();
-                            FAmountOff.FormBorderStyle = FormBorderStyle.Sizable;
-                            //FAmountOff.Size = new Size(895, 794);
-                            FAmountOff.Show();
-                            FAmountOff.TBTeacherNo.Text = TBTeacherNo.Text;
-                            FAmountOff.TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
-                            FAmountOff.BMaxWithDraw_AmountOff_Click(sender,e);
-                            FAmountOff.TBWithDraw.Enabled = false;
-                            foreach (Form f in Application.OpenForms)
-                            {
-                                if (f.Name == "Menu")
-                                {
-                                    f.Enabled = false;
-                                    f.Hide();
-                                    break;
-                                }
+                                f.Enabled = false;
+                                f.Hide();
+                                break;
                             }
                         }
                     }
                 }
+                else if (Convert.ToInt32(dsLoanLoanAmount.Tables[1].Rows[0][0]) == 0 && MessageBox.Show("คุณมียอดค้ำกู้อยู่ในระบบ และคุณสามารถจ่ายยอดค้ำกู้ได้เลย \r\n" +
+                    "โดยใช้เงินเก็บสะสมของคุณในระบบ และสามารถขอคืนเงินเก็บสะสมได้ในภายหลัง ต้องการจ่ายยอดค้ำเลยหรือไม่", "แจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    if (ds.Tables[2].Rows.Count != 0)
+                    {
+                        String Rename = $"Member_{TBTeacherNo.Text}.pdf";
+                        if (ds.Tables[1].Rows.Count != 0)
+                        {
+                            Rename = Rename.Replace(".pdf", $"_{ds.Tables[1].Rows[0][0].ToString()}.pdf");
+                        }
+
+                        FTP.FTPMoveFileandRename($"Member_{TBTeacherNo.Text}.pdf", "CancelMember", Rename);
+                        if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
+                        {
+                            Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[1] + "\r\n" + SQLDefault[9] + "\r\n" + SQLDefault[13])
+                            .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
+                            .Replace("{TeacherNo}", TBTeacherNo.Text)
+                            .Replace("{Note}", TBNote.Text)
+                            .Replace("{DocStatusNo}", "1")
+                            .Replace("{PathFile}", FTP.HostplusPathFile + Rename.Replace("RegMember", "CancelMember"))
+                            .Replace("{ID}", ds.Tables[2].Rows[0][0].ToString()));
+                            MessageBox.Show("ยกเลิกผู้ใช้สำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            CheckSave = true;
+                            Checkmember(true);
+                            BTSave.Enabled = false;
+                            BTUploadFIle.Visible = false;
+                            TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Delete));
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("กรุณาส่งเอกสารสมัครสมาชิก เพื่อยืนยันการสมัคร", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        BTUploadFIle.Visible = true;
+                    }
+                }
+            }
+            else if (dsLoanLoanAmount.Tables[0].Rows.Count != 0 && Convert.ToInt32(dsLoanLoanAmount.Tables[1].Rows[0][0]) != 0)
+            {
+                MessageBox.Show("มียอดกู้อยู่ในระบบไม่สามารถยกเลิกสมาชิกได้ และเงินสะสมไม่พอที่จะชำระ \r\n" +
+                    "ต้องชำระกู้ให้หมดก่อน ถึงจะยกเลิกสมาชิกได้", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else if (dsLoanLoanAmount.Tables[0].Rows.Count != 0 && Convert.ToInt32(dsLoanLoanAmount.Tables[1].Rows[0][0]) == 0)
+            {
+                MessageBox.Show("มียอดค้ำกู้อยู่ในระบบไม่สามารถยกเลิกสมาชิกได้ และเงินสะสมไม่พอที่จะวางเงินค้ำประกัน \r\n" +
+                    "ต้องรอผู้กู้ชำระกู้ให้หมดก่อน", "แจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else if (Convert.ToInt32(ds.Tables[0].Rows[0][0].ToString()) < 1)
+            {
+                if (ds.Tables[2].Rows.Count != 0)
+                {
+                    String Rename = $"Member_{TBTeacherNo.Text}.pdf";
+                    if (ds.Tables[1].Rows.Count != 0)
+                    {
+                        Rename = Rename.Replace(".pdf", $"_{ds.Tables[1].Rows[0][0].ToString()}.pdf");
+                    }
+
+                    FTP.FTPMoveFileandRename($"Member_{TBTeacherNo.Text}.pdf", "CancelMember", Rename);
+                    if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
+                    {
+                        Class.SQLConnection.InputSQLMSSQLDS((SQLDefault[1] + "\r\n" + SQLDefault[9] + "\r\n" + SQLDefault[13])
+                        .Replace("{TeacherNoAddBy}", Class.UserInfo.TeacherNo)
+                        .Replace("{TeacherNo}", TBTeacherNo.Text)
+                        .Replace("{Note}", TBNote.Text)
+                        .Replace("{DocStatusNo}", "1")
+                        .Replace("{PathFile}", FTP.HostplusPathFile + Rename.Replace("RegMember", "CancelMember"))
+                        .Replace("{ID}", ds.Tables[2].Rows[0][0].ToString()));
+                        MessageBox.Show("ยกเลิกผู้ใช้สำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        CheckSave = true;
+                        TBNote.Text = "";
+                        Checkmember(true);
+                        BTSave.Enabled = false;
+                        TBTeacherNo_KeyDown(new object(), new KeyEventArgs(Keys.Delete));
+                    }
+                }
                 else
                 {
-                    MessageBox.Show("กรุณากรอก ข้อมูลที่หมายเหตุให้เรียบร้อย", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("ไม่พบเอกสารสมัครสมาชิก \n กรุณาส่งเอกสารก่อนทำรายการ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    BTUploadFIle.Visible = true;
+                }
+            }
+            else
+            {
+                if ((MessageBox.Show("ยอดเงินคงเหลือของท่านยังอยู่ในระบบ \r\n กรุณาถอนเงินออกจากระบบก่อนทำรายการ", "ระบบ", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes))
+                {
+                    AmountOff FAmountOff = new AmountOff();
+                    Menu FMenu = new Menu();
+                    FAmountOff.FormBorderStyle = FormBorderStyle.Sizable;
+                    //FAmountOff.Size = new Size(895, 794);
+                    FAmountOff.Show();
+                    FAmountOff.TBTeacherNo.Text = TBTeacherNo.Text;
+                    FAmountOff.TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
+                    FAmountOff.BMaxWithDraw_AmountOff_Click(sender, e);
+                    FAmountOff.TBWithDraw.Enabled = false;
+                    foreach (Form f in Application.OpenForms)
+                    {
+                        if (f.Name == "Menu")
+                        {
+                            f.Enabled = false;
+                            f.Hide();
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -494,8 +452,6 @@ namespace BankTeacher.Bank.Add_Member
                 CBYear_HistoryCancel.SelectedIndex = 0;
         }
 
-      
-
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabControl1.SelectedIndex == 1)
@@ -518,12 +474,6 @@ namespace BankTeacher.Bank.Add_Member
                     TBTeacherNo.Text = "";
                     TBTeacherName.Text = "";
                     TBNote.Text = "";
-                    Check = false;
-                    StatusBoxFile = 0;
-                    imgeLocation = "";
-                    CheckBRegister = false;
-                    CheckBCancel = false;
-                    Saving = 0;
                     CBYear_HistoryCancel.DroppedDown = false;
                     CBYear_HistoryCancel.Items.Clear();
                     DGV_HistoryCancel.Rows.Clear();
@@ -540,15 +490,6 @@ namespace BankTeacher.Bank.Add_Member
         private void Checkmember(bool tf)
         {
             TBTeacherNo.Enabled = tf;
-            //BSearch.Enabled = tf;
-        }
-
-        private void tabControl1_KeyDown(object sender, KeyEventArgs e)
-        {
-            
-        }
-        public class MyTextBox : TextBox
-        {
         }
 
         private void CancelMember_KeyUp(object sender, KeyEventArgs e)

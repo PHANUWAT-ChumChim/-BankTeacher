@@ -28,7 +28,7 @@ namespace BankTeacher.Class.ProtocolSharing
             protected static String Folder { get; } = "ShareFile";
             protected static String Location { get; private set; } = "";
 
-            SessionOptions sessionOptions = new SessionOptions
+           public static SessionOptions sessionOptions = new SessionOptions
             {
                 Protocol = Protocol.Ftp,
                 FtpSecure = FtpSecure.Explicit,
@@ -61,9 +61,10 @@ namespace BankTeacher.Class.ProtocolSharing
                 StatusRunning = true;
                 while (true)
                 {
-                    if (time.ElapsedMilliseconds >= 5000 && ThreadConnected.IsAlive && StatusRunning)
+                    if (time.ElapsedMilliseconds >= 5000 && ThreadConnected.IsAlive || !StatusRunning)
                     {
                         ThreadConnected.Abort();
+                        if(StatusRunning)
                         MessageBox.Show("หมดเวลาการเชื่อมต่อโปรดเชื่อมต่อเครือข่าย", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         break;
                     }
@@ -73,7 +74,7 @@ namespace BankTeacher.Class.ProtocolSharing
                     }
                     else if (StatusReturn)
                     {
-                        break;
+                        break;  
                     }
                 }
                 time.Stop();
@@ -196,7 +197,14 @@ namespace BankTeacher.Class.ProtocolSharing
                     using (Session session = new Session())
                     {
                         // Connect
-                        session.Open(sessionOptions);
+                        try{
+                            session.Open(sessionOptions);
+                        }
+                        catch {
+                            MessageBox.Show("เกิดข้อผิดพลาดในการเชื่อมต่อ","การเชื่อมต่อ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                            StatusRunning = false;
+                            return;
+                        }
 
                         if (!session.FileExists(PathFile + Changefilename))
                         {
@@ -235,9 +243,9 @@ namespace BankTeacher.Class.ProtocolSharing
                         }
                         else
                         {
+                            MessageBox.Show("มีเอกสารอยู่ในระบบแล้วไม่สามารถอัพโหลดซ้ำได้", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             StatusReturn = false;
                             StatusRunning = false;
-                            MessageBox.Show("มีเอกสารอยู่ในระบบแล้วไม่สามารถอัพโหลดซ้ำได้", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         }
                     }
                     return;
@@ -246,6 +254,8 @@ namespace BankTeacher.Class.ProtocolSharing
                 {
                     StatusReturn = false;
                     MessageBox.Show("ไม่สามารถส่งไฟล์ได่เนื่องจากไฟล์ในโปรแกรมไม่สมบูรณ์ \n Not Found WinSCP.exe","ระบบ",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                    StatusRunning = false;
+                    return;
                 }
             }
 
@@ -257,7 +267,16 @@ namespace BankTeacher.Class.ProtocolSharing
                     using (Session session = new Session())
                     {
                         // Connect
-                        session.Open(sessionOptions);
+                        try
+                        {
+                            session.Open(sessionOptions);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("เกิดข้อผิดพลาดในการเชื่อมต่อ", "การเชื่อมต่อ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            StatusRunning = false;
+                            return;
+                        }
                         if (!session.FileExists(PathFile + filename))
                         {
                             MessageBox.Show("ไม่พบไฟล์", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -314,7 +333,16 @@ namespace BankTeacher.Class.ProtocolSharing
                     using (Session session = new Session())
                     {
                         // Connect
-                        session.Open(sessionOptions);
+                        try
+                        {
+                            session.Open(sessionOptions);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("เกิดข้อผิดพลาดในการเชื่อมต่อ", "การเชื่อมต่อ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            StatusRunning = false;
+                            return null;
+                        }
 
                         if (!session.FileExists(PathFile + filename))
                         {
@@ -363,7 +391,17 @@ namespace BankTeacher.Class.ProtocolSharing
                     using (Session session = new Session())
                     {
                         // Connect
-                        session.Open(sessionOptions);
+                        try
+                        {
+                            session.Open(sessionOptions);
+                        }
+                        catch
+                        {
+                            MessageBox.Show("เกิดข้อผิดพลาดในการเชื่อมต่อ", "การเชื่อมต่อ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            StatusRunning = false;
+                            return;
+                        }
+
                         String targetPath = PathFile.Replace(Location, Foldertarget) + filename;
                         if (!session.FileExists(PathFile + filename))
                         {
@@ -405,54 +443,64 @@ namespace BankTeacher.Class.ProtocolSharing
                 if (File)
                 {
                     using (Session session = new Session())
-                {
-                    // Connect
-                    session.Open(sessionOptions);
-                    String targetPath = PathFile.Replace(Location, Foldertarget) + filename;
-                    if (!session.FileExists(PathFile + filename))
-                    {
-                        StatusReturn = false;
-                        StatusRunning = false;
-                        MessageBox.Show("ไม่พบเอกสาร", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    else
-                    {
+                    {   
+                        // Connect
                         try
                         {
-                            String ThisPcFilePath = "";
-                            if (Foldertarget.Contains("RegMember"))
-                                ThisPcFilePath = @"C:\Project\BankTeacher\RegMember\";
-                            else if (Foldertarget.Contains("Loan"))
-                                ThisPcFilePath = @"C:\Project\BankTeacher\Loan\";
-                            else if (Foldertarget.Contains("CancelMember"))
-                                ThisPcFilePath = @"C:\Project\BankTeacher\CancelMember\";
-
-                            TransferOptions transferOptions = new TransferOptions();
-                            transferOptions.TransferMode = TransferMode.Binary;
-                            TransferOperationResult transferResult;
-
-                            //DowloadFile
-                            session.GetFileToDirectory(PathFile + filename, ThisPcFilePath);
-                            //UploadFile
-                            transferResult = session.PutFiles(ThisPcFilePath+filename, PathFile.Replace(Location, Foldertarget) + Rename, false, transferOptions);
-                            //CheckFile
-                            transferResult.Check();
-                            //Remove
-                            session.RemoveFile(PathFile + filename);
-                            StatusReturn = true;
-                            StatusRunning = false;
-                            return;
+                            session.Open(sessionOptions);
                         }
                         catch
                         {
-                            StatusReturn = false;
+                            MessageBox.Show("เกิดข้อผิดพลาดในการเชื่อมต่อ", "การเชื่อมต่อ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             StatusRunning = false;
-                            MessageBox.Show("เกิดข้อผิดพลาดโปรดลองใหม่อีกครั้ง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
+
+                        String targetPath = PathFile.Replace(Location, Foldertarget) + filename;
+                        if (!session.FileExists(PathFile + filename))
+                        {
+                            StatusReturn = false;
+                            StatusRunning = false;
+                            MessageBox.Show("ไม่พบเอกสาร", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+                        else
+                        {
+                            try
+                            {
+                                String ThisPcFilePath = "";
+                                if (Foldertarget.Contains("RegMember"))
+                                    ThisPcFilePath = @"C:\Project\BankTeacher\RegMember\";
+                                else if (Foldertarget.Contains("Loan"))
+                                    ThisPcFilePath = @"C:\Project\BankTeacher\Loan\";
+                                else if (Foldertarget.Contains("CancelMember"))
+                                    ThisPcFilePath = @"C:\Project\BankTeacher\CancelMember\";
+
+                                TransferOptions transferOptions = new TransferOptions();
+                                transferOptions.TransferMode = TransferMode.Binary;
+                                TransferOperationResult transferResult;
+
+                                //DowloadFile
+                                session.GetFileToDirectory(PathFile + filename, ThisPcFilePath);
+                                //UploadFile
+                                transferResult = session.PutFiles(ThisPcFilePath+filename, PathFile.Replace(Location, Foldertarget) + Rename, false, transferOptions);
+                                //CheckFile
+                                transferResult.Check();
+                                //Remove
+                                session.RemoveFile(PathFile + filename);
+                                StatusReturn = true;
+                                StatusRunning = false;
+                                return;
+                            }
+                            catch
+                            {
+                                StatusReturn = false;
+                                StatusRunning = false;
+                                MessageBox.Show("เกิดข้อผิดพลาดโปรดลองใหม่อีกครั้ง", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                return;
+                            }
+                        }
                     }
-                }
                 }
                 else
                 {

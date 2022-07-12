@@ -46,49 +46,48 @@ namespace BankTeacher.Bank
           ,
 
         };
-        Thread ThreadWorkingAlive;
+        Thread ReloadDB;
         public Menu()
         {
             InitializeComponent();
-            try
-            {
-                Class.UserInfo.SetTeacherInformation("T43005", "Manit Hodkuntod", "1");
-                ThreadWorkingAlive = new Thread(() => ReloadData());
-                ThreadWorkingAlive.Start();
-            }
-            catch
-            {
-                MessageBox.Show("โปรดทำการเชื่อมฐานข้อมูล", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning); this.Enabled = false; 
-            }
+            Class.UserInfo.SetTeacherInformation("T43005", "ภาณุวัฒน์ ชุมฉิม", "1");
+            ReloadDB = new Thread(Tricker);
+            ReloadDB.Start();
         }
-        Thread THREADWorking;
-        private void ReloadData()
+        private void Tricker()
         {
-            ThreadReloadData();
             Stopwatch time = new Stopwatch();
             time.Start();
-            int Round = 1;
+            ThreadReloadData();
             //Relaod ข้อมูลทุก 1 นาที
             while (true)
             {
-                if(time.ElapsedMilliseconds >= 60000 * Round)
+                if (time.ElapsedMilliseconds >= 60000)
                 {
                     ThreadReloadData();
-                    Round++;
+                    time.Reset();
                 }
             }
         }
-        private void ThreadReloadData()
+        void ThreadReloadData()
         {
-            Date = Class.SQLConnection.InputSQLMSSQLV2ForThread(SQLDefault[1]).Rows[0][0].ToString().Split('-');
-            BankTeacher.Bank.Menu.Monthname = Month[Convert.ToInt32(BankTeacher.Bank.Menu.Date[1]) - 1];
-            dt = Class.SQLConnection.InputSQLMSSQLV2ForThread(SQLDefault[0]);
-            DateAmountChange = Convert.ToInt32(dt.Rows[0][0]);
-            startAmountMin = Convert.ToInt32(dt.Rows[0][1]);
-            startAmountMax = Convert.ToInt32(dt.Rows[0][2]);
-            MinLoan = Convert.ToInt32(dt.Rows[0][3]);
-            perShare = Convert.ToInt32(dt.Rows[0][4]);
-            StatusActivateButtonExceltoSQL = Convert.ToInt32(dt.Rows[0][5]);
+            try
+            {
+                Date = Class.SQLConnection.InputSQLMSSQLV2ForThread(SQLDefault[1]).Rows[0][0].ToString().Split('-');
+                BankTeacher.Bank.Menu.Monthname = Month[Convert.ToInt32(BankTeacher.Bank.Menu.Date[1]) - 1];
+                dt = Class.SQLConnection.InputSQLMSSQLV2ForThread(SQLDefault[0]);
+                DateAmountChange = Convert.ToInt32(dt.Rows[0][0]);
+                startAmountMin = Convert.ToInt32(dt.Rows[0][1]);
+                startAmountMax = Convert.ToInt32(dt.Rows[0][2]);
+                MinLoan = Convert.ToInt32(dt.Rows[0][3]);
+                perShare = Convert.ToInt32(dt.Rows[0][4]);
+                StatusActivateButtonExceltoSQL = Convert.ToInt32(dt.Rows[0][5]);
+            }
+            catch
+            {
+                MessageBox.Show("การเชื่อมต่อมีปัญหา lost connection DB_KCC_Error", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Application.Exit();
+            }
         }
         public void CloseFrom(Form F)
         {
@@ -258,16 +257,8 @@ namespace BankTeacher.Bank
             if (menuStrip1.Visible == true)
             {
                 BankTeacher.Bank.Home F = new BankTeacher.Bank.Home();
-                //F.MdiParent = BankTeacher.Bank.Menu.Parent;
-                //F.WindowState = FormWindowState.Maximized;
-                //F.Show();
                 CloseFrom(F);
             }
-        }
-
-        private void Menu_KeyDown(object sender, KeyEventArgs e)
-        {
-
         }
 
         private void Menu_GuarantorPayLoan_Click(object sender, EventArgs e)

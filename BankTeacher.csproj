@@ -281,10 +281,10 @@
     <Compile Include="Bank\Report\ReportIncome.Designer.cs">
       <DependentUpon>ReportIncome.cs</DependentUpon>
     </Compile>
-    <Compile Include="Bank\Search.cs">
+    <Compile Include="Bank\Optionwinform\Search.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Bank\Search.Designer.cs">
+    <Compile Include="Bank\Optionwinform\Search.Designer.cs">
       <DependentUpon>Search.cs</DependentUpon>
     </Compile>
     <Compile Include="Bank\Add Member\Member.cs">
@@ -305,10 +305,10 @@
     <Compile Include="Bank\Home.Designer.cs">
       <DependentUpon>Home.cs</DependentUpon>
     </Compile>
-    <Compile Include="Bank\SelectFile.cs">
+    <Compile Include="Bank\Optionwinform\SelectFile.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Bank\SelectFile.Designer.cs">
+    <Compile Include="Bank\Optionwinform\SelectFile.Designer.cs">
       <DependentUpon>SelectFile.cs</DependentUpon>
     </Compile>
     <Compile Include="Bank\Setting.cs">
@@ -317,10 +317,10 @@
     <Compile Include="Bank\Setting.Designer.cs">
       <DependentUpon>Setting.cs</DependentUpon>
     </Compile>
-    <Compile Include="Bank\SQLEditing.cs">
+    <Compile Include="Bank\Optionwinform\SQLEditing.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Bank\SQLEditing.Designer.cs">
+    <Compile Include="Bank\Optionwinform\SQLEditing.Designer.cs">
       <DependentUpon>SQLEditing.cs</DependentUpon>
     </Compile>
     <Compile Include="Bank\UnpaidLoanList.cs">
@@ -440,7 +440,7 @@
     <EmbeddedResource Include="Bank\Report\ReportIncome.resx">
       <DependentUpon>ReportIncome.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Bank\Search.resx">
+    <EmbeddedResource Include="Bank\Optionwinform\Search.resx">
       <DependentUpon>Search.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Add Member\Member.resx">
@@ -455,10 +455,10 @@
     <EmbeddedResource Include="Bank\Pay\pay.resx">
       <DependentUpon>pay.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Bank\SelectFile.resx">
+    <EmbeddedResource Include="Bank\Optionwinform\SelectFile.resx">
       <DependentUpon>SelectFile.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Bank\SQLEditing.resx">
+    <EmbeddedResource Include="Bank\Optionwinform\SQLEditing.resx">
       <DependentUpon>SQLEditing.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Bank\Setting.resx">

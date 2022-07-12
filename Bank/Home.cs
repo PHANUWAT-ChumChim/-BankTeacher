@@ -182,7 +182,6 @@ namespace BankTeacher.Bank
                     if (dt.Rows.Count != 0)
                     {
                         TBTeacherName.Text = dt.Rows[0][1].ToString();
-                        TBTeacherBill.Text = dt.Rows[0][4].ToString();
                         Check = 1;
 
                         CByear.Items.Clear();
@@ -217,7 +216,6 @@ namespace BankTeacher.Bank
                         CByear.Text = BankTeacher.Bank.Menu.Date[0];
                         TBTeacherNo.Enabled = false;
                         TBTeacherName.Enabled = false;
-                        TBTeacherBill.Enabled = false;
                         BSearchTeacher.Enabled = true;
                         CByear.Enabled = true;
                         BTPrint.Enabled = true;
@@ -234,7 +232,6 @@ namespace BankTeacher.Bank
                 if (Check == 1)
                 {
                     TBTeacherName.Text = "";
-                    TBTeacherBill.Text = "";
                     Check = 0;
                 }
 
@@ -405,7 +402,6 @@ namespace BankTeacher.Bank
                     TBTeacherName.Text = "";
                     CByear.SelectedIndex = -1;
                     CByear.Items.Clear();
-                    TBTeacherBill.Text = "";
                     dataGridView3.Rows.Clear();
                     CByear.Enabled = false;
                     panel7.Enabled = true;
@@ -423,7 +419,6 @@ namespace BankTeacher.Bank
                     TBTeacherName.Text = "";
                     CByear.SelectedIndex = -1;
                     CByear.Items.Clear();
-                    TBTeacherBill.Text = "";
                     dataGridView3.Rows.Clear();
                     CByear.Enabled = false;
                     panel7.Enabled = true;
@@ -441,7 +436,6 @@ namespace BankTeacher.Bank
                     TBTeacherName.Text = "";
                     CByear.SelectedIndex = -1;
                     CByear.Items.Clear();
-                    TBTeacherBill.Text = "";
                     dataGridView3.Rows.Clear();
                     CByear.Enabled = false;
                     panel7.Enabled = true;

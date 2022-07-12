@@ -30,10 +30,10 @@ namespace BankTeacher.Bank.Add_Member
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CancelMember));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -43,11 +43,12 @@ namespace BankTeacher.Bank.Add_Member
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.BSave = new System.Windows.Forms.Button();
+            this.BTUploadFIle = new System.Windows.Forms.Button();
+            this.BTSave = new System.Windows.Forms.Button();
             this.TBNote = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.TBTeacherNo = new System.Windows.Forms.TextBox();
-            this.BSearch = new System.Windows.Forms.Button();
+            this.BTSearch = new System.Windows.Forms.Button();
             this.TBTeacherName = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
@@ -60,7 +61,6 @@ namespace BankTeacher.Bank.Add_Member
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.BTUploadFIle = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -139,7 +139,6 @@ namespace BankTeacher.Bank.Add_Member
             this.tabControl1.Size = new System.Drawing.Size(840, 516);
             this.tabControl1.TabIndex = 61;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
-            this.tabControl1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tabControl1_KeyDown);
             // 
             // tabPage1
             // 
@@ -158,7 +157,7 @@ namespace BankTeacher.Bank.Add_Member
             // 
             this.groupBox4.Controls.Add(this.label7);
             this.groupBox4.Controls.Add(this.BTUploadFIle);
-            this.groupBox4.Controls.Add(this.BSave);
+            this.groupBox4.Controls.Add(this.BTSave);
             this.groupBox4.Controls.Add(this.TBNote);
             this.groupBox4.Font = new System.Drawing.Font("TH Sarabun New", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(222)));
             this.groupBox4.Location = new System.Drawing.Point(14, 127);
@@ -181,18 +180,31 @@ namespace BankTeacher.Bank.Add_Member
             this.label7.TabIndex = 17;
             this.label7.Text = "*หมายเหตุ";
             // 
-            // BSave
+            // BTUploadFIle
             // 
-            this.BSave.BackColor = System.Drawing.Color.White;
-            this.BSave.Enabled = false;
-            this.BSave.Font = new System.Drawing.Font("TH Sarabun New", 19.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BSave.Location = new System.Drawing.Point(636, 239);
-            this.BSave.Name = "BSave";
-            this.BSave.Size = new System.Drawing.Size(168, 60);
-            this.BSave.TabIndex = 56;
-            this.BSave.Text = "บันทึก";
-            this.BSave.UseVisualStyleBackColor = false;
-            this.BSave.Click += new System.EventHandler(this.BSave_Click);
+            this.BTUploadFIle.BackColor = System.Drawing.Color.White;
+            this.BTUploadFIle.Font = new System.Drawing.Font("TH Sarabun New", 19.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTUploadFIle.Location = new System.Drawing.Point(636, 47);
+            this.BTUploadFIle.Name = "BTUploadFIle";
+            this.BTUploadFIle.Size = new System.Drawing.Size(168, 186);
+            this.BTUploadFIle.TabIndex = 56;
+            this.BTUploadFIle.Text = "อัพโหลดเอกสาร";
+            this.BTUploadFIle.UseVisualStyleBackColor = false;
+            this.BTUploadFIle.Visible = false;
+            this.BTUploadFIle.Click += new System.EventHandler(this.BTUploadFIle_Click);
+            // 
+            // BTSave
+            // 
+            this.BTSave.BackColor = System.Drawing.Color.White;
+            this.BTSave.Enabled = false;
+            this.BTSave.Font = new System.Drawing.Font("TH Sarabun New", 19.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTSave.Location = new System.Drawing.Point(636, 239);
+            this.BTSave.Name = "BTSave";
+            this.BTSave.Size = new System.Drawing.Size(168, 60);
+            this.BTSave.TabIndex = 56;
+            this.BTSave.Text = "บันทึก";
+            this.BTSave.UseVisualStyleBackColor = false;
+            this.BTSave.Click += new System.EventHandler(this.BTSave_Click);
             // 
             // TBNote
             // 
@@ -206,7 +218,7 @@ namespace BankTeacher.Bank.Add_Member
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.TBTeacherNo);
-            this.groupBox3.Controls.Add(this.BSearch);
+            this.groupBox3.Controls.Add(this.BTSearch);
             this.groupBox3.Controls.Add(this.TBTeacherName);
             this.groupBox3.Controls.Add(this.label4);
             this.groupBox3.Controls.Add(this.label5);
@@ -228,19 +240,19 @@ namespace BankTeacher.Bank.Add_Member
             this.TBTeacherNo.TabIndex = 18;
             this.TBTeacherNo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TBTeacherNo_KeyDown);
             // 
-            // BSearch
+            // BTSearch
             // 
-            this.BSearch.BackColor = System.Drawing.Color.White;
-            this.BSearch.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BSearch.BackgroundImage")));
-            this.BSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.BSearch.ForeColor = System.Drawing.Color.White;
-            this.BSearch.ImageKey = "(none)";
-            this.BSearch.Location = new System.Drawing.Point(326, 36);
-            this.BSearch.Name = "BSearch";
-            this.BSearch.Size = new System.Drawing.Size(42, 42);
-            this.BSearch.TabIndex = 47;
-            this.BSearch.UseVisualStyleBackColor = false;
-            this.BSearch.Click += new System.EventHandler(this.BSearch_Click);
+            this.BTSearch.BackColor = System.Drawing.Color.White;
+            this.BTSearch.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("BTSearch.BackgroundImage")));
+            this.BTSearch.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.BTSearch.ForeColor = System.Drawing.Color.White;
+            this.BTSearch.ImageKey = "(none)";
+            this.BTSearch.Location = new System.Drawing.Point(326, 36);
+            this.BTSearch.Name = "BTSearch";
+            this.BTSearch.Size = new System.Drawing.Size(42, 42);
+            this.BTSearch.TabIndex = 47;
+            this.BTSearch.UseVisualStyleBackColor = false;
+            this.BTSearch.Click += new System.EventHandler(this.BTSearch_Click);
             // 
             // TBTeacherName
             // 
@@ -324,8 +336,8 @@ namespace BankTeacher.Bank.Add_Member
             // 
             this.DGV_HistoryCancel.AllowUserToAddRows = false;
             this.DGV_HistoryCancel.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DGV_HistoryCancel.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DGV_HistoryCancel.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             this.DGV_HistoryCancel.BackgroundColor = System.Drawing.Color.White;
             this.DGV_HistoryCancel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_HistoryCancel.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -345,8 +357,8 @@ namespace BankTeacher.Bank.Add_Member
             // 
             // Column1
             // 
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column1.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column1.DefaultCellStyle = dataGridViewCellStyle6;
             this.Column1.HeaderText = "วัน/เดือน/ปี";
             this.Column1.MinimumWidth = 6;
             this.Column1.Name = "Column1";
@@ -365,8 +377,8 @@ namespace BankTeacher.Bank.Add_Member
             // 
             // Column2
             // 
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column2.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column2.DefaultCellStyle = dataGridViewCellStyle7;
             this.Column2.HeaderText = "ชื่อ";
             this.Column2.MinimumWidth = 6;
             this.Column2.Name = "Column2";
@@ -377,26 +389,13 @@ namespace BankTeacher.Bank.Add_Member
             // Column3
             // 
             this.Column3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Column3.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("TH Sarabun New", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Column3.DefaultCellStyle = dataGridViewCellStyle8;
             this.Column3.HeaderText = "สาเหตุ";
             this.Column3.MinimumWidth = 6;
             this.Column3.Name = "Column3";
             this.Column3.ReadOnly = true;
             this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // BTUploadFIle
-            // 
-            this.BTUploadFIle.BackColor = System.Drawing.Color.White;
-            this.BTUploadFIle.Font = new System.Drawing.Font("TH Sarabun New", 19.8F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTUploadFIle.Location = new System.Drawing.Point(636, 193);
-            this.BTUploadFIle.Name = "BTUploadFIle";
-            this.BTUploadFIle.Size = new System.Drawing.Size(151, 40);
-            this.BTUploadFIle.TabIndex = 56;
-            this.BTUploadFIle.Text = "อัพโหลดเอกสาร";
-            this.BTUploadFIle.UseVisualStyleBackColor = false;
-            this.BTUploadFIle.Visible = false;
-            this.BTUploadFIle.Click += new System.EventHandler(this.BTUploadFIle_Click);
             // 
             // CancelMember
             // 
@@ -451,8 +450,8 @@ namespace BankTeacher.Bank.Add_Member
         private System.Windows.Forms.TextBox TBNote;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.TextBox TBTeacherNo;
-        private System.Windows.Forms.Button BSearch;
-        private System.Windows.Forms.Button BSave;
+        private System.Windows.Forms.Button BTSearch;
+        private System.Windows.Forms.Button BTSave;
         private System.Windows.Forms.TextBox TBTeacherName;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;

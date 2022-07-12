@@ -15,33 +15,17 @@ namespace BankTeacher.Bank.Add_Member
 {
     public partial class Member : Form
     {
-        //------------------------- index -----------------
-        int Check = 0;
-        int StatusBoxFile = 0;
-        bool CheckBRegister = false;
-        bool CheckBCancel = false;
-        double Saving = 0;
-        String PathFile = null;
-        bool CheckStatusWorking = false;
-        bool CheckSave = false;
-
-        //----------------------- index code -------------------- ////////
-
         public Member()
         {
             InitializeComponent();
             TBStartAmountShare_Reg.Text = BankTeacher.Bank.Menu.startAmountMin.ToString();
         }
-
-        //------------------------- FormSize -----------------
-        // Comment!
+        // Resize panle center form
         private void membership_SizeChanged(object sender, EventArgs e)
         {
             Class.FromSettingMedtod.ChangeSizePanal(this, panel1);
             TBTeacherNo_Reg.Select();
         }
-        //----------------------- End code -------------------- ////////
-
         /// <summary>
         /// SQLDafault
         /// <para>[0] Insert Teacher Data INPUT:{TeacherNo}{TeacherAddBy}, {StartAmount} </para>
@@ -59,7 +43,6 @@ namespace BankTeacher.Bank.Add_Member
 		   "INSERT INTO EmployeeBank.dbo.tblMember(TeacherNo,TeacherAddBy,StartAmount,DateAdd) \r\n"+
            "VALUES('{TeacherNo}','{TeacherAddBy}',{StartAmount}, CURRENT_TIMESTAMP); \r\n\r\n"
             ,
-
            //[1] SELECT Member  INPUT:{Text}
            "SELECT TeacherNo,Name,null,Fname  \r\n " +
           "FROM(SELECT ISNULL(b.TeacherNo , a.TeacherNo) as TeacherNo ,  CAST(ISNULL(c.PrefixName+' ','') + Fname +' '+ Lname as NVARCHAR)AS NAME, Fname , b.MemberStatusNo  \r\n " +
@@ -70,8 +53,6 @@ namespace BankTeacher.Bank.Add_Member
           "WHERE a.MemberStatusNo = 2 or a.MemberStatusNo IS NULL  \r\n " +
           "ORDER BY a.Fname; "
            ,
-
-
           //[2]  Select Detail Memner INPUT: {TeacherNo} 
           "SELECT a.TeacherNo ,CAST(ISNULL(b.PrefixName+' ','')+a.Fname +' '+ a.Lname as NVARCHAR)AS Name,f.TeacherAddBy,CAST(ISNULL(b.PrefixName+' ','')+h.Fname +' '+ h.Lname as NVARCHAR) as NameTadd,a.IdNo, IIF(a.cNo != null,'-',a.cNo) as cNo,IIF(CAST(a.cMu as nvarchar) != null,'-',a.cMu) as cMu,IIF(CAST(c.TumBonName as nvarchar) != null,'-',CAST(c.TumBonName as nvarchar)) as TumBonName,IIF(CAST(d.AmPhurName as nvarchar) != null,'-',CAST(d.AmPhurName as nvarchar)) as AmPhurName,IIF(CAST(e.JangWatLongName as nvarchar) != null,'-',CAST(e.JangWatLongName as nvarchar)) as JangWatLongName,a.TelMobile,f.StartAmount \r\n " +
           "FROM Personal.dbo.tblTeacherHis as a \r\n " +
@@ -84,7 +65,6 @@ namespace BankTeacher.Bank.Add_Member
           "WHERE a.TeacherNo = '{TeacherNo}'; "
 
           ,
-
            //[3] INSERT Member To Member  Bill BillDetail  and Insert FileINPUT: {TeacherNo} {TeacherNoAddBy} {StartAmount} {Mount} {Year}  {PathFile}
           "DECLARE @CountTeacher INT; \r\n " +
           "DECLARE @BillNo INT;  \r\n " +
@@ -132,7 +112,6 @@ namespace BankTeacher.Bank.Add_Member
           " \r\n " +
           "END; \r\n " +
 
-
           "--INSERT INTO EmployeeBank.dbo.tblFile(TeacherNo , FiletypeNo , pathFile ,TeacherAddBy,LoanID,DateAddFile,IsUse , TeacherRemoveFileBy ,DateRemoveFile, StatusFileInSystem) \r\n " +
           "--VALUES ('{TeacherNo}',1,'{PathFile}','{TeacherNoAddBy}',null,CURRENT_TIMESTAMP,1,null,null,2);"
           ,
@@ -170,91 +149,30 @@ namespace BankTeacher.Bank.Add_Member
           "WHERE TeacherNo = '{TeacherNo}'"
            ,
           //[8] Update File INPUT : {TeacharNo} {PathFile} 
-             "UPDATE EmployeeBank.dbo.tblMember \r\n " +
+          "UPDATE EmployeeBank.dbo.tblMember \r\n " +
           "SET DocStatusNo = 2 , DocUploadPath = '{PathFile}'\r\n"+
           "WHERE TeacherNo = '{TeacherNo}'"
             ,
-    };
-
-        private void BSearchTeacher_Click(object sender, EventArgs e)
+        };
+        // SearchTeacher when Click botton
+        private void BTSearchTeacher_Click(object sender, EventArgs e)
         {
-            try
+            Search IN = new Search(SQLDefault[1]);
+            IN.ShowDialog();
+            if (Search.Return[0] != "")
             {
-                Search IN = new Search(SQLDefault[1]);
-                IN.ShowDialog();
-                if (Search.Return[0] != "")
-                {
-                    TBTeacherNo_Reg.Text = Search.Return[0];
-                    TBTeacherName_Reg.Text = Search.Return[1];
-                    TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
-                }
-
-            }
-            catch (Exception x)
-            {
-                Console.WriteLine(x);
+                TBTeacherNo_Reg.Text = Search.Return[0];
+                TBTeacherName_Reg.Text = Search.Return[1];
+                TBTeacherNo_KeyDown(sender, new KeyEventArgs(Keys.Enter));
             }
         }
-        // Comment!
-        // Available values|  SQLDefault[1] / TB //
-        private void BSave_Click_1(object sender, EventArgs e)
+        private void TBStartAmountShare_Reg_TextChanged(object sender, EventArgs e)
         {
-            if (CheckBRegister == false && TBTeacherName_Reg.Text != "")
-            {
-                if (TBStartAmountShare_Reg.Text == "")
-                    TBStartAmountShare_Reg.Text = "0";
-                int AmountShare = Convert.ToInt32(TBStartAmountShare_Reg.Text);
-                if (AmountShare.ToString() == "" || AmountShare == 0)
-                {
-                    AmountShare = BankTeacher.Bank.Menu.startAmountMin;
-                }
-                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo_Reg.Text));
-                
-                if (AmountShare >= BankTeacher.Bank.Menu.startAmountMin && AmountShare <= BankTeacher.Bank.Menu.startAmountMax)
-                {
-                    if (dt.Rows.Count == 0)
-                    {
-                        DialogResult dialogResult = MessageBox.Show("ยืนยันการสมัคร", "สมัครสมาชิก", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                        if (dialogResult == DialogResult.Yes)
-                        {
-                            CheckStatusWorking = true;
-                            BSave_Reg.Enabled = false;
-                            CheckBRegister = true;
-                            Checkmember(true);
-                            TBStartAmountShare_Reg.Enabled = false;
-                            Class.SQLConnection.InputSQLMSSQL(SQLDefault[3].Replace("{TeacherNo}", TBTeacherNo_Reg.Text)
-                            .Replace("{TeacherNoAddBy}", BankTeacher.Class.UserInfo.TeacherNo)
-                            .Replace("{StartAmount}",TBStartAmountShare_Reg.Text)
-                            .Replace("{Month}", BankTeacher.Bank.Menu.Date[1])
-                            .Replace("{Year}", BankTeacher.Bank.Menu.Date[0])
-                            .Replace("{PathFile}",""));
-                            MessageBox.Show("สมัครเสร็จสิ้น", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            CheckStatusWorking = false;
-                            CheckSave = true;
-                            printDocument1.DocumentName = $"TeacherID{TBTeacherNo_Reg.Text}";
-                            printDocument1.Print();
-                            TBTeacherNo_Reg.Text = "";
-                            TBTeacherName_Reg.Text = "";
-                            CheckBRegister = false;
-                            Checkmember(true);
-                            Check = 0;
-                        }
-                        else
-                        {
-                            MessageBox.Show("ยกเลิกการสมัคร", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("รายชื่อซ้ำ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }
-                else
-                {
-                    MessageBox.Show($"ไม่สามารถสมัครสมาชิกได้เนื่องจาก \r\n ราคาหุ้นเริ่มต้นต่ำหรือสูงเกินไป \r\n โปรดแก้ไข ราคาหุ้นขั้นต่ำ {BankTeacher.Bank.Menu.startAmountMin} หรือ สูงสุด {BankTeacher.Bank.Menu.startAmountMax}", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-               
-            }
+            BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBStartAmountShare_Reg);
+            if (TBStartAmountShare_Reg.Text != "" && TBTeacherNo_Reg.Text != "")
+                BTSave_Reg.Enabled = true;
+            else
+                BTSave_Reg.Enabled = false;
         }
         // Available values| TB /
         private void TBStartAmountShare_KeyPress(object sender, KeyPressEventArgs e)
@@ -264,92 +182,74 @@ namespace BankTeacher.Bank.Add_Member
                 e.Handled = true;
             }
         }
-        private void BExit_Click(object sender, EventArgs e)
+        // Available values|  SQLDefault[1] / TB //
+        private void BSave_Click_1(object sender, EventArgs e)
         {
-            Application.Exit();
-        }
-        private void BTPrintfShare_Click(object sender, EventArgs e)
-        {
-            //printPreviewDialog1.Document = printDocument1;
-            printDocument1.Print();
-            ToolStripButton b = new ToolStripButton();
-            b.Image = Properties.Resources._10x10_Print;
-            b.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            b.Click += printPreview_PrintClick;
-            ((ToolStrip)(printPreviewDialog1.Controls[1])).Items.RemoveAt(0);
-            ((ToolStrip)(printPreviewDialog1.Controls[1])).Items.Insert(0, b);
-            printPreviewDialog1.ShowDialog();
-        }
-        private void printPreview_PrintClick(object sender, EventArgs e)
-        {
-            try
+            if (TBTeacherName_Reg.Text != "")
             {
-                printDialog1.Document = printDocument1;
-                if (printDialog1.ShowDialog() == DialogResult.OK)
+                // Get Amount of Filling user
+                int AmountShare = Convert.ToInt32(TBStartAmountShare_Reg.Text);
+                // Search the User inofmation in the Database
+                DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[1].Replace("{TeacherNo}", TBTeacherNo_Reg.Text));
+                if (AmountShare >= BankTeacher.Bank.Menu.startAmountMin && AmountShare <= BankTeacher.Bank.Menu.startAmountMax)
                 {
-                    printDocument1.Print();
+                    DialogResult dialogResult = MessageBox.Show("ยืนยันการสมัคร", "สมัครสมาชิก", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        // Enable using
+                        TBStartAmountShare_Reg.Enabled = false;
+                        BTSave_Reg.Enabled = false;
+                        Checkmember(true);
+                        // Send scrip sql
+                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[3].Replace("{TeacherNo}", TBTeacherNo_Reg.Text)
+                        .Replace("{TeacherNoAddBy}", BankTeacher.Class.UserInfo.TeacherNo)
+                        .Replace("{StartAmount}", TBStartAmountShare_Reg.Text)
+                        .Replace("{Month}", BankTeacher.Bank.Menu.Date[1])
+                        .Replace("{Year}", BankTeacher.Bank.Menu.Date[0])
+                        .Replace("{PathFile}", ""));
+                        // Message
+                        MessageBox.Show("สมัครเสร็จสิ้น", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        // Print
+                        printDocument1.DocumentName = $"TeacherID{TBTeacherNo_Reg.Text}";
+                        printDocument1.Print();
+                        TBTeacherNo_Reg.Clear();
+                        TBTeacherName_Reg.Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show("ยกเลิกการสมัคร", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show($"ไม่สามารถสมัครสมาชิกได้เนื่องจาก \r\n ราคาหุ้นเริ่มต้นต่ำหรือสูงเกินไป \r\n โปรดแก้ไข ราคาหุ้นขั้นต่ำ {BankTeacher.Bank.Menu.startAmountMin} หรือ สูงสุด {BankTeacher.Bank.Menu.startAmountMax}", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ToString());
-            }
         }
-
-        //----------------------- Printf -------------------- ////////
+        // Print
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
             BankTeacher.Class.Print.PrintPreviewDialog.PrintMember(e,SQLDefault[2],BankTeacher.Bank.Menu.Date[2],BankTeacher.Bank.Menu.Monthname,(Convert.ToInt32(BankTeacher.Bank.Menu.Date[0]) + 543).ToString(),TBTeacherNo_Reg.Text,TBStartAmountShare_Reg.Text,true,true);
-        }
-
-        private void BTOpenfile_Click(object sender, EventArgs e)
-        {
-            if(TBTeacherNo_Reg.Text.Length != 0)
-            {
-                OpenFileDialog dialog = new OpenFileDialog();
-                dialog.Filter = "pdf files(*.pdf)|*.pdf";
-                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    PathFile = dialog.FileName;
-                    if(PathFile != "")
-                    {
-                        BankTeacher.Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("RegMember");
-                        FTP.FTPSendFile(PathFile, $"Member_{TBTeacherNo_Reg.Text}.pdf");
-                        Class.SQLConnection.InputSQLMSSQL(SQLDefault[8]
-                            .Replace("{PathFile}", FTP.HostplusPathFile + $"Member_{TBTeacherNo_Reg.Text}.pdf")
-                            .Replace("{TeacherNo}", TBTeacherNo_Reg.Text));
-                        MessageBox.Show("อัพโหลดเอกสารสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);    
-                    }
-                }
-                PathFile = "";
-            }
-            else
-            {
-                MessageBox.Show("กรุณากรอก รหัสผู้ใช้ก่อน", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
         }
         private void TBTeacherNo_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
                 TBTeacherNo_Reg.Text = TBTeacherNo_Reg.Text.Replace("t", "T");
-                    DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[5].Replace("{Text}", TBTeacherNo_Reg.Text));
+                DataSet ds = Class.SQLConnection.InputSQLMSSQLDS(SQLDefault[5].Replace("{Text}", TBTeacherNo_Reg.Text));
                 if(ds.Tables[0].Rows.Count != 0)
                 {
                     TBTeacherName_Reg.Text = ds.Tables[0].Rows[0][1].ToString();
-                    Check = 1;
-                    CheckBRegister = false;
                     Checkmember(false);
                     TBStartAmountShare_Reg.Enabled = true;
-                    CheckSave = false;
                 }
             }
-            else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back && Check == 1)
+            else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
             {
-                TBTeacherName_Reg.Text = "";
-                CheckBRegister = false;
+                TBTeacherName_Reg.Clear();
                 Checkmember(true);
-                Check = 0;
             }
         }
         private void Checkmember(bool tf)
@@ -358,73 +258,23 @@ namespace BankTeacher.Bank.Add_Member
         }
         private void BExitForm_Click(object sender, EventArgs e)
         {
-            if(!CheckStatusWorking)
-                BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
+            BankTeacher.Class.FromSettingMedtod.ReturntoHome(this);
         }
-
         private void Member_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape && !CheckStatusWorking || (CheckSave && e.KeyCode == Keys.Enter))
-            {
-                if (TBTeacherNo_Reg.Text.Length != 0)
-                {
-                    TBTeacherNo_Reg.Text = "";
-                    TBTeacherName_Reg.Text = "";
-                    TBStartAmountShare_Reg.Text = BankTeacher.Bank.Menu.startAmountMin.ToString(); ;
-                    Check = 0;
-                    StatusBoxFile = 0;
-                    CheckBRegister = false;
-                    CheckBCancel = false;
-                    Saving = 0;
-                    // ไฟล์
-                    StatusBoxFile = 0;
-                    Checkmember(true);
-                    CheckSave = false;
-                }
-                else if(!CheckStatusWorking)
-                {
-                    BExitForm_Click(new object(), new EventArgs());
-                }
-            }
+            if(e.KeyCode == Keys.Escape)
+            BExitForm_Click(new object(), new EventArgs());
         }
         private void TBTeacherNo_Reg_EnabledChanged(object sender, EventArgs e)
         {
             if (TBTeacherNo_Reg.Enabled == true)
             {
-                BSave_Reg.Enabled = false;
+                BTSave_Reg.Enabled = false;
             }
             else
             {
-                BSave_Reg.Enabled = true;
+                BTSave_Reg.Enabled = true;
             }
-        }
-
-        private void BTdeletefile_Reg_Click(object sender, EventArgs e)
-        {
-            PathFile = null;
-            DataTable dt = BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[6]
-               .Replace("{TeacherNo}", TBTeacherNo_Reg.Text));
-            if (dt.Rows.Count != 0)
-            {
-                Class.ProtocolSharing.FileZilla.FileZillaConnection FTP = new Class.ProtocolSharing.FileZilla.FileZillaConnection("RegMember");
-                CheckStatusWorking = true;
-                FTP.FTPRemoveFile("Member_" + TBTeacherNo_Reg.Text + ".pdf");
-                if (BankTeacher.Class.ProtocolSharing.FileZilla.StatusReturn == true)
-                {
-                    BankTeacher.Class.SQLConnection.InputSQLMSSQL(SQLDefault[7]
-                        .Replace("{TeacherRemoveBy}", BankTeacher.Class.UserInfo.TeacherNo)
-                        .Replace("{ID}", dt.Rows[0][0].ToString())
-                        .Replace("{TeacherNo}", TBTeacherNo_Reg.Text)
-                        .Replace("{PathFile}",""));
-                    MessageBox.Show("ลบเอกสารสำเร็จ", "ระบบ", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                CheckStatusWorking = false;
-            }
-        }
-
-        private void TBStartAmountShare_Reg_TextChanged(object sender, EventArgs e)
-        {
-            BankTeacher.Class.FromSettingMedtod.ProtectedCtrlVTB(TBStartAmountShare_Reg);
         }
     }
 }

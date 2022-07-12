@@ -216,7 +216,7 @@ namespace BankTeacher.Bank.Pay
                 else
                     CancelNo = 2;
 
-                DGV_Bill.Rows.Clear();
+                DGV_Bill.Rows.Clear(); 
                 DataTable dt = Class.SQLConnection.InputSQLMSSQL(SQLDefault[3]
                     .Replace("{Month}", CBMonthSelection_Bill.Text)
                    .Replace("{Year}", CBYearSelection_Bill.Text)
