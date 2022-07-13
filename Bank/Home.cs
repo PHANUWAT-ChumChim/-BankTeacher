@@ -12,7 +12,6 @@ namespace BankTeacher.Bank
 {
     public partial class Home : Form
     {
-        public static Font F = new Font("TH Sarabun New",16,FontStyle.Regular);
         int Check = 0;
         public static int SelectIndexRow = -1;
 
@@ -139,14 +138,11 @@ namespace BankTeacher.Bank
            ,
         };
 
-        public PrintPageEventHandler pdoc_PrintPage { get; private set; }
-
         public Home()
         {
             InitializeComponent();
         }
      
-
         private void Form2_SizeChanged(object sender, EventArgs e)
         {
             Class.FromSettingMedtod.ChangeSizePanal(this, P1);

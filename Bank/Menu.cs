@@ -1,13 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Printing;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,7 +9,7 @@ namespace BankTeacher.Bank
     public partial class Menu : Form
     {
         //============================== Time Servers SQL ========================================
-        public static DataTable Date_Time_SQL_Now = Class.SQLConnection.InputSQLMSSQL("SELECT FORMAT (getdate(), 'dd-MM-yyyy') as date,YEAR(GETDATE()) as Year,MONTH(GETDATE()) as Month, CAST(GETDATE() as time) as Time;");
+        public static DataTable Date_Time_SQL_Now;
         public static int MenuEnabled;
         public static int startAmountMin;
         public static int startAmountMax;
@@ -46,19 +39,25 @@ namespace BankTeacher.Bank
           ,
 
         };
-        Thread ReloadDB;
         public Menu()
         {
             InitializeComponent();
             Class.UserInfo.SetTeacherInformation("T43005", "ภาณุวัฒน์ ชุมฉิม", "1");
-            ReloadDB = new Thread(Tricker);
-            ReloadDB.Start();
+            ThreadReloadData();
+            Task.Run(Tricker);
+            try
+            {
+                Date_Time_SQL_Now = Class.SQLConnection.InputSQLMSSQL("SELECT FORMAT (getdate(), 'dd-MM-yyyy') as date,YEAR(GETDATE()) as Year,MONTH(GETDATE()) as Month, CAST(GETDATE() as time) as Time;");
+            }
+            catch
+            {
+                this.Enabled = false;
+            }
         }
         private void Tricker()
         {
             Stopwatch time = new Stopwatch();
             time.Start();
-            ThreadReloadData();
             //Relaod ข้อมูลทุก 1 นาที
             while (true)
             {
@@ -107,17 +106,16 @@ namespace BankTeacher.Bank
                 if(this.AccessibilityObject.Name == "หน้าเเรก")
                 {
                     BankTeacher.Bank.Home f = new BankTeacher.Bank.Home();
-                    f.MdiParent = BankTeacher.Bank.Menu.Parent;
+                    f.MdiParent = Parent;
+                    
                     f.WindowState = FormWindowState.Maximized;
                     f.Show();
-
                 }
                 else
                 {
                     this.menuStrip1.Visible = false;
                 }
             }
-          
         }
         public void menuStrip1_ItemAdded(object sender, ToolStripItemEventArgs e)
         {
